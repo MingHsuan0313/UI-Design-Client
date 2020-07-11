@@ -3,17 +3,21 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
-import { AppSidebarComponent } from './components/app-sidebar/app-sidebar.component';
 import { AppGraphEditorComponent } from './components/app-graph-editor/app-graph-editor.component';
 import { AppSettingComponent } from './components/app-setting/app-setting.component';
+import { WizardComponent } from './components/control-panel/wizard/wizard.component';
+import { NavigationComponent } from './components/control-panel/navigation/navigation.component';
+import { ControlPanelComponent } from './components/control-panel/control-panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppHeaderComponent,
-    AppSidebarComponent,
     AppGraphEditorComponent,
     AppSettingComponent,
+    WizardComponent,
+    NavigationComponent,
+    ControlPanelComponent
   ],
   imports: [
     BrowserModule
