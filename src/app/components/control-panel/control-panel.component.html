@@ -1,5 +1,56 @@
-<div>
-    Hi Control Panel
-    <app-navigation></app-navigation>
-    <app-wizard></app-wizard>
+<div style="border-style:groove;height:1000px;flex-direction: column;display: flex">
+  <div style="flex: 1;position:relative;left:10px;font-size: 25px">
+    Layout
+    <div class="dropdown" >
+      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:150px;font-size: large" >
+      </div>
+      <div class="dropdown-menu">
+        <option class="dropdown-item" *ngFor="let kind of layout" (click)="setLayout(kind)">{{kind}}</option>
+      </div>
+    </div>
+  </div>
+
+
+  <div style="flex: 1;position:relative;left:10px;font-size: 25px">
+    Genre
+    <div class="dropdown">
+      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:150px;font-size: large" >
+      </div>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" *ngFor="let kind of genre" (click)="setGenre(kind)">{{kind}}</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex: 1;position:relative;left:10px;font-size: 25px">
+    Category
+    <div class="dropdown">
+      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:150px;font-size: large" >
+      </div>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" *ngFor="let kind of categories" (click)="setCategory(kind)">{{kind}}</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex: 1;position:relative;left:10px;font-size: 25px">
+    UI Components
+    <div class="dropdown">
+      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:150px;font-size: large" >
+      </div>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" *ngFor="let kind of components" (click)="setComponent(kind)">{{kind}}</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex: 1;position:relative;left:10px;font-size: 25px">
+    Composition Mechanism
+    <a href="#">wizard</a>
+  </div>
+
+  <div style="flex: 1;position:relative;left:10px;font-size: 25px">
+    Navigation
+  </div>
+
 </div>
