@@ -51,8 +51,8 @@ export class GraphStorage {
         }
 
         let vertexModel = new VertexStorage(vertex);
-        vertexModel.changeValue("Heaeklwqjqej")
-        console.log(this.graph)
+        // vertexModel.changeValue("Heaeklwqjqej")
+        // console.log(this.graph)
         this.vertexList.push(vertexModel);
         return vertex;
     }

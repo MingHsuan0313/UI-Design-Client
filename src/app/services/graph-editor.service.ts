@@ -18,7 +18,8 @@ export default class GraphEditorService {
   createGraph(element: ElementRef) {
     let graphStorage = new GraphStorage(element);
     this.graphsStorage.push(graphStorage);
-    // this.inserVertex(0,'2',"Hello",200,250,300,100);
+    this.inserVertex(0,'2',"Hello",200,250,300,100);
+    this.inserVertex(0,'3',"Hello2",200,250,300,100);
     // this.changeVertexValue(0,"2","adhsjahksahjsad")
   }
 
