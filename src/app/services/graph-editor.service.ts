@@ -1,29 +1,49 @@
 import { Injectable, ElementRef } from '@angular/core';
+import { GraphStorage } from '../models/graph-storage.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export default class GraphEditorService {
+  graphsStorage: GraphStorage[];
   graph: mxGraph;
 
-  constructor() { }
+  constructor() {
+    this.graphsStorage = []
 
+  }
+
+  // argument : native html element reference (container)
+  // return : void
+  // function : create graph
   createGraph(element: ElementRef) {
 
-    console.log("Create Graph");
-    console.log(element);
-    this.graph = new mxGraph(element);
-    try {
-      const parent = this.graph.getDefaultParent();
-      this.graph.getModel().beginUpdate();
+    let graphStorage = new GraphStorage(element);
+    this.graphsStorage.push(graphStorage);
+    this.inserVertex(0,'1',"Hello",200,250,300,100);
+    this.changeVertexValue(0,"1","adhsjahksahjsad")
+    // console.log("Create Graph");
+    // console.log(element);
+    // let editor = new mxEditor();
+    // let graphModel = new mxGraphModel();
+    // this.graph = new mxGraph(element,graphModel);
+    // console.log(this.graph)
+    // console.log(mxEditor)
+    // console.log(window.mxEditor)
+    // console.log(window.mxUtils);
+    // console.log(mxEditor)
+    // console.log(mxUtils)
+  }
 
-      const vertex1 = this.graph.insertVertex(parent, '1', 'Vertex 1', 0, 0, 200, 80);
-      const vertex2 = this.graph.insertVertex(parent, '2', 'Vertex 2', 0, 0, 200, 80);
+  inserVertex(index,vertexID,vertexValue,x,y,width,height) {
+    this.graphsStorage[index].insertVertex(vertexID,vertexValue,x,y,width,height);
+  }
 
-      this.graph.insertEdge(parent, '', '', vertex1, vertex2);
-    } finally {
-      this.graph.getModel().endUpdate();
-      new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
-    }
+  changeVertexValue(index,vertexID,newValue) {
+    this.graphsStorage[index].changeVertexValue(vertexID,newValue);
+  }
+
+  inserEdge(index,sourceVertex,targetVertex) {
+    this.graphsStorage[index].insertEdge(sourceVertex,targetVertex);
   }
 }

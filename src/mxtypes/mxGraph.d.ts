@@ -8,6 +8,7 @@
 declare class mxGraph {
 
   constructor(container: any);
+  constructor(container:any, model:any)
 
   mouseListeners;
   isMouseDown;
