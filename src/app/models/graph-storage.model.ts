@@ -1,4 +1,6 @@
 import { elementAttribute } from "@angular/core/src/render3/instructions";
+import VertexStorage from "./vertex-storage.model";
+import EdgeStorage from "./edge-storage.model";
 
 export class GraphStorage {
     vertexList: VertexStorage[];
@@ -14,12 +16,16 @@ export class GraphStorage {
         this.graph = new mxGraph(element, this.graphModel);
     }
 
+    // issue : won't rerender imediately
     changeVertexValue(vertexID, newValue) {
         try {
             this.graph.getModel().beginUpdate();
             let vertex = this.findVertexByID(vertexID);
-            if(vertex != null)
+            if(vertex != null) {
                 vertex.changeValue(newValue);
+                console.log("changged")
+                console.log(this.graph)
+            }
             else
                 console.log("Vertex not found");
         } finally {
@@ -29,20 +35,21 @@ export class GraphStorage {
     }
 
     // insert vertex
-    insertVertex(parentVertexID, vertexValue, x, y, width, height) {
+    insertVertex(vertexID, vertexValue, x, y, width, height) {
         let vertex;
         try {
             const parent = this.graph.getDefaultParent();
             console.log("this is parent")
             console.log(parent)
             this.graph.getModel().beginUpdate();
-            vertex = this.graph.insertVertex(parent, parent.id, vertexValue, x, y, width, height);
+            vertex = this.graph.insertVertex(parent, vertexID, vertexValue, x, y, width, height);
             // vertex.valueChanged("ajdasdjh")
 
         } finally {
             this.graph.getModel().endUpdate();
             new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
         }
+
         let vertexModel = new VertexStorage(vertex);
         vertexModel.changeValue("Heaeklwqjqej")
         console.log(this.graph)
@@ -76,42 +83,5 @@ export class GraphStorage {
         }
         // not found
         // return -1;
-    }
-}
-
-export class VertexStorage {
-    vertex: any;
-    x: String;
-    y: String;
-    width: number;
-    height: number;
-    id: string;
-    parentId: string;
-    value: string;
-
-    changeValue(value) {
-        this.vertex.valueChanged(value);
-    }
-
-    constructor(vertex) {
-        this.vertex = vertex;
-        this.x = this.vertex["geometry"]["x"]
-        this.y = this.vertex["geometry"]["y"]
-        this.width = this.vertex["geometry"]["width"]
-        this.height = this.vertex["geometry"]["height"]
-        this.value = this.vertex["value"]
-        this.id = this.vertex["id"]
-        console.log(this)
-    }
-}
-
-export class EdgeStorage {
-    edge: any;
-    sourceID: string;
-    targetID: string;
-
-    constructor(edge) {
-        this.edge = edge;
-        console.log(edge);
     }
 }
