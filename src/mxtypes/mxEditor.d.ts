@@ -1,0 +1,3 @@
+declare class mxEditor {
+    constructor();
+}
