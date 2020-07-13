@@ -1,8 +1,9 @@
-<div style="border-style:groove;height:1000px;flex-direction: column;display: flex">
+<div class="container-fluid" style="border-style:groove;flex-direction: column;display: flex;height:500px">
   <div style="flex: 1;position:relative;left:10px;font-size: 25px">
     Layout
     <div class="dropdown" >
-      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:150px;font-size: large" >
+      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large;" >
+        {{this.layout_selected}}
       </div>
       <div class="dropdown-menu">
         <option class="dropdown-item" *ngFor="let kind of layout" (click)="setLayout(kind)">{{kind}}</option>
@@ -14,7 +15,8 @@
   <div style="flex: 1;position:relative;left:10px;font-size: 25px">
     Genre
     <div class="dropdown">
-      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:150px;font-size: large" >
+      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large" >
+        {{this.genre_selected}}
       </div>
       <div class="dropdown-menu">
         <a class="dropdown-item" *ngFor="let kind of genre" (click)="setGenre(kind)">{{kind}}</a>
@@ -25,7 +27,8 @@
   <div style="flex: 1;position:relative;left:10px;font-size: 25px">
     Category
     <div class="dropdown">
-      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:150px;font-size: large" >
+      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large" >
+        {{this.category_selected}}
       </div>
       <div class="dropdown-menu">
         <a class="dropdown-item" *ngFor="let kind of categories" (click)="setCategory(kind)">{{kind}}</a>
@@ -36,7 +39,8 @@
   <div style="flex: 1;position:relative;left:10px;font-size: 25px">
     UI Components
     <div class="dropdown">
-      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:150px;font-size: large" >
+      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large" >
+        {{this.component_selected}}
       </div>
       <div class="dropdown-menu">
         <a class="dropdown-item" *ngFor="let kind of components" (click)="setComponent(kind)">{{kind}}</a>
@@ -46,11 +50,22 @@
 
   <div style="flex: 1;position:relative;left:10px;font-size: 25px">
     Composition Mechanism
-    <a href="#">wizard</a>
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="fresh()">Launch wizard</button>
+    <app-wizard [componentName]="component_selected" [componentProperties]="componentProperties"></app-wizard>
   </div>
 
   <div style="flex: 1;position:relative;left:10px;font-size: 25px">
     Navigation
   </div>
 
+  <div>
+    <button class="btn btn-block" (click)="show()">Existing Component</button>
+    <div *ngFor="let c of storageComponents">{{c | json}}..</div>
+  </div>
+
 </div>
+
+
+
+

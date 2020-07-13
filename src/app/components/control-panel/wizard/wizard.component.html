@@ -1,1 +1,70 @@
-<p>wizard works!</p>
+<!-- Modal -->
+<div class="modal" id="myModal" role="dialog" (cancel)="show()" >
+  <div class="modal-dialog" style="position: fixed;left:500px;width:500px;height:700px">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Composition Wizard</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="onClose()">&times;</button>
+      </div>
+      <div class="modal-body">
+          <ul class="nav nav-tabs" role="tablist" id="myTab">
+            <li class="nav-item" role="presentation"><a class="nav-link active" href="#building" data-toggle="tab">Building</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" href="#composition" data-toggle="tab">Composition</a></li>
+          </ul>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="building" role="tabpanel">
+          <p>Ready to Build:  <mark>{{componentName}}</mark></p>
+          <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <div *ngFor="let property of componentProperties">
+              <div *ngIf="!(property==='componentList')">{{property}}:
+                  <input ngModel name={{property}}>
+  <!--                <button class="btn btn-danger" (click)="setData(property,kind.value)">confirm</button>-->
+              </div>
+            </div>
+            <button class="btn btn-primary">Submit</button>
+          </form>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="getComponentProperties(componentName)">Start</button>
+            <button type="button" class="btn btn-info btn-lg" (click)="clickNext()">Next</button>
+          </div>
+        </div>
+        <div class="tab-pane" id="composition" role="tabpanel">
+          <p>Composite <mark>{{componentName}}</mark></p>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="position:relative;left:10px;font-size: large" (click)="clickCreate()">
+              +
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a *ngFor="let element of compositeElements" class="dropdown-item" (click)="getSubComponentProperties(element)" >{{element}}</a>
+            </div>
+          </div>
+
+          <div *ngIf="!isComposite; else compositeBlock" style="font: caption">Basic Component cannot be composite, click Finish!</div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info btn-lg" data-dismiss="modal" (click)="clickFinish()">Finish</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<ng-template #compositeBlock>
+  <form #sf="ngForm" (ngSubmit)="onCompositeSubmit(sf)">
+    <div style="position: relative;left:5px">
+      <strong>{{this.subComponentName}}</strong>
+      <div *ngFor="let property of properties">{{property}}:
+        <input ngModel name={{property}}>
+      </div>
+    </div>
+    <button class="btn btn-primary">Submit</button>
+  </form>
+
+</ng-template>

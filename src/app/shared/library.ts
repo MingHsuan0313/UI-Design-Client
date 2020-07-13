@@ -24,6 +24,22 @@ export const Library = {
         "prompt": [],
       }
     }
+  },
 
+  // component properties
+  "components": {
+    "icon": ["text"],
+    "text": ["text"],
+    "button": ["text"],
+    "dropdown": ["items"],
+    "table": ["headers", "rows"],
+    "card": ["header", "componentList"],
+    "inputgroup": ["componentList"]
+  },
+
+  // Composite component can composite the following components
+  "compositeComponents": {
+    "card": ["text", "button", "table"],
+    "inputgroup": ["text", "button", "icon", "dropdown"],
   }
 };

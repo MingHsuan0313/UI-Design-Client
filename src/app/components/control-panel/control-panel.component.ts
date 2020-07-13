@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {Storage} from "../../shared/storage";
+
+
 @Component({
   selector: "app-control-panel",
   templateUrl: "./control-panel.component.html",
@@ -16,6 +18,10 @@ export class ControlPanelComponent implements OnInit {
   genre_selected: any;
   category_selected: any;
   component_selected: any;
+  componentProperties: any[];
+
+  storageComponents: any[] = Storage.components;
+  isHidden = true;
   constructor() { }
 
   ngOnInit(): void {
@@ -44,5 +50,14 @@ export class ControlPanelComponent implements OnInit {
   setComponent(kind: any) {
     console.log(kind);
     this.component_selected = kind;
+  }
+
+
+  fresh() {
+    this.componentProperties = [];
+  }
+
+  show() {
+    console.log(Storage.components);
   }
 }

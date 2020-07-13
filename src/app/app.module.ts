@@ -8,6 +8,7 @@ import { AppSettingComponent } from './components/app-setting/app-setting.compon
 import { WizardComponent } from './components/control-panel/wizard/wizard.component';
 import { NavigationComponent } from './components/control-panel/navigation/navigation.component';
 import { ControlPanelComponent } from './components/control-panel/control-panel.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ControlPanelComponent } from './components/control-panel/control-panel.
     ControlPanelComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -20,11 +20,14 @@ export class Icon implements UIComponent {
   selector: String;
   text: String;
 
+  constructor(init?:Partial<Icon>) {
+    Object.assign(this,init);
+  }
   add(component: UIComponent): void {
   }
 
   getInfo(): String {
-    return '';
+    return "";
   }
 
   remove(component: UIComponent): void {
@@ -39,12 +42,17 @@ export class Text implements UIComponent {
   width: String;
   x: String;
   y: String;
+  text: String;
+
+  constructor(init?:Partial<Icon>) {
+    Object.assign(this,init);
+  }
 
   add(component: UIComponent): void {
   }
 
   getInfo(): String {
-    return '';
+    return "";
   }
 
   remove(component: UIComponent): void {
@@ -58,12 +66,16 @@ export class Button implements UIComponent {
   width: String;
   x: String;
   y: String;
+  text:String;
 
+  constructor(init?:Partial<Icon>) {
+    Object.assign(this,init);
+  }
   add(component: UIComponent): void {
   }
 
   getInfo(): String {
-    return '';
+    return "";
   }
 
   remove(component: UIComponent): void {
@@ -78,12 +90,17 @@ export class Table implements UIComponent {
   width: String;
   x: String;
   y: String;
+  headers:any[];
+  rows:any[];
 
+  constructor(init?:Partial<Icon>) {
+    Object.assign(this,init);
+  }
   add(component: UIComponent): void {
   }
 
   getInfo(): String {
-    return '';
+    return "";
   }
 
   remove(component: UIComponent): void {
@@ -98,12 +115,19 @@ export class CardComposite implements UIComponent {
   width: String;
   x: String;
   y: String;
-
-  add(component: UIComponent): void {
+  header:String;
+  componentList:any[]=[];
+  constructor(init?:Partial<Icon>) {
+    Object.assign(this,init);
+  }
+  add(component: any): void {
+    this.componentList.push(component);
   }
 
   getInfo(): String {
-    return '';
+    console.log("Card Composite get Info")
+    console.log(this.componentList);
+    return "";
   }
 
   remove(component: UIComponent): void {
@@ -111,19 +135,23 @@ export class CardComposite implements UIComponent {
 
 }
 
-export class DropdownComposite implements UIComponent {
+export class Dropdown implements UIComponent {
   ID: String;
   height: String;
   selector: String;
   width: String;
   x: String;
   y: String;
+  items:any[];
 
+  constructor(init?:Partial<Icon>) {
+    Object.assign(this,init);
+  }
   add(component: UIComponent): void {
   }
 
   getInfo(): String {
-    return '';
+    return "";
   }
 
   remove(component: UIComponent): void {
@@ -139,11 +167,14 @@ export class InputGroupComposite implements UIComponent {
   x: String;
   y: String;
 
+  constructor(init?:Partial<Icon>) {
+    Object.assign(this,init);
+  }
   add(component: UIComponent): void {
   }
 
   getInfo(): String {
-    return '';
+    return "";
   }
 
   remove(component: UIComponent): void {
