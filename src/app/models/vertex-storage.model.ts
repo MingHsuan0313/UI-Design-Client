@@ -1,25 +1,45 @@
+/**
+ * @description
+ * This is the storage of mxGraph Vertex
+ * It's stored in GraphStorage
+ */
 export default class VertexStorage {
     vertex: any;
-    x: String;
-    y: String;
-    width: number;
-    height: number;
     id: string;
     parentId: string;
     value: string;
 
+    constructor(vertex) {
+        this.vertex = vertex;
+        this.id = this.vertex["id"];
+        this.parentId = this.vertex["parent"]["id"];
+    }
+
+    /**
+     * 
+     * @param value , vertex value wanted to be changed
+     */
     changeValue(value) {
         this.vertex.valueChanged(value);
     }
 
-    constructor(vertex) {
-        this.vertex = vertex;
-        this.x = this.vertex["geometry"]["x"]
-        this.y = this.vertex["geometry"]["y"]
-        this.width = this.vertex["geometry"]["width"]
-        this.height = this.vertex["geometry"]["height"]
-        this.value = this.vertex["value"]
-        this.id = this.vertex["id"]
-        console.log(this)
+    getVertexX() {
+        return this.vertex["geometry"]["x"];
+    }
+
+    getVertexY() {
+        return this.vertex["geometry"]["y"];
+    }
+
+    getVertexWidth() {
+        return this.vertex["geometry"]["width"];
+    }
+
+    getVertexHeight() {
+        return this.vertex["geometry"]["height"];
+    }
+
+    getVertexValue() {
+        return this.vertex["value"];
     }
 }

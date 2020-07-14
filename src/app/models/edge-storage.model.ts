@@ -1,10 +1,13 @@
 export default class EdgeStorage {
     edge: any;
-    sourceID: string;
-    targetID: string;
+    id: string;
+    parentID: string;
 
     constructor(edge) {
         this.edge = edge;
-        console.log(edge);
+        this.id = edge["id"];
+        this.parentID = this.edge["parent"]["id"];
+        console.log(this.edge)
+        // console.log(edge);
     }
 }

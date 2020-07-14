@@ -134,13 +134,13 @@ export class WizardComponent implements OnInit {
     }
   }
   clickNext() {
-    $("#myModal a[href=\"#composition\"]").tab("show");
+    // $("#myModal a[href=\"#composition\"]").tab("show");
   }
 
 
   onClose() {
     console.log("close")
-    $("#myModal a[href=\"#building\"]").tab("show");
+    // $("#myModal a[href=\"#building\"]").tab("show");
   }
 
   clickCreate() {
@@ -151,7 +151,7 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     console.log("finish");
     this.component.getInfo();
-    $("#myModal a[href=\"#building\"]").tab("show");
+    // $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
   }
 }

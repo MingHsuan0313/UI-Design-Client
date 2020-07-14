@@ -16,15 +16,19 @@ export class GraphStorage {
         this.graph = new mxGraph(element, this.graphModel);
     }
 
+    getGraph() {
+        return this.graph;
+    }
+
     // issue : won't rerender imediately
     changeVertexValue(vertexID, newValue) {
         try {
             this.graph.getModel().beginUpdate();
-            let vertex = this.findVertexByID(vertexID);
-            if(vertex != null) {
-                vertex.changeValue(newValue);
-                console.log("changged")
-                console.log(this.graph)
+            let vertexModel = this.findVertexByID(vertexID);
+            if (vertexModel != null) {
+                vertexModel.changeValue(newValue);
+                // console.log("changged")
+                // console.log(this.graph)
             }
             else
                 console.log("Vertex not found");
@@ -39,8 +43,8 @@ export class GraphStorage {
         let vertex;
         try {
             const parent = this.graph.getDefaultParent();
-            console.log("this is parent")
-            console.log(parent)
+            // console.log("this is parent")
+            // console.log(parent)
             this.graph.getModel().beginUpdate();
             vertex = this.graph.insertVertex(parent, vertexID, vertexValue, x, y, width, height);
             // vertex.valueChanged("ajdasdjh")
@@ -60,10 +64,11 @@ export class GraphStorage {
     // insert edge
     insertEdge(sourceVertex, targetVertex) {
         let edge;
+
         try {
             const parent = this.graph.getDefaultParent();
             this.graph.getModel().beginUpdate();
-            edge = this.graph.createEdge(parent, '', '', sourceVertex, targetVertex, "");
+            edge = this.graph.insertEdge(parent, '', '', sourceVertex, targetVertex, "");
 
         } finally {
             this.graph.getModel().endUpdate();
@@ -76,8 +81,6 @@ export class GraphStorage {
 
     findVertexByID(id) {
         for (let element of this.vertexList) {
-            console.log(element)
-            console.log(id)
             if (element.id == id)
                 return element;
         }

@@ -6,7 +6,6 @@ import { GraphStorage } from '../models/graph-storage.model';
 })
 export default class GraphEditorService {
   graphsStorage: GraphStorage[];
-  graph: mxGraph;
 
   constructor() {
     this.graphsStorage = []
@@ -20,6 +19,8 @@ export default class GraphEditorService {
     this.graphsStorage.push(graphStorage);
     this.inserVertex(0,'2',"Hello",200,250,300,100);
     this.inserVertex(0,'3',"Hello2",200,250,300,100);
+    this.inserEdge(0,"2","3");
+    // console.log(this.graphsStorage[0].getGraph())
     // this.changeVertexValue(0,"2","adhsjahksahjsad")
   }
 
@@ -31,7 +32,9 @@ export default class GraphEditorService {
     this.graphsStorage[graphIndex].changeVertexValue(vertexID,newValue);
   }
 
-  inserEdge(graphIndex,sourceVertex,targetVertex) {
-    this.graphsStorage[graphIndex].insertEdge(sourceVertex,targetVertex);
+  inserEdge(graphIndex,sourceVertexID,targetVertexID) {
+    let sourceVertexModel = this.graphsStorage[graphIndex].findVertexByID(sourceVertexID);
+    let targetVertexModel = this.graphsStorage[graphIndex].findVertexByID(targetVertexID);
+    this.graphsStorage[graphIndex].insertEdge(sourceVertexModel.vertex,targetVertexModel.vertex);
   }
 }
