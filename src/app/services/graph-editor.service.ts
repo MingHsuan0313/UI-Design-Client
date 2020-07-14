@@ -6,6 +6,7 @@ import { GraphStorage } from '../models/graph-storage.model';
 })
 export default class GraphEditorService {
   graphsStorage: GraphStorage[];
+  selectedGraphIndex: number;
 
   constructor() {
     this.graphsStorage = []
@@ -17,24 +18,40 @@ export default class GraphEditorService {
   createGraph(element: ElementRef) {
     let graphStorage = new GraphStorage(element);
     this.graphsStorage.push(graphStorage);
-    this.inserVertex(0,'2',"Hello",200,250,300,100);
-    this.inserVertex(0,'3',"Hello2",200,250,300,100);
-    this.inserEdge(0,"2","3");
-    // console.log(this.graphsStorage[0].getGraph())
+    //Cell click event
+    console.log(mxEvent)
+    console.log(this.graphsStorage[0].getGraph())
+
+    let vertex1 = this.inserVertex(0,"1", '2', "Hello", 200, 250, 300, 100);
+    let vertex2 = this.inserVertex(0,"2", '3', "Hello2", 200, 250, 300, 100);
+    // let edge = this.inserEdge(0, "2", "3");
+
+    console.log("graph hereee")
+    console.log(this.graphsStorage[0].getGraph())
+    console.log("vertex hereee")
+    console.log(vertex1)
+    // console.log("edge hereee")
+    // console.log(edge)
     // this.changeVertexValue(0,"2","adhsjahksahjsad")
   }
 
-  inserVertex(graphIndex,vertexID,vertexValue,x,y,width,height) {
-    this.graphsStorage[graphIndex].insertVertex(vertexID,vertexValue,x,y,width,height);
+  // object => svg
+
+  createComponet(svg) {
+    //inserVertex
   }
 
-  changeVertexValue(graphIndex,vertexID,newValue) {
-    this.graphsStorage[graphIndex].changeVertexValue(vertexID,newValue);
+  inserVertex(graphIndex, parent, vertexID, vertexValue, x, y, width, height) {
+    return this.graphsStorage[graphIndex].insertVertex(parent,vertexID, vertexValue, x, y, width, height);
   }
 
-  inserEdge(graphIndex,sourceVertexID,targetVertexID) {
+  changeVertexValue(graphIndex, vertexID, newValue) {
+    this.graphsStorage[graphIndex].changeVertexValue(vertexID, newValue);
+  }
+
+  inserEdge(graphIndex, sourceVertexID, targetVertexID) {
     let sourceVertexModel = this.graphsStorage[graphIndex].findVertexByID(sourceVertexID);
     let targetVertexModel = this.graphsStorage[graphIndex].findVertexByID(targetVertexID);
-    this.graphsStorage[graphIndex].insertEdge(sourceVertexModel.vertex,targetVertexModel.vertex);
+    return this.graphsStorage[graphIndex].insertEdge(sourceVertexModel.vertex, targetVertexModel.vertex);
   }
 }

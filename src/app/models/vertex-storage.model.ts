@@ -5,9 +5,10 @@
  */
 export default class VertexStorage {
     vertex: any;
-    id: string;
+    id: string; 
     parentId: string;
     value: string;
+    componentName: string;
 
     constructor(vertex) {
         this.vertex = vertex;

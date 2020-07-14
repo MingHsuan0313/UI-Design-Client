@@ -93,6 +93,7 @@ declare class mxImage {
 declare class mxEvent {
   static ADD: any;
   static REMOVE: any;
+  addListener(element,eventName,funct);
 }
 
 declare class mxMouseEvent {

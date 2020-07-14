@@ -14,6 +14,26 @@ export class GraphStorage {
         this.edgeList = []
         this.graphModel = new mxGraphModel();
         this.graph = new mxGraph(element, this.graphModel);
+        this.graph.addMouseListener(
+            {
+                mouseDown: function (sender, evt) {
+                    console.log("mouse down");
+                    // console.log(sender)
+                    console.log(evt);
+                },
+                mouseMove: function (sender, evt) {
+                    // console.log("mouse move");
+                    // // console.log(sender)
+                    // console.log(evt);
+                },
+                mouseUp: function (sender, evt) {
+                    console.log("mouse up");
+                    // console.log(sender)
+                    console.log(evt);
+                    // mxLog.debug('mouseUp');
+                }
+            }
+        )
     }
 
     getGraph() {
@@ -39,10 +59,20 @@ export class GraphStorage {
     }
 
     // insert vertex
-    insertVertex(vertexID, vertexValue, x, y, width, height) {
+    insertVertex(parent, vertexID, vertexValue, x, y, width, height) {
         let vertex;
         try {
-            const parent = this.graph.getDefaultParent();
+            if(parent == "1") {
+                parent = this.graph.getDefaultParent();
+                console.log("parent")
+                console.log(parent)
+            }
+            else {
+                parent = this.findVertexByID(parent).vertex;
+                console.log("parent")
+                console.log(parent)
+            }
+            // const parent = this.graph.getDefaultParent();
             // console.log("this is parent")
             // console.log(parent)
             this.graph.getModel().beginUpdate();

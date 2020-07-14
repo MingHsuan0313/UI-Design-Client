@@ -32,6 +32,7 @@ export class WizardComponent implements OnInit {
   }
 
   setComponent(properties): boolean {
+
     switch (this.componentName) {
       case "icon":
         this.component = new Icon(properties);
