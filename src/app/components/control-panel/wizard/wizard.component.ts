@@ -3,7 +3,6 @@ import {Storage} from "../../../shared/storage";
 import {Button, CardComposite, Dropdown, Icon, InputGroupComposite, Table, Text, UIComponent} from '../../../models/model';
 import {NgForm} from "@angular/forms";
 
-
 @Component({
   selector: "app-wizard",
   templateUrl: "./wizard.component.html",
@@ -139,7 +138,7 @@ export class WizardComponent implements OnInit {
 
 
   onClose() {
-    console.log("close")
+    console.log("close");
     $("#myModal a[href=\"#building\"]").tab("show");
   }
 
@@ -151,7 +150,16 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     console.log("finish");
     this.component.getInfo();
+
     $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
   }
 }
+
+
+
+
+
+
+
+
