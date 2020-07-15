@@ -157,8 +157,10 @@ export class WizardComponent implements OnInit {
     $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
     this.graphEditorService.bindComponent(this.component);
+    console.log(this.component.getInfo(this));
   }
 }
+
 
 
 
