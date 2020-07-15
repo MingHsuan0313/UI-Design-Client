@@ -5,6 +5,7 @@ export interface UIComponent {
   height: String;
   ID: String;
   selector: String;
+  type: String;
 
   add(component: UIComponent): void;
   remove(component: UIComponent): void;
@@ -19,6 +20,7 @@ export class Icon implements UIComponent {
   ID: String;
   selector: String;
   text: String;
+  type: String;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -26,8 +28,8 @@ export class Icon implements UIComponent {
   add(component: UIComponent): void {
   }
 
-  getInfo(): String {
-    return "";
+  getInfo(): any {
+    return this;
   }
 
   remove(component: UIComponent): void {
@@ -44,6 +46,7 @@ export class Text implements UIComponent {
   y: String;
   text: String;
   href: String;
+  type: String;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -52,8 +55,8 @@ export class Text implements UIComponent {
   add(component: UIComponent): void {
   }
 
-  getInfo(): String {
-    return JSON.stringify(this);
+  getInfo(): any {
+    return this;
   }
 
   remove(component: UIComponent): void {
@@ -69,6 +72,7 @@ export class Button implements UIComponent {
   y: String;
   text: String;
   href: String;
+  type: String;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -76,8 +80,8 @@ export class Button implements UIComponent {
   add(component: UIComponent): void {
   }
 
-  getInfo(): String {
-    return JSON.stringify(this);
+  getInfo(): any {
+    return this;
   }
 
   remove(component: UIComponent): void {
@@ -94,6 +98,7 @@ export class Table implements UIComponent {
   y: String;
   headers: any[];
   rows: any[];
+  type: String;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -101,8 +106,8 @@ export class Table implements UIComponent {
   add(component: UIComponent): void {
   }
 
-  getInfo(): String {
-    return "";
+  getInfo(): any {
+    return this;
   }
 
   remove(component: UIComponent): void {
@@ -118,7 +123,9 @@ export class CardComposite implements UIComponent {
   x: String;
   y: String;
   header: String;
+  type: String;
   componentList: any[] = [];
+
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
   }
@@ -126,10 +133,8 @@ export class CardComposite implements UIComponent {
     this.componentList.push(component);
   }
 
-  getInfo(): String {
-    console.log("Card Composite get Info");
-    console.log(this.componentList);
-    return "";
+  getInfo(): any {
+    return this;
   }
 
   remove(component: UIComponent): void {
@@ -144,6 +149,7 @@ export class Dropdown implements UIComponent {
   width: String;
   x: String;
   y: String;
+  type: String;
   items: any[];
 
   constructor(init?: Partial<Icon>) {
@@ -152,8 +158,8 @@ export class Dropdown implements UIComponent {
   add(component: UIComponent): void {
   }
 
-  getInfo(): String {
-    return "";
+  getInfo(): any {
+    return this;
   }
 
   remove(component: UIComponent): void {
@@ -168,6 +174,8 @@ export class InputGroupComposite implements UIComponent {
   width: String;
   x: String;
   y: String;
+  type: String;
+  componentList: any[] = [];
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -175,8 +183,8 @@ export class InputGroupComposite implements UIComponent {
   add(component: UIComponent): void {
   }
 
-  getInfo(): String {
-    return "";
+  getInfo(): any {
+    return this;
   }
 
   remove(component: UIComponent): void {

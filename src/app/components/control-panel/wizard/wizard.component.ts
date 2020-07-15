@@ -3,6 +3,7 @@ import {Storage} from "../../../shared/storage";
 import {Button, CardComposite, Dropdown, Icon, InputGroupComposite, Table, Text, UIComponent} from "../../../models/model";
 import {NgForm} from "@angular/forms";
 import GraphEditorService from "../../../services/graph-editor.service";
+import {PropertyGenerator} from "../../../shared/property-generator";
 
 @Component({
   selector: "app-wizard",
@@ -33,7 +34,9 @@ export class WizardComponent implements OnInit {
   }
 
   setComponent(properties): boolean {
-
+   properties["id"] = PropertyGenerator.getID();
+   properties["selector"] = PropertyGenerator.getSelector(this.componentName);
+   properties["type"] = this.componentName;
     switch (this.componentName) {
       case "icon":
         this.component = new Icon(properties);
@@ -64,6 +67,9 @@ export class WizardComponent implements OnInit {
   }
 
   setSubComponent(properties): boolean {
+    properties["id"] = PropertyGenerator.getID();
+    properties["selector"] = this.subComponentName;
+    properties["type"] = this.subComponentName;
     switch (this.subComponentName) {
       case "icon":
         this.subComponent = new Icon(properties);
@@ -153,11 +159,12 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     console.log("finish");
     this.component.getInfo();
-
     $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
+
     this.graphEditorService.bindComponent(this.component);
-    console.log(this.component.getInfo(this));
+    this.properties = [];
+    this.subComponentName = "";
   }
 }
 

@@ -4,7 +4,7 @@ export const Library = {
       "category": {
         "retrieving data": ["table", "card", "inputgroup", "dropdown", "icon"],
         "submitting data": ["text", "button", "inputgroup", "dropdown"],
-        "navigation": [],
+        "navigation": ["text", "button"],
         "prompt": [],
       }
     },

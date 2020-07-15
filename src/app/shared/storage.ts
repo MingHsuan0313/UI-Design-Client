@@ -2,13 +2,14 @@ import {Library} from "./library";
 import {UIComponent} from "../models/model";
 
 export class Storage {
-  static components: any[]=[];
-  static UICDL: any[];
-  static PageUICDL: any[];
+  static components: any[] = [];
+  static UICDL: any[] = [];
+  static PageUICDL: any = {};
   static library: any = Library;
 
   static add(component: UIComponent) {
     this.components.push(component);
+    this.UICDL.push(component.getInfo());
   }
 
   static getGenre(): any[] {
@@ -24,8 +25,14 @@ export class Storage {
     return Object.values(this.library["components"][component]);
   }
 
-  static getCompositeElements(component:string):any[]{
+  static getCompositeElements(component: string): any[] {
     return Object.values(this.library["compositeComponents"][component]);
+  }
+
+  static getPageUICDL() {
+    this.PageUICDL["selector"] = "page1";
+    this.PageUICDL["componentList"] = this.UICDL;
+    return this.PageUICDL;
   }
 
 }
