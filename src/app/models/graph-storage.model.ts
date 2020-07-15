@@ -17,6 +17,7 @@ export class GraphStorage {
         this.id = id;
         this.graphModel = new mxGraphModel();
         this.graph = new mxGraph(element, this.graphModel);
+        this.createStyle()
         this.graph.addMouseListener(
             {
                 mouseDown: function (sender, evt) {
@@ -47,27 +48,21 @@ export class GraphStorage {
     }
 
     bindComponent(component, parent) {
-        console.log("Component Value Hereee")
-        console.log(component[Storage.getComponentValue(component["type"])]);
+        // console.log("Component Value Hereee")
+        // console.log(component[Storage.getComponentValue(component["type"])]);
         // basic component
         if (component["componentList"] == undefined) {
             let vertexID = component["id"];
             // console.log(Storage)
             let valueKey = Storage.getComponentValue(component["type"]);
             let vertexValue = component[valueKey];
-            console.log(parent);
-            let style = new Object();
-            style["opacity"] = '0'
-            style["fillColor"] = "red"
-            style["fontSize"] = "35"
-            this.getGraph().getStylesheet().putCellStyle("myStyle", style)
-            let vertex = this.insertVertex(parent, vertexID, vertexValue, 20, 100, 50, 50, "myStyle");
-            console.log(this.getGraph().getStylesheet().styles["myStyle"])
-            this.getGraph().getStylesheet().styles["myStyle"]["fontSize"] = "100"
-            console.log(this.getGraph().getStylesheet().styles["myStyle"])
+            let vertex = this.insertVertex(parent, vertexID, vertexValue, 20, 100, 50, 50,component["type"]+"Style");
+            // console.log(this.getGraph().getStylesheet().styles["myStyle"])
+            // this.getGraph().getStylesheet().styles["myStyle"]["fontSize"] = "100"
+            // console.log(this.getGraph().getStylesheet().styles["myStyle"])
 
-            console.log("vertex hereeeee");
-            console.log(vertex);
+            // console.log("vertex hereeeee");
+            // console.log(vertex);
         }
         else {
 

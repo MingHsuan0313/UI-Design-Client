@@ -29,14 +29,14 @@ export default class GraphEditorService {
     // let vertex2 = this.inserVertex(0,"2", '3', "Hello2", 200, 250, 300, 100);
     // let edge = this.inserEdge(0, "2", "3");
 
-    console.log("graph hereee")
+    // console.log("graph hereee")
 
-    console.log(this.graphsStorage[0].getGraph())
+    // console.log(this.graphsStorage[0].getGraph())
     // console.log("vertex hereee")
     // console.log(vertex1)
-    let parent = this.graphsStorage[0].getGraph().getDefaultParent()
+    // let parent = this.graphsStorage[0].getGraph().getDefaultParent()
     // this.bindComponent(fakeCard,parent);
-    this.bindComponent(fakeText,parent);
+    // this.bindComponent(fakeText,parent);
     // console.log("edge hereee")
     // console.log(edge)
     // this.changeVertexValue(0,"2","adhsjahksahjsad")
@@ -48,8 +48,8 @@ export default class GraphEditorService {
     graph.bindComponent(component,parent);
     // // this is basic component
     // if(component["key"] == undefined)
-    console.log("Bind Component");
-    console.log(component);
+    // console.log("Bind Component");
+    // console.log(component);
   }
 
   createCompoent(component) {
