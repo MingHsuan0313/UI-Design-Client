@@ -41,6 +41,12 @@ export const Library = {
   "compositeComponents": {
     "card": ["text", "button", "table"],
     "inputgroup": ["text", "button", "icon", "dropdown"],
+  },
+
+  "componentValue": {
+    "text": ["text"],
+    "table": ["headers","rows"],
+    "card": ["header"]
   }
 };
 
