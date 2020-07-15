@@ -29,8 +29,8 @@ export const Library = {
   // component properties
   "components": {
     "icon": ["text"],
-    "text": ["text"],
-    "button": ["text"],
+    "text": ["text", "href"],
+    "button": ["text", "href"],
     "dropdown": ["items"],
     "table": ["headers", "rows"],
     "card": ["header", "componentList"],
@@ -43,3 +43,4 @@ export const Library = {
     "inputgroup": ["text", "button", "icon", "dropdown"],
   }
 };
+

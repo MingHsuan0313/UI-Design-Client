@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {Storage} from "../../../shared/storage";
-import {Button, CardComposite, Dropdown, Icon, InputGroupComposite, Table, Text, UIComponent} from '../../../models/model';
+import {Button, CardComposite, Dropdown, Icon, InputGroupComposite, Table, Text, UIComponent} from "../../../models/model";
 import {NgForm} from "@angular/forms";
+import GraphEditorService from "../../../services/graph-editor.service";
 
 @Component({
   selector: "app-wizard",
@@ -16,15 +17,16 @@ export class WizardComponent implements OnInit {
 
 
   component: any;
-  subComponent:any;
-  subComponentName:any;
+  subComponent: any;
+  subComponentName: any;
   properties: any[] = [];
   tmp: Map<any, any>;
-  compositeElements:any[]=[];
-  private isComposite: boolean = false;
+  compositeElements: any[] = [];
+  private isComposite = false;
 
 
-  constructor() { }
+
+  constructor(private graphEditorService: GraphEditorService) { }
 
   ngOnInit(): void {
     console.log("start wizard");
@@ -94,16 +96,16 @@ export class WizardComponent implements OnInit {
   getComponentProperties(componentName) {
     console.log(componentName);
     this.componentProperties =  Storage.getComponentProperties(componentName);
-    if(this.componentProperties.includes("componentList")){
+    if (this.componentProperties.includes("componentList")) {
       console.log("is Composite");
-      this.isComposite=true;
+      this.isComposite = true;
     }
     console.log(this.componentProperties);
     // this.setComponent();
     // console.log("set Component " + this.component.constructor.name);
   }
 
-  getSubComponentProperties(subComponentName:string) {
+  getSubComponentProperties(subComponentName: string) {
     this.properties =  Storage.getComponentProperties(subComponentName);
     this.subComponentName = subComponentName;
     // this.setComponent();
@@ -129,12 +131,12 @@ export class WizardComponent implements OnInit {
   onCompositeSubmit(sf: NgForm) {
     console.log(sf.value);
     if (this.setSubComponent(sf.value)) {
-      console.log("ready to add " + this.subComponentName+ " component to composite component");
+      console.log("ready to add " + this.subComponentName + " component to composite component");
       this.component.add(this.subComponent);
     }
   }
   clickNext() {
-    // $("#myModal a[href=\"#composition\"]").tab("show");
+    $("#myModal a[href=\"#composition\"]").tab("show");
   }
 
 
@@ -154,6 +156,7 @@ export class WizardComponent implements OnInit {
 
     $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
+    this.graphEditorService.bindComponent(this.component);
   }
 }
 

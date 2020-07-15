@@ -43,6 +43,7 @@ export class Text implements UIComponent {
   x: String;
   y: String;
   text: String;
+  href: String;
 
   constructor(init?:Partial<Icon>) {
     Object.assign(this,init);
@@ -67,6 +68,7 @@ export class Button implements UIComponent {
   x: String;
   y: String;
   text:String;
+  href: String;
 
   constructor(init?:Partial<Icon>) {
     Object.assign(this,init);

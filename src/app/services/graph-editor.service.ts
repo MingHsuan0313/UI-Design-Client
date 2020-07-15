@@ -37,8 +37,9 @@ export default class GraphEditorService {
 
   // object => svg
 
-  createComponet(svg) {
-    //inserVertex
+  bindComponent(component){
+    console.log("Bind Component");
+    console.log(component);
   }
 
   inserVertex(graphIndex, parent, vertexID, vertexValue, x, y, width, height) {
