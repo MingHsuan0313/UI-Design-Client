@@ -35,8 +35,8 @@ export default class GraphEditorService {
     // console.log("vertex hereee")
     // console.log(vertex1)
     // let parent = this.graphsStorage[0].getGraph().getDefaultParent()
-    // this.bindComponent(fakeCard,parent);
-    // this.bindComponent(fakeText,parent);
+    this.bindComponent(fakeCard,parent);
+    this.bindComponent(fakeText,parent);
     // console.log("edge hereee")
     // console.log(edge)
     // this.changeVertexValue(0,"2","adhsjahksahjsad")

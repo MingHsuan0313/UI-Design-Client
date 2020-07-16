@@ -48,6 +48,8 @@ export class GraphStorage {
     }
 
     bindComponent(component, parent) {
+        console.log("bind component hereee")
+        console.log(component)
         // console.log("Component Value Hereee")
         // console.log(component[Storage.getComponentValue(component["type"])]);
         // basic component
@@ -71,7 +73,8 @@ export class GraphStorage {
             // bind component
 
         }
-
+        console.log("external representation heree")
+        console.log(this)
     }
 
     getGraph() {

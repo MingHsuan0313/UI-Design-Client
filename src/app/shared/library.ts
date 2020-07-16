@@ -30,7 +30,7 @@ export const Library = {
   "components": {
     "icon": ["text"],
     "text": ["text", "href"],
-    "button": ["text", "href"],
+    "button": ["text", "href","action:submit or navigation"],
     "dropdown": ["items"],
     "table": ["headers", "rows"],
     "card": ["header", "componentList"],
