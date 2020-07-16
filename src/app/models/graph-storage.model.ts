@@ -1,4 +1,3 @@
-import { elementAttribute } from "@angular/core/src/render3/instructions";
 import VertexStorage from "./vertex-storage.model";
 import EdgeStorage from "./edge-storage.model";
 import { Storage } from "./../shared/storage";

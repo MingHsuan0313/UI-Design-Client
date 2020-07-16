@@ -1,8 +1,8 @@
 <div class="container-fluid" style="border-style:groove;flex-direction: column;display: flex;height:500px">
   <div style="flex: 1;position:relative;left:10px;font-size: 25px">
     Layout
-    <div class="dropdown" >
-      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large;" >
+    <div class="dropdown">
+      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large;">
         {{this.layout_selected}}
       </div>
       <div class="dropdown-menu">
@@ -15,11 +15,11 @@
   <div style="flex: 1;position:relative;left:10px;font-size: 25px">
     Genre
     <div class="dropdown">
-      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large" >
+      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large">
         {{this.genre_selected}}
       </div>
       <div class="dropdown-menu">
-        <a class="dropdown-item" *ngFor="let kind of genre" (click)="setGenre(kind)">{{kind}}</a>
+        <option class="dropdown-item" *ngFor="let kind of genre" (click)="setGenre(kind)">{{kind}}</option>
       </div>
     </div>
   </div>
@@ -27,11 +27,11 @@
   <div style="flex: 1;position:relative;left:10px;font-size: 25px">
     Category
     <div class="dropdown">
-      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large" >
+      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large">
         {{this.category_selected}}
       </div>
       <div class="dropdown-menu">
-        <a class="dropdown-item" *ngFor="let kind of categories" (click)="setCategory(kind)">{{kind}}</a>
+        <option class="dropdown-item" *ngFor="let kind of categories" (click)="setCategory(kind)">{{kind}}</option>
       </div>
     </div>
   </div>
@@ -39,11 +39,11 @@
   <div style="flex: 1;position:relative;left:10px;font-size: 25px">
     UI Components
     <div class="dropdown">
-      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large" >
+      <div class="dropdown-toggle" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large">
         {{this.component_selected}}
       </div>
       <div class="dropdown-menu">
-        <a class="dropdown-item" *ngFor="let kind of components" (click)="setComponent(kind)">{{kind}}</a>
+        <option class="dropdown-item" *ngFor="let kind of components" (click)="setComponent(kind)">{{kind}}</option>
       </div>
     </div>
   </div>
@@ -51,7 +51,8 @@
   <div style="flex: 1;position:relative;left:10px;font-size: 25px">
     Composition Mechanism
     <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="fresh()">Launch wizard</button>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"
+      (click)="fresh()">Launch wizard</button>
     <app-wizard [componentName]="component_selected" [componentProperties]="componentProperties"></app-wizard>
   </div>
 
@@ -62,15 +63,8 @@
 </div>
 
 <div>
-  <button onclick="location.href='https://www.google.com.tw';" >google</button>
+  <button onclick="location.href='https://www.google.com.tw';">google</button>
   <button class="btn btn-dark" (click)="connectServer()">Connect Server </button>
   <button class="btn btn-block" (click)="show()">Existing Component</button>
   <div *ngFor="let c of storageComponents">{{c["selector"] | json}}..</div>
 </div>
-
-
-
-
-
-
-

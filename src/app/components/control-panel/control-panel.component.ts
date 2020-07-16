@@ -23,7 +23,13 @@ export class ControlPanelComponent implements OnInit {
 
   storageComponents: any[] = Storage.components;
   isHidden = true;
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+
+    this.genre_selected = "select genre";
+    this.category_selected = "select category";
+    this.layout_selected = "select layout";
+    this.component_selected = "select component";
+  }
 
   ngOnInit(): void {
     this.genre = Storage.getGenre();
