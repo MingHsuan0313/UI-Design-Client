@@ -163,10 +163,9 @@ export class WizardComponent implements OnInit {
     // $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
 
-    const graphID = this.graphEditorService.selectedGraphID;
-    const graph = this.graphEditorService.findGraphByID(graphID).getGraph();
-    const parent = graph.getDefaultParent();
-    this.graphEditorService.bindComponent(this.component, parent);
+    console.log("add this component")
+    console.log(this.component)
+    this.graphEditorService.bindComponent(this.component);
     this.properties = [];
     this.subComponentName = "";
 

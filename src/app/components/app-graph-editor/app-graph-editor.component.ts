@@ -11,12 +11,12 @@ import * as html2canvas from 'html2canvas';
 export class AppGraphEditorComponent implements AfterViewInit {
 
   constructor(private graphEditorService: GraphEditorService) {
-    this.createGraph("graphContainer");
   }
 
   // @ViewChild('graphContainer') graphContainer: ElementRef;
 
   ngAfterViewInit() {
+    this.createGraph("graphContainer0");
     // this.graphEditorService.createGraph(this.graphContainer.nativeElement);
   }
 

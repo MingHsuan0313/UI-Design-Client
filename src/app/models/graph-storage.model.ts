@@ -46,24 +46,18 @@ export class GraphStorage {
         this.getGraph().getStylesheet().putCellStyle("textStyle", style)
     }
 
-    bindComponent(component, parent) {
-        console.log("bind component hereee")
+    createComponent(component, parent) {
+        console.log("bind component heree")
         console.log(component)
-        // console.log("Component Value Hereee")
-        // console.log(component[Storage.getComponentValue(component["type"])]);
+        console.log(parent)
         // basic component
         if (component["componentList"] == undefined) {
+            console.log("this is basic component")
             let vertexID = component["id"];
             // console.log(Storage)
             let valueKey = Storage.getComponentValue(component["type"]);
             let vertexValue = component[valueKey];
             let vertex = this.insertVertex(parent, vertexID, vertexValue, 20, 100, 50, 50,component["type"]+"Style");
-            // console.log(this.getGraph().getStylesheet().styles["myStyle"])
-            // this.getGraph().getStylesheet().styles["myStyle"]["fontSize"] = "100"
-            // console.log(this.getGraph().getStylesheet().styles["myStyle"])
-
-            // console.log("vertex hereeeee");
-            // console.log(vertex);
         }
         else {
 
@@ -102,19 +96,24 @@ export class GraphStorage {
     insertVertex(parent, vertexID, vertexValue, x, y, width, height, style) {
         let vertex;
         try {
-            if (parent.id == "1") {
-                parent = this.graph.getDefaultParent();
-                console.log("parent")
-                console.log(parent)
-            }
-            else {
-                parent = this.findVertexByID(parent).vertex;
-                console.log("parent")
-                console.log(parent)
-            }
+            // if (parent.id == "1") {
+            //     parent = this.graph.getDefaultParent();
+            //     console.log("parent")
+            //     console.log(parent)
+            // }
+            // else {
+            //     parent = this.findVertexByID(parent).vertex;
+            //     console.log("parent")
+            //     console.log(parent)
+            // }
             // const parent = this.graph.getDefaultParent();
             // console.log("this is parent")
             // console.log(parent)
+            console.log("ready to insert vertex")
+            console.log(parent)
+            console.log(vertexID)
+            console.log(vertexValue)
+            console.log(style)
             this.graph.getModel().beginUpdate();
             vertex = this.graph.insertVertex(parent, vertexID, vertexValue, x, y, width, height, style, "");
             // vertex.valueChanged("ajdasdjh")
