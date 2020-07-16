@@ -18,7 +18,7 @@ export default class GraphEditorService {
   // return : void
   // function : create graph
   createGraph(element) {
-    let graphStorage = new GraphStorage(element,"graph" + this.graphsStorage.length.toString());
+    let graphStorage = new GraphStorage(element,"graphContainer" + this.graphsStorage.length.toString());
     this.graphsStorage.push(graphStorage);
     this.selectedGraphID = graphStorage.getID();
     //Cell click event

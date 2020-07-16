@@ -11,12 +11,13 @@ import * as html2canvas from 'html2canvas';
 export class AppGraphEditorComponent implements AfterViewInit {
 
   constructor(private graphEditorService: GraphEditorService) {
+    this.createGraph("graphContainer");
   }
 
-  @ViewChild('graphContainer') graphContainer: ElementRef;
+  // @ViewChild('graphContainer') graphContainer: ElementRef;
 
   ngAfterViewInit() {
-    this.graphEditorService.createGraph(this.graphContainer.nativeElement);
+    // this.graphEditorService.createGraph(this.graphContainer.nativeElement);
   }
 
   createGraph(elementId) {
@@ -28,7 +29,6 @@ export class AppGraphEditorComponent implements AfterViewInit {
   } 
 
   saveAs(uri, filename) {
-    console.log("adjshakjd")
     var link = document.createElement('a');
 
     if (typeof link.download === 'string') {
@@ -54,17 +54,12 @@ export class AppGraphEditorComponent implements AfterViewInit {
 
   convertToCanvas() {
     let elementID = this.graphEditorService.selectedGraphID;
-    elementID = 'graphContainer';
     let element = document.getElementById(elementID)
-    console.log("convertttt")
-    console.log(element)
-    let temp = this;
+    let originalThis = this;
     html2canvas(element).then(function (canvas) {
-      // console.log("adhsdj")
-      console.log(canvas);
-      temp.saveAs(canvas.toDataURL(), 'file-name.png');
+      // console.log(canvas);
+      originalThis.saveAs(canvas.toDataURL(), 'file-name.png');
     });
-
   }
 
 
