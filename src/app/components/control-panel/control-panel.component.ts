@@ -67,7 +67,7 @@ export class ControlPanelComponent implements OnInit {
     console.log(JSON.stringify(pageUICDL));
 
     this.postPageUICDL(Storage.PageUICDL).subscribe(
-      response => console.log(response["body"]);
+      response => console.log(response["body"])
     );
   }
   postPageUICDL(PDL) {
