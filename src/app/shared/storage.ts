@@ -1,11 +1,14 @@
 import {Library} from "./library";
 import {UIComponent} from "../models/model";
+import {HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 
 export class Storage {
   static components: any[] = [];
   static UICDL: any[] = [];
   static PageUICDL: any = {};
   static library: any = Library;
+
 
   static add(component: UIComponent) {
     this.components.push(component);
@@ -38,5 +41,6 @@ export class Storage {
     this.PageUICDL["componentList"] = this.UICDL;
     return this.PageUICDL;
   }
+
 
 }

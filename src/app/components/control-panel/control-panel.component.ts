@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {Storage} from "../../shared/storage";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 
 @Component({
@@ -22,7 +23,7 @@ export class ControlPanelComponent implements OnInit {
 
   storageComponents: any[] = Storage.components;
   isHidden = true;
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     this.genre = Storage.getGenre();
@@ -64,5 +65,15 @@ export class ControlPanelComponent implements OnInit {
   connectServer() {
     const pageUICDL = Storage.getPageUICDL();
     console.log(JSON.stringify(pageUICDL));
+
+    this.postPageUICDL(Storage.PageUICDL).subscribe(
+      response => console.log(response["body"]);
+    );
+  }
+  postPageUICDL(PDL) {
+    return this.httpClient.post("http://localhost:8080", PDL,
+      { headers: new HttpHeaders().set("Content-Type", "application/json"),
+        observe: "response", withCredentials: true, responseType: "text" }
+    );
   }
 }

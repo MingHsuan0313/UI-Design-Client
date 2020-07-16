@@ -5,6 +5,7 @@ import {NgForm} from "@angular/forms";
 import GraphEditorService from "../../../services/graph-editor.service";
 import {PropertyGenerator} from "../../../shared/property-generator";
 
+
 @Component({
   selector: "app-wizard",
   templateUrl: "./wizard.component.html",
@@ -142,13 +143,13 @@ export class WizardComponent implements OnInit {
     }
   }
   clickNext() {
-    // $("#myModal a[href=\"#composition\"]").tab("show");
+    $("#myModal a[href=\"#composition\"]").tab("show");
   }
 
 
   onClose() {
     console.log("close");
-    // $("#myModal a[href=\"#building\"]").tab("show");
+    $("#myModal a[href=\"#building\"]").tab("show");
   }
 
   clickCreate() {
@@ -159,16 +160,18 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     console.log("finish");
     this.component.getInfo();
-    // $("#myModal a[href=\"#building\"]").tab("show");
+    $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
 
-    let graphID = this.graphEditorService.selectedGraphID;
-    let graph = this.graphEditorService.findGraphByID(graphID).getGraph()
-    let parent = graph.getDefaultParent()
-    this.graphEditorService.bindComponent(this.component,parent);
+    const graphID = this.graphEditorService.selectedGraphID;
+    const graph = this.graphEditorService.findGraphByID(graphID).getGraph();
+    const parent = graph.getDefaultParent();
+    this.graphEditorService.bindComponent(this.component, parent);
     this.properties = [];
     this.subComponentName = "";
+
   }
+
 }
 
 
