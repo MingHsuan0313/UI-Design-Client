@@ -29,6 +29,10 @@ export class Storage {
     return Object.values(this.library["compositeComponents"][component]);
   }
 
+  static getComponentValue(componentType: string): any {
+    return Object.values(this.library["componentValue"][componentType]);
+  }
+
   static getPageUICDL() {
     this.PageUICDL["selector"] = "page1";
     this.PageUICDL["componentList"] = this.UICDL;

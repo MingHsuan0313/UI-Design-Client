@@ -1,19 +1,23 @@
 import { elementAttribute } from "@angular/core/src/render3/instructions";
 import VertexStorage from "./vertex-storage.model";
 import EdgeStorage from "./edge-storage.model";
+import { Storage } from "./../shared/storage";
 
 export class GraphStorage {
     vertexList: VertexStorage[];
     edgeList: EdgeStorage[];
     graphModel: mxGraphModel;
     graph: mxGraph;
+    id: string;
 
     // create graph
-    constructor(element) {
-        this.vertexList = []
-        this.edgeList = []
+    constructor(element, id) {
+        this.vertexList = [];
+        this.edgeList = [];
+        this.id = id;
         this.graphModel = new mxGraphModel();
         this.graph = new mxGraph(element, this.graphModel);
+        this.createStyle()
         this.graph.addMouseListener(
             {
                 mouseDown: function (sender, evt) {
@@ -34,6 +38,40 @@ export class GraphStorage {
                 }
             }
         )
+    }
+
+    createStyle() {
+        let style = new Object();
+        style["opacity"] = '0'
+        style["fontSize"] = "15"
+        this.getGraph().getStylesheet().putCellStyle("textStyle", style)
+    }
+
+    bindComponent(component, parent) {
+        // console.log("Component Value Hereee")
+        // console.log(component[Storage.getComponentValue(component["type"])]);
+        // basic component
+        if (component["componentList"] == undefined) {
+            let vertexID = component["id"];
+            // console.log(Storage)
+            let valueKey = Storage.getComponentValue(component["type"]);
+            let vertexValue = component[valueKey];
+            let vertex = this.insertVertex(parent, vertexID, vertexValue, 20, 100, 50, 50,component["type"]+"Style");
+            // console.log(this.getGraph().getStylesheet().styles["myStyle"])
+            // this.getGraph().getStylesheet().styles["myStyle"]["fontSize"] = "100"
+            // console.log(this.getGraph().getStylesheet().styles["myStyle"])
+
+            // console.log("vertex hereeeee");
+            // console.log(vertex);
+        }
+        else {
+
+
+            // insert vertex
+            // bind component
+
+        }
+
     }
 
     getGraph() {
@@ -59,10 +97,10 @@ export class GraphStorage {
     }
 
     // insert vertex
-    insertVertex(parent, vertexID, vertexValue, x, y, width, height) {
+    insertVertex(parent, vertexID, vertexValue, x, y, width, height, style) {
         let vertex;
         try {
-            if(parent == "1") {
+            if (parent.id == "1") {
                 parent = this.graph.getDefaultParent();
                 console.log("parent")
                 console.log(parent)
@@ -76,7 +114,7 @@ export class GraphStorage {
             // console.log("this is parent")
             // console.log(parent)
             this.graph.getModel().beginUpdate();
-            vertex = this.graph.insertVertex(parent, vertexID, vertexValue, x, y, width, height);
+            vertex = this.graph.insertVertex(parent, vertexID, vertexValue, x, y, width, height, style, "");
             // vertex.valueChanged("ajdasdjh")
 
         } finally {
@@ -116,5 +154,9 @@ export class GraphStorage {
         }
         // not found
         // return -1;
+    }
+
+    getID() {
+        return this.id;
     }
 }

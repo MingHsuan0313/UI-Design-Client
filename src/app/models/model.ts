@@ -35,6 +35,9 @@ export class Icon implements UIComponent {
   remove(component: UIComponent): void {
   }
 
+  getValue() {
+
+  }
 }
 
 export class Text implements UIComponent {
