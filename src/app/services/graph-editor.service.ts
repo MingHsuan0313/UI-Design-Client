@@ -17,7 +17,7 @@ export default class GraphEditorService {
   // argument : native html element reference (container)
   // return : void
   // function : create graph
-  createGraph(element: ElementRef) {
+  createGraph(element) {
     let graphStorage = new GraphStorage(element,"graph" + this.graphsStorage.length.toString());
     this.graphsStorage.push(graphStorage);
     this.selectedGraphID = graphStorage.getID();
@@ -35,8 +35,8 @@ export default class GraphEditorService {
     // console.log("vertex hereee")
     // console.log(vertex1)
     // let parent = this.graphsStorage[0].getGraph().getDefaultParent()
-    this.bindComponent(fakeCard,parent);
-    this.bindComponent(fakeText,parent);
+    // this.bindComponent(fakeCard,parent);
+    // this.bindComponent(fakeText,parent);
     // console.log("edge hereee")
     // console.log(edge)
     // this.changeVertexValue(0,"2","adhsjahksahjsad")
