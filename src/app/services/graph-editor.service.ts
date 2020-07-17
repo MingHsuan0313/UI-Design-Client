@@ -29,7 +29,7 @@ export default class GraphEditorService {
     // this.bindComponent(fakeButton);
     // this.bindComponent(fakeDropdown);
     // this.bindComponent(fakeTable);
-    this.bindComponent(fakeCardComposite);
+    // this.bindComponent(fakeCardComposite);
   }
 
   // object => svg
