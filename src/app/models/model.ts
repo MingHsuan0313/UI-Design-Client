@@ -25,6 +25,7 @@ export class Icon implements UIComponent {
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
   }
+
   add(component: UIComponent): void {
   }
 
@@ -158,6 +159,7 @@ export class Dropdown implements UIComponent {
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
   }
+
   add(component: UIComponent): void {
   }
 
@@ -167,7 +169,6 @@ export class Dropdown implements UIComponent {
 
   remove(component: UIComponent): void {
   }
-
 }
 
 export class InputGroupComposite implements UIComponent {
@@ -183,6 +184,7 @@ export class InputGroupComposite implements UIComponent {
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
   }
+
   add(component: UIComponent): void {
   }
 
@@ -192,7 +194,6 @@ export class InputGroupComposite implements UIComponent {
 
   remove(component: UIComponent): void {
   }
-
 }
 
 

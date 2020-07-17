@@ -62,10 +62,11 @@ export class GraphStorage {
         // this.getGraph().getStylesheet()["styles"]["textStyle"]["fontColor"] = "red";
     }
 
-    createComponent(component, parent) {
+    createComponent(component, parent,x?,y?) {
         console.log("bind component heree")
         console.log(component)
         console.log(parent)
+
         // basic component
         if (component["componentList"] == undefined) {
             console.log("this is basic component")
@@ -132,24 +133,15 @@ export class GraphStorage {
             console.log(style)
             this.graph.getModel().beginUpdate();
             vertex = this.graph.insertVertex(parent, vertexID, vertexValue, x, y, width, height, style, "");
-            // var obj = document.getElementById("testing")
-            var obj = document.createElement("button")
-            console.log("object here")
-            console.log(obj)
-            obj.setAttribute('label', 'click me');
-            var v1 = this.graph.insertVertex(parent, null, obj, 0, 0, width, height)
-
-            // vertex.valueChanged("ajdasdjh")
-
         } finally {
             this.graph.getModel().endUpdate();
             new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
         }
 
-        let vertexModel = new VertexStorage(vertex);
+        let vertexStorage = new VertexStorage(vertex);
         // vertexModel.changeValue("Heaeklwqjqej")
         // console.log(this.graph)
-        this.vertexList.push(vertexModel);
+        this.vertexList.push(vertexStorage);
         return vertex;
     }
 

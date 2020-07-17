@@ -19,19 +19,32 @@ export default class GraphEditorService {
   // return : void
   // function : create graph
   createGraph(element) {
-    let graphStorage = new GraphStorage(element,"graphContainer" + this.graphsStorage.length.toString());
+    let graphStorage = new GraphStorage(element, "graphContainer" + this.graphsStorage.length.toString());
     this.graphsStorage.push(graphStorage);
     this.selectedGraphID = graphStorage.getID();
 
+    this.bindComponent(fakeText);
+    this.bindComponent(fakeText);
+    this.bindComponent(fakeText);
     this.bindComponent(fakeText);
     this.bindComponent(fakeButton);
   }
 
   // object => svg
-  bindComponent(component){
-    let graph = this.findGraphByID(this.selectedGraphID);
-    let parent = graph.getGraph().getDefaultParent();
-    graph.createComponent(component,parent);
+  bindComponent(component, x?, y?) {
+    console.log("heyeyey")
+    console.log(x)
+    console.log(y)
+    if (x == undefined || y == undefined) {
+      let graph = this.findGraphByID(this.selectedGraphID);
+      let parent = graph.getGraph().getDefaultParent();
+      graph.createComponent(component, parent);
+    }
+    else {
+      let graph = this.findGraphByID(this.selectedGraphID);
+      let parent = graph.getGraph().getDefaultParent();
+      graph.createComponent(component, parent,x,y)
+    }
     // // this is basic component
     // if(component["key"] == undefined)
     // console.log("Bind Component");
@@ -39,8 +52,8 @@ export default class GraphEditorService {
   }
 
   findGraphByID(id) {
-    for(let element of this.graphsStorage) {
-      if(element.getID() == id)
+    for (let element of this.graphsStorage) {
+      if (element.getID() == id)
         return element;
     }
   }

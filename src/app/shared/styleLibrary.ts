@@ -1,18 +1,33 @@
-export const StyleLibrary = {
-    // basic component
-    "text": {
+export const StyleLibrary = [
+    {
+        genere: "coreUI",
 
-    },
-    "button": {
+        // basic component
+        text: {
+            opacity: '0',
+            fontSize: '15',
+            fontColor: 'black'
+        },
+        button: {
+            fontSize: '18',
+            fontColor: '#fff',
+            fillColor: "#5bc0de",
+            rounded: true,
+            strokeColor: "#269abc"
+        },
+        dropdownHeader: {
 
-    },
-    "dropdown": {
+        },
+        dropdownItem: {
 
-    },
-    "icon": {
+        },
+        icon: {
 
-    },
-    "card": {
+        },
 
+        // composite component
+        card: {
+
+        }
     }
-}
+]

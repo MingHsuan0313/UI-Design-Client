@@ -48,6 +48,7 @@ export const Library = {
     "text": ["text"],
     "button": ["text"],
     "table": ["headers", "rows"],
+    "dropdown": ["items"],
     "card": ["header"]
   }
 };

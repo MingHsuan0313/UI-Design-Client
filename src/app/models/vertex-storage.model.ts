@@ -1,3 +1,5 @@
+import { UIComponent } from "../models/model";
+import StyleStorage from "./style-storage.model";
 /**
  * @description
  * This is the storage of mxGraph Vertex
@@ -9,6 +11,8 @@ export default class VertexStorage {
     parentId: string;
     value: string;
     componentName: string;
+    component: UIComponent;
+    styleStorage: StyleStorage;
 
     constructor(vertex) {
         this.vertex = vertex;
