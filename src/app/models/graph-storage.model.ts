@@ -88,14 +88,13 @@ export class GraphStorage {
                 this.setStrategy(new DropdownStrategy())
             }
 
-            this.strategy.createComponent(this,component);
             console.log(this.strategy.strategyName)
-            console.log("this is basic component")
-            let vertexID = component["id"];
-            // console.log(Storage)
-            let valueKey = Storage.getComponentValue(component["type"]);
-            let vertexValue = component[valueKey];
-            let vertex = this.insertVertex(parent, vertexID, vertexValue, 50, 50, component["type"] + "Style");
+            this.strategy.createComponent(this,component,parent);
+            // let vertexID = component["id"];
+            // // console.log(Storage)
+            // let valueKey = Storage.getComponentValue(component["type"]);
+            // let vertexValue = component[valueKey];
+            // let vertex = this.insertVertex(parent, vertexID, vertexValue, 50, 50, component["type"] + "Style");
         }
         else {
             // insert vertex
@@ -110,17 +109,19 @@ export class GraphStorage {
     }
 
     // insert vertex
-    insertVertex(parent, vertexID, vertexValue, width, height, style) {
+    insertVertex(parent, vertexID, vertexValue, width, height, styleStorage) {
+        console.log("style heree")
+        console.log(styleStorage)
         let vertex;
         try {
             this.graph.getModel().beginUpdate();
-            vertex = this.graph.insertVertex(parent, vertexID, vertexValue, 0, 0, width, height, style, "");
+            vertex = this.graph.insertVertex(parent, vertexID, vertexValue, 0, 0, width, height,styleStorage.name , "");
         } finally {
             this.graph.getModel().endUpdate();
             new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
         }
 
-        let vertexStorage = new VertexStorage(vertex);
+        let vertexStorage = new VertexStorage(vertex,styleStorage);
         this.vertexList.push(vertexStorage);
         return vertex;
     }

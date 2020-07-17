@@ -1,6 +1,6 @@
 export let fakeText = {
     text: "textValuess",
-    href: "dddd",
+    href: "",
     id: "2",
     selector: "text3",
     type: "text"

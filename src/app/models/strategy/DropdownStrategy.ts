@@ -8,7 +8,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
         this.strategyName = "Dropdown Strategy";
     }
 
-    createComponent(graphStorage:GraphStorage,component:UIComponent) {
+    createComponent(graphStorage:GraphStorage,component,parent) {
 
     }
 }

@@ -24,7 +24,9 @@ export default class GraphEditorService {
     this.selectedGraphID = graphStorage.getID();
 
     this.bindComponent(fakeText);
-    this.bindComponent(fakeButton);
+    this.bindComponent(fakeButton)
+    // setTimeout(() => {
+      // this.bindComponent(fakeButton)},8000)
   }
 
   // object => svg

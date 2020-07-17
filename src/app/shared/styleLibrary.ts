@@ -5,7 +5,7 @@ export const StyleLibrary = [
         // basic component
         text: {
             opacity: '0',
-            fontSize: '15',
+            fontSize: '25',
             fontColor: 'black'
         },
         button: {

@@ -3,5 +3,5 @@ import { UIComponent } from "../model";
 
 export interface ICreateComponentStrategy {
     strategyName: string;
-    createComponent(graphStorage:GraphStorage,component:UIComponent)
+    createComponent(graphStorage:GraphStorage,component,parent)
 }
