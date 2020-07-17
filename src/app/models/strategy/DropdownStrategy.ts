@@ -21,7 +21,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
 
         let dropdownHeaderVertex = graphStorage.insertVertex(dropdownVertex,component.id+"header","",200,30,styleStorage,component);
-        let itemList = component.items[0]
+        let itemList = component.items
         itemList = itemList.split(" ")
         for(let element of itemList) {
             styleName = "dropdownHeaderstyle" + component.id;

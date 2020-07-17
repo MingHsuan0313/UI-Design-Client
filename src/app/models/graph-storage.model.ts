@@ -6,6 +6,8 @@ import { ButtonStrategy } from "./strategy/ButtonStrategy";
 import { TextStrategy } from "./strategy/TextStrategy";
 import { DropdownStrategy } from "./strategy/DropdownStrategy";
 import { TableStrategy } from "./strategy/TableStrategy";
+import { StyleLibrary } from "../shared/styleLibrary";
+import StyleStorage from "./style-storage.model";
 
 export class GraphStorage {
     vertexList: VertexStorage[];
@@ -66,8 +68,15 @@ export class GraphStorage {
         }
         //composite component here
         else {
-            // insert vertex
-            // bind component
+            let type = component.type;
+            let styleName = type + "style" + component.id;
+            let style = StyleLibrary[0][type];
+            let styleStorage = new StyleStorage(styleName,style);
+            this.graph.getStylesheet().putCellStyle(styleName,style);
+            let compositeVertex = this.insertVertex(parent,component.id,component.header,200,100,styleStorage,component);
+            for(let element of component.componentList) {
+                this.createComponent(element,compositeVertex);
+            }
         }
     }
 
