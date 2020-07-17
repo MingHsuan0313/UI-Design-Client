@@ -27,6 +27,12 @@ export const StyleLibrary = [
         icon: {
 
         },
+        table: {
+
+        },
+        tableHeader: {
+
+        },
 
         // composite component
         card: {

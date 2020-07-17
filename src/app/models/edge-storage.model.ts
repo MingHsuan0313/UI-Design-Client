@@ -8,6 +8,5 @@ export default class EdgeStorage {
         this.id = edge["id"];
         this.parentID = this.edge["parent"]["id"];
         console.log(this.edge)
-        // console.log(edge);
     }
 }

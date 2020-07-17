@@ -4,6 +4,7 @@ import { fakeCard } from '../../fakedata/fakeCard';
 import { fakeText } from '../../fakedata/fakeText';
 import { fakeButton } from '../../fakedata/fakeButton';
 import { fakeDropdown } from '../../fakedata/fakeDropdown';
+import { fakeTable } from '../../fakedata/fakeTable';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +25,10 @@ export default class GraphEditorService {
     this.graphsStorage.push(graphStorage);
     this.selectedGraphID = graphStorage.getID();
 
-    // this.bindComponent(fakeText);
-    // this.bindComponent(fakeButton);
+    this.bindComponent(fakeText);
+    this.bindComponent(fakeButton);
     this.bindComponent(fakeDropdown);
-    // setTimeout(() => {
-      // this.bindComponent(fakeButton)},8000)
+    this.bindComponent(fakeTable);
   }
 
   // object => svg

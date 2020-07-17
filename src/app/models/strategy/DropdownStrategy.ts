@@ -10,13 +10,13 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     }
 
     createComponent(graphStorage:GraphStorage,component,parent) {
-        let styleName = "style" + component.id + "dropdownBox";
+        let styleName = "dropdownBoxstyle" + component.id;
         let style = {"overflow":true};
         let styleStorage = new StyleStorage(styleName,style)
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
         let dropdownVertex = graphStorage.insertVertex(parent,component.id,"",300,200,styleStorage,component);
 
-        styleName = "style" + component.id + "dropdownHeader";
+        styleName = "dropdownHeaderstyle" + component.id;
         styleStorage = new StyleStorage(styleName,style);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
 
@@ -24,7 +24,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
         let itemList = component.items[0]
         itemList = itemList.split(" ")
         for(let element of itemList) {
-            styleName = "style" + component.id + "dropdownHeader";
+            styleName = "dropdownHeaderstyle" + component.id;
             styleStorage = new StyleStorage(styleName,style);
             graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
             let dropdownItemVertex = graphStorage.insertVertex(dropdownVertex,component.id+"item",element,150,30,styleStorage,component);

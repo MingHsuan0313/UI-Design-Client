@@ -108,15 +108,11 @@ export class WizardComponent implements OnInit {
       this.isComposite = true;
     }
     console.log(this.componentProperties);
-    // this.setComponent();
-    // console.log("set Component " + this.component.constructor.name);
   }
 
   getSubComponentProperties(subComponentName: string) {
     this.properties =  Storage.getComponentProperties(subComponentName);
     this.subComponentName = subComponentName;
-    // this.setComponent();
-    // console.log("set Component " + this.component.constructor.name);
   }
 
   show() {
