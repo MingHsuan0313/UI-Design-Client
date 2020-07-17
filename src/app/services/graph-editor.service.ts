@@ -24,8 +24,8 @@ export default class GraphEditorService {
     this.graphsStorage.push(graphStorage);
     this.selectedGraphID = graphStorage.getID();
 
-    this.bindComponent(fakeText);
-    this.bindComponent(fakeButton);
+    // this.bindComponent(fakeText);
+    // this.bindComponent(fakeButton);
     this.bindComponent(fakeDropdown);
     // setTimeout(() => {
       // this.bindComponent(fakeButton)},8000)
@@ -50,5 +50,10 @@ export default class GraphEditorService {
       if (element.getID() == id)
         return element;
     }
+  }
+
+  getGraph() {
+    let graphStorage = this.findGraphByID(this.selectedGraphID);
+    return graphStorage;
   }
 }

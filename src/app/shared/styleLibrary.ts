@@ -15,6 +15,9 @@ export const StyleLibrary = [
             rounded: true,
             strokeColor: "#269abc"
         },
+        dropdownBox: {
+
+        },
         dropdownHeader: {
 
         },

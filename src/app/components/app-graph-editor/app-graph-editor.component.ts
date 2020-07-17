@@ -20,6 +20,10 @@ export class AppGraphEditorComponent implements AfterViewInit {
     // this.graphEditorService.createGraph(this.graphContainer.nativeElement);
   }
 
+  showExternalRepresentation() {
+    console.log(this.graphEditorService.getGraph());
+  }
+
   createGraph(elementId) {
     let element = document.getElementById(elementId);
     this.graphEditorService.createGraph(element);
