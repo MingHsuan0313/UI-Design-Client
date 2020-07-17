@@ -1,6 +1,10 @@
 import VertexStorage from "./vertex-storage.model";
 import EdgeStorage from "./edge-storage.model";
 import { Storage } from "./../shared/storage";
+import { ICreateComponentStrategy } from "./strategy/ICreateComponentStrategy";
+import { ButtonStrategy } from "./strategy/ButtonStrategy";
+import { TextStrategy } from "./strategy/TextStrategy";
+import { DropdownStrategy } from "./strategy/DropdownStrategy";
 
 export class GraphStorage {
     vertexList: VertexStorage[];
@@ -8,6 +12,7 @@ export class GraphStorage {
     graphModel: mxGraphModel;
     graph: mxGraph;
     id: string;
+    strategy: ICreateComponentStrategy;
 
     // create graph
     constructor(element, id) {
@@ -37,6 +42,10 @@ export class GraphStorage {
                 }
             }
         )
+    }
+
+    setStrategy(strategy:ICreateComponentStrategy) {
+        this.strategy = strategy;
     }
 
     createStyle() {
@@ -69,19 +78,28 @@ export class GraphStorage {
 
         // basic component
         if (component["componentList"] == undefined) {
+            if(component["type"] == "button")  {
+                this.setStrategy(new ButtonStrategy())
+            }
+            else if(component["type"] == "text") {
+                this.setStrategy(new TextStrategy())
+            }
+            else if(component["type"] == "dropdown") {
+                this.setStrategy(new DropdownStrategy())
+            }
+
+            this.strategy.createComponent(this,component);
+            console.log(this.strategy.strategyName)
             console.log("this is basic component")
             let vertexID = component["id"];
             // console.log(Storage)
             let valueKey = Storage.getComponentValue(component["type"]);
             let vertexValue = component[valueKey];
-            let vertex = this.insertVertex(parent, vertexID, vertexValue, 20, 100, 50, 50, component["type"] + "Style");
+            let vertex = this.insertVertex(parent, vertexID, vertexValue, 50, 50, component["type"] + "Style");
         }
         else {
-
-
             // insert vertex
             // bind component
-
         }
         console.log("external representation heree")
         console.log(this)
@@ -91,56 +109,18 @@ export class GraphStorage {
         return this.graph;
     }
 
-    // issue : won't rerender imediately
-    changeVertexValue(vertexID, newValue) {
-        try {
-            this.graph.getModel().beginUpdate();
-            let vertexModel = this.findVertexByID(vertexID);
-            if (vertexModel != null) {
-                vertexModel.changeValue(newValue);
-                // console.log("changged")
-                // console.log(this.graph)
-            }
-            else
-                console.log("Vertex not found");
-        } finally {
-            this.graph.getModel().endUpdate();
-            new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
-        }
-    }
-
     // insert vertex
-    insertVertex(parent, vertexID, vertexValue, x, y, width, height, style) {
+    insertVertex(parent, vertexID, vertexValue, width, height, style) {
         let vertex;
         try {
-            // if (parent.id == "1") {
-            //     parent = this.graph.getDefaultParent();
-            //     console.log("parent")
-            //     console.log(parent)
-            // }
-            // else {
-            //     parent = this.findVertexByID(parent).vertex;
-            //     console.log("parent")
-            //     console.log(parent)
-            // }
-            // const parent = this.graph.getDefaultParent();
-            // console.log("this is parent")
-            // console.log(parent)
-            console.log("ready to insert vertex")
-            console.log(parent)
-            console.log(vertexID)
-            console.log(vertexValue)
-            console.log(style)
             this.graph.getModel().beginUpdate();
-            vertex = this.graph.insertVertex(parent, vertexID, vertexValue, x, y, width, height, style, "");
+            vertex = this.graph.insertVertex(parent, vertexID, vertexValue, 0, 0, width, height, style, "");
         } finally {
             this.graph.getModel().endUpdate();
             new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
         }
 
         let vertexStorage = new VertexStorage(vertex);
-        // vertexModel.changeValue("Heaeklwqjqej")
-        // console.log(this.graph)
         this.vertexList.push(vertexStorage);
         return vertex;
     }
