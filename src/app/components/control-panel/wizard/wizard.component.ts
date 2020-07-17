@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, Input, OnInit, Inject} from "@angular/core";
 import {Storage} from "../../../shared/storage";
 import {Button, CardComposite, Dropdown, Icon, InputGroupComposite, Table, Text, UIComponent} from "../../../models/model";
 import {NgForm} from "@angular/forms";
 import GraphEditorService from "../../../services/graph-editor.service";
 import {PropertyGenerator} from "../../../shared/property-generator";
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 
 @Component({
@@ -13,8 +14,10 @@ import {PropertyGenerator} from "../../../shared/property-generator";
 })
 export class WizardComponent implements OnInit {
 
-  @Input() componentProperties: any[];
-  @Input() componentName: any;
+  // @Input() componentProperties: any[];
+  // @Input() componentName: any; 
+  private componentProperties: any[];
+  private componentName: any; 
 
 
 
@@ -28,10 +31,17 @@ export class WizardComponent implements OnInit {
 
 
 
-  constructor(private graphEditorService: GraphEditorService) { }
+  constructor(private graphEditorService: GraphEditorService,
+    public dialogRef: MatDialogRef<WizardComponent>, 
+    @Inject(MAT_DIALOG_DATA) public data
+    ) { 
+      this.componentName = data.name;
+      this.properties = data.properties;
+    }
 
   ngOnInit(): void {
     console.log("start wizard");
+    
   }
 
   setComponent(properties): boolean {
@@ -170,6 +180,10 @@ export class WizardComponent implements OnInit {
     this.properties = [];
     this.subComponentName = "";
 
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

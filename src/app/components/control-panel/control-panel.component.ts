@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import {Storage} from "../../shared/storage";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { WizardComponent } from './wizard/wizard.component';
 
 
 @Component({
@@ -23,7 +25,7 @@ export class ControlPanelComponent implements OnInit {
 
   storageComponents: any[] = Storage.components;
   isHidden = true;
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, public dialog: MatDialog) {
 
     this.genre_selected = "select genre";
     this.category_selected = "select category";
@@ -82,4 +84,18 @@ export class ControlPanelComponent implements OnInit {
         observe: "response", withCredentials: true, responseType: "text" }
     );
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(WizardComponent, {
+
+      hasBackdrop: true,
+      data: {name: this.component_selected, properties: Storage.getComponentProperties(this.component_selected)}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+
 }

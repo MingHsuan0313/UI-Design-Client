@@ -1,5 +1,6 @@
 // import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject} from '@angular/core';
+
 
 @Component({
   selector: 'app-root',
@@ -11,5 +12,5 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
+
