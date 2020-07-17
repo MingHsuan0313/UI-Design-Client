@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor() { }
+  constructor() {
+    console.log("Hello My Name is Tim")
+
+   }
 
   ngOnInit() {
   }

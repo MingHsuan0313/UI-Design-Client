@@ -40,10 +40,26 @@ export class GraphStorage {
     }
 
     createStyle() {
-        let style = new Object();
-        style["opacity"] = '0'
-        style["fontSize"] = "15"
-        this.getGraph().getStylesheet().putCellStyle("textStyle", style)
+        let textStyle = new Object();
+        textStyle["opacity"] = '0';
+        textStyle["fontSize"] = "15";
+        textStyle["fontColor"] = "green";
+        // textStyle["indicatorStrokeColor"] = "green"
+        this.getGraph().getStylesheet().putCellStyle("textStyle", textStyle);
+        console.log("all style heree")
+        console.log(this.getGraph().getStylesheet())
+
+        let buttonStyle = new Object();
+        buttonStyle["fontSize"] = "18";
+        buttonStyle["fontColor"] = "#fff";
+        buttonStyle['fillColor'] = "#5bc0de";
+        buttonStyle['rounded'] = true;
+        buttonStyle['strokeColor'] = "#269abc"
+        // buttonStyle['labelBorderColor'] = "#269abc"
+        this.getGraph().getStylesheet().putCellStyle("buttonStyle", buttonStyle);
+        console.log("akjds")
+        console.log(this.getGraph().getStylesheet()["styles"]["textStyle"])
+        // this.getGraph().getStylesheet()["styles"]["textStyle"]["fontColor"] = "red";
     }
 
     createComponent(component, parent) {
@@ -57,7 +73,7 @@ export class GraphStorage {
             // console.log(Storage)
             let valueKey = Storage.getComponentValue(component["type"]);
             let vertexValue = component[valueKey];
-            let vertex = this.insertVertex(parent, vertexID, vertexValue, 20, 100, 50, 50,component["type"]+"Style");
+            let vertex = this.insertVertex(parent, vertexID, vertexValue, 20, 100, 50, 50, component["type"] + "Style");
         }
         else {
 
@@ -116,6 +132,13 @@ export class GraphStorage {
             console.log(style)
             this.graph.getModel().beginUpdate();
             vertex = this.graph.insertVertex(parent, vertexID, vertexValue, x, y, width, height, style, "");
+            // var obj = document.getElementById("testing")
+            var obj = document.createElement("button")
+            console.log("object here")
+            console.log(obj)
+            obj.setAttribute('label', 'click me');
+            var v1 = this.graph.insertVertex(parent, null, obj, 0, 0, width, height)
+
             // vertex.valueChanged("ajdasdjh")
 
         } finally {

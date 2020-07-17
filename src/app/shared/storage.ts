@@ -41,6 +41,4 @@ export class Storage {
     this.PageUICDL["componentList"] = this.UICDL;
     return this.PageUICDL;
   }
-
-
 }

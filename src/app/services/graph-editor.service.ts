@@ -2,6 +2,7 @@ import { Injectable, ElementRef } from '@angular/core';
 import { GraphStorage } from '../models/graph-storage.model';
 import { fakeCard } from '../../fakedata/fakeCard';
 import { fakeText } from '../../fakedata/fakeText';
+import { fakeButton } from '../../fakedata/fakeButton';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export default class GraphEditorService {
     this.selectedGraphID = graphStorage.getID();
 
     this.bindComponent(fakeText);
+    this.bindComponent(fakeButton);
   }
 
   // object => svg
