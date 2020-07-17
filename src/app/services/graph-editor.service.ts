@@ -24,17 +24,11 @@ export default class GraphEditorService {
     this.selectedGraphID = graphStorage.getID();
 
     this.bindComponent(fakeText);
-    this.bindComponent(fakeText);
-    this.bindComponent(fakeText);
-    this.bindComponent(fakeText);
     this.bindComponent(fakeButton);
   }
 
   // object => svg
   bindComponent(component, x?, y?) {
-    console.log("heyeyey")
-    console.log(x)
-    console.log(y)
     if (x == undefined || y == undefined) {
       let graph = this.findGraphByID(this.selectedGraphID);
       let parent = graph.getGraph().getDefaultParent();
@@ -45,10 +39,6 @@ export default class GraphEditorService {
       let parent = graph.getGraph().getDefaultParent();
       graph.createComponent(component, parent,x,y)
     }
-    // // this is basic component
-    // if(component["key"] == undefined)
-    // console.log("Bind Component");
-    // console.log(component);
   }
 
   findGraphByID(id) {
