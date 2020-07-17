@@ -109,7 +109,7 @@ export class GraphStorage {
     }
 
     // insert vertex
-    insertVertex(parent, vertexID, vertexValue, width, height, styleStorage) {
+    insertVertex(parent, vertexID, vertexValue, width, height, styleStorage,uicomponent) {
         console.log("style heree")
         console.log(styleStorage)
         let vertex;
@@ -121,7 +121,7 @@ export class GraphStorage {
             new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
         }
 
-        let vertexStorage = new VertexStorage(vertex,styleStorage);
+        let vertexStorage = new VertexStorage(vertex,styleStorage,uicomponent);
         this.vertexList.push(vertexStorage);
         return vertex;
     }
@@ -155,5 +155,12 @@ export class GraphStorage {
 
     getID() {
         return this.id;
+    }
+
+    getLastVertexGeometry() {
+        console.log("hello")
+        console.log(this.getGraph())
+        // return this.getGraph().tooltipHandler;
+        return "s"
     }
 }

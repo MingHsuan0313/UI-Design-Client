@@ -9,6 +9,7 @@ declare class mxGraph {
 
   constructor(container: any);
   constructor(container:any, model:any)
+  // tooltipHandler;
 
   mouseListeners;
   isMouseDown;

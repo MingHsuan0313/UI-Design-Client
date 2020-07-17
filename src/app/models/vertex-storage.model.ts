@@ -14,11 +14,12 @@ export default class VertexStorage {
     component: UIComponent;
     styleStorage: StyleStorage;
 
-    constructor(vertex,styleStorage) {
+    constructor(vertex,styleStorage,component) {
         this.vertex = vertex;
         this.id = this.vertex["id"];
         this.parentId = this.vertex["parent"]["id"];
         this.styleStorage = styleStorage;
+        this.component = component;
     }
 
     /**

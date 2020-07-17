@@ -11,12 +11,10 @@ export class ButtonStrategy implements ICreateComponentStrategy {
 
     createComponent(graphStorage:GraphStorage,component,parent) {
         let style = StyleLibrary[0]["button"];
-        console.log("Button Strategy") 
-        console.log(component)
         let styleName = "style" + component.id;
         let styleStorage = new StyleStorage(styleName,style);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
         let width = 10 * component.text.length;
-        graphStorage.insertVertex(parent,component.id,component.text,width,30,styleStorage);
+        graphStorage.insertVertex(parent,component.id,component.text,width,40,styleStorage,component);
     }
 }

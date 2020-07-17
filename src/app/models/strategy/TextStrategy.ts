@@ -17,6 +17,6 @@ export class TextStrategy implements ICreateComponentStrategy {
         let styleName = "style" + component.id;
         let styleStorage = new StyleStorage(styleName,style);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
-        graphStorage.insertVertex(parent,component.id,component.text,30,30,styleStorage);
+        graphStorage.insertVertex(parent,component.id,component.text,30,30,styleStorage,component);
     }
 }
