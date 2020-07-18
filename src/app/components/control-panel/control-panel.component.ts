@@ -25,10 +25,6 @@ export class ControlPanelComponent implements OnInit {
   isHidden = true;
   constructor(private httpClient: HttpClient) {
 
-    this.genre_selected = "";
-    this.category_selected = "";
-    this.layout_selected = "";
-    this.component_selected = "";
   }
 
   ngOnInit(): void {
