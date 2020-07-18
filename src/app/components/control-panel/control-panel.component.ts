@@ -25,6 +25,7 @@ export class ControlPanelComponent implements OnInit {
   isHidden = true;
   constructor(private httpClient: HttpClient) {
 
+
   }
 
   ngOnInit(): void {
