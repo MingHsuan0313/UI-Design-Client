@@ -68,10 +68,15 @@ export class ControlPanelComponent implements OnInit {
   connectServer() {
     const pageUICDL = Storage.getPageUICDL();
     console.log(JSON.stringify(pageUICDL));
+    console.log("Show Internal Representation");
+    console.log("Component List");
+    console.log(Storage.components);
+    console.log("Page UICDL");
+    console.log(pageUICDL);
 
-    this.postPageUICDL(Storage.PageUICDL).subscribe(
-      response => console.log(response["body"])
-    );
+    // this.postPageUICDL(Storage.PageUICDL).subscribe(
+    //   response => console.log(response["body"])
+    // );
   }
   postPageUICDL(PDL) {
     return this.httpClient.post("http://localhost:8080", PDL,

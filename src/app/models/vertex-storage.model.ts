@@ -13,6 +13,7 @@ export default class VertexStorage {
     componentName: string;
     component: UIComponent;
     styleStorage: StyleStorage;
+    childrenIDs: string[];
 
     constructor(vertex,styleStorage,component) {
         this.vertex = vertex;
@@ -20,6 +21,14 @@ export default class VertexStorage {
         this.parentId = this.vertex["parent"]["id"];
         this.styleStorage = styleStorage;
         this.component = component;
+        this.childrenIDs = [];
+
+        // check key
+        if("componentList" in component) {
+            for(let element of component.componentList) {
+                this.childrenIDs.push(element.id);
+            }
+        }
     }
 
     /**
@@ -48,5 +57,23 @@ export default class VertexStorage {
 
     getVertexValue() {
         return this.vertex["value"];
+    }
+    
+    isBasicComponent() {
+
+        // if(this.component["componentList"].length == 0)
+        console.log(this.component)
+        if("componentList" in this.component)
+            return false;
+        else
+            return true;
+    }
+
+    addChild(childID) {
+        this.childrenIDs.push(childID);
+    }
+
+    getVertex() {
+        return this.vertex;
     }
 }

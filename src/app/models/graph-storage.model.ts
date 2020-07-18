@@ -40,6 +40,11 @@ export class GraphStorage {
         )
     }
 
+    // sync internal storage and external storage
+    syncStorage() {
+
+    }
+
     setStrategy(strategy:ICreateComponentStrategy) {
         this.strategy = strategy;
     }
@@ -97,7 +102,7 @@ export class GraphStorage {
 
         let vertexStorage = new VertexStorage(vertex,styleStorage,uicomponent);
         this.vertexList.push(vertexStorage);
-        return vertex;
+        return vertexStorage;
     }
 
     // insert edge

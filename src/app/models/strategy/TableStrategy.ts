@@ -16,21 +16,25 @@ export class TableStrategy implements ICreateComponentStrategy {
         let style = { "overflow": true };
         let styleStorage = new StyleStorage(styleName, style);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
-        let tableBoxVertex = graphStorage.insertVertex(parent, component.id, "", 200, 100, styleStorage, component);
+        let tableBoxVertexStorage = graphStorage.insertVertex(parent, component.id, "", 200, 100, styleStorage, component);
 
         styleName = "tableHeaderstyle" + component.id;
         style = { "overflow": true };
         styleStorage = new StyleStorage(styleName, style);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
-        let tableHeaderVertex = graphStorage.insertVertex(tableBoxVertex, component.id, "", 100, 40, styleStorage, component);
+        let tableHeaderVertexStorage = graphStorage.insertVertex(tableBoxVertexStorage.getVertex(), component.id + "header", "", 100, 40, styleStorage, component);
+        tableBoxVertexStorage.addChild(tableHeaderVertexStorage.id);
 
         let itemList = component.headers;
         itemList = itemList.split(" ");
+        let index = 0;
         for (let element of itemList) {
             styleName = "tableCellstyle" + component.id;
             styleStorage = new StyleStorage(styleName, style);
             graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
-            let dropdownItemVertex = graphStorage.insertVertex(tableHeaderVertex, component.id + "item", element, 150, 30, styleStorage, component);
+            let tableHeaderElementVertexStorage = graphStorage.insertVertex(tableHeaderVertexStorage.getVertex(), component.id + "item" + index, element, 150, 30, styleStorage, component);
+            tableHeaderVertexStorage.addChild(tableHeaderElementVertexStorage.id);
+            index += 1
         }
     }
 }
