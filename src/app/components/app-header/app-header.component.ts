@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import GraphEditorService from 'src/app/services/graph-editor.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppHeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private graphEditorService:GraphEditorService) { }
+
+  save() {
+    this.graphEditorService.syncStorage();
+  }
 
   ngOnInit() {
   }

@@ -21,7 +21,7 @@ export class AppGraphEditorComponent implements AfterViewInit {
   }
 
   showExternalRepresentation() {
-    console.log(this.graphEditorService.getGraph());
+    console.log(this.graphEditorService.getGraphStorage());
   }
 
   createGraph(elementId) {

@@ -30,8 +30,6 @@ export class ControlPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.genre = Storage.getGenre();
-
-    console.log(this.layout_selected);
   }
 
   setLayout(selection: any) {

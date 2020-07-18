@@ -10,8 +10,8 @@ import { StyleLibrary } from "../shared/styleLibrary";
 import StyleStorage from "./style-storage.model";
 
 export class GraphStorage {
-    vertexList: VertexStorage[];
-    edgeList: EdgeStorage[];
+    vertexStorageList: VertexStorage[];
+    edgeStorageList: EdgeStorage[];
     graphModel: mxGraphModel;
     graph: mxGraph;
     id: string;
@@ -19,8 +19,8 @@ export class GraphStorage {
 
     // create graph
     constructor(element, id) {
-        this.vertexList = [];
-        this.edgeList = [];
+        this.vertexStorageList = [];
+        this.edgeStorageList = [];
         this.id = id;
         this.graphModel = new mxGraphModel();
         this.graph = new mxGraph(element, this.graphModel);
@@ -42,7 +42,12 @@ export class GraphStorage {
 
     // sync internal storage and external storage
     syncStorage() {
+        console.log("start sync storage");
+        console.log(this);
 
+        for(let vertexStorage of this.vertexStorageList) {
+            vertexStorage.sync();
+        }
     }
 
     setStrategy(strategy:ICreateComponentStrategy) {
@@ -90,7 +95,7 @@ export class GraphStorage {
     }
 
     // insert vertex
-    insertVertex(parent, vertexID, vertexValue, width, height, styleStorage,uicomponent) {
+    insertVertex(parent, vertexID, vertexValue, width, height, styleStorage,uicomponent,dataBinding?) {
         let vertex;
         try {
             this.graph.getModel().beginUpdate();
@@ -100,8 +105,8 @@ export class GraphStorage {
             new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
         }
 
-        let vertexStorage = new VertexStorage(vertex,styleStorage,uicomponent);
-        this.vertexList.push(vertexStorage);
+        let vertexStorage = new VertexStorage(vertex,styleStorage,uicomponent,dataBinding);
+        this.vertexStorageList.push(vertexStorage);
         return vertexStorage;
     }
 
@@ -119,12 +124,12 @@ export class GraphStorage {
             new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
         }
         let edgeModel = new EdgeStorage(edge);
-        this.edgeList.push(edgeModel);
+        this.edgeStorageList.push(edgeModel);
         return edge;
     }
 
     findVertexByID(id) {
-        for (let element of this.vertexList) {
+        for (let element of this.vertexStorageList) {
             if (element.id == id)
                 return element;
         }

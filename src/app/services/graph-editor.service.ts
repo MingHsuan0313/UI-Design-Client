@@ -25,12 +25,10 @@ export default class GraphEditorService {
     this.graphsStorage.push(graphStorage);
     this.selectedGraphID = graphStorage.getID();
 
-
     // this.bindComponent(fakeText);
     // this.bindComponent(fakeButton);
-    this.bindComponent(fakeDropdown);
+    // this.bindComponent(fakeDropdown);
     // this.bindComponent(fakeTable);
-
     // this.bindComponent(fakeCardComposite);
   }
 
@@ -55,8 +53,13 @@ export default class GraphEditorService {
     }
   }
 
-  getGraph() {
+  getGraphStorage() {
     let graphStorage = this.findGraphByID(this.selectedGraphID);
     return graphStorage;
+  }
+
+  syncStorage() {
+    let graphStorage = this.findGraphByID(this.selectedGraphID);
+    return graphStorage.syncStorage();
   }
 }
