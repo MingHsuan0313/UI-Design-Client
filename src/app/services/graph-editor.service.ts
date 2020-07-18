@@ -28,7 +28,7 @@ export default class GraphEditorService {
     // this.bindComponent(fakeText);
     // this.bindComponent(fakeButton);
     // this.bindComponent(fakeDropdown);
-    // this.bindComponent(fakeTable);
+    this.bindComponent(fakeTable);
     // this.bindComponent(fakeCardComposite);
   }
 
