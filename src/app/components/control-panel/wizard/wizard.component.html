@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal" id="myModal" role="dialog" (cancel)="show()" >
-  <div class="modal-dialog" style="position: fixed;left:500px;width:500px;height:700px">
+  <div class="modal-dialog" style="position: fixed;left:500px;width:700px;height:700px">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -10,12 +10,12 @@
       </div>
       <div class="modal-body">
           <ul class="nav nav-tabs" role="tablist" id="myTab">
-            <li class="nav-item" role="presentation"><a class="nav-link active" href="#building" data-toggle="tab">Building</a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" href="#composition" data-toggle="tab">Composition</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link active" id="building-tab" href="#building" data-toggle="tab">Building</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" id="composition-tab" href="#composition" data-toggle="tab" >Composition</a></li>
           </ul>
       </div>
       <div class="tab-content">
-        <div class="tab-pane active" id="building" role="tabpanel">
+        <div class="tab-pane active" id="building" role="tabpanel" aria-labelledby="building-tab">
           <p>Ready to Build:  <mark>{{componentName}}</mark></p>
           <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             <div *ngFor="let property of componentProperties">
@@ -32,7 +32,7 @@
             <button type="button" class="btn btn-info btn-lg" (click)="clickNext()">Next</button>
           </div>
         </div>
-        <div class="tab-pane" id="composition" role="tabpanel">
+        <div class="tab-pane" id="composition" role="tabpanel" aria-labelledby="composition-tab">
           <p>Composite <mark>{{componentName}}</mark></p>
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="position:relative;left:10px;font-size: large" (click)="clickCreate()">
@@ -54,6 +54,8 @@
     </div>
 
   </div>
+
+
 </div>
 
 <ng-template #compositeBlock>
@@ -68,3 +70,4 @@
   </form>
 
 </ng-template>
+

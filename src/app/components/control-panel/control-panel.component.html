@@ -68,7 +68,7 @@
 
 <div>
   <button onclick="location.href='https://www.google.com.tw';">google</button>
-  <button class="btn btn-dark" (click)="connectServer()">Connect Server </button>
-  <button class="btn btn-block" (click)="show()">Existing Component</button>
+  <button type="button" class="btn btn-dark" (click)="connectServer()">Connect Server </button>
+  <button class="btn btn-light" (click)="show()">Existing Component</button>
   <div *ngFor="let c of storageComponents">{{c["selector"] | json}}..</div>
 </div>
