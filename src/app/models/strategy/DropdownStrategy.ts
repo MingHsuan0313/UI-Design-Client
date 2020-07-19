@@ -48,6 +48,8 @@ export class DropdownStrategy implements ICreateComponentStrategy {
         let index = 0;
         let itemList = component.items;
         itemList = itemList.split(" ");
+
+        // insert dropdown item
         for(let element of itemList) {
             let dropdownItemGeometry = new mxGeometry(0 + 3,30 * index,200 - 5,30)
             console.log(dropdownItemGeometry)

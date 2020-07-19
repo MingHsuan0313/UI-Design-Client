@@ -35,7 +35,6 @@ export const StyleLibrary = [
             fontColor: "#333333",
             opacity: 0,
             fontSize:"14"
-            
         },
         icon: {
 
