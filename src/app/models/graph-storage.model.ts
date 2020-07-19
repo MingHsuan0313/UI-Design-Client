@@ -16,6 +16,7 @@ export class GraphStorage {
     graph: mxGraph;
     id: string;
     strategy: ICreateComponentStrategy;
+    last_x: number;
 
     // create graph
     constructor(element, id) {
@@ -95,14 +96,14 @@ export class GraphStorage {
     }
 
     // insert vertex
-    insertVertex(parent, vertexID, vertexValue, width, height, styleStorage,uicomponent,dataBinding?) {
+    insertVertex(parent, vertexID, vertexValue,geometry,styleStorage,uicomponent,dataBinding?) {
         let vertex;
         try {
             this.graph.getModel().beginUpdate();
-            vertex = this.graph.insertVertex(parent, vertexID, vertexValue, 0, 0, width, height,styleStorage.name , "");
+            vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x,geometry.y , geometry.width, geometry.height,styleStorage.name , "");
         } finally {
             this.graph.getModel().endUpdate();
-            new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
+            // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
         }
 
         let vertexStorage = new VertexStorage(vertex,styleStorage,uicomponent,dataBinding);

@@ -15,6 +15,7 @@ export class ButtonStrategy implements ICreateComponentStrategy {
         let styleStorage = new StyleStorage(styleName,style);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
         let width = 15 * component.text.length;
-        graphStorage.insertVertex(parent,component.id,component.text,width,40,styleStorage,component);
+        let buttonGeometry = new mxGeometry(0,0,width,40);
+        graphStorage.insertVertex(parent,component.id,component.text,buttonGeometry,styleStorage,component);
     }
 }
