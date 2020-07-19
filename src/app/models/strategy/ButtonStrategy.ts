@@ -2,10 +2,23 @@ import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { GraphStorage } from "../graph-storage.model";
 import { StyleLibrary } from "../../shared/styleLibrary";
 import StyleStorage from "../style-storage.model";
+import DataBinding from "../util/DataBinding";
 
 export class ButtonStrategy implements ICreateComponentStrategy {
     strategyName: string;
-    constructor() {
+    basex: number;
+    basey: number;
+    constructor(basex?,basey?) {
+        // basic component
+        if(basex == undefined || basey == undefined) {
+            this.basex = 0;
+            this.basey = 0;
+        }
+        // inside composite component
+        else {
+            this.basex = basex;
+            this.basey = basey;
+        }
         this.strategyName = "Button Strategy";
     }
 
@@ -16,6 +29,14 @@ export class ButtonStrategy implements ICreateComponentStrategy {
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
         let width = 15 * component.text.length;
         let buttonGeometry = new mxGeometry(0,0,width,40);
-        graphStorage.insertVertex(parent,component.id,component.text,buttonGeometry,styleStorage,component);
+        let hasDataBining = true;
+        let dataBindingName = "text";
+        let isList = -1;
+        let dataBinding = new DataBinding(
+            hasDataBining,
+            dataBindingName,
+            isList
+        )
+        graphStorage.insertVertex(parent,component.id,component.text,buttonGeometry,styleStorage,component,dataBinding);
     }
 }

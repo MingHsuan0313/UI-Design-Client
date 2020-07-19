@@ -2,10 +2,23 @@ import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { GraphStorage } from "../graph-storage.model";
 import { StyleLibrary } from "../../shared/styleLibrary";
 import StyleStorage from "../style-storage.model";
+import DataBinding from "../util/DataBinding";
 
 export class DropdownStrategy implements ICreateComponentStrategy {
     strategyName: string;
-    constructor() {
+    basex : number;
+    basey : number;
+    constructor(basex?,basey?) {
+        // basic component
+        if(basex == undefined || basey == undefined) {
+            this.basex = 0;
+            this.basey = 0;
+        }
+        // inside composite component
+        else {
+            this.basex = basex;
+            this.basey = basey;
+        }
         this.strategyName = "Dropdown Strategy";
     }
 
@@ -45,17 +58,28 @@ export class DropdownStrategy implements ICreateComponentStrategy {
         console.log(dropdownItemListVertexStorage.isBasicComponent())
         console.log(graphStorage.getGraph().getStylesheet())
 
+
         let index = 0;
         let itemList = component.items;
         itemList = itemList.split(" ");
+        // insert dropdown item
         for(let element of itemList) {
+            let hasDataBinding = true;
+            let dataBindingName = "items";
+            let isList = index;
+            let dataBinding = new DataBinding(
+                hasDataBinding,
+                dataBindingName,
+                isList
+            );
+
             let dropdownItemGeometry = new mxGeometry(0 + 3,30 * index,200 - 5,30)
             console.log(dropdownItemGeometry)
             styleName = "dropdownHeaderstyle" + component.id;
             let dropdownItemStyle = StyleLibrary[0]["dropdownItem"];
             styleStorage = new StyleStorage(styleName,dropdownItemStyle);
             graphStorage.getGraph().getStylesheet().putCellStyle(styleName,dropdownItemStyle);
-            let dropdownItemVertexStorage = graphStorage.insertVertex(dropdownItemListVertexStorage.getVertex(),component.id + "item" + index,element,dropdownItemGeometry,styleStorage,component);
+            let dropdownItemVertexStorage = graphStorage.insertVertex(dropdownItemListVertexStorage.getVertex(),component.id + "item" + index,element,dropdownItemGeometry,styleStorage,component,dataBinding);
             dropdownItemListVertexStorage.addChild(dropdownItemVertexStorage.id);
             console.log(dropdownItemVertexStorage.isBasicComponent())
             index += 1;

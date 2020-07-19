@@ -25,7 +25,16 @@ export default class VertexStorage {
         this.component = component;
         this.childrenIDs = [];
 
-        this.dataBinding = dataBinding;
+        if(dataBinding == undefined) {
+            let dataBinding = {
+                hasDataBinding: false,
+                dataBindingName: "",
+                isList: -1
+            }
+            this.dataBinding = dataBinding;
+        }
+        else
+            this.dataBinding = dataBinding;
 
         // check key
         if("componentList" in component) {
@@ -83,13 +92,34 @@ export default class VertexStorage {
 
     sync() {
         if(this.dataBinding.hasDataBinding) {
+            console.log("need to databinding")
             let componentValueKey = this.dataBinding.dataBindingName;
+
+            // databinding text , button only one value
             if(this.dataBinding.isList == -1) {
                 this.component[componentValueKey] = this.vertex.value;
             }
+            // databinidng dropdownItem , a list
             else {
+                let listValues = this.component[componentValueKey].split(" ");
+                let index = this.dataBinding.isList;
+                listValues[index] = this.vertex.value;
 
+                // convert list to string
+                let result = ""
+                for(let index = 0;index < listValues.length;index++) {
+                    result = result + listValues[index];
+
+                    // last element no need add space
+                    if(index != listValues.length - 1) {
+                        result += " "
+                    }
+                }
+                this.component[componentValueKey] = result;
             }
+        }
+        else {
+            console.log("no need data binding")
         }
         // console.log(this.dataBinding);
         // this.component["text"] = "ashdaskdsasda";

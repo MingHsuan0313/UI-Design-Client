@@ -15,12 +15,18 @@ export let fakeCardComposite = {
             type: "button"
         },
         {
-            headers: "header1 header2 header3",
-            id: "6",
-            rows: "11 22 33",
-            selector: "table",
-            type: "table"
+            id:"13",
+            items: "new old bad broken",
+            selector: "dropdown3",
+            type: "dropdown"
         }
+        // {
+        //     headers: "header1 header2 header3",
+        //     id: "6",
+        //     rows: "11 22 33",
+        //     selector: "table",
+        //     type: "table"
+        // }
     ],
     header: "fakeCardValue",
     id: "8",

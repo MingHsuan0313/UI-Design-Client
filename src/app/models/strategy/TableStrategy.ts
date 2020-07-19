@@ -6,7 +6,20 @@ import { constants } from "buffer";
 
 export class TableStrategy implements ICreateComponentStrategy {
     strategyName: string;
-    constructor() {
+    basex: number;
+    basey: number;
+    constructor(basex?, basey?) {
+        // basic component
+        if (basex == undefined || basey == undefined) {
+            this.basex = 0;
+            this.basey = 0;
+        }
+        // inside composite component
+        else {
+            this.basex = basex;
+            this.basey = basey;
+        }
+
         this.strategyName = "Button Strategy";
     }
 
