@@ -39,8 +39,8 @@ export const Library = {
 
   // Composite component can composite the following components
   "compositeComponents": {
-    "card": ["text", "button", "table"],
-    "inputgroup": ["text", "button", "icon", "dropdown"],
+    "card": ["text", "button"],
+    "inputgroup": ["text", "button", "icon"],
   },
 
   "componentValue": {

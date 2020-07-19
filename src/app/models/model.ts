@@ -186,6 +186,7 @@ export class InputGroupComposite implements UIComponent {
   }
 
   add(component: UIComponent): void {
+    this.componentList.push(component);
   }
 
   getInfo(): any {
