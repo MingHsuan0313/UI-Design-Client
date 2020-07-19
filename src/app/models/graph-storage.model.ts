@@ -8,6 +8,7 @@ import { DropdownStrategy } from "./strategy/DropdownStrategy";
 import { TableStrategy } from "./strategy/TableStrategy";
 import { StyleLibrary } from "../shared/styleLibrary";
 import StyleStorage from "./style-storage.model";
+import { CardStrategy } from "./strategy/CardStrategy";
 
 export class GraphStorage {
     vertexStorageList: VertexStorage[];
@@ -76,19 +77,14 @@ export class GraphStorage {
 
             console.log(this.strategy.strategyName)
             this.strategy.createComponent(this,component,parent);
+
         }
         //composite component here
         else {
-            let type = component.type;
-            let styleName = type + "style" + component.id;
-            let style = StyleLibrary[0][type];
-            let styleStorage = new StyleStorage(styleName,style);
-            this.graph.getStylesheet().putCellStyle(styleName,style);
-            let compositeComponentGeometry = new mxGeometry(0,0,300,300);
-            let compositeVertexStorage = this.insertVertex(parent,component.id,component.header,compositeComponentGeometry,styleStorage,component);
-            for(let element of component.componentList) {
-                this.createComponent(element,compositeVertexStorage.getVertex());
+            if(component["type"] == "card"){
+                this.setStrategy(new CardStrategy(basex,basey));
             }
+            this.strategy.createComponent(this,component,parent);
         }
     }
 
@@ -103,16 +99,12 @@ export class GraphStorage {
         console.log(parent)
         try {
             this.graph.getModel().beginUpdate();
-            console.log("ajdhdjkdaasaa2")
-
-
             vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x,geometry.y , geometry.width, geometry.height,styleStorage.name , "");
         } finally {
             this.graph.getModel().endUpdate();
             // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
         }
 
-        console.log("ajdhdjkdaasaa")
         let vertexStorage = new VertexStorage(vertex,styleStorage,uicomponent,dataBinding);
         this.vertexStorageList.push(vertexStorage);
         return vertexStorage;

@@ -1,5 +1,6 @@
+
 export const StyleLibrary = [
-    {
+    {    
         genere: "coreUI",
 
         // basic component
@@ -25,6 +26,7 @@ export const StyleLibrary = [
             rounded: true,
             strokeColor: "#a6a6a6",
             fillColor: "#ffffff"
+
         },
         dropdownList: {
             strokeColor: '#c8c8c8',
@@ -34,14 +36,17 @@ export const StyleLibrary = [
             strokeColor: "#ffffff",
             fontColor: "#333333",
             opacity: 0,
-            fontSize:"14"
+            fontSize:"14",
+            
         },
         icon: {
 
         },
         tableBox: {
             opacity: '0',
-            strokeColor: '#000000'
+            strokeColor: '#000000',
+
+
         },
         tableHeader:{
             fontStyle: 1,  //FONT_BOLD
@@ -49,22 +54,36 @@ export const StyleLibrary = [
             strokeColor: '#b8bcc2',
             fontColor: "#4f5d73",
             fontSize:"16",
+            shadow: true,
+            
         },
         tableData_white: {
             fillColor: "#ffffff",
             strokeColor: '#d8dbe0',
             fontColor: "#4f5d73",
-            fontSize:"16"
+            fontSize:"16",
+            shadow: true,
         },
         tableData_grey: {
             fillColor: "#f1f4f6",
             strokeColor: '#d8dbe0',
             fontColor: "#4f5d73",
-            fontSize:"16"
+            fontSize:"16",
+            shadow: true,
         },
 
         // composite component
         card: {
+            cardBox: {
+                fillColor: "#ffffff",
+                strokeColor: '#d8dbe0',
+
+            },
+            cardHeader:{
+                
+            }
+
+            
 
         }
     }

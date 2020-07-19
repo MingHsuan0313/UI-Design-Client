@@ -40,9 +40,12 @@ export class TextStrategy implements ICreateComponentStrategy {
         )
         let styleName = "style" + component.id;
         let styleStorage = new StyleStorage(styleName,style);
-        let textGeometry = new mxGeometry(0,0,30,30);
+        let textGeometry = new mxGeometry(this.basex,this.basey,30,30);
         console.log("ready create text2")
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
-        graphStorage.insertVertex(parent,component.id,component.text,textGeometry,styleStorage,component,dataBinding);
+        let vertexStorage = graphStorage.insertVertex(parent,component.id,component.text,textGeometry,styleStorage,component,dataBinding);
+        component.width = 30;
+        component.height = 30;
+        component.vertexStorage = vertexStorage;
     }
 }

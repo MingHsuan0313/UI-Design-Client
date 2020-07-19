@@ -1,3 +1,4 @@
+import VertexStorage from './vertex-storage.model'
 export interface UIComponent {
   x: String;
   y: String;
@@ -6,6 +7,7 @@ export interface UIComponent {
   ID: String;
   selector: String;
   type: String;
+  vertexStorage: VertexStorage;
 
   add(component: UIComponent): void;
   remove(component: UIComponent): void;
@@ -21,6 +23,7 @@ export class Icon implements UIComponent {
   selector: String;
   text: String;
   type: String;
+  vertexStorage: VertexStorage;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -51,6 +54,7 @@ export class Text implements UIComponent {
   text: String;
   href: String;
   type: String;
+  vertexStorage: VertexStorage;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -77,6 +81,7 @@ export class Button implements UIComponent {
   text: String;
   href: String;
   type: String;
+  vertexStorage: VertexStorage;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -103,6 +108,7 @@ export class Table implements UIComponent {
   headers: any[];
   rows: any[];
   type: String;
+  vertexStorage: VertexStorage;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -129,6 +135,7 @@ export class CardComposite implements UIComponent {
   header: String;
   type: String;
   componentList: any[] = [];
+  vertexStorage: VertexStorage;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -155,6 +162,7 @@ export class Dropdown implements UIComponent {
   y: String;
   type: String;
   items: any[];
+  vertexStorage: VertexStorage;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -180,6 +188,7 @@ export class InputGroupComposite implements UIComponent {
   y: String;
   type: String;
   componentList: any[] = [];
+  vertexStorage: VertexStorage;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);

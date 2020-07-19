@@ -4,10 +4,12 @@ import { StyleLibrary } from "../../shared/styleLibrary";
 import StyleStorage from "../style-storage.model";
 import { constants } from "buffer";
 
+
 export class TableStrategy implements ICreateComponentStrategy {
     strategyName: string;
     basex: number;
     basey: number;
+    
     constructor(basex?, basey?) {
         // basic component
         if (basex == undefined || basey == undefined) {
@@ -30,10 +32,20 @@ export class TableStrategy implements ICreateComponentStrategy {
         const widthValue = 100;
         let headerList = component.headers.split(" ");
         let colNumber = headerList.length;
-        let rows = component.row.split(";")
+        let rows = component.rows.split(";") 
         let rowNumber = rows.length;
         
+    //     var testStyle = [];
+         mxConstants.SHADOW_OPACITY = 0.3
+    //     testStyle[mxConstants.SHADOWCOLOR] = "B";
+    //    // testStyle["Hi"] = 2;
+    //     console.log("Here!!")
+    //     console.log(testStyle)
+    //     console.log(mxConstants.SHADOWCOLOR)
+    //     console.log("Here2!!")
+        
         // table box
+
         let styleName = "tableBoxstyle" + component.id;
         let tableBoxStyle = StyleLibrary[0]["tableBox"];
         tableBoxStyle["overflow"] = true;
@@ -42,9 +54,10 @@ export class TableStrategy implements ICreateComponentStrategy {
         let width = widthValue*colNumber;
         let height = heightValue*(rowNumber+1);
 
-        let tableBoxVertexGeometry = new mxGeometry(0,0,width,height);
+        let tableBoxVertexGeometry = new mxGeometry(this.basex,this.basey,width,height);
         let tableBoxVertexStorage = graphStorage.insertVertex(parent, component.id, "This is Box", tableBoxVertexGeometry, styleStorage, component);
-
+        component.width = width;
+        component.height = height;
 
         let tableHeaderVertexGeometry;
         console.log(colNumber)
@@ -88,5 +101,6 @@ export class TableStrategy implements ICreateComponentStrategy {
                 tableBoxVertexStorage.addChild(tableDataVertexStorage.id);
             }
         }
+        component.vertexStorage = tableBoxVertexStorage;
     }
 }

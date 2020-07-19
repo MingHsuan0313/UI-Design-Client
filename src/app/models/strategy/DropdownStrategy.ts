@@ -31,9 +31,11 @@ export class DropdownStrategy implements ICreateComponentStrategy {
         let dropdownBoxStyle = StyleLibrary[0]["dropdownBox"];
         let styleStorage = new StyleStorage(styleName,dropdownBoxStyle)
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,dropdownBoxStyle);
-        let dropdownVertexGeometry = new mxGeometry(0,0,220,dropdownHeight);
+        let dropdownVertexGeometry = new mxGeometry(this.basex,this.basey,220,dropdownHeight);
         let dropdownVertexStorage = graphStorage.insertVertex(parent,component.id,"",dropdownVertexGeometry,styleStorage,component);
-        console.log(dropdownVertexStorage.isBasicComponent())
+
+        component.width = 220;
+        component.height = dropdownHeight;
 
         // insert dropdown header 
         styleName = "dropdownHeaderStyle" + component.id;
@@ -43,20 +45,18 @@ export class DropdownStrategy implements ICreateComponentStrategy {
         let dropdownHeaderGeometry = new mxGeometry(0,0,200,30);
         let dropdownHeaderVertexStorage = graphStorage.insertVertex(dropdownVertexStorage.getVertex(),component.id+"header","",dropdownHeaderGeometry,styleStorage,component);
         dropdownVertexStorage.addChild(dropdownHeaderVertexStorage.id);
-        console.log(dropdownHeaderVertexStorage.isBasicComponent())
+
 
         // insert dropdown list
         styleName = "dropdownListStyle" + component.id;
         let dropdownListStyle = StyleLibrary[0]["dropdownList"];
         styleStorage = new StyleStorage(styleName,dropdownListStyle);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,dropdownListStyle);
-        console.log("asdjsaa")
-        console.log(styleStorage)
-        let dropdownListGeometry = new mxGeometry(0 + 3,30,200 - 5,dropdownHeight - 30);
+
+        let dropdownListGeometry = new mxGeometry( 3, 30, 200 - 5,dropdownHeight - 30);
         let dropdownItemListVertexStorage = graphStorage.insertVertex(dropdownVertexStorage.getVertex(),component.id+"itemList","",dropdownListGeometry,styleStorage,component);
         dropdownVertexStorage.addChild(dropdownItemListVertexStorage.id);
-        console.log(dropdownItemListVertexStorage.isBasicComponent())
-        console.log(graphStorage.getGraph().getStylesheet())
+
 
 
         let index = 0;
@@ -73,8 +73,8 @@ export class DropdownStrategy implements ICreateComponentStrategy {
                 isList
             );
 
-            let dropdownItemGeometry = new mxGeometry(0 + 3,30 * index,200 - 5,30)
-            console.log(dropdownItemGeometry)
+            let dropdownItemGeometry = new mxGeometry(3,30*index, 200 - 5,30)
+
             styleName = "dropdownHeaderstyle" + component.id;
             let dropdownItemStyle = StyleLibrary[0]["dropdownItem"];
             styleStorage = new StyleStorage(styleName,dropdownItemStyle);
@@ -84,5 +84,6 @@ export class DropdownStrategy implements ICreateComponentStrategy {
             console.log(dropdownItemVertexStorage.isBasicComponent())
             index += 1;
         }
+        component.vertexStorage = dropdownVertexStorage;
     }
 }
