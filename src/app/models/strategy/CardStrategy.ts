@@ -29,8 +29,24 @@ export class CardStrategy implements ICreateComponentStrategy {
         let styleName = "cardStyle" + component.id;
         let cardStyleStorage = new StyleStorage(styleName,cardStyle);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,cardStyle)
-        let cardGeometry = new mxGeometry(0,0,300,400);
+        let cardGeometry = new mxGeometry(0,0,300,500);
         let cardVertexStorage = graphStorage.insertVertex(parent,component.id,"",cardGeometry,cardStyleStorage,component);
-        return cardVertexStorage;
+
+        // insert care header vertex
+        let cardHeaderStyle = StyleLibrary[0]["cardHeader"];
+        styleName = "cardHeaderStyle" + component.id;
+        let cardHeaderStyleStorage = new StyleStorage(styleName,cardHeaderStyle);
+        graphStorage.getGraph().getStylesheet().putCellStyle(styleName,cardHeaderStyle);
+        let cardHeaderGeometry = new mxGeometry(150,0,50,50);
+        let cardHeaderVertexStorage = graphStorage.insertVertex(cardVertexStorage.getVertex(),component.id,component.header,cardHeaderGeometry,cardHeaderStyleStorage,component);
+
+
+
+        // return cardVertexStorage;
+        return {
+            "vertexStorage": cardVertexStorage,
+            "width": 50,
+            "height": 100
+        }
     }
 }

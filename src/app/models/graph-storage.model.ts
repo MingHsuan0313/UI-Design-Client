@@ -82,9 +82,10 @@ export class GraphStorage {
                 this.setStrategy(new CardStrategy());
             }
 
-            let compositeComponentVertexStorage = this.strategy.createComponent(this,component,parent);
+            let obj = this.strategy.createComponent(this,component,parent);
+            let compositeComponentVertexStorage = obj.vertexStorage;
             let basex = 0;
-            let basey = 0;
+            let basey = 0 + obj.height;
             for(let element of component.componentList) {
                 let obj = this.createComponent(element,compositeComponentVertexStorage.getVertex(),basex,basey);
                 console.log("create component heree")
