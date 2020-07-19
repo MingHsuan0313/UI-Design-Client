@@ -8,6 +8,7 @@ import { DropdownStrategy } from "./strategy/DropdownStrategy";
 import { TableStrategy } from "./strategy/TableStrategy";
 import { StyleLibrary } from "../shared/styleLibrary";
 import StyleStorage from "./style-storage.model";
+import { CardStrategy } from "./strategy/CardStrategy";
 
 export class GraphStorage {
     vertexStorageList: VertexStorage[];
@@ -28,14 +29,14 @@ export class GraphStorage {
         this.graph.addMouseListener(
             {
                 mouseDown: function (sender, evt) {
-                    console.log("mouse down");
-                    console.log(evt);
+                    // console.log("mouse down");
+                    // console.log(evt);
                 },
                 mouseMove: function (sender, evt) {
                 },
                 mouseUp: function (sender, evt) {
-                    console.log("mouse up");
-                    console.log(evt);
+                    // console.log("mouse up");
+                    // console.log(evt);
                 }
             }
         )
@@ -43,9 +44,6 @@ export class GraphStorage {
 
     // sync internal storage and external storage
     syncStorage() {
-        console.log("start sync storage");
-        console.log(this);
-
         for(let vertexStorage of this.vertexStorageList) {
             vertexStorage.sync();
         }
@@ -56,8 +54,10 @@ export class GraphStorage {
     }
 
     createComponent(component, parent,basex?,basey?) {
-        console.log("bind component heree")
-        console.log(component)
+        if(basex == undefined || basey == undefined) {
+            basex = 0;
+            basey = 0;
+        }
 
         // basic component
         if (component["componentList"] == undefined) {
@@ -74,21 +74,34 @@ export class GraphStorage {
                 this.setStrategy(new TableStrategy(basex,basey));
             }
 
-            console.log(this.strategy.strategyName)
-            this.strategy.createComponent(this,component,parent);
+            return this.strategy.createComponent(this,component,parent);
         }
         //composite component here
         else {
-            let type = component.type;
-            let styleName = type + "style" + component.id;
-            let style = StyleLibrary[0][type];
-            let styleStorage = new StyleStorage(styleName,style);
-            this.graph.getStylesheet().putCellStyle(styleName,style);
-            let compositeComponentGeometry = new mxGeometry(0,0,300,300);
-            let compositeVertexStorage = this.insertVertex(parent,component.id,component.header,compositeComponentGeometry,styleStorage,component);
-            for(let element of component.componentList) {
-                this.createComponent(element,compositeVertexStorage.getVertex());
+            if(component["type"] == "card") {
+                this.setStrategy(new CardStrategy());
             }
+
+            let compositeComponentVertexStorage = this.strategy.createComponent(this,component,parent);
+            let basex = 0;
+            let basey = 0;
+            for(let element of component.componentList) {
+                let obj = this.createComponent(element,compositeComponentVertexStorage.getVertex(),basex,basey);
+                console.log("create component heree")
+                console.log(obj)
+                basey = basey + obj['height'];
+            }
+
+            // let type = component.type;
+            // let styleName = type + "style" + component.id;
+            // let style = StyleLibrary[0][type];
+            // let styleStorage = new StyleStorage(styleName,style);
+            // this.graph.getStylesheet().putCellStyle(styleName,style);
+            // let compositeComponentGeometry = new mxGeometry(0,0,300,300);
+            // let compositeVertexStorage = this.insertVertex(parent,component.id,component.header,compositeComponentGeometry,styleStorage,component);
+            // for(let element of component.componentList) {
+            //     this.createComponent(element,compositeVertexStorage.getVertex());
+            // }
         }
     }
 
@@ -99,20 +112,14 @@ export class GraphStorage {
     // insert vertex
     insertVertex(parent, vertexID, vertexValue,geometry,styleStorage,uicomponent,dataBinding?) {
         let vertex;
-        console.log("parent here")
-        console.log(parent)
         try {
             this.graph.getModel().beginUpdate();
-            console.log("ajdhdjkdaasaa2")
-
-
             vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x,geometry.y , geometry.width, geometry.height,styleStorage.name , "");
         } finally {
             this.graph.getModel().endUpdate();
             // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
         }
 
-        console.log("ajdhdjkdaasaa")
         let vertexStorage = new VertexStorage(vertex,styleStorage,uicomponent,dataBinding);
         this.vertexStorageList.push(vertexStorage);
         return vertexStorage;

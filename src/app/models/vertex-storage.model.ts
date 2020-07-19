@@ -73,9 +73,7 @@ export default class VertexStorage {
     }
     
     isBasicComponent() {
-
         // if(this.component["componentList"].length == 0)
-        console.log(this.component)
         if("componentList" in this.component)
             return false;
         else
@@ -92,7 +90,6 @@ export default class VertexStorage {
 
     sync() {
         if(this.dataBinding.hasDataBinding) {
-            console.log("need to databinding")
             let componentValueKey = this.dataBinding.dataBindingName;
 
             // databinding text , button only one value
@@ -121,7 +118,5 @@ export default class VertexStorage {
         else {
             console.log("no need data binding")
         }
-        // console.log(this.dataBinding);
-        // this.component["text"] = "ashdaskdsasda";
     }
 }

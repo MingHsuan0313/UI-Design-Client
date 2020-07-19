@@ -65,7 +65,13 @@ export const StyleLibrary = [
 
         // composite component
         card: {
+            strokeColor: "#a6a6a6",
+            fillColor: "#ffffff"   
+        },
 
+        cardHeader: {
+            fontSize:"24",
+            opacity:'0'
         }
     }
 ]

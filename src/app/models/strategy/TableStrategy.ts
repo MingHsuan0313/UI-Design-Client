@@ -3,6 +3,7 @@ import { GraphStorage } from "../graph-storage.model";
 import { StyleLibrary } from "../../shared/styleLibrary";
 import StyleStorage from "../style-storage.model";
 import { constants } from "buffer";
+// import { table } from "console";
 
 export class TableStrategy implements ICreateComponentStrategy {
     strategyName: string;
@@ -42,7 +43,7 @@ export class TableStrategy implements ICreateComponentStrategy {
         let width = widthValue*colNumber;
         let height = heightValue*(rowNumber+1);
 
-        let tableBoxVertexGeometry = new mxGeometry(0,0,width,height);
+        let tableBoxVertexGeometry = new mxGeometry(this.basex + 0,this.basey + 0,width,height);
         let tableBoxVertexStorage = graphStorage.insertVertex(parent, component.id, "This is Box", tableBoxVertexGeometry, styleStorage, component);
 
 
@@ -56,7 +57,7 @@ export class TableStrategy implements ICreateComponentStrategy {
             styleStorage = new StyleStorage(styleName, tableHeaderStyle);
             graphStorage.getGraph().getStylesheet().putCellStyle(styleName, tableHeaderStyle);
             let x = i*widthValue;
-            tableHeaderVertexGeometry = new mxGeometry(x,0,widthValue,heightValue);
+            tableHeaderVertexGeometry = new mxGeometry(this.basex + x,this.basey + 0,widthValue,heightValue);
             let tableHeaderVertexStorage = graphStorage.insertVertex(tableBoxVertexStorage.getVertex(), component.id + "header", headerList[i], tableHeaderVertexGeometry, styleStorage, component);
             tableBoxVertexStorage.addChild(tableHeaderVertexStorage.id);
         }
@@ -83,10 +84,16 @@ export class TableStrategy implements ICreateComponentStrategy {
 
                 let x = (i)*widthValue;
                 let y = (j+1)*heightValue;
-                tableDataVertexGeometry = new mxGeometry(x,y,widthValue,heightValue);
+                tableDataVertexGeometry = new mxGeometry(this.basex + x,this.basey + y,widthValue,heightValue);
                 let tableDataVertexStorage = graphStorage.insertVertex(tableBoxVertexStorage.getVertex(), component.id + "header", rowData[i], tableDataVertexGeometry, styleStorage, component);
                 tableBoxVertexStorage.addChild(tableDataVertexStorage.id);
             }
+        }
+
+        return {
+            "vertexStorage": tableBoxVertexStorage,
+            "width": width,
+            "height": height
         }
     }
 }
