@@ -19,8 +19,16 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              { "glob": "**/*", "input": "src/assets/", "output": "/assets/" },
-              { "glob": "**/*", "input": "./node_modules/mxgraph/javascript/src", "output": "/assets/mxgraph" }
+              {
+                "glob": "**/*",
+                "input": "src/assets/",
+                "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/mxgraph/javascript/src",
+                "output": "/assets/mxgraph"
+              }
             ],
             "styles": [
               "src/styles.scss"
@@ -82,8 +90,16 @@
               "node_modules/mxgraph/javascript/mxClient.js"
             ],
             "assets": [
-              { "glob": "**/*", "input": "src/assets/", "output": "/assets/" },
-              { "glob": "**/*", "input": "./node_modules/mxgraph/javascript/src", "output": "/assets/mxgraph" }
+              {
+                "glob": "**/*",
+                "input": "src/assets/",
+                "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/mxgraph/javascript/src",
+                "output": "/assets/mxgraph"
+              }
             ]
           }
         },
@@ -129,5 +145,8 @@
       }
     }
   },
-  "defaultProject": "angular-mxgraph"
+  "defaultProject": "angular-mxgraph",
+  "cli": {
+    "analytics": false
+  }
 }

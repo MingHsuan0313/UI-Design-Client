@@ -40,11 +40,28 @@ export const StyleLibrary = [
         icon: {
 
         },
-        table: {
-
+        tableBox: {
+            opacity: '0',
+            strokeColor: '#000000'
         },
-        tableHeader: {
-
+        tableHeader:{
+            fontStyle: 1,  //FONT_BOLD
+            fillColor: "#ffffff",
+            strokeColor: '#b8bcc2',
+            fontColor: "#4f5d73",
+            fontSize:"16",
+        },
+        tableData_white: {
+            fillColor: "#ffffff",
+            strokeColor: '#d8dbe0',
+            fontColor: "#4f5d73",
+            fontSize:"16"
+        },
+        tableData_grey: {
+            fillColor: "#f1f4f6",
+            strokeColor: '#d8dbe0',
+            fontColor: "#4f5d73",
+            fontSize:"16"
         },
 
         // composite component

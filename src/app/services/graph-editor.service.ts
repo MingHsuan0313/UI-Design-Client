@@ -25,10 +25,10 @@ export default class GraphEditorService {
     this.graphsStorage.push(graphStorage);
     this.selectedGraphID = graphStorage.getID();
 
-    this.bindComponent(fakeText)
-    this.bindComponent(fakeButton);
-    this.bindComponent(fakeDropdown);
-    // this.bindComponent(fakeTable);
+    //this.bindComponent(fakeText)
+    //this.bindComponent(fakeButton);
+    //this.bindComponent(fakeDropdown);
+     this.bindComponent(fakeTable);
     // this.bindComponent(fakeCardComposite);
   }
 
