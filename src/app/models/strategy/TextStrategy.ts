@@ -6,11 +6,25 @@ import DataBinding from "../util/DataBinding";
 
 export class TextStrategy implements ICreateComponentStrategy {
     strategyName: string;
-    constructor() {
+    basex: number;
+    basey: number;
+    constructor(basex?,basey?) {
+        // basic component
+        if(basex == undefined || basey == undefined) {
+            this.basex = 0;
+            this.basey = 0;
+        }
+        // inside composite component
+        else {
+            this.basex = basex;
+            this.basey = basey;
+        }
+
         this.strategyName = "Text Strategy";
     }
 
     createComponent(graphStorage:GraphStorage,component,parent) {
+        console.log("ready create text")
         let style = StyleLibrary[0]["text"];
         if(component["href"].length > 0) {
             style["fontColor"] = "blue";
@@ -27,6 +41,7 @@ export class TextStrategy implements ICreateComponentStrategy {
         let styleName = "style" + component.id;
         let styleStorage = new StyleStorage(styleName,style);
         let textGeometry = new mxGeometry(0,0,30,30);
+        console.log("ready create text2")
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
         graphStorage.insertVertex(parent,component.id,component.text,textGeometry,styleStorage,component,dataBinding);
     }
