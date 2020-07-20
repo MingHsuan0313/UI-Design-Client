@@ -106,6 +106,8 @@ export class WizardComponent implements OnInit {
     if (this.componentProperties.includes("componentList")) {
       console.log("is Composite");
       this.isComposite = true;
+    } else {
+      this.isComposite = false;
     }
     console.log(this.componentProperties);
   }
@@ -159,8 +161,8 @@ export class WizardComponent implements OnInit {
     $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
 
-    console.log("add this component")
-    console.log(this.component)
+    console.log("add this component");
+    console.log(this.component);
     this.graphEditorService.bindComponent(this.component);
     this.properties = [];
     this.subComponentName = "";
@@ -168,6 +170,7 @@ export class WizardComponent implements OnInit {
   }
 
 }
+
 
 
 

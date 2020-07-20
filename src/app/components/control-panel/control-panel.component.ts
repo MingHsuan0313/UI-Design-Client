@@ -49,6 +49,7 @@ export class ControlPanelComponent implements OnInit {
     console.log(kind);
     this.category_selected = kind;
     this.components = Storage.getComponents(this.genre_selected, this.category_selected);
+    this.component_selected = "";
   }
 
   setComponent(kind: any) {
@@ -85,4 +86,5 @@ export class ControlPanelComponent implements OnInit {
     );
   }
 }
+
 
