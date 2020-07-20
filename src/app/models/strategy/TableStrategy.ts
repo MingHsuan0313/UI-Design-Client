@@ -31,9 +31,9 @@ export class TableStrategy implements ICreateComponentStrategy {
         const widthValue = 100;
         let headerList = component.headers.split(" ");
         let colNumber = headerList.length;
-        let rows = component.row.split(";")
+        let rows = component.rows.split(";")
         let rowNumber = rows.length;
-        
+
         // table box
         let styleName = "tableBoxstyle" + component.id;
         let tableBoxStyle = StyleLibrary[0]["tableBox"];
@@ -61,7 +61,7 @@ export class TableStrategy implements ICreateComponentStrategy {
             let tableHeaderVertexStorage = graphStorage.insertVertex(tableBoxVertexStorage.getVertex(), component.id + "header", headerList[i], tableHeaderVertexGeometry, styleStorage, component);
             tableBoxVertexStorage.addChild(tableHeaderVertexStorage.id);
         }
-        
+
 
 
         let tableDataVertexGeometry;

@@ -22,7 +22,7 @@ export class ControlPanelComponent implements OnInit {
   componentProperties: any[];
 
   storageComponents: any[] = Storage.components;
-  isHidden = true;
+
   constructor(private httpClient: HttpClient) {
 
 
@@ -35,7 +35,9 @@ export class ControlPanelComponent implements OnInit {
   setLayout(selection: any) {
     console.log(selection);
     this.layout_selected = selection;
+    Storage.layout = this.layout_selected;
   }
+
 
   setGenre(kind: any) {
     console.log(kind);
@@ -72,9 +74,9 @@ export class ControlPanelComponent implements OnInit {
     console.log("Page UICDL");
     console.log(pageUICDL);
 
-    // this.postPageUICDL(Storage.PageUICDL).subscribe(
-    //   response => console.log(response["body"])
-    // );
+    this.postPageUICDL(Storage.PageUICDL).subscribe(
+      response => console.log(response["body"])
+    );
   }
   postPageUICDL(PDL) {
     return this.httpClient.post("http://localhost:8080", PDL,

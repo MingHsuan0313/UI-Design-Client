@@ -8,7 +8,7 @@ export class Storage {
   static UICDL: any[] = [];
   static PageUICDL: any = {};
   static library: any = Library;
-
+  static layout: any = "";
 
   static add(component: UIComponent) {
     this.components.push(component);
@@ -39,6 +39,7 @@ export class Storage {
   static getPageUICDL() {
     this.PageUICDL["selector"] = "page1";
     this.PageUICDL["componentList"] = this.UICDL;
+    this.PageUICDL["layout"] = this.layout;
     return this.PageUICDL;
   }
 }
