@@ -1,8 +1,9 @@
-<div class="container-fluid" style="border-style:groove;flex-direction: column;display: flex;height:500px">
-  <div style="flex: 1;position:relative;left:10px;font-size: 25px">
+<div class="container" style="border-style:groove;display: flex;flex-direction: column">
+  <div style="flex: 1;font-size: 25px">
     Layout
     <div class="dropdown">
-      <div class="dropdown-toggle dropdownItem" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large;">
+      <div class="dropdown-toggle dropdownItem" data-toggle="dropdown"
+           style="border-style: groove;width:90%;font-size: large;">
         <b class="caret"></b>
         {{this.layout_selected}}
       </div>
@@ -13,10 +14,11 @@
   </div>
 
 
-  <div style="flex: 1;position:relative;left:10px;font-size: 25px">
+  <div style="flex: 1;font-size: 25px">
     Genre
     <div class="dropdown">
-      <div class="dropdown-toggle dropdownItem" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large">
+      <div class="dropdown-toggle dropdownItem" data-toggle="dropdown"
+           style="border-style: groove;width:90%;font-size: large">
         <b class="caret"></b>
         {{this.genre_selected}}
       </div>
@@ -26,10 +28,11 @@
     </div>
   </div>
 
-  <div style="flex: 1;position:relative;left:10px;font-size: 25px">
+  <div style="flex: 1;font-size: 25px">
     Category
     <div class="dropdown">
-      <div class="dropdown-toggle dropdownItem" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large">
+      <div class="dropdown-toggle dropdownItem" data-toggle="dropdown"
+           style="border-style: groove;width:90%;font-size: large">
         <b class="caret"></b>
         {{this.category_selected}}
       </div>
@@ -39,10 +42,11 @@
     </div>
   </div>
 
-  <div style="flex: 1;position:relative;left:10px;font-size: 25px">
+  <div style="flex: 1;font-size: 25px">
     UI Components
     <div class="dropdown">
-      <div class="dropdown-toggle dropdownItem" data-toggle="dropdown" style="border-style: groove;width:170px;font-size: large">
+      <div class="dropdown-toggle dropdownItem" data-toggle="dropdown"
+           style="border-style: groove;width:90%;font-size: large">
         <b class="caret"></b>
         {{this.component_selected}}
       </div>
@@ -52,32 +56,33 @@
     </div>
   </div>
 
-  <div style="flex: 1;position:relative;left:10px;font-size: 25px">
+  <div style="flex: 1;font-size: 25px">
     Composition Mechanism
     <!-- Trigger the modal with a button -->
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"
-      (click)="fresh()">Launch wizard</button>
+            (click)="fresh()">Launch wizard
+    </button>
     <app-wizard [componentName]="component_selected" [componentProperties]="componentProperties"></app-wizard>
   </div>
 
-  <div style="flex: 1;position:relative;left:10px;font-size: 25px">
+  <div style="flex: 1;font-size: 25px">
     Navigation
   </div>
 
 </div>
 
-<div>
-  <button onclick="location.href='https://www.google.com.tw';">google</button>
-  <button type="button" class="btn btn-dark" (click)="connectServer()">Connect Server </button>
+<div style="display: flex;flex-direction: column;align-items: center">
+  <!--    <button onclick="location.href='https://www.google.com.tw';">google</button>-->
+  <button type="button" class="btn btn-dark" (click)="connectServer()">Connect Server</button>
   <button class="btn btn-light" (click)="show()">Existing Component</button>
   <div *ngFor="let c of storageComponents">{{c["selector"] | json}}..</div>
-</div>
 
-<div class="input-group">
-  <div class="input-group-prepend">
-    <span class="input-group-text">End</span>
-    <span class="btn"><i class="fa fa-envelope-o"></i></span>
+  <div class="input-group">
+    <div class="input-group-append">
+      <!--    <span class="input-group-text">End</span>-->
+      <span class="btn"><i class="fa fa-envelope-o"></i></span>
+    </div>
+    <input type="text" class="form-control">
   </div>
-  <input type="text" class="form-control">
 </div>
 

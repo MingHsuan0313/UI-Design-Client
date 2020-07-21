@@ -1,7 +1,11 @@
+:host{
+  height:100%;
+}
+
 .geEditor {
-    background-color: white;
     border-style: solid;
     border-color: black;
+    height: 90%;
 }
 
  /* width */
@@ -17,7 +21,7 @@
 
 /* Handle */
 #graphContainer ::-webkit-scrollbar-thumb {
-  background: red;
   border-radius: 10px;
-} 
+}
+
 

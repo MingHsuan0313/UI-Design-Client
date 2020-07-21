@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  display: flex;
+  align-content: stretch;
+  align-items: stretch;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+app-root {
+  padding-left: 0.5%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
