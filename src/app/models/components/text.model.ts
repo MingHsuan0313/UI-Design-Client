@@ -3,17 +3,17 @@ import VertexStorage from '../vertex-storage.model'
 
 export class Text implements UIComponent {
     id: String;
-    height: String;
+    height?: number;
     selector: String;
-    width: String;
-    x: String;
-    y: String;
+    width?: number;
+    x?: String;
+    y?: String;
     text: String;
-    href: String;
+    href?: String;
     type: String;
-    style: Object[];
+    style?: Object[];
     isBasic: boolean;
-    vertexStorage: VertexStorage;
+    vertexStorage?: VertexStorage;
   
     constructor(init?: Partial<Text>) {
       Object.assign(this, init);

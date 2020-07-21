@@ -4,8 +4,8 @@ import VertexStorage from '../vertex-storage.model'
 export class Icon implements UIComponent {
     x: String;
     y: String;
-    width: String;
-    height: String;
+    height?: number;
+    width?: number;
     id: String;
     selector: String;
     text: String;

@@ -5,24 +5,25 @@ import { fakeText } from '../../fakedata/fakeText';
 import { fakeButton } from '../../fakedata/fakeButton';
 import { fakeDropdown } from '../../fakedata/fakeDropdown';
 import { fakeTable } from '../../fakedata/fakeTable';
+import { UIComponent } from '../models/modelDependency';
 
 @Injectable({
   providedIn: 'root'
 })
 export default class GraphEditorService {
-  graphsStorage: GraphStorage[];
+  graphStorages: GraphStorage[];
   selectedGraphID: string;
 
   constructor() {
-    this.graphsStorage = []
+    this.graphStorages = []
   }
 
   // argument : native html element reference (container)
   // return : void
   // function : create graph
   createGraph(element) {
-    let graphStorage = new GraphStorage(element, "graphContainer" + this.graphsStorage.length.toString());
-    this.graphsStorage.push(graphStorage);
+    let graphStorage = new GraphStorage(element, "graphContainer" + this.graphStorages.length.toString());
+    this.graphStorages.push(graphStorage);
     this.selectedGraphID = graphStorage.getID();
 
     // this.bindComponent(fakeText)
@@ -33,21 +34,21 @@ export default class GraphEditorService {
   }
 
   // object => svg
-  bindComponent(component, x?, y?) {
+  bindComponent(component:UIComponent, x?, y?) {
     if (x == undefined || y == undefined) {
-      let graph = this.findGraphByID(this.selectedGraphID);
-      let parent = graph.getGraph().getDefaultParent();
-      graph.createComponent(component, parent);
+      let graphStorage = this.findGraphByID(this.selectedGraphID);
+      let parent = graphStorage.getGraph().getDefaultParent();
+      graphStorage.createComponent(component, parent);
     }
     else {
-      let graph = this.findGraphByID(this.selectedGraphID);
-      let parent = graph.getGraph().getDefaultParent();
-      graph.createComponent(component, parent,x,y)
+      let graphStorage = this.findGraphByID(this.selectedGraphID);
+      let parent = graphStorage.getGraph().getDefaultParent();
+      graphStorage.createComponent(component, parent, x, y)
     }
   }
 
   findGraphByID(id) {
-    for (let element of this.graphsStorage) {
+    for (let element of this.graphStorages) {
       if (element.getID() == id)
         return element;
     }

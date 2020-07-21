@@ -3,17 +3,17 @@ import VertexStorage from '../vertex-storage.model'
 
 export class CardComposite implements UIComponent {
     id: String;
-    height: String;
+    height?: number;
     selector: String;
-    width: String;
-    x: String;
-    y: String;
-    header: String;
+    width?: number;
+    x?: String;
+    y?: String;
+    header?: String;
     type: String;
-    componentList: any[] = [];
-    style: Object[];
+    componentList?: UIComponent[] = [];
+    style?: Object[];
     isBasic: boolean;
-    vertexStorage: VertexStorage;
+    vertexStorage?: VertexStorage;
   
     constructor(init?: Partial<CardComposite>) {
       Object.assign(this, init);
@@ -32,4 +32,4 @@ export class CardComposite implements UIComponent {
       return this.isBasic;
   }
   
-  }
+}

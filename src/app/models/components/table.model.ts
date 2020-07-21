@@ -3,9 +3,9 @@ import VertexStorage from '../vertex-storage.model'
 
 export class Table implements UIComponent {
     id: String;
-    height: String;
+    height?: number;
     selector: String;
-    width: String;
+    width?: number;
     x: String;
     y: String;
     collumn: number;
@@ -14,11 +14,12 @@ export class Table implements UIComponent {
     data: any[][];
     type: String;
     style: Object[];
-    isBasic: boolean;
+    isBasic?: boolean;
     vertexStorage: VertexStorage;
   
     constructor(init?: Partial<Table>) {
       Object.assign(this, init);
+      this.isBasic = false;
     }
     add(component: UIComponent): void {
     }
@@ -38,7 +39,7 @@ export class Table implements UIComponent {
   export class tableHeader {
     headerName: string;
     componentType: string;
-    constructor(headerName: string, componentType: string;){
+    constructor(headerName: string, componentType: string){
         this.componentType = componentType;
         this.headerName = headerName;
     }

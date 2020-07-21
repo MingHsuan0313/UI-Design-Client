@@ -3,9 +3,9 @@ import VertexStorage from '../vertex-storage.model'
 
 export class InputGroupComposite implements UIComponent {
     id: String;
-    height: String;
+    height?: number;
     selector: String;
-    width: String;
+    width?: number;
     x: String;
     y: String;
     type: String;

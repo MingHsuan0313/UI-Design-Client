@@ -1,11 +1,10 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
-import { GraphStorage } from "../graph-storage.model";
-import { StyleLibrary } from "../../shared/styleLibrary";
-import StyleStorage from "../style-storage.model";
-import DataBinding from "../util/DataBinding";
-import {CardComposite} from '../modelDependency'
+
+
+import { StyleLibrary } from '../../shared/styleLibrary' 
+import {CardComposite, DataBinding, StyleStorage, GraphStorage } from '../modelDependency'
 import {Library} from '../../shared/library'
-import { element } from "src/app/models/createComponentStrategy/node_modules/protractor";
+
 
 export class CardStrategy implements ICreateComponentStrategy {
     strategyName: string;
@@ -25,7 +24,7 @@ export class CardStrategy implements ICreateComponentStrategy {
         this.strategyName = "Card Strategy";
     }
 
-    createComponent(graphStorage:GraphStorage,component,parent) {
+    createComponent(graphStorage:GraphStorage, component:CardComposite, parent) {
 
 
         let styleName = component.type + "style" + component.id;

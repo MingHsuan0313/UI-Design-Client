@@ -1,8 +1,9 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { GraphStorage } from "../graph-storage.model";
 import { StyleLibrary } from "../../shared/styleLibrary";
-import StyleStorage from "../style-storage.model";
-import DataBinding from "../util/DataBinding";
+import { StyleStorage } from "../style-storage.model";
+import { DataBinding } from "../util/DataBinding";
+import { Text } from '../modelDependency'
 
 export class TextStrategy implements ICreateComponentStrategy {
     strategyName: string;
@@ -23,7 +24,7 @@ export class TextStrategy implements ICreateComponentStrategy {
         this.strategyName = "Text Strategy";
     }
 
-    createComponent(graphStorage:GraphStorage,component,parent) {
+    createComponent(graphStorage:GraphStorage,component: Text,parent) {
         console.log("ready create text")
         let style = StyleLibrary[0]["text"];
         if(component["href"].length > 0) {
