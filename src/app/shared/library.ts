@@ -3,7 +3,7 @@ export const Library = {
     "CoreUI": {
       "category": {
         "retrieving data": ["text", "table", "card", "inputgroup", "dropdown", "icon"],
-        "submitting data": ["button", "inputgroup", "dropdown"],
+        "submitting data": ["button", "inputgroup", "dropdown", "input"],
         "navigation": ["text", "button"],
         "prompt": [],
       }
@@ -31,6 +31,7 @@ export const Library = {
     "icon": ["text"],
     "text": ["text", "href"],
     "button": ["text", "href"],
+    "input": ["type"],
     "dropdown": ["items"],
     "table": ["headers", "rows"],
     "card": ["header", "componentList"],

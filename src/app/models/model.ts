@@ -3,13 +3,16 @@ export interface UIComponent {
   y: String;
   width: String;
   height: String;
-  ID: String;
+  id: String;
   selector: String;
   type: String;
+  style: String;
 
   add(component: UIComponent): void;
+
   remove(component: UIComponent): void;
-  getInfo(): String;
+
+  getInfo(): any;
 }
 
 export class Icon implements UIComponent {
@@ -17,10 +20,11 @@ export class Icon implements UIComponent {
   y: String;
   width: String;
   height: String;
-  ID: String;
+  id: String;
   selector: String;
-  text: String;
   type: String;
+  style: String;
+  text: String;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -36,21 +40,19 @@ export class Icon implements UIComponent {
   remove(component: UIComponent): void {
   }
 
-  getValue() {
-
-  }
 }
 
 export class Text implements UIComponent {
-  ID: String;
-  height: String;
-  selector: String;
-  width: String;
   x: String;
   y: String;
+  width: String;
+  height: String;
+  id: String;
+  selector: String;
+  type: String;
+  style: String;
   text: String;
   href: String;
-  type: String;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -68,19 +70,21 @@ export class Text implements UIComponent {
 }
 
 export class Button implements UIComponent {
-  ID: String;
-  height: String;
-  selector: String;
-  width: String;
   x: String;
   y: String;
+  width: String;
+  height: String;
+  id: String;
+  selector: String;
+  type: String;
+  style: String;
   text: String;
   href: String;
-  type: String;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
   }
+
   add(component: UIComponent): void {
   }
 
@@ -94,19 +98,21 @@ export class Button implements UIComponent {
 }
 
 export class Table implements UIComponent {
-  ID: String;
-  height: String;
-  selector: String;
-  width: String;
   x: String;
   y: String;
+  width: String;
+  height: String;
+  id: String;
+  selector: String;
+  type: String;
+  style: String;
   headers: any[];
   rows: any[];
-  type: String;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
   }
+
   add(component: UIComponent): void {
   }
 
@@ -120,19 +126,21 @@ export class Table implements UIComponent {
 }
 
 export class CardComposite implements UIComponent {
-  ID: String;
-  height: String;
-  selector: String;
-  width: String;
   x: String;
   y: String;
-  header: String;
+  width: String;
+  height: String;
+  id: String;
+  selector: String;
   type: String;
+  style: String;
+  header: String;
   componentList: any[] = [];
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
   }
+
   add(component: any): void {
     this.componentList.push(component);
   }
@@ -147,13 +155,14 @@ export class CardComposite implements UIComponent {
 }
 
 export class Dropdown implements UIComponent {
-  ID: String;
-  height: String;
-  selector: String;
-  width: String;
   x: String;
   y: String;
+  width: String;
+  height: String;
+  id: String;
+  selector: String;
   type: String;
+  style: String;
   items: any[];
 
   constructor(init?: Partial<Icon>) {
@@ -172,13 +181,14 @@ export class Dropdown implements UIComponent {
 }
 
 export class InputGroupComposite implements UIComponent {
-  ID: String;
-  height: String;
-  selector: String;
-  width: String;
   x: String;
   y: String;
+  width: String;
+  height: String;
+  id: String;
+  selector: String;
   type: String;
+  style: String;
   componentList: any[] = [];
 
   constructor(init?: Partial<Icon>) {
@@ -196,5 +206,32 @@ export class InputGroupComposite implements UIComponent {
   remove(component: UIComponent): void {
   }
 }
+
+export class Input implements UIComponent {
+  x: String;
+  y: String;
+  width: String;
+  height: String;
+  id: String;
+  selector: String;
+  type: String;   // e.g. input-text, input-password
+  style: String;
+
+  constructor(init?: Partial<Icon>) {
+    Object.assign(this, init);
+  }
+
+  add(component: UIComponent): void {
+  }
+
+  getInfo(): any {
+    return this;
+  }
+
+  remove(component: UIComponent): void {
+  }
+
+}
+
 
 
