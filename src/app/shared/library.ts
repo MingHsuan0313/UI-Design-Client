@@ -2,9 +2,9 @@ export const Library = {
   "genre": {
     "CoreUI": {
       "category": {
-        "retrieving data": ["text", "table", "card", "inputgroup", "dropdown", "icon"],
+        "retrieving data": ["text", "table", "card", "inputgroup", "dropdown", "icon", "breadcrumb"],
         "submitting data": ["button", "inputgroup", "dropdown", "input"],
-        "navigation": ["text", "button"],
+        "navigation": ["text", "button", "breadcrumb"],
         "prompt": [],
       }
     },
@@ -32,6 +32,7 @@ export const Library = {
     "text": ["text", "href"],
     "button": ["text", "href"],
     "input": ["type"],
+    "breadcrumb": ["items"],
     "dropdown": ["items"],
     "table": ["headers", "rows"],
     "card": ["header", "componentList"],
@@ -48,6 +49,7 @@ export const Library = {
     "icon": ["text"],
     "text": ["text"],
     "button": ["text"],
+    "breadcrumb": ["items"],
     "table": ["headers", "rows"],
     "dropdown": ["items"],
     "card": ["header"]
