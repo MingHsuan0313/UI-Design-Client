@@ -1,4 +1,4 @@
-export default class DataBinding {
+export class DataBinding {
     hasDataBinding: Boolean;
     dataBindingName: string;
     // -1 not list

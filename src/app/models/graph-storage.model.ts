@@ -1,14 +1,14 @@
 import VertexStorage from "./vertex-storage.model";
 import EdgeStorage from "./edge-storage.model";
 import { Storage } from "./../shared/storage";
-import { ICreateComponentStrategy } from "./strategy/ICreateComponentStrategy";
-import { ButtonStrategy } from "./strategy/ButtonStrategy";
-import { TextStrategy } from "./strategy/TextStrategy";
-import { DropdownStrategy } from "./strategy/DropdownStrategy";
-import { TableStrategy } from "./strategy/TableStrategy";
+import { ICreateComponentStrategy } from "./createComponentStrategy/ICreateComponentStrategy";
+import { ButtonStrategy } from "./createComponentStrategy/ButtonStrategy";
+import { TextStrategy } from "./createComponentStrategy/TextStrategy";
+import { DropdownStrategy } from "./createComponentStrategy/DropdownStrategy";
+import { TableStrategy } from "./createComponentStrategy/TableStrategy";
 import { StyleLibrary } from "../shared/styleLibrary";
 import StyleStorage from "./style-storage.model";
-import { CardStrategy } from "./strategy/CardStrategy";
+import { CardStrategy } from "./createComponentStrategy/CardStrategy";
 
 export class GraphStorage {
     vertexStorageList: VertexStorage[];
@@ -93,7 +93,7 @@ export class GraphStorage {
     }
 
     // insert vertex
-    insertVertex(parent, vertexID, vertexValue,geometry,styleStorage,uicomponent,dataBinding?) {
+    insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent, dataBinding?) {
         let vertex;
         console.log("parent here")
         console.log(parent)

@@ -77,7 +77,7 @@ export const StyleLibrary = [
             cardBox: {
                 fillColor: "#ffffff",
                 strokeColor: '#d8dbe0',
-
+                
             },
             cardHeader:{
                 

@@ -3,9 +3,9 @@ import { GraphStorage } from "../graph-storage.model";
 import { StyleLibrary } from "../../shared/styleLibrary";
 import StyleStorage from "../style-storage.model";
 import DataBinding from "../util/DataBinding";
-import {CardComposite} from '../model'
+import {CardComposite} from '../modelDependency'
 import {Library} from '../../shared/library'
-import { element } from "protractor";
+import { element } from "src/app/models/createComponentStrategy/node_modules/protractor";
 
 export class CardStrategy implements ICreateComponentStrategy {
     strategyName: string;

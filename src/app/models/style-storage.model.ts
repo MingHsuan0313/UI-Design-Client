@@ -1,4 +1,4 @@
-export default class StyleStorage {
+export class StyleStorage {
     name: string;
     // mxStyle
     style: Object;
