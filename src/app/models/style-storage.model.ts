@@ -1,35 +1,39 @@
 export class StyleStorage {
-    name: string;
-    // mxStyle
-    style: Object;
+  name: string;
+  // mxStyle
+  style: Object;
 
-    constructor(name,style) {
-        this.name = name;
-        this.style = style;
-    }
+  constructor(name, style) {
+    this.name = name;
+    this.style = style;
+  }
 
-    changeOpacity(newOpacity) {
-        this.style["opacity"] = newOpacity;
-    }
+  getStyle() {
+    return this.style;
+  }
 
-    changeFontSize(newFontSize) {
-        this.style["fontSize"] = newFontSize;
-    }
+  changeOpacity(newOpacity) {
+    this.style['opacity'] = newOpacity;
+  }
 
-    changeFontColor(newFontColor) {
-        this.style["fontColor"] = newFontColor;
-    }
+  changeFontSize(newFontSize) {
+    this.style['fontSize'] = newFontSize;
+  }
 
-    changeFillColor(newFillColor) {
-        this.style["fillColor"] = newFillColor;
-    }
+  changeFontColor(newFontColor) {
+    this.style['fontColor'] = newFontColor;
+  }
 
-    // border color
-    changeStrokeColor(newStrokeColor) {
-        this.style["strokeColor"] = newStrokeColor;
-    }
+  changeFillColor(newFillColor) {
+    this.style['fillColor'] = newFillColor;
+  }
 
-    changeRounded(rounded:Boolean) {
-        this.style["rounded"] = rounded;
-    }
+  // border color
+  changeStrokeColor(newStrokeColor) {
+    this.style['strokeColor'] = newStrokeColor;
+  }
+
+  changeRounded(rounded: Boolean) {
+    this.style['rounded'] = rounded;
+  }
 }

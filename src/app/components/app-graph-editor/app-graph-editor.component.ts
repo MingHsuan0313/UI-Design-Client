@@ -17,6 +17,7 @@ export class AppGraphEditorComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.createGraph("graphContainer0");
+    console.log("Create graph editor");
     // this.graphEditorService.createGraph(this.graphContainer.nativeElement);
   }
 
@@ -30,7 +31,7 @@ export class AppGraphEditorComponent implements AfterViewInit {
   }
 
   ngOnInit() {
-  } 
+  }
 
   saveAs(uri, filename) {
     var link = document.createElement('a');

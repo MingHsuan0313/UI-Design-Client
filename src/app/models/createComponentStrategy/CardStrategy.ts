@@ -1,7 +1,7 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 
 
-import { StyleLibrary } from '../../shared/styleLibrary' 
+import { StyleLibrary } from '../../shared/styleLibrary'
 import {CardComposite, DataBinding, StyleStorage, GraphStorage } from '../modelDependency'
 import {Library} from '../../shared/library'
 
@@ -33,22 +33,21 @@ export class CardStrategy implements ICreateComponentStrategy {
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
         let cardGeometry = new mxGeometry(0,0,200,200);
         let cardBoxVertex = graphStorage.insertVertex(parent,component.id,"Card",cardGeometry,styleStorage,component);
-        
+
         let componentListTemp = component.componentList
         let tempHeight = 50;
         let componentHeightGap = 20;
         for(var i =0; i<Library.compositeComponents.card.length; i++){
-            
+
             for(let element of componentListTemp) {
                 if(element.type == Library.compositeComponents.card[i]){
                     graphStorage.createComponent(element,cardBoxVertex.getVertex(),0,tempHeight);
 
-                    tempHeight = tempHeight + element.height + componentHeightGap; 
+                    tempHeight = tempHeight + element.height + componentHeightGap;
 
                 }
             }
         }
-
 
 
         let componetList = component.componentList;
@@ -74,7 +73,7 @@ export class CardStrategy implements ICreateComponentStrategy {
         console.log("Here!!")
         console.log(height)
         console.log(maxWidth)
-    
+
         cardGeometry = new mxGeometry(0,0,maxWidth,height);
         cardBoxVertex.vertex.setGeometry(cardGeometry);
         console.log(cardBoxVertex.vertex)
@@ -86,10 +85,10 @@ export class CardStrategy implements ICreateComponentStrategy {
             let geometry = element.vertexStorage.vertex.getGeometry();
             console.log(geometry)
             geometry.x = centerX-element.width/2;
-            
+
             element.vertexStorage.vertex.setGeometry(geometry);
         }
-        
+
         graphStorage.getGraph().refresh();
     }
 }

@@ -37,7 +37,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
         component.width = 220;
         component.height = dropdownHeight;
 
-        // insert dropdown header 
+        // insert dropdown header
         styleName = "dropdownHeaderStyle" + component.id;
         let dropdownHeaderStyle = StyleLibrary[0]["dropdownHeader"];
         styleStorage = new StyleStorage(styleName,dropdownHeaderStyle);
@@ -82,6 +82,6 @@ export class DropdownStrategy implements ICreateComponentStrategy {
             dropdownItemListVertexStorage.addChild(dropdownItemVertexStorage.id);
             index += 1;
         }
-        component.vertexStorage = dropdownVertexStorage;
+        // component.vertexStorage = dropdownVertexStorage;
     }
 }

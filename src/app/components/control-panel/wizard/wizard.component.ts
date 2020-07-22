@@ -1,13 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Storage} from "../../../shared/storage";
-import {
-  // Breadcrumb,
-  INPUT,
-} from '../../../models/model';
-import {Breadcrumb,Button, CardComposite, Dropdown, Icon, InputGroupComposite, Table, Text, UIComponent} from "../../../models/modelDependency";
 import {NgForm} from "@angular/forms";
 import GraphEditorService from "../../../services/graph-editor.service";
 import {PropertyGenerator} from "../../../shared/property-generator";
+import {Breadcrumb, Button, CardComposite, Dropdown, Icon, INPUT, InputGroupComposite, Table, Text} from "../../../models/model";
 
 
 
@@ -118,7 +114,6 @@ export class WizardComponent implements OnInit {
   }
 
   getComponentProperties(componentName) {
-    console.log(componentName);
     this.componentProperties =  Storage.getComponentProperties(componentName);
     if (this.componentProperties.includes("componentList")) {
       console.log("is Composite");
@@ -126,7 +121,6 @@ export class WizardComponent implements OnInit {
     } else {
       this.isComposite = false;
     }
-    console.log(this.componentProperties);
   }
 
   getSubComponentProperties(subComponentName: string) {
@@ -177,10 +171,8 @@ export class WizardComponent implements OnInit {
     this.component.getInfo();
     $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
-
-    console.log("add this component");
-    console.log(this.component);
     this.graphEditorService.bindComponent(this.component);
+    console.log(this.component);
     this.properties = [];
     this.subComponentName = "";
 

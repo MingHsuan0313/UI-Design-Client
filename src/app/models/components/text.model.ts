@@ -11,21 +11,21 @@ export class Text implements UIComponent {
     text: String;
     href?: String;
     type: String;
-    style?: Object[];
+    style?: any;
     isBasic: boolean;
     vertexStorage?: VertexStorage;
-  
+
     constructor(init?: Partial<Text>) {
       Object.assign(this, init);
     }
-  
+
     add(component: UIComponent): void {
     }
-  
+
     getInfo(): any {
       return this;
     }
-  
+
     remove(component: UIComponent): void {
     }
     isBasicComponent(): boolean{

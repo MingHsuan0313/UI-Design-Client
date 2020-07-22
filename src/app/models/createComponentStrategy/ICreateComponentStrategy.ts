@@ -1,7 +1,5 @@
-import { GraphStorage } from "../graph-storage.model";
-import { UIComponent } from "../modelDependency";
+import {GraphStorage} from '../graph-storage.model';
 
 export interface ICreateComponentStrategy {
-    strategyName: string;
-    createComponent(graphStorage:GraphStorage,component,parent)
+  createComponent(graphStorage: GraphStorage, component, parent);
 }

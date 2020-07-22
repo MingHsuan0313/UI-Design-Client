@@ -1,11 +1,12 @@
 import {ICreateComponentStrategy} from "./ICreateComponentStrategy";
 import {GraphStorage} from "../graph-storage.model";
+import {Text} from "../components/text.model";
 import {StyleLibrary} from "../../shared/styleLibrary";
-import {StyleStorage} from "../style-storage.model";
 import {DataBinding} from "../util/DataBinding";
-import {Text} from "../modelDependency";
+import {StyleStorage} from "../style-storage.model";
 
-export class TextStrategy implements ICreateComponentStrategy {
+
+export class IconStrategy implements ICreateComponentStrategy {
   basex: number;
   basey: number;
 
@@ -20,13 +21,9 @@ export class TextStrategy implements ICreateComponentStrategy {
     }
   }
 
+  // ICON STYLE IS UNDEFINE
   createComponent(graphStorage: GraphStorage, component, parent) {
     const style = StyleLibrary[0]["text"];
-    if (component["href"].length > 0) {
-      style["fontColor"] = "blue";
-    } else {
-      style["fontColor"] = "black";
-    }
     const dataBinding = new DataBinding(
       true,
       "text",
