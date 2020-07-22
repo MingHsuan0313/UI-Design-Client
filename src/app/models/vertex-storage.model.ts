@@ -1,6 +1,5 @@
-import { UIComponent } from "../models/model";
-import StyleStorage from "./style-storage.model";
-import DataBinding from "./util/DataBinding";
+import { UIComponent, StyleStorage, DataBinding } from "./modelDependency";
+
 /**
  * @description
  * This is the storage of mxGraph Vertex

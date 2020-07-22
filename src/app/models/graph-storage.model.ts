@@ -1,14 +1,14 @@
 import VertexStorage from "./vertex-storage.model";
 import EdgeStorage from "./edge-storage.model";
 import { Storage } from "./../shared/storage";
-import { ICreateComponentStrategy } from "./strategy/ICreateComponentStrategy";
-import { ButtonStrategy } from "./strategy/ButtonStrategy";
-import { TextStrategy } from "./strategy/TextStrategy";
-import { DropdownStrategy } from "./strategy/DropdownStrategy";
-import { TableStrategy } from "./strategy/TableStrategy";
+import { ICreateComponentStrategy } from "./createComponentStrategy/ICreateComponentStrategy";
+import { ButtonStrategy } from "./createComponentStrategy/ButtonStrategy";
+import { TextStrategy } from "./createComponentStrategy/TextStrategy";
+import { DropdownStrategy } from "./createComponentStrategy/DropdownStrategy";
+import { TableStrategy } from "./createComponentStrategy/TableStrategy";
 import { StyleLibrary } from "../shared/styleLibrary";
-import StyleStorage from "./style-storage.model";
-import { CardStrategy } from "./strategy/CardStrategy";
+import { StyleStorage } from "./style-storage.model";
+import { CardStrategy } from "./createComponentStrategy/CardStrategy";
 
 export class GraphStorage {
     vertexStorageList: VertexStorage[];
@@ -74,35 +74,16 @@ export class GraphStorage {
                 this.setStrategy(new TableStrategy(basex,basey));
             }
 
-            return this.strategy.createComponent(this,component,parent);
+            console.log(this.strategy.strategyName)
+            this.strategy.createComponent(this,component,parent);
+
         }
         //composite component here
         else {
-            if(component["type"] == "card") {
-                this.setStrategy(new CardStrategy());
+            if(component["type"] == "card"){
+                this.setStrategy(new CardStrategy(basex,basey));
             }
-
-            let obj = this.strategy.createComponent(this,component,parent);
-            let compositeComponentVertexStorage = obj.vertexStorage;
-            let basex = 0;
-            let basey = 0 + obj.height;
-            for(let element of component.componentList) {
-                let obj = this.createComponent(element,compositeComponentVertexStorage.getVertex(),basex,basey);
-                console.log("create component heree")
-                console.log(obj)
-                basey = basey + obj['height'];
-            }
-
-            // let type = component.type;
-            // let styleName = type + "style" + component.id;
-            // let style = StyleLibrary[0][type];
-            // let styleStorage = new StyleStorage(styleName,style);
-            // this.graph.getStylesheet().putCellStyle(styleName,style);
-            // let compositeComponentGeometry = new mxGeometry(0,0,300,300);
-            // let compositeVertexStorage = this.insertVertex(parent,component.id,component.header,compositeComponentGeometry,styleStorage,component);
-            // for(let element of component.componentList) {
-            //     this.createComponent(element,compositeVertexStorage.getVertex());
-            // }
+            this.strategy.createComponent(this,component,parent);
         }
     }
 
@@ -111,7 +92,7 @@ export class GraphStorage {
     }
 
     // insert vertex
-    insertVertex(parent, vertexID, vertexValue,geometry,styleStorage,uicomponent,dataBinding?) {
+    insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent, dataBinding?) {
         let vertex;
         try {
             this.graph.getModel().beginUpdate();

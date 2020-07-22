@@ -2,19 +2,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Storage} from "../../../shared/storage";
 import {
   Breadcrumb,
-  Button,
-  CardComposite,
-  Dropdown,
-  Icon,
   INPUT,
-  InputGroupComposite,
-  Table,
-  Text,
-  UIComponent
 } from '../../../models/model';
+import {Button, CardComposite, Dropdown, Icon, InputGroupComposite, Table, Text, UIComponent} from "../../../models/modelDependency";
 import {NgForm} from "@angular/forms";
 import GraphEditorService from "../../../services/graph-editor.service";
 import {PropertyGenerator} from "../../../shared/property-generator";
+
 
 
 @Component({
@@ -164,13 +158,13 @@ export class WizardComponent implements OnInit {
     }
   }
   clickNext() {
-    $("#myModal a[href=\"#composition\"]").tab("show");
+    // $("#myModal a[href=\"#composition\"]").tab("show");
   }
 
 
   onClose() {
     console.log("close");
-    $("#myModal a[href=\"#building\"]").tab("show");
+    // $("#myModal a[href=\"#building\"]").tab("show");
   }
 
   clickCreate() {
@@ -181,7 +175,7 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     console.log("finish");
     this.component.getInfo();
-    $("#myModal a[href=\"#building\"]").tab("show");
+    // $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
 
     console.log("add this component");
@@ -193,9 +187,3 @@ export class WizardComponent implements OnInit {
   }
 
 }
-
-
-
-
-
-

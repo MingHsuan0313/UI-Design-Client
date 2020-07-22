@@ -1,8 +1,8 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { GraphStorage } from "../graph-storage.model";
 import { StyleLibrary } from "../../shared/styleLibrary";
-import StyleStorage from "../style-storage.model";
-import DataBinding from "../util/DataBinding";
+import { StyleStorage } from "../style-storage.model";
+import { DataBinding } from "../util/DataBinding";
 
 export class ButtonStrategy implements ICreateComponentStrategy {
     strategyName: string;
@@ -37,12 +37,10 @@ export class ButtonStrategy implements ICreateComponentStrategy {
             dataBindingName,
             isList
         )
-        let buttonVertexStorage = graphStorage.insertVertex(parent,component.id,component.text,buttonGeometry,styleStorage,component,dataBinding);
-
-        return {
-            "vertexStorage": buttonVertexStorage,
-            "width":width,
-            "height": 40
-        }
+        let vertexStorage = graphStorage.insertVertex(parent,component.id,component.text,buttonGeometry,styleStorage,component,dataBinding);
+        component.width = width;
+        component.height = 40;
+        component.vertexStorage = vertexStorage
+        
     }
 }

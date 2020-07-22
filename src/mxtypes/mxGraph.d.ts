@@ -249,6 +249,7 @@ declare class mxGraph {
   getCellBounds(cell, includeEdges, includeDescendants);
   getBoundingBoxFromGeometry(cells, includeEdges);
   refresh(cell);
+  refresh();
   snap(value);
   panGraph(dx, dy);
   zoomIn();

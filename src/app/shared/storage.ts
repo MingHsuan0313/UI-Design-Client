@@ -1,5 +1,5 @@
 import {Library} from "./library";
-import {UIComponent} from "../models/model";
+import {UIComponent} from "../models/modelDependency";
 import {HttpHeaders} from "@angular/common/http";
 import {HttpClient} from "@angular/common/http";
 

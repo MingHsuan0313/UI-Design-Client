@@ -1,8 +1,8 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { GraphStorage } from "../graph-storage.model";
 import { StyleLibrary } from "../../shared/styleLibrary";
-import StyleStorage from "../style-storage.model";
-import DataBinding from "../util/DataBinding";
+import { StyleStorage } from "../style-storage.model";
+import { DataBinding } from "../util/DataBinding";
 
 export class DropdownStrategy implements ICreateComponentStrategy {
     strategyName: string;
@@ -34,6 +34,9 @@ export class DropdownStrategy implements ICreateComponentStrategy {
         let dropdownVertexGeometry = new mxGeometry(this.basex,this.basey,220,dropdownHeight);
         let dropdownVertexStorage = graphStorage.insertVertex(parent,component.id,"",dropdownVertexGeometry,styleStorage,component);
 
+        component.width = 220;
+        component.height = dropdownHeight;
+
         // insert dropdown header 
         styleName = "dropdownHeaderStyle" + component.id;
         let dropdownHeaderStyle = StyleLibrary[0]["dropdownHeader"];
@@ -48,9 +51,11 @@ export class DropdownStrategy implements ICreateComponentStrategy {
         let dropdownListStyle = StyleLibrary[0]["dropdownList"];
         styleStorage = new StyleStorage(styleName,dropdownListStyle);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,dropdownListStyle);
-        let dropdownListGeometry = new mxGeometry(this.basex + 3,this.basey + 30,200 - 5,dropdownHeight - 30);
+
+        let dropdownListGeometry = new mxGeometry( 3, 30, 200 - 5,dropdownHeight - 30);
         let dropdownItemListVertexStorage = graphStorage.insertVertex(dropdownVertexStorage.getVertex(),component.id+"itemList","",dropdownListGeometry,styleStorage,component);
         dropdownVertexStorage.addChild(dropdownItemListVertexStorage.id);
+
 
 
         let index = 0;
@@ -67,7 +72,8 @@ export class DropdownStrategy implements ICreateComponentStrategy {
                 isList
             );
 
-            let dropdownItemGeometry = new mxGeometry(this.basex + 3,this.basey + 30 * index,200 - 5,30)
+            let dropdownItemGeometry = new mxGeometry(3,30*index, 200 - 5,30)
+
             styleName = "dropdownHeaderstyle" + component.id;
             let dropdownItemStyle = StyleLibrary[0]["dropdownItem"];
             styleStorage = new StyleStorage(styleName,dropdownItemStyle);
@@ -76,11 +82,6 @@ export class DropdownStrategy implements ICreateComponentStrategy {
             dropdownItemListVertexStorage.addChild(dropdownItemVertexStorage.id);
             index += 1;
         }
-
-        return {
-            "vertexStorage": dropdownVertexStorage,
-            "width": 220,
-            "height": dropdownHeight
-        }
+        component.vertexStorage = dropdownVertexStorage;
     }
 }

@@ -1,14 +1,14 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { GraphStorage } from "../graph-storage.model";
 import { StyleLibrary } from "../../shared/styleLibrary";
-import StyleStorage from "../style-storage.model";
-import { constants } from "buffer";
-// import { table } from "console";
+import { StyleStorage } from "../style-storage.model";
+import { Table } from '../modelDependency'
 
 export class TableStrategy implements ICreateComponentStrategy {
     strategyName: string;
     basex: number;
     basey: number;
+    
     constructor(basex?, basey?) {
         // basic component
         if (basex == undefined || basey == undefined) {
@@ -24,17 +24,27 @@ export class TableStrategy implements ICreateComponentStrategy {
         this.strategyName = "Button Strategy";
     }
 
-    createComponent(graphStorage: GraphStorage, component, parent) {
+    createComponent(graphStorage: GraphStorage, component:Table, parent) {
         console.log("compoennt here")
         console.log(component)
         const heightValue = 50;
         const widthValue = 100;
-        let headerList = component.headers.split(" ");
+        let headerList = component.headers;
         let colNumber = headerList.length;
-        let rows = component.rows.split(";")
-        let rowNumber = rows.length;
-
+        let data = component.data;
+        let rowNumber = data.length;
+        
+    //     var testStyle = [];
+         mxConstants.SHADOW_OPACITY = 0.3
+    //     testStyle[mxConstants.SHADOWCOLOR] = "B";
+    //    // testStyle["Hi"] = 2;
+    //     console.log("Here!!")
+    //     console.log(testStyle)
+    //     console.log(mxConstants.SHADOWCOLOR)
+    //     console.log("Here2!!")
+        
         // table box
+
         let styleName = "tableBoxstyle" + component.id;
         let tableBoxStyle = StyleLibrary[0]["tableBox"];
         tableBoxStyle["overflow"] = true;
@@ -43,9 +53,10 @@ export class TableStrategy implements ICreateComponentStrategy {
         let width = widthValue*colNumber;
         let height = heightValue*(rowNumber+1);
 
-        let tableBoxVertexGeometry = new mxGeometry(this.basex + 0,this.basey + 0,width,height);
+        let tableBoxVertexGeometry = new mxGeometry(this.basex,this.basey,width,height);
         let tableBoxVertexStorage = graphStorage.insertVertex(parent, component.id, "This is Box", tableBoxVertexGeometry, styleStorage, component);
-
+        component.width = width;
+        component.height = height;
 
         let tableHeaderVertexGeometry;
         console.log(colNumber)
@@ -68,14 +79,14 @@ export class TableStrategy implements ICreateComponentStrategy {
         let tableDataStyle
         console.log(colNumber)
         for(var j=0; j<rowNumber; j++){
-            console.log(rows[j])
+
             if(j%2==0){
                 tableDataStyle = StyleLibrary[0]["tableData_grey"];
             }else{
                 tableDataStyle = StyleLibrary[0]["tableData_white"];
             }
             tableDataStyle["overflow"] = true;
-            let rowData = rows[j].split(" ");
+            
             for(var i=0; i<colNumber; i++){
 
                 styleName = "tableDatastyle" + component.id + ":"+j+","+i;
@@ -84,16 +95,11 @@ export class TableStrategy implements ICreateComponentStrategy {
 
                 let x = (i)*widthValue;
                 let y = (j+1)*heightValue;
-                tableDataVertexGeometry = new mxGeometry(this.basex + x,this.basey + y,widthValue,heightValue);
-                let tableDataVertexStorage = graphStorage.insertVertex(tableBoxVertexStorage.getVertex(), component.id + "header", rowData[i], tableDataVertexGeometry, styleStorage, component);
+                tableDataVertexGeometry = new mxGeometry(x,y,widthValue,heightValue);
+                let tableDataVertexStorage = graphStorage.insertVertex(tableBoxVertexStorage.getVertex(), component.id + "header", data[i][j], tableDataVertexGeometry, styleStorage, component);
                 tableBoxVertexStorage.addChild(tableDataVertexStorage.id);
             }
         }
-
-        return {
-            "vertexStorage": tableBoxVertexStorage,
-            "width": width,
-            "height": height
-        }
+        component.vertexStorage = tableBoxVertexStorage;
     }
 }
