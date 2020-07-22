@@ -6,6 +6,7 @@ export * from './components/icon.model'
 export * from './components/inputGroup.model'
 export * from './components/table.model'
 export * from './components/text.model'
+export * from './components/breadcrumb.model'
 
 export * from './edge-storage.model'
 export * from './vertex-storage.model'
