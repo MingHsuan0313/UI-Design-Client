@@ -5,6 +5,7 @@ import { fakeText } from '../../fakedata/fakeText';
 import { fakeButton } from '../../fakedata/fakeButton';
 import { fakeDropdown } from '../../fakedata/fakeDropdown';
 import { fakeTable } from '../../fakedata/fakeTable';
+import { fakeCardComposite } from '../../fakedata/fakeCardComposite';
 import { UIComponent } from '../models/modelDependency';
 
 @Injectable({
@@ -30,7 +31,7 @@ export default class GraphEditorService {
     // this.bindComponent(fakeButton);
     // this.bindComponent(fakeDropdown);
     // this.bindComponent(fakeTable);
-    // this.bindComponent(fakeCardComposite);
+     this.bindComponent(fakeCardComposite);
   }
 
   // object => svg

@@ -10,7 +10,7 @@ export class Breadcrumb implements UIComponent {
     selector: String;
     type: String;
     style?: Object[];
-    vertexStorage?: VertexStorage;
+//    vertexStorage?: VertexStorage;
     isBasic?: boolean;
     items: any[];
 

@@ -15,7 +15,7 @@ export class Table implements UIComponent {
     type: String;
     style: Object[];
     isBasic?: boolean;
-    vertexStorage: VertexStorage;
+  //  vertexStorage: VertexStorage;
   
     constructor(init?: Partial<Table>) {
       Object.assign(this, init);

@@ -12,7 +12,7 @@ export class Dropdown implements UIComponent {
     items: any[];
     style: Object[];
     isBasic?: boolean;
-    vertexStorage: VertexStorage;
+  //  vertexStorage: VertexStorage;
   
     constructor(init?: Partial<Dropdown>) {
       Object.assign(this, init);

@@ -13,7 +13,7 @@ export class CardComposite implements UIComponent {
     componentList?: UIComponent[] = [];
     style?: Object[];
     isBasic: boolean;
-    vertexStorage?: VertexStorage;
+  //  vertexStorage?: VertexStorage;
   
     constructor(init?: Partial<CardComposite>) {
       Object.assign(this, init);

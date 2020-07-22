@@ -12,7 +12,7 @@ export class InputGroupComposite implements UIComponent {
     componentList: UIComponent[] = [];
     style: Object[];
     isBasic: boolean;
-    vertexStorage: VertexStorage;
+  //  vertexStorage: VertexStorage;
   
     constructor(init?: Partial<InputGroupComposite>) {
       Object.assign(this, init);

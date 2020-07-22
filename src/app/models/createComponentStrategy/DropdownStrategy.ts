@@ -23,7 +23,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     }
 
     createComponent(graphStorage:GraphStorage,component,parent) {
-        let itemCount = component.items.split(" ").length;
+        let itemCount = component.items.length;
         let dropdownHeight = 30 * (itemCount + 1);
 
         // insert dropdown box
@@ -60,7 +60,6 @@ export class DropdownStrategy implements ICreateComponentStrategy {
 
         let index = 0;
         let itemList = component.items;
-        itemList = itemList.split(" ");
         // insert dropdown item
         for(let element of itemList) {
             let hasDataBinding = true;

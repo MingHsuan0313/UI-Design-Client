@@ -12,7 +12,7 @@ export class Icon implements UIComponent {
     type: String;
     style: Object[];
     isBasic: boolean;
-    vertexStorage: VertexStorage;
+  //  vertexStorage: VertexStorage;
   
     constructor(init?: Partial<Icon>) {
       Object.assign(this, init);

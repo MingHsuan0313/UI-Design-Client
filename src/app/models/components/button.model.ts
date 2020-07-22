@@ -13,7 +13,7 @@ export class Button implements UIComponent {
     type: String;
     style: Object[];
     isBasic: boolean;
-    vertexStorage: VertexStorage;
+  //  vertexStorage: VertexStorage;
   
     constructor(init?: Partial<Button>) {
       Object.assign(this, init);

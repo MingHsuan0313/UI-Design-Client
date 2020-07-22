@@ -14,7 +14,7 @@ export class InputText implements UIComponent {
     style: Object[];
     isBasic?: boolean;
     required: boolean;
-    vertexStorage: VertexStorage;
+  //  vertexStorage: VertexStorage;
   
     constructor(init?: Partial<InputText>) {
       Object.assign(this, init);

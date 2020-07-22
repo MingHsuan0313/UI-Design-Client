@@ -13,7 +13,7 @@ export class Text implements UIComponent {
     type: String;
     style?: Object[];
     isBasic: boolean;
-    vertexStorage?: VertexStorage;
+  //  vertexStorage?: VertexStorage;
   
     constructor(init?: Partial<Text>) {
       Object.assign(this, init);
