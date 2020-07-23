@@ -68,7 +68,7 @@ export class ControlPanelComponent implements OnInit {
 
   connectServer() {
     const pageUICDL = Storage.getPageUICDL();
-    console.log(JSON.stringify(pageUICDL));
+    // console.log(JSON.stringify(pageUICDL));
     console.log("Show Internal Representation");
     console.log("Component List");
     console.log(Storage.components);

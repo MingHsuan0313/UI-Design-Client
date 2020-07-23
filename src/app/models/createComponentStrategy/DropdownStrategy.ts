@@ -1,87 +1,73 @@
-import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
-import { GraphStorage } from "../graph-storage.model";
-import { StyleLibrary } from "../../shared/styleLibrary";
-import { StyleStorage } from "../style-storage.model";
-import { DataBinding } from "../util/DataBinding";
+import {ICreateComponentStrategy} from "./ICreateComponentStrategy";
+import {GraphStorage} from "../graph-storage.model";
+import {StyleLibrary} from "../../shared/styleLibrary";
+import {StyleStorage} from "../style-storage.model";
+import {DataBinding} from "../util/DataBinding";
 
 export class DropdownStrategy implements ICreateComponentStrategy {
-    strategyName: string;
-    basex : number;
-    basey : number;
-    constructor(basex?,basey?) {
-        // basic component
-        if (basex == undefined || basey == undefined) {
-            this.basex = 0;
-            this.basey = 0;
-        }
-        // inside composite component
-        else {
-            this.basex = basex;
-            this.basey = basey;
-        }
-        this.strategyName = "Dropdown Strategy";
+  basex: number;
+  basey: number;
+
+  constructor(basex?, basey?) {
+    // basic component
+    if (basex == undefined || basey == undefined) {
+      this.basex = 50;
+      this.basey = 50;
+    } else {
+      this.basex = basex;
+      this.basey = basey;
     }
+  }
 
-    createComponent(graphStorage:GraphStorage,component,parent) {
-        let itemCount = component.items.split(" ").length;
-        let dropdownHeight = 30 * (itemCount + 1);
+  createComponent(graphStorage: GraphStorage, component, parent) {
+    const itemCount = component.items.split(" ").length;
+    const dropdownHeight = 30 * (itemCount + 1);
 
-        // insert dropdown box
-        let styleName = "dropdownBoxStyle" + component.id;
-        let dropdownBoxStyle = StyleLibrary[0]["dropdownBox"];
-        let styleStorage = new StyleStorage(styleName,dropdownBoxStyle)
-        graphStorage.getGraph().getStylesheet().putCellStyle(styleName,dropdownBoxStyle);
-        let dropdownVertexGeometry = new mxGeometry(this.basex,this.basey,220,dropdownHeight);
-        let dropdownVertexStorage = graphStorage.insertVertex(parent,component.id,"",dropdownVertexGeometry,styleStorage,component);
+    // insert dropdown box
+    let styleName = "dropdownBoxStyle" + component.id;
+    const dropdownBoxStyle = StyleLibrary[0]["dropdownBox"];
+    let styleStorage = new StyleStorage(styleName, dropdownBoxStyle);
+    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownBoxStyle);
+    const dropdownVertexGeometry = new mxGeometry(this.basex, this.basey, 220, dropdownHeight);
+    const dropdownVertexStorage = graphStorage.insertVertex(parent, component.id, "", dropdownVertexGeometry, styleStorage, component);
 
-        component.width = 220;
-        component.height = dropdownHeight;
+    component.width = 220;
+    component.height = dropdownHeight;
 
-        // insert dropdown header
-        styleName = "dropdownHeaderStyle" + component.id;
-        let dropdownHeaderStyle = StyleLibrary[0]["dropdownHeader"];
-        styleStorage = new StyleStorage(styleName,dropdownHeaderStyle);
-        graphStorage.getGraph().getStylesheet().putCellStyle(styleName,dropdownHeaderStyle);
-        let dropdownHeaderGeometry = new mxGeometry(this.basex,this.basey,200,30);
-        let dropdownHeaderVertexStorage = graphStorage.insertVertex(dropdownVertexStorage.getVertex(),component.id+"header","",dropdownHeaderGeometry,styleStorage,component);
-        dropdownVertexStorage.addChild(dropdownHeaderVertexStorage.id);
-
-        // insert dropdown list
-        styleName = "dropdownListStyle" + component.id;
-        let dropdownListStyle = StyleLibrary[0]["dropdownList"];
-        styleStorage = new StyleStorage(styleName,dropdownListStyle);
-        graphStorage.getGraph().getStylesheet().putCellStyle(styleName,dropdownListStyle);
-
-        let dropdownListGeometry = new mxGeometry( 3, 30, 200 - 5,dropdownHeight - 30);
-        let dropdownItemListVertexStorage = graphStorage.insertVertex(dropdownVertexStorage.getVertex(),component.id+"itemList","",dropdownListGeometry,styleStorage,component);
-        dropdownVertexStorage.addChild(dropdownItemListVertexStorage.id);
+    // insert dropdown header
+    styleName = "dropdownHeaderStyle" + component.id;
+    const dropdownHeaderStyle = StyleLibrary[0]["dropdownHeader"];
+    styleStorage = new StyleStorage(styleName, dropdownHeaderStyle);
+    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownHeaderStyle);
+    const dropdownHeaderGeometry = new mxGeometry(0, 20, 200, 30);
+    const dropdownHeaderVertexStorage = graphStorage.insertVertex(dropdownVertexStorage.getVertex(), component.id, "", dropdownHeaderGeometry, styleStorage, component);
+    dropdownVertexStorage.addChild(dropdownHeaderVertexStorage.id, dropdownHeaderVertexStorage.getVertex(), "header");
 
 
+    styleName = "dropdownListStyle" + component.id;
+    const dropdownListStyle = StyleLibrary[0]["dropdownList"];
+    styleStorage = new StyleStorage(styleName, dropdownListStyle);
+    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownListStyle);
 
-        let index = 0;
-        let itemList = component.items;
-        itemList = itemList.split(" ");
-        // insert dropdown item
-        for(let element of itemList) {
-            let hasDataBinding = true;
-            let dataBindingName = "items";
-            let isList = index;
-            let dataBinding = new DataBinding(
-                hasDataBinding,
-                dataBindingName,
-                isList
-            );
+    const dropdownListGeometry = new mxGeometry(0, 0, 200, dropdownHeight - 30);
+    const dropdownItemListVertexStorage = graphStorage.insertVertex(dropdownVertexStorage.getVertex(), component.id, "", dropdownListGeometry, styleStorage, component);
+    dropdownVertexStorage.addChild(dropdownItemListVertexStorage.id, dropdownItemListVertexStorage.getVertex(), "itemList");
 
-            let dropdownItemGeometry = new mxGeometry(3,30*index, 200 - 5,30)
 
-            styleName = "dropdownHeaderstyle" + component.id;
-            let dropdownItemStyle = StyleLibrary[0]["dropdownItem"];
-            styleStorage = new StyleStorage(styleName,dropdownItemStyle);
-            graphStorage.getGraph().getStylesheet().putCellStyle(styleName,dropdownItemStyle);
-            let dropdownItemVertexStorage = graphStorage.insertVertex(dropdownItemListVertexStorage.getVertex(),component.id + "item" + index,element,dropdownItemGeometry,styleStorage,component,dataBinding);
-            dropdownItemListVertexStorage.addChild(dropdownItemVertexStorage.id);
-            index += 1;
-        }
-        // component.vertexStorage = dropdownVertexStorage;
+    let index = 0;
+    const itemList = component.items.split(" ");
+    // insert dropdown item
+    for (const element of itemList) {
+
+      const dropdownItemGeometry = new mxGeometry(0, 23 + 30 + 30 * index, 200, 30);
+
+      styleName = "dropdownItemstyle" + component.id;
+      const dropdownItemStyle = StyleLibrary[0]["dropdownItem"];
+      styleStorage = new StyleStorage(styleName, dropdownItemStyle);
+      graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownItemStyle);
+      const dropdownItemVertexStorage = graphStorage.insertVertex(dropdownItemListVertexStorage.getVertex(), component.id, element, dropdownItemGeometry, styleStorage, component);
+      dropdownVertexStorage.addChild(dropdownItemVertexStorage.id, dropdownItemVertexStorage.getVertex(), "items");
+      index += 1;
     }
+  }
 }

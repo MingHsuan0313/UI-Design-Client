@@ -10,6 +10,7 @@ import {StyleLibrary} from "../shared/styleLibrary";
 import {StyleStorage} from "./style-storage.model";
 import {CardStrategy} from "./createComponentStrategy/CardStrategy";
 import {IconStrategy} from "./createComponentStrategy/IconStrategy";
+import {InputStrategy} from './createComponentStrategy/InputStrategy';
 
 export class GraphStorage {
   vertexStorageList: VertexStorage[];
@@ -55,8 +56,8 @@ export class GraphStorage {
 
   createComponent(component, parent, basex?, basey?) {
     if (basex == undefined || basey == undefined) {
-      basex = 50;
-      basey = 50;
+      basex = 30;
+      basey = 30;
     }
 
     // basic component
@@ -71,6 +72,8 @@ export class GraphStorage {
         this.setStrategy(new TableStrategy(basex, basey));
       } else if (component["type"] == "icon") {
         this.setStrategy(new IconStrategy(basex, basey));
+      } else if (component["type"].startsWith("input")) {
+        this.setStrategy(new InputStrategy(basex, basey));
       }
 
       this.strategy.createComponent(this, component, parent);
@@ -89,7 +92,7 @@ export class GraphStorage {
   }
 
   // insert vertex
-  insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent, dataBinding?) {
+  insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent) {
     let vertex;
     try {
       this.graph.getModel().beginUpdate();
@@ -99,12 +102,11 @@ export class GraphStorage {
       // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
     }
 
-    const vertexStorage = new VertexStorage(vertex, styleStorage, uicomponent, dataBinding);
+    const vertexStorage = new VertexStorage(vertex, styleStorage, uicomponent);
     this.vertexStorageList.push(vertexStorage);
     return vertexStorage;
   }
 
-  // insert edge
   insertEdge(sourceVertex, targetVertex) {
     let edge;
 
@@ -115,7 +117,6 @@ export class GraphStorage {
 
     } finally {
       this.graph.getModel().endUpdate();
-      // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
     }
     const edgeModel = new EdgeStorage(edge);
     this.edgeStorageList.push(edgeModel);
@@ -128,14 +129,10 @@ export class GraphStorage {
         return element;
       }
     }
-    // not found
-    // return -1;
   }
 
   getID() {
     return this.id;
   }
 
-  getLastVertexGeometry() {
-  }
 }

@@ -27,7 +27,6 @@ export default class GraphEditorService {
   bindComponent(component, x?, y?) {
     if (x === undefined || y === undefined) {
       const parent = this.graphStorage.getGraph().getDefaultParent();
-      console.log(parent);
       this.graphStorage.createComponent(component, parent);
     } else {
       const parent = this.graphStorage.getGraph().getDefaultParent();

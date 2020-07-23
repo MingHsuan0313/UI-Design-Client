@@ -27,19 +27,15 @@ export class TextStrategy implements ICreateComponentStrategy {
     } else {
       style["fontColor"] = "black";
     }
-    const dataBinding = new DataBinding(
-      true,
-      "text",
-      -1.
-    );
     const styleName = "style" + component.id;
     const styleStorage = new StyleStorage(styleName, style);
     const textGeometry = new mxGeometry(this.basex, this.basey, 30, 30);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
     // Initialized
-    graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding);
+    graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component);
     // component.vertexStorage = vertexStorage;
     component["style"] = style;
+    return this;
   }
 }

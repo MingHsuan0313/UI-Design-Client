@@ -23,19 +23,14 @@ export class IconStrategy implements ICreateComponentStrategy {
 
   // ICON STYLE IS UNDEFINE
   createComponent(graphStorage: GraphStorage, component, parent) {
-    const style = StyleLibrary[0]["text"];
-    const dataBinding = new DataBinding(
-      true,
-      "text",
-      -1.
-    );
+    const style = StyleLibrary[0]["icon"];
     const styleName = "style" + component.id;
     const styleStorage = new StyleStorage(styleName, style);
     const textGeometry = new mxGeometry(this.basex, this.basey, 30, 30);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
     // Initialized
-    graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding);
+    graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component);
     // component.vertexStorage = vertexStorage;
     component["style"] = style;
   }

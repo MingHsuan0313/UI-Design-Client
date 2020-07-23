@@ -1,94 +1,58 @@
-import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
-
-
-import { StyleLibrary } from '../../shared/styleLibrary'
-import {CardComposite, DataBinding, StyleStorage, GraphStorage } from '../modelDependency'
-import {Library} from '../../shared/library'
+import {ICreateComponentStrategy} from "./ICreateComponentStrategy";
+import {StyleLibrary} from "../../shared/styleLibrary";
+import {Library} from "../../shared/library";
+import {GraphStorage} from "../graph-storage.model";
+import {CardComposite} from "../model";
+import {StyleStorage} from "../style-storage.model";
 
 
 export class CardStrategy implements ICreateComponentStrategy {
-    strategyName: string;
-    basex: number;
-    basey: number;
-    constructor(basex?,basey?) {
-        // basic component
-        if(basex == undefined || basey == undefined) {
-            this.basex = 0;
-            this.basey = 0;
-        }
-        // inside composite component
-        else {
-            this.basex = basex;
-            this.basey = basey;
-        }
-        this.strategyName = "Card Strategy";
+  strategyName: string;
+  basex: number;
+  basey: number;
+
+  constructor(basex?, basey?) {
+    // basic component
+    if (basex == undefined || basey == undefined) {
+      this.basex = 0;
+      this.basey = 0;
+    } else {
+      this.basex = basex;
+      this.basey = basey;
     }
+    this.strategyName = "Card Strategy";
+  }
 
-    createComponent(graphStorage:GraphStorage, component:CardComposite, parent) {
+  createComponent(graphStorage: GraphStorage, component, parent) {
 
-
-        let styleName = component.type + "style" + component.id;
-        let style = StyleLibrary[0]["card"]["cardBox"];
-        let styleStorage = new StyleStorage(styleName,style);
-        graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
-        let cardGeometry = new mxGeometry(0,0,200,200);
-        let cardBoxVertex = graphStorage.insertVertex(parent,component.id,"Card",cardGeometry,styleStorage,component);
-
-        let componentListTemp = component.componentList
-        let tempHeight = 50;
-        let componentHeightGap = 20;
-        for(var i =0; i<Library.compositeComponents.card.length; i++){
-
-            for(let element of componentListTemp) {
-                if(element.type == Library.compositeComponents.card[i]){
-                    graphStorage.createComponent(element,cardBoxVertex.getVertex(),0,tempHeight);
-
-                    tempHeight = tempHeight + element.height + componentHeightGap;
-
-                }
-            }
-        }
+    // insert dropdown box
+    let styleName = "cardBoxStyle" + component.id;
+    const cardBoxStyle = StyleLibrary[0]["card"]["cardBox"];
+    let styleStorage = new StyleStorage(styleName, cardBoxStyle);
+    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, cardBoxStyle);
+    const cardVertexGeometry = new mxGeometry(0, 0, 250, 300);
+    const cardVertexStorage = graphStorage.insertVertex(parent, component.id, "", cardVertexGeometry, styleStorage, component);
 
 
-        let componetList = component.componentList;
-        let maxWidth = 0;
-        let height = 0;
-        let hasButton = false;
-        for(var i=0; i<componetList.length; i++){
-            if(maxWidth < componetList[i].width){
-                maxWidth = componetList[i].width
-            }
-            console.log(componetList[i].height)
-            if(componetList[i].type == "button"){
-                if (!hasButton){
-                    height = height + componetList[i].height + componentHeightGap;
-                    hasButton = true;
-                }
-            }else{
-                height = height + componetList[i].height + componentHeightGap;
-            }
-        }
-        height = height + 50;
-        maxWidth = maxWidth +50;
-        console.log("Here!!")
-        console.log(height)
-        console.log(maxWidth)
+    styleName = "cardHeaderStyle" + component.id;
+    const cardHeaderStyle = StyleLibrary[0]["card"]["cardHeader"];
+    styleStorage = new StyleStorage(styleName, cardHeaderStyle);
+    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, cardHeaderStyle);
+    const cardHeaderGeometry = new mxGeometry(0, 0, 250, 50);
+    const cardHeaderVertexStorage = graphStorage.insertVertex(cardVertexStorage.getVertex(), component.id, component["header"], cardHeaderGeometry, styleStorage, component);
+    cardVertexStorage.addChild(cardHeaderVertexStorage.id, cardHeaderVertexStorage.getVertex(), "header");
 
-        cardGeometry = new mxGeometry(0,0,maxWidth,height);
-        cardBoxVertex.vertex.setGeometry(cardGeometry);
-        console.log(cardBoxVertex.vertex)
-        let centerX = maxWidth/2;
-        console.log(centerX)
-
-        for(let element of componentListTemp) {
-            console.log(element)
-            let geometry = element.vertexStorage.vertex.getGeometry();
-            console.log(geometry)
-            geometry.x = centerX-element.width/2;
-
-            element.vertexStorage.vertex.setGeometry(geometry);
-        }
-
-        graphStorage.getGraph().refresh();
+    const componentListTemp = component.componentList;
+    let index = 0;
+    for (const element of componentListTemp) {
+      styleName = "cardItemStyle" + component.id;
+      const cardItemStyle = StyleLibrary[0][element.type];
+      styleStorage = new StyleStorage(styleName, cardBoxStyle);
+      graphStorage.getGraph().getStylesheet().putCellStyle(styleName, cardItemStyle);
+      const cardItemVertexGeometry = new mxGeometry(0, 50 + 50 * index, 250, 100);
+      const cardItemVertexStorage = graphStorage.insertVertex(cardVertexStorage.getVertex(), component.id, element["text"], cardItemVertexGeometry, styleStorage, element);  // can be more than attribute text
+      cardVertexStorage.addChild(cardItemVertexStorage.id, cardItemVertexStorage.getVertex(), "componentList");
+      index++;
     }
+  }
 }

@@ -52,7 +52,9 @@ export const Library = {
     "breadcrumb": ["items"],
     "table": ["headers", "rows"],
     "dropdown": ["items"],
-    "card": ["header"]
+    "card": ["header"],
+    "input": [],
+    "inputgroup": []
   }
 };
 

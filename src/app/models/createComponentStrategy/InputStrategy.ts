@@ -2,9 +2,8 @@ import {ICreateComponentStrategy} from "./ICreateComponentStrategy";
 import {GraphStorage} from "../graph-storage.model";
 import {StyleLibrary} from "../../shared/styleLibrary";
 import {StyleStorage} from "../style-storage.model";
-import {DataBinding} from "../util/DataBinding";
 
-export class ButtonStrategy implements ICreateComponentStrategy {
+export class InputStrategy implements ICreateComponentStrategy {
   basex: number;
   basey: number;
 
@@ -17,28 +16,20 @@ export class ButtonStrategy implements ICreateComponentStrategy {
       this.basex = basex;
       this.basey = basey;
     }
-
   }
 
   createComponent(graphStorage: GraphStorage, component, parent) {
-    const style = StyleLibrary[0]["button"];
+    const style = StyleLibrary[0]["input"];
+
     const styleName = "style" + component.id;
     const styleStorage = new StyleStorage(styleName, style);
+    const textGeometry = new mxGeometry(this.basex, this.basey, 200, 30);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
-    const width = 15 * component.text.length;
-    const buttonGeometry = new mxGeometry(this.basex, this.basey, width, 40);
 
-    const dataBinding = new DataBinding(
-      true,
-      "text",
-      -1
-    );
-    graphStorage.insertVertex(parent, component.id, component.text, buttonGeometry, styleStorage, component);
-    component.width = width;
-    component.height = 40;
-    // component.vertexStorage = vertexStorage
-
+    // Initialized
+    graphStorage.insertVertex(parent, component.id, "", textGeometry, styleStorage, component);
+    // component.vertexStorage = vertexStorage;
     component["style"] = style;
-
+    return this;
   }
 }
