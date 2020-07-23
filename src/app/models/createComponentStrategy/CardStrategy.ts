@@ -49,9 +49,9 @@ export class CardStrategy implements ICreateComponentStrategy {
       const cardItemStyle = StyleLibrary[0][element.type];
       styleStorage = new StyleStorage(styleName, cardBoxStyle);
       graphStorage.getGraph().getStylesheet().putCellStyle(styleName, cardItemStyle);
-      const cardItemVertexGeometry = new mxGeometry(0, 50 + 50 * index, 250, 100);
+      const cardItemVertexGeometry = new mxGeometry(0, 50 + 50 * index, 100, 50);
       const cardItemVertexStorage = graphStorage.insertVertex(cardVertexStorage.getVertex(), component.id, element["text"], cardItemVertexGeometry, styleStorage, element);  // can be more than attribute text
-      cardVertexStorage.addChild(cardItemVertexStorage.id, cardItemVertexStorage.getVertex(), "componentList");
+      cardVertexStorage.addChild(cardItemVertexStorage.id, cardItemVertexStorage.getVertex(), "componentList",element);
       index++;
     }
   }

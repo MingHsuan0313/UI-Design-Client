@@ -6,8 +6,7 @@ import {ButtonStrategy} from "./createComponentStrategy/ButtonStrategy";
 import {TextStrategy} from "./createComponentStrategy/TextStrategy";
 import {DropdownStrategy} from "./createComponentStrategy/DropdownStrategy";
 import {TableStrategy} from "./createComponentStrategy/TableStrategy";
-import {StyleLibrary} from "../shared/styleLibrary";
-import {StyleStorage} from "./style-storage.model";
+
 import {CardStrategy} from "./createComponentStrategy/CardStrategy";
 import {IconStrategy} from "./createComponentStrategy/IconStrategy";
 import {InputStrategy} from './createComponentStrategy/InputStrategy';

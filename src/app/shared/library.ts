@@ -3,7 +3,7 @@ export const Library = {
     "CoreUI": {
       "category": {
         "retrieving data": ["text", "table", "card", "inputgroup", "dropdown", "icon", "breadcrumb"],
-        "submitting data": ["button", "inputgroup", "dropdown", "input"],
+        "submitting data": ["button", "inputgroup", "dropdown", "input", "form"],
         "navigation": ["text", "button", "breadcrumb"],
         "prompt": [],
       }
@@ -36,13 +36,15 @@ export const Library = {
     "dropdown": ["items"],
     "table": ["headers", "rows"],
     "card": ["header", "componentList"],
-    "inputgroup": ["componentList"]
+    "inputgroup": ["componentList"],
+    "form":["componentList"]
   },
 
   // Composite component can composite the following components
   "compositeComponents": {
     "card": ["text", "dropdown", "button", "table"],
     "inputgroup": ["text", "button", "icon", "dropdown"],
+    "form": ["text", "button", "icon"]
   },
 
   "componentValue": {
