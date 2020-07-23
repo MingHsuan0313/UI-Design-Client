@@ -57,6 +57,24 @@ export class WizardComponent implements OnInit {
         this.component = new Dropdown(properties);
         break;
       case "table":
+        // process table header
+        let headers= properties.headers.split(" ")
+        headers = headers.map(element => {
+          return {
+            headerName: element,
+            componentType: "Text"
+          }
+        });
+        properties["headers"] = headers;
+        // process table data
+        let dataRows = properties.data.replace(/^\s+|\s+$/g, '');;
+        dataRows = dataRows.split(";")
+        let dataTemp = []
+        for(var i=0; i<dataRows.length; i++){
+          let dataRow = dataRows[i].split(",")
+          dataTemp.push(dataRow);
+        }
+        properties["data"] = dataTemp;
         this.component = new Table(properties);
         break;
       case "card":
