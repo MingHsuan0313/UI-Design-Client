@@ -69,7 +69,7 @@ export class TableStrategy implements ICreateComponentStrategy {
             graphStorage.getGraph().getStylesheet().putCellStyle(styleName, tableHeaderStyle);
             let x = i*widthValue;
             tableHeaderVertexGeometry = new mxGeometry(this.basex + x,this.basey + 0,widthValue,heightValue);
-            let tableHeaderVertexStorage = graphStorage.insertVertex(tableBoxVertexStorage.getVertex(), component.id + "header", headerList[i], tableHeaderVertexGeometry, styleStorage, component);
+            let tableHeaderVertexStorage = graphStorage.insertVertex(tableBoxVertexStorage.getVertex(), component.id + "header", headerList[i].headerName, tableHeaderVertexGeometry, styleStorage, component);
             tableBoxVertexStorage.addChild(tableHeaderVertexStorage.id);
         }
 
@@ -96,10 +96,10 @@ export class TableStrategy implements ICreateComponentStrategy {
                 let x = (i)*widthValue;
                 let y = (j+1)*heightValue;
                 tableDataVertexGeometry = new mxGeometry(x,y,widthValue,heightValue);
-                let tableDataVertexStorage = graphStorage.insertVertex(tableBoxVertexStorage.getVertex(), component.id + "header", data[i][j], tableDataVertexGeometry, styleStorage, component);
+                let tableDataVertexStorage = graphStorage.insertVertex(tableBoxVertexStorage.getVertex(), component.id + "header", data[j][i], tableDataVertexGeometry, styleStorage, component);
                 tableBoxVertexStorage.addChild(tableDataVertexStorage.id);
             }
         }
-        component.vertexStorage = tableBoxVertexStorage;
+        //component.vertexStorage = tableBoxVertexStorage;
     }
 }

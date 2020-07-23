@@ -6,10 +6,10 @@ export class Table implements UIComponent {
     height?: number;
     selector: String;
     width?: number;
-    x: String;
-    y: String;
-    collumn: number;
-    row: number;
+    x?: String;
+    y?: String;
+    collumn?: number;
+    row?: number;
     headers: tableHeader[];
     data: any[][];
     type: String;

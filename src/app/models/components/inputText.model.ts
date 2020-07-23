@@ -14,6 +14,7 @@ export class InputText implements UIComponent {
     style: Object[];
     isBasic?: boolean;
     required: boolean;
+    input_type: string;
   //  vertexStorage: VertexStorage;
   
     constructor(init?: Partial<InputText>) {
