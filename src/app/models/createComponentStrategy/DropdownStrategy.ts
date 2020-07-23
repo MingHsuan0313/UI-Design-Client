@@ -90,6 +90,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
   }
 
   createComponent(graphStorage: GraphStorage, component, parent) {
+    console.log("dropdown strategy hereeee");
     let dropdownBoxVertexStorage = this.createDropdownBoxVertex(graphStorage, component, parent);
     let dropdownHeaderVertexStorage = this.createDropdownHeaderVertex(graphStorage, component, dropdownBoxVertexStorage);
     let dropdownItemListVertexStorage = this.createDropdownItemListVertex(graphStorage, component, dropdownBoxVertexStorage);
