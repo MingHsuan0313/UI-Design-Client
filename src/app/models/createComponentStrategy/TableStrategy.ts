@@ -50,13 +50,13 @@ export class TableStrategy implements ICreateComponentStrategy {
         tableBoxStyle["overflow"] = true;
         let styleStorage = new StyleStorage(styleName, tableBoxStyle);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName, tableBoxStyle);
-        let width = widthValue*colNumber;
-        let height = heightValue*(rowNumber+1);
+        let width = widthValue * colNumber;
+        let height = heightValue * (rowNumber+1);
 
         let tableBoxVertexGeometry = new mxGeometry(this.basex,this.basey,width,height);
         let tableBoxVertexStorage = graphStorage.insertVertex(parent, component.id, "This is Box", tableBoxVertexGeometry, styleStorage, component);
-        component.width = width;
-        component.height = height;
+        component.width = width.toString();
+        component.height = height.toString();
 
         let tableHeaderVertexGeometry;
         console.log(colNumber)

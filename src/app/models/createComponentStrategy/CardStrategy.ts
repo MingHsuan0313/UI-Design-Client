@@ -43,7 +43,7 @@ export class CardStrategy implements ICreateComponentStrategy {
                 if(element.type == Library.compositeComponents.card[i]){
                     graphStorage.createComponent(element,cardBoxVertex.getVertex(),0,tempHeight);
 
-                    tempHeight = tempHeight + element.height + componentHeightGap; 
+                    tempHeight = tempHeight + parseInt(element.height.toString(),10) + componentHeightGap; 
 
                 }
             }
@@ -56,17 +56,17 @@ export class CardStrategy implements ICreateComponentStrategy {
         let height = 0;
         let hasButton = false;
         for(var i=0; i<componetList.length; i++){
-            if(maxWidth < componetList[i].width){
-                maxWidth = componetList[i].width
+            if(maxWidth < parseInt(componetList[i].width.toString(),10)){
+                maxWidth = parseInt(componetList[i].width.toString(),10)
             }
             console.log(componetList[i].height)
             if(componetList[i].type == "button"){
                 if (!hasButton){
-                    height = height + componetList[i].height + componentHeightGap;
+                    height = height + parseInt(componetList[i].height.toString(),10) + componentHeightGap;
                     hasButton = true;
                 }
             }else{
-                height = height + componetList[i].height + componentHeightGap;
+                height = height + parseInt(componetList[i].height.toString(),10) + componentHeightGap;
             }
         }
         height = height + 50;

@@ -29,13 +29,13 @@ export default class GraphEditorService {
 
     // this.bindComponent(fakeText)
     // this.bindComponent(fakeButton);
-    // this.bindComponent(fakeDropdown);
+    this.bindComponent(fakeDropdown);
     // this.bindComponent(fakeTable);
-     this.bindComponent(fakeCardComposite);
+    //  this.bindComponent(fakeCardComposite);
   }
 
   // object => svg
-  bindComponent(component:UIComponent, x?, y?) {
+  bindComponent(component, x?, y?) {
     if (x == undefined || y == undefined) {
       let graphStorage = this.findGraphByID(this.selectedGraphID);
       let parent = graphStorage.getGraph().getDefaultParent();

@@ -24,13 +24,7 @@ export class TextStrategy implements ICreateComponentStrategy {
         this.strategyName = "Text Strategy";
     }
 
-    createComponent(graphStorage:GraphStorage,component: Text,parent) {
-        console.log("ready create text")
-        let style = StyleLibrary[0]["text"];
-        if(component["href"].length > 0) {
-            style["fontColor"] = "blue";
-        }
-
+    createDataBinding() {
         let hasDataBinding = true;
         let dataBindingName = "text";
         let isList = -1;
@@ -39,17 +33,32 @@ export class TextStrategy implements ICreateComponentStrategy {
             dataBindingName,
             isList
         )
+        return dataBinding;
+    }
+
+    createComponent(graphStorage:GraphStorage,component: Text,parent) {
+        console.log("ready create text")
+        let dataBinding = this.createDataBinding();
+
+        let style = StyleLibrary[0]["text"];
+        if(component["href"].length > 0) {
+            style["fontColor"] = "blue";
+        }
         let styleName = "style" + component.id;
         let styleStorage = new StyleStorage(styleName,style);
+        graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
+
         let width = 30;
         let height = 30;
         let textGeometry = new mxGeometry(this.basex,this.basey,width,height);
-        console.log("ready create text2")
-        graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
         let vertexStorage = graphStorage.insertVertex(parent,component.id,component.text,textGeometry,styleStorage,component,dataBinding);
-        component.width = 30;
-        component.height = 30;
-        component.x = this.basex;
-        // component.vertexStorage = vertexStorage;
+
+        // binding width height x y with internal representation
+        component.width = width.toString();
+        component.height = height.toString();
+        component.x = this.basex.toString();
+        component.y = this.basey.toString();
+
+        return vertexStorage;
     }
 }

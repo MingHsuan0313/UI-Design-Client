@@ -1,6 +1,8 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { GraphStorage } from "../graph-storage.model";
-
+import { StyleLibrary } from "../../shared/styleLibrary";
+import { StyleStorage } from "../style-storage.model";
+import { DataBinding } from "../util/DataBinding";
 
 export class InputTextStrategy implements ICreateComponentStrategy {
     strategyName: string;
