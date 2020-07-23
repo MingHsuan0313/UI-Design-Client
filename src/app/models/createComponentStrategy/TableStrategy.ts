@@ -100,6 +100,6 @@ export class TableStrategy implements ICreateComponentStrategy {
                 tableBoxVertexStorage.addChild(tableDataVertexStorage.id);
             }
         }
-        component.vertexStorage = tableBoxVertexStorage;
+        // component.vertexStorage = tableBoxVertexStorage;
     }
 }

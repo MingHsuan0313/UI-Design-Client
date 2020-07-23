@@ -82,12 +82,12 @@ export class CardStrategy implements ICreateComponentStrategy {
         console.log(centerX)
 
         for(let element of componentListTemp) {
-            console.log(element)
-            let geometry = element.vertexStorage.vertex.getGeometry();
-            console.log(geometry)
-            geometry.x = centerX-element.width/2;
+            // console.log(element)
+            // let geometry = element.vertexStorage.vertex.getGeometry();
+            // console.log(geometry)
+            // geometry.x = centerX-element.width/2;
             
-            element.vertexStorage.vertex.setGeometry(geometry);
+            // element.vertexStorage.vertex.setGeometry(geometry);
         }
         
         graphStorage.getGraph().refresh();

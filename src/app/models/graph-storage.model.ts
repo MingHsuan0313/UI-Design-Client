@@ -6,6 +6,7 @@ import { ButtonStrategy } from "./createComponentStrategy/ButtonStrategy";
 import { TextStrategy } from "./createComponentStrategy/TextStrategy";
 import { DropdownStrategy } from "./createComponentStrategy/DropdownStrategy";
 import { TableStrategy } from "./createComponentStrategy/TableStrategy";
+import { InputTextStrategy } from "./createComponentStrategy/InputTextStrategy";
 import { StyleLibrary } from "../shared/styleLibrary";
 import { StyleStorage } from "./style-storage.model";
 import { CardStrategy } from "./createComponentStrategy/CardStrategy";
@@ -72,6 +73,9 @@ export class GraphStorage {
             }
             else if(component["type"] == "table") {
                 this.setStrategy(new TableStrategy(basex,basey));
+            }
+            else if(component["type"] == "input") {
+                this.setStrategy(new InputTextStrategy(basex,basey));
             }
 
             console.log(this.strategy.strategyName)

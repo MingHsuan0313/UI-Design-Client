@@ -47,6 +47,6 @@ export class TextStrategy implements ICreateComponentStrategy {
         let vertexStorage = graphStorage.insertVertex(parent,component.id,component.text,textGeometry,styleStorage,component,dataBinding);
         component.width = 30;
         component.height = 30;
-        component.vertexStorage = vertexStorage;
+        // component.vertexStorage = vertexStorage;
     }
 }
