@@ -91,7 +91,7 @@ export class GraphStorage {
   }
 
   // insert vertex
-  insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent) {
+  insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent,dataBinding?) {
     let vertex;
     try {
       this.graph.getModel().beginUpdate();
@@ -101,7 +101,7 @@ export class GraphStorage {
       // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
     }
 
-    const vertexStorage = new VertexStorage(vertex, styleStorage, uicomponent);
+    const vertexStorage = new VertexStorage(vertex, styleStorage, uicomponent,dataBinding);
     this.vertexStorageList.push(vertexStorage);
     return vertexStorage;
   }

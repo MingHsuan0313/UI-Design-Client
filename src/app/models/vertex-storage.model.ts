@@ -1,6 +1,6 @@
-import {StyleStorage, DataBinding} from "./modelDependency";
-import {Storage} from "../shared/storage";
-import {UIComponent} from "./model";
+import { StyleStorage, DataBinding } from "./modelDependency";
+import { Storage } from "../shared/storage";
+import { UIComponent } from "./model";
 
 /**
  * @description
@@ -17,13 +17,26 @@ export default class VertexStorage {
   children: any;
   dataBinding: DataBinding;
 
-  constructor(vertex, styleStorage, component) {
+  constructor(vertex, styleStorage, component, dataBinding?) {
     this.vertex = vertex;
     this.id = this.vertex["id"];
     this.parentId = this.vertex["parent"]["id"];
     this.styleStorage = styleStorage;
     this.component = component;
     this.children = [];
+
+    // initialize dataBinding
+    if (dataBinding == undefined) {
+      let dataBinding = {
+        hasDataBinding: false,
+        dataBindingName: "",
+        isList: -1
+      }
+      this.dataBinding = dataBinding;
+    }
+    else
+      this.dataBinding = dataBinding
+
   }
 
   /**
@@ -65,9 +78,9 @@ export default class VertexStorage {
   addChild(childID, childVertex, property, element?) {
     let child;
     if (property == "componentList") {
-      child = {childID, childVertex, property, element};
+      child = { childID, childVertex, property, element };
     } else {
-      child = {childID, childVertex, property};
+      child = { childID, childVertex, property };
     }
     this.children.push(child);
   }
@@ -77,46 +90,79 @@ export default class VertexStorage {
   }
 
   sync() {
-    const componentValues = Storage.getComponentValue(this.component.type.toString());
-    console.log("sync value");
+    if (this.dataBinding.hasDataBinding) {
+      let componentValueKey = this.dataBinding.dataBindingName;
 
-    // parent vertex
-    if (this.getVertex()["parent"]["id"] == "1") {
-      this.component["x"] = this.getVertexX();
-      this.component["y"] = this.getVertexY();
-      this.component["width"] = this.getVertexWidth();
-      this.component["height"] = this.getVertexHeight();
+      // databinding text , button only one value
+      if (this.dataBinding.isList == -1) {
+        this.component[componentValueKey] = this.vertex.value;
+      }
+      // databinidng dropdownItem , a list
+      else {
+        let listValues = this.component[componentValueKey].split(" ");
+        let index = this.dataBinding.isList;
+        listValues[index] = this.vertex.value;
 
-      if (this.children.length == 0) {
-        this.component[componentValues[0]] = this.getVertex()["value"];
-      } else {
+        // convert list to string
+        let result = ""
+        for (let index = 0; index < listValues.length; index++) {
+          result = result + listValues[index];
 
-        /// sync component basic attribute
-        for (let i = 0; i < componentValues.length; i++) {
-          let result = "";
-          for (let j = 0; j < this.children.length; j++) {
-            if (this.children[j]["property"] == componentValues[i]) {
-              result += this.children[j]["childVertex"]["value"] + " ";
-            }
-          }
-          this.component[componentValues[i]] = result;
-        }
-
-        // sync composite component list
-        for (let i = 0; i < this.children.length; i++) {
-          if (this.children[i]["property"] == "componentList") {
-            this.children[i]["element"]["x"] = this.children[i]["childVertex"]["geometry"]["x"];
-            this.children[i]["element"]["y"] = this.children[i]["childVertex"]["geometry"]["y"];
-            this.children[i]["element"]["width"] = this.children[i]["childVertex"]["geometry"]["width"];
-            this.children[i]["element"]["height"] = this.children[i]["childVertex"]["geometry"]["height"];
-            this.children[i]["element"]["text"] = this.children[i]["childVertex"]["value"]; // assume basic component
-
-            // composite componet is not available
+          // last element no need add space
+          if (index != listValues.length - 1) {
+            result += " "
           }
         }
+        this.component[componentValueKey] = result;
       }
     }
+    else {
+      console.log("no need data binding")
+    }
   }
+
+  // william
+  // sync() {
+  //   const componentValues = Storage.getComponentValue(this.component.type.toString());
+  //   console.log("sync value");
+
+  //   // parent vertex
+  //   if (this.getVertex()["parent"]["id"] == "1") {
+  //     this.component["x"] = this.getVertexX();
+  //     this.component["y"] = this.getVertexY();
+  //     this.component["width"] = this.getVertexWidth();
+  //     this.component["height"] = this.getVertexHeight();
+
+  //     if (this.children.length == 0) {
+  //       this.component[componentValues[0]] = this.getVertex()["value"];
+  //     } else {
+
+  //       /// sync component basic attribute
+  //       for (let i = 0; i < componentValues.length; i++) {
+  //         let result = "";
+  //         for (let j = 0; j < this.children.length; j++) {
+  //           if (this.children[j]["property"] == componentValues[i]) {
+  //             result += this.children[j]["childVertex"]["value"] + " ";
+  //           }
+  //         }
+  //         this.component[componentValues[i]] = result;
+  //       }
+
+  //       // sync composite component list
+  //       for (let i = 0; i < this.children.length; i++) {
+  //         if (this.children[i]["property"] == "componentList") {
+  //           this.children[i]["element"]["x"] = this.children[i]["childVertex"]["geometry"]["x"];
+  //           this.children[i]["element"]["y"] = this.children[i]["childVertex"]["geometry"]["y"];
+  //           this.children[i]["element"]["width"] = this.children[i]["childVertex"]["geometry"]["width"];
+  //           this.children[i]["element"]["height"] = this.children[i]["childVertex"]["geometry"]["height"];
+  //           this.children[i]["element"]["text"] = this.children[i]["childVertex"]["value"]; // assume basic component
+
+  //           // composite componet is not available
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 
