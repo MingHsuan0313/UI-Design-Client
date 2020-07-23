@@ -1,9 +1,9 @@
-import {ICreateComponentStrategy} from "./ICreateComponentStrategy";
-import {GraphStorage} from "../graph-storage.model";
-import {StyleLibrary} from "../../shared/styleLibrary";
-import {StyleStorage} from "../style-storage.model";
-import {DataBinding} from "../util/DataBinding";
-import {Text} from "../modelDependency";
+import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
+import { GraphStorage } from "../graph-storage.model";
+import { StyleLibrary } from "../../shared/styleLibrary";
+import { StyleStorage } from "../style-storage.model";
+import { DataBinding } from "../util/DataBinding";
+import { Text } from "../modelDependency";
 
 export class TextStrategy implements ICreateComponentStrategy {
   basex: number;
@@ -20,7 +20,21 @@ export class TextStrategy implements ICreateComponentStrategy {
     }
   }
 
-  createComponent(graphStorage: GraphStorage, component, parent) {
+  createDataBinding() {
+    let hasDataBinding = true;
+    let dataBindingName = "text";
+    let isList = -1;
+    let dataBinding = new DataBinding(
+      hasDataBinding,
+      dataBindingName,
+      isList
+    )
+    return dataBinding;
+  }
+
+  createTextVertex(graphStorage, component, parent) {
+    const dataBinding = this.createDataBinding();
+
     const style = StyleLibrary[0]["text"];
     if (component["href"].length > 0) {
       style["fontColor"] = "#3366BB";
@@ -33,9 +47,19 @@ export class TextStrategy implements ICreateComponentStrategy {
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
     // Initialized
-    graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component);
+    let textVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding);
+    return textVertexStorage;
+  }
+
+  createComponent(graphStorage: GraphStorage, component, parent) {
+    let textVertexStorage = this.createTextVertex(graphStorage, component ,parent);
     // component.vertexStorage = vertexStorage;
-    component["style"] = style;
-    return this;
+    component.x = textVertexStorage.getVertexX(); 
+    component.y = textVertexStorage.getVertexY();
+    component.width = textVertexStorage.getVertexWidth();
+    component.height = textVertexStorage.getVertexHeight();
+    component["style"] = textVertexStorage.getStyle();
+    return textVertexStorage;
+    // return this;
   }
 }
