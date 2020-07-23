@@ -23,7 +23,7 @@ export class TextStrategy implements ICreateComponentStrategy {
   createComponent(graphStorage: GraphStorage, component, parent) {
     const style = StyleLibrary[0]["text"];
     if (component["href"].length > 0) {
-      style["fontColor"] = "blue";
+      style["fontColor"] = "#3366BB";
     } else {
       style["fontColor"] = "black";
     }

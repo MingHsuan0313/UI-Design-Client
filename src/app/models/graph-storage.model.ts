@@ -10,6 +10,7 @@ import {TableStrategy} from "./createComponentStrategy/TableStrategy";
 import {CardStrategy} from "./createComponentStrategy/CardStrategy";
 import {IconStrategy} from "./createComponentStrategy/IconStrategy";
 import {InputStrategy} from './createComponentStrategy/InputStrategy';
+import {LayoutStrategy} from './createComponentStrategy/LayoutStrategy';
 
 export class GraphStorage {
   vertexStorageList: VertexStorage[];
@@ -58,6 +59,10 @@ export class GraphStorage {
       basex = 30;
       basey = 30;
     }
+    else if(component["type"].startsWith("Layout")){
+      basex = 0;
+      basey = 0;
+    }
 
     // basic component
     if (component["componentList"] == undefined) {
@@ -73,6 +78,9 @@ export class GraphStorage {
         this.setStrategy(new IconStrategy(basex, basey));
       } else if (component["type"].startsWith("input")) {
         this.setStrategy(new InputStrategy(basex, basey));
+      } else if (component["type"].startsWith("Layout")){
+        this.setStrategy(new LayoutStrategy(basex, basey));
+
       }
 
       this.strategy.createComponent(this, component, parent);

@@ -85,6 +85,16 @@ export const StyleLibrary = [
     input: {
       strokeColor: '#000000',
       fillColor: "#ffffff"
+    },
+
+    Layout1Header:{
+      border: '#000000',
+      fillColor: "#ffffff"
+    },
+
+    Layout1Sidebar:{
+      border: '#000000',
+      fillColor: "#2f353a"
     }
   }
 ];

@@ -1,6 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {Storage} from "../../shared/storage";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import GraphEditorService from "../../services/graph-editor.service";
+import {Layout, Text} from "../../models/model";
+import {PropertyGenerator} from "../../shared/property-generator";
 
 
 @Component({
@@ -22,8 +25,10 @@ export class ControlPanelComponent implements OnInit {
   componentProperties: any[];
 
   storageComponents: any[] = Storage.components;
+  private layoutComponent: any;
+  private layoutPart: any;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService) {
 
 
   }
@@ -79,12 +84,49 @@ export class ControlPanelComponent implements OnInit {
       response => console.log(response["body"])
     );
   }
+
   postPageUICDL(PDL) {
     return this.httpClient.post("http://localhost:8080", PDL,
-      { headers: new HttpHeaders().set("Content-Type", "application/json"),
-        observe: "response", withCredentials: true, responseType: "text" }
+      {
+        headers: new HttpHeaders().set("Content-Type", "application/json"),
+        observe: "response", withCredentials: true, responseType: "text"
+      }
     );
   }
+
+  apply() {
+    // selector is now meaningless
+    this.layoutComponent = new Layout({id: PropertyGenerator.getID(), selector: "layout", type: this.layout_selected});
+    Storage.add(this.layoutComponent);
+    this.graphEditorService.bindComponent(this.layoutComponent);
+  }
+
+  addLayoutItem(sf) {
+    document.getElementById("myForm").style.display = "none";
+    let properties = sf.value;
+    console.log(sf.value);
+    properties["id"] = PropertyGenerator.getID();
+    properties["selector"] = "text";
+    properties["type"] = "text";
+    let text = new Text(properties);
+    if (this.layoutPart == "sidebar") {
+      this.layoutComponent["sidebar"].push(text);
+    } else if (this.layoutPart == "header") {
+      this.layoutComponent["header"].push(text);
+    }
+
+    this.graphEditorService.bindComponent(text);
+  }
+
+  openForm(s) {
+    this.layoutPart = s;
+    document.getElementById("myForm").style.display = "block";
+  }
+
+  closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
+
 }
 
 

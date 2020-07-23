@@ -257,6 +257,33 @@ export class Breadcrumb implements UIComponent {
 
   remove(component: UIComponent): void {
   }
+}
+
+export class Layout implements UIComponent {
+  x: String;
+  y: String;
+  width: String;
+  height: String;
+  id: String;
+  selector: String;
+  type: String;       // layout1, layout2, ...
+  style: String;
+  header: any = [];
+  sidebar: any = [];
+
+  constructor(init?: Partial<Layout>) {
+    Object.assign(this, init);
+  }
+
+  add(component: UIComponent): void {
+  }
+
+  getInfo(): any {
+    return this;
+  }
+
+  remove(component: UIComponent): void {
+  }
 
 }
 
