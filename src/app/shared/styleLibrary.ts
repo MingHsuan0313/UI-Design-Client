@@ -15,29 +15,33 @@ export const StyleLibrary = [
       rounded: true,
       strokeColor: '#269abc'
     },
-    dropdownBox: {
-      opacity: '0',
-      strokeColor: '#ffffff'
-    },
-    dropdownHeader: {
-      fontSize: '14',
-      fontColor: '#333333',
-      rounded: true,
-      strokeColor: '#a6a6a6',
-      fillColor: '#ffffff',
-      border: '#a6a6a6',
+    dropdown: {
+      dropdownBox: {
+        opacity: '0',
+        strokeColor: '#ffffff'
+      },
 
-    },
-    dropdownList: {
-      strokeColor: '#c8c8c8',
-      fillColor: '#ffffff',
-      opacity: '0',
-    },
-    dropdownItem: {
-      strokeColor: '#ffffff',
-      fontColor: '#333333',
-      fontSize: '14',
+      dropdownHeader: {
+        fontSize: '14',
+        fontColor: '#333333',
+        rounded: true,
+        strokeColor: '#a6a6a6',
+        fillColor: '#ffffff',
+        border: '#a6a6a6',
 
+      },
+
+      dropdownList: {
+        strokeColor: '#c8c8c8',
+        fillColor: '#ffffff',
+        opacity: '0',
+      },
+
+      dropdownItem: {
+        strokeColor: '#ffffff',
+        fontColor: '#333333',
+        fontSize: '14',
+      },
     },
     icon: {},
     tableBox: {

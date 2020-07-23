@@ -25,7 +25,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
 
     // insert dropdown box
     let styleName = "dropdownBoxStyle" + component.id;
-    const dropdownBoxStyle = StyleLibrary[0]["dropdownBox"];
+    const dropdownBoxStyle = StyleLibrary[0]["dropdown"]["dropdownBox"];
     let styleStorage = new StyleStorage(styleName, dropdownBoxStyle);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownBoxStyle);
     const dropdownVertexGeometry = new mxGeometry(this.basex, this.basey, 220, dropdownHeight);
@@ -36,7 +36,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
 
     // insert dropdown header
     styleName = "dropdownHeaderStyle" + component.id;
-    const dropdownHeaderStyle = StyleLibrary[0]["dropdownHeader"];
+    const dropdownHeaderStyle = StyleLibrary[0]["dropdown"]["dropdownHeader"];
     styleStorage = new StyleStorage(styleName, dropdownHeaderStyle);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownHeaderStyle);
     const dropdownHeaderGeometry = new mxGeometry(0, 20, 200, 30);
@@ -45,7 +45,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
 
 
     styleName = "dropdownListStyle" + component.id;
-    const dropdownListStyle = StyleLibrary[0]["dropdownList"];
+    const dropdownListStyle = StyleLibrary[0]["dropdown"]["dropdownList"];
     styleStorage = new StyleStorage(styleName, dropdownListStyle);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownListStyle);
 
@@ -62,7 +62,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
       const dropdownItemGeometry = new mxGeometry(0, 23 + 30 + 30 * index, 200, 30);
 
       styleName = "dropdownItemstyle" + component.id;
-      const dropdownItemStyle = StyleLibrary[0]["dropdownItem"];
+      const dropdownItemStyle = StyleLibrary[0]["dropdown"]["dropdownItem"];
       styleStorage = new StyleStorage(styleName, dropdownItemStyle);
       graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownItemStyle);
       const dropdownItemVertexStorage = graphStorage.insertVertex(dropdownItemListVertexStorage.getVertex(), component.id, element, dropdownItemGeometry, styleStorage, component);

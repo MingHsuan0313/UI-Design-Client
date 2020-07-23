@@ -50,7 +50,7 @@ export class TextStrategy implements ICreateComponentStrategy {
     graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding);
     // component.vertexStorage = vertexStorage;
     component["style"] = style;
-    // return textVertexStorage;
-    return this;
+    return textVertexStorage;
+    // return this;
   }
 }
