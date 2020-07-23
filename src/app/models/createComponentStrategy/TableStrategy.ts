@@ -29,7 +29,7 @@ export class TableStrategy implements ICreateComponentStrategy {
 
     // set style
     let styleName = "tableBoxstyle" + component.id;
-    const tableBoxStyle = StyleLibrary[0]["tableBox"];
+    const tableBoxStyle = StyleLibrary[0]["table"]["tableBox"];
     tableBoxStyle["overflow"] = true;
     let styleStorage = new StyleStorage(styleName, tableBoxStyle);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, tableBoxStyle);
@@ -44,7 +44,7 @@ export class TableStrategy implements ICreateComponentStrategy {
     let tableHeaderVertexGeometry;
     for (let i = 0; i < colNumber; i++) {
       styleName = "tableHeaderstyle" + component.id + ":" + i;
-      const tableHeaderStyle = StyleLibrary[0]["tableHeader"];
+      const tableHeaderStyle = StyleLibrary[0]["table"]["tableHeader"];
       tableHeaderStyle["overflow"] = true;
       styleStorage = new StyleStorage(styleName, tableHeaderStyle);
       graphStorage.getGraph().getStylesheet().putCellStyle(styleName, tableHeaderStyle);
@@ -58,7 +58,7 @@ export class TableStrategy implements ICreateComponentStrategy {
     let tableDataVertexGeometry;
     let tableDataStyle;
 
-    tableDataStyle = StyleLibrary[0]["tableData_grey"];
+    tableDataStyle = StyleLibrary[0]["table"]["tableData_grey"];
 
     // tableDataStyle = StyleLibrary[0]['tableData_white'];
 

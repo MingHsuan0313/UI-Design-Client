@@ -8,6 +8,7 @@ export const StyleLibrary = [
       fontSize: '25',
       fontColor: 'black'
     },
+
     button: {
       fontSize: '18',
       fontColor: '#fff',
@@ -15,6 +16,7 @@ export const StyleLibrary = [
       rounded: true,
       strokeColor: '#269abc'
     },
+
     dropdown: {
       dropdownBox: {
         opacity: '0',
@@ -43,34 +45,39 @@ export const StyleLibrary = [
         fontSize: '14',
       },
     },
+
     icon: {},
-    tableBox: {
-      opacity: '0',
-      strokeColor: '#000000',
 
-    },
-    tableHeader: {
-      fontStyle: 1,  //FONT_BOLD
-      fillColor: '#ffffff',
-      strokeColor: '#b8bcc2',
-      fontColor: '#4f5d73',
-      fontSize: '16',
-      shadow: true,
+    table: {
+      tableBox: {
+        opacity: '0',
+        strokeColor: '#000000',
+      },
 
-    },
-    tableData_white: {
-      fillColor: '#ffffff',
-      strokeColor: '#d8dbe0',
-      fontColor: '#4f5d73',
-      fontSize: '16',
-      shadow: true,
-    },
-    tableData_grey: {
-      fillColor: '#f1f4f6',
-      strokeColor: '#d8dbe0',
-      fontColor: '#4f5d73',
-      fontSize: '16',
-      shadow: true,
+      tableHeader: {
+        fontStyle: 1,  //FONT_BOLD
+        fillColor: '#ffffff',
+        strokeColor: '#b8bcc2',
+        fontColor: '#4f5d73',
+        fontSize: '16',
+        shadow: true,
+      },
+
+      tableData_white: {
+        fillColor: '#ffffff',
+        strokeColor: '#d8dbe0',
+        fontColor: '#4f5d73',
+        fontSize: '16',
+        shadow: true,
+      },
+
+      tableData_grey: {
+        fillColor: '#f1f4f6',
+        strokeColor: '#d8dbe0',
+        fontColor: '#4f5d73',
+        fontSize: '16',
+        shadow: true,
+      },
     },
 
     // composite component
