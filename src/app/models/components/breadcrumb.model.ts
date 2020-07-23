@@ -4,8 +4,8 @@ import VertexStorage from "../vertex-storage.model";
 export class Breadcrumb implements UIComponent {
     x: String;
     y: String;
-    width: number;
-    height: number;
+    width: String;
+    height: String;
     id: String;
     selector: String;
     type: String;

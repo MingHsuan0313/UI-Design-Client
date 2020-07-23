@@ -81,6 +81,7 @@ export class CardStrategy implements ICreateComponentStrategy {
         let centerX = maxWidth/2;
         console.log(centerX)
 
+<<<<<<< HEAD
         // for(let element of componentListTemp) {
         //     console.log(element)
         //     let geometry = element.vertexStorage.vertex.getGeometry();
@@ -89,6 +90,16 @@ export class CardStrategy implements ICreateComponentStrategy {
             
         //     element.vertexStorage.vertex.setGeometry(geometry);
         // }
+=======
+        for(let element of componentListTemp) {
+            // console.log(element)
+            // let geometry = element.vertexStorage.vertex.getGeometry();
+            // console.log(geometry)
+            // geometry.x = centerX-element.width/2;
+            
+            // element.vertexStorage.vertex.setGeometry(geometry);
+        }
+>>>>>>> 5d6dc7de733610d53138ab80aec7fc9a5023dc60
         
         graphStorage.getGraph().refresh();
     }

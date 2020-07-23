@@ -2,12 +2,12 @@ import { UIComponent }  from './UIComponent.model'
 import VertexStorage from '../vertex-storage.model'
 
 export class Icon implements UIComponent {
-    x: String;
-    y: String;
-    height?: number;
-    width?: number;
     id: String;
     selector: String;
+    x: String;
+    y: String;
+    width?: String;
+    height?: String;
     text: String;
     type: String;
     style: Object[];

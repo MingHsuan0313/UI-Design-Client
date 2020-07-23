@@ -3,9 +3,9 @@ import VertexStorage from '../vertex-storage.model'
 
 export class Text implements UIComponent {
     id: String;
-    height?: number;
+    height?: String;
     selector: String;
-    width?: number;
+    width?: String;
     x?: String;
     y?: String;
     text: String;
