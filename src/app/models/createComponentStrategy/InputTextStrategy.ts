@@ -21,5 +21,6 @@ export class InputTextStrategy implements ICreateComponentStrategy {
     }
 
     createComponent(graphStorage: GraphStorage, component: any, parent: any) {
+        console.log("component here")
     }
 }

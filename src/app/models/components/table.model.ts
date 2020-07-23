@@ -3,9 +3,9 @@ import VertexStorage from '../vertex-storage.model'
 
 export class Table implements UIComponent {
     id: String;
-    height?: number;
+    height?: String;
+    width?: String;
     selector: String;
-    width?: number;
     x: String;
     y: String;
     collumn: number;

@@ -3,11 +3,11 @@ import VertexStorage from '../vertex-storage.model'
 
 export class InputGroupComposite implements UIComponent {
     id: String;
-    height?: number;
     selector: String;
-    width?: number;
     x: String;
     y: String;
+    width?: String;
+    height?: String;
     type: String;
     componentList: UIComponent[] = [];
     style: Object[];

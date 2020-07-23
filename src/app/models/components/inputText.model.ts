@@ -3,11 +3,11 @@ import VertexStorage from '../vertex-storage.model'
 
 export class InputText implements UIComponent {
     id: String;
-    height?: number;
     selector: String;
-    width?: number;
     x: String;
     y: String;
+    width?: String;
+    height?: String;
     headers: tableHeader[];
     data: any[][];
     type: String;

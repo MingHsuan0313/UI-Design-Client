@@ -28,7 +28,8 @@ export class ButtonStrategy implements ICreateComponentStrategy {
         let styleStorage = new StyleStorage(styleName,style);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName,style);
         let width = 15 * component.text.length;
-        let buttonGeometry = new mxGeometry(this.basex,this.basey,width,40);
+        let height = 40;
+        let buttonGeometry = new mxGeometry(this.basex,this.basey,width,height);
         let hasDataBining = true;
         let dataBindingName = "text";
         let isList = -1;
@@ -38,9 +39,13 @@ export class ButtonStrategy implements ICreateComponentStrategy {
             isList
         )
         let vertexStorage = graphStorage.insertVertex(parent,component.id,component.text,buttonGeometry,styleStorage,component,dataBinding);
+        component.x = this.basex;
+        component.y = this.basey;
         component.width = width;
-        component.height = 40;
-        component.vertexStorage = vertexStorage
+        component.height = height;
+        
+        // component.vertexStorage = vertexStorage
+        return vertexStorage;
         
     }
 }

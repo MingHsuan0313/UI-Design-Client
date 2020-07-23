@@ -82,6 +82,10 @@ export const StyleLibrary = [
             cardHeader:{
                 
             }
+        },
+
+        // inputText
+        input: {
         }
     }
 ]
