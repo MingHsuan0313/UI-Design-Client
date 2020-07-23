@@ -23,6 +23,18 @@ export class CardStrategy implements ICreateComponentStrategy {
     this.strategyName = "Card Strategy";
   }
 
+  createDataBinding() {
+
+  }
+
+  createCardBoxVertex() {
+
+  }
+
+  createCardHeaderVertex() {
+
+  }
+
   createComponent(graphStorage: GraphStorage, component, parent) {
 
     // insert dropdown box
