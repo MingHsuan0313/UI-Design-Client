@@ -31,21 +31,29 @@ export class ButtonStrategy implements ICreateComponentStrategy {
     return dataBinding;
   }
 
-  createComponent(graphStorage: GraphStorage, component, parent) {
+  createButtonVertex(graphStorage, component, parent) {
     let dataBinding = this.createDataBinding();
-
     const style = StyleLibrary[0]["button"];
     const styleName = "style" + component.id;
     const styleStorage = new StyleStorage(styleName, style);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
     const width = 15 * component.text.length;
-    const buttonGeometry = new mxGeometry(this.basex, this.basey, width, 40);
+    const height = 40;
+    const buttonGeometry = new mxGeometry(this.basex, this.basey, width, height);
     let buttonVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, buttonGeometry, styleStorage, component,dataBinding);
 
-    component.width = width;
-    component.height = 40;
-    component["style"] = style;
+    return buttonVertexStorage;
+  }
+
+  createComponent(graphStorage: GraphStorage, component, parent) {
+    let buttonVertexStorage = this.createButtonVertex(graphStorage, component, parent);
+
+    component.x = buttonVertexStorage.getVertexX();
+    component.y = buttonVertexStorage.getVertexY();
+    component.width = buttonVertexStorage.getVertexWidth();
+    component.height = buttonVertexStorage.getVertexHeight();
+    component["style"] = buttonVertexStorage.getStyle();
 
     return buttonVertexStorage;
   }

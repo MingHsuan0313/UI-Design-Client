@@ -75,6 +75,10 @@ export default class VertexStorage {
     }
   }
 
+  getStyle() {
+    return this.styleStorage.getStyle();
+  }
+
   addChild(childID, childVertex, property, element?) {
     let child;
     if (property == "componentList") {

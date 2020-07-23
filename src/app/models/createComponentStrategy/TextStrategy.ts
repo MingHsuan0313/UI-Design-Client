@@ -32,7 +32,7 @@ export class TextStrategy implements ICreateComponentStrategy {
     return dataBinding;
   }
 
-  createComponent(graphStorage: GraphStorage, component, parent) {
+  createTextVertex(graphStorage, component, parent) {
     const dataBinding = this.createDataBinding();
 
     const style = StyleLibrary[0]["text"];
@@ -44,12 +44,21 @@ export class TextStrategy implements ICreateComponentStrategy {
     const styleName = "style" + component.id;
     const styleStorage = new StyleStorage(styleName, style);
     const textGeometry = new mxGeometry(this.basex, this.basey, 30, 30);
-    let textVertexStorage = graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
+    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
     // Initialized
-    graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding);
+    let textVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding);
+    return textVertexStorage;
+  }
+
+  createComponent(graphStorage: GraphStorage, component, parent) {
+    let textVertexStorage = this.createTextVertex(graphStorage, component ,parent);
     // component.vertexStorage = vertexStorage;
-    component["style"] = style;
+    component.x = textVertexStorage.getVertexX(); 
+    component.y = textVertexStorage.getVertexY();
+    component.width = textVertexStorage.getVertexWidth();
+    component.height = textVertexStorage.getVertexHeight();
+    component["style"] = textVertexStorage.getStyle();
     return textVertexStorage;
     // return this;
   }

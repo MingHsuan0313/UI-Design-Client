@@ -29,7 +29,6 @@ export class DropdownStrategy implements ICreateComponentStrategy {
       isList
     );
     return dataBinding;
-
   }
 
   createDropdownBoxVertex(graphStorage, component, parent) {
@@ -73,11 +72,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     return dropdownItemListVertexStorage;
   }
 
-  createComponent(graphStorage: GraphStorage, component, parent) {
-    let dropdownBoxVertexStorage = this.createDropdownBoxVertex(graphStorage, component, parent);
-    let dropdownHeaderVertexStorage = this.createDropdownHeaderVertex(graphStorage, component, dropdownBoxVertexStorage);
-    let dropdownItemListVertexStorage = this.createDropdownItemListVertex(graphStorage, component, dropdownBoxVertexStorage);
-
+  createDropdownItemVertexs(graphStorage, component, parent, grandparent) {
     let index = 0;
     const itemList = component.items.split(" ");
     // insert dropdown item
@@ -88,11 +83,20 @@ export class DropdownStrategy implements ICreateComponentStrategy {
       const dropdownItemStyle = StyleLibrary[0]["dropdown"]["dropdownItem"];
       const styleStorage = new StyleStorage(styleName, dropdownItemStyle);
       graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownItemStyle);
-      const dropdownItemVertexStorage = graphStorage.insertVertex(dropdownItemListVertexStorage.getVertex(), component.id, element, dropdownItemGeometry, styleStorage, component,dataBinding);
-      dropdownBoxVertexStorage.addChild(dropdownItemVertexStorage.id, dropdownItemVertexStorage.getVertex(), "items");
+      const dropdownItemVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, element, dropdownItemGeometry, styleStorage, component,dataBinding);
+      grandparent.addChild(dropdownItemVertexStorage.id, dropdownItemVertexStorage.getVertex(), "items");
       index += 1;
     }
+  }
 
+  createComponent(graphStorage: GraphStorage, component, parent) {
+    let dropdownBoxVertexStorage = this.createDropdownBoxVertex(graphStorage, component, parent);
+    let dropdownHeaderVertexStorage = this.createDropdownHeaderVertex(graphStorage, component, dropdownBoxVertexStorage);
+    let dropdownItemListVertexStorage = this.createDropdownItemListVertex(graphStorage, component, dropdownBoxVertexStorage);
+    this.createDropdownItemVertexs(graphStorage,component,dropdownItemListVertexStorage, dropdownBoxVertexStorage);
+
+    component.x = dropdownBoxVertexStorage.getVertexX();
+    component.y = dropdownBoxVertexStorage.getVertexY();
     component.width = dropdownBoxVertexStorage.getVertexWidth();
     component.height = dropdownBoxVertexStorage.getVertexHeight();
 
