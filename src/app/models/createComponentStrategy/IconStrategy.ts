@@ -21,8 +21,21 @@ export class IconStrategy implements ICreateComponentStrategy {
     }
   }
 
+  createDataBinding(index, key) {
+    const hasDataBinding = true;
+    const dataBindingName = key;
+    const isList = index;
+    const dataBinding = new DataBinding(
+      hasDataBinding,
+      dataBindingName,
+      isList
+    );
+    return dataBinding;
+  }
+
   // ICON STYLE IS UNDEFINE
   createComponent(graphStorage: GraphStorage, component, parent) {
+    this.createDataBinding(-1, "text");
     const style = StyleLibrary[0]["icon"];
     const styleName = "style" + component.id;
     const styleStorage = new StyleStorage(styleName, style);
