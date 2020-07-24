@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from "@angular/core";
 import {Storage} from "../../../shared/storage";
 import {NgForm} from "@angular/forms";
 import GraphEditorService from "../../../services/graph-editor.service";
@@ -14,7 +14,7 @@ import {
   InputGroupComposite,
   Table,
   Text
-} from '../../../models/model';
+} from "../../../models/model";
 
 
 
@@ -166,6 +166,10 @@ export class WizardComponent implements OnInit {
     if (this.setSubComponent(sf.value)) {
       console.log("ready to add " + this.subComponentName + " component to composite component");
       this.component.add(this.subComponent);
+      sf.resetForm();
+      for (const element of this.properties) {
+        sf["value"][element] = "";
+      }
     }
   }
   clickNext() {
