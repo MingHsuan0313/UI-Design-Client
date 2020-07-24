@@ -3,10 +3,17 @@ export const StyleLibrary = [
     genere: "coreUI",
 
     // basic component
-    text: {
-      opacity: "0",
-      fontSize: "25",
-      fontColor: "black"
+    text:{
+      text_black: {
+        opacity: "0",
+        fontSize: "25",
+        fontColor: "black"
+      }, 
+      text_blue: {
+        opacity: "0",
+        fontSize: "25",
+        fontColor: "#336688"
+      }, 
     },
 
     button: {

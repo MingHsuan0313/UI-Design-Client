@@ -57,7 +57,7 @@ export class GraphStorage {
 
   createComponent(component, parent, basex?, basey?) {
     console.log("create Component heree");
-    console.log(component);
+
     if (basex == undefined || basey == undefined) {
       basex = 30;
       basey = 30;

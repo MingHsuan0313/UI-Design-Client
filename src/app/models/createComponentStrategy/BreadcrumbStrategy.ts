@@ -68,8 +68,8 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
         for(let subUIComponent of component["componentList"]) {
 
           let vertexStorage: VertexStorage = graphStorage.createComponent(subUIComponent, breadcrumbBoxVertexStorage.getVertex(), this.basex, this.basey)
-
-          breadcrumbBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList",subUIComponent);
+          //console.log(vertexStorage)
+          breadcrumbBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
           this.basex = this.basex + vertexStorage.getVertexWidth() + 10;
 
           if(i != component["componentList"].length-1){

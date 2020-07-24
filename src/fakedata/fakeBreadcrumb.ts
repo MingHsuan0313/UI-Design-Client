@@ -12,15 +12,15 @@ export let fakeBreadcrumb = {
         },
         {
             text: "World",
-            href: "2",
+            href: "",
             id: "4",
             selector: "text3",
             type: "text"
         },
         {
             text: "OK",
-            href: "2",
-            id: "4",
+            href: "",
+            id: "5",
             selector: "text3",
             type: "text"
         },
