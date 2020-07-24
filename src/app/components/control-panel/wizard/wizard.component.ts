@@ -166,10 +166,12 @@ export class WizardComponent implements OnInit {
     if (this.setSubComponent(sf.value)) {
       console.log("ready to add " + this.subComponentName + " component to composite component");
       this.component.add(this.subComponent);
-      sf.resetForm();
       for (const element of this.properties) {
         sf["value"][element] = "";
       }
+
+      //reset form with dafault value
+      sf.resetForm(sf["value"]);
     }
   }
   clickNext() {

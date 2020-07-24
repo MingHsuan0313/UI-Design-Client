@@ -64,7 +64,6 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
 
         this.basey = 20;
         this.basex = 30;
-
         var i = 0;
         for(let subUIComponent of component["componentList"]) {
 
@@ -82,7 +81,7 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
 
         let newmxGeometry = new mxGeometry(0, 0, this.basex+30, 70);
         breadcrumbBoxVertexStorage.getVertex().setGeometry(newmxGeometry);
-        graphStorage.getGraph().refresh();
+        // graphStorage.getGraph().refresh();
 
         return breadcrumbBoxVertexStorage;
     }

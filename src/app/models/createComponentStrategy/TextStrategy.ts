@@ -35,18 +35,17 @@ export class TextStrategy implements ICreateComponentStrategy {
   createTextVertex(graphStorage, component, parent) {
     const dataBinding = this.createDataBinding();
 
-    let style;
+    let style = StyleLibrary[0]["text"];
     if (component["href"].length > 0) {
-     // style["fontColor"] = "#3366BB";
-      style = StyleLibrary[0]["text"]["text_blue"];
+      style["fontColor"] = "#3366BB";
     } else {
-      style = StyleLibrary[0]["text"]["text_black"];
+      style["fontColor"] = "black";
     }
     const styleName = "style"+"Text"+ component.id;
-    
+
     const styleStorage = new StyleStorage(styleName, style);
 
-    let width = (component.text.length)*12;    
+    let width = (component.text.length)*12;
     const textGeometry = new mxGeometry(this.basex, this.basey, width, 30);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
