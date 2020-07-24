@@ -243,19 +243,13 @@ export class BreadcrumbComposite implements UIComponent {
   type: String;
   style: String;
   componentList: any[] = [];
-<<<<<<< HEAD
-  constructor(init?: Partial<Breadcrumb>) {
-=======
 
   constructor(init?: Partial<BreadcrumbComposite>) {
->>>>>>> c8eadd46ac0fcbe8ebd32706e6778067ec9eedea
     Object.assign(this, init);
   }
 
   add(component: UIComponent): void {
     this.componentList.push(component);
-<<<<<<< HEAD
-=======
   }
 
   getInfo(): any {
@@ -283,7 +277,6 @@ export class FormComposite implements UIComponent {
 
   add(component: UIComponent): void {
     this.componentList.push(component);
->>>>>>> c8eadd46ac0fcbe8ebd32706e6778067ec9eedea
   }
 
   getInfo(): any {

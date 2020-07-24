@@ -1,6 +1,6 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { GraphStorage } from "../graph-storage.model";
-import { Breadcrumb } from "../model";
+import { BreadcrumbComposite } from "../model";
 import { StyleStorage } from "../style-storage.model";
 import { DataBinding } from "../util/DataBinding";
 import { StyleLibrary } from "../../shared/styleLibrary";

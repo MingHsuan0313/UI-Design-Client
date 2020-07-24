@@ -91,7 +91,6 @@ export class GraphStorage {
       if (component["type"] == "card") {
         this.setStrategy(new CardStrategy(basex, basey));
       }
-<<<<<<< HEAD
       if (component["type"] == "breadcrumb") {
         this.setStrategy(new BreadcrumbStrategy(basex, basey));
       }
@@ -110,24 +109,6 @@ export class GraphStorage {
       // let newmxGeometry = new mxGeometry(0,0,maxWidth,basey);
       // compositeVertexStorage.setGeometry(newmxGeometry);
       // this.getGraph().refresh();
-=======
-
-      const compositeVertexStorage = this.strategy.createComponent(this, component, parent);
-      basey = basey + 20;
-      let maxWidth = 0;
-      for (const subUIComponent of component["componentList"]) {
-        const vertexStorage = this.createComponent(subUIComponent, compositeVertexStorage.getVertex(), basex, basey);
-        if (vertexStorage.getVertexWidth() > maxWidth) {
-          maxWidth = vertexStorage.getVertexWidth();
-        }
-        basey = basey + vertexStorage.getVertexHeight();
-        compositeVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
-      }
-
-      const newmxGeometry = new mxGeometry(0, 0, maxWidth, basey);
-      compositeVertexStorage.setGeometry(newmxGeometry);
-      this.getGraph().refresh();
->>>>>>> c8eadd46ac0fcbe8ebd32706e6778067ec9eedea
       return compositeVertexStorage;
     }
 
