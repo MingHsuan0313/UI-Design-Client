@@ -3,7 +3,18 @@ import {Storage} from "../../../shared/storage";
 import {NgForm} from "@angular/forms";
 import GraphEditorService from "../../../services/graph-editor.service";
 import {PropertyGenerator} from "../../../shared/property-generator";
-import {Breadcrumb, Button, CardComposite, Dropdown, Icon, INPUT, InputGroupComposite, Table, Text} from "../../../models/model";
+import {
+  BreadcrumbComposite,
+  Button,
+  CardComposite,
+  Dropdown,
+  FormComposite,
+  Icon,
+  INPUT,
+  InputGroupComposite,
+  Table,
+  Text
+} from '../../../models/model';
 
 
 
@@ -65,7 +76,10 @@ export class WizardComponent implements OnInit {
         this.component = new INPUT(properties);
         break;
       case "breadcrumb":
-        this.component = new Breadcrumb(properties);
+        this.component = new BreadcrumbComposite(properties);
+        break;
+      case "form":
+        this.component = new FormComposite(properties);
         break;
       default:
         console.log("Component Building Failed");
@@ -104,7 +118,10 @@ export class WizardComponent implements OnInit {
         this.component = new INPUT(properties);
         break;
       case "breadcrumb":
-        this.component = new Breadcrumb(properties);
+        this.component = new BreadcrumbComposite(properties);
+        break;
+      case "form":
+        this.component = new FormComposite(properties);
         break;
       default:
         console.log("Sub Component Building Failed");

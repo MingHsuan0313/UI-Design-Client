@@ -41,7 +41,7 @@ export class ButtonStrategy implements ICreateComponentStrategy {
     const width = 15 * component.text.length;
     const height = 40;
     const buttonGeometry = new mxGeometry(this.basex, this.basey, width, height);
-    let buttonVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, buttonGeometry, styleStorage, component,dataBinding);
+    let buttonVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, buttonGeometry, styleStorage, component,dataBinding, true);
 
     return buttonVertexStorage;
   }

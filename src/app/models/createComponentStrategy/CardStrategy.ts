@@ -43,6 +43,7 @@ export class CardStrategy implements ICreateComponentStrategy {
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, cardBoxStyle);
     const cardVertexGeometry = new mxGeometry(0, 0, 250, 300);
     const cardVertexStorage = graphStorage.insertVertex(parent, component.id, "", cardVertexGeometry, styleStorage, component);
+    cardVertexStorage.setIsPrimary(true);
     return cardVertexStorage;
   }
 

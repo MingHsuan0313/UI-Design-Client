@@ -1,6 +1,6 @@
-import {StyleStorage, DataBinding} from "./modelDependency";
-import {Storage} from "../shared/storage";
-import {UIComponent} from "./model";
+import {StyleStorage, DataBinding} from './modelDependency';
+import {Storage} from '../shared/storage';
+import {UIComponent} from './model';
 
 /**
  * @description
@@ -16,20 +16,27 @@ export default class VertexStorage {
   styleStorage: StyleStorage;
   children: any;
   dataBinding: DataBinding;
+  isPrimary: boolean;
 
-  constructor(vertex, styleStorage, component, dataBinding?) {
+  constructor(vertex, styleStorage, component, dataBinding?, isPrimary?) {
     this.vertex = vertex;
-    this.id = this.vertex["id"];
-    this.parentId = this.vertex["parent"]["id"];
+    this.id = this.vertex['id'];
+    this.parentId = this.vertex['parent']['id'];
     this.styleStorage = styleStorage;
     this.component = component;
     this.children = [];
+
+    if (isPrimary == undefined) {
+      this.isPrimary = false;
+    } else {
+      this.isPrimary = true;
+    }
 
     // initialize dataBinding
     if (dataBinding == undefined) {
       const dataBinding = {
         hasDataBinding: false,
-        dataBindingName: "",
+        dataBindingName: '',
         isList: -1
       };
       this.dataBinding = dataBinding;
@@ -37,6 +44,10 @@ export default class VertexStorage {
       this.dataBinding = dataBinding;
     }
 
+  }
+
+  setIsPrimary(isPrimary) {
+    this.isPrimary = isPrimary;
   }
 
   /**
@@ -48,27 +59,27 @@ export default class VertexStorage {
   }
 
   getVertexX() {
-    return this.vertex["geometry"]["x"];
+    return this.vertex['geometry']['x'];
   }
 
   getVertexY() {
-    return this.vertex["geometry"]["y"];
+    return this.vertex['geometry']['y'];
   }
 
   getVertexWidth() {
-    return this.vertex["geometry"]["width"];
+    return this.vertex['geometry']['width'];
   }
 
   getVertexHeight() {
-    return this.vertex["geometry"]["height"];
+    return this.vertex['geometry']['height'];
   }
 
   getVertexValue() {
-    return this.vertex["value"];
+    return this.vertex['value'];
   }
 
   isBasicComponent() {
-    if ("componentList" in this.component) {
+    if ('componentList' in this.component) {
       return false;
     } else {
       return true;
@@ -81,7 +92,7 @@ export default class VertexStorage {
 
   addChild(childID, childVertex, property, element?) {
     let child;
-    if (property == "componentList") {
+    if (property == 'componentList') {
       child = {childID, childVertex, property, element};
     } else {
       child = {childID, childVertex, property};
@@ -93,14 +104,20 @@ export default class VertexStorage {
     return this.vertex;
   }
 
+  syncProperties() {
+    this.component['x'] = this.getVertexX();
+    this.component['y'] = this.getVertexY();
+    this.component['width'] = this.getVertexWidth();
+    this.component['height'] = this.getVertexHeight();
+  }
+
   sync() {
     // sync parent vertex's geometry
-    if (this.getVertex()['parent']['id'] == '1') {
-      this.component['x'] = this.getVertexX();
-      this.component['y'] = this.getVertexY();
-      this.component['width'] = this.getVertexWidth();
-      this.component['height'] = this.getVertexHeight();
+    if (this.isPrimary) {
+      this.syncProperties();
     }
+
+    // if(this.getVertex()["parent"])
 
     if (this.dataBinding.hasDataBinding) {
       const componentValueKey = this.dataBinding.dataBindingName;
@@ -109,26 +126,26 @@ export default class VertexStorage {
       if (this.dataBinding.isList == -1) {
         this.component[componentValueKey] = this.vertex.value;
       } else {
-        const listValues = this.component[componentValueKey].split(" ");
+        const listValues = this.component[componentValueKey].split(' ');
         const index = this.dataBinding.isList;
 
         // sync component value with vertex value
         listValues[index] = this.vertex.value;
 
         // convert list to string
-        let result = "";
+        let result = '';
         for (let index = 0; index < listValues.length; index++) {
           result = result + listValues[index];
 
           // last element no need add space
           if (index != listValues.length - 1) {
-            result += " ";
+            result += ' ';
           }
         }
         this.component[componentValueKey] = result;
       }
     } else {
-      console.log("no need data binding, it may be sync by child vertex already");
+      console.log('no need data binding, it may be sync by child vertex already');
     }
   }
 

@@ -10,8 +10,8 @@ import {TableStrategy} from "./createComponentStrategy/TableStrategy";
 import {CardStrategy} from "./createComponentStrategy/CardStrategy";
 import {BreadcrumbStrategy} from "./createComponentStrategy/BreadcrumbStrategy";
 import {IconStrategy} from "./createComponentStrategy/IconStrategy";
-import {InputStrategy} from './createComponentStrategy/InputStrategy';
-import {LayoutStrategy} from './createComponentStrategy/LayoutStrategy';
+import {InputStrategy} from "./createComponentStrategy/InputStrategy";
+import {LayoutStrategy} from "./createComponentStrategy/LayoutStrategy";
 
 export class GraphStorage {
   vertexStorageList: VertexStorage[];
@@ -56,13 +56,12 @@ export class GraphStorage {
   }
 
   createComponent(component, parent, basex?, basey?) {
-    console.log("create Component heree")
-    console.log(component)
+    console.log("create Component heree");
+    console.log(component);
     if (basex == undefined || basey == undefined) {
       basex = 30;
       basey = 30;
-    }
-    else if(component["type"].startsWith("Layout")){
+    } else if (component["type"].startsWith("Layout")) {
       basex = 0;
       basey = 0;
     }
@@ -81,7 +80,7 @@ export class GraphStorage {
         this.setStrategy(new IconStrategy(basex, basey));
       } else if (component["type"].startsWith("input")) {
         this.setStrategy(new InputStrategy(basex, basey));
-      } else if (component["type"].startsWith("Layout")){
+      } else if (component["type"].startsWith("Layout")) {
         this.setStrategy(new LayoutStrategy(basex, basey));
 
       }
@@ -92,6 +91,7 @@ export class GraphStorage {
       if (component["type"] == "card") {
         this.setStrategy(new CardStrategy(basex, basey));
       }
+<<<<<<< HEAD
       if (component["type"] == "breadcrumb") {
         this.setStrategy(new BreadcrumbStrategy(basex, basey));
       }
@@ -110,6 +110,24 @@ export class GraphStorage {
       // let newmxGeometry = new mxGeometry(0,0,maxWidth,basey);
       // compositeVertexStorage.setGeometry(newmxGeometry);
       // this.getGraph().refresh();
+=======
+
+      const compositeVertexStorage = this.strategy.createComponent(this, component, parent);
+      basey = basey + 20;
+      let maxWidth = 0;
+      for (const subUIComponent of component["componentList"]) {
+        const vertexStorage = this.createComponent(subUIComponent, compositeVertexStorage.getVertex(), basex, basey);
+        if (vertexStorage.getVertexWidth() > maxWidth) {
+          maxWidth = vertexStorage.getVertexWidth();
+        }
+        basey = basey + vertexStorage.getVertexHeight();
+        compositeVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
+      }
+
+      const newmxGeometry = new mxGeometry(0, 0, maxWidth, basey);
+      compositeVertexStorage.setGeometry(newmxGeometry);
+      this.getGraph().refresh();
+>>>>>>> c8eadd46ac0fcbe8ebd32706e6778067ec9eedea
       return compositeVertexStorage;
     }
 
@@ -120,7 +138,7 @@ export class GraphStorage {
   }
 
   // insert vertex
-  insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent,dataBinding?) {
+  insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent, dataBinding?, isPrimary?) {
     let vertex;
     try {
       this.graph.getModel().beginUpdate();
@@ -130,7 +148,7 @@ export class GraphStorage {
       // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
     }
 
-    const vertexStorage = new VertexStorage(vertex, styleStorage, uicomponent,dataBinding);
+    const vertexStorage = new VertexStorage(vertex, styleStorage, uicomponent, dataBinding, isPrimary);
     this.vertexStorageList.push(vertexStorage);
     return vertexStorage;
   }
