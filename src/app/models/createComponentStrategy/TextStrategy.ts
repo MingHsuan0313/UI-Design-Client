@@ -47,14 +47,14 @@ export class TextStrategy implements ICreateComponentStrategy {
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
     // Initialized
-    let textVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding);
+    let textVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding, true);
     return textVertexStorage;
   }
 
   createComponent(graphStorage: GraphStorage, component, parent) {
     let textVertexStorage = this.createTextVertex(graphStorage, component ,parent);
     // component.vertexStorage = vertexStorage;
-    component.x = textVertexStorage.getVertexX(); 
+    component.x = textVertexStorage.getVertexX();
     component.y = textVertexStorage.getVertexY();
     component.width = textVertexStorage.getVertexWidth();
     component.height = textVertexStorage.getVertexHeight();

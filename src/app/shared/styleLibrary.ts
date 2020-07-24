@@ -1,48 +1,48 @@
 export const StyleLibrary = [
   {
-    genere: 'coreUI',
+    genere: "coreUI",
 
     // basic component
     text: {
-      opacity: '0',
-      fontSize: '25',
-      fontColor: 'black'
+      opacity: "0",
+      fontSize: "25",
+      fontColor: "black"
     },
 
     button: {
-      fontSize: '18',
-      fontColor: '#fff',
-      fillColor: '#5bc0de',
+      fontSize: "18",
+      fontColor: "#fff",
+      fillColor: "#5bc0de",
       rounded: true,
-      strokeColor: '#269abc'
+      strokeColor: "#269abc"
     },
 
     dropdown: {
       dropdownBox: {
-        opacity: '0',
-        strokeColor: '#ffffff'
+        opacity: "0",
+        strokeColor: "#ffffff"
       },
 
       dropdownHeader: {
-        fontSize: '14',
-        fontColor: '#333333',
+        fontSize: "14",
+        fontColor: "#333333",
         rounded: true,
-        strokeColor: '#a6a6a6',
-        fillColor: '#ffffff',
-        border: '#a6a6a6',
+        strokeColor: "#a6a6a6",
+        fillColor: "#ffffff",
+        border: "#a6a6a6",
 
       },
 
       dropdownList: {
-        strokeColor: '#c8c8c8',
-        fillColor: '#ffffff',
-        opacity: '0',
+        strokeColor: "#c8c8c8",
+        fillColor: "#ffffff",
+        opacity: "0",
       },
 
       dropdownItem: {
-        strokeColor: '#ffffff',
-        fontColor: '#333333',
-        fontSize: '14',
+        strokeColor: "#ffffff",
+        fontColor: "#333333",
+        fontSize: "14",
       },
     },
 
@@ -50,32 +50,32 @@ export const StyleLibrary = [
 
     table: {
       tableBox: {
-        opacity: '0',
-        strokeColor: '#000000',
+        opacity: "0",
+        strokeColor: "#000000",
       },
 
       tableHeader: {
-        fontStyle: 1,  //FONT_BOLD
-        fillColor: '#ffffff',
-        strokeColor: '#b8bcc2',
-        fontColor: '#4f5d73',
-        fontSize: '16',
+        fontStyle: 1,  // FONT_BOLD
+        fillColor: "#ffffff",
+        strokeColor: "#b8bcc2",
+        fontColor: "#4f5d73",
+        fontSize: "16",
         shadow: true,
       },
 
       tableData_white: {
-        fillColor: '#ffffff',
-        strokeColor: '#d8dbe0',
-        fontColor: '#4f5d73',
-        fontSize: '16',
+        fillColor: "#ffffff",
+        strokeColor: "#d8dbe0",
+        fontColor: "#4f5d73",
+        fontSize: "16",
         shadow: true,
       },
 
       tableData_grey: {
-        fillColor: '#f1f4f6',
-        strokeColor: '#d8dbe0',
-        fontColor: '#4f5d73',
-        fontSize: '16',
+        fillColor: "#f1f4f6",
+        strokeColor: "#d8dbe0",
+        fontColor: "#4f5d73",
+        fontSize: "16",
         shadow: true,
       },
     },
@@ -83,28 +83,29 @@ export const StyleLibrary = [
     // composite component
     card: {
       cardBox: {
-        fillColor: '#ffffff',
-        strokeColor: '#000000'
+        fillColor: "#ffffff",
+        strokeColor: "#000000"
       },
       cardHeader: {
-        fillColor: '#edefef',
-        strokeColor: '#000000',
-        fontSize: '30',
+        fillColor: "#edefef",
+        strokeColor: "#000000",
+        fontColor: "000000",
+        fontSize: "30",
       }
     },
 
     input: {
-      strokeColor: '#000000',
+      strokeColor: "#000000",
       fillColor: "#ffffff"
     },
 
-    Layout1Header:{
-      border: '#000000',
+    Layout1Header: {
+      border: "#000000",
       fillColor: "#ffffff"
     },
 
-    Layout1Sidebar:{
-      border: '#000000',
+    Layout1Sidebar: {
+      border: "#000000",
       fillColor: "#2f353a"
     }
   }

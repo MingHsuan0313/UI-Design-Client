@@ -43,7 +43,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownBoxStyle);
     const dropdownBoxVertexGeometry = new mxGeometry(this.basex, this.basey, dropdownWidth, dropdownHeight);
     const dropdownBoxVertexStorage = graphStorage.insertVertex(parent, component.id, "", dropdownBoxVertexGeometry, styleStorage, component);
-
+    dropdownBoxVertexStorage.setIsPrimary(true);
     return dropdownBoxVertexStorage;
   }
 

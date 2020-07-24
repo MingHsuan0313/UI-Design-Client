@@ -48,8 +48,8 @@ export class TableStrategy implements ICreateComponentStrategy {
     const height = this.gridHeight * 2;
 
     const tableBoxVertexGeometry = new mxGeometry(this.basex, this.basey, width, height);
-    const tableBoxVertexStorage = graphStorage.insertVertex(parent, component.id, "", tableBoxVertexGeometry, styleStorage, component)
-
+    const tableBoxVertexStorage = graphStorage.insertVertex(parent, component.id, "", tableBoxVertexGeometry, styleStorage, component);
+    tableBoxVertexStorage.setIsPrimary(true);
     return tableBoxVertexStorage;
   }
 
