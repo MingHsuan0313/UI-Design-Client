@@ -104,3 +104,4 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     return dropdownBoxVertexStorage;
   }
 }
+

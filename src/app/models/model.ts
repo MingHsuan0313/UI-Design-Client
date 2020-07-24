@@ -233,7 +233,7 @@ export class INPUT implements UIComponent {
 
 }
 
-export class Breadcrumb implements UIComponent {
+export class BreadcrumbComposite implements UIComponent {
   x: String;
   y: String;
   width: String;
@@ -242,13 +242,41 @@ export class Breadcrumb implements UIComponent {
   selector: String;
   type: String;
   style: String;
-  items: any[];
+  componentList: any[] = [];
 
-  constructor(init?: Partial<Breadcrumb>) {
+  constructor(init?: Partial<BreadcrumbComposite>) {
     Object.assign(this, init);
   }
 
   add(component: UIComponent): void {
+    this.componentList.push(component);
+  }
+
+  getInfo(): any {
+    return this;
+  }
+
+  remove(component: UIComponent): void {
+  }
+}
+
+export class FormComposite implements UIComponent {
+  x: String;
+  y: String;
+  width: String;
+  height: String;
+  id: String;
+  selector: String;
+  type: String;
+  style: String;
+  componentList: any[] = [];
+
+  constructor(init?: Partial<FormComposite>) {
+    Object.assign(this, init);
+  }
+
+  add(component: UIComponent): void {
+    this.componentList.push(component);
   }
 
   getInfo(): any {

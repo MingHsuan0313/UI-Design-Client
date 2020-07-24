@@ -32,10 +32,10 @@ export const Library = {
     "text": ["text", "href"],
     "button": ["text", "href"],
     "input": ["type"],
-    "breadcrumb": ["items"],
     "dropdown": ["items"],
     "table": ["headers", "rows"],
     "card": ["header", "componentList"],
+    "breadcrumb": ["componentList"],
     "inputgroup": ["componentList"],
     "form":["componentList"]
   },
@@ -43,18 +43,19 @@ export const Library = {
   // Composite component can composite the following components
   "compositeComponents": {
     "card": ["text", "dropdown", "button", "table"],
+    "breadcrumb": ["text"],
     "inputgroup": ["text", "button", "icon", "dropdown"],
-    "form": ["text", "button", "icon"]
+    "form": ["text", "button", "input"]
   },
 
   "componentValue": {
     "icon": ["text"],
     "text": ["text"],
     "button": ["text"],
-    "breadcrumb": ["items"],
     "table": ["headers", "rows"],
     "dropdown": ["items"],
     "card": ["header"],
+    "breadcrumb": [],
     "input": [],
     "inputgroup": []
   }
