@@ -93,6 +93,18 @@ export const StyleLibrary = [
       }
     },
 
+    breadcrumb: {
+      breadcrumbBox:{
+        fillColor: '#edefef',
+        strokeColor: '#ffffff'
+      },
+      breadcrumbIndicator: {
+          shape: "line",
+          rotation: 120,
+          strokeWidth: 1.8,
+      }
+    },
+
     input: {
       strokeColor: '#000000',
       fillColor: "#ffffff"

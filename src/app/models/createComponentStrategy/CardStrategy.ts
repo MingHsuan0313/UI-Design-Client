@@ -64,6 +64,21 @@ export class CardStrategy implements ICreateComponentStrategy {
     // insert dropdown box
 
 
+    this.basey = 50;
+    this.basex = 0;
+    let maxWidth = 0;
+    for(let subUIComponent of component["componentList"]) {
+      let vertexStorage = graphStorage.createComponent(subUIComponent, cardBoxVertexStorage.getVertex(), this.basex, this.basey)
+      if(vertexStorage.getVertexWidth() > maxWidth)
+        maxWidth = vertexStorage.getVertexWidth();
+      this.basey = this.basey + vertexStorage.getVertexHeight();
+      cardBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList",subUIComponent);
+    }
+
+    let newmxGeometry = new mxGeometry(0,0,maxWidth,this.basey);
+    cardBoxVertexStorage.setGeometry(newmxGeometry);
+    graphStorage.getGraph().refresh();
+
     return cardBoxVertexStorage;
 
     // const componentListTemp = component.componentList;

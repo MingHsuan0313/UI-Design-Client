@@ -8,6 +8,7 @@ import {DropdownStrategy} from "./createComponentStrategy/DropdownStrategy";
 import {TableStrategy} from "./createComponentStrategy/TableStrategy";
 
 import {CardStrategy} from "./createComponentStrategy/CardStrategy";
+import {BreadcrumbStrategy} from "./createComponentStrategy/BreadcrumbStrategy";
 import {IconStrategy} from "./createComponentStrategy/IconStrategy";
 import {InputStrategy} from './createComponentStrategy/InputStrategy';
 import {LayoutStrategy} from './createComponentStrategy/LayoutStrategy';
@@ -91,21 +92,24 @@ export class GraphStorage {
       if (component["type"] == "card") {
         this.setStrategy(new CardStrategy(basex, basey));
       }
-
-      let compositeVertexStorage = this.strategy.createComponent(this, component, parent);
-      basey = basey + 20;
-      let maxWidth = 0;
-      for(let subUIComponent of component["componentList"]) {
-        let vertexStorage = this.createComponent(subUIComponent, compositeVertexStorage.getVertex(),basex,basey)
-        if(vertexStorage.getVertexWidth() > maxWidth)
-          maxWidth = vertexStorage.getVertexWidth();
-        basey = basey + vertexStorage.getVertexHeight();
-        compositeVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList",subUIComponent);
+      if (component["type"] == "breadcrumb") {
+        this.setStrategy(new BreadcrumbStrategy(basex, basey));
       }
 
-      let newmxGeometry = new mxGeometry(0,0,maxWidth,basey);
-      compositeVertexStorage.setGeometry(newmxGeometry);
-      this.getGraph().refresh();
+      let compositeVertexStorage = this.strategy.createComponent(this, component, parent);
+      // basey = basey + 20;
+      // let maxWidth = 0;
+      // for(let subUIComponent of component["componentList"]) {
+      //   let vertexStorage = this.createComponent(subUIComponent, compositeVertexStorage.getVertex(),basex,basey)
+      //   if(vertexStorage.getVertexWidth() > maxWidth)
+      //     maxWidth = vertexStorage.getVertexWidth();
+      //   basey = basey + vertexStorage.getVertexHeight();
+      //   compositeVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList",subUIComponent);
+      // }
+
+      // let newmxGeometry = new mxGeometry(0,0,maxWidth,basey);
+      // compositeVertexStorage.setGeometry(newmxGeometry);
+      // this.getGraph().refresh();
       return compositeVertexStorage;
     }
 

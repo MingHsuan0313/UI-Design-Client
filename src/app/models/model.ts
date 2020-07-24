@@ -239,16 +239,16 @@ export class Breadcrumb implements UIComponent {
   width: String;
   height: String;
   id: String;
-  selector: String;
+  selector: String; 
   type: String;
   style: String;
-  items: any[];
-
+  componentList: any[] = [];
   constructor(init?: Partial<Breadcrumb>) {
     Object.assign(this, init);
   }
 
   add(component: UIComponent): void {
+    this.componentList.push(component);
   }
 
   getInfo(): any {

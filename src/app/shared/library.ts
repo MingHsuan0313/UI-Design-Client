@@ -32,7 +32,7 @@ export const Library = {
     "text": ["text", "href"],
     "button": ["text", "href"],
     "input": ["type"],
-    "breadcrumb": ["items"],
+    "breadcrumb": ["componentList"],
     "dropdown": ["items"],
     "table": ["headers", "rows"],
     "card": ["header", "componentList"],
@@ -44,19 +44,20 @@ export const Library = {
   "compositeComponents": {
     "card": ["text", "dropdown", "button", "table"],
     "inputgroup": ["text", "button", "icon", "dropdown"],
-    "form": ["text", "button", "icon"]
+    "form": ["text", "button", "icon"],
+    "breadcrumb": ["text"]
   },
 
   "componentValue": {
     "icon": ["text"],
     "text": ["text"],
     "button": ["text"],
-    "breadcrumb": ["items"],
+    "breadcrumb": [],
     "table": ["headers", "rows"],
     "dropdown": ["items"],
     "card": ["header"],
     "input": [],
-    "inputgroup": []
+    "inputgroup": [],
   }
 };
 

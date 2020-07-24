@@ -1,5 +1,6 @@
 import {Injectable, ElementRef} from "@angular/core";
 import {GraphStorage} from "../models/graph-storage.model";
+import {fakeBreadcrumb} from "../../fakedata/fakeBreadcrumb"
 
 @Injectable({
   providedIn: "root"
@@ -20,6 +21,7 @@ export default class GraphEditorService {
     this.graphStorage = new GraphStorage(element, "graphContainer" + this.graphStorages.length.toString());
     this.graphStorages.push(this.graphStorage);
     this.selectedGraphID = this.graphStorage.getID();
+    this.bindComponent(fakeBreadcrumb);
   }
 
   // object => svg
