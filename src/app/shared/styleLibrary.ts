@@ -109,8 +109,8 @@ export const StyleLibrary = [
       formBox: {
         strokeColor: "#333333",
         fillColor: "#ffffff",
-        rounded: true,
-        shadow: true,
+        rounded: false,
+        shadow: false,
       }
     },
 
@@ -121,7 +121,7 @@ export const StyleLibrary = [
       },
       breadcrumbIndicator: {
           shape: "line",
-          rotation: 90,
+          rotation: 120,
           strokeWidth: 1.8,
       }
     },

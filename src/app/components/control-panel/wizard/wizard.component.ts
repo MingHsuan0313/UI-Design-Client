@@ -115,7 +115,7 @@ export class WizardComponent implements OnInit {
         this.subComponent = new InputGroupComposite(properties);
         break;
       case "input":
-        this.component = new INPUT(properties);
+        this.subComponent = new INPUT(properties);
         break;
       case "breadcrumb":
         this.component = new BreadcrumbComposite(properties);
@@ -175,13 +175,13 @@ export class WizardComponent implements OnInit {
     }
   }
   clickNext() {
-    // $("#myModal a[href=\"#composition\"]").tab("show");
+    $("#myModal a[href=\"#composition\"]").tab("show");
   }
 
 
   onClose() {
     console.log("close");
-    // $("#myModal a[href=\"#building\"]").tab("show");
+    $("#myModal a[href=\"#building\"]").tab("show");
   }
 
   clickCreate() {
@@ -192,7 +192,7 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     console.log("finish");
     this.component.getInfo();
-    // $("#myModal a[href=\"#building\"]").tab("show");
+    $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
     this.graphEditorService.bindComponent(this.component);
     console.log(this.component);

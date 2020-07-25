@@ -31,7 +31,7 @@ export const Library = {
     "icon": ["text"],
     "text": ["text", "href"],
     "button": ["text", "href"],
-    "input": ["type"],
+    "input": ["typeInfo"],
     "dropdown": ["items"],
     "table": ["headers", "rows"],
     "card": ["header", "componentList"],

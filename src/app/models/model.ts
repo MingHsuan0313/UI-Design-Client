@@ -214,8 +214,9 @@ export class INPUT implements UIComponent {
   height: String;
   id: String;
   selector: String;
-  type: String;   // e.g. input-text, input-password
+  type: String;
   style: String;
+  typeInfo: String;  // e.g. input-text, input-password
 
   constructor(init?: Partial<INPUT>) {
     Object.assign(this, init);
@@ -239,7 +240,7 @@ export class BreadcrumbComposite implements UIComponent {
   width: String;
   height: String;
   id: String;
-  selector: String; 
+  selector: String;
   type: String;
   style: String;
   componentList: any[] = [];
