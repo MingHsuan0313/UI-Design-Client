@@ -4,9 +4,16 @@ export const StyleLibrary = [
 
     // basic component
     text: {
-      opacity: "0",
-      fontSize: "25",
-      fontColor: "black"
+      textBlack:{
+        opacity: "0",
+        fontSize: "25",
+        fontColor: "black"
+      },
+      textBlue:{
+        opacity: "0",
+        fontSize: "25",
+        fontColor: "blue"
+      },
     },
 
     button: {
