@@ -67,21 +67,21 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
         var i = 0;
         for(let subUIComponent of component["componentList"]) {
 
-          let vertexStorage: VertexStorage = graphStorage.createComponent(subUIComponent, breadcrumbBoxVertexStorage.getVertex(), this.basex, this.basey)
+          let vertexStorage = graphStorage.createComponent(subUIComponent, breadcrumbBoxVertexStorage.getVertex(), this.basex, this.basey)
           //console.log(vertexStorage)
           breadcrumbBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
-          this.basex = this.basex + vertexStorage.getVertexWidth() + 10;
+          this.basex = vertexStorage.getVertexX() + vertexStorage.getVertexWidth() + 5;
 
           if(i != component["componentList"].length-1){
             let indicatorStorage =  this.createBreadcrumbIndicatorVertex(graphStorage, component, breadcrumbBoxVertexStorage, this.basex, this.basey);
-            this.basex = this.basex + indicatorStorage.getVertexWidth()+  10;
+            this.basex = indicatorStorage.getVertexX() + indicatorStorage.getVertexWidth()+ 7;
           }
           i += 1;
         }
 
         let newmxGeometry = new mxGeometry(0, 0, this.basex+30, 70);
         breadcrumbBoxVertexStorage.getVertex().setGeometry(newmxGeometry);
-        // graphStorage.getGraph().refresh();
+        graphStorage.getGraph().refresh();
 
         return breadcrumbBoxVertexStorage;
     }

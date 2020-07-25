@@ -21,8 +21,8 @@ export default class GraphEditorService {
     this.graphStorage = new GraphStorage(element, "graphContainer" + this.graphStorages.length.toString());
     this.graphStorages.push(this.graphStorage);
     this.selectedGraphID = this.graphStorage.getID();
-    this.bindComponent(fakeBreadcrumb);
-  }
+    //this.bindComponent(fakeBreadcrumb);
+  } 
 
   // object => svg
   // possible to have x y ?
