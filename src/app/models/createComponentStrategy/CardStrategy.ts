@@ -1,8 +1,6 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../shared/styleLibrary";
-import { Library } from "../../shared/library";
 import { GraphStorage } from "../graph-storage.model";
-import { CardComposite } from "../model";
 import { StyleStorage } from "../style-storage.model";
 import { DataBinding } from "../util/DataBinding";
 
@@ -80,19 +78,12 @@ export class CardStrategy implements ICreateComponentStrategy {
     cardBoxVertexStorage.setGeometry(newmxGeometry);
     graphStorage.getGraph().refresh();
 
-    return cardBoxVertexStorage;
+    component["x"] = cardBoxVertexStorage.getVertexX();
+    component["y"] = cardBoxVertexStorage.getVertexX();
+    component["width"] = cardBoxVertexStorage.getVertexWidth();
+    component["height"] = cardBoxVertexStorage.getVertexHeight();
+    component["style"] = cardBoxVertexStorage.getStyle();
 
-    // const componentListTemp = component.componentList;
-    // let index = 0;
-    // for (const element of componentListTemp) {
-    //   styleName = "cardItemStyle" + component.id;
-    //   const cardItemStyle = StyleLibrary[0][element.type];
-    //   styleStorage = new StyleStorage(styleName, cardBoxStyle);
-    //   graphStorage.getGraph().getStylesheet().putCellStyle(styleName, cardItemStyle);
-    //   const cardItemVertexGeometry = new mxGeometry(0, 50 + 50 * index, 100, 50);
-    //   const cardItemVertexStorage = graphStorage.insertVertex(cardVertexStorage.getVertex(), component.id, element["text"], cardItemVertexGeometry, styleStorage, element);  // can be more than attribute text
-    //   cardVertexStorage.addChild(cardItemVertexStorage.id, cardItemVertexStorage.getVertex(), "componentList",element);
-    //   index++;
-    // }
+    return cardBoxVertexStorage;
   }
 }

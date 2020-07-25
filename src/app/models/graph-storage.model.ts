@@ -6,7 +6,7 @@ import {ButtonStrategy} from "./createComponentStrategy/ButtonStrategy";
 import {TextStrategy} from "./createComponentStrategy/TextStrategy";
 import {DropdownStrategy} from "./createComponentStrategy/DropdownStrategy";
 import {TableStrategy} from "./createComponentStrategy/TableStrategy";
-
+import { FormStrategy } from "./createComponentStrategy/FormStrategy";
 import {CardStrategy} from "./createComponentStrategy/CardStrategy";
 import {BreadcrumbStrategy} from "./createComponentStrategy/BreadcrumbStrategy";
 import {IconStrategy} from "./createComponentStrategy/IconStrategy";
@@ -57,6 +57,7 @@ export class GraphStorage {
 
   createComponent(component, parent, basex?, basey?) {
     console.log("create Component heree");
+    console.log(component)
 
     if (basex == undefined || basey == undefined) {
       basex = 30;
@@ -91,8 +92,11 @@ export class GraphStorage {
       if (component["type"] == "card") {
         this.setStrategy(new CardStrategy(basex, basey));
       }
-      if (component["type"] == "breadcrumb") {
+      else if (component["type"] == "breadcrumb") {
         this.setStrategy(new BreadcrumbStrategy(basex, basey));
+      }
+      else if(component["type"] == "form") {
+        this.setStrategy(new FormStrategy(basex,basey));
       }
 
       let compositeVertexStorage = this.strategy.createComponent(this, component, parent);
