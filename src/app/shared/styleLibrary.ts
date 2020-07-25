@@ -105,6 +105,15 @@ export const StyleLibrary = [
       }
     },
 
+    form: {
+      formBox: {
+        strokeColor: "#333333",
+        fillColor: "#ffffff",
+        rounded: true,
+        shadow: true,
+      }
+    },
+
     breadcrumb: {
       breadcrumbBox:{
         fillColor: '#edefef',
