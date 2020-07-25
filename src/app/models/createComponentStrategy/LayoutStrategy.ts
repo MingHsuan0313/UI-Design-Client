@@ -24,18 +24,27 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     const defaultHeight = graphNode.offsetHeight;
 
     let style = StyleLibrary[0]["Layout1Header"];
-    let styleName = "style" + component.type;
+    let styleName = "style" + component.type + "Header";
     let styleStorage = new StyleStorage(styleName, style);
     const layoutHeaderGeometry = new mxGeometry(0, 0, defaultWidth , defaultHeight / 15 );
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
     const header = graphStorage.insertVertex(parent, null, component.text, layoutHeaderGeometry, styleStorage, component);
 
-    style = StyleLibrary[0]["Layout1Sidebar"];
-    styleName = "style" + component.type;
+
+    style = StyleLibrary[0]["Layout1Footer"];
+    styleName = "style" + component.type + "Footer";
     styleStorage = new StyleStorage(styleName, style);
-    const layoutSidebarGeometry = new mxGeometry(0, defaultHeight / 15 , defaultWidth/7, defaultHeight *14/15 );
+    const layoutFooterGeometry = new mxGeometry(0, defaultHeight * 14 / 15 , defaultWidth, defaultHeight * 1 / 15 );
+    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
+    graphStorage.insertVertex(parent, null, component.text, layoutFooterGeometry, styleStorage, component);
+
+    style = StyleLibrary[0]["Layout1Sidebar"];
+    styleName = "style" + component.type + "Sidebar";
+    styleStorage = new StyleStorage(styleName, style);
+    const layoutSidebarGeometry = new mxGeometry(0, defaultHeight / 15 , defaultWidth / 7, defaultHeight * 14 / 15 );
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
     graphStorage.insertVertex(parent, null, component.text, layoutSidebarGeometry, styleStorage, component);
+
 
   }
 

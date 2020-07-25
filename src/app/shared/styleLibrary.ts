@@ -124,12 +124,20 @@ export const StyleLibrary = [
 
     Layout1Header: {
       border: "#000000",
-      fillColor: "#ffffff"
+      fillColor: "#ffffff",
+      strokeColor: '#c8ced3'
     },
 
     Layout1Sidebar: {
       border: "#000000",
-      fillColor: "#2f353a"
+      fillColor: "#2f353a",
+      strokeColor: '#c8ced3'
+    },
+
+    Layout1Footer: {
+      border: "#000000",
+      fillColor: "#f0f3f5",
+      strokeColor: '#c8ced3'
     }
   }
 ];
