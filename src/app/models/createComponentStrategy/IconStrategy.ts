@@ -47,5 +47,10 @@ export class IconStrategy implements ICreateComponentStrategy {
     // component.vertexStorage = vertexStorage;
     iconVertexStorage.setIsPrimary(true);
     component["style"] = style;
+    component["x"] = iconVertexStorage.getVertexX();
+    component["y"] = iconVertexStorage.getVertexY();
+    component["width"] = iconVertexStorage.getVertexWidth();
+    component["height"] = iconVertexStorage.getVertexHeight();
+    return iconVertexStorage;
   }
 }

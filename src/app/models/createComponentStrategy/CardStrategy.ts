@@ -78,6 +78,12 @@ export class CardStrategy implements ICreateComponentStrategy {
     cardBoxVertexStorage.setGeometry(newmxGeometry);
     graphStorage.getGraph().refresh();
 
+    component["x"] = cardBoxVertexStorage.getVertexX();
+    component["y"] = cardBoxVertexStorage.getVertexX();
+    component["width"] = cardBoxVertexStorage.getVertexWidth();
+    component["height"] = cardBoxVertexStorage.getVertexHeight();
+    component["style"] = cardBoxVertexStorage.getStyle();
+
     return cardBoxVertexStorage;
   }
 }

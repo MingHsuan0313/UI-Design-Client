@@ -49,10 +49,10 @@ export class ButtonStrategy implements ICreateComponentStrategy {
   createComponent(graphStorage: GraphStorage, component, parent) {
     let buttonVertexStorage = this.createButtonVertex(graphStorage, component, parent);
 
-    component.x = buttonVertexStorage.getVertexX();
-    component.y = buttonVertexStorage.getVertexY();
-    component.width = buttonVertexStorage.getVertexWidth();
-    component.height = buttonVertexStorage.getVertexHeight();
+    component["x"] = buttonVertexStorage.getVertexX();
+    component["y"] = buttonVertexStorage.getVertexY();
+    component["width"] = buttonVertexStorage.getVertexWidth();
+    component["height"] = buttonVertexStorage.getVertexHeight();
     component["style"] = buttonVertexStorage.getStyle();
 
     return buttonVertexStorage;

@@ -63,7 +63,11 @@ export class FormStrategy implements ICreateComponentStrategy {
         formBoxVertexStorage.setGeometry(newmxGeometry);
         graphStorage.getGraph().refresh();
 
-
+        component.x = formBoxVertexStorage.getVertexX();
+        component.y = formBoxVertexStorage.getVertexY();
+        component.width = formBoxVertexStorage.getVertexWidth();
+        component.height = formBoxVertexStorage.getVertexHeight();
+        component["style"] = formBoxVertexStorage.getStyle();
         return formBoxVertexStorage;
     }
 }
