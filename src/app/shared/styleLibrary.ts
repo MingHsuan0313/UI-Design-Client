@@ -10,18 +10,18 @@ export const StyleLibrary = [
     text:{
       text_black: {
         opacity: "0",
-        fontSize: "25",
+        fontSize: "16",
         fontColor: "black"
       },
       text_blue: {
         opacity: "0",
-        fontSize: "25",
+        fontSize: "16",
         fontColor: "#20a8d8"
       },
     },
 
     button: {
-      fontSize: "18",
+      fontSize: "16",
       fontColor: "#fff",
       fillColor: "#5bc0de",
       rounded: true,
@@ -35,7 +35,7 @@ export const StyleLibrary = [
       },
 
       dropdownHeader: {
-        fontSize: "14",
+        fontSize: "16",
         fontColor: "#333333",
         rounded: true,
         strokeColor: "#a6a6a6",
@@ -53,7 +53,7 @@ export const StyleLibrary = [
       dropdownItem: {
         strokeColor: "#ffffff",
         fontColor: "#333333",
-        fontSize: "14",
+        fontSize: "12",
       },
     },
 
