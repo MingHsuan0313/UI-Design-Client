@@ -37,7 +37,6 @@ export class TextStrategy implements ICreateComponentStrategy {
 
 
     let style ;
-    console.log(style)
     if (component["href"].length>0) {
       style = StyleLibrary[0]["text"]["text_blue"];
     } else {
@@ -63,10 +62,6 @@ export class TextStrategy implements ICreateComponentStrategy {
   createComponent(graphStorage: GraphStorage, component, parent) {
     let textVertexStorage = this.createTextVertex(graphStorage, component ,parent);
     // component.vertexStorage = vertexStorage;
-    component.x = textVertexStorage.getVertexX();
-    component.y = textVertexStorage.getVertexY();
-    component.width = textVertexStorage.getVertexWidth();
-    component.height = textVertexStorage.getVertexHeight();
     component["style"] = textVertexStorage.getStyle();
     return textVertexStorage;
     // return this;

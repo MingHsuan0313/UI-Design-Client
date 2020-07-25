@@ -43,8 +43,9 @@ export class IconStrategy implements ICreateComponentStrategy {
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
     // Initialized
-    graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component);
+    let iconVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component);
     // component.vertexStorage = vertexStorage;
+    iconVertexStorage.setIsPrimary(true);
     component["style"] = style;
   }
 }

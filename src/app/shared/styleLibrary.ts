@@ -2,19 +2,6 @@ export const StyleLibrary = [
   {
     genere: "coreUI",
 
-    // basic component
-<<<<<<< HEAD
-    text: {
-      textBlack:{
-        opacity: "0",
-        fontSize: "25",
-        fontColor: "black"
-      },
-      textBlue:{
-        opacity: "0",
-        fontSize: "25",
-        fontColor: "blue"
-=======
     // text: {
     //   opacity: "0",
     //   fontSize: "25",
@@ -25,12 +12,11 @@ export const StyleLibrary = [
         opacity: "0",
         fontSize: "25",
         fontColor: "black"
-      }, 
+      },
       text_blue: {
         opacity: "0",
         fontSize: "25",
-        fontColor: "#336688"
->>>>>>> 09e9c73ead2cc635fdcfc05106deed3a1cafc7c6
+        fontColor: "#20a8d8"
       },
     },
 
@@ -109,11 +95,11 @@ export const StyleLibrary = [
     card: {
       cardBox: {
         fillColor: "#ffffff",
-        strokeColor: "#000000"
+        strokeColor: '#c8ced3'
       },
       cardHeader: {
         fillColor: "#edefef",
-        strokeColor: "#000000",
+        strokeColor: '#c8ced3',
         fontColor: "000000",
         fontSize: "30",
       }
