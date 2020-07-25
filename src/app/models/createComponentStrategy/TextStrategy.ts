@@ -35,12 +35,16 @@ export class TextStrategy implements ICreateComponentStrategy {
   createTextVertex(graphStorage, component, parent) {
     const dataBinding = this.createDataBinding();
 
-    let style;
-    if (component["href"].length > 0) {
-      style = StyleLibrary[0]["text"]["textBlue"];
+
+    let style ;
+    console.log(style)
+    if (component["href"].length>0) {
+      style = StyleLibrary[0]["text"]["text_blue"];
     } else {
-      style = StyleLibrary[0]["text"]["textBlue"];
+      style = StyleLibrary[0]["text"]["text_black"];
+
     }
+
     const styleName = "style"+"Text"+ component.id;
 
     const styleStorage = new StyleStorage(styleName, style);
@@ -51,7 +55,8 @@ export class TextStrategy implements ICreateComponentStrategy {
 
     // Initialized
     let textVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding, true);
-
+    graphStorage.getGraph().updateCellSize(textVertexStorage.getVertex(), true);
+    graphStorage.getGraph().refresh(textVertexStorage.getVertex());
     return textVertexStorage;
   }
 

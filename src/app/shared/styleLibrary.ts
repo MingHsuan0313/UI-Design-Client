@@ -3,6 +3,7 @@ export const StyleLibrary = [
     genere: "coreUI",
 
     // basic component
+<<<<<<< HEAD
     text: {
       textBlack:{
         opacity: "0",
@@ -13,6 +14,23 @@ export const StyleLibrary = [
         opacity: "0",
         fontSize: "25",
         fontColor: "blue"
+=======
+    // text: {
+    //   opacity: "0",
+    //   fontSize: "25",
+    //   fontColor: "black"
+    // },
+    text:{
+      text_black: {
+        opacity: "0",
+        fontSize: "25",
+        fontColor: "black"
+      }, 
+      text_blue: {
+        opacity: "0",
+        fontSize: "25",
+        fontColor: "#336688"
+>>>>>>> 09e9c73ead2cc635fdcfc05106deed3a1cafc7c6
       },
     },
 
@@ -108,7 +126,7 @@ export const StyleLibrary = [
       },
       breadcrumbIndicator: {
           shape: "line",
-          rotation: 120,
+          rotation: 90,
           strokeWidth: 1.8,
       }
     },
