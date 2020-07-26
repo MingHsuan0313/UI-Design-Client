@@ -22,7 +22,7 @@ export const StyleLibrary = [
 
     button: {
       fontSize: "16",
-      fontColor: "#fff",
+      fontColor: "#000000",
       fillColor: "#5bc0de",
       rounded: true,
       strokeColor: "#269abc"
@@ -51,9 +51,10 @@ export const StyleLibrary = [
       },
 
       dropdownItem: {
-        strokeColor: "#ffffff",
+        strokeColor: "#a6a6a6",
         fontColor: "#333333",
-        fontSize: "12",
+        fontSize: "16",
+        fillColor: "#ffffff",
       },
     },
 
@@ -70,7 +71,7 @@ export const StyleLibrary = [
         fillColor: "#ffffff",
         strokeColor: "#b8bcc2",
         fontColor: "#4f5d73",
-        fontSize: "16",
+        fontSize: "20",
         shadow: true,
       },
 
@@ -78,7 +79,7 @@ export const StyleLibrary = [
         fillColor: "#ffffff",
         strokeColor: "#d8dbe0",
         fontColor: "#4f5d73",
-        fontSize: "16",
+        fontSize: "20",
         shadow: true,
       },
 
@@ -86,7 +87,7 @@ export const StyleLibrary = [
         fillColor: "#f1f4f6",
         strokeColor: "#d8dbe0",
         fontColor: "#4f5d73",
-        fontSize: "16",
+        fontSize: "20",
         shadow: true,
       },
     },
@@ -116,8 +117,8 @@ export const StyleLibrary = [
 
     breadcrumb: {
       breadcrumbBox:{
-        fillColor: '#edefef',
-        strokeColor: '#ffffff'
+        fillColor: '#ffffff',
+        strokeColor: '#c8ced3'
       },
       breadcrumbIndicator: {
           shape: "line",
@@ -131,14 +132,17 @@ export const StyleLibrary = [
       fillColor: "#ffffff"
     },
 
+    Layout1: {
+      fillColor: "#ffffff",
+      strokeColor: '#c8ced3'
+    },
+
     Layout1Header: {
-      border: "#000000",
       fillColor: "#ffffff",
       strokeColor: '#c8ced3'
     },
 
     Layout1Sidebar: {
-      border: "#000000",
       fillColor: "#2f353a",
       strokeColor: '#c8ced3'
     },
