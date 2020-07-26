@@ -68,6 +68,7 @@ export class GraphStorage {
     }
 
     // basic component
+
     if (component["componentList"] == undefined) {
       if (component["type"] == "button") {
         this.setStrategy(new ButtonStrategy(basex, basey));
@@ -81,9 +82,6 @@ export class GraphStorage {
         this.setStrategy(new IconStrategy(basex, basey));
       } else if (component["type"].startsWith("input")) {
         this.setStrategy(new InputStrategy(basex, basey));
-      } else if (component["type"].startsWith("Layout")) {
-        this.setStrategy(new LayoutStrategy(basex, basey));
-
       }
 
       return this.strategy.createComponent(this, component, parent);
@@ -97,6 +95,10 @@ export class GraphStorage {
       }
       else if(component["type"] == "form") {
         this.setStrategy(new FormStrategy(basex,basey));
+      }
+      else if (component["type"].startsWith("Layout")) {
+        this.setStrategy(new LayoutStrategy(basex, basey));
+
       }
 
       let compositeVertexStorage = this.strategy.createComponent(this, component, parent);

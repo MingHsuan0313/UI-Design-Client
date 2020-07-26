@@ -1,0 +1,16 @@
+{
+"selector": "page1",
+"componentList":[
+  {
+    "selector":"layout",
+    "type":"layout1",
+    "layout":"layout",
+    "id":"2",
+    "header":[],
+    "sidebar":[],
+    "componentList":[],
+    "footer":[],
+    "asidebar":[]
+  }
+]
+}

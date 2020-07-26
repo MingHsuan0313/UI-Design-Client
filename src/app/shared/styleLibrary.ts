@@ -108,7 +108,7 @@ export const StyleLibrary = [
 
     form: {
       formBox: {
-        strokeColor: "#333333",
+        strokeColor: "#ffffff",
         fillColor: "#ffffff",
         rounded: false,
         shadow: false,

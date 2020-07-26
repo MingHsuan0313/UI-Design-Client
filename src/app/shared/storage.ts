@@ -2,9 +2,11 @@ import {Library} from "./library";
 import {UIComponent} from "../models/modelDependency";
 import {HttpHeaders} from "@angular/common/http";
 import {HttpClient} from "@angular/common/http";
+import {Layout} from '../models/model';
 
 export class Storage {
   static components: any[] = [];
+  static layoutComponent: Layout;
   static UICDL: any[] = [];
   static PageUICDL: any = {};
   static library: any = Library;
@@ -13,6 +15,10 @@ export class Storage {
   static add(component: UIComponent) {
     this.components.push(component);
     this.UICDL.push(component.getInfo());
+  }
+
+  static setLayoutComponent(component) {
+    this.layoutComponent = component;
   }
 
   static getGenre(): any[] {
@@ -38,8 +44,9 @@ export class Storage {
 
   static getPageUICDL() {
     this.PageUICDL["selector"] = "page1";
-    this.PageUICDL["componentList"] = this.UICDL;
-    this.PageUICDL["layout"] = this.layout;
+    this.layoutComponent["componentList"] = this.UICDL;
+    this.PageUICDL["componentList"] = (this.layoutComponent);
     return this.PageUICDL;
   }
 }
+

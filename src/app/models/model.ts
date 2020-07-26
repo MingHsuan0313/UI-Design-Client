@@ -7,6 +7,7 @@ export interface UIComponent {
   selector: String;
   type: String;
   style: String;
+  layout: String;
 
   add(component: UIComponent): void;
 
@@ -24,6 +25,7 @@ export class Icon implements UIComponent {
   selector: String;
   type: String;
   style: String;
+  layout: String;
   text: String;
 
   constructor(init?: Partial<Icon>) {
@@ -51,6 +53,7 @@ export class Text implements UIComponent {
   selector: String;
   type: String;
   style: String;
+  layout: String;
   text: String;
   href: String;
 
@@ -78,6 +81,7 @@ export class Button implements UIComponent {
   selector: String;
   type: String;
   style: String;
+  layout: String;
   text: String;
   href: String;
 
@@ -106,6 +110,7 @@ export class Table implements UIComponent {
   selector: String;
   type: String;
   style: String;
+  layout: String;
   headers: any[];
   rows: any[];
 
@@ -134,6 +139,7 @@ export class CardComposite implements UIComponent {
   selector: String;
   type: String;
   style: String;
+  layout: String;
   header: String;
   componentList: any[] = [];
 
@@ -163,6 +169,7 @@ export class Dropdown implements UIComponent {
   selector: String;
   type: String;
   style: String;
+  layout: String;
   items: any[];
 
   constructor(init?: Partial<Dropdown>) {
@@ -189,6 +196,7 @@ export class InputGroupComposite implements UIComponent {
   selector: String;
   type: String;
   style: String;
+  layout: String;
   componentList: any[] = [];
 
   constructor(init?: Partial<InputGroupComposite>) {
@@ -216,6 +224,7 @@ export class INPUT implements UIComponent {
   selector: String;
   type: String;
   style: String;
+  layout: String;
   typeInfo: String;  // e.g. input-text, input-password
 
   constructor(init?: Partial<INPUT>) {
@@ -243,6 +252,7 @@ export class BreadcrumbComposite implements UIComponent {
   selector: String;
   type: String;
   style: String;
+  layout: String;
   componentList: any[] = [];
 
   constructor(init?: Partial<BreadcrumbComposite>) {
@@ -270,6 +280,7 @@ export class FormComposite implements UIComponent {
   selector: String;
   type: String;
   style: String;
+  layout: String;
   componentList: any[] = [];
 
   constructor(init?: Partial<FormComposite>) {
@@ -297,8 +308,12 @@ export class Layout implements UIComponent {
   selector: String;
   type: String;       // layout1, layout2, ...
   style: String;
-  header: any = [];
-  sidebar: any = [];
+  layout: String;
+  componentList: any[] = [];
+  header: any[] = [];
+  sidebar: any[] = [];
+  footer: any[] = [];
+  asidebar: any[] = [];
 
   constructor(init?: Partial<Layout>) {
     Object.assign(this, init);

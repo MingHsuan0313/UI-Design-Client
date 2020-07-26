@@ -96,23 +96,27 @@ export class ControlPanelComponent implements OnInit {
 
   apply() {
     // selector is now meaningless
-    this.layoutComponent = new Layout({id: PropertyGenerator.getID(), selector: "layout", type: this.layout_selected});
-    Storage.add(this.layoutComponent);
+    this.layoutComponent = new Layout({id: PropertyGenerator.getID(), selector: "layout", type: this.layout_selected, layout: this.layout_selected});
+    Storage.setLayoutComponent(this.layoutComponent);
     this.graphEditorService.bindComponent(this.layoutComponent);
   }
 
   addLayoutItem(sf) {
     document.getElementById("myForm").style.display = "none";
-    let properties = sf.value;
+    const properties = sf.value;
     console.log(sf.value);
     properties["id"] = PropertyGenerator.getID();
     properties["selector"] = "text";
     properties["type"] = "text";
-    let text = new Text(properties);
+    const text = new Text(properties);
     if (this.layoutPart == "sidebar") {
       this.layoutComponent["sidebar"].push(text);
     } else if (this.layoutPart == "header") {
       this.layoutComponent["header"].push(text);
+    } else if (this.layoutPart == "footer") {
+      this.layoutComponent["footer"].push(text);
+    } else if (this.layoutPart == "asidebar") {
+      this.layoutComponent["asidebar"].push(text);
     }
 
     this.graphEditorService.bindComponent(text);
