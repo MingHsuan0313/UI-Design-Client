@@ -66,7 +66,7 @@ export class TextStrategy implements ICreateComponentStrategy {
     component["y"] = textVertexStorage.getVertexY();
     component["width"] = textVertexStorage.getVertexWidth();
     component["height"] = textVertexStorage.getVertexHeight();
-    component["style"] = textVertexStorage.getStyle();
+    // component["style"] = textVertexStorage.getStyle();
     return textVertexStorage;
   }
 }

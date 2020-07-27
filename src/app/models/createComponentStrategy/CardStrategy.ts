@@ -75,14 +75,14 @@ export class CardStrategy implements ICreateComponentStrategy {
     }
 
     let newmxGeometry = new mxGeometry(0,0,maxWidth,this.basey);
-    cardBoxVertexStorage.setGeometry(newmxGeometry);
+    cardBoxVertexStorage.getVertex().setGeometry(newmxGeometry);
     graphStorage.getGraph().refresh();
 
     component["x"] = cardBoxVertexStorage.getVertexX();
     component["y"] = cardBoxVertexStorage.getVertexX();
     component["width"] = cardBoxVertexStorage.getVertexWidth();
     component["height"] = cardBoxVertexStorage.getVertexHeight();
-    component["style"] = cardBoxVertexStorage.getStyle();
+    // component["style"] = cardBoxVertexStorage.getStyle();
 
     return cardBoxVertexStorage;
   }

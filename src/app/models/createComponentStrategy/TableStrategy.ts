@@ -104,7 +104,7 @@ export class TableStrategy implements ICreateComponentStrategy {
     component.y = tableBoxVertexStorage.getVertexY();
     component.width = tableBoxVertexStorage.getVertexWidth();
     component.height = tableBoxVertexStorage.getVertexHeight();
-    component.style = tableBoxVertexStorage.getStyle();
+    // component.style = tableBoxVertexStorage.getStyle();
 
     return tableBoxVertexStorage;
   }

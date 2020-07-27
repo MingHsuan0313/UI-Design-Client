@@ -53,7 +53,7 @@ export class ButtonStrategy implements ICreateComponentStrategy {
     component["y"] = buttonVertexStorage.getVertexY();
     component["width"] = buttonVertexStorage.getVertexWidth();
     component["height"] = buttonVertexStorage.getVertexHeight();
-    component["style"] = buttonVertexStorage.getStyle();
+    // component["style"] = buttonVertexStorage.getStyle();
 
     return buttonVertexStorage;
   }

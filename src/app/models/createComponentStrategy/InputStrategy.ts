@@ -30,7 +30,7 @@ export class InputStrategy implements ICreateComponentStrategy {
     let inputVertexStorage = graphStorage.insertVertex(parent, component.id, "", textGeometry, styleStorage, component);
     inputVertexStorage.setIsPrimary(true);
     // component.vertexStorage = vertexStorage;
-    component["style"] = inputVertexStorage.getStyle();
+    // component["style"] = inputVertexStorage.getStyle();
     component["x"] = inputVertexStorage.getVertexX();
     component["y"] = inputVertexStorage.getVertexY();
     component["width"] = inputVertexStorage.getVertexWidth();

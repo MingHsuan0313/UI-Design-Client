@@ -57,7 +57,7 @@ export class GraphStorage {
 
   createComponent(component, parent, basex?, basey?) {
     console.log("create Component heree");
-    console.log(component)
+    console.log(component);
 
     if (basex == undefined || basey == undefined) {
       basex = 30;
@@ -68,21 +68,23 @@ export class GraphStorage {
     }
 
     // set parent [layout parts] to each components
-    switch(component["layout"]){
-      case "header":
-        parent = this.findVertexByID(3);
-        break;
-      case "footer":
-        parent = this.findVertexByID(4);
-        break;
-      case "sidebar":
-        parent = this.findVertexByID(5);
-        break;
-      case "asidebar":
-        parent = this.findVertexByID(7);
-        break;
-      default:
-        parent = this.findVertexByID(6); //body
+    if (parent.id < 8) {
+      switch (component["layout"]) {
+        case "header":
+          parent = this.findVertexByID(3);
+          break;
+        case "footer":
+          parent = this.findVertexByID(4);
+          break;
+        case "sidebar":
+          parent = this.findVertexByID(5);
+          break;
+        case "asidebar":
+          parent = this.findVertexByID(7);
+          break;
+        // default:
+        //   parent = this.findVertexByID(1); // body
+      }
     }
 
     // basic component
@@ -106,20 +108,17 @@ export class GraphStorage {
 
       if (component["type"] == "card") {
         this.setStrategy(new CardStrategy(basex, basey));
-      }
-      else if (component["type"] == "breadcrumb") {
+      } else if (component["type"] == "breadcrumb") {
         this.setStrategy(new BreadcrumbStrategy(basex, basey));
-      }
-      else if(component["type"] == "form") {
-        this.setStrategy(new FormStrategy(basex,basey));
-      }
-      else if (component["type"].startsWith("layout")) {
+      } else if (component["type"] == "form") {
+        this.setStrategy(new FormStrategy(basex, basey));
+      } else if (component["type"].startsWith("layout")) {
         // initialized layout into 5 parts
         this.setStrategy(new LayoutStrategy(basex, basey));
 
       }
 
-      let compositeVertexStorage = this.strategy.createComponent(this, component, parent);
+      const compositeVertexStorage = this.strategy.createComponent(this, component, parent);
       // basey = basey + 20;
       // let maxWidth = 0;
       // for(let subUIComponent of component["componentList"]) {

@@ -87,7 +87,7 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
         breadcrumbBoxVertexStorage.getVertex().setGeometry(newmxGeometry);
         graphStorage.getGraph().refresh();
 
-        component["style"] = breadcrumbBoxVertexStorage.getStyle();
+        // component["style"] = breadcrumbBoxVertexStorage.getStyle();
         component["x"] = breadcrumbBoxVertexStorage.getVertexX();
         component["y"] = breadcrumbBoxVertexStorage.getVertexY();
         component["width"] = breadcrumbBoxVertexStorage.getVertexWidth();

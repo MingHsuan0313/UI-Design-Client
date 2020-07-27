@@ -67,7 +67,7 @@ export class FormStrategy implements ICreateComponentStrategy {
         component.y = formBoxVertexStorage.getVertexY();
         component.width = formBoxVertexStorage.getVertexWidth();
         component.height = formBoxVertexStorage.getVertexHeight();
-        component["style"] = formBoxVertexStorage.getStyle();
+        // component["style"] = formBoxVertexStorage.getStyle();
         return formBoxVertexStorage;
     }
 }

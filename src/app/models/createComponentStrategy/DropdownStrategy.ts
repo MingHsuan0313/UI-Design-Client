@@ -100,7 +100,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     component["y"] = dropdownBoxVertexStorage.getVertexY();
     component["width"] = dropdownBoxVertexStorage.getVertexWidth();
     component["height"] = dropdownBoxVertexStorage.getVertexHeight();
-    component["style"] = dropdownBoxVertexStorage.getStyle();
+    // component["style"] = dropdownBoxVertexStorage.getStyle();
 
     return dropdownBoxVertexStorage;
   }

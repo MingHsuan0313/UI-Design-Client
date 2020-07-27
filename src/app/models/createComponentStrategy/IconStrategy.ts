@@ -46,7 +46,7 @@ export class IconStrategy implements ICreateComponentStrategy {
     let iconVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component);
     // component.vertexStorage = vertexStorage;
     iconVertexStorage.setIsPrimary(true);
-    component["style"] = style;
+    // component["style"] = style;
     component["x"] = iconVertexStorage.getVertexX();
     component["y"] = iconVertexStorage.getVertexY();
     component["width"] = iconVertexStorage.getVertexWidth();

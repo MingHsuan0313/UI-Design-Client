@@ -10,16 +10,16 @@
       <div class="dropdown-menu">
         <option class="dropdown-item" *ngFor="let kind of layout" (click)="setLayout(kind)">{{kind}}</option>
       </div>
-      <button type="button" class="btn btn-outline-danger" (click)="openForm('header')">
+      <button type="button" class="btn btn-outline-danger btn-sm" (click)="openForm('header')">
         HeaderItem
       </button>
-      <button type="button" class="btn btn-outline-danger" (click)="openForm('sidebar')">
+      <button type="button" class="btn btn-outline-danger  btn-sm" (click)="openForm('sidebar')">
         SidebarItem
       </button>
-      <button type="button" class="btn btn-outline-danger" (click)="openForm('asidebar')">
+      <button type="button" class="btn btn-outline-danger  btn-sm" (click)="openForm('asidebar')">
         AsidebarItem
       </button>
-      <button type="button" class="btn btn-outline-danger" (click)="openForm('footer')">
+      <button type="button" class="btn btn-outline-danger  btn-sm" (click)="openForm('footer')">
         FooterItem
       </button>
     </div>
