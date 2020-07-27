@@ -1,60 +1,60 @@
 export const StyleLibrary = [
   {
-    genere: "coreUI",
+    genere: 'coreUI',
 
     // text: {
     //   opacity: "0",
     //   fontSize: "25",
     //   fontColor: "black"
     // },
-    text:{
+    text: {
       text_black: {
-        opacity: "0",
-        fontSize: "16",
-        fontColor: "black"
+        opacity: '0',
+        fontSize: '16',
+        fontColor: 'black'
       },
       text_blue: {
-        opacity: "0",
-        fontSize: "16",
-        fontColor: "#20a8d8"
+        opacity: '0',
+        fontSize: '16',
+        fontColor: '#20a8d8'
       },
     },
 
     button: {
-      fontSize: "16",
-      fontColor: "#000000",
-      fillColor: "#5bc0de",
+      fontSize: '16',
+      fontColor: '#000000',
+      fillColor: '#5bc0de',
       rounded: true,
-      strokeColor: "#269abc"
+      strokeColor: '#269abc'
     },
 
     dropdown: {
       dropdownBox: {
-        opacity: "0",
-        strokeColor: "#ffffff"
+        opacity: '0',
+        strokeColor: '#ffffff'
       },
 
       dropdownHeader: {
-        fontSize: "16",
-        fontColor: "#333333",
+        fontSize: '16',
+        fontColor: '#333333',
         rounded: true,
-        strokeColor: "#a6a6a6",
-        fillColor: "#ffffff",
-        border: "#a6a6a6",
+        strokeColor: '#a6a6a6',
+        fillColor: '#ffffff',
+        border: '#a6a6a6',
 
       },
 
       dropdownList: {
-        strokeColor: "#c8c8c8",
-        fillColor: "#ffffff",
-        opacity: "0",
+        strokeColor: '#c8c8c8',
+        fillColor: '#ffffff',
+        opacity: '0',
       },
 
       dropdownItem: {
-        strokeColor: "#a6a6a6",
-        fontColor: "#333333",
-        fontSize: "16",
-        fillColor: "#ffffff",
+        strokeColor: '#a6a6a6',
+        fontColor: '#333333',
+        fontSize: '16',
+        fillColor: '#ffffff',
       },
     },
 
@@ -62,32 +62,32 @@ export const StyleLibrary = [
 
     table: {
       tableBox: {
-        opacity: "0",
-        strokeColor: "#000000",
+        opacity: '0',
+        strokeColor: '#000000',
       },
 
       tableHeader: {
         fontStyle: 1,  // FONT_BOLD
-        fillColor: "#ffffff",
-        strokeColor: "#b8bcc2",
-        fontColor: "#4f5d73",
-        fontSize: "20",
+        fillColor: '#ffffff',
+        strokeColor: '#b8bcc2',
+        fontColor: '#4f5d73',
+        fontSize: '20',
         shadow: true,
       },
 
       tableData_white: {
-        fillColor: "#ffffff",
-        strokeColor: "#d8dbe0",
-        fontColor: "#4f5d73",
-        fontSize: "20",
+        fillColor: '#ffffff',
+        strokeColor: '#d8dbe0',
+        fontColor: '#4f5d73',
+        fontSize: '20',
         shadow: true,
       },
 
       tableData_grey: {
-        fillColor: "#f1f4f6",
-        strokeColor: "#d8dbe0",
-        fontColor: "#4f5d73",
-        fontSize: "20",
+        fillColor: '#f1f4f6',
+        strokeColor: '#d8dbe0',
+        fontColor: '#4f5d73',
+        fontSize: '20',
         shadow: true,
       },
     },
@@ -95,61 +95,71 @@ export const StyleLibrary = [
     // composite component
     card: {
       cardBox: {
-        fillColor: "#ffffff",
+        fillColor: '#ffffff',
         strokeColor: '#c8ced3'
       },
       cardHeader: {
-        fillColor: "#edefef",
+        fillColor: '#edefef',
         strokeColor: '#c8ced3',
-        fontColor: "000000",
-        fontSize: "30",
+        fontColor: '000000',
+        fontSize: '30',
       }
     },
 
     form: {
       formBox: {
-        strokeColor: "#ffffff",
-        fillColor: "#ffffff",
+        strokeColor: '#ffffff',
+        fillColor: '#ffffff',
         rounded: false,
         shadow: false,
       }
     },
 
     breadcrumb: {
-      breadcrumbBox:{
+      breadcrumbBox: {
         fillColor: '#ffffff',
         strokeColor: '#c8ced3'
       },
       breadcrumbIndicator: {
-          shape: "line",
-          rotation: 120,
-          strokeWidth: 1.8,
+        shape: 'line',
+        rotation: 120,
+        strokeWidth: 1.8,
       }
     },
 
     input: {
-      strokeColor: "#000000",
-      fillColor: "#ffffff"
+      strokeColor: '#000000',
+      fillColor: '#ffffff'
     },
 
     Layout1: {
-      fillColor: "#ffffff",
+      fillColor: '#ffffff',
       strokeColor: '#c8ced3'
     },
 
     Layout1Header: {
-      fillColor: "#ffffff",
+      fillColor: '#ffffff',
       strokeColor: '#c8ced3'
     },
 
     Layout1Sidebar: {
-      fillColor: "#2f353a",
+      fillColor: '#2f353a',
       strokeColor: '#c8ced3'
     },
 
     Layout1Footer: {
-      border: "#000000",
-      fillColor: "#f0f3f5",
+      border: '#000000',
+      fillColor: '#f0f3f5',
+      strokeColor: '#c8ced3'
+    },
+
+    Layout1Body: {
+      fillColor: '#ffffff',
+      strokeColor: '#c8ced3'
+    },
+
+    Layout1Asidebar: {
+      fillColor: '#ffffff',
       strokeColor: '#c8ced3'
     }
   }

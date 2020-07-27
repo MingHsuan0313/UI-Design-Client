@@ -1,7 +1,7 @@
-import {ICreateComponentStrategy} from "./ICreateComponentStrategy";
-import {GraphStorage} from "../graph-storage.model";
-import {StyleLibrary} from "../../shared/styleLibrary";
-import {StyleStorage} from "../style-storage.model";
+import {ICreateComponentStrategy} from './ICreateComponentStrategy';
+import {GraphStorage} from '../graph-storage.model';
+import {StyleLibrary} from '../../shared/styleLibrary';
+import {StyleStorage} from '../style-storage.model';
 
 export class LayoutStrategy implements ICreateComponentStrategy {
   basex: number;
@@ -19,42 +19,55 @@ export class LayoutStrategy implements ICreateComponentStrategy {
   }
 
   createComponent(graphStorage: GraphStorage, component, parent) {
-    const graphNode = document.getElementById("graphContainer0");
+    const graphNode = document.getElementById('graphContainer0');
     const defaultWidth = graphNode.offsetWidth;
     const defaultHeight = graphNode.offsetHeight;
 
-    let style = StyleLibrary[0]["Layout1"];
-    let styleName = "style" + component.type;
+    let style = StyleLibrary[0]['Layout1'];
+    let styleName = 'style' + component.type;
     let styleStorage = new StyleStorage(styleName, style);
-    const layoutGeometry = new mxGeometry(0, 0, defaultWidth , defaultHeight);
+    const layoutGeometry = new mxGeometry(0, 0, defaultWidth, defaultHeight);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
     const layout = graphStorage.insertVertex(parent, null, component.text, layoutGeometry, styleStorage, component);
     layout.setIsPrimary(true);
 
     // component.text, component, .... attributeds not yet finished
 
-    style = StyleLibrary[0]["Layout1Header"];
-    styleName = "style" + component.type + "Header";
+    style = StyleLibrary[0]['Layout1Header'];
+    styleName = 'style' + component.type + 'Header';
     styleStorage = new StyleStorage(styleName, style);
-    const layoutHeaderGeometry = new mxGeometry(0, 0, defaultWidth , defaultHeight / 15 );
+    const layoutHeaderGeometry = new mxGeometry(0, 0, defaultWidth, defaultHeight / 15);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
     const header = graphStorage.insertVertex(layout.getVertex(), null, component.text, layoutHeaderGeometry, styleStorage, component);
 
 
-    style = StyleLibrary[0]["Layout1Footer"];
-    styleName = "style" + component.type + "Footer";
+    style = StyleLibrary[0]['Layout1Footer'];
+    styleName = 'style' + component.type + 'Footer';
     styleStorage = new StyleStorage(styleName, style);
-    const layoutFooterGeometry = new mxGeometry(0, defaultHeight * 14 / 15 , defaultWidth, defaultHeight * 1 / 15 );
+    const layoutFooterGeometry = new mxGeometry(defaultWidth / 7, defaultHeight * 14 / 15, defaultWidth * 5 / 7, defaultHeight * 1 / 15);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
     graphStorage.insertVertex(layout.getVertex(), null, component.text, layoutFooterGeometry, styleStorage, component);
 
-    style = StyleLibrary[0]["Layout1Sidebar"];
-    styleName = "style" + component.type + "Sidebar";
+    style = StyleLibrary[0]['Layout1Sidebar'];
+    styleName = 'style' + component.type + 'Sidebar';
     styleStorage = new StyleStorage(styleName, style);
-    const layoutSidebarGeometry = new mxGeometry(0, defaultHeight / 15 , defaultWidth / 7, defaultHeight * 14 / 15 );
+    const layoutSidebarGeometry = new mxGeometry(0, defaultHeight / 15, defaultWidth / 7, defaultHeight * 14 / 15);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
     graphStorage.insertVertex(layout.getVertex(), null, component.text, layoutSidebarGeometry, styleStorage, component);
 
+    style = StyleLibrary[0]['Layout1Body'];
+    styleName = 'style' + component.type + 'Body';
+    styleStorage = new StyleStorage(styleName, style);
+    const layoutBodyGeometry = new mxGeometry(defaultWidth / 7, defaultHeight / 15, defaultWidth * 5 / 7, defaultHeight * 13 / 15);
+    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
+    graphStorage.insertVertex(layout.getVertex(), null, component.text, layoutBodyGeometry, styleStorage, component);
+
+    style = StyleLibrary[0]['Layout1Asidebar'];
+    styleName = 'style' + component.type + 'Asidebar';
+    styleStorage = new StyleStorage(styleName, style);
+    const layoutAsidebarGeometry = new mxGeometry(defaultWidth * 6 / 7, defaultHeight / 15, defaultWidth / 7, defaultHeight * 14 / 15);
+    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
+    graphStorage.insertVertex(layout.getVertex(), null, component.text, layoutAsidebarGeometry, styleStorage, component);
 
   }
 

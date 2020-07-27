@@ -96,7 +96,7 @@ export class ControlPanelComponent implements OnInit {
 
   apply() {
     // selector is now meaningless
-    this.layoutComponent = new Layout({id: PropertyGenerator.getID(), selector: "layout", type: this.layout_selected, layout: this.layout_selected});
+    this.layoutComponent = new Layout({id: PropertyGenerator.getID(), selector: this.layout_selected, type: "layout", layout: "layout"});
     Storage.setLayoutComponent(this.layoutComponent);
     this.graphEditorService.bindComponent(this.layoutComponent);
   }
@@ -108,6 +108,7 @@ export class ControlPanelComponent implements OnInit {
     properties["id"] = PropertyGenerator.getID();
     properties["selector"] = "text";
     properties["type"] = "text";
+    properties["layout"] = this.layoutPart;
     const text = new Text(properties);
     if (this.layoutPart == "sidebar") {
       this.layoutComponent["sidebar"].push(text);

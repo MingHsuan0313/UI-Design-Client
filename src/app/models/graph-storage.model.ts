@@ -62,13 +62,30 @@ export class GraphStorage {
     if (basex == undefined || basey == undefined) {
       basex = 30;
       basey = 30;
-    } else if (component["type"].startsWith("Layout")) {
+    } else if (component["type"].startsWith("layout")) {
       basex = 0;
       basey = 0;
     }
 
-    // basic component
+    // set parent [layout parts] to each components
+    switch(component["layout"]){
+      case "header":
+        parent = this.findVertexByID(3);
+        break;
+      case "footer":
+        parent = this.findVertexByID(4);
+        break;
+      case "sidebar":
+        parent = this.findVertexByID(5);
+        break;
+      case "asidebar":
+        parent = this.findVertexByID(7);
+        break;
+      default:
+        parent = this.findVertexByID(6); //body
+    }
 
+    // basic component
     if (component["componentList"] == undefined) {
       if (component["type"] == "button") {
         this.setStrategy(new ButtonStrategy(basex, basey));
@@ -96,7 +113,8 @@ export class GraphStorage {
       else if(component["type"] == "form") {
         this.setStrategy(new FormStrategy(basex,basey));
       }
-      else if (component["type"].startsWith("Layout")) {
+      else if (component["type"].startsWith("layout")) {
+        // initialized layout into 5 parts
         this.setStrategy(new LayoutStrategy(basex, basey));
 
       }
@@ -159,7 +177,7 @@ export class GraphStorage {
   findVertexByID(id) {
     for (const element of this.vertexStorageList) {
       if (element.id == id) {
-        return element;
+        return element.getVertex();
       }
     }
   }
