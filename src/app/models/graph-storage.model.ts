@@ -60,8 +60,8 @@ export class GraphStorage {
     console.log(component);
 
     if (basex == undefined || basey == undefined) {
-      basex = 30;
-      basey = 30;
+      basex = 10;
+      basey = 10;
     } else if (component["type"].startsWith("layout")) {
       basex = 0;
       basey = 0;
