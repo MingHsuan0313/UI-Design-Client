@@ -1,6 +1,8 @@
 import {Injectable, ElementRef} from "@angular/core";
 import {GraphStorage} from "../models/graph-storage.model";
-import {fakeBreadcrumb} from "../../fakedata/fakeBreadcrumb"
+import {fakeBreadcrumb} from "../../fakedata/fakeBreadcrumb";
+import {StyleLibrary} from "../shared/styleLibrary";
+import {StyleStorage} from "../models/style-storage.model";
 
 @Injectable({
   providedIn: "root"
@@ -21,8 +23,8 @@ export default class GraphEditorService {
     this.graphStorage = new GraphStorage(element, "graphContainer" + this.graphStorages.length.toString());
     this.graphStorages.push(this.graphStorage);
     this.selectedGraphID = this.graphStorage.getID();
-    //this.bindComponent(fakeBreadcrumb);
-  } 
+    // this.bindComponent(fakeBreadcrumb);
+  }
 
   // object => svg
   // possible to have x y ?
@@ -43,5 +45,9 @@ export default class GraphEditorService {
 
   syncStorage() {
     this.graphStorage.syncStorage();
+  }
+
+  addArrow() {
+
   }
 }

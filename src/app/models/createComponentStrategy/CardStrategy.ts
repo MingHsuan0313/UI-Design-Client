@@ -65,7 +65,7 @@ export class CardStrategy implements ICreateComponentStrategy {
 
     this.basey = 50;
     this.basex = 0;
-    let maxWidth = 0;
+    let maxWidth = 250;
     for(let subUIComponent of component["componentList"]) {
       let vertexStorage = graphStorage.createComponent(subUIComponent, cardBoxVertexStorage.getVertex(), this.basex, this.basey)
       if(vertexStorage.getVertexWidth() > maxWidth)
