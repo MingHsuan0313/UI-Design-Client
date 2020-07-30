@@ -46,7 +46,7 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
         const breadcrumbBoxStyle = StyleLibrary[0]["breadcrumb"]["breadcrumbBox"];
         let styleStorage = new StyleStorage(styleName, breadcrumbBoxStyle);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName, breadcrumbBoxStyle);
-        const breadcrumbVertexGeometry = new mxGeometry(0, 0, 50, defaultHeight / 30 );
+        const breadcrumbVertexGeometry = new mxGeometry(this.basex, this.basey, 50, defaultHeight / 30 );
         const breadcrumbVertexStorage = graphStorage.insertVertex(parent, component.id, "", breadcrumbVertexGeometry, styleStorage, component);
         breadcrumbVertexStorage.setIsPrimary(true);
         return breadcrumbVertexStorage;
@@ -57,7 +57,7 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
         const breadcrumbIndicatorStyle = StyleLibrary[0]["breadcrumb"]["breadcrumbIndicator"];
         let styleStorage = new StyleStorage(styleName, breadcrumbIndicatorStyle);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName, breadcrumbIndicatorStyle);
-        const breadcrumbVertexGeometry = new mxGeometry(x, y, 15, 5);
+        const breadcrumbVertexGeometry = new mxGeometry(x, y+10, 20, 20);
         const breadcrumbVertexIndicatorStorage = graphStorage.insertVertex(parent.getVertex(), component.id, "", breadcrumbVertexGeometry, styleStorage, component);
         parent.addChild(breadcrumbVertexIndicatorStorage.id, breadcrumbVertexIndicatorStorage.getVertex(), "indicator");
         return breadcrumbVertexIndicatorStorage;
@@ -66,24 +66,24 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
     createComponent(graphStorage: GraphStorage, component: any, parent: any) {
         let breadcrumbBoxVertexStorage = this.createBreadcrumbBoxVertex(graphStorage, component, parent);
 
-        this.basey = 20;
-        this.basex = 30;
+        let p1 = 15;
+        let p2 = 15;
         var i = 0;
         for(let subUIComponent of component["componentList"]) {
 
-          let vertexStorage = graphStorage.createComponent(subUIComponent, breadcrumbBoxVertexStorage.getVertex(), this.basex-15, this.basey-15)
+          let vertexStorage = graphStorage.createComponent(subUIComponent, breadcrumbBoxVertexStorage.getVertex(), p1, p2)
           //console.log(vertexStorage)
           breadcrumbBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
-          this.basex = vertexStorage.getVertexX() + vertexStorage.getVertexWidth() + 4;
+          p1 = vertexStorage.getVertexX() + vertexStorage.getVertexWidth() + 15;
 
           if(i != component["componentList"].length-1){
-            let indicatorStorage =  this.createBreadcrumbIndicatorVertex(graphStorage, component, breadcrumbBoxVertexStorage, this.basex, this.basey);
-            this.basex = indicatorStorage.getVertexX() + indicatorStorage.getVertexWidth()+ 10;
+            let indicatorStorage =  this.createBreadcrumbIndicatorVertex(graphStorage, component, breadcrumbBoxVertexStorage, p1, p2);
+            p1 = indicatorStorage.getVertexX() + indicatorStorage.getVertexWidth()+ 15;
           }
           i += 1;
         }
 
-        let newmxGeometry = new mxGeometry(0, 0, this.basex+30, 40);
+        let newmxGeometry = new mxGeometry(this.basex, this.basey, p1+30, 50);
         breadcrumbBoxVertexStorage.getVertex().setGeometry(newmxGeometry);
         graphStorage.getGraph().refresh();
 

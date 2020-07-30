@@ -39,7 +39,7 @@ export class FormStrategy implements ICreateComponentStrategy {
         const formBoxStyle = StyleLibrary[0]["form"]["formBox"];
         let styleStorage = new StyleStorage(styleName, formBoxStyle);
         graphStorage.getGraph().getStylesheet().putCellStyle(styleName, formBoxStyle);
-        const formVertexGeometry = new mxGeometry(0, 0, 300, 300);
+        const formVertexGeometry = new mxGeometry(this.basex, this.basey, 300, 300);
         const formVertexStorage = graphStorage.insertVertex(parent, component.id, "", formVertexGeometry, styleStorage, component);
         formVertexStorage.setIsPrimary(true);
         return formVertexStorage;
@@ -48,18 +48,19 @@ export class FormStrategy implements ICreateComponentStrategy {
     createComponent(graphStorage: GraphStorage, component, parent) {
         let formBoxVertexStorage = this.createFormBoxVertex(graphStorage, component, parent);
 
-        this.basey = 40;
-        this.basex = 15;
+
+        let p1= 15;
+      let p2 = 40;
         let maxWidth = 0;
         for (let subUIComponent of component["componentList"]) {
-            let vertexStorage = graphStorage.createComponent(subUIComponent, formBoxVertexStorage.getVertex(), this.basex, this.basey)
+            let vertexStorage = graphStorage.createComponent(subUIComponent, formBoxVertexStorage.getVertex(), p1, p2)
             if (vertexStorage.getVertexWidth() > maxWidth)
                 maxWidth = vertexStorage.getVertexWidth();
-            this.basey = this.basey + vertexStorage.getVertexHeight();
+            p2 = p2 + vertexStorage.getVertexHeight() + 10;
             formBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
         }
 
-        let newmxGeometry = new mxGeometry(0, 0, maxWidth+50, this.basey);
+        let newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth+50, p2);
         formBoxVertexStorage.getVertex().setGeometry(newmxGeometry);
         graphStorage.getGraph().refresh();
 

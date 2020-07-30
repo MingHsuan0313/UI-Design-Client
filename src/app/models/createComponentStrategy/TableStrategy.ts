@@ -19,8 +19,8 @@ export class TableStrategy implements ICreateComponentStrategy {
       this.basex = basex;
       this.basey = basey;
     }
-    this.gridWidth = 100;
-    this.gridHeight = 50;
+    this.gridWidth = 80;
+    this.gridHeight = 40;
   }
 
   createDataBinding(index, key) {
@@ -65,7 +65,7 @@ export class TableStrategy implements ICreateComponentStrategy {
       const styleStorage = new StyleStorage(styleName, tableHeaderStyle);
       graphStorage.getGraph().getStylesheet().putCellStyle(styleName, tableHeaderStyle);
       const x = i * this.gridWidth;
-      const tableHeaderVertexGeometry = new mxGeometry(this.basex + x, this.basey + 0, this.gridWidth, this.gridHeight);
+      const tableHeaderVertexGeometry = new mxGeometry( x, 0, this.gridWidth, this.gridHeight);
       const tableHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, headerList[i], tableHeaderVertexGeometry, styleStorage, component, dataBinding);
       parent.addChild(tableHeaderVertexStorage.id, tableHeaderVertexStorage.getVertex(), "headers");
     }
@@ -86,7 +86,7 @@ export class TableStrategy implements ICreateComponentStrategy {
 
       const x = i * this.gridWidth;
       const y = 1 * this.gridHeight;
-      const tableDataVertexGeometry = new mxGeometry(this.basex + x, this.basey + y, this.gridWidth, this.gridHeight);
+      const tableDataVertexGeometry = new mxGeometry( x,  y, this.gridWidth, this.gridHeight);
       const tableDataVertexStorage = graphStorage.insertVertex(parent.getVertex(),
         component.id, rows[i], tableDataVertexGeometry, styleStorage, component,dataBinding);
       parent.addChild(tableDataVertexStorage.id, tableDataVertexStorage.getVertex(), "rows");

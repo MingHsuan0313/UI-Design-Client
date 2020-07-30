@@ -23,58 +23,60 @@ export class CardStrategy implements ICreateComponentStrategy {
   }
 
   createDataBinding() {
-    let dataBindingName = "header";
-    let hasDataBining = true;
-    let isList = -1;
-    let dataBinding = new DataBinding(
+    const dataBindingName = "header";
+    const hasDataBining = true;
+    const isList = -1;
+    const dataBinding = new DataBinding(
       hasDataBining,
       dataBindingName,
       isList
-    )
+    );
     return dataBinding;
   }
 
   createCardBoxVertex(graphStorage, component, parent) {
-    let styleName = "cardBoxStyle" + component.id;
+    const styleName = "cardBoxStyle" + component.id;
     const cardBoxStyle = StyleLibrary[0]["card"]["cardBox"];
-    let styleStorage = new StyleStorage(styleName, cardBoxStyle);
+    const styleStorage = new StyleStorage(styleName, cardBoxStyle);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, cardBoxStyle);
-    const cardVertexGeometry = new mxGeometry(0, 0, 250, 300);
+    const cardVertexGeometry = new mxGeometry(this.basex, this.basey, 250, 300);
     const cardVertexStorage = graphStorage.insertVertex(parent, component.id, "", cardVertexGeometry, styleStorage, component);
     cardVertexStorage.setIsPrimary(true);
     return cardVertexStorage;
   }
 
   createCardHeaderVertex(graphStorage, component, parent) {
-    let dataBinding = this.createDataBinding();
-    let styleName = "cardHeaderStyle" + component.id;
+    const dataBinding = this.createDataBinding();
+    const styleName = "cardHeaderStyle" + component.id;
     const cardHeaderStyle = StyleLibrary[0]["card"]["cardHeader"];
-    let styleStorage = new StyleStorage(styleName, cardHeaderStyle);
+    const styleStorage = new StyleStorage(styleName, cardHeaderStyle);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, cardHeaderStyle);
     const cardHeaderGeometry = new mxGeometry(0, 0, 250, 50);
-    const cardHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, component["header"], cardHeaderGeometry, styleStorage, component,dataBinding);
+    const cardHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, component["header"], cardHeaderGeometry, styleStorage, component, dataBinding);
     parent.addChild(cardHeaderVertexStorage.id, cardHeaderVertexStorage.getVertex(), "header");
     return cardHeaderVertexStorage;
   }
 
   createComponent(graphStorage: GraphStorage, component, parent) {
-    let cardBoxVertexStorage = this.createCardBoxVertex(graphStorage, component, parent);
-    let cardHeaderVertexStorage = this.createCardHeaderVertex(graphStorage, component, cardBoxVertexStorage);
+    const cardBoxVertexStorage = this.createCardBoxVertex(graphStorage, component, parent);
+    const cardHeaderVertexStorage = this.createCardHeaderVertex(graphStorage, component, cardBoxVertexStorage);
     // insert dropdown box
 
 
-    this.basey = 50;
-    this.basex = 0;
+    let p1 = 50;
+    let p2 = 50;
     let maxWidth = 250;
-    for(let subUIComponent of component["componentList"]) {
-      let vertexStorage = graphStorage.createComponent(subUIComponent, cardBoxVertexStorage.getVertex(), this.basex, this.basey)
-      if(vertexStorage.getVertexWidth() > maxWidth)
+    for (const subUIComponent of component["componentList"]) {
+      const vertexStorage = graphStorage.createComponent(subUIComponent, cardBoxVertexStorage.getVertex(), p1, p2);
+      if (vertexStorage.getVertexWidth() > maxWidth) {
         maxWidth = vertexStorage.getVertexWidth();
-      this.basey = this.basey + vertexStorage.getVertexHeight();
-      cardBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList",subUIComponent);
+      }
+      p2 = p2 + vertexStorage.getVertexHeight() + 10;
+
+      cardBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
     }
 
-    let newmxGeometry = new mxGeometry(0,0,maxWidth,this.basey);
+    const newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth, p2);
     cardBoxVertexStorage.getVertex().setGeometry(newmxGeometry);
     graphStorage.getGraph().refresh();
 

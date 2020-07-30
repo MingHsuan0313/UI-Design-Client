@@ -59,12 +59,17 @@ export class GraphStorage {
     console.log("create Component heree");
     console.log(component);
 
-    if (basex == undefined || basey == undefined) {
-      basex = 10;
-      basey = 10;
-    } else if (component["type"].startsWith("layout")) {
+    const graphNode = document.getElementById("graphContainer0");
+    const defaultWidth = graphNode.offsetWidth;
+    const defaultHeight = graphNode.offsetHeight;
+
+    if (component["type"].startsWith("layout")) {
       basex = 0;
       basey = 0;
+
+    } else if (basex == undefined || basey == undefined) {
+      basex = defaultWidth * 3/10;
+      basey = defaultHeight *3/10;
     }
 
     // set parent [layout parts] to each components
