@@ -77,15 +77,23 @@ export class GraphStorage {
       switch (component["layout"]) {
         case "header":
           parent = this.findVertexByID(3);
+          basex = parent["x"];
+          basey = parent["y"];
           break;
         case "footer":
           parent = this.findVertexByID(4);
+          basex = parent["x"];
+          basey = parent["y"];
           break;
         case "sidebar":
           parent = this.findVertexByID(5);
+          basex = parent["x"];
+          basey = parent["y"];
           break;
         case "asidebar":
           parent = this.findVertexByID(7);
+          basex = parent["x"];
+          basey = parent["y"];
           break;
         // default:
         //   parent = this.findVertexByID(1); // body

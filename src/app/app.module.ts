@@ -1,17 +1,30 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from "./app.component";
 import { AppGraphEditorComponent } from "./components/app-graph-editor/app-graph-editor.component";
 import { AppSettingComponent } from "./components/app-setting/app-setting.component";
-import { WizardComponent } from "./components/control-panel/wizard/wizard.component";
+// import { WizardComponent } from "./components/control-panel/wizard/wizard.component";
 import { NavigationComponent } from "./components/control-panel/navigation/navigation.component";
 import { ControlPanelComponent } from "./components/control-panel/control-panel.component";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import {AppHeaderComponent} from './components/app-header/app-header.component';
-import { AppFooterComponent } from './components/app-footer/app-footer.component';
+import { AppRoutingModule } from "./app.routing";
+import { DefaultLayoutComponent } from "./containers";
+import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
+import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+// import {AppHeaderComponent} from './components/app-header/app-header.component';
 
+import {
+  AppAsideModule,
+  AppBreadcrumbModule,
+  AppHeaderModule,
+  AppFooterModule,
+  AppSidebarModule
+} from "@coreui/angular";
+
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import {WizardComponent} from './containers/default-layout/wizard/wizard.component';
 
 @NgModule({
   declarations: [
@@ -21,13 +34,21 @@ import { AppFooterComponent } from './components/app-footer/app-footer.component
     WizardComponent,
     NavigationComponent,
     ControlPanelComponent,
-    AppHeaderComponent,
-    AppFooterComponent,
+    DefaultLayoutComponent
   ],
   imports: [
+    PerfectScrollbarModule,
+    AppRoutingModule,
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    AppAsideModule,
+    AppBreadcrumbModule.forRoot(),
+    AppHeaderModule,
+    AppFooterModule,
+    AppSidebarModule,
+    BsDropdownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

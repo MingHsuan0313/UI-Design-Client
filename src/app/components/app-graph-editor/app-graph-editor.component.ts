@@ -2,6 +2,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import GraphEditorService from '../../services/graph-editor.service';
 import * as html2canvas from 'html2canvas';
+import ImportService from '../../services/import.service';
 
 @Component({
   selector: 'app-graph-editor',
@@ -9,6 +10,8 @@ import * as html2canvas from 'html2canvas';
   styleUrls: ['./app-graph-editor.component.scss']
 })
 export class AppGraphEditorComponent implements AfterViewInit {
+
+
 
   constructor(private graphEditorService: GraphEditorService) {
   }
