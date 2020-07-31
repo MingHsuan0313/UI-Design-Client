@@ -25,7 +25,7 @@ export class DefaultLayoutComponent implements OnInit {
 	public element: HTMLElement = document.body;
 
   // test_data
-  layout: any[] = ["Layout1", "Layout2", "Layout3"];
+  layout: any[] = ["Prime", "Alba", "Leaf"];
   genre: any[];
   categories: any[];
   components: any[];
@@ -160,4 +160,5 @@ export class DefaultLayoutComponent implements OnInit {
     this.graphEditorService.syncStorage();
   }
 }
+
 
