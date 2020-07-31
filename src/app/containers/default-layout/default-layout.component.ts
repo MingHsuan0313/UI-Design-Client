@@ -131,8 +131,12 @@ export class DefaultLayoutComponent implements OnInit {
     } else if (this.layoutPart == "asidebar") {
       this.layoutComponent["asidebar"].push(text);
     }
-
     this.graphEditorService.bindComponent(text);
+
+    for (const element of properties) {
+      sf["value"][element] = "";
+    }
+    sf.resetForm(sf["value"]);
   }
 
   openForm(s) {
@@ -156,3 +160,4 @@ export class DefaultLayoutComponent implements OnInit {
     this.graphEditorService.syncStorage();
   }
 }
+
