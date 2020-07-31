@@ -15,6 +15,7 @@ import {
   Table,
   Text
 } from "../../../models/model";
+import { fakeServiceComponents } from "./fakeServiceComponent";
 
 
 
@@ -29,7 +30,7 @@ export class WizardComponent implements OnInit {
   @Input() componentName: any;
 
 
-
+  serviceComponents: any;
   component: any;
   subComponent: any;
   subComponentName: any;
@@ -40,9 +41,16 @@ export class WizardComponent implements OnInit {
 
 
 
-  constructor(private graphEditorService: GraphEditorService) { }
+  constructor(private graphEditorService: GraphEditorService) {
 
-  ngOnInit(): void {
+  }
+
+  ngOnInit(): void {    
+    this.serviceComponents = fakeServiceComponents;
+
+    console.log("get service components");
+
+    console.log(this.serviceComponents);
     console.log("start wizard");
   }
 
@@ -190,6 +198,7 @@ export class WizardComponent implements OnInit {
     console.log("finish");
     this.component.getInfo();
     // $("#myModal a[href=\"#building\"]").tab("show");
+
     Storage.add(this.component);
     this.graphEditorService.bindComponent(this.component);
     console.log(this.component);

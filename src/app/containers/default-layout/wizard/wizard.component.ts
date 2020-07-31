@@ -15,6 +15,7 @@ import {
   Table,
   Text
 } from "../../../models/model";
+import { fakeServiceComponents } from "../../../components/control-panel/wizard/fakeServiceComponent";
 
 
 
@@ -28,8 +29,8 @@ export class WizardComponent implements OnInit {
   @Input() componentProperties: any[];
   @Input() componentName: any;
 
-
-
+  selectedServiceComponent: object;
+  serviceComponents: any;
   component: any;
   subComponent: any;
   subComponentName: any;
@@ -40,7 +41,17 @@ export class WizardComponent implements OnInit {
 
 
 
-  constructor(private graphEditorService: GraphEditorService) { }
+  constructor(private graphEditorService: GraphEditorService) {
+    this.serviceComponents = fakeServiceComponents;
+    this.selectedServiceComponent = {};
+    this.selectedServiceComponent["name"] = "choose service component";
+    console.log("we get service components");
+    console.log(this.serviceComponents);
+  }
+
+  setSelectedServiceComponent(serviceComponent) {
+    this.selectedServiceComponent = serviceComponent;
+  }
 
   ngOnInit(): void {
     console.log("start wizard");
@@ -175,13 +186,13 @@ export class WizardComponent implements OnInit {
     }
   }
   clickNext() {
-    $("#myModal a[href=\"#composition\"]").tab("show");
+    // $("#myModal a[href=\"#composition\"]").tab("show");
   }
 
 
   onClose() {
     console.log("close");
-    $("#myModal a[href=\"#building\"]").tab("show");
+    // $("#myModal a[href=\"#building\"]").tab("show");
   }
 
   clickCreate() {
@@ -192,7 +203,7 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     console.log("finish");
     this.component.getInfo();
-    $("#myModal a[href=\"#building\"]").tab("show");
+    // $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
     this.graphEditorService.bindComponent(this.component);
     console.log(this.component);

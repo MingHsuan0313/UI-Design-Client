@@ -43,7 +43,10 @@
             </div>
           </div>
 
-          <div *ngIf="!isComposite; else compositeBlock" style="font: caption">Basic Component cannot be composite, click Finish!</div>
+          <div *ngIf="!isComposite; else compositeBlock" style="font: caption">
+            <button class="btn btn-success" type="button">Enabled Matchmaking</button>
+            Basic Component cannot be composite, click Finish!
+          </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-info btn-lg" data-dismiss="modal" (click)="clickFinish()">Finish</button>
