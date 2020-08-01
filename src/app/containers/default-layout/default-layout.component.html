@@ -1,8 +1,25 @@
 <app-header [fixed]="true" [asideMenuToggler]="false" [sidebarToggler]="false">
 
+  <ul class="nav navbar-nav">
+    <li class="nav-item px-4">
+      <a class="nav-link" role="button" (click)="import()">Import </a>
+      <input type="file"
+             id="pictures" name="pictures"
+             accept="image/png, image/jpeg" multiple style="font-size: 16px;display: none">
+    </li>
+    <li class="nav-item px-4">
+      <a class="nav-link" role="button" (click)="save()">Save</a>
+    </li>
+    <li class="nav-item px-4" dropdown>
+      <a class="nav-link" role="button" data-toggle="dropdown" dropdownToggle>Export</a>
+      <div class="dropdown-menu" *dropdownMenu style="">
+        <a class="dropdown-item" (click)="connectServer()">Connect Server</a>
+      </div>
+    </li>
+  </ul>
 
   <ul class="nav navbar-nav">
-    <li class="nav-item dropdown px-5" dropdown>
+    <li class="nav-item dropdown px-4" dropdown>
       <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
          dropdownToggle (click)="false">
         {{this.layout_selected}}
@@ -66,27 +83,10 @@
         <a class="dropdown-item" (click)="openForm('asidebar')">asidebar</a>
       </div>
     </li>
-    <li class="nav-item px-4">
-      <a class="nav-link" role="button" (click)="connectServer()">Connect Server</a>
-    </li>
+    <li class="btn btn-ghost-dark btn-pill px-4" (click)="openForm2()">Navigation Mechanism</li>
     <!--    <li class="btn btn-outline-dark btn-pill px-5">Insert Item</li>-->
-
   </ul>
 
-  <ul class="nav navbar-nav">
-    <li class="nav-item px-4">
-      <a class="nav-link" role="button" (click)="import()">Import </a>
-      <input type="file"
-             id="pictures" name="pictures"
-             accept="image/png, image/jpeg" multiple style="font-size: 16px;display: none">
-    </li>
-    <li class="nav-item px-4">
-      <a class="nav-link" role="button" (click)="save()">Save</a>
-    </li>
-    <li class="nav-item px-4">
-      <a class="nav-link" role="button" >Export</a>
-    </li>
-  </ul>
 
 </app-header>
 <div class="app-body">
@@ -137,3 +137,29 @@
   </form>
 </div>
 
+
+<div class="form-popup" id="myForm2"
+     style="display: none;position:fixed;top:8%;right:40%;z-index: 9;width:350px;height:100px">
+  <form #sf="ngForm" (ngSubmit)="insertEdge(sf);">
+    <div class="card">
+      <div class="card-body" >
+        <div class="form-group row">
+          <label class="col-5" for="source-part" style="text-align: center">Source:</label>
+          <div class="col-md-7">
+            <input type="text" id="source-part" name="source" ngModel>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-5" for="target-part" style="text-align: center">Target:</label>
+          <div class="col-md-7">
+            <input type="text" id="target-part" name="target" ngModel>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer" style="display: flex;justify-content: center;">
+        <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+        <button type="reset" class="btn btn-sm btn-danger" (click)="closeForm2()"><i class="fa fa-ban"></i> Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -149,6 +149,14 @@ export class DefaultLayoutComponent implements OnInit {
     document.getElementById("myForm").style.display = "none";
   }
 
+  openForm2() {
+    document.getElementById("myForm2").style.display = "block";
+  }
+
+  closeForm2() {
+    document.getElementById("myForm2").style.display = "none";
+  }
+
   import() {
     this.importService.import();
   }
@@ -159,6 +167,11 @@ export class DefaultLayoutComponent implements OnInit {
   save() {
     this.graphEditorService.syncStorage();
   }
+
+  insertEdge(sf) {
+
+  }
 }
+
 
 

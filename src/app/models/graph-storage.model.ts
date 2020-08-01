@@ -1,17 +1,17 @@
-import VertexStorage from "./vertex-storage.model";
-import EdgeStorage from "./edge-storage.model";
-import {Storage} from "./../shared/storage";
-import {ICreateComponentStrategy} from "./createComponentStrategy/ICreateComponentStrategy";
-import {ButtonStrategy} from "./createComponentStrategy/ButtonStrategy";
-import {TextStrategy} from "./createComponentStrategy/TextStrategy";
-import {DropdownStrategy} from "./createComponentStrategy/DropdownStrategy";
-import {TableStrategy} from "./createComponentStrategy/TableStrategy";
-import { FormStrategy } from "./createComponentStrategy/FormStrategy";
-import {CardStrategy} from "./createComponentStrategy/CardStrategy";
-import {BreadcrumbStrategy} from "./createComponentStrategy/BreadcrumbStrategy";
-import {IconStrategy} from "./createComponentStrategy/IconStrategy";
-import {InputStrategy} from "./createComponentStrategy/InputStrategy";
-import {LayoutStrategy} from "./createComponentStrategy/LayoutStrategy";
+import VertexStorage from './vertex-storage.model';
+import EdgeStorage from './edge-storage.model';
+import {Storage} from './../shared/storage';
+import {ICreateComponentStrategy} from './createComponentStrategy/ICreateComponentStrategy';
+import {ButtonStrategy} from './createComponentStrategy/ButtonStrategy';
+import {TextStrategy} from './createComponentStrategy/TextStrategy';
+import {DropdownStrategy} from './createComponentStrategy/DropdownStrategy';
+import {TableStrategy} from './createComponentStrategy/TableStrategy';
+import {FormStrategy} from './createComponentStrategy/FormStrategy';
+import {CardStrategy} from './createComponentStrategy/CardStrategy';
+import {BreadcrumbStrategy} from './createComponentStrategy/BreadcrumbStrategy';
+import {IconStrategy} from './createComponentStrategy/IconStrategy';
+import {InputStrategy} from './createComponentStrategy/InputStrategy';
+import {LayoutStrategy} from './createComponentStrategy/LayoutStrategy';
 
 export class GraphStorage {
   vertexStorageList: VertexStorage[];
@@ -28,6 +28,19 @@ export class GraphStorage {
     this.id = id;
     this.graphModel = new mxGraphModel();
     this.graph = new mxGraph(element, this.graphModel);
+    const parent = this.getGraph().getDefaultParent();
+    const v1 = this.graph.insertVertex(parent, null, 'Hi', 200, 200, 100, 100);
+    const v2 = this.graph.insertVertex(parent, null, 'World', 500, 200, 100, 100);
+    const v3 = this.graph.insertVertex(parent, null, 'World', 500, 200, 100, 100);
+    const e1 = this.graph.insertEdge(parent, null, 'shoot', v1, v2);
+
+    const keyHandler = new mxKeyHandler(this.graph);
+    keyHandler.bindKey(46, function (evt) {
+      console.log('inside keyhandler');
+      keyHandler.graph.getSelectionModel().removeCell();
+
+    });
+
     this.graph.addMouseListener(
       {
         mouseDown: function (sender, evt) {
@@ -56,44 +69,44 @@ export class GraphStorage {
   }
 
   createComponent(component, parent, basex?, basey?) {
-    console.log("create Component heree");
+    console.log('create Component heree');
     console.log(component);
 
-    const graphNode = document.getElementById("graphContainer0");
+    const graphNode = document.getElementById('graphContainer0');
     const defaultWidth = graphNode.offsetWidth;
     const defaultHeight = graphNode.offsetHeight;
 
-    if (component["type"].startsWith("layout")) {
+    if (component['type'].startsWith('layout')) {
       basex = 0;
       basey = 0;
 
     } else if (basex == undefined || basey == undefined) {
-      basex = defaultWidth * 3/10;
-      basey = defaultHeight *3/10;
+      basex = defaultWidth * 3 / 10;
+      basey = defaultHeight * 3 / 10;
     }
 
     // set parent [layout parts] to each components
     if (parent.id < 8) {
-      switch (component["layout"]) {
-        case "header":
+      switch (component['layout']) {
+        case 'header':
           parent = this.findVertexByID(3);
-          basex = parent["x"];
-          basey = parent["y"];
+          basex = parent['x'];
+          basey = parent['y'];
           break;
-        case "footer":
+        case 'footer':
           parent = this.findVertexByID(4);
-          basex = parent["x"];
-          basey = parent["y"];
+          basex = parent['x'];
+          basey = parent['y'];
           break;
-        case "sidebar":
+        case 'sidebar':
           parent = this.findVertexByID(5);
-          basex = parent["x"];
-          basey = parent["y"];
+          basex = parent['x'];
+          basey = parent['y'];
           break;
-        case "asidebar":
+        case 'asidebar':
           parent = this.findVertexByID(7);
-          basex = parent["x"];
-          basey = parent["y"];
+          basex = parent['x'];
+          basey = parent['y'];
           break;
         // default:
         //   parent = this.findVertexByID(1); // body
@@ -101,31 +114,31 @@ export class GraphStorage {
     }
 
     // basic component
-    if (component["componentList"] == undefined) {
-      if (component["type"] == "button") {
+    if (component['componentList'] == undefined) {
+      if (component['type'] == 'button') {
         this.setStrategy(new ButtonStrategy(basex, basey));
-      } else if (component["type"] == "text") {
+      } else if (component['type'] == 'text') {
         this.setStrategy(new TextStrategy(basex, basey));
-      } else if (component["type"] == "dropdown") {
+      } else if (component['type'] == 'dropdown') {
         this.setStrategy(new DropdownStrategy(basex, basey));
-      } else if (component["type"] == "table") {
+      } else if (component['type'] == 'table') {
         this.setStrategy(new TableStrategy(basex, basey));
-      } else if (component["type"] == "icon") {
+      } else if (component['type'] == 'icon') {
         this.setStrategy(new IconStrategy(basex, basey));
-      } else if (component["type"].startsWith("input")) {
+      } else if (component['type'].startsWith('input')) {
         this.setStrategy(new InputStrategy(basex, basey));
       }
 
       return this.strategy.createComponent(this, component, parent);
     } else {
 
-      if (component["type"] == "card") {
+      if (component['type'] == 'card') {
         this.setStrategy(new CardStrategy(basex, basey));
-      } else if (component["type"] == "breadcrumb") {
+      } else if (component['type'] == 'breadcrumb') {
         this.setStrategy(new BreadcrumbStrategy(basex, basey));
-      } else if (component["type"] == "form") {
+      } else if (component['type'] == 'form') {
         this.setStrategy(new FormStrategy(basex, basey));
-      } else if (component["type"].startsWith("layout")) {
+      } else if (component['type'].startsWith('layout')) {
         // initialized layout into 5 parts
         this.setStrategy(new LayoutStrategy(basex, basey));
 
@@ -159,7 +172,7 @@ export class GraphStorage {
     let vertex;
     try {
       this.graph.getModel().beginUpdate();
-      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height, styleStorage.name, "");
+      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height, styleStorage.name, '');
     } finally {
       this.graph.getModel().endUpdate();
       // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
@@ -176,7 +189,7 @@ export class GraphStorage {
     try {
       const parent = this.graph.getDefaultParent();
       this.graph.getModel().beginUpdate();
-      edge = this.graph.insertEdge(parent, "", "", sourceVertex, targetVertex, "");
+      edge = this.graph.insertEdge(parent, '', '', sourceVertex, targetVertex, '');
 
     } finally {
       this.graph.getModel().endUpdate();
