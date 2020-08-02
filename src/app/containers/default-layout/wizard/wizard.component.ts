@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 import {Storage} from "../../../shared/storage";
 import {NgForm} from "@angular/forms";
 import GraphEditorService from "../../../services/graph-editor.service";
+import ServiceComponentService from "../../../services/service-component.service";
 import {PropertyGenerator} from "../../../shared/property-generator";
 import {
   BreadcrumbComposite,
@@ -21,7 +22,7 @@ import {
 @Component({
   selector: "app-wizard",
   templateUrl: "./wizard.component.html",
-  styleUrls: ["./wizard.component.css"]
+  styleUrls: ["./wizard.component.scss"]
 })
 export class WizardComponent implements OnInit {
 
@@ -40,7 +41,9 @@ export class WizardComponent implements OnInit {
 
 
 
-  constructor(private graphEditorService: GraphEditorService) { }
+  constructor(private graphEditorService: GraphEditorService,
+    private servceComponentService: ServiceComponentService    
+  ) { }
 
   ngOnInit(): void {
     console.log("start wizard");
@@ -86,6 +89,10 @@ export class WizardComponent implements OnInit {
         return false;
     }
     return true;
+  }
+
+  setServiceComponent(serviceComponent) {
+    this.component.setServiceComponent(serviceComponent);
   }
 
   setSubComponent(properties): boolean {
@@ -175,13 +182,13 @@ export class WizardComponent implements OnInit {
     }
   }
   clickNext() {
-    $("#myModal a[href=\"#composition\"]").tab("show");
+    // $("#myModal a[href=\"#composition\"]").tab("show");
   }
 
 
   onClose() {
     console.log("close");
-    $("#myModal a[href=\"#building\"]").tab("show");
+    // $("#myModal a[href=\"#building\"]").tab("show");
   }
 
   clickCreate() {
@@ -192,7 +199,7 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     console.log("finish");
     this.component.getInfo();
-    $("#myModal a[href=\"#building\"]").tab("show");
+    // $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
     this.graphEditorService.bindComponent(this.component);
     console.log(this.component);

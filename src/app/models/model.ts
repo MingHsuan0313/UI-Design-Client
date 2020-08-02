@@ -8,6 +8,8 @@ export interface UIComponent {
   type: String;
   style: String;
   layout: String;
+  serviceComponent: Object;
+  isArgument: String; // "" if it's not an argment , instead argument name
 
   add(component: UIComponent): void;
 
@@ -27,6 +29,8 @@ export class Icon implements UIComponent {
   style: String;
   layout: String;
   text: String;
+  serviceComponent: Object;
+  isArgument: String;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
@@ -40,6 +44,10 @@ export class Icon implements UIComponent {
   }
 
   remove(component: UIComponent): void {
+  }
+
+  setServiceComponent(serviceComponent): void {
+
   }
 
 }
@@ -56,6 +64,8 @@ export class Text implements UIComponent {
   layout: String;
   text: String;
   href: String;
+  serviceComponent: Object;
+  isArgument: String;
 
   constructor(init?: Partial<Text>) {
     Object.assign(this, init);
@@ -69,6 +79,10 @@ export class Text implements UIComponent {
   }
 
   remove(component: UIComponent): void {
+  }
+
+  setServiceComponent(serviceComponent) {
+    this.serviceComponent = serviceComponent;
   }
 }
 
@@ -84,6 +98,8 @@ export class Button implements UIComponent {
   layout: String;
   text: String;
   href: String;
+  serviceComponent: Object;
+  isArgument: String;
 
   constructor(init?: Partial<Button>) {
     Object.assign(this, init);
@@ -99,6 +115,9 @@ export class Button implements UIComponent {
   remove(component: UIComponent): void {
   }
 
+  setServiceComponent(serviceComponent) {
+    this.serviceComponent = serviceComponent;
+  }
 }
 
 export class Table implements UIComponent {
@@ -113,6 +132,8 @@ export class Table implements UIComponent {
   layout: String;
   headers: any[];
   rows: any[];
+  serviceComponent: Object;
+  isArgument: String;
 
   constructor(init?: Partial<Table>) {
     Object.assign(this, init);
@@ -128,6 +149,9 @@ export class Table implements UIComponent {
   remove(component: UIComponent): void {
   }
 
+  setServiceComponent(serviceComponent) {
+    this.serviceComponent = serviceComponent;
+  }
 }
 
 export class CardComposite implements UIComponent {
@@ -142,6 +166,8 @@ export class CardComposite implements UIComponent {
   layout: String;
   header: String;
   componentList: any[] = [];
+  serviceComponent: Object;
+  isArgument: String;
 
   constructor(init?: Partial<CardComposite>) {
     Object.assign(this, init);
@@ -158,6 +184,9 @@ export class CardComposite implements UIComponent {
   remove(component: UIComponent): void {
   }
 
+  setServiceComponent(serviceComponent) {
+    this.serviceComponent = serviceComponent;
+  }
 }
 
 export class Dropdown implements UIComponent {
@@ -171,6 +200,8 @@ export class Dropdown implements UIComponent {
   style: String;
   layout: String;
   items: any[];
+  serviceComponent: Object;
+  isArgument: String;
 
   constructor(init?: Partial<Dropdown>) {
     Object.assign(this, init);
@@ -185,6 +216,10 @@ export class Dropdown implements UIComponent {
 
   remove(component: UIComponent): void {
   }
+
+  setServiceComponent(serviceComponent) {
+    this.serviceComponent = serviceComponent;
+  }
 }
 
 export class InputGroupComposite implements UIComponent {
@@ -198,6 +233,8 @@ export class InputGroupComposite implements UIComponent {
   style: String;
   layout: String;
   componentList: any[] = [];
+  serviceComponent: Object;
+  isArgument: String;
 
   constructor(init?: Partial<InputGroupComposite>) {
     Object.assign(this, init);
@@ -213,6 +250,10 @@ export class InputGroupComposite implements UIComponent {
 
   remove(component: UIComponent): void {
   }
+
+  setServiceComponent(serviceComponent) {
+    this.serviceComponent = serviceComponent;
+  }
 }
 
 export class INPUT implements UIComponent {
@@ -226,6 +267,8 @@ export class INPUT implements UIComponent {
   style: String;
   layout: String;
   typeInfo: String;  // e.g. input-text, input-password
+  serviceComponent: Object;
+  isArgument: String;
 
   constructor(init?: Partial<INPUT>) {
     Object.assign(this, init);
@@ -241,6 +284,9 @@ export class INPUT implements UIComponent {
   remove(component: UIComponent): void {
   }
 
+  setServiceComponent(serviceComponent) {
+    this.serviceComponent = serviceComponent;
+  }
 }
 
 export class BreadcrumbComposite implements UIComponent {
@@ -254,6 +300,8 @@ export class BreadcrumbComposite implements UIComponent {
   style: String;
   layout: String;
   componentList: any[] = [];
+  serviceComponent: Object;
+  isArgument: String;
 
   constructor(init?: Partial<BreadcrumbComposite>) {
     Object.assign(this, init);
@@ -269,6 +317,11 @@ export class BreadcrumbComposite implements UIComponent {
 
   remove(component: UIComponent): void {
   }
+
+  setServiceComponent(serviceComponent) {
+    this.setServiceComponent = serviceComponent;
+  }
+
 }
 
 export class FormComposite implements UIComponent {
@@ -282,6 +335,8 @@ export class FormComposite implements UIComponent {
   style: String;
   layout: String;
   componentList: any[] = [];
+  serviceComponent: Object;
+  isArgument: String;
 
   constructor(init?: Partial<FormComposite>) {
     Object.assign(this, init);
@@ -296,6 +351,10 @@ export class FormComposite implements UIComponent {
   }
 
   remove(component: UIComponent): void {
+  }
+
+  setServiceComponent(serviceComponent) {
+    this.serviceComponent = serviceComponent;
   }
 }
 
@@ -314,6 +373,8 @@ export class Layout implements UIComponent {
   sidebar: any[] = [];
   footer: any[] = [];
   asidebar: any[] = [];
+  serviceComponent: Object;
+  isArgument: String;
 
   constructor(init?: Partial<Layout>) {
     Object.assign(this, init);
@@ -329,7 +390,8 @@ export class Layout implements UIComponent {
   remove(component: UIComponent): void {
   }
 
+  setServiceComponent(serviceComponent,argumentName?) {
+    this.serviceComponent = serviceComponent;
+    this.isArgument = argumentName;
+  }
 }
-
-
-
