@@ -3,6 +3,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import GraphEditorService from '../../services/graph-editor.service';
 import * as html2canvas from 'html2canvas';
 import ImportService from '../../services/import.service';
+import {Storage} from '../../shared/storage';
 
 @Component({
   selector: 'app-graph-editor',
@@ -73,7 +74,11 @@ export class AppGraphEditorComponent implements AfterViewInit {
   clearGraph(){
     const graphModel = this.graphEditorService.getGraphStorage().getGraphModel();
     graphModel.clear();
+
   }
 
 
+  newPage() {
+    Storage.isNewPage = true;
+  }
 }

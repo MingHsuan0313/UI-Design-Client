@@ -1,49 +1,49 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {Component, Input, OnInit} from '@angular/core';
 
 import {
-	Router,
-	NavigationEnd,
-	ActivatedRoute,
-	RouteConfigLoadEnd
-} from "@angular/router";
-import {Storage} from "../../shared/storage";
-import {Layout, Text} from "../../models/model";
-import {PropertyGenerator} from "../../shared/property-generator";
-import GraphEditorService from "../../services/graph-editor.service";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import ImportService from "../../services/import.service";
+  Router,
+  NavigationEnd,
+  ActivatedRoute,
+  RouteConfigLoadEnd
+} from '@angular/router';
+import {Storage} from '../../shared/storage';
+import {Layout, Text} from '../../models/model';
+import {PropertyGenerator} from '../../shared/property-generator';
+import GraphEditorService from '../../services/graph-editor.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import ImportService from '../../services/import.service';
 
 @Component({
-	selector: "app-dashboard",
-	templateUrl: "./default-layout.component.html",
-	styleUrls: ["./default-layout.css"]
+  selector: 'app-dashboard',
+  templateUrl: './default-layout.component.html',
+  styleUrls: ['./default-layout.css']
 })
 export class DefaultLayoutComponent implements OnInit {
-	public navItems = null;
-	public sidebarMinimized = true;
-	private changes: MutationObserver;
-	public element: HTMLElement = document.body;
+  public navItems = null;
+  public sidebarMinimized = true;
+  private changes: MutationObserver;
+  public element: HTMLElement = document.body;
 
   // test_data
-  layout: any[] = ["Prime", "Alba", "Leaf"];
+  layout: any[] = ['Prime', 'Alba', 'Leaf'];
   genre: any[];
   categories: any[];
   components: any[];
-  layout_selected: any = "Layout";
-  genre_selected: any = "Genre";
-  category_selected: any = "Category";
-  component_selected: any = "Component";
+  layout_selected: any = 'Layout';
+  genre_selected: any = 'Genre';
+  category_selected: any = 'Category';
+  component_selected: any = 'Component';
   componentProperties: any[];
 
   storageComponents: any[] = Storage.components;
   private layoutComponent: any;
   private layoutPart: any;
   private files: any[];
-	public userName = "undefined";
+  public userName = 'undefined';
 
-	constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService, private importService: ImportService) {
+  constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService, private importService: ImportService) {
 
-	}
+  }
 
   ngOnInit(): void {
     this.genre = Storage.getGenre();
@@ -66,7 +66,7 @@ export class DefaultLayoutComponent implements OnInit {
     console.log(kind);
     this.category_selected = kind;
     this.components = Storage.getComponents(this.genre_selected, this.category_selected);
-    this.component_selected = "Component";
+    this.component_selected = 'Component';
   }
 
   setComponent(kind: any) {
@@ -86,72 +86,72 @@ export class DefaultLayoutComponent implements OnInit {
   connectServer() {
     const pageUICDL = Storage.getPageUICDL();
     // console.log(JSON.stringify(pageUICDL));
-    console.log("Show Internal Representation");
-    console.log("Component List");
+    console.log('Show Internal Representation');
+    console.log('Component List');
     console.log(Storage.components);
-    console.log("Page UICDL");
+    console.log('Page UICDL');
     console.log(pageUICDL);
 
     this.postPageUICDL(Storage.PageUICDL).subscribe(
-      response => console.log(response["body"])
+      response => console.log(response['body'])
     );
   }
 
   postPageUICDL(PDL) {
-    return this.httpClient.post("http://localhost:8080", PDL,
+    return this.httpClient.post('http://localhost:8080', PDL,
       {
-        headers: new HttpHeaders().set("Content-Type", "application/json"),
-        observe: "response", withCredentials: true, responseType: "text"
+        headers: new HttpHeaders().set('Content-Type', 'application/json'),
+        observe: 'response', withCredentials: true, responseType: 'text'
       }
     );
   }
 
   apply() {
     // selector is now meaningless
-    this.layoutComponent = new Layout({id: PropertyGenerator.getID(), selector: this.layout_selected, type: "layout", layout: "layout"});
+    this.layoutComponent = new Layout({id: PropertyGenerator.getID(), selector: this.layout_selected, type: 'layout', layout: 'layout'});
     Storage.setLayoutComponent(this.layoutComponent);
     this.graphEditorService.bindComponent(this.layoutComponent);
   }
 
   addLayoutItem(sf) {
-    document.getElementById("myForm").style.display = "none";
+    document.getElementById('myForm').style.display = 'none';
     const properties = sf.value;
     console.log(sf.value);
-    properties["id"] = PropertyGenerator.getID();
-    properties["selector"] = "text";
-    properties["type"] = "text";
-    properties["layout"] = this.layoutPart;
+    properties['id'] = PropertyGenerator.getID();
+    properties['selector'] = 'text';
+    properties['type'] = 'text';
+    properties['layout'] = this.layoutPart;
     const text = new Text(properties);
-    if (this.layoutPart == "sidebar") {
-      this.layoutComponent["sidebar"].push(text);
-    } else if (this.layoutPart == "header") {
-      console.log("push");
-      this.layoutComponent["header"].push(text);
-    } else if (this.layoutPart == "footer") {
-      this.layoutComponent["footer"].push(text);
-    } else if (this.layoutPart == "asidebar") {
-      this.layoutComponent["asidebar"].push(text);
+    if (this.layoutPart == 'sidebar') {
+      this.layoutComponent['sidebar'].push(text);
+    } else if (this.layoutPart == 'header') {
+      console.log('push');
+      this.layoutComponent['header'].push(text);
+    } else if (this.layoutPart == 'footer') {
+      this.layoutComponent['footer'].push(text);
+    } else if (this.layoutPart == 'asidebar') {
+      this.layoutComponent['asidebar'].push(text);
     }
     this.graphEditorService.bindComponent(text);
 
     for (const element of properties) {
-      sf["value"][element] = "";
+      sf['value'][element] = '';
     }
-    sf.resetForm(sf["value"]);
+    sf.resetForm(sf['value']);
   }
 
   openForm(s) {
     this.layoutPart = s;
     console.log(s);
-    document.getElementById("myForm").style.display = "block";
+    document.getElementById('myForm').style.display = 'block';
   }
 
   closeForm() {
-    document.getElementById("myForm").style.display = "none";
+    document.getElementById('myForm').style.display = 'none';
   }
 
   openForm2() {
-    document.getElementById("navigationForm").style.display = "block";
+    document.getElementById('navigationForm').style.display = 'block';
   }
 
   import() {
@@ -161,12 +161,13 @@ export class DefaultLayoutComponent implements OnInit {
   showFiles() {
     this.files = this.importService.getFiles();
   }
+
   save() {
     this.graphEditorService.syncStorage();
   }
 
   closeForm2() {
-    document.getElementById("navigationForm").style.display = "none";
+    document.getElementById('navigationForm').style.display = 'none';
   }
 
   insertEdge(sf) {
@@ -176,12 +177,13 @@ export class DefaultLayoutComponent implements OnInit {
     const graphNode = document.getElementById('graphContainer0');
     const defaultWidth = graphNode.offsetWidth;
     const defaultHeight = graphNode.offsetHeight;
-    const v1 = graph.insertVertex(parent, null, sf["value"]["source"], defaultWidth/2, defaultHeight/2-200, 80, 30);
-    var v2 = graph.insertVertex(parent, null, sf["value"]["target"], defaultWidth/2, defaultHeight/2, 80, 30);
+    const v1 = graph.insertVertex(parent, null, sf['value']['source'], defaultWidth / 2, defaultHeight / 2 - 200, 80, 30);
+    var v2 = graph.insertVertex(parent, null, sf['value']['target'], defaultWidth / 2, defaultHeight / 2, 80, 30);
     var e1 = graph.insertEdge(parent, null, '', v1, v2);
-    document.getElementById("navigationForm").style.display = "none";
+    document.getElementById('navigationForm').style.display = 'none';
   }
 
 }
+
 
 

@@ -3,6 +3,7 @@ import {UIComponent} from "../models/modelDependency";
 import {HttpHeaders} from "@angular/common/http";
 import {HttpClient} from "@angular/common/http";
 import {Layout} from '../models/model';
+import {PropertyGenerator} from './property-generator';
 
 export class Storage {
   static components: any[] = [];
@@ -11,7 +12,7 @@ export class Storage {
   static PageUICDL: any = {};
   static library: any = Library;
   static layout: any = "";
-
+  static isNewPage = true;
   static add(component: UIComponent) {
     this.components.push(component);
     this.UICDL.push(component.getInfo());
@@ -43,10 +44,19 @@ export class Storage {
   }
 
   static getPageUICDL() {
-    this.PageUICDL["selector"] = "page1";
+    if(this.isNewPage){
+      this.PageUICDL["id"] = PropertyGenerator.getPageID();
+      this.PageUICDL["selector"] = "page" + this.PageUICDL["id"];
+      this.isNewPage = false;
+    }
     this.layoutComponent["componentList"] = this.UICDL;
     this.PageUICDL["componentList"] = (this.layoutComponent);
     return this.PageUICDL;
+  }
+
+  static clearTemp(){
+    this.components = [];
+    this.UICDL = [];
   }
 }
 
