@@ -232,6 +232,10 @@ export class WizardComponent implements OnInit {
     this.setServiceComponent(this.component,serviceComponent);
   }
 
+  setSelectedServiceSubComponent(subComponent,serviceComponent) {
+    this.setServiceComponent(subComponent,serviceComponent);
+  }
+
   getServiceComponents() {
     return this.servceComponentService.getServiceComponents();
   }

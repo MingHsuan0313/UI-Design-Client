@@ -75,18 +75,7 @@
             </div>
           </div>
 
-          <br />
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{selectedServiceComponent.name}} &nbsp;&nbsp; {{selectedServiceComponent.preference}}
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a *ngFor="let serviceComponent of this.getServiceComponents()" class="dropdown-item"
-                (click)="this.setSelectedServiceComponent(serviceComponent)">{{serviceComponent.name}} &nbsp;&nbsp;
-                {{serviceComponent.preference}}</a>
-            </div>
-          </div>
+
 
           <div *ngIf="!isComposite; else compositeBlock" style="font: caption">Basic Component cannot be composite,
             click Finish!</div>
@@ -96,7 +85,8 @@
               <input (change)="setMatchmaking($event.target.checked)" type="checkbox">
               <span class="slider round"></span>
             </label> &nbsp; &nbsp; <label style="font-weight: bold;">Matchmaking</label>
-            &nbsp; &nbsp; <button (click)="queryServices()" class="btn btn-primary btn-lg" type="button">Query Services</button>
+            &nbsp; &nbsp; <button (click)="queryServices()" class="btn btn-primary btn-lg" type="button">Query
+              Services</button>
             <button type="button" class="btn btn-info btn-lg" data-dismiss="modal"
               (click)="clickFinish()">Finish</button>
           </div>
@@ -126,7 +116,18 @@
               </div>
               &nbsp;
               <div style="display:inline" *ngIf="subComponent.serviceType == 'ServiceComponent'">
-                serviceComponent heree
+                <div style="display: inline;" class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{subComponent.serviceComponent.name}} &nbsp;&nbsp; {{subComponent.serviceComponent.preference}}
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a *ngFor="let serviceComponent of this.getServiceComponents()" class="dropdown-item"
+                      (click)="this.setSelectedServiceSubComponent(subComponent,serviceComponent)">{{serviceComponent.name}}
+                      &nbsp;&nbsp;
+                      {{serviceComponent.preference}}</a>
+                  </div>
+                </div>
               </div>
               <div style="display:inline" *ngIf="subComponent.serviceType == 'Argument'">
                 Argument heree
@@ -149,7 +150,7 @@
 </div>
 
 <ng-template #compositeBlock>
-  <form #sf="ngForm" (ngSubmit)="onCompositeSubmit(sf);">
+  <form style="display: inline;" #sf="ngForm" (ngSubmit)="onCompositeSubmit(sf);">
     <div style="position: relative;left:5px">
       <strong>{{this.subComponentName}}</strong>
       <div *ngFor="let property of properties">{{property}}:
@@ -159,5 +160,17 @@
     <br>
     <button class="btn btn-primary">Submit</button>
   </form>
+  &nbsp;&nbsp;
+  <div style="display: inline;" class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+      {{selectedServiceComponent.name}} &nbsp;&nbsp; {{selectedServiceComponent.preference}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a *ngFor="let serviceComponent of this.getServiceComponents()" class="dropdown-item"
+        (click)="this.setSelectedServiceComponent(serviceComponent)">{{serviceComponent.name}} &nbsp;&nbsp;
+        {{serviceComponent.preference}}</a>
+    </div>
+  </div>
 
 </ng-template>
