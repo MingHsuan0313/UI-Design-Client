@@ -182,7 +182,6 @@ export class DefaultLayoutComponent implements OnInit {
     document.getElementById("navigationForm").style.display = "none";
   }
 
-
 }
 
 

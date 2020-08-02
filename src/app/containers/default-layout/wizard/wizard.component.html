@@ -44,8 +44,11 @@
           <p>Ready to Build:  <mark>{{componentName}}</mark></p>
           <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             <div *ngFor="let property of componentProperties">
-              <div *ngIf="!(property==='componentList')">{{property}}:
+              <div *ngIf="!(property==='componentList')" class="row">
+                <label class="col-3" style="text-align: center">{{property}}:</label>
+                <div class="col-9">
                   <input ngModel name={{property}}>
+                </div>
   <!--                <button class="btn btn-danger" (click)="setData(property,kind.value)">confirm</button>-->
               </div>
             </div>
