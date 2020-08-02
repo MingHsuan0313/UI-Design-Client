@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from "@angular/core";
-import {Storage} from "../../../shared/storage";
-import {NgForm} from "@angular/forms";
+import { Component, Input, OnInit } from "@angular/core";
+import { Storage } from "../../../shared/storage";
+import { NgForm } from "@angular/forms";
 import GraphEditorService from "../../../services/graph-editor.service";
 import ServiceComponentService from "../../../services/service-component.service";
-import {PropertyGenerator} from "../../../shared/property-generator";
+import { PropertyGenerator } from "../../../shared/property-generator";
 import {
   BreadcrumbComposite,
   Button,
@@ -14,8 +14,11 @@ import {
   INPUT,
   InputGroupComposite,
   Table,
-  Text
+  Text,
+  UIComponent,
+  ServiceMappingType
 } from "../../../models/model";
+// import { UIComponent } from "src/app/models/modelDependency";
 
 
 
@@ -30,7 +33,7 @@ export class WizardComponent implements OnInit {
   @Input() componentName: any;
 
 
-
+  selectedServiceComponent: Object;
   component: any;
   subComponent: any;
   subComponentName: any;
@@ -42,17 +45,21 @@ export class WizardComponent implements OnInit {
 
 
   constructor(private graphEditorService: GraphEditorService,
-    private servceComponentService: ServiceComponentService    
-  ) { }
+    private servceComponentService: ServiceComponentService
+  ) {
+    this.selectedServiceComponent = {};
+    this.selectedServiceComponent["name"] = "choose service component";
+  }
 
   ngOnInit(): void {
     console.log("start wizard");
   }
 
   setComponent(properties): boolean {
-   properties["id"] = PropertyGenerator.getID();
-   properties["selector"] = PropertyGenerator.getSelector(this.componentName);
-   properties["type"] = this.componentName;
+    properties["id"] = PropertyGenerator.getID();
+    properties["selector"] = PropertyGenerator.getSelector(this.componentName);
+    properties["type"] = this.componentName;
+    properties["serviceType"] = ServiceMappingType["none"];
     switch (this.componentName) {
       case "icon":
         this.component = new Icon(properties);
@@ -91,14 +98,11 @@ export class WizardComponent implements OnInit {
     return true;
   }
 
-  setServiceComponent(serviceComponent) {
-    this.component.setServiceComponent(serviceComponent);
-  }
-
   setSubComponent(properties): boolean {
     properties["id"] = PropertyGenerator.getID();
     properties["selector"] = this.subComponentName;
     properties["type"] = this.subComponentName;
+    properties["serviceType"] = ServiceMappingType["none"];
     switch (this.subComponentName) {
       case "icon":
         this.subComponent = new Icon(properties);
@@ -138,7 +142,7 @@ export class WizardComponent implements OnInit {
   }
 
   getComponentProperties(componentName) {
-    this.componentProperties =  Storage.getComponentProperties(componentName);
+    this.componentProperties = Storage.getComponentProperties(componentName);
     if (this.componentProperties.includes("componentList")) {
       console.log("is Composite");
       this.isComposite = true;
@@ -148,7 +152,7 @@ export class WizardComponent implements OnInit {
   }
 
   getSubComponentProperties(subComponentName: string) {
-    this.properties =  Storage.getComponentProperties(subComponentName);
+    this.properties = Storage.getComponentProperties(subComponentName);
     this.subComponentName = subComponentName;
   }
 
@@ -208,5 +212,36 @@ export class WizardComponent implements OnInit {
 
   }
 
+  // this is for composition subComponent
+  // type1. Service Component 
+  // type2. Argument 
+  // type3. None
+  setServiceType(subComponent:UIComponent,serviceType:ServiceMappingType) {
+    console.log("set service Type")
+    console.log(subComponent)
+    console.log(serviceType)
+    subComponent.setServiceType(serviceType);
+  }
+
+  setServiceComponent(component:UIComponent,serviceComponent) {
+    component.setServiceComponent(serviceComponent);
+  }
+
+  setSelectedServiceComponent(serviceComponent) {
+    this.selectedServiceComponent = serviceComponent;
+    this.setServiceComponent(this.component,serviceComponent);
+  }
+
+  getServiceComponents() {
+    return this.servceComponentService.getServiceComponents();
+  }
+
+  setMatchmaking(isChecked) {
+    this.servceComponentService.setIsMatchMaking(isChecked);
+  }
+
+  queryServices() {
+    this.servceComponentService.queryServer();
+  }
 }
 

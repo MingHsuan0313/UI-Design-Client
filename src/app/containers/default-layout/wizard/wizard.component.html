@@ -37,8 +37,8 @@
               id="building-tab" href="#building" data-toggle="tab">Building</a></li>
           <li class="nav-item" role="presentation" style="flex: 1;text-align: center"><a class="nav-link" role="tab"
               id="composition-tab" href="#composition" data-toggle="tab">Composition</a></li>
-          <li class="nav-item" role="presentation" style="flex: 1;text-align: center"><a class="nav-link" role="tab"
-              id="service-tab" href="#service" data-toggle="tab">Service</a></li>
+          <li *ngIf="isComposite;" class="nav-item" role="presentation" style="flex: 1;text-align: center"><a
+              class="nav-link" role="tab" id="service-tab" href="#service" data-toggle="tab">Service</a></li>
         </ul>
       </div>
       <div class="tab-content">
@@ -75,25 +75,69 @@
             </div>
           </div>
 
-          <div *ngIf="!isComposite; else compositeBlock" style="font: caption">Basic Component cannot be composite,
-            click Finish!</div>
-
-          <br>
-          <div *ngIf="isComposite">
-            <div *ngFor="let subComponent of component.componentList">
-              <label class="compositeServiceTitle">
-                Argument: {{subComponent.type}}
-              </label>
+          <br />
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{selectedServiceComponent.name}} &nbsp;&nbsp; {{selectedServiceComponent.preference}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a *ngFor="let serviceComponent of this.getServiceComponents()" class="dropdown-item"
+                (click)="this.setSelectedServiceComponent(serviceComponent)">{{serviceComponent.name}} &nbsp;&nbsp;
+                {{serviceComponent.preference}}</a>
             </div>
           </div>
 
-          <div class="modal-footer">
+          <div *ngIf="!isComposite; else compositeBlock" style="font: caption">Basic Component cannot be composite,
+            click Finish!</div>
+
+          <div style="justify-content: start;" class="modal-footer">
+            <label class="switch">
+              <input (change)="setMatchmaking($event.target.checked)" type="checkbox">
+              <span class="slider round"></span>
+            </label> &nbsp; &nbsp; <label style="font-weight: bold;">Matchmaking</label>
+            &nbsp; &nbsp; <button (click)="queryServices()" class="btn btn-primary btn-lg" type="button">Query Services</button>
             <button type="button" class="btn btn-info btn-lg" data-dismiss="modal"
               (click)="clickFinish()">Finish</button>
           </div>
         </div>
-        <div class="service-component-pane" id="service" role="tabpanel" aria-labelledby="service-tab">
+
+        <div *ngIf="isComposite" class="tab-pane" id="service" role="tabpanel" aria-labelledby="service-tab">
           <p>Service Component Mapping <mark>{{componentName}}</mark></p>
+          <div *ngIf="isComposite">
+            <div *ngFor="let subComponent of component.componentList">
+              <label class="compositeServiceTitle">
+                {{subComponent.type}}
+              </label>
+              &nbsp;
+              &nbsp;
+
+              <div class="dropdown" style="display:inline">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{subComponent.serviceType}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a (click)="setServiceType(subComponent,'ServiceComponent')" class="dropdown-item">Service
+                    Component</a>
+                  <a (click)="setServiceType(subComponent,'Argument')" class="dropdown-item">Argument</a>
+                  <a (click)="setServiceType(subComponent,'None')" class="dropdown-item">None</a>
+                </div>
+              </div>
+              &nbsp;
+              <div style="display:inline" *ngIf="subComponent.serviceType == 'ServiceComponent'">
+                serviceComponent heree
+              </div>
+              <div style="display:inline" *ngIf="subComponent.serviceType == 'Argument'">
+                Argument heree
+              </div>
+              <div style="display:inline" *ngIf="subComponent.serviceType == 'None'">
+                None heree
+              </div>
+              <br />
+              <br />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -112,6 +156,7 @@
         <input ngModel name={{property}}>
       </div>
     </div>
+    <br>
     <button class="btn btn-primary">Submit</button>
   </form>
 
