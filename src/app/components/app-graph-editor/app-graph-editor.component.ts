@@ -70,8 +70,10 @@ export class AppGraphEditorComponent implements AfterViewInit {
     });
   }
 
-
-
+  clearGraph(){
+    const graphModel = this.graphEditorService.getGraphStorage().getGraphModel();
+    graphModel.clear();
+  }
 
 
 }

@@ -1,4 +1,7 @@
 declare class mxGraphModel {
-    constructor();
-    remove(cell);
+  constructor();
+
+  remove(cell);
+
+  clear();
 }
