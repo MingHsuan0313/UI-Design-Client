@@ -112,7 +112,7 @@
 </app-footer>
 
 <div class="form-popup" id="myForm"
-     style="display: none;position:fixed;top:8%;right:50%;z-index: 9;width:350px;height:100px">
+     style="display: none;position:fixed;top:8%;right:30%;z-index: 9;width:350px;height:100px">
   <form #sf="ngForm" (ngSubmit)="addLayoutItem(sf);">
   <div class="card">
     <div class="card-body" >
@@ -121,7 +121,7 @@
           <div class="col-md-7">
             <input type="text" id="text-part" name="text" ngModel>
           </div>
-        </div>
+        </div>s
         <div class="form-group row">
           <label class="col-5" for="href-part" style="text-align: center">Href:</label>
           <div class="col-md-7">
@@ -137,9 +137,8 @@
   </form>
 </div>
 
-
-<div class="form-popup" id="myForm2"
-     style="display: none;position:fixed;top:8%;right:40%;z-index: 9;width:350px;height:100px">
+<div class="form-popup" id="navigationForm"
+     style="position:fixed;display:none;top:8%;right:30%;z-index: 9;width:350px;height:100px">
   <form #sf="ngForm" (ngSubmit)="insertEdge(sf);">
     <div class="card">
       <div class="card-body" >
@@ -163,3 +162,5 @@
     </div>
   </form>
 </div>
+
+

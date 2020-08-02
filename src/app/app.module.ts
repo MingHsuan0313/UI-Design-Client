@@ -1,11 +1,12 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppComponent } from "./app.component";
 import { AppGraphEditorComponent } from "./components/app-graph-editor/app-graph-editor.component";
 import { AppSettingComponent } from "./components/app-setting/app-setting.component";
 // import { WizardComponent } from "./components/control-panel/wizard/wizard.component";
-import { NavigationComponent } from "./components/control-panel/navigation/navigation.component";
+// import { NavigationComponent } from "./components/control-panel/navigation/navigation.component";
+import {NavigationComponent} from "./containers/default-layout/navigation/navigation.component";
 import { ControlPanelComponent } from "./components/control-panel/control-panel.component";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
@@ -23,8 +24,8 @@ import {
   AppSidebarModule
 } from "@coreui/angular";
 
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import {WizardComponent} from './containers/default-layout/wizard/wizard.component';
+import { BsDropdownModule } from "ngx-bootstrap/dropdown";
+import {WizardComponent} from "./containers/default-layout/wizard/wizard.component";
 
 @NgModule({
   declarations: [

@@ -42,6 +42,7 @@ export class DefaultLayoutComponent implements OnInit {
 	public userName = "undefined";
 
 	constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService, private importService: ImportService) {
+
 	}
 
   ngOnInit(): void {
@@ -150,28 +151,39 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   openForm2() {
-    document.getElementById("myForm2").style.display = "block";
-  }
-
-  closeForm2() {
-    document.getElementById("myForm2").style.display = "none";
+    document.getElementById("navigationForm").style.display = "block";
   }
 
   import() {
     this.importService.import();
   }
 
-  showFiles(){
+  showFiles() {
     this.files = this.importService.getFiles();
   }
   save() {
     this.graphEditorService.syncStorage();
   }
 
-  insertEdge(sf) {
-
+  closeForm2() {
+    document.getElementById("navigationForm").style.display = "none";
   }
-}
 
+  insertEdge(sf) {
+    const graphStorage = this.graphEditorService.getGraphStorage();
+    const graph = graphStorage.getGraph();
+    const parent = graph.getDefaultParent();
+    const graphNode = document.getElementById('graphContainer0');
+    const defaultWidth = graphNode.offsetWidth;
+    const defaultHeight = graphNode.offsetHeight;
+    const v1 = graph.insertVertex(parent, null, sf["value"]["source"], defaultWidth/2, defaultHeight/2-200, 80, 30);
+    var v2 = graph.insertVertex(parent, null, sf["value"]["target"], defaultWidth/2, defaultHeight/2, 80, 30);
+    var e1 = graph.insertEdge(parent, null, '', v1, v2);
+    document.getElementById("navigationForm").style.display = "none";
+  }
+
+
+
+}
 
 

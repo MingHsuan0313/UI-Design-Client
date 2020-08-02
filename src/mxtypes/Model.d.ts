@@ -3,6 +3,7 @@
 
 declare class mxCell {
 
+  constructor(value?, geometry?, style?);
   id: any;
   value;
   geometry;

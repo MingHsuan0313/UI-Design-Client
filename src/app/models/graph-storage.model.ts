@@ -28,11 +28,6 @@ export class GraphStorage {
     this.id = id;
     this.graphModel = new mxGraphModel();
     this.graph = new mxGraph(element, this.graphModel);
-    const parent = this.getGraph().getDefaultParent();
-    const v1 = this.graph.insertVertex(parent, null, 'Hi', 200, 200, 100, 100);
-    const v2 = this.graph.insertVertex(parent, null, 'World', 500, 200, 100, 100);
-    const v3 = this.graph.insertVertex(parent, null, 'World', 500, 200, 100, 100);
-    const e1 = this.graph.insertEdge(parent, null, 'shoot', v1, v2);
 
     const keyHandler = new mxKeyHandler(this.graph);
     keyHandler.bindKey(46, function (evt) {
@@ -167,6 +162,9 @@ export class GraphStorage {
     return this.graph;
   }
 
+  getGraphModel(){
+    return this.graphModel;
+  }
   // insert vertex
   insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent, dataBinding?, isPrimary?) {
     let vertex;
