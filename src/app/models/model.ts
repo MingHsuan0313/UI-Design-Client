@@ -66,6 +66,10 @@ export class Icon implements UIComponent {
 
   setServiceType(serviceType: ServiceMappingType): void {
     this.serviceType = serviceType;
+    if (serviceType == ServiceMappingType["none"] ||
+      serviceType == ServiceMappingType["argument"]) {
+      this.serviceComponent = {}
+    }
   }
 
 }
@@ -111,8 +115,12 @@ export class Text implements UIComponent {
 
   setServiceType(serviceType: ServiceMappingType): void {
     this.serviceType = serviceType;
+    if (serviceType == ServiceMappingType["none"] ||
+      serviceType == ServiceMappingType["argument"]) {
+      this.serviceComponent = {}
+    }
   }
-  
+
 }
 
 export class Button implements UIComponent {
@@ -152,10 +160,15 @@ export class Button implements UIComponent {
 
   setServiceComponent(serviceComponent) {
     this.serviceComponent = serviceComponent;
+
   }
 
   setServiceType(serviceType: ServiceMappingType): void {
     this.serviceType = serviceType;
+    if (serviceType == ServiceMappingType["none"] ||
+      serviceType == ServiceMappingType["argument"]) {
+      this.serviceComponent = {}
+    }
   }
 }
 
@@ -200,6 +213,10 @@ export class Table implements UIComponent {
 
   setServiceType(serviceType) {
     this.serviceType = serviceType;
+    if (serviceType == ServiceMappingType["none"] ||
+      serviceType == ServiceMappingType["argument"]) {
+      this.serviceComponent = {}
+    }
   }
 }
 
@@ -242,6 +259,10 @@ export class CardComposite implements UIComponent {
 
   setServiceType(serviceType) {
     this.serviceType = serviceType;
+    if (serviceType == ServiceMappingType["none"] ||
+      serviceType == ServiceMappingType["argument"]) {
+      this.serviceComponent = {}
+    }
   }
 
   setArgument(argumentName: any): void {
@@ -268,8 +289,12 @@ export class Dropdown implements UIComponent {
     Object.assign(this, init);
   }
 
-  setServiceType(serviceType:ServiceMappingType) {
+  setServiceType(serviceType: ServiceMappingType) {
     this.serviceType = serviceType;
+    if (serviceType == ServiceMappingType["none"] ||
+      serviceType == ServiceMappingType["argument"]) {
+      this.serviceComponent = {}
+    }
   }
   setArgument(argumentName: any): void {
     this.argumentName = argumentName;
@@ -309,8 +334,12 @@ export class InputGroupComposite implements UIComponent {
     Object.assign(this, init);
   }
 
-  setServiceType(serviceType:ServiceMappingType) {
+  setServiceType(serviceType: ServiceMappingType) {
     this.serviceType = serviceType;
+    if (serviceType == ServiceMappingType["none"] ||
+      serviceType == ServiceMappingType["argument"]) {
+      this.serviceComponent = {}
+    }
   }
 
   setArgument(argumentName: any): void {
@@ -354,6 +383,10 @@ export class INPUT implements UIComponent {
 
   setServiceType(serviceType: ServiceMappingType) {
     this.serviceType = serviceType;
+    if (serviceType == ServiceMappingType["none"] ||
+      serviceType == ServiceMappingType["argument"]) {
+      this.serviceComponent = {}
+    }
   }
 
   setArgument(argumentName: any): void {
@@ -396,6 +429,10 @@ export class BreadcrumbComposite implements UIComponent {
 
   setServiceType(serviceType: ServiceMappingType) {
     this.serviceType = serviceType;
+    if (serviceType == ServiceMappingType["none"] ||
+      serviceType == ServiceMappingType["argument"]) {
+      this.serviceComponent = {}
+    }
   }
 
   setArgument(argumentName: any): void {
@@ -440,6 +477,10 @@ export class FormComposite implements UIComponent {
 
   setServiceType(serviceType: ServiceMappingType) {
     this.serviceType = serviceType;
+    if (serviceType == ServiceMappingType["none"] ||
+      serviceType == ServiceMappingType["argument"]) {
+      this.serviceComponent = {}
+    }
   }
 
   setArgument(argumentName: any): void {
@@ -487,6 +528,10 @@ export class Layout implements UIComponent {
 
   setServiceType(serviceType: ServiceMappingType) {
     this.serviceType = serviceType;
+    if (serviceType == ServiceMappingType["none"] ||
+      serviceType == ServiceMappingType["argument"]) {
+      this.serviceComponent = {}
+    }
   }
 
   setArgument(argumentName: any): void {
@@ -503,7 +548,7 @@ export class Layout implements UIComponent {
   remove(component: UIComponent): void {
   }
 
-  setServiceComponent(serviceComponent,argumentName?) {
+  setServiceComponent(serviceComponent, argumentName?) {
     this.serviceComponent = serviceComponent;
   }
 }

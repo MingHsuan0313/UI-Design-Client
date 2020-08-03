@@ -129,9 +129,20 @@
                   </div>
                 </div>
               </div>
+
               <div style="display:inline" *ngIf="subComponent.serviceType == 'Argument'">
-                Argument heree
-              </div>
+                <div style="display: inline;" class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{subComponent.argumentName}}
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a *ngFor="let argument of this.component.serviceComponent.arguments" class="dropdown-item"
+                      (click)="this.setArgument(subComponent,argument)">{{argument.name}}</a>
+                  </div>
+                </div>
+              </div>serviceComponent
+
               <div style="display:inline" *ngIf="subComponent.serviceType == 'None'">
                 None heree
               </div>

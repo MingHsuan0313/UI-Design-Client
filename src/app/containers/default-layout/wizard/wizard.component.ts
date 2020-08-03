@@ -223,6 +223,10 @@ export class WizardComponent implements OnInit {
     subComponent.setServiceType(serviceType);
   }
 
+  setArgument(subComponent:UIComponent,argument) {
+    subComponent.setArgument(argument.name);
+  }
+
   setServiceComponent(component:UIComponent,serviceComponent) {
     component.setServiceComponent(serviceComponent);
   }
