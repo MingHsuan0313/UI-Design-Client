@@ -209,4 +209,9 @@ export class GraphStorage {
     return this.id;
   }
 
+  clear(){
+    this.edgeStorageList = []
+    this.vertexStorageList = [];
+  }
+
 }

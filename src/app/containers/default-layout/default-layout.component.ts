@@ -159,7 +159,7 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   showFiles() {
-    this.files = this.importService.getFiles();
+    this.files = this.importService.pages;
   }
 
   save() {
@@ -184,6 +184,7 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
 }
+
 
 
 

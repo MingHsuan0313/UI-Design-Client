@@ -80,5 +80,7 @@ export class AppGraphEditorComponent implements AfterViewInit {
 
   newPage() {
     Storage.isNewPage = true;
+    this.graphEditorService.getGraphStorage().clear();
+    this.clearGraph();
   }
 }

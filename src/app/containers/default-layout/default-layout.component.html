@@ -100,7 +100,10 @@
           <button class="btn btn-instagram" (click)="showFiles()">show files</button>
           <br><br>
           <form>
-            <div *ngFor="let file of files">{{file.name}}</div>
+            <div *ngFor="let file of files"><strong>{{file.selector}}</strong>
+              <div *ngFor="let f of file['components']">->{{f}}</div>
+            </div>
+
           </form>
         </div>
       </div>

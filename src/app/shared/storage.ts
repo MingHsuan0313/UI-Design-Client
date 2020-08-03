@@ -13,6 +13,9 @@ export class Storage {
   static library: any = Library;
   static layout: any = "";
   static isNewPage = true;
+
+  // for temporary import
+  static PageComponents: any[] = [];
   static add(component: UIComponent) {
     this.components.push(component);
     this.UICDL.push(component.getInfo());
@@ -51,6 +54,7 @@ export class Storage {
     }
     this.layoutComponent["componentList"] = this.UICDL;
     this.PageUICDL["componentList"] = (this.layoutComponent);
+
     return this.PageUICDL;
   }
 
