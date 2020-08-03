@@ -43,7 +43,7 @@
       </div>
       <div class="tab-content">
         <div class="tab-pane active" id="building" role="tabpanel" aria-labelledby="building-tab">
-          <p>Ready to Build: <mark>{{componentName}}</mark></p>
+          <p style="font-weight: bold;">Ready to Build: <mark>{{componentName}}</mark></p>
           <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             <div *ngFor="let property of componentProperties">
               <div *ngIf="!(property==='componentList')">{{property}}:
@@ -54,6 +54,7 @@
             <br>
             <button class="btn btn-primary">Submit</button>
           </form>
+          <br style="display: block;margin: 3px;">
 
           <div class="modal-footer">
 
@@ -62,7 +63,9 @@
           </div>
         </div>
         <div class="tab-pane" id="composition" role="tabpanel" aria-labelledby="composition-tab">
-          <p>Composite <mark>{{componentName}}</mark></p>
+          <p style="font-weight: bold;">Composite <mark>{{componentName}}</mark></p>
+
+
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -76,10 +79,8 @@
           </div>
 
 
-
-          <div *ngIf="!isComposite; else compositeBlock" style="font: caption">Basic Component cannot be composite,
-            click Finish!</div>
-          &nbsp;&nbsp;
+          <br style="display: block;margin: 3px;">
+          &nbsp; 
           <div style="display: inline;" class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -91,6 +92,11 @@
                 {{serviceComponent.preference}}</a>
             </div>
           </div>
+
+          <div *ngIf="!isComposite; else compositeBlock" style="font: caption">
+            Basic Component cannot be composite, click Finish!
+          </div>
+          <br style="display: block;margin: 3px;">
 
           <div style="justify-content: start;" class="modal-footer">
             <label class="switch">
@@ -175,14 +181,16 @@
 </div>
 
 <ng-template #compositeBlock>
+  <!-- <br style="display: block;margin: 3px;"> -->
   <form style="display: inline;" #sf="ngForm" (ngSubmit)="onCompositeSubmit(sf);">
-    <div style="position: relative;left:5px">
+    <div style="position: relative;left:5px;">
       <strong>{{this.subComponentName}}</strong>
       <div *ngFor="let property of properties">{{property}}:
         <input ngModel name={{property}}>
       </div>
     </div>
-    <br>
+    <br style="display: block;margin: 3px;">
+    &nbsp;
     <button class="btn btn-primary">Submit</button>
   </form>
 

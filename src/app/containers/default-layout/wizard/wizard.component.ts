@@ -60,6 +60,11 @@ export class WizardComponent implements OnInit {
     properties["selector"] = PropertyGenerator.getSelector(this.componentName);
     properties["type"] = this.componentName;
     properties["serviceType"] = ServiceMappingType["none"];
+    properties["serviceComponent"] = {
+      "name": "",
+      "preference": 0
+    }
+
     switch (this.componentName) {
       case "icon":
         this.component = new Icon(properties);
@@ -103,6 +108,11 @@ export class WizardComponent implements OnInit {
     properties["selector"] = this.subComponentName;
     properties["type"] = this.subComponentName;
     properties["serviceType"] = ServiceMappingType["none"];
+    properties["serviceComponent"] = {
+      "name": "",
+      "preference": 0
+    }
+
     switch (this.subComponentName) {
       case "icon":
         this.subComponent = new Icon(properties);
