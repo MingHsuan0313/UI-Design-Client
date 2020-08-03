@@ -79,6 +79,18 @@
 
           <div *ngIf="!isComposite; else compositeBlock" style="font: caption">Basic Component cannot be composite,
             click Finish!</div>
+          &nbsp;&nbsp;
+          <div style="display: inline;" class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{selectedServiceComponent.name}} &nbsp;&nbsp; {{selectedServiceComponent.preference}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a *ngFor="let serviceComponent of this.getServiceComponents()" class="dropdown-item"
+                (click)="this.setSelectedServiceComponent(serviceComponent)">{{serviceComponent.name}} &nbsp;&nbsp;
+                {{serviceComponent.preference}}</a>
+            </div>
+          </div>
 
           <div style="justify-content: start;" class="modal-footer">
             <label class="switch">
@@ -93,7 +105,7 @@
         </div>
 
         <div *ngIf="isComposite" class="tab-pane" id="service" role="tabpanel" aria-labelledby="service-tab">
-          <p>Service Component Mapping <mark>{{componentName}}</mark></p>
+          <p>Service Component Mapping <mark>{{componentName}} : &nbsp; <div style="display: inline;" *ngIf="component != undefined"><div style="display: inline;" *ngIf="component.serviceComponent != undefined">{{component.serviceComponent.name}}</div> </div></mark></p>
           <div *ngIf="isComposite">
             <div *ngIf="component != undefined">
               <div *ngFor="let subComponent of component.componentList">
@@ -142,10 +154,10 @@
                         (click)="this.setArgument(subComponent,argument)">{{argument.name}}</a>
                     </div>
                   </div>
-                </div>serviceComponent
+                </div>
 
                 <div style="display:inline" *ngIf="subComponent.serviceType == 'None'">
-                  None heree
+                  <!-- None heree -->
                 </div>
                 <br />
                 <br />
@@ -173,17 +185,6 @@
     <br>
     <button class="btn btn-primary">Submit</button>
   </form>
-  &nbsp;&nbsp;
-  <div style="display: inline;" class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false">
-      {{selectedServiceComponent.name}} &nbsp;&nbsp; {{selectedServiceComponent.preference}}
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a *ngFor="let serviceComponent of this.getServiceComponents()" class="dropdown-item"
-        (click)="this.setSelectedServiceComponent(serviceComponent)">{{serviceComponent.name}} &nbsp;&nbsp;
-        {{serviceComponent.preference}}</a>
-    </div>
-  </div>
+
 
 </ng-template>
