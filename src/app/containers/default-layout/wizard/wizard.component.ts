@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from "@angular/core";
-import {Storage} from "../../../shared/storage";
-import {NgForm} from "@angular/forms";
+import { Component, Input, OnInit } from "@angular/core";
+import { Storage } from "../../../shared/storage";
+import { NgForm } from "@angular/forms";
 import GraphEditorService from "../../../services/graph-editor.service";
-import {PropertyGenerator} from "../../../shared/property-generator";
+import ServiceComponentService from "../../../services/service-component.service";
+import { PropertyGenerator } from "../../../shared/property-generator";
 import {
   BreadcrumbComposite,
   Button,
@@ -13,23 +14,26 @@ import {
   INPUT,
   InputGroupComposite,
   Table,
-  Text
+  Text,
+  UIComponent,
+  ServiceMappingType
 } from "../../../models/model";
+// import { UIComponent } from "src/app/models/modelDependency";
 
 
 
 @Component({
   selector: "app-wizard",
   templateUrl: "./wizard.component.html",
-  styleUrls: ["./wizard.component.css"]
+  styleUrls: ["./wizard.component.scss"]
 })
 export class WizardComponent implements OnInit {
 
   @Input() componentProperties: any[];
   @Input() componentName: any;
 
-
-
+  serviceNoneOption: Object;
+  selectedServiceComponent: Object;
   component: any;
   subComponent: any;
   subComponentName: any;
@@ -40,16 +44,31 @@ export class WizardComponent implements OnInit {
 
 
 
-  constructor(private graphEditorService: GraphEditorService) { }
+  constructor(private graphEditorService: GraphEditorService,
+    private servceComponentService: ServiceComponentService
+  ) {
+    this.selectedServiceComponent = {};
+    this.selectedServiceComponent["name"] = "choose service component";
+    this.serviceNoneOption = {
+      "name": "None",
+      "preference": 0
+    }
+  }
 
   ngOnInit(): void {
     console.log("start wizard");
   }
 
   setComponent(properties): boolean {
-   properties["id"] = PropertyGenerator.getID();
-   properties["selector"] = PropertyGenerator.getSelector(this.componentName);
-   properties["type"] = this.componentName;
+    properties["id"] = PropertyGenerator.getID();
+    properties["selector"] = PropertyGenerator.getSelector(this.componentName);
+    properties["type"] = this.componentName;
+    properties["serviceType"] = ServiceMappingType["none"];
+    properties["serviceComponent"] = {
+      "name": "",
+      "preference": 0
+    }
+
     switch (this.componentName) {
       case "icon":
         this.component = new Icon(properties);
@@ -92,6 +111,12 @@ export class WizardComponent implements OnInit {
     properties["id"] = PropertyGenerator.getID();
     properties["selector"] = this.subComponentName;
     properties["type"] = this.subComponentName;
+    properties["serviceType"] = ServiceMappingType["none"];
+    properties["serviceComponent"] = {
+      "name": "",
+      "preference": 0
+    }
+
     switch (this.subComponentName) {
       case "icon":
         this.subComponent = new Icon(properties);
@@ -131,7 +156,7 @@ export class WizardComponent implements OnInit {
   }
 
   getComponentProperties(componentName) {
-    this.componentProperties =  Storage.getComponentProperties(componentName);
+    this.componentProperties = Storage.getComponentProperties(componentName);
     if (this.componentProperties.includes("componentList")) {
       console.log("is Composite");
       this.isComposite = true;
@@ -141,7 +166,7 @@ export class WizardComponent implements OnInit {
   }
 
   getSubComponentProperties(subComponentName: string) {
-    this.properties =  Storage.getComponentProperties(subComponentName);
+    this.properties = Storage.getComponentProperties(subComponentName);
     this.subComponentName = subComponentName;
   }
 
@@ -175,13 +200,13 @@ export class WizardComponent implements OnInit {
     }
   }
   clickNext() {
-    $("#myModal a[href=\"#composition\"]").tab("show");
+    // $("#myModal a[href=\"#composition\"]").tab("show");
   }
 
 
   onClose() {
     console.log("close");
-    $("#myModal a[href=\"#building\"]").tab("show");
+    // $("#myModal a[href=\"#building\"]").tab("show");
   }
 
   clickCreate() {
@@ -192,7 +217,7 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     console.log("finish");
     this.component.getInfo();
-    $("#myModal a[href=\"#building\"]").tab("show");
+    // $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
     this.graphEditorService.bindComponent(this.component);
     console.log(this.component);
@@ -201,5 +226,44 @@ export class WizardComponent implements OnInit {
 
   }
 
+  // this is for composition subComponent
+  // type1. Service Component 
+  // type2. Argument 
+  // type3. None
+  setServiceType(subComponent:UIComponent,serviceType:ServiceMappingType) {
+    console.log("set service Type")
+    console.log(subComponent)
+    console.log(serviceType)
+    subComponent.setServiceType(serviceType);
+  }
+
+  setArgument(subComponent:UIComponent,argument) {
+    subComponent.setArgument(argument.name);
+  }
+
+  setServiceComponent(component:UIComponent,serviceComponent) {
+    component.setServiceComponent(serviceComponent);
+  }
+
+  setSelectedServiceComponent(serviceComponent) {
+    this.selectedServiceComponent = serviceComponent;
+    this.setServiceComponent(this.component,serviceComponent);
+  }
+
+  setSelectedServiceSubComponent(subComponent,serviceComponent) {
+    this.setServiceComponent(subComponent,serviceComponent);
+  }
+
+  getServiceComponents() {
+    return this.servceComponentService.getServiceComponents();
+  }
+
+  setMatchmaking(isChecked) {
+    this.servceComponentService.setIsMatchMaking(isChecked);
+  }
+
+  queryServices() {
+    this.servceComponentService.queryServer();
+  }
 }
 
