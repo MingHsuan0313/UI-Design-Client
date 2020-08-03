@@ -95,59 +95,61 @@
         <div *ngIf="isComposite" class="tab-pane" id="service" role="tabpanel" aria-labelledby="service-tab">
           <p>Service Component Mapping <mark>{{componentName}}</mark></p>
           <div *ngIf="isComposite">
-            <div *ngFor="let subComponent of component.componentList">
-              <label class="compositeServiceTitle">
-                {{subComponent.type}}
-              </label>
-              &nbsp;
-              &nbsp;
+            <div *ngIf="component != undefined">
+              <div *ngFor="let subComponent of component.componentList">
+                <label class="compositeServiceTitle">
+                  {{subComponent.type}}
+                </label>
+                &nbsp;
+                &nbsp;
 
-              <div class="dropdown" style="display:inline">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{subComponent.serviceType}}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a (click)="setServiceType(subComponent,'ServiceComponent')" class="dropdown-item">Service
-                    Component</a>
-                  <a (click)="setServiceType(subComponent,'Argument')" class="dropdown-item">Argument</a>
-                  <a (click)="setServiceType(subComponent,'None')" class="dropdown-item">None</a>
-                </div>
-              </div>
-              &nbsp;
-              <div style="display:inline" *ngIf="subComponent.serviceType == 'ServiceComponent'">
-                <div style="display: inline;" class="dropdown">
+                <div class="dropdown" style="display:inline">
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{subComponent.serviceComponent.name}} &nbsp;&nbsp; {{subComponent.serviceComponent.preference}}
+                    {{subComponent.serviceType}}
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a *ngFor="let serviceComponent of this.getServiceComponents()" class="dropdown-item"
-                      (click)="this.setSelectedServiceSubComponent(subComponent,serviceComponent)">{{serviceComponent.name}}
-                      &nbsp;&nbsp;
-                      {{serviceComponent.preference}}</a>
+                    <a (click)="setServiceType(subComponent,'ServiceComponent')" class="dropdown-item">Service
+                      Component</a>
+                    <a (click)="setServiceType(subComponent,'Argument')" class="dropdown-item">Argument</a>
+                    <a (click)="setServiceType(subComponent,'None')" class="dropdown-item">None</a>
                   </div>
                 </div>
-              </div>
-
-              <div style="display:inline" *ngIf="subComponent.serviceType == 'Argument'">
-                <div style="display: inline;" class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{subComponent.argumentName}}
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a *ngFor="let argument of this.component.serviceComponent.arguments" class="dropdown-item"
-                      (click)="this.setArgument(subComponent,argument)">{{argument.name}}</a>
+                &nbsp;
+                <div style="display:inline" *ngIf="subComponent.serviceType == 'ServiceComponent'">
+                  <div style="display: inline;" class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{subComponent.serviceComponent.name}} &nbsp;&nbsp; {{subComponent.serviceComponent.preference}}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a *ngFor="let serviceComponent of this.getServiceComponents()" class="dropdown-item"
+                        (click)="this.setSelectedServiceSubComponent(subComponent,serviceComponent)">{{serviceComponent.name}}
+                        &nbsp;&nbsp;
+                        {{serviceComponent.preference}}</a>
+                    </div>
                   </div>
                 </div>
-              </div>serviceComponent
 
-              <div style="display:inline" *ngIf="subComponent.serviceType == 'None'">
-                None heree
+                <div style="display:inline" *ngIf="subComponent.serviceType == 'Argument'">
+                  <div style="display: inline;" class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{subComponent.argumentName}}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a *ngFor="let argument of this.component.serviceComponent.arguments" class="dropdown-item"
+                        (click)="this.setArgument(subComponent,argument)">{{argument.name}}</a>
+                    </div>
+                  </div>
+                </div>serviceComponent
+
+                <div style="display:inline" *ngIf="subComponent.serviceType == 'None'">
+                  None heree
+                </div>
+                <br />
+                <br />
               </div>
-              <br />
-              <br />
             </div>
           </div>
         </div>
