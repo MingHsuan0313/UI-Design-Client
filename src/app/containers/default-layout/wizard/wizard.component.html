@@ -54,13 +54,14 @@
             <br>
             <button class="btn btn-primary">Submit</button>
           </form>
+
           <br style="display: block;margin: 3px;">
 
           <div class="modal-footer">
-
             <button type="button" class="btn btn-danger" (click)="getComponentProperties(componentName)">Start</button>
             <button type="button" class="btn btn-info btn-lg" (click)="clickNext()">Next</button>
           </div>
+
         </div>
         <div class="tab-pane" id="composition" role="tabpanel" aria-labelledby="composition-tab">
           <p style="font-weight: bold;">Composite <mark>{{componentName}}</mark></p>
@@ -78,9 +79,8 @@
             </div>
           </div>
 
+          <br style="display: block;margin: 3px;">&nbsp;
 
-          <br style="display: block;margin: 3px;">
-          &nbsp; 
           <div style="display: inline;" class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -90,6 +90,8 @@
               <a *ngFor="let serviceComponent of this.getServiceComponents()" class="dropdown-item"
                 (click)="this.setSelectedServiceComponent(serviceComponent)">{{serviceComponent.name}} &nbsp;&nbsp;
                 {{serviceComponent.preference}}</a>
+              <a *ngIf="!isComposite" class="dropdown-item" 
+                (click)="this.setSelectedServiceComponent(serviceNoneOption)">None</a>
             </div>
           </div>
 
@@ -111,7 +113,11 @@
         </div>
 
         <div *ngIf="isComposite" class="tab-pane" id="service" role="tabpanel" aria-labelledby="service-tab">
-          <p>Service Component Mapping <mark>{{componentName}} : &nbsp; <div style="display: inline;" *ngIf="component != undefined"><div style="display: inline;" *ngIf="component.serviceComponent != undefined">{{component.serviceComponent.name}}</div> </div></mark></p>
+          <p>Service Component Mapping <mark>{{componentName}} : &nbsp; <div style="display: inline;"
+                *ngIf="component != undefined">
+                <div style="display: inline;" *ngIf="component.serviceComponent != undefined">
+                  {{component.serviceComponent.name}}</div>
+              </div></mark></p>
           <div *ngIf="isComposite">
             <div *ngIf="component != undefined">
               <div *ngFor="let subComponent of component.componentList">
@@ -163,7 +169,7 @@
                 </div>
 
                 <div style="display:inline" *ngIf="subComponent.serviceType == 'None'">
-                  <!-- None heree -->
+                  <!-- None here -->
                 </div>
                 <br />
                 <br />
@@ -172,16 +178,11 @@
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
-
-
 </div>
 
 <ng-template #compositeBlock>
-  <!-- <br style="display: block;margin: 3px;"> -->
   <form style="display: inline;" #sf="ngForm" (ngSubmit)="onCompositeSubmit(sf);">
     <div style="position: relative;left:5px;">
       <strong>{{this.subComponentName}}</strong>
@@ -193,6 +194,4 @@
     &nbsp;
     <button class="btn btn-primary">Submit</button>
   </form>
-
-
 </ng-template>

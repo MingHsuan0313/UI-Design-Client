@@ -32,7 +32,7 @@ export class WizardComponent implements OnInit {
   @Input() componentProperties: any[];
   @Input() componentName: any;
 
-
+  serviceNoneOption: Object;
   selectedServiceComponent: Object;
   component: any;
   subComponent: any;
@@ -49,6 +49,10 @@ export class WizardComponent implements OnInit {
   ) {
     this.selectedServiceComponent = {};
     this.selectedServiceComponent["name"] = "choose service component";
+    this.serviceNoneOption = {
+      "name": "None",
+      "preference": 0
+    }
   }
 
   ngOnInit(): void {
