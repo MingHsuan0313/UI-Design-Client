@@ -67,7 +67,7 @@ export let fakeServiceComponents = [
     },
     {
         name: "login",
-        preference: 0.17,
+        preference: 0.13,
         arguments: [
             {
                 name: "account",
@@ -82,5 +82,31 @@ export let fakeServiceComponents = [
             name: "serviceResult",
             type: "string"
         }
+    },
+    {
+        name: "addItem",
+        preference: 0.04,
+        arguments: [
+            {
+                name: "description",
+                type: "string"
+            },
+            {
+                name: "quantity",
+                type: "string"
+            },
+            {
+                name: "price",
+                type: "string"
+            },
+            {
+                name: "isNew",
+                type: "Boolean"
+            },
+            {
+                name: "condition",
+                type: "String"
+            }
+        ]
     }
 ]

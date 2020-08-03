@@ -45,7 +45,7 @@ export const Library = {
     "card": ["text", "dropdown", "button", "table"],
     "breadcrumb": ["text"],
     "inputgroup": ["text", "button", "icon", "dropdown"],
-    "form": ["text", "button", "input"],
+    "form": ["text", "button", "input","dropdown"],
   },
 
   "componentValue": {
