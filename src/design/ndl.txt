@@ -1,0 +1,26 @@
+### Navigation Description language
+
+{
+   path: '',
+   component: DefaultLayoutComponent,
+   serviceComponent: {},
+   children:[
+      {
+        path: '',
+        coomponent: Page1Component,
+        serviceComponent: {},
+        children:[
+          {
+            path: 'selab',
+            component: Page2Component
+            serviceComponent: {},
+          }
+        ]
+      },
+      {
+        path: 'news',
+        component: Page3Component
+        serviceComponent: {},
+      }
+   ]
+}

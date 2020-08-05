@@ -13,6 +13,7 @@ export class Storage {
   static library: any = Library;
   static layout: any = "";
   static isNewPage = true;
+  static
 
   // for temporary import
   static PageComponents: any[] = [];
