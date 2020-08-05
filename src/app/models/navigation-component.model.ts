@@ -7,4 +7,5 @@ export class NavigationComponent {
   add(child) {
     this.children.push(child);
   }
+
 }

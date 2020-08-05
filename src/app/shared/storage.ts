@@ -1,9 +1,10 @@
-import {Library} from "./library";
-import {UIComponent} from "../models/modelDependency";
-import {HttpHeaders} from "@angular/common/http";
-import {HttpClient} from "@angular/common/http";
+import {Library} from './library';
+import {UIComponent} from '../models/modelDependency';
+import {HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Layout} from '../models/model';
 import {PropertyGenerator} from './property-generator';
+import {NavigationComponent} from '../models/navigation-component.model';
 
 export class Storage {
   static components: any[] = [];
@@ -11,12 +12,15 @@ export class Storage {
   static UICDL: any[] = [];
   static PageUICDL: any = {};
   static library: any = Library;
-  static layout: any = "";
+  static layout: any = '';
   static isNewPage = true;
-  static
+
+  // unorder, check if component exists / data binding
+  static navigationList: NavigationComponent[] = [];
 
   // for temporary import
   static PageComponents: any[] = [];
+
   static add(component: UIComponent) {
     this.components.push(component);
     this.UICDL.push(component.getInfo());
@@ -27,39 +31,42 @@ export class Storage {
   }
 
   static getGenre(): any[] {
-    return Object.keys(this.library["genre"]);
+    return Object.keys(this.library['genre']);
   }
+
   static getCategories(genre: string): any[] {
-    return Object.keys(this.library["genre"][genre]["category"]);
+    return Object.keys(this.library['genre'][genre]['category']);
   }
+
   static getComponents(genre: string, category: string): any[] {
-    return Object.values(this.library["genre"][genre]["category"][category]);
+    return Object.values(this.library['genre'][genre]['category'][category]);
   }
+
   static getComponentProperties(component: string): any[] {
-    return Object.values(this.library["components"][component]);
+    return Object.values(this.library['components'][component]);
   }
 
   static getCompositeElements(component: string): any[] {
-    return Object.values(this.library["compositeComponents"][component]);
+    return Object.values(this.library['compositeComponents'][component]);
   }
 
   static getComponentValue(componentType: string): any {
-    return Object.values(this.library["componentValue"][componentType]);
+    return Object.values(this.library['componentValue'][componentType]);
   }
 
   static getPageUICDL() {
-    if(this.isNewPage){
-      this.PageUICDL["id"] = PropertyGenerator.getPageID();
-      this.PageUICDL["selector"] = "page" + this.PageUICDL["id"];
+    if (this.isNewPage) {
+      this.PageUICDL['id'] = PropertyGenerator.getPageID();
+      this.PageUICDL['selector'] = 'page' + this.PageUICDL['id'];
       this.isNewPage = false;
     }
-    this.layoutComponent["componentList"] = this.UICDL;
-    this.PageUICDL["componentList"] = (this.layoutComponent);
+    this.layoutComponent['componentList'] = this.UICDL;
+    this.PageUICDL['componentList'] = (this.layoutComponent);
 
     return this.PageUICDL;
   }
 
-  static clearTemp(){
+  static clearTemp() {
     this.components = [];
     this.UICDL = [];
   }
