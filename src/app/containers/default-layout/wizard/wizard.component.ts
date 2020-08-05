@@ -200,13 +200,13 @@ export class WizardComponent implements OnInit {
     }
   }
   clickNext() {
-    // $("#myModal a[href=\"#composition\"]").tab("show");
+    $("#myModal a[href=\"#composition\"]").tab("show");
   }
 
 
   onClose() {
     console.log("close");
-    // $("#myModal a[href=\"#building\"]").tab("show");
+    $("#myModal a[href=\"#building\"]").tab("show");
   }
 
   clickCreate() {
@@ -217,7 +217,7 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     console.log("finish");
     this.component.getInfo();
-    // $("#myModal a[href=\"#building\"]").tab("show");
+    $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
     this.graphEditorService.bindComponent(this.component);
     console.log(this.component);
@@ -227,8 +227,8 @@ export class WizardComponent implements OnInit {
   }
 
   // this is for composition subComponent
-  // type1. Service Component 
-  // type2. Argument 
+  // type1. Service Component
+  // type2. Argument
   // type3. None
   setServiceType(subComponent:UIComponent,serviceType:ServiceMappingType) {
     console.log("set service Type")

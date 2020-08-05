@@ -1,9 +1,10 @@
 // import { Component, OnInit } from '@angular/core';
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import GraphEditorService from '../../services/graph-editor.service';
 import * as html2canvas from 'html2canvas';
 import ImportService from '../../services/import.service';
 import {Storage} from '../../shared/storage';
+import ExportService from '../../services/export.service';
 
 @Component({
   selector: 'app-graph-editor',
@@ -13,15 +14,14 @@ import {Storage} from '../../shared/storage';
 export class AppGraphEditorComponent implements AfterViewInit {
 
 
-
-  constructor(private graphEditorService: GraphEditorService) {
+  constructor(private graphEditorService: GraphEditorService, private exportService: ExportService) {
   }
 
   // @ViewChild('graphContainer') graphContainer: ElementRef;
 
   ngAfterViewInit() {
-    this.createGraph("graphContainer0");
-    console.log("Create graph editor");
+    this.createGraph('graphContainer0');
+    console.log('Create graph editor');
     // this.graphEditorService.createGraph(this.graphContainer.nativeElement);
   }
 
@@ -63,7 +63,7 @@ export class AppGraphEditorComponent implements AfterViewInit {
 
   convertToCanvas() {
     let elementID = this.graphEditorService.selectedGraphID;
-    let element = document.getElementById(elementID)
+    let element = document.getElementById(elementID);
     let originalThis = this;
     html2canvas(element).then(function (canvas) {
       // console.log(canvas);
@@ -71,10 +71,11 @@ export class AppGraphEditorComponent implements AfterViewInit {
     });
   }
 
-  clearGraph(){
+  clearGraph() {
     const graphModel = this.graphEditorService.getGraphStorage().getGraphModel();
     graphModel.clear();
-
+    this.graphEditorService.getGraphStorage().clear();
+    Storage.clearTemp();
   }
 
 
@@ -82,5 +83,11 @@ export class AppGraphEditorComponent implements AfterViewInit {
     Storage.isNewPage = true;
     this.graphEditorService.getGraphStorage().clear();
     this.clearGraph();
+  }
+
+  newProject() {
+    this.exportService.newProject().subscribe(
+      response => console.log(response["body"])
+    );
   }
 }

@@ -12,6 +12,7 @@ import {PropertyGenerator} from '../../shared/property-generator';
 import GraphEditorService from '../../services/graph-editor.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import ImportService from '../../services/import.service';
+import ExportService from '../../services/export.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -41,7 +42,7 @@ export class DefaultLayoutComponent implements OnInit {
   private files: any[];
   public userName = 'undefined';
 
-  constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService, private importService: ImportService) {
+  constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService, private importService: ImportService, private exportService:ExportService) {
 
   }
 
@@ -92,19 +93,11 @@ export class DefaultLayoutComponent implements OnInit {
     console.log('Page UICDL');
     console.log(pageUICDL);
 
-    this.postPageUICDL(Storage.PageUICDL).subscribe(
+    this.exportService.postPageUICDL(Storage.PageUICDL).subscribe(
       response => console.log(response['body'])
     );
   }
 
-  postPageUICDL(PDL) {
-    return this.httpClient.post('http://localhost:8080', PDL,
-      {
-        headers: new HttpHeaders().set('Content-Type', 'application/json'),
-        observe: 'response', withCredentials: true, responseType: 'text'
-      }
-    );
-  }
 
   apply() {
     // selector is now meaningless
@@ -184,7 +177,6 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
 }
-
 
 
 
