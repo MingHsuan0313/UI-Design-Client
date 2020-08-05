@@ -57,6 +57,12 @@ export class GraphStorage {
     for (const vertexStorage of this.vertexStorageList) {
       vertexStorage.sync();
     }
+
+    for (const edgeStorage of this.edgeStorageList) {
+      edgeStorage.sync();
+    }
+
+    console.log(Storage.navigationFlow);
   }
 
   setStrategy(strategy: ICreateComponentStrategy) {
@@ -162,9 +168,10 @@ export class GraphStorage {
     return this.graph;
   }
 
-  getGraphModel(){
+  getGraphModel() {
     return this.graphModel;
   }
+
   // insert vertex
   insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent, dataBinding?, isPrimary?) {
     let vertex;
@@ -186,8 +193,11 @@ export class GraphStorage {
 
     try {
       const parent = this.graph.getDefaultParent();
+      let style = new Object();
+      style[mxConstants.STYLE_FONTSIZE] = 16;
+      this.graph.getStylesheet().putCellStyle('edgeStyle', style);
       this.graph.getModel().beginUpdate();
-      edge = this.graph.insertEdge(parent, '', '', sourceVertex, targetVertex, '');
+      edge = this.graph.insertEdge(parent, '', '', sourceVertex, targetVertex, "edgeStyle");
 
     } finally {
       this.graph.getModel().endUpdate();
@@ -209,8 +219,8 @@ export class GraphStorage {
     return this.id;
   }
 
-  clear(){
-    this.edgeStorageList = []
+  clear() {
+    this.edgeStorageList = [];
     this.vertexStorageList = [];
   }
 

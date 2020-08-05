@@ -12,16 +12,18 @@ export default class NavigationService {
 
   createNavigationComponent(source, url, target) {
 
-    let parent = this.findParentByName(source);
-    if (parent == 'None') {
+    let parent = this.findNavigationComponentByName(source);
+    if (parent == null) {
       parent = this.createRoot(source);
     }
 
-    let nc = new NavigationComponent();
-    nc[path] = url;
-    nc[component] = target;
-    // nc[serviceComponent] = this.findServiceComponentByName();
-
+    let nc = this.findNavigationComponentByName(target);
+    if (nc == null) {
+      nc = new NavigationComponent();
+      // nc[serviceComponent] = this.findServiceComponentByName();
+    }
+    nc['path'] = url;
+    nc['component'] = target;
     parent.add(nc);
 
     Storage.navigationList.push(nc);
@@ -32,24 +34,28 @@ export default class NavigationService {
     let root = new NavigationComponent();
 
     // default route
-    root[path] = '';
-    root[component] = source;
+    root['path'] = '';
+    root['component'] = 'DefaultLayoutComponent'; // now it is our default
     // root[serviceComponent] = this.findServiceComponentByName();
-    Storage.navigationList.push(nc);
-    return nc;
+    Storage.navigationList.push(root);
+    this.setRoot();
+    return root;
   }
 
-  findParentByName(source) {
+  findNavigationComponentByName(source) {
     for (let nav of Storage.navigationList) {
-      if (nav[component] == source) {
+      if (nav['component'] == source) {
         return nav;
       }
     }
-    return 'None';
   }
 
   findServiceComponentByName(pageName) {
 
     return {};
+  }
+
+  setRoot() {
+    Storage.navigationFlow = this.findNavigationComponentByName('DefaultLayoutComponent');
   }
 }

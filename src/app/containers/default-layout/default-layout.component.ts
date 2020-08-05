@@ -42,7 +42,7 @@ export class DefaultLayoutComponent implements OnInit {
   private files: any[];
   public userName = 'undefined';
 
-  constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService, private importService: ImportService, private exportService:ExportService) {
+  constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService, private importService: ImportService, private exportService: ExportService) {
 
   }
 
@@ -170,9 +170,13 @@ export class DefaultLayoutComponent implements OnInit {
     const graphNode = document.getElementById('graphContainer0');
     const defaultWidth = graphNode.offsetWidth;
     const defaultHeight = graphNode.offsetHeight;
-    const v1 = graph.insertVertex(parent, null, sf['value']['source'], defaultWidth / 2, defaultHeight / 2 - 200, 80, 30);
-    var v2 = graph.insertVertex(parent, null, sf['value']['target'], defaultWidth / 2, defaultHeight / 2, 80, 30);
-    var e1 = graph.insertEdge(parent, null, '', v1, v2);
+    let style = new Object();
+    style[mxConstants.STYLE_ROUNDED] = true;
+    style[mxConstants.STYLE_FONTSIZE] = 20;
+    graph.getStylesheet().putCellStyle('rounded', style);
+    let v1 = graph.insertVertex(parent, null, sf['value']['source'], defaultWidth / 2 - 200, defaultHeight / 2, 150, 90, "rounded","");
+    let v2 = graph.insertVertex(parent, null, sf['value']['target'], defaultWidth / 2 + 200, defaultHeight / 2, 150, 90,"rounded","");
+    graphStorage.insertEdge(v1, v2);
     document.getElementById('navigationForm').style.display = 'none';
   }
 

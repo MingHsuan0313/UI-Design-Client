@@ -17,6 +17,7 @@ export class Storage {
 
   // unorder, check if component exists / data binding
   static navigationList: NavigationComponent[] = [];
+  static navigationFlow: NavigationComponent;
 
   // for temporary import
   static PageComponents: any[] = [];
