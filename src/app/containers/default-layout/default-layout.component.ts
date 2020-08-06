@@ -174,13 +174,17 @@ export class DefaultLayoutComponent implements OnInit {
     style[mxConstants.STYLE_ROUNDED] = true;
     style[mxConstants.STYLE_FONTSIZE] = 20;
     graph.getStylesheet().putCellStyle('rounded', style);
-    let v1 = graph.insertVertex(parent, null, sf['value']['source'], defaultWidth / 2 - 200, defaultHeight / 2, 150, 90, "rounded","");
-    let v2 = graph.insertVertex(parent, null, sf['value']['target'], defaultWidth / 2 + 200, defaultHeight / 2, 150, 90,"rounded","");
+    let v1 = graphStorage.findVertex(sf['value']['source']);
+    if(v1 == null){
+      v1 = graph.insertVertex(parent, null, sf['value']['source'], defaultWidth / 2 - 400, defaultHeight / 2, 150, 90, "rounded","");
+    }
+    let v2 = graph.insertVertex(parent, null, sf['value']['target'], defaultWidth / 2, defaultHeight / 2, 150, 90,"rounded","");
     graphStorage.insertEdge(v1, v2);
     document.getElementById('navigationForm').style.display = 'none';
   }
 
 }
+
 
 
 

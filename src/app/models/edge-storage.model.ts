@@ -4,6 +4,10 @@ export default class EdgeStorage {
   edge: any;
   id: string;
   parentID: string;
+
+  srcVertex: any;
+  targetVertex: any;
+
   source: string;
   target: string;
   url: string;
@@ -13,6 +17,8 @@ export default class EdgeStorage {
     this.edge = edge;
     this.id = edge['id'];
     this.parentID = this.edge['parent']['id'];
+    this.srcVertex = this.edge['source'];
+    this.targetVertex = this.edge['target'];
     this.source = edge['source']['value'];
     this.target = edge['target']['value'];
     this.url = edge['value'];
@@ -20,6 +26,8 @@ export default class EdgeStorage {
 
   sync() {
     this.url = this.edge['value'];
+    this.source = this.edge['source']['value'];
+    this.target = this.edge["target"]["value"];
     this.navigationService = new NavigationService();
     this.navigationService.createNavigationComponent(this.source, this.url, this.target);
   }

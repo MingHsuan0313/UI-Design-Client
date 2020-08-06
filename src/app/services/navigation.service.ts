@@ -12,50 +12,60 @@ export default class NavigationService {
 
   createNavigationComponent(source, url, target) {
 
-    let parent = this.findNavigationComponentByName(source);
-    if (parent == null) {
-      parent = this.createRoot(source);
+    let parent;
+
+    // root setting: Default layout
+    if (source == 'DefaultLayout') {
+      if (Storage.navigationFlow == null) {
+        parent = this.createRoot(source);
+      } else {
+        parent = Storage.navigationFlow;
+      }
+    } else{
+      parent = this.findNavigationComponentByName(source);
     }
 
-    let nc = this.findNavigationComponentByName(target);
-    if (nc == null) {
-      nc = new NavigationComponent();
-      // nc[serviceComponent] = this.findServiceComponentByName();
+      let nc = this.findNavigationComponentByName(target);
+      if (nc == null) {
+        nc = new NavigationComponent();
+        parent.add(nc);
+        Storage.navigationList.push(nc);
+        // nc[serviceComponent] = this.findServiceComponentByName();
+      }
+      nc['path'] = url;
+      nc['component'] = target;
+
+      return nc;
     }
-    nc['path'] = url;
-    nc['component'] = target;
-    parent.add(nc);
 
-    Storage.navigationList.push(nc);
-    return nc;
-  }
+    // should only call once
+    createRoot(source) {
+    console.log("create root");
+      let root = new NavigationComponent();
 
-  createRoot(source) {
-    let root = new NavigationComponent();
+      // default route
+      root['path'] = '';
+      root['component'] = 'DefaultLayout'; // now it is our default
+      // root[serviceComponent] = this.findServiceComponentByName();
+      Storage.navigationList.push(root);
+      this.setRoot(root);
+      return root;
+    }
 
-    // default route
-    root['path'] = '';
-    root['component'] = 'DefaultLayoutComponent'; // now it is our default
-    // root[serviceComponent] = this.findServiceComponentByName();
-    Storage.navigationList.push(root);
-    this.setRoot();
-    return root;
-  }
-
-  findNavigationComponentByName(source) {
-    for (let nav of Storage.navigationList) {
-      if (nav['component'] == source) {
-        return nav;
+    findNavigationComponentByName(source) {
+      for (let nav of Storage.navigationList) {
+        if (nav['component'] == source) {
+          return nav;
+        }
       }
     }
-  }
 
-  findServiceComponentByName(pageName) {
+    findServiceComponentByName(pageName) {
 
-    return {};
-  }
+      return {};
+    }
 
-  setRoot() {
-    Storage.navigationFlow = this.findNavigationComponentByName('DefaultLayoutComponent');
+    setRoot(root) {
+      Storage.navigationFlow = root;
+    }
   }
-}

@@ -58,6 +58,8 @@ export class GraphStorage {
       vertexStorage.sync();
     }
 
+    // reset navigation flow then sync
+    Storage.navigationFlow = null;
     for (const edgeStorage of this.edgeStorageList) {
       edgeStorage.sync();
     }
@@ -222,6 +224,18 @@ export class GraphStorage {
   clear() {
     this.edgeStorageList = [];
     this.vertexStorageList = [];
+  }
+
+  // find vertex in the edges
+  findVertex(src){
+    for(const edgeStorage of this.edgeStorageList){
+      if(edgeStorage.source == src){
+        return edgeStorage.srcVertex;
+      }
+      if(edgeStorage.target == src){
+        return edgeStorage.targetVertex;
+      }
+    }
   }
 
 }
