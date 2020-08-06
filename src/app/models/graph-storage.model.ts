@@ -60,6 +60,7 @@ export class GraphStorage {
 
     // reset navigation flow then sync
     Storage.navigationFlow = null;
+    Storage.navigationList = [];
     for (const edgeStorage of this.edgeStorageList) {
       edgeStorage.sync();
     }

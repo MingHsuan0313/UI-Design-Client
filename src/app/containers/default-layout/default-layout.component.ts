@@ -84,7 +84,7 @@ export class DefaultLayoutComponent implements OnInit {
     console.log(Storage.components);
   }
 
-  connectServer() {
+  storePDL() {
     const pageUICDL = Storage.getPageUICDL();
     // console.log(JSON.stringify(pageUICDL));
     console.log('Show Internal Representation');
@@ -183,8 +183,12 @@ export class DefaultLayoutComponent implements OnInit {
     document.getElementById('navigationForm').style.display = 'none';
   }
 
+  storeNDL() {
+    this.exportService.postNDL().subscribe(
+      response => console.log(response["body"])
+    );
+  }
 }
-
 
 
 

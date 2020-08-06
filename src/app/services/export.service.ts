@@ -1,5 +1,6 @@
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable} from "@angular/core";
+import {Storage} from '../shared/storage';
 
 
 @Injectable({
@@ -24,6 +25,15 @@ export default class ExportService {
 
   newProject() {
     return this.httpClient.get("http://localhost:8080/trunc",
+      {
+        headers: new HttpHeaders().set("Content-Type", "application/json"),
+        observe: "response", withCredentials: true, responseType: "text"
+      }
+    );
+  }
+
+  postNDL(){
+    return this.httpClient.post("http://localhost:8080/navigate", Storage.navigationFlow,
       {
         headers: new HttpHeaders().set("Content-Type", "application/json"),
         observe: "response", withCredentials: true, responseType: "text"
