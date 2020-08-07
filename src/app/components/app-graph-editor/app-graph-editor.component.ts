@@ -5,6 +5,8 @@ import * as html2canvas from 'html2canvas';
 import ImportService from '../../services/import.service';
 import {Storage} from '../../shared/storage';
 import ExportService from '../../services/export.service';
+import {StyleStorage} from '../../models/style-storage.model';
+import {StyleLibrary} from '../../shared/styleLibrary';
 
 @Component({
   selector: 'app-graph-editor',
@@ -90,4 +92,13 @@ export class AppGraphEditorComponent implements AfterViewInit {
       response => console.log(response["body"])
     );
   }
+
+  increaseFont() {
+    StyleLibrary[0]["fontSize"] += 10;
+  }
+
+  decreaseFont() {
+    StyleLibrary[0]["fontSize"] -= 10;
+  }
+
 }

@@ -1,7 +1,7 @@
 export const StyleLibrary = [
   {
     genere: "coreUI",
-
+    fontSize: 16,
     // text: {
     //   opacity: "0",
     //   fontSize: "25",

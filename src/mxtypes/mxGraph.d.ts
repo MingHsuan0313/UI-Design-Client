@@ -470,4 +470,7 @@ declare class mxGraph {
   fireGestureEvent(evt, cell);
   destroy();
 
+  addListener(DOUBLE_CLICK: any, param2: (sender, evt) => void) {
+
+  }
 }

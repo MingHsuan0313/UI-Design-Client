@@ -93,6 +93,7 @@ declare class mxImage {
 declare class mxEvent {
   static ADD: any;
   static REMOVE: any;
+  static DOUBLE_CLICK: ;
   addListener(element,eventName,funct);
 }
 
@@ -132,6 +133,12 @@ declare class mxPoint {
   equals(obj: any): boolean;
 
   clone();
+
+}
+
+declare class mxUtils{
+
+  alert(obj:any);
 
 }
 

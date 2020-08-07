@@ -36,25 +36,25 @@ export class TextStrategy implements ICreateComponentStrategy {
     const dataBinding = this.createDataBinding();
 
 
-    let style ;
+    let style = {} ;
     if (component["href"].length>0) {
-      style = StyleLibrary[0]["text"]["text_blue"];
+      style = Object.assign(style, StyleLibrary[0]["text"]["text_blue"]);
     } else {
-      style = StyleLibrary[0]["text"]["text_black"];
-
+      style = Object.assign(style, StyleLibrary[0]["text"]["text_black"]);
     }
+
 
     const styleName = "style"+"Text"+ component.id;
 
     const styleStorage = new StyleStorage(styleName, style);
 
-    let width = (component.text.length)*12;
-    const textGeometry = new mxGeometry(this.basex, this.basey, width, 30);
+    let width = (component.text.length)*20;
+    const textGeometry = new mxGeometry(this.basex, this.basey, width, 50);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
     // Initialized
     let textVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding, true);
-    graphStorage.getGraph().updateCellSize(textVertexStorage.getVertex(), true);
+    // graphStorage.getGraph().updateCellSize(textVertexStorage.getVertex(), true);
     graphStorage.getGraph().refresh(textVertexStorage.getVertex());
     return textVertexStorage;
   }
@@ -66,7 +66,7 @@ export class TextStrategy implements ICreateComponentStrategy {
     component["y"] = textVertexStorage.getVertexY();
     component["width"] = textVertexStorage.getVertexWidth();
     component["height"] = textVertexStorage.getVertexHeight();
-    // component["style"] = textVertexStorage.getStyle();
+    //component["style"] = textVertexStorage.getStyle();
     return textVertexStorage;
   }
 }

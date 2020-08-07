@@ -109,6 +109,7 @@ export default class VertexStorage {
     this.component['y'] = this.getVertexY();
     this.component['width'] = this.getVertexWidth();
     this.component['height'] = this.getVertexHeight();
+    this.component['style'] = this.getStyle();
 
   }
 

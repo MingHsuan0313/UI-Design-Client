@@ -12,6 +12,8 @@ import {BreadcrumbStrategy} from './createComponentStrategy/BreadcrumbStrategy';
 import {IconStrategy} from './createComponentStrategy/IconStrategy';
 import {InputStrategy} from './createComponentStrategy/InputStrategy';
 import {LayoutStrategy} from './createComponentStrategy/LayoutStrategy';
+import {StyleStorage} from './style-storage.model';
+import {StyleLibrary} from '../shared/styleLibrary';
 
 export class GraphStorage {
   vertexStorageList: VertexStorage[];
@@ -36,6 +38,17 @@ export class GraphStorage {
 
     });
 
+    this.graph.addListener(mxEvent.DOUBLE_CLICK, function (sender, evt) {
+      let cell = evt.getProperty('cell');
+      // mxUtils.alert('Doubleclick: '+((cell != null) ? 'Cell' : 'Graph'));
+      let styleName = cell['style'];
+      let style = this.getStylesheet().getCellStyle(styleName);
+      style['fontSize'] = StyleLibrary[0]["fontSize"];
+      console.log(style);
+      this.getStylesheet().putCellStyle(styleName, style);
+      this.refresh();
+      evt.consume();
+    });
     this.graph.addMouseListener(
       {
         mouseDown: function (sender, evt) {
@@ -51,6 +64,7 @@ export class GraphStorage {
       }
     );
   }
+
 
   // sync internal storage and external storage
   syncStorage() {
@@ -73,8 +87,6 @@ export class GraphStorage {
   }
 
   createComponent(component, parent, basex?, basey?) {
-    console.log('create Component heree');
-    console.log(component);
 
     const graphNode = document.getElementById('graphContainer0');
     const defaultWidth = graphNode.offsetWidth;
@@ -200,7 +212,7 @@ export class GraphStorage {
       style[mxConstants.STYLE_FONTSIZE] = 16;
       this.graph.getStylesheet().putCellStyle('edgeStyle', style);
       this.graph.getModel().beginUpdate();
-      edge = this.graph.insertEdge(parent, '', '', sourceVertex, targetVertex, "edgeStyle");
+      edge = this.graph.insertEdge(parent, '', '', sourceVertex, targetVertex, 'edgeStyle');
 
     } finally {
       this.graph.getModel().endUpdate();
@@ -228,15 +240,16 @@ export class GraphStorage {
   }
 
   // find vertex in the edges
-  findVertex(src){
-    for(const edgeStorage of this.edgeStorageList){
-      if(edgeStorage.source == src){
+  findVertex(src) {
+    for (const edgeStorage of this.edgeStorageList) {
+      if (edgeStorage.source == src) {
         return edgeStorage.srcVertex;
       }
-      if(edgeStorage.target == src){
+      if (edgeStorage.target == src) {
         return edgeStorage.targetVertex;
       }
     }
   }
 
 }
+
