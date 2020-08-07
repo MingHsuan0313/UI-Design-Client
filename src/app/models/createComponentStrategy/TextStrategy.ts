@@ -48,7 +48,7 @@ export class TextStrategy implements ICreateComponentStrategy {
 
     const styleStorage = new StyleStorage(styleName, style);
 
-    let width = (component.text.length)*20;
+    let width = (component.text.length)*12;
     const textGeometry = new mxGeometry(this.basex, this.basey, width, 50);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
@@ -70,3 +70,4 @@ export class TextStrategy implements ICreateComponentStrategy {
     return textVertexStorage;
   }
 }
+

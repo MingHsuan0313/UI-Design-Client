@@ -118,7 +118,6 @@ export class DefaultLayoutComponent implements OnInit {
     if (this.layoutPart == 'sidebar') {
       this.layoutComponent['sidebar'].push(text);
     } else if (this.layoutPart == 'header') {
-      console.log('push');
       this.layoutComponent['header'].push(text);
     } else if (this.layoutPart == 'footer') {
       this.layoutComponent['footer'].push(text);

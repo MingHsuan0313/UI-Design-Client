@@ -38,17 +38,24 @@ export class GraphStorage {
 
     });
 
+    let style = {};
+    let cell;
     this.graph.addListener(mxEvent.DOUBLE_CLICK, function (sender, evt) {
-      let cell = evt.getProperty('cell');
+      cell = evt.getProperty('cell');
+
+      // To prevent double click for inputting text
+      if(!cell["style"].startsWith("styleText")) return;
+
       // mxUtils.alert('Doubleclick: '+((cell != null) ? 'Cell' : 'Graph'));
       let styleName = cell['style'];
-      let style = this.getStylesheet().getCellStyle(styleName);
+      style = this.getStylesheet().getCellStyle(styleName);
       style['fontSize'] = StyleLibrary[0]["fontSize"];
-      console.log(style);
       this.getStylesheet().putCellStyle(styleName, style);
       this.refresh();
       evt.consume();
     });
+
+
     this.graph.addMouseListener(
       {
         mouseDown: function (sender, evt) {
@@ -69,6 +76,10 @@ export class GraphStorage {
   // sync internal storage and external storage
   syncStorage() {
     for (const vertexStorage of this.vertexStorageList) {
+      let style = this.graph.getStylesheet().getCellStyle(vertexStorage.styleStorage.name);
+      console.log("here's the style");
+      console.log(style);
+      vertexStorage.styleStorage.setStyle(style);
       vertexStorage.sync();
     }
 
@@ -226,6 +237,14 @@ export class GraphStorage {
     for (const element of this.vertexStorageList) {
       if (element.id == id) {
         return element.getVertex();
+      }
+    }
+  }
+
+  findVertexStorageByID(id) {
+    for (const element of this.vertexStorageList) {
+      if (element.id == id) {
+        return element;
       }
     }
   }

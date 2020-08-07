@@ -8,6 +8,9 @@ export class StyleStorage {
     this.style = style;
   }
 
+  setStyle(style){
+    this.style = style;
+  }
   getStyle() {
     return this.style;
   }

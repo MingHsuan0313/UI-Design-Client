@@ -1,6 +1,7 @@
 import {StyleStorage, DataBinding} from './modelDependency';
 import {Storage} from '../shared/storage';
 import {UIComponent} from './model';
+import GraphEditorService from '../services/graph-editor.service';
 
 /**
  * @description
@@ -25,6 +26,7 @@ export default class VertexStorage {
     this.styleStorage = styleStorage;
     this.component = component;
     this.children = [];
+
 
     if (isPrimary == undefined) {
       this.isPrimary = false;
@@ -109,8 +111,6 @@ export default class VertexStorage {
     this.component['y'] = this.getVertexY();
     this.component['width'] = this.getVertexWidth();
     this.component['height'] = this.getVertexHeight();
-    this.component['style'] = this.getStyle();
-
   }
 
   sync() {
@@ -118,7 +118,7 @@ export default class VertexStorage {
     if (this.isPrimary) {
       this.syncProperties();
     }
-
+    this.component['style'] = this.getStyle();
     // if(this.getVertex()["parent"])
 
     if (this.dataBinding.hasDataBinding) {
