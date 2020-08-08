@@ -24,8 +24,8 @@ export default class ImportService {
         this.pages = JSON.parse(this.pagesText);
         for(let i in this.pages) {
           let components = JSON.parse(this.pages[i]["pdl"]);
+          this.pages[i]["components"] = [];
           for(let component of components["componentList"]["componentList"]){
-            this.pages[i]["components"] = [];
             this.pages[i]["components"].push(component["selector"]);
           }
 

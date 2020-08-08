@@ -2,26 +2,26 @@ export const Library = {
   "genre": {
     "CoreUI": {
       "category": {
-        "retrieving data": ["text", "table", "card", "inputgroup", "dropdown", "icon", "breadcrumb"],
-        "submitting data": ["button", "inputgroup", "dropdown", "input", "form"],
-        "navigation": ["text", "button", "breadcrumb"],
-        "prompt": [],
+        "Input Controls": ["input", "form", "dropdown"],
+        "Navigational Components": ["text", "button", "breadcrumb"],
+        "Informational Components": ["text", "table", "card", "icons"],
+        "Containers": ["form", "card"],
       }
     },
     "Angular Material": {
       "category": {
-        "retrieving data": [],
-        "submitting data": [],
-        "navigation": [],
-        "prompt": [],
+        "Input Controls": [],
+        "Navigational Components": [],
+        "Informational Components": [],
+        "Containers": [],
       }
     },
     "HTML": {
       "category": {
-        "retrieving data": [],
-        "submitting data": [],
-        "navigation": [],
-        "prompt": [],
+        "Input Controls": [],
+        "Navigational Components": [],
+        "Informational Components": [],
+        "Containers": [],
       }
     }
   },
@@ -37,7 +37,7 @@ export const Library = {
     "card": ["header", "componentList"],
     "breadcrumb": ["componentList"],
     "inputgroup": ["componentList"],
-    "form":["componentList"]
+    "form": ["componentList"]
   },
 
   // Composite component can composite the following components
@@ -45,7 +45,7 @@ export const Library = {
     "card": ["text", "dropdown", "button", "table"],
     "breadcrumb": ["text"],
     "inputgroup": ["text", "button", "icon", "dropdown"],
-    "form": ["text", "button", "input","dropdown"],
+    "form": ["text", "button", "input", "dropdown"],
   },
 
   "componentValue": {

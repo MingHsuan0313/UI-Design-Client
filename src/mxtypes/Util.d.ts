@@ -93,7 +93,7 @@ declare class mxImage {
 declare class mxEvent {
   static ADD: any;
   static REMOVE: any;
-  static DOUBLE_CLICK: ;
+  static DOUBLE_CLICK: any;
   addListener(element,eventName,funct);
 }
 
