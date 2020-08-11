@@ -8,4 +8,8 @@ export class NavigationComponent {
     this.children.push(child);
   }
 
+  remove(i) {
+    this.children.splice(i, 1);
+  }
+
 }

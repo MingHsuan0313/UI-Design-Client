@@ -62,6 +62,8 @@ export class FormStrategy implements ICreateComponentStrategy {
 
         let newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth+50, p2);
         formBoxVertexStorage.getVertex().setGeometry(newmxGeometry);
+
+        // this does not refresh dropdown vertex position; i guess
         graphStorage.getGraph().refresh();
 
         component.x = formBoxVertexStorage.getVertexX();

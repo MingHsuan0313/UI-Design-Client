@@ -40,11 +40,14 @@ export class GraphStorage {
 
     let style = {};
     let cell;
+    let count = 0;
     this.graph.addListener(mxEvent.DOUBLE_CLICK, function (sender, evt) {
       cell = evt.getProperty('cell');
-
+      count++;
       // To prevent double click for inputting text
-      if(!cell["style"].startsWith("styleText")) return;
+      if(!cell["style"].startsWith("styleText") || count%2==1) {
+        return;
+      }
 
       // mxUtils.alert('Doubleclick: '+((cell != null) ? 'Cell' : 'Graph'));
       let styleName = cell['style'];

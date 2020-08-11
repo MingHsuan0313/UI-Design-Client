@@ -3,6 +3,7 @@
 {
   "selector": "page1",
   "id":"1",
+  "serviceComponent": {},
   "componentList": {
       "selector":"Layout1",
       "type":"layout",
@@ -16,3 +17,4 @@
     }
 
 }
+

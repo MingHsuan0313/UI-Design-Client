@@ -36,7 +36,7 @@ export default class VertexStorage {
 
     // initialize dataBinding
     if (dataBinding == undefined) {
-      const dataBinding = {
+      dataBinding = {
         hasDataBinding: false,
         dataBindingName: '',
         isList: -1
@@ -194,6 +194,5 @@ export default class VertexStorage {
   //   }
   // }
 }
-
 
 

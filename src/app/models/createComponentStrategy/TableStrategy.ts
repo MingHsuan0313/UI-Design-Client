@@ -19,7 +19,7 @@ export class TableStrategy implements ICreateComponentStrategy {
       this.basex = basex;
       this.basey = basey;
     }
-    this.gridWidth = 80;
+    this.gridWidth = 150;
     this.gridHeight = 40;
   }
 
