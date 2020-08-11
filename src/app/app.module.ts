@@ -14,6 +14,7 @@ import { AppRoutingModule } from "./app.routing";
 import { DefaultLayoutComponent } from "./containers";
 import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { MonacoEditorModule } from "ngx-monaco-editor";
 // import {AppHeaderComponent} from './components/app-header/app-header.component';
 
 import {
@@ -21,11 +22,12 @@ import {
   AppBreadcrumbModule,
   AppHeaderModule,
   AppFooterModule,
-  AppSidebarModule
+  AppSidebarModule,
 } from "@coreui/angular";
 
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import {WizardComponent} from "./containers/default-layout/wizard/wizard.component";
+import { CodeEditorComponent } from './components/code-editor/code-editor.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import {WizardComponent} from "./containers/default-layout/wizard/wizard.compone
     WizardComponent,
     NavigationComponent,
     ControlPanelComponent,
-    DefaultLayoutComponent
+    DefaultLayoutComponent,
+    CodeEditorComponent
   ],
   imports: [
     PerfectScrollbarModule,
@@ -49,7 +52,8 @@ import {WizardComponent} from "./containers/default-layout/wizard/wizard.compone
     AppHeaderModule,
     AppFooterModule,
     AppSidebarModule,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    MonacoEditorModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

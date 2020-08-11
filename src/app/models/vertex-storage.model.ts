@@ -13,7 +13,8 @@ export default class VertexStorage {
   id: string;
   parentId: string;
   value: string;
-  component: UIComponent;
+  component:any;
+
   styleStorage: StyleStorage;
   children: any;
   dataBinding: DataBinding;
