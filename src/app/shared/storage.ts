@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {Layout} from '../models/model';
 import {PropertyGenerator} from './property-generator';
 import {NavigationComponent} from '../models/navigation-component.model';
+import * as _ from 'lodash';
 
 export class Storage {
   static components: any[] = [];
@@ -14,6 +15,8 @@ export class Storage {
   static library: any = Library;
   static layout: any = '';
   static isNewPage = true;
+  static compositeLibrary = [];
+
 
   // unorder, check if component exists / data binding
   static navigationList: NavigationComponent[] = [];
@@ -26,6 +29,19 @@ export class Storage {
     this.components.push(component);
     this.UICDL.push(component.getInfo());
   }
+
+  static addCompositeComponent(component: any) {
+    if(component.componentList != undefined){
+      let compositeComponent = _.cloneDeep(component)
+      this.compositeLibrary.push(compositeComponent);
+    }
+    console.log(this.compositeLibrary);
+  }
+
+  static getCompositeComponents(){
+    return this.compositeLibrary;
+  }
+
 
   static setLayoutComponent(component) {
     this.layoutComponent = component;
@@ -44,15 +60,23 @@ export class Storage {
   }
 
   static getComponentProperties(component: string): any[] {
-    return Object.values(this.library['components'][component]);
+      return Object.values(this.library['components'][component]);
   }
 
+
   static getCompositeElements(component: string): any[] {
-    return Object.values(this.library['compositeComponents'][component]);
+     let elements = Object.values(this.library['compositeComponents'][component]);
+     for(var compositeElement of this.compositeLibrary){
+       elements.push("Template: " + compositeElement.selector);
+     }
+     console.log(elements);
+     return elements;
   }
 
   static getComponentValue(componentType: string): any {
-    return Object.values(this.library['componentValue'][componentType]);
+
+      return Object.values(this.library['componentValue'][componentType]);
+    
   }
 
   static getPageUICDL() {

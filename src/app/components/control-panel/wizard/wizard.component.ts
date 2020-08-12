@@ -3,6 +3,7 @@ import {Storage} from "../../../shared/storage";
 import {NgForm} from "@angular/forms";
 import GraphEditorService from "../../../services/graph-editor.service";
 import {PropertyGenerator} from "../../../shared/property-generator";
+
 import {
   BreadcrumbComposite,
   Button,
@@ -189,11 +190,13 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     console.log("finish");
     this.component.getInfo();
+    console.log("HiHiHI");
     // $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
+    Storage.addCompositeComponent(this.component);
     this.graphEditorService.bindComponent(this.component);
     console.log(this.component);
-    this.properties = [];
+    this.properties = [];  
     this.subComponentName = "";
 
   }

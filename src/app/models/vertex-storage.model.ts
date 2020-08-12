@@ -118,7 +118,7 @@ export default class VertexStorage {
     if (this.isPrimary) {
       this.syncProperties();
     }
-    this.component['style'] = this.getStyle();
+    this.component['style'] = String(this.getStyle());
     // if(this.getVertex()["parent"])
 
     if (this.dataBinding.hasDataBinding) {

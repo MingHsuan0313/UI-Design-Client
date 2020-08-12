@@ -165,8 +165,15 @@ export class WizardComponent implements OnInit {
   }
 
   getSubComponentProperties(subComponentName: string) {
-    this.properties = Storage.getComponentProperties(subComponentName);
-    this.subComponentName = subComponentName;
+    if(subComponentName.includes("Template")){
+      this.properties = null;
+      this.subComponentName = subComponentName;
+    //  this.subComponentName = subComponentName.replace("Template: ","");
+    }else{
+      this.properties = Storage.getComponentProperties(subComponentName);
+      this.subComponentName = subComponentName;
+    }
+
   }
 
   show() {
@@ -186,10 +193,24 @@ export class WizardComponent implements OnInit {
   }
 
   onCompositeSubmit(sf: NgForm) {
-    console.log(sf.value);
-    if (this.setSubComponent(sf.value)) {
+    if(this.subComponentName.includes("Template")){
+      console.log("Hello")
+      let compositeComponents = Storage.getCompositeComponents();
+      this.subComponentName = this.subComponentName.replace("Template: ","");
+      for(var component of compositeComponents){
+        if(component.selector === this.subComponentName){
+          this.subComponent = component;
+          break;
+        }
+      }
+      console.log(this.subComponent);
+      this.component.add(this.subComponent);
+      console.log(this.subComponent);
+    }
+    else if (this.setSubComponent(sf.value)) {
       console.log('ready to add ' + this.subComponentName + ' component to composite component');
       this.component.add(this.subComponent);
+      console.log(this.subComponent);
       for (const element of this.properties) {
         sf['value'][element] = '';
       }
@@ -197,17 +218,19 @@ export class WizardComponent implements OnInit {
       //reset form with dafault value
       sf.resetForm(sf['value']);
     }
+
   }
 
   clickNext() {
     $('#myModal a[href="#composition"]').tab('show');
   }
 
-
   onClose() {
     console.log('close');
     $('#myModal a[href="#building"]').tab('show');
   }
+  
+  
 
   clickCreate() {
     this.compositeElements = Storage.getCompositeElements(this.componentName);
@@ -219,11 +242,12 @@ export class WizardComponent implements OnInit {
     this.component.getInfo();
     $('#myModal a[href="#building"]').tab('show');
     Storage.add(this.component);
+    Storage.addCompositeComponent(this.component);
     this.graphEditorService.bindComponent(this.component);
     this.properties = [];
     this.subComponentName = '';
 
-  }
+  } 
 
   // this is for composition subComponent
   // type1. Service Component
