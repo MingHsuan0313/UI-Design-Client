@@ -139,7 +139,28 @@ declare class mxPoint {
 declare class mxUtils{
 
   alert(obj:any);
+  static createXmlDocument();
+  static getXml(root:any);
 
+}
+
+declare class mxXmlCanvas2D{
+  constructor(root:any);
+}
+
+declare class mxImageExport{
+  constructor();
+  drawState(state:any, canvas:any);
+}
+
+declare class mxXmlRequest{
+  constructor(	url,
+    params,
+    method?,
+    async?,
+    username?,
+    password?)
+    simulate(doc, target);
 }
 
 /******************      Util end      **************/

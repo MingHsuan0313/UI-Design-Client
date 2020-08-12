@@ -15,7 +15,7 @@ export class Storage {
   static library: any = Library;
   static layout: any = '';
   static isNewPage = true;
-  static compositeLibrary = [];
+  static templateLibrary = [];
 
 
   // unorder, check if component exists / data binding
@@ -30,16 +30,16 @@ export class Storage {
     this.UICDL.push(component.getInfo());
   }
 
-  static addCompositeComponent(component: any) {
+  static addCompositeComponentTemplate(component: any) {
     if(component.componentList != undefined){
       let compositeComponent = _.cloneDeep(component)
-      this.compositeLibrary.push(compositeComponent);
+      this.templateLibrary.push(compositeComponent);
     }
-    console.log(this.compositeLibrary);
+    console.log(this.templateLibrary);
   }
 
-  static getCompositeComponents(){
-    return this.compositeLibrary;
+  static getCompositeComponentTemplates(){
+    return this.templateLibrary;
   }
 
 
@@ -66,7 +66,7 @@ export class Storage {
 
   static getCompositeElements(component: string): any[] {
      let elements = Object.values(this.library['compositeComponents'][component]);
-     for(var compositeElement of this.compositeLibrary){
+     for(var compositeElement of this.templateLibrary){
        elements.push("Template: " + compositeElement.selector);
      }
      console.log(elements);

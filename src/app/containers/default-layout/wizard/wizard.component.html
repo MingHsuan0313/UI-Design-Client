@@ -67,7 +67,15 @@
 
         </div>
         <div class="tab-pane" id="composition" role="tabpanel" aria-labelledby="composition-tab">
-          <p style="font-weight: bold;">Composite <mark>{{componentName}}</mark></p>
+          <p style="font-weight: bold;">Composite <mark>{{componentName}}</mark>  
+            &nbsp; &nbsp; &nbsp;
+            <label class="checkbox">
+              <input type="checkbox" (change)="setIsTemplate($event.target.checked)" data-toggle="toggle">
+              
+              &nbsp;For Template
+            </label>
+          </p>
+         
 
 
           <div class="dropdown">

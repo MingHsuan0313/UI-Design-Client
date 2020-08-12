@@ -187,6 +187,10 @@ export class DefaultLayoutComponent implements OnInit {
       response => console.log(response["body"])
     );
   }
+
+  exportPicture(){
+    this.exportService.export();
+  }
 }
 
 

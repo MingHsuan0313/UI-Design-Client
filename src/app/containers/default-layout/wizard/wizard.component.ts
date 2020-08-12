@@ -41,6 +41,7 @@ export class WizardComponent implements OnInit {
   tmp: Map<any, any>;
   compositeElements: any[] = [];
   private isComposite = false;
+  private isTemplate = false;
 
 
   constructor(private graphEditorService: GraphEditorService,
@@ -195,7 +196,7 @@ export class WizardComponent implements OnInit {
   onCompositeSubmit(sf: NgForm) {
     if(this.subComponentName.includes("Template")){
       console.log("Hello")
-      let compositeComponents = Storage.getCompositeComponents();
+      let compositeComponents = Storage.getCompositeComponentTemplates();
       this.subComponentName = this.subComponentName.replace("Template: ","");
       for(var component of compositeComponents){
         if(component.selector === this.subComponentName){
@@ -242,13 +243,17 @@ export class WizardComponent implements OnInit {
     this.component.getInfo();
     $('#myModal a[href="#building"]').tab('show');
     Storage.add(this.component);
-    Storage.addCompositeComponent(this.component);
+    Storage.addCompositeComponentTemplate(this.component);
     this.graphEditorService.bindComponent(this.component);
     this.properties = [];
     this.subComponentName = '';
 
   } 
 
+  setIsTemplate(isTemplate){
+    this.isTemplate = isTemplate;
+    console.log(this.isTemplate)
+  }
   // this is for composition subComponent
   // type1. Service Component
   // type2. Argument

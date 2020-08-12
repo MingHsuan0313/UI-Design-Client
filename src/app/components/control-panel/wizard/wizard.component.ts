@@ -193,7 +193,7 @@ export class WizardComponent implements OnInit {
     console.log("HiHiHI");
     // $("#myModal a[href=\"#building\"]").tab("show");
     Storage.add(this.component);
-    Storage.addCompositeComponent(this.component);
+    Storage.addCompositeComponentTemplate(this.component);
     this.graphEditorService.bindComponent(this.component);
     console.log(this.component);
     this.properties = [];  
