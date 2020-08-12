@@ -1,7 +1,9 @@
 export let fakeServiceComponents = [
     {
         name: "addCategory",
+        className: "HierarchyController",
         preference: 0.45,
+        connectDB: true,
         arguments: [
             {
                 name: "uid",
@@ -27,7 +29,9 @@ export let fakeServiceComponents = [
     },
     {
         name: "viewDepartmentList",
+        className: "HierarchyController",
         preference: 0.25,
+        connectDB: true,
         arguments: [
             {
                 name: "uid",
@@ -45,7 +49,9 @@ export let fakeServiceComponents = [
     },
     {
         name: "addDepartment",
+        className: "HierarchyController",
         preference: 0.03,
+        connectDB: true,
         arguments: [
             {
                 name: "uid",
@@ -67,7 +73,9 @@ export let fakeServiceComponents = [
     },
     {
         name: "login",
+        className: "AuthController",
         preference: 0.13,
+        connectDB: true,
         arguments: [
             {
                 name: "account",
@@ -85,7 +93,9 @@ export let fakeServiceComponents = [
     },
     {
         name: "addItem",
+        className: "HierarchyController",
         preference: 0.04,
+        connectDB: true,
         arguments: [
             {
                 name: "description",
