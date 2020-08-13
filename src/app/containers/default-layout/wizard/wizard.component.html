@@ -69,13 +69,19 @@
         <div class="tab-pane" id="composition" role="tabpanel" aria-labelledby="composition-tab">
           <p style="font-weight: bold;">Composite <mark>{{componentName}}</mark>  
             &nbsp; &nbsp; &nbsp;
+          </p>
+          <div *ngIf="isComposite">
             <label class="checkbox">
               <input type="checkbox" (change)="setIsTemplate($event.target.checked)" data-toggle="toggle">
-              
               &nbsp;For Template
             </label>
-          </p>
-         
+            &nbsp;&nbsp;
+            <label *ngIf="isTemplate" >
+              <input type="text" placeholder="Template Name" [(ngModel)]="templateName">
+            </label>
+          </div>
+
+          
 
 
           <div class="dropdown">

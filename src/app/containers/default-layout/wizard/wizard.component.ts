@@ -42,6 +42,7 @@ export class WizardComponent implements OnInit {
   compositeElements: any[] = [];
   private isComposite = false;
   private isTemplate = false;
+  private templateName:string = "";
 
 
   constructor(private graphEditorService: GraphEditorService,
@@ -252,6 +253,9 @@ export class WizardComponent implements OnInit {
 
   setIsTemplate(isTemplate){
     this.isTemplate = isTemplate;
+    if(this.isTemplate==false){
+      this.templateName = "";
+    }
     console.log(this.isTemplate)
   }
   // this is for composition subComponent

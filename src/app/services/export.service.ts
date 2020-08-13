@@ -15,23 +15,36 @@ export default class ExportService {
   }
 
   export(){
-    var xmlDoc = mxUtils.createXmlDocument();
-    var root = xmlDoc.createElement('output');
-    xmlDoc.appendChild(root);
+    // var xmlDoc = mxUtils.createXmlDocument();
+    // var root = xmlDoc.createElement('output');
+    // xmlDoc.appendChild(root);
 
-    var xmlCanvas = new mxXmlCanvas2D(root);
-    var imgExport = new mxImageExport();
-    imgExport.drawState(this.graphEditorService.graphStorage.getGraph().getView().getState(this.graphEditorService.graphStorage.getGraph().model.root), xmlCanvas);
+    // var xmlCanvas = new mxXmlCanvas2D(root);
+    // var imgExport = new mxImageExport();
+    // imgExport.drawState(this.graphEditorService.graphStorage.getGraph().getView().getState(this.graphEditorService.graphStorage.getGraph().model.root), xmlCanvas);
 
-    var bounds = this.graphEditorService.graphStorage.getGraph().getGraphBounds();
-    var w = Math.ceil(bounds.x + bounds.width);
-    var h = Math.ceil(bounds.y + bounds.height);
+    // var bounds = this.graphEditorService.graphStorage.getGraph().getGraphBounds();
+    // var w = Math.ceil(bounds.x + bounds.width);
+    // var h = Math.ceil(bounds.y + bounds.height);
 
-    var xml = mxUtils.getXml(root);
-    console.log(xml);
-    new mxXmlRequest('export', 
-                      'format=png&w=' + w + '&h=' + h + '&bg=#F9F7ED&xml=' + encodeURIComponent(xml))
-        .simulate(document, '_blank');
+    // var xml = mxUtils.getXml(root);
+    // console.log('format=png&w=' + w + '&h=' + h + '&bg=#F9F7ED&xml=' + xml);
+    // new mxXmlRequest(
+    //   "http://localhost:8080/exportPicture",
+    //   'format=png&w=' + w + '&h=' + h + '&bg=#F9F7ED&xml=' + encodeURIComponent(xml),
+    //   "POST",
+    //   false
+    //   ).simulate(document, '_blank');
+    var encoder = new mxCodec();
+    var result = encoder.encode(this.graphEditorService.graphStorage.getGraph().getModel());
+    var xml = mxUtils.getXml(result);
+    console.log(xml)
+    return this.httpClient.post("http://localhost:8080/exportPicture", xml,
+      {
+        headers: new HttpHeaders().set("Content-Type", "application/json"),
+        observe: "response", withCredentials: true, responseType: "text"
+      }
+    );
   }
 
   postPageUICDL(PDL) {
