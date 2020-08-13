@@ -26,7 +26,9 @@
             </div>
             <button class="btn btn-primary">Submit</button>
           </form>
-
+          <div *ngIf="isCustom">
+            This is a custom Component.
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" (click)="getComponentProperties(componentName)">Start</button>
             <button type="button" class="btn btn-info btn-lg" (click)="clickNext()">Next</button>

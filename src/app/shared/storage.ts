@@ -1,12 +1,12 @@
 import {Library} from './library';
-import {UIComponent} from '../models/modelDependency';
 import {HttpHeaders} from '@angular/common/http';
 import {HttpClient} from '@angular/common/http';
-import {Layout} from '../models/model';
+import {Layout, UIComponent} from '../models/model';
 import {PropertyGenerator} from './property-generator';
 import {NavigationComponent} from '../models/navigation-component.model';
 
 export class Storage {
+  static newCompositeList: any[] = [];  // store reusable composite component
   static components: any[] = [];
   static layoutComponent: Layout;
   static UICDL: any[] = [];
@@ -25,6 +25,11 @@ export class Storage {
   static add(component: UIComponent) {
     this.components.push(component);
     this.UICDL.push(component.getInfo());
+    if (component.selector.startsWith('card') || component.selector.startsWith('form')) {
+      this.newCompositeList.push(component);
+      console.log("composite is pushed");
+      this.library['genre']['CoreUI']['category']['Containers'].push(component.selector);
+    }
   }
 
   static setLayoutComponent(component) {
@@ -44,6 +49,7 @@ export class Storage {
   }
 
   static getComponentProperties(component: string): any[] {
+    if(this.library['components'][component] == undefined) return undefined;
     return Object.values(this.library['components'][component]);
   }
 
@@ -53,6 +59,17 @@ export class Storage {
 
   static getComponentValue(componentType: string): any {
     return Object.values(this.library['componentValue'][componentType]);
+  }
+
+  static getCompositeByName(componentName){
+    for(let component of this.newCompositeList){
+      console.log(component.selector);
+      console.log(componentName);
+      if(component.selector == componentName){
+        console.log("match");
+        return component;
+      }
+    }
   }
 
   static getPageUICDL() {
@@ -72,5 +89,6 @@ export class Storage {
     this.UICDL = [];
   }
 }
+
 
 

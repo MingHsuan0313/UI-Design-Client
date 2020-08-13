@@ -80,8 +80,6 @@ export class GraphStorage {
   syncStorage() {
     for (const vertexStorage of this.vertexStorageList) {
       let style = this.graph.getStylesheet().getCellStyle(vertexStorage.styleStorage.name);
-      console.log("here's the style");
-      console.log(style);
       vertexStorage.styleStorage.setStyle(style);
       vertexStorage.sync();
     }
@@ -93,7 +91,6 @@ export class GraphStorage {
       edgeStorage.sync();
     }
 
-    console.log(Storage.navigationFlow);
   }
 
   setStrategy(strategy: ICreateComponentStrategy) {
@@ -101,7 +98,6 @@ export class GraphStorage {
   }
 
   createComponent(component, parent, basex?, basey?) {
-
     const graphNode = document.getElementById('graphContainer0');
     const defaultWidth = graphNode.offsetWidth;
     const defaultHeight = graphNode.offsetHeight;

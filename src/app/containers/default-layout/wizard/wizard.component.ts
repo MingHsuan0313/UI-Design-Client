@@ -41,6 +41,7 @@ export class WizardComponent implements OnInit {
   tmp: Map<any, any>;
   compositeElements: any[] = [];
   private isComposite = false;
+  private isCustom: boolean = false;
 
 
   constructor(private graphEditorService: GraphEditorService,
@@ -156,6 +157,11 @@ export class WizardComponent implements OnInit {
 
   getComponentProperties(componentName) {
     this.componentProperties = Storage.getComponentProperties(componentName);
+    if (this.componentProperties == undefined) {
+      this.component = Storage.getCompositeByName(componentName);
+      this.isCustom = true;
+      return;
+    }
     if (this.componentProperties.includes('componentList')) {
       console.log('is Composite');
       this.isComposite = true;
@@ -216,13 +222,35 @@ export class WizardComponent implements OnInit {
 
   clickFinish() {
     console.log('finish');
-    this.component.getInfo();
     $('#myModal a[href="#building"]').tab('show');
-    Storage.add(this.component);
-    this.graphEditorService.bindComponent(this.component);
+    let newComponent = {};
+    if (this.isCustom) {
+      newComponent = this.newCompositeComponent(newComponent, this.component);
+      newComponent['id'] = PropertyGenerator.getID();
+      newComponent['selector'] = PropertyGenerator.getSelector(newComponent.type);
+      this.graphEditorService.bindComponent(newComponent);
+    } else {
+      Storage.add(this.component);
+      this.graphEditorService.bindComponent(this.component);
+    }
     this.properties = [];
     this.subComponentName = '';
+    this.isCustom = false;
+    this.component = {};
 
+  }
+
+  newCompositeComponent(newComponent, component) {
+    if(component["type"].startsWith("form")) {
+      newComponent = new FormComposite();
+      newComponent['type'] = "form";
+    }
+    for (let i in component.componentList) {
+      newComponent['componentList'].push(Object.assign({}, component['componentList'][i]));
+      newComponent['componentList'][i]['id'] = PropertyGenerator.getID();
+      newComponent['componentList'][i]['selector'] = PropertyGenerator.getSelector(newComponent['componentList'][i].type);
+    }
+    return newComponent;
   }
 
   // this is for composition subComponent

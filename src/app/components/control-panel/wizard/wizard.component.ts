@@ -37,6 +37,7 @@ export class WizardComponent implements OnInit {
   tmp: Map<any, any>;
   compositeElements: any[] = [];
   private isComposite = false;
+  isCustom: boolean;
 
 
 
@@ -132,6 +133,11 @@ export class WizardComponent implements OnInit {
 
   getComponentProperties(componentName) {
     this.componentProperties =  Storage.getComponentProperties(componentName);
+    console.log(this.componentProperties);
+    if(this.componentProperties == undefined) {
+
+      this.isCustom = true;
+    }
     if (this.componentProperties.includes("componentList")) {
       console.log("is Composite");
       this.isComposite = true;
@@ -140,11 +146,11 @@ export class WizardComponent implements OnInit {
     }
   }
 
+
   getSubComponentProperties(subComponentName: string) {
     this.properties =  Storage.getComponentProperties(subComponentName);
     this.subComponentName = subComponentName;
   }
-
 
 
   onKey(event: any) {

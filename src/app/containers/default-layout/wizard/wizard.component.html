@@ -44,7 +44,10 @@
       <div class="tab-content">
         <div class="tab-pane active" id="building" role="tabpanel" aria-labelledby="building-tab">
           <p style="font-weight: bold;">Ready to Build: <mark>{{componentName}}</mark></p>
-          <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+          <div *ngIf="isCustom">
+            This is a Custom Component.
+          </div>
+          <form #f="ngForm" *ngIf="!isCustom" (ngSubmit)="onSubmit(f)">
             <div *ngFor="let property of componentProperties">
               <div *ngIf="!(property==='componentList')" class="row">
                 <label class="col-3" style="text-align: center">{{property}}:</label>
@@ -93,7 +96,7 @@
               <a *ngFor="let serviceComponent of this.getServiceComponents()" class="dropdown-item"
                 (click)="this.setSelectedServiceComponent(serviceComponent)">{{serviceComponent.name}} &nbsp;&nbsp;
                 {{serviceComponent.preference}}</a>
-              <a *ngIf="!isComposite" class="dropdown-item" 
+              <a *ngIf="!isComposite" class="dropdown-item"
                 (click)="this.setSelectedServiceComponent(serviceNoneOption)">None</a>
             </div>
           </div>
