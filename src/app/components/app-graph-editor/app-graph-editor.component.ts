@@ -89,16 +89,31 @@ export class AppGraphEditorComponent implements AfterViewInit {
 
   newProject() {
     this.exportService.newProject().subscribe(
-      response => console.log(response["body"])
+      response => console.log(response['body'])
     );
   }
 
   increaseFont() {
-    StyleLibrary[0]["fontSize"] += 10;
+    StyleLibrary[0]['fontSize'] += 10;
   }
 
   decreaseFont() {
-    StyleLibrary[0]["fontSize"] -= 10;
+    StyleLibrary[0]['fontSize'] -= 10;
   }
 
+  getXML() {
+    let encoder = new mxCodec();
+
+    let result = encoder.encode(this.graphEditorService.getGraphStorage().getGraph().getModel());
+    let xml = mxUtils.getXml(result);
+    console.log(xml);
+  }
+
+  getImage() {
+    this.exportService.postImage().subscribe(
+      response => console.log(response['body'])
+    );
+  }
 }
+
+

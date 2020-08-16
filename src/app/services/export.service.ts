@@ -41,5 +41,14 @@ export default class ExportService {
     );
   }
 
+  postImage() {
+    return this.httpClient.post("http://localhost:8080/exportPicture", 'hi',
+      {
+        headers: new HttpHeaders().set("Content-Type", "application/json"),
+        observe: "response", withCredentials: true, responseType: "text"
+      }
+    );
+  }
 }
+
 

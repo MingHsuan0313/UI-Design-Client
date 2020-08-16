@@ -41,6 +41,7 @@ export class DefaultLayoutComponent implements OnInit {
   private layoutPart: any;
   private files: any[];
   public userName = 'undefined';
+  private image: any;
 
   constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService, private importService: ImportService, private exportService: ExportService) {
 
@@ -174,18 +175,28 @@ export class DefaultLayoutComponent implements OnInit {
     style[mxConstants.STYLE_FONTSIZE] = 20;
     graph.getStylesheet().putCellStyle('rounded', style);
     let v1 = graphStorage.findVertex(sf['value']['source']);
-    if(v1 == null){
-      v1 = graph.insertVertex(parent, null, sf['value']['source'], defaultWidth / 2 - 400, defaultHeight / 2, 150, 90, "rounded","");
+    if (v1 == null) {
+      v1 = graph.insertVertex(parent, null, sf['value']['source'], defaultWidth / 2 - 400, defaultHeight / 2, 150, 90, 'rounded', '');
     }
-    let v2 = graph.insertVertex(parent, null, sf['value']['target'], defaultWidth / 2, defaultHeight / 2, 150, 90,"rounded","");
+    let v2 = graph.insertVertex(parent, null, sf['value']['target'], defaultWidth / 2, defaultHeight / 2, 150, 90, 'rounded', '');
     graphStorage.insertEdge(v1, v2);
     document.getElementById('navigationForm').style.display = 'none';
   }
 
   storeNDL() {
     this.exportService.postNDL().subscribe(
-      response => console.log(response["body"])
+      response => console.log(response['body'])
     );
+  }
+
+  showImage() {
+    this.exportService.postImage().subscribe(
+      response => {
+        this.image = 'data:image/png;base64,' + response['body'];
+        console.log(this.image);
+      }
+    );
+
   }
 }
 
