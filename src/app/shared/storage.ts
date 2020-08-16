@@ -21,6 +21,7 @@ export class Storage {
 
   // for temporary import
   static PageComponents: any[] = [];
+  static image: any[] = [];
 
   static add(component: UIComponent) {
     this.components.push(component);

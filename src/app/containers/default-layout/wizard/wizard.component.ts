@@ -159,6 +159,7 @@ export class WizardComponent implements OnInit {
     this.componentProperties = Storage.getComponentProperties(componentName);
     if (this.componentProperties == undefined) {
       this.component = Storage.getCompositeByName(componentName);
+      console.log("component no properties");
       this.isCustom = true;
       return;
     }

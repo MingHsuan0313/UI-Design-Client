@@ -45,7 +45,7 @@ export class GraphStorage {
       cell = evt.getProperty('cell');
       count++;
       // To prevent double click for inputting text
-      if(!cell["style"].startsWith("styleText") || count%2==1) {
+      if(!cell["style"].startsWith("styleText") && count%2==1) {
         return;
       }
 

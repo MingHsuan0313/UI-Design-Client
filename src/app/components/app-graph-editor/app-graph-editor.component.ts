@@ -101,19 +101,19 @@ export class AppGraphEditorComponent implements AfterViewInit {
     StyleLibrary[0]['fontSize'] -= 10;
   }
 
-  getXML() {
+  postXML() {
     let encoder = new mxCodec();
 
     let result = encoder.encode(this.graphEditorService.getGraphStorage().getGraph().getModel());
     let xml = mxUtils.getXml(result);
-    console.log(xml);
+    this.exportService.postImage(xml).subscribe(
+      response => {
+        Storage.image.push('data:image/png;base64,' + response['body']);
+      }
+    )
   }
 
-  getImage() {
-    this.exportService.postImage().subscribe(
-      response => console.log(response['body'])
-    );
-  }
+
 }
 
 

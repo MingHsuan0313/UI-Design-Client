@@ -41,8 +41,8 @@ export default class ExportService {
     );
   }
 
-  postImage() {
-    return this.httpClient.post("http://localhost:8080/exportPicture", 'hi',
+  postImage(xml) {
+    return this.httpClient.post("http://localhost:8080/exportPicture", xml,
       {
         headers: new HttpHeaders().set("Content-Type", "application/json"),
         observe: "response", withCredentials: true, responseType: "text"

@@ -68,7 +68,8 @@
     </li>
     <span><i class="nav-icon icon-arrow-right"></i></span>
     <li class="btn btn-ghost-dark btn-pill px-4" data-toggle="modal" data-target="#myModal"
-        (click)="fresh()">Launch Wizard</li>
+        (click)="fresh()">Launch Wizard
+    </li>
     <app-wizard [componentName]="component_selected" [componentProperties]="componentProperties"></app-wizard>
     <li class="nav-item dropdown px-4" dropdown>
       <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
@@ -95,7 +96,7 @@
     <!-- Breadcrumb -->
     <div class="container-fluid" style="height: 100%">
       <div class="row" style="height:100%">
-      <app-graph-editor class="col-10"></app-graph-editor>
+        <app-graph-editor class="col-10"></app-graph-editor>
         <div class="col-2">
           <button class="btn btn-instagram" (click)="showFiles()">show topics</button>
           <br><br>
@@ -104,8 +105,10 @@
               <div *ngFor="let f of file['components']">->{{f}}</div>
             </div>
           </form>
-          <button class="btn btn-primary" (click)="showImage()">show image</button>
-          <img [src]="image" alt="image">
+          <button class="btn btn-primary" (click)="showImage()">show images</button>
+          <div *ngFor="let f of image">->
+            <img [src]="f" alt="image" style="height: 100px;width: 200px">
+          </div>
           <router-outlet></router-outlet>
         </div>
       </div>
@@ -118,9 +121,9 @@
 
 <div class="form-popup" id="myForm"
      style="display: none;position:fixed;top:8%;right:30%;z-index: 9;width:350px;height:100px">
-  <form #li ="ngForm" (ngSubmit)="addLayoutItem(li);">
-  <div class="card">
-    <div class="card-body" >
+  <form #li="ngForm" (ngSubmit)="addLayoutItem(li);">
+    <div class="card">
+      <div class="card-body">
         <div class="form-group row">
           <label class="col-5" for="text-part" style="text-align: center">Text:</label>
           <div class="col-md-7">
@@ -133,20 +136,21 @@
             <input type="text" id="href-part" name="href" ngModel>
           </div>
         </div>
+      </div>
+      <div class="card-footer" style="display: flex;justify-content: center;">
+        <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+        <button type="reset" class="btn btn-sm btn-danger" (click)="closeForm()"><i class="fa fa-ban"></i> Cancel
+        </button>
+      </div>
     </div>
-    <div class="card-footer" style="display: flex;justify-content: center;">
-      <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
-      <button type="reset" class="btn btn-sm btn-danger" (click)="closeForm()"><i class="fa fa-ban"></i> Cancel</button>
-    </div>
-  </div>
   </form>
 </div>
 
 <div class="form-popup" id="navigationForm"
      style="position:fixed;display:none;top:8%;right:30%;z-index: 9;width:350px;height:100px">
-  <form #ie ="ngForm" (ngSubmit)="insertEdge(ie);">
+  <form #ie="ngForm" (ngSubmit)="insertEdge(ie);">
     <div class="card">
-      <div class="card-body" >
+      <div class="card-body">
         <div class="form-group row">
           <label class="col-5" for="source-part" style="text-align: center">Source:</label>
           <div class="col-md-7">
@@ -162,7 +166,8 @@
       </div>
       <div class="card-footer" style="display: flex;justify-content: center;">
         <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
-        <button type="reset" class="btn btn-sm btn-danger" (click)="closeForm2()"><i class="fa fa-ban"></i> Cancel</button>
+        <button type="reset" class="btn btn-sm btn-danger" (click)="closeForm2()"><i class="fa fa-ban"></i> Cancel
+        </button>
       </div>
     </div>
   </form>

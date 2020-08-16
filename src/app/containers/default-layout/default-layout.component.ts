@@ -41,7 +41,7 @@ export class DefaultLayoutComponent implements OnInit {
   private layoutPart: any;
   private files: any[];
   public userName = 'undefined';
-  private image: any;
+  private image: any[] = [];
 
   constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService, private importService: ImportService, private exportService: ExportService) {
 
@@ -190,15 +190,10 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   showImage() {
-    this.exportService.postImage().subscribe(
-      response => {
-        this.image = 'data:image/png;base64,' + response['body'];
-        console.log(this.image);
-      }
-    );
-
+    this.image = Storage.image;
   }
 }
+
 
 
 
