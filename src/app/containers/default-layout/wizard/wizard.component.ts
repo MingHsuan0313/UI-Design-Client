@@ -224,11 +224,12 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     console.log('finish');
     $('#myModal a[href="#building"]').tab('show');
-    let newComponent = {};
+    let newComponent:any;
     if (this.isCustom) {
       newComponent = this.newCompositeComponent(newComponent, this.component);
       newComponent['id'] = PropertyGenerator.getID();
       newComponent['selector'] = PropertyGenerator.getSelector(newComponent.type);
+      Storage.add(newComponent);
       this.graphEditorService.bindComponent(newComponent);
     } else {
       Storage.add(this.component);

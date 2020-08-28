@@ -31,6 +31,7 @@ export class GraphStorage {
     this.graphModel = new mxGraphModel();
     this.graph = new mxGraph(element, this.graphModel);
 
+
     const keyHandler = new mxKeyHandler(this.graph);
     keyHandler.bindKey(46, function (evt) {
       console.log('inside keyhandler');
@@ -45,14 +46,14 @@ export class GraphStorage {
       cell = evt.getProperty('cell');
       count++;
       // To prevent double click for inputting text
-      if(!cell["style"].startsWith("styleText") && count%2==1) {
+      if (count % 2 == 1) {
         return;
       }
 
       // mxUtils.alert('Doubleclick: '+((cell != null) ? 'Cell' : 'Graph'));
       let styleName = cell['style'];
       style = this.getStylesheet().getCellStyle(styleName);
-      style['fontSize'] = StyleLibrary[0]["fontSize"];
+      style['fontSize'] = StyleLibrary[0]['fontSize'];
       this.getStylesheet().putCellStyle(styleName, style);
       this.refresh();
       evt.consume();

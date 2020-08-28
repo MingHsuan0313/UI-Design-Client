@@ -41,7 +41,8 @@ export class DefaultLayoutComponent implements OnInit {
   private layoutPart: any;
   private files: any[];
   public userName = 'undefined';
-  private image: any[] = [];
+  private images: any[] = [];
+
 
   constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService, private importService: ImportService, private exportService: ExportService) {
 
@@ -89,7 +90,6 @@ export class DefaultLayoutComponent implements OnInit {
     const pageUICDL = Storage.getPageUICDL();
     // console.log(JSON.stringify(pageUICDL));
     console.log('Show Internal Representation');
-    console.log('Component List');
     console.log(Storage.components);
     console.log('Page UICDL');
     console.log(pageUICDL);
@@ -175,10 +175,12 @@ export class DefaultLayoutComponent implements OnInit {
     style[mxConstants.STYLE_FONTSIZE] = 20;
     graph.getStylesheet().putCellStyle('rounded', style);
     let v1 = graphStorage.findVertex(sf['value']['source']);
+    let srcStyle = this.findImageStyle(sf['value']['source']);
+    let tarStyle = this.findImageStyle(sf['value']['target']);
     if (v1 == null) {
-      v1 = graph.insertVertex(parent, null, sf['value']['source'], defaultWidth / 2 - 400, defaultHeight / 2, 150, 90, 'rounded', '');
+      v1 = graph.insertVertex(parent, null, sf['value']['source'], defaultWidth / 2 - 400, defaultHeight / 2, 150, 90, srcStyle, '');
     }
-    let v2 = graph.insertVertex(parent, null, sf['value']['target'], defaultWidth / 2, defaultHeight / 2, 150, 90, 'rounded', '');
+    let v2 = graph.insertVertex(parent, null, sf['value']['target'], defaultWidth / 2, defaultHeight / 2, 150, 90, tarStyle, '');
     graphStorage.insertEdge(v1, v2);
     document.getElementById('navigationForm').style.display = 'none';
   }
@@ -190,9 +192,53 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   showImage() {
-    this.image = Storage.image;
+    this.images = Storage.images;
+
+  }
+
+  findImageStyle(page) {
+    for (let i = 0; i < this.images.length; i++) {
+      if (this.images[i]['page'] == page) {
+        // 声明一个object
+        var style = {};
+        // 克隆一个object
+        style = mxUtils.clone(style);
+        style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;  // 不设置这个属性 背景图片不出来
+
+        style[mxConstants.STYLE_STROKECOLOR] = '#ffffff';
+
+        style[mxConstants.STYLE_FONTCOLOR] = '#2422a0';
+        // 文字水平方式
+        style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
+        // 文字垂直对齐
+        style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_BOTTOM;
+        // 字体大小
+        style[mxConstants.STYLE_FONTSIZE] = 30;
+        // 底图水平对齐
+        style[mxConstants.STYLE_IMAGE_ALIGN] = mxConstants.ALIGN_CENTER;
+        // 底图垂直对齐
+        style[mxConstants.STYLE_IMAGE_VERTICAL_ALIGN] = mxConstants.ALIGN_CENTER;
+        // 图片路径
+        //style[mxConstants.STYLE_IMAGE] = 'images/icons48/gear.png';
+        style[mxConstants.STYLE_IMAGE] = Storage.images[i]['img'];
+        // 背景图片宽
+        style[mxConstants.STYLE_IMAGE_WIDTH] = 300;
+        // 背景图片高
+        style[mxConstants.STYLE_IMAGE_HEIGHT] = 200;
+        // 上间距设置
+        // 即使下边定义了全局设置，但这里单独设置上边间距仍单独有效
+        style[mxConstants.STYLE_SPACING_TOP] = 30;
+        // 四边间距设置
+        style[mxConstants.STYLE_SPACING] = 10;
+
+        style[mxConstants.STYLE_FILLCOLOR] = '#ffffff';
+        this.graphEditorService.graphStorage.getGraph().getStylesheet().putCellStyle('style' + i.toString(), style);
+        return 'style' + i.toString();
+      }
+    }
   }
 }
+
 
 
 

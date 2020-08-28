@@ -106,8 +106,9 @@
             </div>
           </form>
           <button class="btn btn-primary" (click)="showImage()">show images</button>
-          <div *ngFor="let f of image">->
-            <img [src]="f" alt="image" style="height: 100px;width: 200px">
+          <div *ngFor="let f of images">->
+            <a>{{f["page"]}}</a>
+            <img [src]="f.img" alt="image" style="height: 100px;width: 200px">
           </div>
           <router-outlet></router-outlet>
         </div>

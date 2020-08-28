@@ -15,11 +15,12 @@ import {StyleLibrary} from '../../shared/styleLibrary';
 })
 export class AppGraphEditorComponent implements AfterViewInit {
 
-
+  imageCount = 1;
   constructor(private graphEditorService: GraphEditorService, private exportService: ExportService) {
   }
 
   // @ViewChild('graphContainer') graphContainer: ElementRef;
+
 
   ngAfterViewInit() {
     this.createGraph('graphContainer0');
@@ -108,7 +109,11 @@ export class AppGraphEditorComponent implements AfterViewInit {
     let xml = mxUtils.getXml(result);
     this.exportService.postImage(xml).subscribe(
       response => {
-        Storage.image.push('data:image/png;base64,' + response['body']);
+        let page = "Page" + this.imageCount++;
+        let image = {};
+        image["page"] = page;
+        image["img"] = 'data:image/png;base64,' + response['body'];
+        Storage.images.push(image);
       }
     )
   }
