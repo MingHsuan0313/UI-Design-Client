@@ -199,36 +199,35 @@ export class DefaultLayoutComponent implements OnInit {
   findImageStyle(page) {
     for (let i = 0; i < this.images.length; i++) {
       if (this.images[i]['page'] == page) {
-        // 声明一个object
+
         var style = {};
-        // 克隆一个object
+
         style = mxUtils.clone(style);
-        style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;  // 不设置这个属性 背景图片不出来
+        style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;
 
         style[mxConstants.STYLE_STROKECOLOR] = '#ffffff';
 
         style[mxConstants.STYLE_FONTCOLOR] = '#2422a0';
-        // 文字水平方式
+
         style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
-        // 文字垂直对齐
+
         style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_BOTTOM;
-        // 字体大小
+
         style[mxConstants.STYLE_FONTSIZE] = 30;
-        // 底图水平对齐
+
         style[mxConstants.STYLE_IMAGE_ALIGN] = mxConstants.ALIGN_CENTER;
-        // 底图垂直对齐
+
         style[mxConstants.STYLE_IMAGE_VERTICAL_ALIGN] = mxConstants.ALIGN_CENTER;
-        // 图片路径
+
         //style[mxConstants.STYLE_IMAGE] = 'images/icons48/gear.png';
         style[mxConstants.STYLE_IMAGE] = Storage.images[i]['img'];
-        // 背景图片宽
+
         style[mxConstants.STYLE_IMAGE_WIDTH] = 300;
-        // 背景图片高
+
         style[mxConstants.STYLE_IMAGE_HEIGHT] = 200;
-        // 上间距设置
-        // 即使下边定义了全局设置，但这里单独设置上边间距仍单独有效
+
         style[mxConstants.STYLE_SPACING_TOP] = 30;
-        // 四边间距设置
+
         style[mxConstants.STYLE_SPACING] = 10;
 
         style[mxConstants.STYLE_FILLCOLOR] = '#ffffff';
