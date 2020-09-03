@@ -9,7 +9,7 @@ export interface UIComponent {
     selector: String;
     type: String;
     vertexStorage?: VertexStorage;
-    style?: Object[];
+    style?: any; // Object[]
     isBasic?: boolean;
   
     add(component: UIComponent): void;

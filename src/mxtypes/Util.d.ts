@@ -140,9 +140,8 @@ declare class mxUtils{
 
   alert(obj:any);
 
-  static getXml(result: any) {
-    
-  }
+  static getXml(result: any); 
+  static clone(obj:any);
 }
 
 /******************      Util end      **************/

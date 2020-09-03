@@ -6,7 +6,7 @@ export interface UIComponent {
   id: String;
   selector: String;
   type: String;
-  style: String;
+  style: Object;
   layout: String;
 
   serviceComponent: Object;
