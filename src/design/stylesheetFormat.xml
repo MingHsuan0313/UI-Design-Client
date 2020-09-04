@@ -1,0 +1,44 @@
+<mxStylesheet>
+    <add as="defaultVertex">
+        <add value="rectangle" as="shape" />
+        <add value="rectanglePerimeter" as="perimeter" />
+        <add value="middle" as="verticalAlign" />
+        <add value="center" as="align" />
+        <add value="#C3D9FF" as="fillColor" />
+        <add value="#6482B9" as="strokeColor" />
+        <add value="#774400" as="fontColor" />
+    </add>
+    <add as="defaultEdge">
+        <add value="connector" as="shape" />
+        <add value="classic" as="endArrow" />
+        <add value="middle" as="verticalAlign" />
+        <add value="center" as="align" />
+        <add value="#6482B9" as="strokeColor" />
+        <add value="#446299" as="fontColor" />
+    </add>
+    <add as="stylelayout">
+        <add value="#ffffff" as="fillColor" />
+        <add value="#c8ced3" as="strokeColor" />
+    </add>
+    <add as="stylelayoutHeader">
+        <add value="#ffffff" as="fillColor" />
+        <add value="#c8ced3" as="strokeColor" />
+    </add>
+    <add as="stylelayoutFooter">
+        <add value="#000000" as="border" />
+        <add value="#f0f3f5" as="fillColor" />
+        <add value="#c8ced3" as="strokeColor" />
+    </add>
+    <add as="stylelayoutSidebar">
+        <add value="#2f353a" as="fillColor" />
+        <add value="#c8ced3" as="strokeColor" />
+    </add>
+    <add as="stylelayoutBody">
+        <add value="#ffffff" as="fillColor" />
+        <add value="#c8ced3" as="strokeColor" />
+    </add>
+    <add as="stylelayoutAsidebar">
+        <add value="#ffffff" as="fillColor" />
+        <add value="#c8ced3" as="strokeColor" />
+    </add>
+</mxStylesheet>

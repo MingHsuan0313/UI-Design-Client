@@ -203,7 +203,9 @@ export class GraphStorage {
     let vertex;
     try {
       this.graph.getModel().beginUpdate();
-      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height, styleStorage.name, '');
+      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height, "fillColor=red;strokeColor=blue", '');
+      console.log("Hello Vertex Heree")
+      console.log(vertex) 
     } finally {
       this.graph.getModel().endUpdate();
       // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());

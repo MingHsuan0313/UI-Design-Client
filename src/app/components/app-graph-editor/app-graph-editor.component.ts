@@ -1,13 +1,15 @@
 // import { Component, OnInit } from '@angular/core';
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import GraphEditorService from '../../services/graph-editor.service';
 import * as html2canvas from 'html2canvas';
 import ImportService from '../../services/import.service';
-import {Storage} from '../../shared/storage';
+import { Storage } from '../../shared/storage';
 import ExportService from '../../services/export.service';
-import {StyleStorage} from '../../models/style-storage.model';
-import {StyleLibrary} from '../../shared/styleLibrary';
+import { StyleStorage } from '../../models/style-storage.model';
+import { StyleLibrary } from '../../shared/styleLibrary';
 
+import xml2js from 'xml2js';
+import json2xml from 'json2xml';
 @Component({
   selector: 'app-graph-editor',
   templateUrl: './app-graph-editor.component.html',
@@ -104,9 +106,21 @@ export class AppGraphEditorComponent implements AfterViewInit {
 
   postXML() {
     let encoder = new mxCodec();
-
     let result = encoder.encode(this.graphEditorService.getGraphStorage().getGraph().getModel());
+    // let stylesResult = encoder.encode(this.graphEditorService.getGraphStorage().getGraph().getStylesheet());
+    // console.log(stylesResult)
+    // let styleXml = mxUtils.getXml(stylesResult);
+    // console.log(styleXml)
     let xml = mxUtils.getXml(result);
+    // console.log(xml2js);
+    // let parser = xml2js.Parser();
+    // let final;
+    // parser.parseString(xml, (error, result) => {
+    //   console.log(result)
+    //   console.log(json2xml(result))
+    // })
+    // 1. append mxStylesheet xml object
+    // 2. convert json object to xml
     this.exportService.postImage(xml).subscribe(
       response => {
         let page = "Page" + this.imageCount++;
@@ -117,8 +131,6 @@ export class AppGraphEditorComponent implements AfterViewInit {
       }
     )
   }
-
-
 }
 
 
