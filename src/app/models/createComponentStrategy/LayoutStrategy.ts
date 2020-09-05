@@ -15,7 +15,7 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     } else {
       this.basex = basex;
       this.basey = basey;
-    }
+    };
   }
 
   createComponent(graphStorage: GraphStorage, component, parent) {
