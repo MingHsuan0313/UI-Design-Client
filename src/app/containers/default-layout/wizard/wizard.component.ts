@@ -214,7 +214,7 @@ export class WizardComponent implements OnInit {
   onClose() {
     console.log('close');
     $('#myModal a[href="#building"]').tab('show');
-  }
+  } 
 
   clickCreate() {
     this.compositeElements = Storage.getCompositeElements(this.componentName);

@@ -15,6 +15,7 @@ export default class ExportService {
 
 
   postPageUICDL(PDL) {
+    console.log(PDL);
     return this.httpClient.post("http://localhost:8080", PDL,
       {
         headers: new HttpHeaders().set("Content-Type", "application/json"),

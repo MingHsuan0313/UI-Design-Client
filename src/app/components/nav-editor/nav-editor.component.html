@@ -1,0 +1,20 @@
+<div class="col-2">
+  <!-- <button class="btn btn-instagram" (click)="showFiles()">show topics</button>
+    <br><br>
+  <form>
+    <div *ngFor="let file of files"><strong>{{file.selector}}</strong>
+      <div *ngFor="let f of file['components']">->{{f}}</div>
+    </div>
+  </form> -->
+  <br>
+  <div>
+    <button class="btn btn-outline-primary" (click)="postXML()">Post XML</button>
+  </div>  
+  <hr>
+  <div *ngFor="let f of images">
+    <a>{{f["page"]}}</a>
+    <img id="{{f.page}}" [src]="f.img" alt="image" style="height: 100px;width: 200px">
+    <hr>
+  </div>
+  <router-outlet></router-outlet>
+</div>

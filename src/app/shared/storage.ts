@@ -85,6 +85,8 @@ export class Storage {
     return this.PageUICDL;
   }
 
+  
+
   static clearTemp() {
     this.components = [];
     this.UICDL = [];

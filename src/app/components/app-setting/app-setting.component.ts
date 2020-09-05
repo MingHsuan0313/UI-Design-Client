@@ -1,11 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import GraphEditorService from '../../services/graph-editor.service';
 import ExportService from '../../services/export.service';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-setting',
   templateUrl: './app-setting.component.html',
-  styleUrls: ['./app-setting.component.scss']
+  styleUrls: ['./app-setting.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppSettingComponent implements OnInit {
 

@@ -30,7 +30,9 @@ export class GraphStorage {
     this.id = id;
     this.graphModel = new mxGraphModel();
     this.graph = new mxGraph(element, this.graphModel);
-
+    mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.gif', 14, 14);
+    this.graph.setConnectable(true);
+    console.log(new mxImage('src/app/resources/images/arrow.gif', 14, 14));
 
     const keyHandler = new mxKeyHandler(this.graph);
     keyHandler.bindKey(46, function (evt) {
@@ -269,5 +271,12 @@ export class GraphStorage {
       }
     }
   }
+
+  zoomTo(zoomFactor:any){
+    this.graph.zoomTo(zoomFactor, this.graph.centerZoom);
+  }
+
+
+
 
 }

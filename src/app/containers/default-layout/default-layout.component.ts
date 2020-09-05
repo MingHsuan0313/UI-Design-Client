@@ -202,7 +202,7 @@ export class DefaultLayoutComponent implements OnInit {
 
         var style = {};
 
-        style = mxUtils.clone(style);
+        style = mxUtils.clone(style); 
         style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;
 
         style[mxConstants.STYLE_STROKECOLOR] = '#ffffff';

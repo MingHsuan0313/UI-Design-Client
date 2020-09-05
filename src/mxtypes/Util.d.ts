@@ -94,6 +94,7 @@ declare class mxEvent {
   static ADD: any;
   static REMOVE: any;
   static DOUBLE_CLICK: any;
+  static CHANGE: any;
   addListener(element,eventName,funct);
 }
 
@@ -140,9 +141,9 @@ declare class mxUtils{
 
   alert(obj:any);
 
-  static getXml(result: any) {
-    
-  }
+  static getXml(result: any);
+  static makeDraggable(element, graphF, funct, dragElement);
+  static parseXml(xml);
 }
 
 /******************      Util end      **************/
