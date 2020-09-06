@@ -12,7 +12,6 @@ import { BreadcrumbStrategy } from './createComponentStrategy/BreadcrumbStrategy
 import { IconStrategy } from './createComponentStrategy/IconStrategy';
 import { InputStrategy } from './createComponentStrategy/InputStrategy';
 import { LayoutStrategy } from './createComponentStrategy/LayoutStrategy';
-import { StyleStorage } from './style-storage.model';
 import { StyleLibrary } from '../shared/styleLibrary';
 
 export class GraphStorage {
@@ -44,10 +43,6 @@ export class GraphStorage {
     let style = {};
     let cell;
     let count = 0;
-    this.graph.addListener(mxEvent.CLICK,(sender,event) => {
-      let selectedVertex = sender.selectionModel.cells[0];
-      console.log(selectedVertex);
-    })
 
     this.graph.addListener(mxEvent.DOUBLE_CLICK, function (sender, evt) {
       console.log(sender);
@@ -226,6 +221,7 @@ export class GraphStorage {
     try {
       this.graph.getModel().beginUpdate();
       vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,styleDescription, '');
+      // vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,"rounded=true", '');
     } finally {
       this.graph.getModel().endUpdate();
       // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());

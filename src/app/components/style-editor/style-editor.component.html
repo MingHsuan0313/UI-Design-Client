@@ -5,7 +5,11 @@
   </div>
   <hr>
   <div style="padding:3%">
-    <p>World</p>
+    <input (change)="changeColor(event)" [(ngModel)]="colorPicker" type="color" name="fillColor" id="bgColor"><label for="fillColor">Fill</label>
+    &nbsp;&nbsp;<input (change)="toggleOpacity(event)"[(ngModel)]="opacity" type="checkbox" name="opacity" id="opacity"><label for="opacity">Opacity</label>
+    <br>
+    <input (change)="toggleShadow(event)"[(ngModel)]="shadow" type="checkbox" name="shadow" id="shadow"><label for="shadow">Shadow</label>
+    &nbsp;&nbsp;<input (change)="toggleRounded(event)" [(ngModel)]="rounded" type="checkbox" name="rounded" id="rounded"><label for="rounded">Rounded</label>
   </div>
 </div>
 

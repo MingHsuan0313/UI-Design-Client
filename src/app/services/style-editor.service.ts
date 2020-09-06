@@ -53,8 +53,8 @@ class StyleModel {
   strokeColor: String;
 
   opacity: String;
-  shadow: boolean;
-  rounded: boolean;
+  shadow: String;
+  rounded: String;
   rotation: number;
 
   constructor() {
