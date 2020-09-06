@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import GraphEditorService from '../../services/graph-editor.service'
+import StyleEditorService from '../../services/style-editor.service';
 
 
 @Component({
@@ -9,12 +10,13 @@ import GraphEditorService from '../../services/graph-editor.service'
 })
 export class StyleEditorComponent implements OnInit {
   graph: any;
-  constructor(private graphEditorService: GraphEditorService) { 
+  constructor(private graphEditorService: GraphEditorService,
+    private styleEditorService: StyleEditorService) { 
 
   }
 
   ngOnInit() {
-
+    this.styleEditorService.convertStyleDescriptionToJsobObject("fillColor=#ffffff;fontSize=20;") 
   }
 
   ngAfterViewInit(){

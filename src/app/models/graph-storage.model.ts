@@ -1,19 +1,19 @@
 import VertexStorage from './vertex-storage.model';
 import EdgeStorage from './edge-storage.model';
-import {Storage} from './../shared/storage';
-import {ICreateComponentStrategy} from './createComponentStrategy/ICreateComponentStrategy';
-import {ButtonStrategy} from './createComponentStrategy/ButtonStrategy';
-import {TextStrategy} from './createComponentStrategy/TextStrategy';
-import {DropdownStrategy} from './createComponentStrategy/DropdownStrategy';
-import {TableStrategy} from './createComponentStrategy/TableStrategy';
-import {FormStrategy} from './createComponentStrategy/FormStrategy';
-import {CardStrategy} from './createComponentStrategy/CardStrategy';
-import {BreadcrumbStrategy} from './createComponentStrategy/BreadcrumbStrategy';
-import {IconStrategy} from './createComponentStrategy/IconStrategy';
-import {InputStrategy} from './createComponentStrategy/InputStrategy';
-import {LayoutStrategy} from './createComponentStrategy/LayoutStrategy';
-import {StyleStorage} from './style-storage.model';
-import {StyleLibrary} from '../shared/styleLibrary';
+import { Storage } from './../shared/storage';
+import { ICreateComponentStrategy } from './createComponentStrategy/ICreateComponentStrategy';
+import { ButtonStrategy } from './createComponentStrategy/ButtonStrategy';
+import { TextStrategy } from './createComponentStrategy/TextStrategy';
+import { DropdownStrategy } from './createComponentStrategy/DropdownStrategy';
+import { TableStrategy } from './createComponentStrategy/TableStrategy';
+import { FormStrategy } from './createComponentStrategy/FormStrategy';
+import { CardStrategy } from './createComponentStrategy/CardStrategy';
+import { BreadcrumbStrategy } from './createComponentStrategy/BreadcrumbStrategy';
+import { IconStrategy } from './createComponentStrategy/IconStrategy';
+import { InputStrategy } from './createComponentStrategy/InputStrategy';
+import { LayoutStrategy } from './createComponentStrategy/LayoutStrategy';
+import { StyleStorage } from './style-storage.model';
+import { StyleLibrary } from '../shared/styleLibrary';
 
 export class GraphStorage {
   vertexStorageList: VertexStorage[];
@@ -30,7 +30,7 @@ export class GraphStorage {
     this.id = id;
     this.graphModel = new mxGraphModel();
     this.graph = new mxGraph(element, this.graphModel);
-    mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.gif', 14, 14);
+    // mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.gif', 14, 14);
     this.graph.setConnectable(true);
     console.log(new mxImage('src/app/resources/images/arrow.gif', 14, 14));
 
@@ -44,7 +44,15 @@ export class GraphStorage {
     let style = {};
     let cell;
     let count = 0;
+    this.graph.addListener(mxEvent.CLICK,(sender,event) => {
+      let selectedVertex = sender.selectionModel.cells[0];
+      console.log(selectedVertex);
+    })
+
     this.graph.addListener(mxEvent.DOUBLE_CLICK, function (sender, evt) {
+      console.log(sender);
+      console.log(evt);
+      console.log("doule click");
       cell = evt.getProperty('cell');
       count++;
       // To prevent double click for inputting text
@@ -203,9 +211,21 @@ export class GraphStorage {
   // insert vertex
   insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent, dataBinding?, isPrimary?) {
     let vertex;
+    let style = styleStorage.style;
+    // eg : fillColor=red;strokeColor=blue
+    let styleDescription = "";
+    let styleKeys = Object.keys(style);
+    for (let index = 0; index < styleKeys.length; index++) {
+      let key = styleKeys[index];
+      if (index == styleKeys.length - 1)
+        styleDescription = styleDescription + `${key}=${style[key]};`
+      else
+        styleDescription = styleDescription + `${key}=${style[key]};`
+    }
+
     try {
       this.graph.getModel().beginUpdate();
-      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height, styleStorage.name, '');
+      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,styleDescription, '');
     } finally {
       this.graph.getModel().endUpdate();
       // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
@@ -272,7 +292,7 @@ export class GraphStorage {
     }
   }
 
-  zoomTo(zoomFactor:any){
+  zoomTo(zoomFactor: any) {
     this.graph.zoomTo(zoomFactor, this.graph.centerZoom);
   }
 
