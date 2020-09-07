@@ -94,7 +94,11 @@ declare class mxEvent {
   static ADD: any;
   static REMOVE: any;
   static DOUBLE_CLICK: any;
+  static CLICK: any;
   static CHANGE: any;
+  static RESIZE: any;
+  static RESIZE_CELLS: any;
+  static MOVE_CELLS: any;
   addListener(element,eventName,funct);
 }
 
@@ -141,6 +145,7 @@ declare class mxUtils{
 
   alert(obj:any);
 
+  static clone(style);
   static getXml(result: any);
   static makeDraggable(element, graphF, funct, dragElement);
   static parseXml(xml);
@@ -149,6 +154,9 @@ declare class mxUtils{
 declare class mxClipboard{
   static copy(graph, cells?);
   static paste(graph);
+}
+declare class mxConnectionHandler {
+
 }
 
 /******************      Util end      **************/

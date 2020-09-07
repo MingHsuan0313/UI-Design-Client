@@ -1,19 +1,18 @@
 import VertexStorage from './vertex-storage.model';
 import EdgeStorage from './edge-storage.model';
-import {Storage} from './../shared/storage';
-import {ICreateComponentStrategy} from './createComponentStrategy/ICreateComponentStrategy';
-import {ButtonStrategy} from './createComponentStrategy/ButtonStrategy';
-import {TextStrategy} from './createComponentStrategy/TextStrategy';
-import {DropdownStrategy} from './createComponentStrategy/DropdownStrategy';
-import {TableStrategy} from './createComponentStrategy/TableStrategy';
-import {FormStrategy} from './createComponentStrategy/FormStrategy';
-import {CardStrategy} from './createComponentStrategy/CardStrategy';
-import {BreadcrumbStrategy} from './createComponentStrategy/BreadcrumbStrategy';
-import {IconStrategy} from './createComponentStrategy/IconStrategy';
-import {InputStrategy} from './createComponentStrategy/InputStrategy';
-import {LayoutStrategy} from './createComponentStrategy/LayoutStrategy';
-import {StyleStorage} from './style-storage.model';
-import {StyleLibrary} from '../shared/styleLibrary';
+import { Storage } from './../shared/storage';
+import { ICreateComponentStrategy } from './createComponentStrategy/ICreateComponentStrategy';
+import { ButtonStrategy } from './createComponentStrategy/ButtonStrategy';
+import { TextStrategy } from './createComponentStrategy/TextStrategy';
+import { DropdownStrategy } from './createComponentStrategy/DropdownStrategy';
+import { TableStrategy } from './createComponentStrategy/TableStrategy';
+import { FormStrategy } from './createComponentStrategy/FormStrategy';
+import { CardStrategy } from './createComponentStrategy/CardStrategy';
+import { BreadcrumbStrategy } from './createComponentStrategy/BreadcrumbStrategy';
+import { IconStrategy } from './createComponentStrategy/IconStrategy';
+import { InputStrategy } from './createComponentStrategy/InputStrategy';
+import { LayoutStrategy } from './createComponentStrategy/LayoutStrategy';
+import { StyleLibrary } from '../shared/styleLibrary';
 
 export class GraphStorage {
   vertexStorageList: VertexStorage[];
@@ -22,15 +21,22 @@ export class GraphStorage {
   graph: mxGraph;
   id: string;
   strategy: ICreateComponentStrategy;
+  // true if modified and haven't been saved yet
+  modified: Boolean;
 
   // create graph
   constructor(element, id) {
+    this.modified = false;
     this.vertexStorageList = [];
     this.edgeStorageList = [];
     this.id = id;
     this.graphModel = new mxGraphModel();
     this.graph = new mxGraph(element, this.graphModel);
+<<<<<<< HEAD
     mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.svg', 14, 14);
+=======
+    // mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.gif', 14, 14);
+>>>>>>> 1eb00465d2b63f3a31d1fc3bd96d5738a8a7630f
     this.graph.setConnectable(true);
     console.log(new mxImage('src/app/resources/images/arrow.gif', 14, 14));
 
@@ -44,22 +50,34 @@ export class GraphStorage {
     let style = {};
     let cell;
     let count = 0;
-    this.graph.addListener(mxEvent.DOUBLE_CLICK, function (sender, evt) {
-      cell = evt.getProperty('cell');
-      count++;
-      // To prevent double click for inputting text
-      if (count % 2 == 1) {
-        return;
-      }
 
-      // mxUtils.alert('Doubleclick: '+((cell != null) ? 'Cell' : 'Graph'));
-      let styleName = cell['style'];
-      style = this.getStylesheet().getCellStyle(styleName);
-      style['fontSize'] = StyleLibrary[0]['fontSize'];
-      this.getStylesheet().putCellStyle(styleName, style);
-      this.refresh();
-      evt.consume();
-    });
+    // this.graph.addListener(mxEvent.DOUBLE_CLICK, function (sender, evt) {
+    //   console.log(sender);
+    //   console.log(evt);
+    //   console.log("doule click");
+    //   cell = evt.getProperty('cell');
+    //   count++;
+    //   // To prevent double click for inputting text
+    //   if (count % 2 == 1) {
+    //     return;
+    //   }
+
+    //   // mxUtils.alert('Doubleclick: '+((cell != null) ? 'Cell' : 'Graph'));
+    //   let styleName = cell['style'];
+    //   style = this.getStylesheet().getCellStyle(styleName);
+    //   style['fontSize'] = StyleLibrary[0]['fontSize'];
+    //   this.getStylesheet().putCellStyle(styleName, style);
+    //   this.refresh();
+    //   evt.consume();
+    // });
+    this.graph.addListener(mxEvent.RESIZE_CELLS,(sender, event) => {
+      console.log("vertex is resized");
+      this.modified = true;
+    })
+
+    this.graph.addListener(mxEvent.MOVE_CELLS,(sender,event) => {
+      this.modified = true;
+    })
 
 
     this.graph.addMouseListener(
@@ -82,8 +100,8 @@ export class GraphStorage {
   // sync internal storage and external storage
   syncStorage() {
     for (const vertexStorage of this.vertexStorageList) {
-      let style = this.graph.getStylesheet().getCellStyle(vertexStorage.styleStorage.name);
-      vertexStorage.styleStorage.setStyle(style);
+      // let style = this.graph.getStylesheet().getCellStyle(vertexStorage.styleStorage.name);
+      // vertexStorage.styleStorage.setStyle(style);
       vertexStorage.sync();
     }
 
@@ -93,7 +111,11 @@ export class GraphStorage {
     for (const edgeStorage of this.edgeStorageList) {
       edgeStorage.sync();
     }
+    this.modified = false;
+  }
 
+  setModified() {
+    this.modified = true;
   }
 
   setStrategy(strategy: ICreateComponentStrategy) {
@@ -202,21 +224,38 @@ export class GraphStorage {
 
   // insert vertex
   insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent, dataBinding?, isPrimary?) {
+    this.modified = true;
     let vertex;
+    let style = styleStorage.style;
+    // eg : fillColor=red;strokeColor=blue
+    let styleDescription = "";
+    let styleKeys = Object.keys(style);
+    for (let index = 0; index < styleKeys.length; index++) {
+      let key = styleKeys[index];
+      if (index == styleKeys.length - 1)
+        styleDescription = styleDescription + `${key}=${style[key]};`
+      else
+        styleDescription = styleDescription + `${key}=${style[key]};`
+    }
+
     try {
       this.graph.getModel().beginUpdate();
-      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height, styleStorage.name, '');
+      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,styleDescription, '');
+      // vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,"rounded=true", '');
     } finally {
       this.graph.getModel().endUpdate();
       // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
     }
-
-    const vertexStorage = new VertexStorage(vertex, styleStorage, uicomponent, dataBinding, isPrimary);
+    let cloneStyle = {};
+    Object.assign(cloneStyle,styleStorage.style);
+    styleStorage.style = cloneStyle;
+    const vertexStorage = new VertexStorage(vertex,styleStorage, uicomponent, dataBinding, isPrimary);
     this.vertexStorageList.push(vertexStorage);
     return vertexStorage;
   }
 
   insertEdge(sourceVertex, targetVertex) {
+    this.modified = true;
     let edge;
 
     try {
@@ -272,7 +311,7 @@ export class GraphStorage {
     }
   }
 
-  zoomTo(zoomFactor:any){
+  zoomTo(zoomFactor: any) {
     this.graph.zoomTo(zoomFactor, this.graph.centerZoom);
   }
 
@@ -289,4 +328,7 @@ export class GraphStorage {
 
 
 
+  getModified() {
+    return this.modified;
+  }
 }
