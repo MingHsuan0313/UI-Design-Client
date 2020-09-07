@@ -30,7 +30,7 @@ export class GraphStorage {
     this.id = id;
     this.graphModel = new mxGraphModel();
     this.graph = new mxGraph(element, this.graphModel);
-    mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.gif', 14, 14);
+    mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.svg', 14, 14);
     this.graph.setConnectable(true);
     console.log(new mxImage('src/app/resources/images/arrow.gif', 14, 14));
 
@@ -274,6 +274,16 @@ export class GraphStorage {
 
   zoomTo(zoomFactor:any){
     this.graph.zoomTo(zoomFactor, this.graph.centerZoom);
+  }
+
+  getMaxID(){
+    let cellsObject = this.getGraphModel().cells;
+    const cells = Object.values(cellsObject);
+    console.log(cells);
+    let maxID = cells.reduce((acc, cur)=>{
+      return Math.max(acc, parseInt(cur.id));
+    }, 0);
+    return maxID;
   }
 
 

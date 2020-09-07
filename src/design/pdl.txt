@@ -14,7 +14,9 @@
       "componentList":[],
       "footer":[],
       "asidebar":[]
-    }
+    },
+  "img":"",
+  "xml":""
 
 }
 

@@ -146,4 +146,9 @@ declare class mxUtils{
   static parseXml(xml);
 }
 
+declare class mxClipboard{
+  static copy(graph, cells?);
+  static paste(graph);
+}
+
 /******************      Util end      **************/

@@ -2,13 +2,13 @@ export class PropertyGenerator {
   static id = 1;
   static pageID = 0;
 
-  static getID() {
-    this.id++;
+  static getID(maxID) {
+    this.id = maxID+1;
     return this.id.toString();
   }
 
-  static getSelector(componentName) {
-    this.id++;
+  static getSelector(componentName, maxID) {
+    this.id = maxID+2;
     return componentName + this.id.toString();
   }
 

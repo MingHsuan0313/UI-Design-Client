@@ -9,6 +9,7 @@ import GraphEditorService from '../../services/graph-editor.service'
 })
 export class StyleEditorComponent implements OnInit {
   graph: any;
+  cellOnEditted: mxCell;
   constructor(private graphEditorService: GraphEditorService) { 
 
   }
@@ -24,6 +25,7 @@ export class StyleEditorComponent implements OnInit {
       
       var cells = evt.getProperty('removed');
       console.log(cells);
+      this.cellOnEditted = cells;
       // for (var i = 0; i < cells.length; i++)
       // {
       //   // Handle cells[i]...

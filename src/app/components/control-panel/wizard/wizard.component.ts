@@ -48,8 +48,8 @@ export class WizardComponent implements OnInit {
   }
 
   setComponent(properties): boolean {
-   properties["id"] = PropertyGenerator.getID();
-   properties["selector"] = PropertyGenerator.getSelector(this.componentName);
+   properties["id"] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
+   properties["selector"] = PropertyGenerator.getSelector(this.componentName, this.graphEditorService.getMaxID());
    properties["type"] = this.componentName;
     switch (this.componentName) {
       case "icon":
@@ -90,7 +90,7 @@ export class WizardComponent implements OnInit {
   }
 
   setSubComponent(properties): boolean {
-    properties["id"] = PropertyGenerator.getID();
+    properties["id"] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
     properties["selector"] = this.subComponentName;
     properties["type"] = this.subComponentName;
     switch (this.subComponentName) {
