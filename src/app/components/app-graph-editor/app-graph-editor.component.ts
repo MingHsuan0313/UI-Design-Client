@@ -21,6 +21,10 @@ export class AppGraphEditorComponent implements AfterViewInit {
 
   // @ViewChild('graphContainer') graphContainer: ElementRef;
 
+  getModified() {
+    // return true;
+    return this.graphEditorService.getGraphStorage().getModified();
+  }
 
   ngAfterViewInit() {
     // this.createGraph('graphContainer0');

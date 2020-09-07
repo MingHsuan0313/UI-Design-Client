@@ -96,6 +96,9 @@ declare class mxEvent {
   static DOUBLE_CLICK: any;
   static CLICK: any;
   static CHANGE: any;
+  static RESIZE: any;
+  static RESIZE_CELLS: any;
+  static MOVE_CELLS: any;
   addListener(element,eventName,funct);
 }
 

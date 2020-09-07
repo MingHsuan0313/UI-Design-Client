@@ -21,9 +21,12 @@ export class GraphStorage {
   graph: mxGraph;
   id: string;
   strategy: ICreateComponentStrategy;
+  // true if modified and haven't been saved yet
+  modified: Boolean;
 
   // create graph
   constructor(element, id) {
+    this.modified = false;
     this.vertexStorageList = [];
     this.edgeStorageList = [];
     this.id = id;
@@ -63,6 +66,14 @@ export class GraphStorage {
     //   this.refresh();
     //   evt.consume();
     // });
+    this.graph.addListener(mxEvent.RESIZE_CELLS,(sender, event) => {
+      console.log("vertex is resized");
+      this.modified = true;
+    })
+
+    this.graph.addListener(mxEvent.MOVE_CELLS,(sender,event) => {
+      this.modified = true;
+    })
 
 
     this.graph.addMouseListener(
@@ -85,8 +96,8 @@ export class GraphStorage {
   // sync internal storage and external storage
   syncStorage() {
     for (const vertexStorage of this.vertexStorageList) {
-      let style = this.graph.getStylesheet().getCellStyle(vertexStorage.styleStorage.name);
-      vertexStorage.styleStorage.setStyle(style);
+      // let style = this.graph.getStylesheet().getCellStyle(vertexStorage.styleStorage.name);
+      // vertexStorage.styleStorage.setStyle(style);
       vertexStorage.sync();
     }
 
@@ -96,7 +107,11 @@ export class GraphStorage {
     for (const edgeStorage of this.edgeStorageList) {
       edgeStorage.sync();
     }
+    this.modified = false;
+  }
 
+  setModified() {
+    this.modified = true;
   }
 
   setStrategy(strategy: ICreateComponentStrategy) {
@@ -205,6 +220,7 @@ export class GraphStorage {
 
   // insert vertex
   insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent, dataBinding?, isPrimary?) {
+    this.modified = true;
     let vertex;
     let style = styleStorage.style;
     // eg : fillColor=red;strokeColor=blue
@@ -235,6 +251,7 @@ export class GraphStorage {
   }
 
   insertEdge(sourceVertex, targetVertex) {
+    this.modified = true;
     let edge;
 
     try {
@@ -294,7 +311,7 @@ export class GraphStorage {
     this.graph.zoomTo(zoomFactor, this.graph.centerZoom);
   }
 
-
-
-
+  getModified() {
+    return this.modified;
+  }
 }

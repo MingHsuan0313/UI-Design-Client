@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import GraphEditorService from '../../services/graph-editor.service'
 import StyleEditorService from '../../services/style-editor.service';
-import { StyleStorage } from 'src/app/models/modelDependency';
+import { StyleStorage, GraphStorage } from 'src/app/models/modelDependency';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { StyleStorage } from 'src/app/models/modelDependency';
 })
 export class StyleEditorComponent implements OnInit {
   graph: any;
-  graphStorage: any;
+  graphStorage: GraphStorage;
   selectedVertex: any;
   selectedStyleStorage: StyleStorage;
 
@@ -34,6 +34,7 @@ export class StyleEditorComponent implements OnInit {
     this.selectedVertex.style = newStyleDescription;
     this.selectedStyleStorage.changeFontSize(this.fontSize);
     this.graph.refresh();
+    this.graphStorage.setModified();
   }
 
   changeFontColor() {
@@ -44,6 +45,7 @@ export class StyleEditorComponent implements OnInit {
     this.selectedStyleStorage.changeFontColor(this.fontColor);
     this.graph.refresh();
     console.log(this.fontColor);
+    this.graphStorage.setModified();
   }
 
   changeColor(event) {
@@ -53,6 +55,7 @@ export class StyleEditorComponent implements OnInit {
     this.selectedVertex.style = newStyleDescription;
     this.selectedStyleStorage.changeFillColor(this.colorPicker);
     this.graph.refresh();
+    this.graphStorage.setModified();
   }
 
   toggleShadow(event) {
@@ -67,6 +70,7 @@ export class StyleEditorComponent implements OnInit {
     }
     let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
+    this.graphStorage.setModified();
     this.graph.refresh();
   }
 
@@ -82,6 +86,7 @@ export class StyleEditorComponent implements OnInit {
     }
     let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
+    this.graphStorage.setModified();
     this.graph.refresh();
   }
 
@@ -97,6 +102,7 @@ export class StyleEditorComponent implements OnInit {
     }
     let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
+    this.graphStorage.setModified();
     this.graph.refresh();
   }
 
@@ -106,7 +112,10 @@ export class StyleEditorComponent implements OnInit {
 
     this.graph.addListener(mxEvent.CLICK, (sender, event) => {
       this.selectedVertex = sender.selectionModel.cells[0];
-      this.selectedStyleStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]).getStyleStorage();
+      let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
+      this.selectedStyleStorage = vertexStorage.getStyleStorage();
+      console.log("Select Vertex");
+      console.log(vertexStorage);
 
       let vertexStyleDescription = this.selectedVertex.style;
       let styleObj = this.styleEditorService.convertStyleDescriptionToJsobObject(vertexStyleDescription);
