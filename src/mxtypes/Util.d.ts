@@ -146,6 +146,7 @@ declare class mxUtils{
   alert(obj:any);
 
   static clone(style);
+  static load(filePath);
   static getXml(result: any);
   static makeDraggable(element, graphF, funct, dragElement);
   static parseXml(xml);

@@ -17,6 +17,7 @@ import { StyleLibrary } from '../shared/styleLibrary';
 export class GraphStorage {
   vertexStorageList: VertexStorage[];
   edgeStorageList: EdgeStorage[];
+  editor: mxEditor;
   graphModel: mxGraphModel;
   graph: mxGraph;
   id: string;
@@ -30,18 +31,36 @@ export class GraphStorage {
     this.vertexStorageList = [];
     this.edgeStorageList = [];
     this.id = id;
-    this.graphModel = new mxGraphModel();
-    this.graph = new mxGraph(element, this.graphModel);
+    this.editor = new mxEditor();
+    this.graph = this.editor.graph;
+    // this.graphModel = new mxGraphModel();
+    this.editor.setGraphContainer(element);
+    // this.graph = new mxGraph(element, this.graphModel);
     // mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.svg', 14, 14);
     this.graph.setConnectable(true);
+    this.graphModel = this.graph.getModel();
+    let config = mxUtils.load("assets/keyhandler.xml").getDocumentElement();
+    console.log("Heree")
+    console.log(config)
+    this.editor.configure(config);
+    console.log("create editor")
+    console.log(this.editor)
     console.log(new mxImage('src/app/resources/images/arrow.gif', 14, 14));
+    // this.editor.addAction("dd",(editor,cell) => {
+    //   console.log("Hello")
+    // })
 
-    const keyHandler = new mxKeyHandler(this.graph);
-    keyHandler.bindKey(46, function (evt) {
-      console.log('inside keyhandler');
-      keyHandler.graph.getSelectionModel().removeCell();
+    // const keyHandler = new mxKeyHandler(this.graph);
+    // keyHandler.bindKey(46, function (evt) {
+    //   console.log('inside keyhandler');
+    //   this.editor.execute("dd")
+    // });
 
-    });
+    // keyHandler.bindKey(89, function (evt) {
+    //   console.log('undo');
+    //   console.log(evt)
+    // });
+
 
     let style = {};
     let cell;
