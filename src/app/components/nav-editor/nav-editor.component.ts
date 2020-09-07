@@ -21,13 +21,6 @@ export class NavEditorComponent implements OnInit {
   constructor(private importService: ImportService, private exportService: ExportService, private graphEditorService: GraphEditorService) { 
     this.files = this.importService.pages;
     this.images = Storage.images;
-    // this.imageObservable = of(Storage.images);
-    // this.imageObservable.subscribe({
-    //   next: x =>{
-    //     console.log(x);
-    //   }
-    // })
-
   }
 
   postXML() {
