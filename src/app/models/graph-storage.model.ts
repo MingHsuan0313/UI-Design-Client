@@ -226,12 +226,10 @@ export class GraphStorage {
       this.graph.getModel().endUpdate();
       // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
     }
-
-    console.log("vertexr gerrr")
-    console.log(vertex)
-    const vertexStorage = new VertexStorage(vertex, styleStorage, uicomponent, dataBinding, isPrimary);
-    console.log("vertexqj hakjdsa")
-    console.log(vertexStorage)
+    let cloneStyle = {};
+    Object.assign(cloneStyle,styleStorage.style);
+    styleStorage.style = cloneStyle;
+    const vertexStorage = new VertexStorage(vertex,styleStorage, uicomponent, dataBinding, isPrimary);
     this.vertexStorageList.push(vertexStorage);
     return vertexStorage;
   }
