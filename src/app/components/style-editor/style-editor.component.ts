@@ -69,7 +69,46 @@ export class StyleEditorComponent implements OnInit {
       let vertexStyleDescription = this.selectedVertex.style;
       let styleObj = this.styleEditorService.convertStyleDescriptionToJsobObject(vertexStyleDescription);
       console.log(this.selectedVertex);
-      console.log(styleObj)
+      console.log(styleObj);
+      if(styleObj["fillColor"] != undefined) {
+        this.colorPicker = styleObj["fillColor"];
+      }
+      else
+        this.colorPicker = "#ffffff";
+
+      if(styleObj["rounded"] != undefined) {
+        if(styleObj["rounded"] == "1")
+          this.rounded = true;
+        else
+          this.rounded = false;
+      }
+      else
+        this.rounded = false;
+
+      if(styleObj["shadow"] != undefined) {
+        if(styleObj["shadow"] == "1")
+          this.shadow = true;
+        else
+          this.shadow = false;
+      }
+      else
+        this.rounded = false;
+      if(styleObj["opacity"] != undefined) {
+        if(styleObj["opacity"] == "100")
+          this.opacity = true;
+        else
+          this.opacity = false;
+      }
+      else
+        this.opacity = false;
+
+     // let styleKeys = Object.keys(styleObj);
+      // for(let index = 0;index < styleKeys.length;index++) {
+      //   let styleKey = styleKeys[index];
+      //   let styleValue = styleObj[styleKey];
+      //   if()
+        
+      // }
     })
     this.styleEditorService.convertStyleDescriptionToJsobObject("fillColor=#ffffff;fontSize=20;")
   }
