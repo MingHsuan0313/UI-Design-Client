@@ -78,7 +78,7 @@ export class NavEditorComponent implements OnInit {
 
 
           let cell = codec.decode(elt)
-          let maxID = (Object.values(graph.getModel().cells)).reduce((acc, cur)=>{
+          let maxID = (Object.values(graph.getModel().cells)).reduce((acc:number, cur:mxCell)=>{
             return Math.max(acc, parseInt(cur.id));
           }, 0);
 
