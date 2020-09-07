@@ -1,13 +1,19 @@
 <!-- <button (click)="convertToCanvas()" class="info">GraphEditor To Canvas</button> -->
-<button type="button" (click)="showExternalRepresentation()" class="btn btn-secondary">Show External Representation</button>
-<button type="buttton" (click)="newProject()" class="btn btn-secondary" style="margin-left: 1%">New Project</button>
-<button type="buttton" (click)="newPage()" class="btn btn-secondary" style="margin-left: 1%">New Page</button>
-<button type="buttton" (click)="clearGraph()" class="btn btn-secondary" style="margin-left: 1%">Clear Graph</button>
-<button type="buttton" (click)="increaseFont()" class="btn btn-secondary" style="margin-left: 1%">Larger Font</button>
-<button type="buttton" (click)="decreaseFont()" class="btn btn-secondary" style="margin-left: 1%">Smaller Font</button>
-<button type="buttton" (click)="postXML()" class="btn btn-secondary" style="margin-left: 1%">Post XML</button>
+<button type="button" (click)="showExternalRepresentation()" class="btn btn-outline-dark">Show ER</button>
+<button type="button" (click)="showInternelRepresentation()" class="btn btn-outline-dark">Show IR</button>
+<button type="button" (click)="newProject()" class="btn btn-outline-dark">New Project</button>
+<button type="button" (click)="newPage()" class="btn btn-outline-dark">New Page</button>
+<button type="button" (click)="clearGraph()" class="btn btn-outline-dark">Clear Graph</button>
+<button type="button" (click)="increaseFont()" class="btn btn-outline-dark">Larger Font</button>
+<button type="button" (click)="decreaseFont()" class="btn btn-outline-dark">Smaller Font</button>
+<!-- <button type="button" (click)="postXML()" class="btn btn-outline-dark">Post XML</button> -->
+<button type="button" (click)="zoomIn()" class="btn btn-outline-dark" style="margin-left: 1%">+</button>
+<button type="button" (click)="zoomOut()" class="btn btn-outline-dark">-</button>
+<div style="display:inline-block" *ngIf="getModified()">
+    Graph need to be saved
+</div>
 <div
-    style="overflow:scroll"
+    style="overflow:scroll" 
     class="geEditor"
     id="graphContainer0">
 </div>

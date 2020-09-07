@@ -1,5 +1,5 @@
 // import { Component, OnInit } from '@angular/core';
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild, OnInit} from '@angular/core';
 import GraphEditorService from '../../services/graph-editor.service';
 import * as html2canvas from 'html2canvas';
 import ImportService from '../../services/import.service';
@@ -14,22 +14,30 @@ import {StyleLibrary} from '../../shared/styleLibrary';
   styleUrls: ['./app-graph-editor.component.scss']
 })
 export class AppGraphEditorComponent implements AfterViewInit {
-
-  imageCount = 1;
+  private zoomFactor = 1;
+  //imageCount = 1;
   constructor(private graphEditorService: GraphEditorService, private exportService: ExportService) {
   }
 
   // @ViewChild('graphContainer') graphContainer: ElementRef;
 
+  getModified() {
+    // return true;
+    return this.graphEditorService.getGraphStorage().getModified();
+  }
 
   ngAfterViewInit() {
-    this.createGraph('graphContainer0');
-    console.log('Create graph editor');
+    // this.createGraph('graphContainer0');
+    // console.log('Create graph editor');
     // this.graphEditorService.createGraph(this.graphContainer.nativeElement);
   }
 
   showExternalRepresentation() {
     console.log(this.graphEditorService.getGraphStorage());
+  }
+
+  showInternelRepresentation(){
+    console.log(Storage.getPageUICDL());
   }
 
   createGraph(elementId) {
@@ -38,6 +46,8 @@ export class AppGraphEditorComponent implements AfterViewInit {
   }
 
   ngOnInit() {
+    this.createGraph('graphContainer0');
+    console.log('Create graph editor');
   }
 
   saveAs(uri, filename) {
@@ -102,20 +112,34 @@ export class AppGraphEditorComponent implements AfterViewInit {
     StyleLibrary[0]['fontSize'] -= 10;
   }
 
-  postXML() {
-    let encoder = new mxCodec();
+  // postXML() {
+  //   let encoder = new mxCodec();
 
-    let result = encoder.encode(this.graphEditorService.getGraphStorage().getGraph().getModel());
-    let xml = mxUtils.getXml(result);
-    this.exportService.postImage(xml).subscribe(
-      response => {
-        let page = "Page" + this.imageCount++;
-        let image = {};
-        image["page"] = page;
-        image["img"] = 'data:image/png;base64,' + response['body'];
-        Storage.images.push(image);
-      }
-    )
+  //   let result = encoder.encode(this.graphEditorService.getGraphStorage().getGraph().getModel());
+  //   let xml = mxUtils.getXml(result);
+  //   let pageUICDL = Storage.getPageUICDL();
+  //   pageUICDL["xml"] = xml;
+  //   this.exportService.postImage(xml).subscribe(
+  //     response => {
+  //       let page = "Page" + this.imageCount++;
+  //       let image = {};
+  //       image["page"] = page;
+  //       image["img"] = 'data:image/png;base64,' + response['body'];
+  //       Storage.images.push(image);
+  //       pageUICDL["image"] = JSON.stringify(image["img"]);
+  //       console.log(pageUICDL);
+  //     }
+  //   )
+  // }
+
+  zoomIn(){
+    this.zoomFactor = this.zoomFactor*1.11;
+    this.graphEditorService.zoomTo(this.zoomFactor);
+  }
+
+  zoomOut(){
+    this.zoomFactor = this.zoomFactor*0.9;
+    this.graphEditorService.zoomTo(this.zoomFactor);
   }
 
 

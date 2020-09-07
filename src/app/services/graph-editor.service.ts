@@ -50,4 +50,15 @@ export default class GraphEditorService {
   addArrow() {
 
   }
+
+  zoomTo(zoomFactor:any){
+    this.graphStorage.zoomTo(zoomFactor);
+  }
+
+  getMaxID(){
+    return this.getGraphStorage().getMaxID();
+  }
+
+  
+  
 }

@@ -1,32 +1,14 @@
-<div style="background-color: #eaeded;height:95%;padding-left: 3%">
-  <br>
-  <button class="btn btn-primary" style="margin-left: 5%" (click)="insertArrow()">Arrow</button>
-  <br><br><br>
-  <!--<form>-->
-  <!--  <div class="form-group">-->
-  <!--    <label for="staticEmail2" class="sr-only">Email</label>-->
-  <!--    <INPUT type="text" class="form-control" id="staticEmail2" value="email@example.com">-->
-  <!--  </div>-->
-  <!--  <div class="form-group">-->
-  <!--    <label for="inputPassword2" class="sr-only">Password</label>-->
-  <!--    <INPUT type="password" class="form-control" id="inputPassword2" placeholder="Password">-->
-  <!--  </div>-->
-  <!--  <button type="submit" class="btn btn-primary mb-2">Confirm identity</button>-->
-  <!--</form>-->
+<div style="background-color: #eaeded;height:100%; position: fixed;">
+  <mat-tab-group>
+    <mat-tab label="Style"> 
+      <app-style-editor></app-style-editor> 
+    </mat-tab>
+    <mat-tab label="Pages"> Pages </mat-tab>
+    <mat-tab label="Nav">
+      <app-nav-editor></app-nav-editor>
+    </mat-tab>
 
-  <label for="pictures">Choose a profile picture:</label>
 
-  <input type="file"
-         id="pictures" name="pictures"
-         accept="image/png, image/jpeg" multiple style="font-size: 16px">
-
-  <br><br>
-  <button class="btn btn-primary" style="margin-left: 5%" (click)="onsubmit()">submit</button>
-  <br>
-  <br>
-  <br>
-  <form class="border">
-    <div *ngFor="let file of files">{{file.name}}</div>
-  </form>
+  </mat-tab-group>
 </div>
 

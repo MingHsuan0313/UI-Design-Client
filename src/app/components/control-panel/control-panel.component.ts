@@ -96,7 +96,7 @@ export class ControlPanelComponent implements OnInit {
 
   apply() {
     // selector is now meaningless
-    this.layoutComponent = new Layout({id: PropertyGenerator.getID(), selector: this.layout_selected, type: "layout", layout: "layout"});
+    this.layoutComponent = new Layout({id: PropertyGenerator.getID(this.graphEditorService.getMaxID()), selector: this.layout_selected, type: "layout", layout: "layout"});
     Storage.setLayoutComponent(this.layoutComponent);
     this.graphEditorService.bindComponent(this.layoutComponent);
   }
@@ -105,7 +105,7 @@ export class ControlPanelComponent implements OnInit {
     document.getElementById("myForm").style.display = "none";
     const properties = sf.value;
     console.log(sf.value);
-    properties["id"] = PropertyGenerator.getID();
+    properties["id"] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
     properties["selector"] = "text";
     properties["type"] = "text";
     properties["layout"] = this.layoutPart;
