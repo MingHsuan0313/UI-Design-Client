@@ -88,6 +88,10 @@ export default class VertexStorage {
     }
   }
 
+  getStyleStorage() {
+    return this.styleStorage;
+  }
+
   getStyle() {
     return this.styleStorage.getStyle();
   }
@@ -150,49 +154,6 @@ export default class VertexStorage {
       console.log('no need data binding, it may be sync by child vertex already');
     }
   }
-
-  // william
-  // sync() {
-  //   const componentValues = Storage.getComponentValue(this.component.type.toString());
-  //   console.log("sync value");
-
-  // // parent vertex
-  // if (this.getVertex()["parent"]["id"] == "1") {
-  //   this.component["x"] = this.getVertexX();
-  //   this.component["y"] = this.getVertexY();
-  //   this.component["width"] = this.getVertexWidth();
-  //   this.component["height"] = this.getVertexHeight();
-
-  //     if (this.children.length == 0) {
-  //       this.component[componentValues[0]] = this.getVertex()["value"];
-  //     } else {
-
-  //       /// sync component basic attribute
-  //       for (let i = 0; i < componentValues.length; i++) {
-  //         let result = "";
-  //         for (let j = 0; j < this.children.length; j++) {
-  //           if (this.children[j]["property"] == componentValues[i]) {
-  //             result += this.children[j]["childVertex"]["value"] + " ";
-  //           }
-  //         }
-  //         this.component[componentValues[i]] = result;
-  //       }
-
-  //       // sync composite component list
-  //       for (let i = 0; i < this.children.length; i++) {
-  //         if (this.children[i]["property"] == "componentList") {
-  //           this.children[i]["element"]["x"] = this.children[i]["childVertex"]["geometry"]["x"];
-  //           this.children[i]["element"]["y"] = this.children[i]["childVertex"]["geometry"]["y"];
-  //           this.children[i]["element"]["width"] = this.children[i]["childVertex"]["geometry"]["width"];
-  //           this.children[i]["element"]["height"] = this.children[i]["childVertex"]["geometry"]["height"];
-  //           this.children[i]["element"]["text"] = this.children[i]["childVertex"]["value"]; // assume basic component
-
-  //           // composite componet is not available
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
 }
 
 

@@ -15,28 +15,32 @@ export class StyleStorage {
     return this.style;
   }
 
-  changeOpacity(newOpacity) {
+  changeOpacity(newOpacity: String) {
     this.style['opacity'] = newOpacity;
   }
 
-  changeFontSize(newFontSize) {
+  changeFontSize(newFontSize: String) {
     this.style['fontSize'] = newFontSize;
   }
 
-  changeFontColor(newFontColor) {
+  changeFontColor(newFontColor: String) {
     this.style['fontColor'] = newFontColor;
   }
 
-  changeFillColor(newFillColor) {
+  changeFillColor(newFillColor: String) {
     this.style['fillColor'] = newFillColor;
   }
 
   // border color
-  changeStrokeColor(newStrokeColor) {
+  changeStrokeColor(newStrokeColor: String) {
     this.style['strokeColor'] = newStrokeColor;
   }
 
-  changeRounded(rounded: Boolean) {
+  changeRounded(rounded: String) {
     this.style['rounded'] = rounded;
+  }
+
+  changeShadow(shadow: String) {
+    this.style['shadow'] = shadow;
   }
 }

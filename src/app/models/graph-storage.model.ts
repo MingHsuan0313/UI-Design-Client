@@ -44,25 +44,25 @@ export class GraphStorage {
     let cell;
     let count = 0;
 
-    this.graph.addListener(mxEvent.DOUBLE_CLICK, function (sender, evt) {
-      console.log(sender);
-      console.log(evt);
-      console.log("doule click");
-      cell = evt.getProperty('cell');
-      count++;
-      // To prevent double click for inputting text
-      if (count % 2 == 1) {
-        return;
-      }
+    // this.graph.addListener(mxEvent.DOUBLE_CLICK, function (sender, evt) {
+    //   console.log(sender);
+    //   console.log(evt);
+    //   console.log("doule click");
+    //   cell = evt.getProperty('cell');
+    //   count++;
+    //   // To prevent double click for inputting text
+    //   if (count % 2 == 1) {
+    //     return;
+    //   }
 
-      // mxUtils.alert('Doubleclick: '+((cell != null) ? 'Cell' : 'Graph'));
-      let styleName = cell['style'];
-      style = this.getStylesheet().getCellStyle(styleName);
-      style['fontSize'] = StyleLibrary[0]['fontSize'];
-      this.getStylesheet().putCellStyle(styleName, style);
-      this.refresh();
-      evt.consume();
-    });
+    //   // mxUtils.alert('Doubleclick: '+((cell != null) ? 'Cell' : 'Graph'));
+    //   let styleName = cell['style'];
+    //   style = this.getStylesheet().getCellStyle(styleName);
+    //   style['fontSize'] = StyleLibrary[0]['fontSize'];
+    //   this.getStylesheet().putCellStyle(styleName, style);
+    //   this.refresh();
+    //   evt.consume();
+    // });
 
 
     this.graph.addMouseListener(
@@ -227,7 +227,11 @@ export class GraphStorage {
       // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
     }
 
+    console.log("vertexr gerrr")
+    console.log(vertex)
     const vertexStorage = new VertexStorage(vertex, styleStorage, uicomponent, dataBinding, isPrimary);
+    console.log("vertexqj hakjdsa")
+    console.log(vertexStorage)
     this.vertexStorageList.push(vertexStorage);
     return vertexStorage;
   }
