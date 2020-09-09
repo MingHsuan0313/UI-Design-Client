@@ -22,13 +22,6 @@ export class NavEditorComponent implements OnInit {
   constructor(private importService: ImportService, private exportService: ExportService, private graphEditorService: GraphEditorService) { 
     this.files = this.importService.pages;
     this.images = Storage.images;
-    // this.imageObservable = of(Storage.images);
-    // this.imageObservable.subscribe({
-    //   next: x =>{
-    //     console.log(x);
-    //   }
-    // })
-
   }
 
   postXML() {
@@ -97,7 +90,11 @@ export class NavEditorComponent implements OnInit {
           console.log(uiComponent)
 
           let cell = codec.decode(elt)
+<<<<<<< HEAD
           let maxID = (Object.values(graph.getModel().cells)).reduce((acc: number, cur: mxCell)=>{
+=======
+          let maxID = (Object.values(graph.getModel().cells)).reduce((acc:number, cur:mxCell)=>{
+>>>>>>> ab6bfb7ee66d8131e1c006468d2a28684fd6be4a
             return Math.max(acc, parseInt(cur.id));
           }, 0);
           let newChildID = PropertyGenerator.getID(maxID);

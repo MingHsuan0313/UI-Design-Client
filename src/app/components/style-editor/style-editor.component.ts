@@ -128,6 +128,14 @@ export class StyleEditorComponent implements OnInit {
     this.graph.getSelectionModel().addListener(mxEvent.CHANGE, function (sender, evt) {
       let cells = evt.getProperty('removed');
       console.log(cells);
+<<<<<<< HEAD
+=======
+      this.cellOnEditted = cells;
+      // for (var i = 0; i < cells.length; i++)
+      // {
+      //   // Handle cells[i]...
+      // }
+>>>>>>> ab6bfb7ee66d8131e1c006468d2a28684fd6be4a
     });
   }
 

@@ -33,7 +33,11 @@ export class GraphStorage {
     this.id = id;
     this.graphModel = new mxGraphModel();
     this.graph = new mxGraph(element, this.graphModel);
+<<<<<<< HEAD
     mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.svg', 14, 14);
+=======
+    // mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.svg', 14, 14);
+>>>>>>> ab6bfb7ee66d8131e1c006468d2a28684fd6be4a
     this.graph.setConnectable(true);
 
 
@@ -316,7 +320,11 @@ export class GraphStorage {
   getMaxID(){
     let cellsObject = this.getGraphModel().cells;
     const cells = Object.values(cellsObject);
+<<<<<<< HEAD
     //console.log(cells);
+=======
+    console.log(cells);
+>>>>>>> ab6bfb7ee66d8131e1c006468d2a28684fd6be4a
     let maxID = cells.reduce((acc:number, cur:mxCell)=>{
       return Math.max(acc, parseInt(cur.id));
     }, 0);
