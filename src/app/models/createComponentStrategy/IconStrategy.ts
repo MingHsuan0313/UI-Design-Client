@@ -1,9 +1,9 @@
-import {ICreateComponentStrategy} from "./ICreateComponentStrategy";
-import {GraphStorage} from "../graph-storage.model";
-import {Text} from "../components/text.model";
-import {StyleLibrary} from "../../shared/styleLibrary";
-import {DataBinding} from "../util/DataBinding";
-import {StyleStorage} from "../style-storage.model";
+import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
+import { GraphStorage } from "../graph-storage.model";
+import { Text } from "../components/text.model";
+import { StyleLibrary } from "../../shared/styleLibrary";
+import { DataBinding } from "../util/DataBinding";
+import { StyleStorage } from "../style-storage.model";
 
 
 export class IconStrategy implements ICreateComponentStrategy {
@@ -21,10 +21,10 @@ export class IconStrategy implements ICreateComponentStrategy {
     }
   }
 
-  createDataBinding(index, key) {
+  createDataBinding() {
     const hasDataBinding = true;
-    const dataBindingName = key;
-    const isList = index;
+    const dataBindingName = "text";
+    const isList = -1;
     const dataBinding = new DataBinding(
       hasDataBinding,
       dataBindingName,
@@ -35,7 +35,7 @@ export class IconStrategy implements ICreateComponentStrategy {
 
   // ICON STYLE IS UNDEFINE
   createComponent(graphStorage: GraphStorage, component, parent) {
-    this.createDataBinding(-1, "text");
+    this.createDataBinding();
     const style = StyleLibrary[0]["icon"];
     const styleName = "style" + component.id;
     const styleStorage = new StyleStorage(styleName, style);

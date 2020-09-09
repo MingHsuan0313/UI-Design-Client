@@ -278,4 +278,13 @@ export class GraphStorage {
     this.editor.setModified(false);
   }
 
+  // copy children as well
+  delete(vertexIDs) {
+
+  }
+
+  // copy children as well
+  copy(vertexIDs) {
+
+  }
 }

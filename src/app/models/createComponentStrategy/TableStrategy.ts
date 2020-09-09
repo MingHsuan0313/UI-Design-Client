@@ -23,16 +23,34 @@ export class TableStrategy implements ICreateComponentStrategy {
     this.gridHeight = 40;
   }
 
-  createDataBinding(index, key) {
-    let hasDataBinding = true;
-    let dataBindingName = key;
-    let isList = index;
-    let dataBinding = new DataBinding(
-      hasDataBinding,
-      dataBindingName,
-      isList
-    );
-    return dataBinding;
+  createDataBinding(part: String, index?) {
+    if (part == "box") {
+      return undefined;
+    }
+    else if (part == "headers") {
+      let hasDataBinding = true;
+      let dataBindingName = "headers";
+      let isList = index;
+      let dataBinding = new DataBinding(
+        hasDataBinding,
+        dataBindingName,
+        isList
+      );
+      return dataBinding;
+    }
+    else if (part == "rows") {
+      let hasDataBinding = true;
+      let dataBindingName = "rows";
+      let isList = index;
+      let dataBinding = new DataBinding(
+        hasDataBinding,
+        dataBindingName,
+        isList
+      );
+      return dataBinding;
+    }
+    else 
+      return undefined;
   }
 
   createTableBoxVertex(graphStorage, component, parent) {
@@ -58,14 +76,14 @@ export class TableStrategy implements ICreateComponentStrategy {
     const colNumber = headerList.length;
 
     for (let i = 0; i < colNumber; i++) {
-      let dataBinding = this.createDataBinding(i,"headers");
+      let dataBinding = this.createDataBinding("headers",i);
       const styleName = "tableHeaderstyle" + component.id + ":" + i;
       const tableHeaderStyle = StyleLibrary[0]["table"]["tableHeader"];
       tableHeaderStyle["overflow"] = true;
       const styleStorage = new StyleStorage(styleName, tableHeaderStyle);
       graphStorage.getGraph().getStylesheet().putCellStyle(styleName, tableHeaderStyle);
       const x = i * this.gridWidth;
-      const tableHeaderVertexGeometry = new mxGeometry( x, 0, this.gridWidth, this.gridHeight);
+      const tableHeaderVertexGeometry = new mxGeometry(x, 0, this.gridWidth, this.gridHeight);
       const tableHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, headerList[i], tableHeaderVertexGeometry, styleStorage, component, dataBinding);
       parent.addChild(tableHeaderVertexStorage.id, tableHeaderVertexStorage.getVertex(), "headers");
     }
@@ -79,16 +97,16 @@ export class TableStrategy implements ICreateComponentStrategy {
 
     tableDataStyle["overflow"] = true;
     for (let i = 0; i < colNumber; i++) {
-      let dataBinding = this.createDataBinding(i,"rows");
+      let dataBinding = this.createDataBinding("rows",i);
       const styleName = "tableDatastyle" + component.id;
       const styleStorage = new StyleStorage(styleName, tableDataStyle);
       graphStorage.getGraph().getStylesheet().putCellStyle(styleName, tableDataStyle);
 
       const x = i * this.gridWidth;
       const y = 1 * this.gridHeight;
-      const tableDataVertexGeometry = new mxGeometry( x,  y, this.gridWidth, this.gridHeight);
+      const tableDataVertexGeometry = new mxGeometry(x, y, this.gridWidth, this.gridHeight);
       const tableDataVertexStorage = graphStorage.insertVertex(parent.getVertex(),
-        component.id, rows[i], tableDataVertexGeometry, styleStorage, component,dataBinding);
+        component.id, rows[i], tableDataVertexGeometry, styleStorage, component, dataBinding);
       parent.addChild(tableDataVertexStorage.id, tableDataVertexStorage.getVertex(), "rows");
     }
   }

@@ -5,6 +5,7 @@ import { StyleStorage } from "../style-storage.model";
 import { DataBinding } from "../util/DataBinding";
 
 
+// no need for data binidng
 export class FormStrategy implements ICreateComponentStrategy {
     strategyName: string;
     basex: number;

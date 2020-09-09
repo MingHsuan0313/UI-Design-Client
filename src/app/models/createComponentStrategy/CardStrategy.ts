@@ -22,16 +22,25 @@ export class CardStrategy implements ICreateComponentStrategy {
     this.strategyName = "Card Strategy";
   }
 
-  createDataBinding() {
-    const dataBindingName = "header";
-    const hasDataBining = true;
-    const isList = -1;
-    const dataBinding = new DataBinding(
-      hasDataBining,
-      dataBindingName,
-      isList
-    );
-    return dataBinding;
+  // part: Box , Header
+  createDataBinding(part: String) {
+    if (part == "header") {
+
+      const dataBindingName = "header";
+      const hasDataBining = true;
+      const isList = -1;
+      const dataBinding = new DataBinding(
+        hasDataBining,
+        dataBindingName,
+        isList
+      );
+      return dataBinding;
+    }
+    else if(part == "box") {
+      return undefined;
+    }
+    else 
+      return undefined;
   }
 
   createCardBoxVertex(graphStorage, component, parent) {
@@ -46,7 +55,7 @@ export class CardStrategy implements ICreateComponentStrategy {
   }
 
   createCardHeaderVertex(graphStorage, component, parent) {
-    const dataBinding = this.createDataBinding();
+    const dataBinding = this.createDataBinding("header");
     const styleName = "cardHeaderStyle" + component.id;
     const cardHeaderStyle = StyleLibrary[0]["card"]["cardHeader"];
     const styleStorage = new StyleStorage(styleName, cardHeaderStyle);

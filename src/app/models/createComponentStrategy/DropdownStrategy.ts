@@ -19,16 +19,27 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     }
   }
 
-  createDataBinding(index) {
-    let hasDataBinding = true;
-    let dataBindingName = "items";
-    let isList = index;
-    let dataBinding = new DataBinding(
-      hasDataBinding,
-      dataBindingName,
-      isList
-    );
-    return dataBinding;
+  // part: like Box,Header,ItemList,Item...etc
+  createDataBinding(part: String, index?) {
+    if (part == "box")
+      return undefined;
+    else if (part == "header")
+      return undefined;
+    else if (part == "itemList")
+      return undefined;
+    else if (part == "item") {
+      let hasDataBinding = true;
+      let dataBindingName = "items";
+      let isList = index;
+      let dataBinding = new DataBinding(
+        hasDataBinding,
+        dataBindingName,
+        isList
+      );
+      return dataBinding;
+    }
+    else
+      return undefined;
   }
 
   createDropdownBoxVertex(graphStorage, component, parent) {
@@ -77,13 +88,13 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     const itemList = component.items.split(" ");
     // insert dropdown item
     for (const element of itemList) {
-      let dataBinding = this.createDataBinding(index);
+      let dataBinding = this.createDataBinding("item",index);
       const dropdownItemGeometry = new mxGeometry(0, 23 + 30 + 30 * index, 200, 30);
       const styleName = "dropdownItemstyle" + component.id;
       const dropdownItemStyle = StyleLibrary[0]["dropdown"]["dropdownItem"];
       const styleStorage = new StyleStorage(styleName, dropdownItemStyle);
       graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownItemStyle);
-      const dropdownItemVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, element, dropdownItemGeometry, styleStorage, component,dataBinding);
+      const dropdownItemVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, element, dropdownItemGeometry, styleStorage, component, dataBinding);
       grandparent.addChild(dropdownItemVertexStorage.id, dropdownItemVertexStorage.getVertex(), "items");
       index += 1;
     }
@@ -94,7 +105,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     let dropdownBoxVertexStorage = this.createDropdownBoxVertex(graphStorage, component, parent);
     let dropdownHeaderVertexStorage = this.createDropdownHeaderVertex(graphStorage, component, dropdownBoxVertexStorage);
     let dropdownItemListVertexStorage = this.createDropdownItemListVertex(graphStorage, component, dropdownBoxVertexStorage);
-    this.createDropdownItemVertexs(graphStorage,component,dropdownItemListVertexStorage, dropdownBoxVertexStorage);
+    this.createDropdownItemVertexs(graphStorage, component, dropdownItemListVertexStorage, dropdownBoxVertexStorage);
 
     component["x"] = dropdownBoxVertexStorage.getVertexX();
     component["y"] = dropdownBoxVertexStorage.getVertexY();

@@ -3,6 +3,7 @@ import {GraphStorage} from "../graph-storage.model";
 import {StyleLibrary} from "../../shared/styleLibrary";
 import {StyleStorage} from "../style-storage.model";
 
+// no need to databinding
 export class InputStrategy implements ICreateComponentStrategy {
   basex: number;
   basey: number;
