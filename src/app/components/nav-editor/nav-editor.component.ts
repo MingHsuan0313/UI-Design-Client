@@ -3,7 +3,8 @@ import ImportService from '../../services/import.service';
 import ExportService from '../../services/export.service';
 import GraphEditorService from '../../services/graph-editor.service';
 import {Storage} from '../../shared/storage';
-import { Observable, BehaviorSubject, of } from 'rxjs';
+import vertexStorage from '../../models/vertex-storage.model';
+import { StyleStorage } from '../../models/style-storage.model';
 import { PropertyGenerator } from '../../shared/property-generator'
 
 
@@ -37,59 +38,73 @@ export class NavEditorComponent implements OnInit {
     let xml = mxUtils.getXml(result);
     console.log(xml)
     let pageUICDL = Storage.getPageUICDL();
+    console.log(pageUICDL)
     pageUICDL["xml"] = xml;
     this.exportService.postImage(xml).subscribe(
       response => {
-        let page = "Page" + this.imageCount++;
+        let pageID = "Page" + this.imageCount++;
         let image = {};
-        image["page"] = page;
+        image["page"] = pageID;
         image["img"] = 'data:image/png;base64,' + response['body'];
         Storage.images.push(image);
         pageUICDL["image"] = JSON.stringify(image["img"]);
-        this.makeDragableOfDom(page, xml);
+        this.makeDragableOfDom(pageID, pageUICDL, this.graphEditorService.graphStorage.vertexStorageList);
       
       }
     )
   }
 
-  makeDragableOfDom(id, xml){
-
+  makeDragableOfDom(id, pageUICDL, vertexStorageList){
+    let xml = pageUICDL["xml"];
     setTimeout(function(graph){ 
       var img = document.getElementById(id); 
       var funct = function(graph, evt, cell, x, y)
       {
-        // var doc = mxUtils.parseXml(xml);
-        // var codec = new mxCodec(doc);
-        // codec.decode(doc.documentElement, graph.getModel()); 
         let doc = mxUtils.parseXml(xml);
         let codec = new mxCodec(doc);
         let elt = doc.documentElement.firstChild.firstChild;
         let cells = [];
         let idMapping = {};
-
         while (elt != null)
         {
-          //console.log(codec.decode(elt));
           var childID = elt.getAttribute("id");
+
           if(childID== "0" || childID == "1" ){
             elt = elt.nextSibling;
             continue;
           }
+          let componentSelector = elt.getAttribute("selector");
+        //  console.log(componentSelector);
+          let uiComponent;
+          let findMatchComponent = function(UICDL, selector){
+            if(UICDL["componentList"]!=undefined){
+            //  console.log(UICDL["componentList"]);
 
+              for(let component of UICDL["componentList"]){
+                     if(selector==component["selector"]){
+                     //  console.log(component);
+                       uiComponent = component;
+                     }else{
+                    //   console.log(component);
+                    //   console.log(selector);
+                       uiComponent = findMatchComponent(component, selector);
+                     }
+                   }
+            }
+            return uiComponent;
+          }
+          uiComponent = findMatchComponent(pageUICDL, componentSelector);
+          console.log(uiComponent)
 
           let cell = codec.decode(elt)
-          let maxID = (Object.values(graph.getModel().cells)).reduce((acc, cur)=>{
+          let maxID = (Object.values(graph.getModel().cells)).reduce((acc: number, cur: mxCell)=>{
             return Math.max(acc, parseInt(cur.id));
           }, 0);
-
           let newChildID = PropertyGenerator.getID(maxID);
-
-          console.log(cell)
-          //var childCell = graph.addCell(cell);
+          //console.log(cell)
           cell.parent = null;
           idMapping[cell.id] = newChildID;
           cell.id = newChildID;
-          
           graph.getModel().beginUpdate();
           try{
             var childCell = graph.getModel().add(graph.getDefaultParent(), cell);
@@ -104,12 +119,12 @@ export class NavEditorComponent implements OnInit {
             graph.getModel().add(parentCell, childCell); 
           }
 
+          let vs: vertexStorage = new vertexStorage(childCell, new StyleStorage("", childCell.style), );
           elt = elt.nextSibling;
         }
         console.log(graph.getModel().cells); 
       }
       mxUtils.makeDraggable(img, graph, funct, img);
-
     }, 300, this.graphEditorService.getGraphStorage().getGraph() );
     
   }

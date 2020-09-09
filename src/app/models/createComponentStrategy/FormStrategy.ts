@@ -50,7 +50,7 @@ export class FormStrategy implements ICreateComponentStrategy {
 
 
         let p1= 15;
-      let p2 = 40;
+        let p2 = 40;
         let maxWidth = 0;
         for (let subUIComponent of component["componentList"]) {
             let vertexStorage = graphStorage.createComponent(subUIComponent, formBoxVertexStorage.getVertex(), p1, p2)

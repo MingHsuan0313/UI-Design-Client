@@ -61,7 +61,7 @@ export class WizardComponent implements OnInit {
 
   setComponent(properties): boolean {
     properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
-    properties['selector'] = PropertyGenerator.getSelector(this.componentName, this.graphEditorService.getMaxID());
+    properties['selector'] = PropertyGenerator.getSelector(this.componentName);
     properties['type'] = this.componentName;
     properties['serviceType'] = ServiceMappingType['none'];
     properties['serviceComponent'] = {
@@ -109,7 +109,7 @@ export class WizardComponent implements OnInit {
 
   setSubComponent(properties): boolean {
     properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
-    properties['selector'] = this.subComponentName;
+    properties['selector'] = PropertyGenerator.getSelector(this.subComponentName);
     properties['type'] = this.subComponentName;
     properties['serviceType'] = ServiceMappingType['none'];
     properties['serviceComponent'] = {
@@ -228,17 +228,19 @@ export class WizardComponent implements OnInit {
     if (this.isCustom) {
       newComponent = this.newCompositeComponent(newComponent, this.component);
       newComponent['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
-      newComponent['selector'] = PropertyGenerator.getSelector(newComponent.type, this.graphEditorService.getMaxID());
+      newComponent['selector'] = PropertyGenerator.getSelector(newComponent.type);
       Storage.add(newComponent);
       this.graphEditorService.bindComponent(newComponent);
     } else {
       Storage.add(this.component);
       this.graphEditorService.bindComponent(this.component);
     }
+    console.log(this.component);
     this.properties = [];
     this.subComponentName = '';
     this.isCustom = false;
     this.component = {};
+
 
   }
 
@@ -250,7 +252,7 @@ export class WizardComponent implements OnInit {
     for (let i in component.componentList) {
       newComponent['componentList'].push(Object.assign({}, component['componentList'][i]));
       newComponent['componentList'][i]['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
-      newComponent['componentList'][i]['selector'] = PropertyGenerator.getSelector(newComponent['componentList'][i].type, this.graphEditorService.getMaxID());
+      newComponent['componentList'][i]['selector'] = PropertyGenerator.getSelector(newComponent['componentList'][i].type);
     }
     return newComponent;
   }

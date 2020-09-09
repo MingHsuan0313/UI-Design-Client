@@ -14,6 +14,7 @@ export class Storage {
   static library: any = Library;
   static layout: any = '';
   static isNewPage = true;
+  static pageUICDLList: any[] = [];
 
   // unorder, check if component exists / data binding
   static navigationList: NavigationComponent[] = [];
@@ -80,8 +81,9 @@ export class Storage {
       this.isNewPage = false;
     }
     this.layoutComponent['componentList'] = this.UICDL;
-    this.PageUICDL['componentList'] = (this.layoutComponent);
-
+    this.PageUICDL['componentList'] = [];
+    this.PageUICDL['componentList'].push(this.layoutComponent);
+    this.pageUICDLList.push(this.PageUICDL);
     return this.PageUICDL;
   }
 

@@ -13,6 +13,7 @@ import { IconStrategy } from './createComponentStrategy/IconStrategy';
 import { InputStrategy } from './createComponentStrategy/InputStrategy';
 import { LayoutStrategy } from './createComponentStrategy/LayoutStrategy';
 import { StyleLibrary } from '../shared/styleLibrary';
+import { Component } from '@angular/core';
 
 export class GraphStorage {
   vertexStorageList: VertexStorage[];
@@ -32,13 +33,9 @@ export class GraphStorage {
     this.id = id;
     this.graphModel = new mxGraphModel();
     this.graph = new mxGraph(element, this.graphModel);
-<<<<<<< HEAD
     mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.svg', 14, 14);
-=======
-    // mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.gif', 14, 14);
->>>>>>> 1eb00465d2b63f3a31d1fc3bd96d5738a8a7630f
     this.graph.setConnectable(true);
-    console.log(new mxImage('src/app/resources/images/arrow.gif', 14, 14));
+
 
     const keyHandler = new mxKeyHandler(this.graph);
     keyHandler.bindKey(46, function (evt) {
@@ -241,6 +238,7 @@ export class GraphStorage {
     try {
       this.graph.getModel().beginUpdate();
       vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,styleDescription, '');
+      vertex["selector"] = uicomponent["selector"]
       // vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,"rounded=true", '');
     } finally {
       this.graph.getModel().endUpdate();
@@ -318,8 +316,8 @@ export class GraphStorage {
   getMaxID(){
     let cellsObject = this.getGraphModel().cells;
     const cells = Object.values(cellsObject);
-    console.log(cells);
-    let maxID = cells.reduce((acc, cur)=>{
+    //console.log(cells);
+    let maxID = cells.reduce((acc:number, cur:mxCell)=>{
       return Math.max(acc, parseInt(cur.id));
     }, 0);
     return maxID;
