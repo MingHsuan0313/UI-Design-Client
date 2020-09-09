@@ -7,7 +7,7 @@ import { AppSettingComponent } from "./components/app-setting/app-setting.compon
 // import { WizardComponent } from "./components/control-panel/wizard/wizard.component";
 // import { NavigationComponent } from "./components/control-panel/navigation/navigation.component";
 import {NavigationComponent} from "./containers/default-layout/navigation/navigation.component";
-import { ControlPanelComponent } from "./components/control-panel/control-panel.component";
+
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { AppRoutingModule } from "./app.routing";
@@ -15,6 +15,7 @@ import { DefaultLayoutComponent } from "./containers";
 import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatButtonModule} from '@angular/material/button';
 // import {AppHeaderComponent} from './components/app-header/app-header.component';
 
 import {
@@ -29,6 +30,7 @@ import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import {WizardComponent} from "./containers/default-layout/wizard/wizard.component";
 import { StyleEditorComponent } from './components/style-editor/style-editor.component';
 import { NavEditorComponent } from './components/nav-editor/nav-editor.component';
+import { PageEditorComponent } from './components/page-editor/page-editor.component';
 
 @NgModule({
   declarations: [
@@ -37,16 +39,17 @@ import { NavEditorComponent } from './components/nav-editor/nav-editor.component
     AppSettingComponent,
     WizardComponent,
     NavigationComponent,
-    ControlPanelComponent,
     DefaultLayoutComponent,
     StyleEditorComponent,
-    NavEditorComponent
+    NavEditorComponent,
+    PageEditorComponent
   ],
   imports: [
     PerfectScrollbarModule,
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    
     FormsModule,
     HttpClientModule,
     AppAsideModule,
@@ -55,7 +58,8 @@ import { NavEditorComponent } from './components/nav-editor/nav-editor.component
     AppFooterModule,
     AppSidebarModule,
     BsDropdownModule.forRoot(),
-    MatTabsModule
+    MatTabsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

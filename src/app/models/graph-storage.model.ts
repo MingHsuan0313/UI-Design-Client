@@ -12,7 +12,12 @@ import { BreadcrumbStrategy } from './createComponentStrategy/BreadcrumbStrategy
 import { IconStrategy } from './createComponentStrategy/IconStrategy';
 import { InputStrategy } from './createComponentStrategy/InputStrategy';
 import { LayoutStrategy } from './createComponentStrategy/LayoutStrategy';
+<<<<<<< HEAD
 import { GraphConfiguration } from './util/graph-configuration';
+=======
+import { StyleLibrary } from '../shared/styleLibrary';
+import { Component } from '@angular/core';
+>>>>>>> navigation-editor
 
 export class GraphStorage {
   vertexStorageList: VertexStorage[];
@@ -38,6 +43,7 @@ export class GraphStorage {
 
     this.initializeEditor(element, "assets/keyhandler.xml");
     this.graphConfiguration = new GraphConfiguration(this);
+
   }
 
 
@@ -178,8 +184,13 @@ export class GraphStorage {
     let styleDescription = this.convertJsonObjectToStyleDescription(styleStorage.style);
     try {
       this.graph.getModel().beginUpdate();
+<<<<<<< HEAD
       vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height, styleDescription, '');
       vertex["component"] = true;
+=======
+      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,styleDescription, '');
+      vertex["selector"] = uicomponent["selector"]
+>>>>>>> navigation-editor
       // vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,"rounded=true", '');
     } finally {
       this.graph.getModel().endUpdate();
@@ -257,8 +268,16 @@ export class GraphStorage {
   getMaxID() {
     let cellsObject = this.getGraphModel().cells;
     const cells = Object.values(cellsObject);
+<<<<<<< HEAD
+    //console.log(cells);
+=======
     console.log(cells);
+<<<<<<< HEAD
     let maxID = cells.reduce((acc: number, cur: mxCell) => {
+=======
+>>>>>>> ab6bfb7ee66d8131e1c006468d2a28684fd6be4a
+    let maxID = cells.reduce((acc:number, cur:mxCell)=>{
+>>>>>>> navigation-editor
       return Math.max(acc, parseInt(cur.id));
     }, 0);
     return maxID;
