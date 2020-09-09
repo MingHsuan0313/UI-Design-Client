@@ -33,6 +33,22 @@ export class Storage {
     }
   }
 
+  static removeComponentByIDs(componentIDs: String[]) {
+
+  }
+
+  static removeComponentByID(componentID: String) {
+
+  }
+
+  static copyComponentByID(componentID: String) {
+
+  }
+
+  static copyComponentByIDs(componentIDs: String[]) {
+
+  }
+
   static setLayoutComponent(component) {
     this.layoutComponent = component;
   }

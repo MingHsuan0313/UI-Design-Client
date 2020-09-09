@@ -10,15 +10,15 @@
         <add as="38" action="selectParent" />
         <add as="40" action="selectChild" />
         <add as="39" action="selectNext" />
-        <add as="46" action="delete" />
-        <add as="65" control="1" action="selectAll" />
-        <add as="90" control="1" action="undo" />
-        <add as="89" control="1" action="redo" />
-        <add as="88" control="1" action="cut" />
-        <add as="67" control="1" action="copy" />
-        <add as="86" control="1" action="paste" />
-        <add as="71" control="1" action="group" />
-        <add as="85" control="1" action="ungroup" />
+        <add as="46" action="mx-delete" />
+        <add as="65" control="1" action="mx-selectAll" />
+        <add as="90" control="1" action="mx-undo" />
+        <add as="89" control="1" action="mx-redo" />
+        <add as="88" control="1" action="mx-cut" />
+        <add as="67" control="1" action="mx-copy" />
+        <add as="86" control="1" action="mx-paste" />
+        <add as="71" control="1" action="mx-group" />
+        <add as="85" control="1" action="mx-ungroup" />
         <add as="113" action="edit" />
         <add as="123" action="showProperties" />
         <add as="107" action="zoomIn" />

@@ -12,7 +12,7 @@ import { BreadcrumbStrategy } from './createComponentStrategy/BreadcrumbStrategy
 import { IconStrategy } from './createComponentStrategy/IconStrategy';
 import { InputStrategy } from './createComponentStrategy/InputStrategy';
 import { LayoutStrategy } from './createComponentStrategy/LayoutStrategy';
-import { StyleLibrary } from '../shared/styleLibrary';
+import { GraphConfiguration } from './util/graph-configuration';
 
 export class GraphStorage {
   vertexStorageList: VertexStorage[];
@@ -21,6 +21,10 @@ export class GraphStorage {
   graphModel: mxGraphModel;
   graph: mxGraph;
   id: string;
+  graphConfiguration: GraphConfiguration;
+
+
+
   strategy: ICreateComponentStrategy;
   // true if modified and haven't been saved yet
   modified: Boolean;
@@ -31,92 +35,26 @@ export class GraphStorage {
     this.vertexStorageList = [];
     this.edgeStorageList = [];
     this.id = id;
-    this.editor = new mxEditor();
-    this.graph = this.editor.graph;
-    // this.graphModel = new mxGraphModel();
-    this.editor.setGraphContainer(element);
-    // this.graph = new mxGraph(element, this.graphModel);
-    // mxConnectionHandler.prototype.connectImage = new mxImage('src/app/resources/images/arrow.svg', 14, 14);
-    this.graph.setConnectable(true);
-    this.graphModel = this.graph.getModel();
-    let config = mxUtils.load("assets/keyhandler.xml").getDocumentElement();
-    console.log("Heree")
-    console.log(config)
-    this.editor.configure(config);
-    console.log("create editor")
-    console.log(this.editor)
-    console.log(new mxImage('src/app/resources/images/arrow.gif', 14, 14));
-    // this.editor.addAction("dd",(editor,cell) => {
-    //   console.log("Hello")
-    // })
 
-    // const keyHandler = new mxKeyHandler(this.graph);
-    // keyHandler.bindKey(46, function (evt) {
-    //   console.log('inside keyhandler');
-    //   this.editor.execute("dd")
-    // });
-
-    // keyHandler.bindKey(89, function (evt) {
-    //   console.log('undo');
-    //   console.log(evt)
-    // });
-
-
-    let style = {};
-    let cell;
-    let count = 0;
-
-    // this.graph.addListener(mxEvent.DOUBLE_CLICK, function (sender, evt) {
-    //   console.log(sender);
-    //   console.log(evt);
-    //   console.log("doule click");
-    //   cell = evt.getProperty('cell');
-    //   count++;
-    //   // To prevent double click for inputting text
-    //   if (count % 2 == 1) {
-    //     return;
-    //   }
-
-    //   // mxUtils.alert('Doubleclick: '+((cell != null) ? 'Cell' : 'Graph'));
-    //   let styleName = cell['style'];
-    //   style = this.getStylesheet().getCellStyle(styleName);
-    //   style['fontSize'] = StyleLibrary[0]['fontSize'];
-    //   this.getStylesheet().putCellStyle(styleName, style);
-    //   this.refresh();
-    //   evt.consume();
-    // });
-    this.graph.addListener(mxEvent.RESIZE_CELLS,(sender, event) => {
-      console.log("vertex is resized");
-      this.modified = true;
-    })
-
-    this.graph.addListener(mxEvent.MOVE_CELLS,(sender,event) => {
-      this.modified = true;
-    })
-
-
-    this.graph.addMouseListener(
-      {
-        mouseDown: function (sender, evt) {
-          // console.log("mouse down");
-          // console.log(evt);
-        },
-        mouseMove: function (sender, evt) {
-        },
-        mouseUp: function (sender, evt) {
-          // console.log("mouse up");
-          // console.log(evt);
-        }
-      }
-    );
+    this.initializeEditor(element, "assets/keyhandler.xml");
+    this.graphConfiguration = new GraphConfiguration(this);
   }
 
+
+
+  initializeEditor(element, filePath) {
+    this.editor = new mxEditor();
+    this.graph = this.editor.graph;
+    this.editor.setGraphContainer(element);
+    this.graph.setConnectable(true);
+    this.graphModel = this.graph.getModel();
+    let config = mxUtils.load(filePath).getDocumentElement();
+    this.editor.configure(config);
+  }
 
   // sync internal storage and external storage
   syncStorage() {
     for (const vertexStorage of this.vertexStorageList) {
-      // let style = this.graph.getStylesheet().getCellStyle(vertexStorage.styleStorage.name);
-      // vertexStorage.styleStorage.setStyle(style);
       vertexStorage.sync();
     }
 
@@ -126,12 +64,9 @@ export class GraphStorage {
     for (const edgeStorage of this.edgeStorageList) {
       edgeStorage.sync();
     }
-    this.modified = false;
+    this.setUnModified();
   }
 
-  setModified() {
-    this.modified = true;
-  }
 
   setStrategy(strategy: ICreateComponentStrategy) {
     this.strategy = strategy;
@@ -174,8 +109,6 @@ export class GraphStorage {
           basex = parent['x'];
           basey = parent['y'];
           break;
-        // default:
-        //   parent = this.findVertexByID(1); // body
       }
     }
 
@@ -211,22 +144,8 @@ export class GraphStorage {
       }
 
       const compositeVertexStorage = this.strategy.createComponent(this, component, parent);
-      // basey = basey + 20;
-      // let maxWidth = 0;
-      // for(let subUIComponent of component["componentList"]) {
-      //   let vertexStorage = this.createComponent(subUIComponent, compositeVertexStorage.getVertex(),basex,basey)
-      //   if(vertexStorage.getVertexWidth() > maxWidth)
-      //     maxWidth = vertexStorage.getVertexWidth();
-      //   basey = basey + vertexStorage.getVertexHeight();
-      //   compositeVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList",subUIComponent);
-      // }
-
-      // let newmxGeometry = new mxGeometry(0,0,maxWidth,basey);
-      // compositeVertexStorage.setGeometry(newmxGeometry);
-      // this.getGraph().refresh();
       return compositeVertexStorage;
     }
-
   }
 
   getGraph() {
@@ -237,34 +156,39 @@ export class GraphStorage {
     return this.graphModel;
   }
 
+  convertJsonObjectToStyleDescription(styleObj) {
+    // eg : fillColor=red;strokeColor=blue
+    let styleDescription = "";
+    let styleKeys = Object.keys(styleObj);
+    for (let index = 0; index < styleKeys.length; index++) {
+      let key = styleKeys[index];
+      if (index == styleKeys.length - 1)
+        styleDescription = styleDescription + `${key}=${styleObj[key]};`
+      else
+        styleDescription = styleDescription + `${key}=${styleObj[key]};`
+    }
+    return styleDescription;
+  }
+
   // insert vertex
   insertVertex(parent, vertexID, vertexValue, geometry, styleStorage, uicomponent, dataBinding?, isPrimary?) {
     this.modified = true;
     let vertex;
-    let style = styleStorage.style;
-    // eg : fillColor=red;strokeColor=blue
-    let styleDescription = "";
-    let styleKeys = Object.keys(style);
-    for (let index = 0; index < styleKeys.length; index++) {
-      let key = styleKeys[index];
-      if (index == styleKeys.length - 1)
-        styleDescription = styleDescription + `${key}=${style[key]};`
-      else
-        styleDescription = styleDescription + `${key}=${style[key]};`
-    }
 
+    let styleDescription = this.convertJsonObjectToStyleDescription(styleStorage.style);
     try {
       this.graph.getModel().beginUpdate();
-      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,styleDescription, '');
+      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height, styleDescription, '');
+      vertex["component"] = true;
       // vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,"rounded=true", '');
     } finally {
       this.graph.getModel().endUpdate();
       // new mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
     }
     let cloneStyle = {};
-    Object.assign(cloneStyle,styleStorage.style);
+    Object.assign(cloneStyle, styleStorage.style);
     styleStorage.style = cloneStyle;
-    const vertexStorage = new VertexStorage(vertex,styleStorage, uicomponent, dataBinding, isPrimary);
+    const vertexStorage = new VertexStorage(vertex, styleStorage, uicomponent, dataBinding, isPrimary);
     this.vertexStorageList.push(vertexStorage);
     return vertexStorage;
   }
@@ -330,20 +254,28 @@ export class GraphStorage {
     this.graph.zoomTo(zoomFactor, this.graph.centerZoom);
   }
 
-  getMaxID(){
+  getMaxID() {
     let cellsObject = this.getGraphModel().cells;
     const cells = Object.values(cellsObject);
     console.log(cells);
-    let maxID = cells.reduce((acc:number, cur:mxCell)=>{
+    let maxID = cells.reduce((acc: number, cur: mxCell) => {
       return Math.max(acc, parseInt(cur.id));
     }, 0);
     return maxID;
   }
 
-
-
-
   getModified() {
-    return this.modified;
+    return this.editor.modified;
   }
+
+
+  setModified() {
+    console.log("set modified")
+    this.editor.setModified(true);
+  }
+
+  setUnModified() {
+    this.editor.setModified(false);
+  }
+
 }

@@ -1,6 +1,7 @@
 declare class mxEditor {
     graph: any;
     keyHandler: any;
+    modified: Boolean;
     constructor(config);
     constructor();
     configure(config);
@@ -12,4 +13,5 @@ declare class mxEditor {
     setGraphContainer(container);
     swapStyles(first,second);
     execute(action);
+    setModified(value);
 }
