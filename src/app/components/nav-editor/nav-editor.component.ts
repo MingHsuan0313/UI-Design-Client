@@ -19,7 +19,9 @@ import { IconStrategy } from '../../models/createComponentStrategy/IconStrategy'
 import { InputStrategy } from '../../models/createComponentStrategy/InputStrategy';
 import { LayoutStrategy } from '../../models/createComponentStrategy/LayoutStrategy';
 import { from } from 'rxjs';
-import { GraphStorage, UIComponent } from 'src/app/models/modelDependency';
+// import { GraphStorage, UIComponent } from 'src/app/models/modelDependency';
+import { GraphStorage } from '../../models/graph-storage.model';
+import { UIComponent } from '../../models/model';
 
 @Component({
   selector: 'app-nav-editor',
@@ -150,7 +152,8 @@ export class NavEditorComponent implements OnInit {
               parentVertexStorage.addChild(newChildID, childCell, componentPart);
             }
           }
-          graphStorage.vertexStorageList.push(vs);   
+          let length = Object.keys(graphStorage.vertexStorageList).length;
+          graphStorage.vertexStorageList[length] = vs;   
           console.log(vs)
           elt = elt.nextSibling;
         }

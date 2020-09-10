@@ -156,6 +156,7 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   save() {
+    this.graphEditorService.syncMxCells();
     this.graphEditorService.syncStorage();
   }
 

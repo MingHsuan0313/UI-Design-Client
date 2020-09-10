@@ -68,7 +68,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     const styleStorage = new StyleStorage(styleName, dropdownHeaderStyle);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownHeaderStyle);
     const dropdownHeaderGeometry = new mxGeometry(0, 20, 200, 30);
-    const dropdownHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, "", dropdownHeaderGeometry, styleStorage, component);
+    const dropdownHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), "tttt" + component.id, "", dropdownHeaderGeometry, styleStorage, component);
     parent.addChild(dropdownHeaderVertexStorage.id, dropdownHeaderVertexStorage.getVertex(), "header");
 
     dropdownHeaderVertexStorage.vertex["componentPart"] = "header";

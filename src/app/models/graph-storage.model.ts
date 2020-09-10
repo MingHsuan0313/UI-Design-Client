@@ -17,7 +17,7 @@ import { StyleLibrary } from '../shared/styleLibrary';
 import { Component } from '@angular/core';
 
 export class GraphStorage {
-  vertexStorageList: VertexStorage[];
+  vertexStorageList: {}; //{index:VertexStorage}
   edgeStorageList: EdgeStorage[];
   editor: mxEditor;
   graphModel: mxGraphModel;
@@ -34,7 +34,7 @@ export class GraphStorage {
   // create graph
   constructor(element, id) {
     this.modified = false;
-    this.vertexStorageList = [];
+    this.vertexStorageList = {};
     this.edgeStorageList = [];
     this.id = id;
 
@@ -57,8 +57,9 @@ export class GraphStorage {
 
   // sync internal storage and external storage
   syncStorage() {
-    for (const vertexStorage of this.vertexStorageList) {
-      vertexStorage.sync();
+
+    for (let key in this.vertexStorageList) {
+      this.vertexStorageList[key].sync();
     }
 
     // reset navigation flow then sync
@@ -70,6 +71,26 @@ export class GraphStorage {
     this.setUnModified();
   }
 
+  // after copy delete undo redo
+  // we need to create or destroy vertexStorage as well
+  syncMxCells() {
+    let test = {
+      
+      0: "11" ,
+      1: "122"
+    }
+    let temp = test[0]
+    delete test[0]
+    console.log(temp)
+
+    console.log(test)
+    let mxCells = this.getGraphModel().cells;
+    console.log("cells here");
+    console.log(mxCells);
+    console.log(Array.isArray(mxCells))
+    console.log("vertexStorages here");
+    console.log(this.vertexStorageList);
+  }
 
   setStrategy(strategy: ICreateComponentStrategy) {
     this.strategy = strategy;
@@ -192,7 +213,8 @@ export class GraphStorage {
     Object.assign(cloneStyle, styleStorage.style);
     styleStorage.style = cloneStyle;
     const vertexStorage = new VertexStorage(vertex, styleStorage, uicomponent, dataBinding, isPrimary);
-    this.vertexStorageList.push(vertexStorage);
+    let vertexLength = Object.keys(this.vertexStorageList).length;
+    this.vertexStorageList[vertexLength] = vertexStorage;
     return vertexStorage;
   }
 
@@ -217,17 +239,18 @@ export class GraphStorage {
   }
 
   findVertexByID(id) {
-    for (const element of this.vertexStorageList) {
-      if (element.id == id) {
-        return element.getVertex();
+    for (let key in this.vertexStorageList) {
+      if (this.vertexStorageList[key].id == id) {
+        return this.vertexStorageList[key].vertex;
       }
     }
   }
 
   findVertexStorageByID(id) {
-    for (const element of this.vertexStorageList) {
-      if (element.id == id) {
-        return element;
+
+    for (let key in this.vertexStorageList) {
+      if (this.vertexStorageList[key].id == id) {
+        return this.vertexStorageList[key];
       }
     }
   }

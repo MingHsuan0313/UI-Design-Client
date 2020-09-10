@@ -47,6 +47,10 @@ export default class GraphEditorService {
     this.graphStorage.syncStorage();
   }
 
+  syncMxCells() {
+    this.graphStorage.syncMxCells();
+  }
+
   addArrow() {
 
   }
