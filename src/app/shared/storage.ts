@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Layout, UIComponent} from '../models/model';
 import {PropertyGenerator} from './property-generator';
 import {NavigationComponent} from '../models/navigation-component.model';
+import * as _ from 'lodash';
 
 export class Storage {
   static newCompositeList: any[] = [];  // store reusable composite component
@@ -52,6 +53,8 @@ export class Storage {
 
   static setLayoutComponent(component) {
     this.layoutComponent = component;
+    this.layoutComponent["componentList"] = this.UICDL;
+    this.PageUICDL['componentList'][0] = (this.layoutComponent);
   }
 
   static getGenre(): any[] {
@@ -91,23 +94,34 @@ export class Storage {
   }
 
   static getPageUICDL() {
+     const clonedPageUICDL = JSON.parse(JSON.stringify(this.PageUICDL));
+     const clonedUICDL = JSON.parse(JSON.stringify(this.UICDL));
+     this.PageUICDL["componentList"][0]["componentList"] = "Hello2";
+     console.log(clonedUICDL);
+     console.log(clonedPageUICDL==this.PageUICDL);
+     console.log(clonedPageUICDL);
+     clonedPageUICDL['componentList'][0]["componentList"] = clonedUICDL;
+     console.log(clonedPageUICDL)
+     return clonedPageUICDL;
+    //return this.pageUICDLList;
+  }
+
+  static createPageUICDL(){
     if (this.isNewPage) {
       this.PageUICDL['id'] = PropertyGenerator.getPageID();
       this.PageUICDL['selector'] = 'page' + this.PageUICDL['id'];
+      this.pageUICDLList.push(this.PageUICDL);
       this.isNewPage = false;
     }
-    this.layoutComponent['componentList'] = this.UICDL;
     this.PageUICDL['componentList'] = [];
-    this.PageUICDL['componentList'].push(this.layoutComponent);
-    this.pageUICDLList.push(this.PageUICDL);
-    return this.PageUICDL;
+
   }
 
   
 
   static clearTemp() {
     this.components = [];
-    this.UICDL = [];
+    this.UICDL = ["Hello"];
   }
 }
 

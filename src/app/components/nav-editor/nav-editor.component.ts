@@ -19,7 +19,9 @@ import { IconStrategy } from '../../models/createComponentStrategy/IconStrategy'
 import { InputStrategy } from '../../models/createComponentStrategy/InputStrategy';
 import { LayoutStrategy } from '../../models/createComponentStrategy/LayoutStrategy';
 import { from } from 'rxjs';
-import { GraphStorage, UIComponent } from 'src/app/models/modelDependency';
+import { GraphStorage } from 'src/app/models/graph-storage.model';
+import { UIComponent } from 'src/app/models/model';
+
 
 @Component({
   selector: 'app-nav-editor',
@@ -43,17 +45,20 @@ export class NavEditorComponent implements OnInit {
     let result = encoder.encode(this.graphEditorService.getGraphStorage().getGraph().getModel());
     let xml = mxUtils.getXml(result);
     console.log(xml)
-    let pageUICDL = Storage.getPageUICDL();
+    console.log(Storage.getPageUICDL());
+    const pageUICDL = Storage.getPageUICDL();
     console.log(pageUICDL)
     pageUICDL["xml"] = xml;
     this.exportService.postImage(xml).subscribe(
       response => {
-        let pageID = "Page" + this.imageCount++;
+        
+        let pageID = pageUICDL["selector"];
         let image = {};
         image["page"] = pageID;
         image["img"] = 'data:image/png;base64,' + response['body'];
         Storage.images.push(image);
         pageUICDL["image"] = JSON.stringify(image["img"]);
+        console.log(pageUICDL)
         this.makeDragableOfDom(pageID, pageUICDL, this.graphEditorService.graphStorage);
       
       }
@@ -62,10 +67,12 @@ export class NavEditorComponent implements OnInit {
 
   makeDragableOfDom(id, pageUICDL, graphStorage: GraphStorage){
     let xml = pageUICDL["xml"];
+    console.log(pageUICDL)
     setTimeout(function(graph){ 
       var img = document.getElementById(id); 
       var funct = function(graph, evt, cell, x, y)
       {
+        console.log(pageUICDL)
         let doc = mxUtils.parseXml(xml);
         let codec = new mxCodec(doc);
         let elt = doc.documentElement.firstChild.firstChild;
@@ -81,7 +88,9 @@ export class NavEditorComponent implements OnInit {
           let componentSelector = elt.getAttribute("selector");
 
           let uiComponent: UIComponent;
+
           let findMatchComponent = function(UICDL, selector){
+            console.log(selector)
             if(UICDL["componentList"]!=undefined){
               for(let component of UICDL["componentList"]){
                      if(selector==component["selector"]){
@@ -151,7 +160,7 @@ export class NavEditorComponent implements OnInit {
             }
           }
           graphStorage.vertexStorageList.push(vs);   
-          console.log(vs)
+          //console.log(vs)
           elt = elt.nextSibling;
         }
 

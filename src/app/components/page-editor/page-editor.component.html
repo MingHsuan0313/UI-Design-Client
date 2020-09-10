@@ -3,8 +3,8 @@
     <span style="padding-right: 55%">Pages</span>
     <button mat-button style="width: 40px; min-width: 40px; margin-left: 3%;" (click)="addNewPage()">+</button>
   </div>
-  <div *ngIf="flag">
-    Hello
+  <div *ngFor="let pageUICDL of pageUICDLList"  style="margin-left: 17%;">
+    <input #box (keyup)="onKey(box.value)" type="text" value="{{pageUICDL['selector']}}" [(ngModel)]="pageUICDL['selector']">
   </div>
 
 
