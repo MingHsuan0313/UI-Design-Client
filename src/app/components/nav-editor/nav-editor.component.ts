@@ -6,7 +6,20 @@ import {Storage} from '../../shared/storage';
 import vertexStorage from '../../models/vertex-storage.model';
 import { StyleStorage } from '../../models/style-storage.model';
 import { PropertyGenerator } from '../../shared/property-generator'
-
+import {DataBinding} from '../../models/util/DataBinding'
+import { ICreateComponentStrategy } from '../../models/createComponentStrategy/ICreateComponentStrategy';
+import { ButtonStrategy } from '../../models/createComponentStrategy/ButtonStrategy';
+import { TextStrategy } from '../../models/createComponentStrategy/TextStrategy';
+import { DropdownStrategy } from '../../models/createComponentStrategy/DropdownStrategy';
+import { TableStrategy } from '../../models/createComponentStrategy/TableStrategy';
+import { FormStrategy } from '../../models/createComponentStrategy/FormStrategy';
+import { CardStrategy } from '../../models/createComponentStrategy/CardStrategy';
+import { BreadcrumbStrategy } from '../../models/createComponentStrategy/BreadcrumbStrategy';
+import { IconStrategy } from '../../models/createComponentStrategy/IconStrategy';
+import { InputStrategy } from '../../models/createComponentStrategy/InputStrategy';
+import { LayoutStrategy } from '../../models/createComponentStrategy/LayoutStrategy';
+import { from } from 'rxjs';
+import { GraphStorage, UIComponent } from 'src/app/models/modelDependency';
 
 @Component({
   selector: 'app-nav-editor',
@@ -41,13 +54,13 @@ export class NavEditorComponent implements OnInit {
         image["img"] = 'data:image/png;base64,' + response['body'];
         Storage.images.push(image);
         pageUICDL["image"] = JSON.stringify(image["img"]);
-        this.makeDragableOfDom(pageID, pageUICDL, this.graphEditorService.graphStorage.vertexStorageList);
+        this.makeDragableOfDom(pageID, pageUICDL, this.graphEditorService.graphStorage);
       
       }
     )
   }
 
-  makeDragableOfDom(id, pageUICDL, vertexStorageList){
+  makeDragableOfDom(id, pageUICDL, graphStorage: GraphStorage){
     let xml = pageUICDL["xml"];
     setTimeout(function(graph){ 
       var img = document.getElementById(id); 
@@ -61,25 +74,19 @@ export class NavEditorComponent implements OnInit {
         while (elt != null)
         {
           var childID = elt.getAttribute("id");
-
           if(childID== "0" || childID == "1" ){
             elt = elt.nextSibling;
             continue;
           }
           let componentSelector = elt.getAttribute("selector");
-        //  console.log(componentSelector);
-          let uiComponent;
+
+          let uiComponent: UIComponent;
           let findMatchComponent = function(UICDL, selector){
             if(UICDL["componentList"]!=undefined){
-            //  console.log(UICDL["componentList"]);
-
               for(let component of UICDL["componentList"]){
                      if(selector==component["selector"]){
-                     //  console.log(component);
                        uiComponent = component;
                      }else{
-                    //   console.log(component);
-                    //   console.log(selector);
                        uiComponent = findMatchComponent(component, selector);
                      }
                    }
@@ -87,21 +94,28 @@ export class NavEditorComponent implements OnInit {
             return uiComponent;
           }
           uiComponent = findMatchComponent(pageUICDL, componentSelector);
-          console.log(uiComponent)
+          // find databinding, isPrimary, componentPart info from xml
+          let dataBinding = (elt.getElementsByTagName("DataBinding"))[0];
+          let dataBindingObject = new DataBinding(
+            dataBinding.getAttribute("hasDataBinding"),
+            dataBinding.getAttribute("dataBindingName"),
+            dataBinding.getAttribute("isList")
+          )
+          let isPrimary = elt.getAttribute("isPrimary");
+          let componentPart = elt.getAttribute("componentPart");
 
+          // create mxcell 
           let cell = codec.decode(elt)
-<<<<<<< HEAD
+          // find new id for new mxcell
           let maxID = (Object.values(graph.getModel().cells)).reduce((acc: number, cur: mxCell)=>{
-=======
-          let maxID = (Object.values(graph.getModel().cells)).reduce((acc:number, cur:mxCell)=>{
->>>>>>> ab6bfb7ee66d8131e1c006468d2a28684fd6be4a
             return Math.max(acc, parseInt(cur.id));
           }, 0);
           let newChildID = PropertyGenerator.getID(maxID);
-          //console.log(cell)
           cell.parent = null;
+          // create mapping betweem new and old id
           idMapping[cell.id] = newChildID;
           cell.id = newChildID;
+          // add new mxcell to graph
           graph.getModel().beginUpdate();
           try{
             var childCell = graph.getModel().add(graph.getDefaultParent(), cell);
@@ -110,16 +124,37 @@ export class NavEditorComponent implements OnInit {
             graph.getModel().endUpdate();
           }
           cells.push(childCell);
+          // bind parent cell and child cell in mxgraph
           var parentID = idMapping[elt.getAttribute("parent")];
           if(parentID!=null){
             var parentCell = cells.find(cell => cell.id == parentID); 
             graph.getModel().add(parentCell, childCell); 
           }
-
-          let vs: vertexStorage = new vertexStorage(childCell, new StyleStorage("", childCell.style), );
+          // update new id in component info (internel representation)
+          uiComponent.id = newChildID;
+        
+          // set layout info to storage 
+          if(componentSelector=="Layout" && componentPart=="box"){
+            Storage.setLayoutComponent(uiComponent);
+          }else if(componentSelector!="Layout" && componentPart=="box"){   
+            // set component(not layout) info to storage
+            Storage.add(uiComponent);
+          }
+          console.log(Storage.UICDL)
+          let vs: vertexStorage = new vertexStorage(childCell, new StyleStorage("", childCell.style), uiComponent, dataBindingObject, isPrimary);
+          let parentVertexStorage: vertexStorage = graphStorage.findVertexStorageByID(parentID);
+          if(parentVertexStorage!=null){
+            if(componentPart == "box"){
+              parentVertexStorage.addChild(newChildID, childCell, "componentList", uiComponent);
+            }else{
+              parentVertexStorage.addChild(newChildID, childCell, componentPart);
+            }
+          }
+          graphStorage.vertexStorageList.push(vs);   
+          console.log(vs)
           elt = elt.nextSibling;
         }
-        console.log(graph.getModel().cells); 
+
       }
       mxUtils.makeDraggable(img, graph, funct, img);
     }, 300, this.graphEditorService.getGraphStorage().getGraph() );

@@ -21,7 +21,7 @@ export class IconStrategy implements ICreateComponentStrategy {
     }
   }
 
-  createDataBinding() {
+  createDataBinding(part, index?) {
     const hasDataBinding = true;
     const dataBindingName = "text";
     const isList = -1;
@@ -35,7 +35,7 @@ export class IconStrategy implements ICreateComponentStrategy {
 
   // ICON STYLE IS UNDEFINE
   createComponent(graphStorage: GraphStorage, component, parent) {
-    this.createDataBinding();
+    this.createDataBinding("icon");
     const style = StyleLibrary[0]["icon"];
     const styleName = "style" + component.id;
     const styleStorage = new StyleStorage(styleName, style);
@@ -44,6 +44,9 @@ export class IconStrategy implements ICreateComponentStrategy {
 
     // Initialized
     let iconVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component);
+    iconVertexStorage.vertex["componentPart"] = "box";
+    iconVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
+    iconVertexStorage.vertex["isPrimary"] = true;
     // component.vertexStorage = vertexStorage;
     iconVertexStorage.setIsPrimary(true);
     // component["style"] = style;

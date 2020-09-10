@@ -38,6 +38,11 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
     const breadcrumbVertexGeometry = new mxGeometry(this.basex, this.basey, 50, defaultHeight / 30);
     const breadcrumbVertexStorage = graphStorage.insertVertex(parent, component.id, "", breadcrumbVertexGeometry, styleStorage, component);
     breadcrumbVertexStorage.setIsPrimary(true);
+    // add Info to mxcell
+    breadcrumbVertexStorage.vertex["componentPart"] = "box";
+    breadcrumbVertexStorage.vertex["isPrimary"] = true;
+    breadcrumbVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
+
     return breadcrumbVertexStorage;
   }
 
@@ -49,6 +54,11 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
     const breadcrumbVertexGeometry = new mxGeometry(x, y + 10, 20, 20);
     const breadcrumbVertexIndicatorStorage = graphStorage.insertVertex(parent.getVertex(), component.id, "", breadcrumbVertexGeometry, styleStorage, component);
     parent.addChild(breadcrumbVertexIndicatorStorage.id, breadcrumbVertexIndicatorStorage.getVertex(), "indicator");
+    
+    breadcrumbVertexIndicatorStorage.vertex["componentPart"] = "indicator";
+    breadcrumbVertexIndicatorStorage.vertex["isPrimary"] = false;
+    breadcrumbVertexIndicatorStorage.vertex["dataBinding"] = this.createDataBinding("indicator");
+    
     return breadcrumbVertexIndicatorStorage;
   }
 
@@ -83,5 +93,11 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
     component["width"] = breadcrumbBoxVertexStorage.getVertexWidth();
     component["height"] = breadcrumbBoxVertexStorage.getVertexHeightk();
     return breadcrumbBoxVertexStorage;
+  }
+
+
+
+  createDataBinding(part: String, index?){
+    return new DataBinding(false, "", -1);
   }
 }

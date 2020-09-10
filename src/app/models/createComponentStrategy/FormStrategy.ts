@@ -23,7 +23,7 @@ export class FormStrategy implements ICreateComponentStrategy {
         this.strategyName = "Form Strategy";
     }
 
-    createDataBinding() {
+    createDataBinding(part, index?) {
         let dataBindingName = "header";
         let hasDataBining = true;
         let isList = -1;
@@ -43,6 +43,9 @@ export class FormStrategy implements ICreateComponentStrategy {
         const formVertexGeometry = new mxGeometry(this.basex, this.basey, 300, 300);
         const formVertexStorage = graphStorage.insertVertex(parent, component.id, "", formVertexGeometry, styleStorage, component);
         formVertexStorage.setIsPrimary(true);
+        formVertexStorage.vertex["componentPart"] = "box";
+        formVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
+        formVertexStorage.vertex["isPrimary"] = true;
         return formVertexStorage;
     }
 

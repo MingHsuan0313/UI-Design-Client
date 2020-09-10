@@ -96,7 +96,7 @@ export default class VertexStorage {
     return this.styleStorage.getStyle();
   }
 
-  addChild(childID, childVertex, property, element?) {
+  addChild(childID, childVertex: mxCell, property, element?) {
     let child;
     if (property == 'componentList') {
       child = {childID, childVertex, property, element};

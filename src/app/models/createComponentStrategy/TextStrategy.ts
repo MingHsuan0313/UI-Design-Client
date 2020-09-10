@@ -20,7 +20,7 @@ export class TextStrategy implements ICreateComponentStrategy {
     }
   }
 
-  createDataBinding() {
+  createDataBinding(part) {
     let hasDataBinding = true;
     let dataBindingName = "text";
     let isList = -1;
@@ -33,7 +33,7 @@ export class TextStrategy implements ICreateComponentStrategy {
   }
 
   createTextVertex(graphStorage, component, parent) {
-    const dataBinding = this.createDataBinding();
+    const dataBinding = this.createDataBinding("text");
 
 
     let style = {} ;
@@ -54,6 +54,9 @@ export class TextStrategy implements ICreateComponentStrategy {
 
     // Initialized
     let textVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding, true);
+    textVertexStorage.vertex["componentPart"] = "box";
+    textVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
+    textVertexStorage.vertex["isPrimary"] = true;
     // graphStorage.getGraph().updateCellSize(textVertexStorage.getVertex(), true);
     graphStorage.getGraph().refresh(textVertexStorage.getVertex());
     return textVertexStorage;

@@ -25,7 +25,7 @@ export class TableStrategy implements ICreateComponentStrategy {
 
   createDataBinding(part: String, index?) {
     if (part == "box") {
-      return undefined;
+      return new DataBinding(false, part, -1);
     }
     else if (part == "headers") {
       let hasDataBinding = true;
@@ -50,7 +50,7 @@ export class TableStrategy implements ICreateComponentStrategy {
       return dataBinding;
     }
     else 
-      return undefined;
+      return new DataBinding(false, part, -1);
   }
 
   createTableBoxVertex(graphStorage, component, parent) {
@@ -68,6 +68,9 @@ export class TableStrategy implements ICreateComponentStrategy {
     const tableBoxVertexGeometry = new mxGeometry(this.basex, this.basey, width, height);
     const tableBoxVertexStorage = graphStorage.insertVertex(parent, component.id, "", tableBoxVertexGeometry, styleStorage, component);
     tableBoxVertexStorage.setIsPrimary(true);
+    tableBoxVertexStorage.vertex["componentPart"] = "box";
+    tableBoxVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
+    tableBoxVertexStorage.vertex["isPrimary"] = true;
     return tableBoxVertexStorage;
   }
 
@@ -86,6 +89,10 @@ export class TableStrategy implements ICreateComponentStrategy {
       const tableHeaderVertexGeometry = new mxGeometry(x, 0, this.gridWidth, this.gridHeight);
       const tableHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, headerList[i], tableHeaderVertexGeometry, styleStorage, component, dataBinding);
       parent.addChild(tableHeaderVertexStorage.id, tableHeaderVertexStorage.getVertex(), "headers");
+
+      tableHeaderVertexStorage.vertex["componentPart"] = "header";
+      tableHeaderVertexStorage.vertex["dataBinding"] = this.createDataBinding("header");
+      tableHeaderVertexStorage.vertex["isPrimary"] = false;
     }
   }
 
@@ -108,6 +115,9 @@ export class TableStrategy implements ICreateComponentStrategy {
       const tableDataVertexStorage = graphStorage.insertVertex(parent.getVertex(),
         component.id, rows[i], tableDataVertexGeometry, styleStorage, component, dataBinding);
       parent.addChild(tableDataVertexStorage.id, tableDataVertexStorage.getVertex(), "rows");
+      tableDataVertexStorage.vertex["componentPart"] = "rows";
+      tableDataVertexStorage.vertex["dataBinding"] = this.createDataBinding("rows", i);
+      tableDataVertexStorage.vertex["isPrimary"] = false;
     }
   }
 

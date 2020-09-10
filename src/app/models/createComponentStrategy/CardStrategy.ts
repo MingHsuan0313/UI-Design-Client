@@ -23,7 +23,7 @@ export class CardStrategy implements ICreateComponentStrategy {
   }
 
   // part: Box , Header
-  createDataBinding(part: String) {
+  createDataBinding(part: String, index?){
     if (part == "header") {
 
       const dataBindingName = "header";
@@ -37,10 +37,10 @@ export class CardStrategy implements ICreateComponentStrategy {
       return dataBinding;
     }
     else if(part == "box") {
-      return undefined;
+      return new DataBinding(false, part, -1);
     }
     else 
-      return undefined;
+      return new DataBinding(false, part, -1);
   }
 
   createCardBoxVertex(graphStorage, component, parent) {
@@ -51,6 +51,10 @@ export class CardStrategy implements ICreateComponentStrategy {
     const cardVertexGeometry = new mxGeometry(this.basex, this.basey, 250, 300);
     const cardVertexStorage = graphStorage.insertVertex(parent, component.id, "", cardVertexGeometry, styleStorage, component);
     cardVertexStorage.setIsPrimary(true);
+
+    cardVertexStorage.vertex["componentPart"] = "box";
+    cardVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
+    cardVertexStorage.vertex["isPrimary"] = true;
     return cardVertexStorage;
   }
 
@@ -63,6 +67,9 @@ export class CardStrategy implements ICreateComponentStrategy {
     const cardHeaderGeometry = new mxGeometry(0, 0, 250, 50);
     const cardHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, component["header"], cardHeaderGeometry, styleStorage, component, dataBinding);
     parent.addChild(cardHeaderVertexStorage.id, cardHeaderVertexStorage.getVertex(), "header");
+    cardHeaderVertexStorage.vertex["componentPart"] = "header";
+    cardHeaderVertexStorage.vertex["dataBinding"] = this.createDataBinding("header");
+    cardHeaderVertexStorage.vertex["isPrimary"] = false;
     return cardHeaderVertexStorage;
   }
 

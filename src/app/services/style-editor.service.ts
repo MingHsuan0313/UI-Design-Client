@@ -21,7 +21,7 @@ export default class StyleEditorService {
     this.convertJsonObjectToStyleDescription(styleModel);
     return styleModel;
   }
-
+  //
   convertJsonObjectToStyleDescription(styleObj: any): String {
     let styleDescription = "";
     let styleKeys = Object.keys(styleObj);

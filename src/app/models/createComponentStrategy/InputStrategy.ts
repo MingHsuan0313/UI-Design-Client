@@ -2,7 +2,7 @@ import {ICreateComponentStrategy} from "./ICreateComponentStrategy";
 import {GraphStorage} from "../graph-storage.model";
 import {StyleLibrary} from "../../shared/styleLibrary";
 import {StyleStorage} from "../style-storage.model";
-
+import { DataBinding } from "../util/DataBinding";
 // no need to databinding
 export class InputStrategy implements ICreateComponentStrategy {
   basex: number;
@@ -17,6 +17,8 @@ export class InputStrategy implements ICreateComponentStrategy {
       this.basex = basex;
       this.basey = basey;
     }
+
+    
   }
 
   createComponent(graphStorage: GraphStorage, component, parent) {
@@ -30,6 +32,10 @@ export class InputStrategy implements ICreateComponentStrategy {
     // Initialized
     let inputVertexStorage = graphStorage.insertVertex(parent, component.id, "", textGeometry, styleStorage, component);
     inputVertexStorage.setIsPrimary(true);
+
+    inputVertexStorage.vertex["componentPart"] = "box";
+    inputVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
+    inputVertexStorage.vertex["isPrimary"] = true;
     // component.vertexStorage = vertexStorage;
     // component["style"] = inputVertexStorage.getStyle();
     component["x"] = inputVertexStorage.getVertexX();
@@ -37,5 +43,9 @@ export class InputStrategy implements ICreateComponentStrategy {
     component["width"] = inputVertexStorage.getVertexWidth();
     component["height"] = inputVertexStorage.getVertexHeight();
     return inputVertexStorage;
+  }
+
+  createDataBinding(part: String, index?){
+    return new DataBinding(false, "", -1);
   }
 }

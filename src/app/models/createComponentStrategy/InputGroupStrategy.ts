@@ -7,4 +7,9 @@ export class InputGroupStrategy implements ICreateComponentStrategy {
     createComponent(graphStorage: GraphStorage, component: any, parent: any) {
         throw new Error("Method not implemented.");
     }
+
+    createDataBinding(part: String, index?){
+        return null;
+    }
+
 }

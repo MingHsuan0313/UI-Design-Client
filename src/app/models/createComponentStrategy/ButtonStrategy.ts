@@ -19,7 +19,7 @@ export class ButtonStrategy implements ICreateComponentStrategy {
     }
   }
 
-  createDataBinding() {
+  createDataBinding(part: String, index?){
     let dataBindingName = "text";
     let hasDataBining = true;
     let isList = -1;
@@ -32,7 +32,7 @@ export class ButtonStrategy implements ICreateComponentStrategy {
   }
 
   createButtonVertex(graphStorage, component, parent) {
-    let dataBinding = this.createDataBinding();
+    let dataBinding = this.createDataBinding("text");
     const style = StyleLibrary[0]["button"];
     const styleName = "style" + component.id;
     const styleStorage = new StyleStorage(styleName, style);
@@ -42,6 +42,9 @@ export class ButtonStrategy implements ICreateComponentStrategy {
     const height = 40;
     const buttonGeometry = new mxGeometry(this.basex, this.basey, width, height);
     let buttonVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, buttonGeometry, styleStorage, component,dataBinding, true);
+    buttonVertexStorage.vertex["componentPart"] = "box";
+    buttonVertexStorage.vertex["dataBinding"] = dataBinding;
+    buttonVertexStorage.vertex["isPrimary"] = true;
 
     return buttonVertexStorage;
   }
