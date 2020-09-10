@@ -247,11 +247,17 @@ export class GraphStorage {
   }
 
   findVertexStorageByID(id) {
-
     for (let key in this.vertexStorageList) {
       if (this.vertexStorageList[key].id == id) {
         return this.vertexStorageList[key];
       }
+    }
+  }
+
+  findVertexKeyByID(id) {
+    for(let key in this.vertexStorageList) {
+      if(this.vertexStorageList[key].id == id)
+        return key;
     }
   }
 
