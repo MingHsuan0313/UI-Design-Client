@@ -21,6 +21,8 @@ import { LayoutStrategy } from '../../models/createComponentStrategy/LayoutStrat
 import { from } from 'rxjs';
 import { GraphStorage } from 'src/app/models/graph-storage.model';
 import { UIComponent } from 'src/app/models/model';
+import StyleEditorService from 'src/app/services/style-editor.service';
+import { style } from '@angular/animations';
 
 
 @Component({
@@ -34,7 +36,10 @@ export class NavEditorComponent implements OnInit {
   private imageCount = 0;
   private imageObservable;
 
-  constructor(private importService: ImportService, private exportService: ExportService, private graphEditorService: GraphEditorService) { 
+  constructor(private importService: ImportService,
+     private exportService: ExportService,
+     private graphEditorService: GraphEditorService,
+     private styleEditorService: StyleEditorService ) { 
     this.files = this.importService.pages;
     this.images = Storage.images;
   }
@@ -75,6 +80,7 @@ export class NavEditorComponent implements OnInit {
 
   makeDragableOfDom(id, pageUICDL, graphStorage: GraphStorage){
     let xml = pageUICDL["xml"];
+    let styleEditorService = this.styleEditorService;
     //console.log(JSON.parse(JSON.stringify(pageUICDL)));
     setTimeout(function(graph){ 
       var img = document.getElementById(id); 
@@ -162,7 +168,10 @@ export class NavEditorComponent implements OnInit {
             Storage.add(uiComponent);
           }
           //console.log(JSON.parse(JSON.stringify(pageUICDL)));
-          let vs: vertexStorage = new vertexStorage(childCell, new StyleStorage("", childCell.style), uiComponent, dataBindingObject, isPrimary);
+          console.log("style heree")
+          console.log(childCell.style)
+          let childCellStyle = styleEditorService.convertStyleDescriptionToJsobObject(childCell.style);
+          let vs: vertexStorage = new vertexStorage(childCell, new StyleStorage("", childCellStyle), uiComponent, dataBindingObject, isPrimary);
           let parentVertexStorage: vertexStorage = graphStorage.findVertexStorageByID(parentID);
           if(parentVertexStorage!=null){
             if(componentPart == "box"){

@@ -39,6 +39,8 @@ export class StyleEditorComponent implements OnInit {
 
   changeFontColor() {
     let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
+    console.log("hereee")
+    console.log(oldStyle)
     oldStyle.fontColor = this.fontColor;
     let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
@@ -50,10 +52,17 @@ export class StyleEditorComponent implements OnInit {
 
   changeColor(event) {
     let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
+    console.log("hereee")
+    console.log(oldStyle)
+    console.log(this.colorPicker)
     oldStyle.fillColor = this.colorPicker;
+    console.log('qqqqq')
     let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
+    console.log(this.selectedStyleStorage)
+    console.log('ttwerwkjehrj')
     this.selectedStyleStorage.changeFillColor(this.colorPicker);
+    console.log('ttwerwkjehrj2')
     this.graph.refresh();
     this.graphStorage.setModified();
   }
