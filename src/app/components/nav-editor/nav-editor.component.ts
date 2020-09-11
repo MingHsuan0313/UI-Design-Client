@@ -168,8 +168,6 @@ export class NavEditorComponent implements OnInit {
             Storage.add(uiComponent);
           }
           //console.log(JSON.parse(JSON.stringify(pageUICDL)));
-          console.log("style heree")
-          console.log(childCell.style)
           let childCellStyle = styleEditorService.convertStyleDescriptionToJsobObject(childCell.style);
           let vs: vertexStorage = new vertexStorage(childCell, new StyleStorage("", childCellStyle), uiComponent, dataBindingObject, isPrimary);
           let parentVertexStorage: vertexStorage = graphStorage.findVertexStorageByID(parentID);
