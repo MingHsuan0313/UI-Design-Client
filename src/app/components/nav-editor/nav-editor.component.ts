@@ -19,9 +19,11 @@ import { IconStrategy } from '../../models/createComponentStrategy/IconStrategy'
 import { InputStrategy } from '../../models/createComponentStrategy/InputStrategy';
 import { LayoutStrategy } from '../../models/createComponentStrategy/LayoutStrategy';
 import { from } from 'rxjs';
-// import { GraphStorage, UIComponent } from 'src/app/models/modelDependency';
-import { GraphStorage } from '../../models/graph-storage.model';
-import { UIComponent } from '../../models/model';
+import { GraphStorage } from 'src/app/models/graph-storage.model';
+import { UIComponent } from 'src/app/models/model';
+import StyleEditorService from 'src/app/services/style-editor.service';
+import { style } from '@angular/animations';
+
 
 @Component({
   selector: 'app-nav-editor',
@@ -34,7 +36,10 @@ export class NavEditorComponent implements OnInit {
   private imageCount = 0;
   private imageObservable;
 
-  constructor(private importService: ImportService, private exportService: ExportService, private graphEditorService: GraphEditorService) { 
+  constructor(private importService: ImportService,
+     private exportService: ExportService,
+     private graphEditorService: GraphEditorService,
+     private styleEditorService: StyleEditorService ) { 
     this.files = this.importService.pages;
     this.images = Storage.images;
   }
@@ -45,17 +50,28 @@ export class NavEditorComponent implements OnInit {
     let result = encoder.encode(this.graphEditorService.getGraphStorage().getGraph().getModel());
     let xml = mxUtils.getXml(result);
     console.log(xml)
-    let pageUICDL = Storage.getPageUICDL();
-    console.log(pageUICDL)
+    const pageUICDL = Storage.getPageUICDL();
+    console.log(JSON.parse(JSON.stringify(pageUICDL)));
     pageUICDL["xml"] = xml;
     this.exportService.postImage(xml).subscribe(
       response => {
-        let pageID = "Page" + this.imageCount++;
+        
+        let pageID = pageUICDL["selector"];
         let image = {};
         image["page"] = pageID;
         image["img"] = 'data:image/png;base64,' + response['body'];
-        Storage.images.push(image);
+         let alreadyExistImageIndex = Storage.images.findIndex(image=>{
+           return image["page"] == pageID
+         })
+         if(alreadyExistImageIndex==-1){
+           Storage.images.push(image);
+         }
+         else{
+          this.images[alreadyExistImageIndex] = image;
+         }
+
         pageUICDL["image"] = JSON.stringify(image["img"]);
+
         this.makeDragableOfDom(pageID, pageUICDL, this.graphEditorService.graphStorage);
       
       }
@@ -64,10 +80,14 @@ export class NavEditorComponent implements OnInit {
 
   makeDragableOfDom(id, pageUICDL, graphStorage: GraphStorage){
     let xml = pageUICDL["xml"];
+    let styleEditorService = this.styleEditorService;
+    //console.log(JSON.parse(JSON.stringify(pageUICDL)));
     setTimeout(function(graph){ 
       var img = document.getElementById(id); 
       var funct = function(graph, evt, cell, x, y)
       {
+        //console.log(JSON.parse(JSON.stringify(pageUICDL)));
+        //console.log(pageUICDL)
         let doc = mxUtils.parseXml(xml);
         let codec = new mxCodec(doc);
         let elt = doc.documentElement.firstChild.firstChild;
@@ -83,7 +103,10 @@ export class NavEditorComponent implements OnInit {
           let componentSelector = elt.getAttribute("selector");
 
           let uiComponent: UIComponent;
+
           let findMatchComponent = function(UICDL, selector){
+            //console.log(selector)
+            //console.log(JSON.parse(JSON.stringify(UICDL)));
             if(UICDL["componentList"]!=undefined){
               for(let component of UICDL["componentList"]){
                      if(selector==component["selector"]){
@@ -95,6 +118,7 @@ export class NavEditorComponent implements OnInit {
             }
             return uiComponent;
           }
+          //console.log(JSON.parse(JSON.stringify(pageUICDL)));
           uiComponent = findMatchComponent(pageUICDL, componentSelector);
           // find databinding, isPrimary, componentPart info from xml
           let dataBinding = (elt.getElementsByTagName("DataBinding"))[0];
@@ -126,6 +150,7 @@ export class NavEditorComponent implements OnInit {
             graph.getModel().endUpdate();
           }
           cells.push(childCell);
+          //console.log(JSON.parse(JSON.stringify(pageUICDL)));
           // bind parent cell and child cell in mxgraph
           var parentID = idMapping[elt.getAttribute("parent")];
           if(parentID!=null){
@@ -134,7 +159,7 @@ export class NavEditorComponent implements OnInit {
           }
           // update new id in component info (internel representation)
           uiComponent.id = newChildID;
-        
+          //console.log(JSON.parse(JSON.stringify(pageUICDL)));
           // set layout info to storage 
           if(componentSelector=="Layout" && componentPart=="box"){
             Storage.setLayoutComponent(uiComponent);
@@ -142,8 +167,9 @@ export class NavEditorComponent implements OnInit {
             // set component(not layout) info to storage
             Storage.add(uiComponent);
           }
-          console.log(Storage.UICDL)
-          let vs: vertexStorage = new vertexStorage(childCell, new StyleStorage("", childCell.style), uiComponent, dataBindingObject, isPrimary);
+          //console.log(JSON.parse(JSON.stringify(pageUICDL)));
+          let childCellStyle = styleEditorService.convertStyleDescriptionToJsobObject(childCell.style);
+          let vs: vertexStorage = new vertexStorage(childCell, new StyleStorage("", childCellStyle), uiComponent, dataBindingObject, isPrimary);
           let parentVertexStorage: vertexStorage = graphStorage.findVertexStorageByID(parentID);
           if(parentVertexStorage!=null){
             if(componentPart == "box"){
@@ -156,11 +182,12 @@ export class NavEditorComponent implements OnInit {
           graphStorage.vertexStorageList[length] = vs;   
           console.log(vs)
           elt = elt.nextSibling;
+          //console.log(JSON.parse(JSON.stringify(pageUICDL)));
         }
 
       }
       mxUtils.makeDraggable(img, graph, funct, img);
-    }, 300, this.graphEditorService.getGraphStorage().getGraph() );
+    }, 100, this.graphEditorService.getGraphStorage().getGraph() );
     
   }
 

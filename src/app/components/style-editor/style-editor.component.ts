@@ -39,6 +39,8 @@ export class StyleEditorComponent implements OnInit {
 
   changeFontColor() {
     let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
+    console.log("hereee")
+    console.log(oldStyle)
     oldStyle.fontColor = this.fontColor;
     let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
