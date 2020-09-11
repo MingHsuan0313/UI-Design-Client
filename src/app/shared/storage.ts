@@ -52,7 +52,7 @@ export class Storage {
   }
 
   static setLayoutComponent(component) {
-    this.layoutComponent = component;
+    this.layoutComponent = _.cloneDeep(component);
     this.layoutComponent["componentList"] = this.UICDL;
     this.PageUICDL['componentList'][0] = (this.layoutComponent);
   }
@@ -94,14 +94,13 @@ export class Storage {
   }
 
   static getPageUICDL() {
-     const clonedPageUICDL = JSON.parse(JSON.stringify(this.PageUICDL));
-     const clonedUICDL = JSON.parse(JSON.stringify(this.UICDL));
-     this.PageUICDL["componentList"][0]["componentList"] = "Hello2";
-     console.log(clonedUICDL);
-     console.log(clonedPageUICDL==this.PageUICDL);
-     console.log(clonedPageUICDL);
-     clonedPageUICDL['componentList'][0]["componentList"] = clonedUICDL;
-     console.log(clonedPageUICDL)
+     const clonedPageUICDL = _.cloneDeep(this.PageUICDL);
+    //  const clonedUICDL = JSON.parse(JSON.stringify(this.UICDL));
+
+    //  console.log(clonedUICDL);
+    //  console.log(clonedPageUICDL==this.PageUICDL);
+    //  console.log(clonedPageUICDL);
+    //  console.log(clonedPageUICDL)
      return clonedPageUICDL;
     //return this.pageUICDLList;
   }
@@ -119,9 +118,10 @@ export class Storage {
 
   
 
-  static clearTemp() {
+  static clearTemp() { 
     this.components = [];
-    this.UICDL = ["Hello"];
+    this.UICDL = [];
+    console.log("clear graph")
   }
 }
 
