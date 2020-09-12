@@ -9,6 +9,7 @@ export class GraphConfiguration {
         let editor = graphStorage.editor;
         this.configureEditorKeyBinding(editor);
         this.configureGraphListener(editor);
+        this.graphStorage = graphStorage;
     }
 
     configureEditorKeyBinding(editor: mxEditor) {
@@ -29,12 +30,15 @@ export class GraphConfiguration {
         })
 
         editor.addAction("mx-paste", (event) => {
-            let soueceIDs = this.getCellsIDs();
+            let sourceIDs = this.getCellsIDs();
+            console.log(event.graph.selectionModel.cells)
             editor.execute("paste");
             let targetIDs = this.getCellsIDs();
+            this.graphStorage.createVertexStorageByCell(sourceIDs,targetIDs);
             console.log("fire paste");
             this.selectedCells = event.graph.selectionModel.cells;
-            console.log(soueceIDs);
+            console.log(sourceIDs);
+            console.log(event.graph.selectionModel.cells)
             console.log(targetIDs);
         })
 

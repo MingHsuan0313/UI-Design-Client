@@ -13,11 +13,11 @@ import { IconStrategy } from './createComponentStrategy/IconStrategy';
 import { InputStrategy } from './createComponentStrategy/InputStrategy';
 import { LayoutStrategy } from './createComponentStrategy/LayoutStrategy';
 import { GraphConfiguration } from './util/graph-configuration';
-import { StyleLibrary } from '../shared/styleLibrary';
-import { Component } from '@angular/core';
+import { PropertyGenerator } from '../shared/property-generator';
 
 export class GraphStorage {
   vertexStorageList: {}; //{index:VertexStorage}
+  garbageStorageList: {}; // vertexStorages for recover;
   edgeStorageList: EdgeStorage[];
   editor: mxEditor;
   graphModel: mxGraphModel;
@@ -74,22 +74,38 @@ export class GraphStorage {
   // after copy delete undo redo
   // we need to create or destroy vertexStorage as well
   syncMxCells() {
-    let test = {
-      
-      0: "11" ,
-      1: "122"
-    }
-    let temp = test[0]
-    delete test[0]
-    console.log(temp)
-
-    console.log(test)
     let mxCells = this.getGraphModel().cells;
+
+    // for copy & recover cell
+    for (let key in mxCells) {
+      console.log(key);
+      if (!(key in this.vertexStorageList)) {
+        console.log(`key : + ${key} not in vertexStorage`)
+        this.createVertexStorageByCell(mxCells[key], key);
+      }
+    }
+
+    // for delete
+    for (let key in this.vertexStorageList) {
+      console.log(key);
+      if (!(key in mxCells)) {
+        console.log(`key : + ${key} not in vertexStorage`)
+        this.deleteVertexStorageByIndex(key);
+      }
+    }
+
     console.log("cells here");
     console.log(mxCells);
-    console.log(Array.isArray(mxCells))
-    console.log("vertexStorages here");
     console.log(this.vertexStorageList);
+  }
+
+  createVertexStorageByCell(sourceCells,targetCells) {
+
+  }
+
+  deleteVertexStorageByIndex(index) {
+    this.garbageStorageList[index] = this.vertexStorageList[index];
+    delete this.vertexStorageList[index];
   }
 
   setStrategy(strategy: ICreateComponentStrategy) {
@@ -202,8 +218,9 @@ export class GraphStorage {
     let styleDescription = this.convertJsonObjectToStyleDescription(styleStorage.style);
     try {
       this.graph.getModel().beginUpdate();
-      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,styleDescription, '');
+      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height, styleDescription, '');
       vertex["selector"] = uicomponent["selector"]
+      vertex["type"] = uicomponent["type"]
       // vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height,"rounded=true", '');
     } finally {
       this.graph.getModel().endUpdate();
@@ -255,8 +272,8 @@ export class GraphStorage {
   }
 
   findVertexKeyByID(id) {
-    for(let key in this.vertexStorageList) {
-      if(this.vertexStorageList[key].id == id)
+    for (let key in this.vertexStorageList) {
+      if (this.vertexStorageList[key].id == id)
         return key;
     }
   }

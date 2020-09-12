@@ -95,14 +95,7 @@ export class Storage {
 
   static getPageUICDL() {
      const clonedPageUICDL = _.cloneDeep(this.PageUICDL);
-    //  const clonedUICDL = JSON.parse(JSON.stringify(this.UICDL));
-
-    //  console.log(clonedUICDL);
-    //  console.log(clonedPageUICDL==this.PageUICDL);
-    //  console.log(clonedPageUICDL);
-    //  console.log(clonedPageUICDL)
      return clonedPageUICDL;
-    //return this.pageUICDLList;
   }
 
   static createPageUICDL(){
