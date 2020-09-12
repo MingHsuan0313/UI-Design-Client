@@ -21,6 +21,10 @@ export class CodeEditorComponent implements OnInit {
   ) {
   }
 
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
   ngOnInit() {
   }
 }
