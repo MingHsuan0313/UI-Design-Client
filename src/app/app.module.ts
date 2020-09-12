@@ -16,6 +16,8 @@ import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 // import {AppHeaderComponent} from './components/app-header/app-header.component';
 
 import {
@@ -31,6 +33,8 @@ import {WizardComponent} from "./containers/default-layout/wizard/wizard.compone
 import { StyleEditorComponent } from './components/style-editor/style-editor.component';
 import { NavEditorComponent } from './components/nav-editor/nav-editor.component';
 import { PageEditorComponent } from './components/page-editor/page-editor.component';
+import { CodeEditorComponent } from './components/code-editor/code-editor.component';
+import { CodeEditorDialogComponent } from './components/code-editor-dialog/code-editor-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,14 +46,16 @@ import { PageEditorComponent } from './components/page-editor/page-editor.compon
     DefaultLayoutComponent,
     StyleEditorComponent,
     NavEditorComponent,
-    PageEditorComponent
+    PageEditorComponent,
+    CodeEditorComponent,
+    CodeEditorDialogComponent
   ],
   imports: [
     PerfectScrollbarModule,
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    
+    MonacoEditorModule.forRoot() ,
     FormsModule,
     HttpClientModule,
     AppAsideModule,
@@ -59,7 +65,12 @@ import { PageEditorComponent } from './components/page-editor/page-editor.compon
     AppSidebarModule,
     BsDropdownModule.forRoot(),
     MatTabsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    CodeEditorComponent,
+    CodeEditorDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

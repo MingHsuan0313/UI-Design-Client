@@ -13,6 +13,7 @@
   "dependencies": {
     "@agm/core": "^1.0.0-beta.5",
     "@angular/animations": "^6.1.10",
+    "@angular/cdk": "^6.2.0",
     "@angular/common": "^6.1.10",
     "@angular/compiler": "^6.1.10",
     "@angular/core": "^6.1.10",
@@ -50,6 +51,7 @@
     "ng2-charts": "1.6.0",
     "ng2-dragula": "^1.5.0",
     "ngx-bootstrap": "3.0.1",
+    "ngx-monaco-editor": "^6.0.0",
     "ngx-perfect-scrollbar": "6.3.1",
     "ngx-quill": "^3.6.0",
     "ngx-toggle-switch": "^2.0.5",
@@ -59,8 +61,7 @@
     "simple-line-icons": "^2.4.1",
     "spinkit": "^1.2.5",
     "ts-helpers": "1.1.2",
-    "zone.js": "0.8.26",
-    "@angular/cdk": "^6.2.0"
+    "zone.js": "0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.8.6",
