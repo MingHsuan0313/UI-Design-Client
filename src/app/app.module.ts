@@ -17,6 +17,8 @@ import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
+import {MatSelectModule} from '@angular/material/select'; 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 // import {AppHeaderComponent} from './components/app-header/app-header.component';
 
@@ -36,6 +38,7 @@ import { PageEditorComponent } from './components/page-editor/page-editor.compon
 import { CodeEditorComponent } from './components/code-editor/code-editor.component';
 import { CodeEditorDialogComponent } from './components/code-editor-dialog/code-editor-dialog.component';
 import { ServiceComponentConfigurationComponent } from './components/service-component-configuration/service-component-configuration.component';
+import { MatFormFieldModule, MatInputModule } from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -68,7 +71,10 @@ import { ServiceComponentConfigurationComponent } from './components/service-com
     BsDropdownModule.forRoot(),
     MatTabsModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatFormFieldModule,
   ],
   entryComponents: [
     CodeEditorComponent,

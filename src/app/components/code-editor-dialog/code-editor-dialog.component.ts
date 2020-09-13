@@ -5,7 +5,7 @@ import { CodeEditorComponent } from '../code-editor/code-editor.component' ;
 @Component({
   selector: 'app-code-editor-dialog',
   templateUrl: './code-editor-dialog.component.html',
-  styleUrls: ['./code-editor-dialog.component.css']
+  styleUrls: ['./code-editor-dialog.component.scss']
 })
 export class CodeEditorDialogComponent implements OnInit {
 
@@ -15,6 +15,7 @@ export class CodeEditorDialogComponent implements OnInit {
     let dialogRef = this.dialog.open(CodeEditorComponent, {
       width: '850px',
       height: '550px',
+      panelClass: 'backdropBackground',
       data: {
         name: "Tim Hsieh",
         age: 23

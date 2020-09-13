@@ -1,3 +1,35 @@
-<p>
-  service-component-configuration works!
-</p>
+<div *ngIf="selectedUIComponent!=undefined && uiType!='none'; else uiComponentNotSelected">
+  <span style="font-size: large;">UI Component Category : {{selectedUIComponent.category}}</span>
+  <br>
+  <div *ngIf="selectedUIComponent.serviceComponent.name.length >0; else serviceNotSelected">
+
+  </div>
+
+
+  <mat-form-field *ngIf="uiType == 'service'">
+    <mat-label>Choose Service</mat-label>
+    <mat-select (selectionChange)="selectService()" [(value)]="selectedServiceComponentName">
+      <mat-option *ngFor="let serviceComponentOption of serviceComponentOptions" value="{{serviceComponentOption}}">
+        {{serviceComponentOption}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="uiType == 'argument'">
+    <mat-label>Choose Argument</mat-label>
+    <mat-select (selectionChange)="selectArgument()" [(value)]="selectedArgumentName">
+      <mat-option *ngFor="let argumentOption of argumentOptions" value="{{argumentOption}}">
+        {{argumentOption}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div *ngIf="uiType == 'none'">
+    <span style="font-size: large;">can't be both argument and service component</span>
+  </div>
+  <br>
+  <button (click)="queryServer()" mat-raised-button color="primary">Query Services</button>
+  &nbsp;
+  <mat-slide-toggle [color]="color" [checked]="isMatchmaking">Matchmaking</mat-slide-toggle>
+</div>
+<ng-template #uiComponentNotSelected><span>UI component has not been selected</span></ng-template>
+<ng-template #serviceNotSelected><span>Service Component has not been selected</span></ng-template>

@@ -58,6 +58,16 @@ export const Library = {
     "breadcrumb": [],
     "input": [],
     "inputgroup": [],
+  },
+
+  // three kind of type
+  // service
+  // argument
+  // none
+  "UI_Service_Type": {
+    "form": "service",
+    "input": "argument",
+    "table": "service",
   }
 };
 

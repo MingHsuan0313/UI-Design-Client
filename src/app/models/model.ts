@@ -10,20 +10,10 @@ export interface UIComponent {
   layout: String;
   category: String;
 
-  serviceComponent: Object;
-  serviceType: ServiceMappingType;
-  argumentName: String;
+  serviceComponent: ServiceComponentModel;
 
   add(component: UIComponent): void;
-
   remove(component: UIComponent): void;
-
-  setArgument(argumentName): void;
-
-  setServiceComponent(serviceComponent): void;
-
-  setServiceType(serviceType: ServiceMappingType): void;
-
   getInfo(): any;
 }
 
@@ -40,13 +30,12 @@ export class Icon implements UIComponent {
   text: String;
   category: String;
 
-  serviceComponent: Object;
-  serviceType: ServiceMappingType;
-  argumentName: String;
+  serviceComponent: ServiceComponentModel;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
     this.category = "informative";
+    this.serviceComponent = new ServiceComponentModel();
   }
 
   add(component: UIComponent): void {
@@ -57,22 +46,6 @@ export class Icon implements UIComponent {
   }
 
   remove(component: UIComponent): void {
-  }
-
-  setServiceComponent(serviceComponent): void {
-    this.serviceComponent = serviceComponent;
-  }
-
-  setServiceType(serviceType: ServiceMappingType): void {
-    this.serviceType = serviceType;
-    if (serviceType == ServiceMappingType["none"] ||
-      serviceType == ServiceMappingType["argument"]) {
-      this.serviceComponent = {}
-    }
-  }
-
-  setArgument(argumentName: any): void {
-    this.argumentName = argumentName
   }
 }
 
@@ -90,13 +63,12 @@ export class Text implements UIComponent {
   href: String;
   category: String;
 
-  serviceComponent: Object;
-  serviceType: ServiceMappingType;
-  argumentName: String;
+  serviceComponent: ServiceComponentModel;
 
   constructor(init?: Partial<Text>) {
     Object.assign(this, init);
     this.category = "informative";
+    this.serviceComponent = new ServiceComponentModel();
   }
 
   add(component: UIComponent): void {
@@ -107,22 +79,6 @@ export class Text implements UIComponent {
   }
 
   remove(component: UIComponent): void {
-  }
-
-  setServiceComponent(serviceComponent) {
-    this.serviceComponent = serviceComponent;
-  }
-
-  setServiceType(serviceType: ServiceMappingType): void {
-    this.serviceType = serviceType;
-    if (serviceType == ServiceMappingType["none"] ||
-      serviceType == ServiceMappingType["argument"]) {
-      this.serviceComponent = {}
-    }
-  }
-
-  setArgument(argumentName: any): void {
-    this.argumentName = argumentName;
   }
 }
 
@@ -140,13 +96,12 @@ export class Button implements UIComponent {
   href: String;
   category: String;
 
-  serviceComponent: Object;
-  serviceType: ServiceMappingType;
-  argumentName: String;
+  serviceComponent: ServiceComponentModel;
 
   constructor(init?: Partial<Button>) {
     Object.assign(this, init);
     this.category = "informative";
+    this.serviceComponent = new ServiceComponentModel();
   }
 
   add(component: UIComponent): void {
@@ -157,23 +112,6 @@ export class Button implements UIComponent {
   }
 
   remove(component: UIComponent): void {
-  }
-
-  setServiceComponent(serviceComponent) {
-    this.serviceComponent = serviceComponent;
-
-  }
-
-  setServiceType(serviceType: ServiceMappingType): void {
-    this.serviceType = serviceType;
-    if (serviceType == ServiceMappingType["none"] ||
-      serviceType == ServiceMappingType["argument"]) {
-      this.serviceComponent = {}
-    }
-  }
-
-  setArgument(argumentName: any): void {
-    this.argumentName = argumentName;
   }
 }
 
@@ -191,13 +129,12 @@ export class Table implements UIComponent {
   rows: any[];
   category: String;
 
-  serviceComponent: Object;
-  serviceType: ServiceMappingType;
-  argumentName: String;
+  serviceComponent: ServiceComponentModel;
 
   constructor(init?: Partial<Table>) {
     Object.assign(this, init);
     this.category = "informative";
+    this.serviceComponent = new ServiceComponentModel();
   }
 
   add(component: UIComponent): void {
@@ -208,22 +145,6 @@ export class Table implements UIComponent {
   }
 
   remove(component: UIComponent): void {
-  }
-
-  setServiceComponent(serviceComponent) {
-    this.serviceComponent = serviceComponent;
-  }
-
-  setServiceType(serviceType) {
-    this.serviceType = serviceType;
-    if (serviceType == ServiceMappingType["none"] ||
-      serviceType == ServiceMappingType["argument"]) {
-      this.serviceComponent = {}
-    }
-  }
-
-  setArgument(argumentName: any): void {
-    this.argumentName = argumentName;
   }
 }
 
@@ -241,13 +162,12 @@ export class CardComposite implements UIComponent {
   componentList: any[] = [];
   category: String;
 
-  serviceComponent: Object;
-  serviceType: ServiceMappingType;
-  argumentName: String;
+  serviceComponent: ServiceComponentModel;
 
   constructor(init?: Partial<CardComposite>) {
     Object.assign(this, init);
     this.category = "informative";
+    this.serviceComponent = new ServiceComponentModel();
   }
 
 
@@ -260,22 +180,6 @@ export class CardComposite implements UIComponent {
   }
 
   remove(component: UIComponent): void {
-  }
-
-  setServiceComponent(serviceComponent) {
-    this.serviceComponent = serviceComponent;
-  }
-
-  setServiceType(serviceType) {
-    this.serviceType = serviceType;
-    if (serviceType == ServiceMappingType["none"] ||
-      serviceType == ServiceMappingType["argument"]) {
-      this.serviceComponent = {}
-    }
-  }
-
-  setArgument(argumentName: any): void {
-    this.argumentName = argumentName;
   }
 }
 
@@ -292,13 +196,12 @@ export class Dropdown implements UIComponent {
   items: any[];
   category: String;
 
-  serviceComponent: Object;
-  serviceType: ServiceMappingType;
-  argumentName: String;
+  serviceComponent: ServiceComponentModel;
 
   constructor(init?: Partial<Dropdown>) {
     Object.assign(this, init);
     this.category = "informative";
+    this.serviceComponent = new ServiceComponentModel();
   }
 
   add(component: UIComponent): void {
@@ -309,22 +212,6 @@ export class Dropdown implements UIComponent {
   }
 
   remove(component: UIComponent): void {
-  }
-
-  setServiceComponent(serviceComponent) {
-    this.serviceComponent = serviceComponent;
-  }
-
-  setServiceType(serviceType: ServiceMappingType) {
-    this.serviceType = serviceType;
-    if (serviceType == ServiceMappingType["none"] ||
-      serviceType == ServiceMappingType["argument"]) {
-      this.serviceComponent = {}
-    }
-  }
-
-  setArgument(argumentName: any): void {
-    this.argumentName = argumentName;
   }
 }
 
@@ -341,13 +228,12 @@ export class InputGroupComposite implements UIComponent {
   componentList: any[] = [];
   category: String;
 
-  serviceComponent: Object;
-  serviceType: ServiceMappingType;
-  argumentName: String;
+  serviceComponent: ServiceComponentModel;
 
   constructor(init?: Partial<InputGroupComposite>) {
     Object.assign(this, init);
     this.category = "input";
+    this.serviceComponent = new ServiceComponentModel();
   }
 
   add(component: UIComponent): void {
@@ -359,22 +245,6 @@ export class InputGroupComposite implements UIComponent {
   }
 
   remove(component: UIComponent): void {
-  }
-
-  setServiceComponent(serviceComponent) {
-    this.serviceComponent = serviceComponent;
-  }
-  
-  setServiceType(serviceType: ServiceMappingType) {
-    this.serviceType = serviceType;
-    if (serviceType == ServiceMappingType["none"] ||
-      serviceType == ServiceMappingType["argument"]) {
-      this.serviceComponent = {}
-    }
-  }
-
-  setArgument(argumentName: any): void {
-    this.argumentName = argumentName;
   }
 }
 
@@ -391,13 +261,12 @@ export class INPUT implements UIComponent {
   typeInfo: String;  // e.g. input-text, input-password
   category: String;
 
-  serviceComponent: Object;
-  serviceType: ServiceMappingType;
-  argumentName: String;
+  serviceComponent: ServiceComponentModel;
 
   constructor(init?: Partial<INPUT>) {
     Object.assign(this, init);
     this.category = "input";
+    this.serviceComponent = new ServiceComponentModel();
   }
 
   add(component: UIComponent): void {
@@ -408,22 +277,6 @@ export class INPUT implements UIComponent {
   }
 
   remove(component: UIComponent): void {
-  }
-
-  setServiceComponent(serviceComponent) {
-    this.serviceComponent = serviceComponent;
-  }
-
-  setServiceType(serviceType: ServiceMappingType) {
-    this.serviceType = serviceType;
-    if (serviceType == ServiceMappingType["none"] ||
-      serviceType == ServiceMappingType["argument"]) {
-      this.serviceComponent = {}
-    }
-  }
-
-  setArgument(argumentName: any): void {
-    this.argumentName = argumentName;
   }
 }
 
@@ -440,13 +293,14 @@ export class BreadcrumbComposite implements UIComponent {
   componentList: any[] = [];
   category: String;
 
-  serviceComponent: Object;
+  serviceComponent: ServiceComponentModel;
   serviceType: ServiceMappingType;
   argumentName: String;
 
   constructor(init?: Partial<BreadcrumbComposite>) {
     Object.assign(this, init);
     this.category = "navigation";
+    this.serviceComponent = new ServiceComponentModel();
   }
 
   add(component: UIComponent): void {
@@ -458,22 +312,6 @@ export class BreadcrumbComposite implements UIComponent {
   }
 
   remove(component: UIComponent): void {
-  }
-
-  setServiceComponent(serviceComponent) {
-    this.setServiceComponent = serviceComponent;
-  }
-
-  setServiceType(serviceType: ServiceMappingType) {
-    this.serviceType = serviceType;
-    if (serviceType == ServiceMappingType["none"] ||
-      serviceType == ServiceMappingType["argument"]) {
-      this.serviceComponent = {}
-    }
-  }
-
-  setArgument(argumentName: any): void {
-    this.argumentName = argumentName;
   }
 }
 
@@ -490,13 +328,14 @@ export class FormComposite implements UIComponent {
   componentList: any[] = [];
   category: String;
 
-  serviceComponent: Object;
+  serviceComponent: ServiceComponentModel;
   serviceType: ServiceMappingType;
   argumentName: String;
 
   constructor(init?: Partial<FormComposite>) {
     Object.assign(this, init);
     this.category = "input";
+    this.serviceComponent = new ServiceComponentModel();
   }
 
   add(component: UIComponent): void {
@@ -508,22 +347,6 @@ export class FormComposite implements UIComponent {
   }
 
   remove(component: UIComponent): void {
-  }
-
-  setServiceComponent(serviceComponent) {
-    this.serviceComponent = serviceComponent;
-  }
-
-  setServiceType(serviceType: ServiceMappingType) {
-    this.serviceType = serviceType;
-    if (serviceType == ServiceMappingType["none"] ||
-      serviceType == ServiceMappingType["argument"]) {
-      this.serviceComponent = {}
-    }
-  }
-
-  setArgument(argumentName: any): void {
-    this.argumentName = argumentName;
   }
 }
 
@@ -544,13 +367,12 @@ export class Layout implements UIComponent {
   asidebar: any[] = [];
   category: String;
 
-  serviceComponent: Object;
-  serviceType: ServiceMappingType;
-  argumentName: String;
+  serviceComponent: ServiceComponentModel;
 
   constructor(init?: Partial<Layout>) {
     Object.assign(this, init);
     this.category = "layout";
+    this.serviceComponent = new ServiceComponentModel();
   }
 
   add(component: UIComponent): void {
@@ -562,26 +384,40 @@ export class Layout implements UIComponent {
 
   remove(component: UIComponent): void {
   }
-
-  setServiceComponent(serviceComponent, argumentName?) {
-    this.serviceComponent = serviceComponent;
-  }
-
-  setServiceType(serviceType: ServiceMappingType) {
-    this.serviceType = serviceType;
-    if (serviceType == ServiceMappingType["none"] ||
-      serviceType == ServiceMappingType["argument"]) {
-      this.serviceComponent = {}
-    }
-  }
-
-  setArgument(argumentName: any): void {
-    this.argumentName = argumentName;
-  }
 }
 
 export enum ServiceMappingType {
   service = "ServiceComponent",
   argument = "Argument",
   none = "None",
+}
+
+export class ServiceComponentModel {
+  name:String;
+  preference: number;
+  serviceType: ServiceMappingType;
+  code: String;
+
+  constructor() {
+    this.name = "";
+    this.preference = 0;
+    this.serviceType = ServiceMappingType["none"];
+    this.code = "";
+  }
+
+  setName(serviceComponentName: String) {
+    this.name = serviceComponentName;
+  }
+
+  setPreference(preference: number) {
+    this.preference = preference;
+  }
+
+  setServiceType(serviceType: ServiceMappingType) {
+    this.serviceType = serviceType;
+  }
+
+  setCode(code: String) {
+    this.code = code;
+  }
 }

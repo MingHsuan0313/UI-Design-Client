@@ -116,8 +116,8 @@ export class StyleEditorComponent implements OnInit {
       this.selectedVertex = sender.selectionModel.cells[0];
       let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
       this.selectedStyleStorage = vertexStorage.getStyleStorage();
-      console.log("Select Vertex");
-      console.log(vertexStorage);
+      // console.log("Select Vertex");
+      // console.log(vertexStorage);
 
       let vertexStyleDescription = this.selectedVertex.style;
       let styleObj = this.styleEditorService.convertStyleDescriptionToJsobObject(vertexStyleDescription);
