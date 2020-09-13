@@ -16,9 +16,15 @@ export default class ServiceComponentService {
     // it will use http service in the future
     // this.serviceComponents = fakeServiceComponents;
     this.serviceComponents = []
+    this.selectedServiceComponent = new ServiceComponentModel();
+
     this.isMatchMaking = false;
     console.log("Get services from server");
     console.log(this.serviceComponents);
+  }
+
+  setServiceComponents(serviceComponents) {
+    this.serviceComponents = serviceComponents;
   }
 
   setIsMatchMaking(isMatchMaking) {
@@ -29,26 +35,44 @@ export default class ServiceComponentService {
     return this.serviceComponents;
   }
 
-  queryServer(uiCategory,parameters,matchmaking) {
+  queryServices(uiCategory, parameters, matchmaking) {
     console.log("Query Server for service components");
     console.log(this);
     let responseJson;
-    let url = `http://localhost:8080/?uiCategory=${uiCategory}&parameters=${parameters}&matchmaking=${matchmaking}`;
+    let url = `http://localhost:8080/getServices/?uiCategory=${uiCategory}&parameters=${parameters}&matchmaking=${matchmaking}`;
     console.log("url = " + url);
-    if (matchmaking) {
-      // will use ui component category and argument length
-      responseJson = this.httpClient.get(url, {
-        headers: new HttpHeaders().set("Content-Type", "application/json"),
-        observe: "response", withCredentials: true, responseType: "text"
-      })
+
+    return this.httpClient.get(url, {
+      headers: new HttpHeaders().set("Content-Type", "application/json"),
+      observe: "response", withCredentials: true, responseType: "text"
+    })
+  }
+
+  queryServer(uiCategory, parameters, matchmaking) {
+    this.queryServices(uiCategory,parameters,matchmaking).subscribe(
+      response => {
+        let serviceComponents = response["body"] ;
+        console.log("response back");
+        console.log(serviceComponents);
+        return JSON.parse(serviceComponents);
+      }
+    )
+  }
+
+  setSelectedServiceComponent(serviceComponentName) {
+    for(let index = 0;index < this.serviceComponents.length;index++) {
+      if(serviceComponentName == this.serviceComponents[index]["name"])
+        this.selectedServiceComponent = this.serviceComponents[index];
     }
-    else {
-      responseJson = this.httpClient.get(url, {
-        headers: new HttpHeaders().set("Content-Type", "application/json"),
-        observe: "response", withCredentials: true, responseType: "text"
-      })
-    }
-    console.log(responseJson);
-    return "111"
+    console.log("OK")
+    console.log(this.selectedServiceComponent);
+  }
+
+  getCode() {
+    return this.selectedServiceComponent.code;
+  }
+
+  getSelectedServiceComponentName() {
+    return this.selectedServiceComponent.name;
   }
 }

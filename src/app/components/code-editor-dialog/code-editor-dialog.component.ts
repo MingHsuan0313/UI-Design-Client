@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import ServiceComponentService from 'src/app/services/service-component.service';
 import { CodeEditorComponent } from '../code-editor/code-editor.component' ;
 
 @Component({
@@ -9,7 +10,8 @@ import { CodeEditorComponent } from '../code-editor/code-editor.component' ;
 })
 export class CodeEditorDialogComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+    private serviceComponentService: ServiceComponentService) { }
 
   openDialog() {
     let dialogRef = this.dialog.open(CodeEditorComponent, {
@@ -17,8 +19,8 @@ export class CodeEditorDialogComponent implements OnInit {
       height: '550px',
       panelClass: 'backdropBackground',
       data: {
-        name: "Tim Hsieh",
-        age: 23
+        code: this.serviceComponentService.getCode(), 
+        name: this.serviceComponentService.getSelectedServiceComponentName()
       }
     });
 
