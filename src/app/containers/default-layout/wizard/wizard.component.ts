@@ -45,14 +45,7 @@ export class WizardComponent implements OnInit {
 
 
   constructor(private graphEditorService: GraphEditorService,
-              private servceComponentService: ServiceComponentService
   ) {
-    this.selectedServiceComponent = {};
-    this.selectedServiceComponent['name'] = 'choose service component';
-    this.serviceNoneOption = {
-      'name': 'None',
-      'preference': 0
-    };
   }
 
   ngOnInit(): void {
@@ -261,40 +254,28 @@ export class WizardComponent implements OnInit {
   // type1. Service Component
   // type2. Argument
   // type3. None
-  setServiceType(subComponent: UIComponent, serviceType: ServiceMappingType) {
-    console.log('set service Type');
-    console.log(subComponent);
-    console.log(serviceType);
-    subComponent.setServiceType(serviceType);
-  }
+  // setServiceType(subComponent: UIComponent, serviceType: ServiceMappingType) {
+  //   console.log('set service Type');
+  //   console.log(subComponent);
+  //   console.log(serviceType);
+  //   subComponent.setServiceType(serviceType);
+  // }
 
-  setArgument(subComponent: UIComponent, argument) {
-    subComponent.setArgument(argument.name);
-  }
+  // setArgument(subComponent: UIComponent, argument) {
+  //   subComponent.setArgument(argument.name);
+  // }
 
-  setServiceComponent(component: UIComponent, serviceComponent) {
-    component.setServiceComponent(serviceComponent);
-  }
+  // setServiceComponent(component: UIComponent, serviceComponent) {
+  //   component.setServiceComponent(serviceComponent);
+  // }
 
-  setSelectedServiceComponent(serviceComponent) {
-    this.selectedServiceComponent = serviceComponent;
-    this.setServiceComponent(this.component, serviceComponent);
-  }
+  // setSelectedServiceComponent(serviceComponent) {
+  //   this.selectedServiceComponent = serviceComponent;
+  //   this.setServiceComponent(this.component, serviceComponent);
+  // }
 
-  setSelectedServiceSubComponent(subComponent, serviceComponent) {
-    this.setServiceComponent(subComponent, serviceComponent);
-  }
-
-  getServiceComponents() {
-    return this.servceComponentService.getServiceComponents();
-  }
-
-  setMatchmaking(isChecked) {
-    this.servceComponentService.setIsMatchMaking(isChecked);
-  }
-
-  queryServices() {
-    this.servceComponentService.queryServer();
-  }
+  // setSelectedServiceSubComponent(subComponent, serviceComponent) {
+  //   this.setServiceComponent(subComponent, serviceComponent);
+  // }
 }
 

@@ -8,6 +8,7 @@ export interface UIComponent {
   type: String;
   style: Object;
   layout: String;
+  category: String;
 
   serviceComponent: Object;
   serviceType: ServiceMappingType;
@@ -37,6 +38,7 @@ export class Icon implements UIComponent {
   style: String;
   layout: String;
   text: String;
+  category: String;
 
   serviceComponent: Object;
   serviceType: ServiceMappingType;
@@ -44,6 +46,7 @@ export class Icon implements UIComponent {
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
+    this.category = "informative";
   }
 
   add(component: UIComponent): void {
@@ -85,6 +88,7 @@ export class Text implements UIComponent {
   layout: String;
   text: String;
   href: String;
+  category: String;
 
   serviceComponent: Object;
   serviceType: ServiceMappingType;
@@ -92,6 +96,7 @@ export class Text implements UIComponent {
 
   constructor(init?: Partial<Text>) {
     Object.assign(this, init);
+    this.category = "informative";
   }
 
   add(component: UIComponent): void {
@@ -133,6 +138,7 @@ export class Button implements UIComponent {
   layout: String;
   text: String;
   href: String;
+  category: String;
 
   serviceComponent: Object;
   serviceType: ServiceMappingType;
@@ -140,6 +146,7 @@ export class Button implements UIComponent {
 
   constructor(init?: Partial<Button>) {
     Object.assign(this, init);
+    this.category = "informative";
   }
 
   add(component: UIComponent): void {
@@ -182,6 +189,7 @@ export class Table implements UIComponent {
   layout: String;
   headers: any[];
   rows: any[];
+  category: String;
 
   serviceComponent: Object;
   serviceType: ServiceMappingType;
@@ -189,6 +197,7 @@ export class Table implements UIComponent {
 
   constructor(init?: Partial<Table>) {
     Object.assign(this, init);
+    this.category = "informative";
   }
 
   add(component: UIComponent): void {
@@ -230,6 +239,7 @@ export class CardComposite implements UIComponent {
   layout: String;
   header: String;
   componentList: any[] = [];
+  category: String;
 
   serviceComponent: Object;
   serviceType: ServiceMappingType;
@@ -237,6 +247,7 @@ export class CardComposite implements UIComponent {
 
   constructor(init?: Partial<CardComposite>) {
     Object.assign(this, init);
+    this.category = "informative";
   }
 
 
@@ -279,6 +290,7 @@ export class Dropdown implements UIComponent {
   style: String;
   layout: String;
   items: any[];
+  category: String;
 
   serviceComponent: Object;
   serviceType: ServiceMappingType;
@@ -286,6 +298,7 @@ export class Dropdown implements UIComponent {
 
   constructor(init?: Partial<Dropdown>) {
     Object.assign(this, init);
+    this.category = "informative";
   }
 
   add(component: UIComponent): void {
@@ -326,6 +339,7 @@ export class InputGroupComposite implements UIComponent {
   style: String;
   layout: String;
   componentList: any[] = [];
+  category: String;
 
   serviceComponent: Object;
   serviceType: ServiceMappingType;
@@ -333,6 +347,7 @@ export class InputGroupComposite implements UIComponent {
 
   constructor(init?: Partial<InputGroupComposite>) {
     Object.assign(this, init);
+    this.category = "input";
   }
 
   add(component: UIComponent): void {
@@ -374,6 +389,7 @@ export class INPUT implements UIComponent {
   style: String;
   layout: String;
   typeInfo: String;  // e.g. input-text, input-password
+  category: String;
 
   serviceComponent: Object;
   serviceType: ServiceMappingType;
@@ -381,6 +397,7 @@ export class INPUT implements UIComponent {
 
   constructor(init?: Partial<INPUT>) {
     Object.assign(this, init);
+    this.category = "input";
   }
 
   add(component: UIComponent): void {
@@ -421,6 +438,7 @@ export class BreadcrumbComposite implements UIComponent {
   style: String;
   layout: String;
   componentList: any[] = [];
+  category: String;
 
   serviceComponent: Object;
   serviceType: ServiceMappingType;
@@ -428,6 +446,7 @@ export class BreadcrumbComposite implements UIComponent {
 
   constructor(init?: Partial<BreadcrumbComposite>) {
     Object.assign(this, init);
+    this.category = "navigation";
   }
 
   add(component: UIComponent): void {
@@ -469,6 +488,7 @@ export class FormComposite implements UIComponent {
   style: String;
   layout: String;
   componentList: any[] = [];
+  category: String;
 
   serviceComponent: Object;
   serviceType: ServiceMappingType;
@@ -476,6 +496,7 @@ export class FormComposite implements UIComponent {
 
   constructor(init?: Partial<FormComposite>) {
     Object.assign(this, init);
+    this.category = "input";
   }
 
   add(component: UIComponent): void {
@@ -521,6 +542,7 @@ export class Layout implements UIComponent {
   sidebar: any[] = [];
   footer: any[] = [];
   asidebar: any[] = [];
+  category: String;
 
   serviceComponent: Object;
   serviceType: ServiceMappingType;
@@ -528,6 +550,7 @@ export class Layout implements UIComponent {
 
   constructor(init?: Partial<Layout>) {
     Object.assign(this, init);
+    this.category = "layout";
   }
 
   add(component: UIComponent): void {

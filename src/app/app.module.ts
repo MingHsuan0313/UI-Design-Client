@@ -35,6 +35,7 @@ import { NavEditorComponent } from './components/nav-editor/nav-editor.component
 import { PageEditorComponent } from './components/page-editor/page-editor.component';
 import { CodeEditorComponent } from './components/code-editor/code-editor.component';
 import { CodeEditorDialogComponent } from './components/code-editor-dialog/code-editor-dialog.component';
+import { ServiceComponentConfigurationComponent } from './components/service-component-configuration/service-component-configuration.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { CodeEditorDialogComponent } from './components/code-editor-dialog/code-
     NavEditorComponent,
     PageEditorComponent,
     CodeEditorComponent,
-    CodeEditorDialogComponent
+    CodeEditorDialogComponent,
+    ServiceComponentConfigurationComponent
   ],
   imports: [
     PerfectScrollbarModule,

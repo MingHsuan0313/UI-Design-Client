@@ -37,8 +37,6 @@
               id="building-tab" href="#building" data-toggle="tab">Building</a></li>
           <li class="nav-item" role="presentation" style="flex: 1;text-align: center"><a class="nav-link" role="tab"
               id="composition-tab" href="#composition" data-toggle="tab">Composition</a></li>
-          <li *ngIf="isComposite;" class="nav-item" role="presentation" style="flex: 1;text-align: center"><a
-              class="nav-link" role="tab" id="service-tab" href="#service" data-toggle="tab">Service</a></li>
         </ul>
       </div>
       <div class="tab-content">
@@ -54,11 +52,10 @@
                 <div class="col-9">
                   <input ngModel name={{property}}>
                 </div>
-  <!--                <button class="btn btn-danger" (click)="setData(property,kind.value)">confirm</button>-->
+                <!--                <button class="btn btn-danger" (click)="setData(property,kind.value)">confirm</button>-->
               </div>
             </div>
-            <br>
-            <button class="btn btn-primary">Submit</button>
+            <button id="testing" class="btn btn-primary">Submit</button>
           </form>
 
           <br style="display: block;margin: 3px;">
@@ -85,21 +82,9 @@
             </div>
           </div>
 
-          <br style="display: block;margin: 3px;">&nbsp;
+          <!-- <br style="display: block;margin: 3px;">&nbsp; -->
+          <br style="display:block;line-height: 1px;"> &nbsp;
 
-          <div style="display: inline;" class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{selectedServiceComponent.name}} &nbsp;&nbsp; {{selectedServiceComponent.preference}}
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a *ngFor="let serviceComponent of this.getServiceComponents()" class="dropdown-item"
-                (click)="this.setSelectedServiceComponent(serviceComponent)">{{serviceComponent.name}} &nbsp;&nbsp;
-                {{serviceComponent.preference}}</a>
-              <a *ngIf="!isComposite" class="dropdown-item"
-                (click)="this.setSelectedServiceComponent(serviceNoneOption)">None</a>
-            </div>
-          </div>
 
           <div *ngIf="!isComposite; else compositeBlock" style="font: caption">
             Basic Component cannot be composite, click Finish!
@@ -107,12 +92,6 @@
           <br style="display: block;margin: 3px;">
 
           <div style="justify-content: start;" class="modal-footer">
-            <label class="switch">
-              <input (change)="setMatchmaking($event.target.checked)" type="checkbox">
-              <span class="slider round"></span>
-            </label> &nbsp; &nbsp; <label style="font-weight: bold;">Matchmaking</label>
-            &nbsp; &nbsp; <button (click)="queryServices()" class="btn btn-primary btn-lg" type="button">Query
-              Services</button>
             <button type="button" class="btn btn-info btn-lg" data-dismiss="modal"
               (click)="clickFinish()">Finish</button>
           </div>
@@ -190,14 +169,13 @@
 
 <ng-template #compositeBlock>
   <form style="display: inline;" #sf="ngForm" (ngSubmit)="onCompositeSubmit(sf);">
-    <div style="position: relative;left:5px;">
+    <div style="position: relative;left:5px;margin-bottom: 3px;">
       <strong>{{this.subComponentName}}</strong>
       <div *ngFor="let property of properties">{{property}}:
         <input ngModel name={{property}}>
       </div>
     </div>
-    <br style="display: block;margin: 3px;">
     &nbsp;
-    <button class="btn btn-primary">Submit</button>
+    <button id="testing2" class="btn btn-primary">Submit</button>
   </form>
 </ng-template>
