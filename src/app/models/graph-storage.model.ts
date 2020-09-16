@@ -263,7 +263,7 @@ export class GraphStorage {
     }
   }
 
-  findVertexStorageByID(id) {
+  findVertexStorageByID(id): VertexStorage {
     for (let key in this.vertexStorageList) {
       if (this.vertexStorageList[key].id == id) {
         return this.vertexStorageList[key];

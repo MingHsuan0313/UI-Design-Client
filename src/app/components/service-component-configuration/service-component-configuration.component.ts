@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GraphStorage } from 'src/app/models/graph-storage.model';
-import { UIComponent, ServiceComponentModel, FormComposite } from 'src/app/models/model';
+import { UIComponent, ServiceComponentModel, FormComposite, ServiceMappingType } from 'src/app/models/model';
 import { Library } from "../../shared/library";
 import VertexStorage from 'src/app/models/vertex-storage.model';
 import GraphEditorService from 'src/app/services/graph-editor.service';
@@ -50,10 +50,14 @@ export class ServiceComponentConfigurationComponent implements OnInit {
   selectService() {
     console.log("select service " + this.selectedServiceComponentName);
     this.serviceComponentService.setSelectedServiceComponent(this.selectedServiceComponentName);
+    this.selectedUIComponent.serviceComponent.name = this.selectedServiceComponentName;
+    this.selectedUIComponent.serviceComponent.serviceType = ServiceMappingType['service'];
   }
 
   selectArgument() {
     console.log("select argument " + this.selectedArgumentName);
+    this.selectedUIComponent.serviceComponent.name = this.selectedArgumentName;
+    this.selectedUIComponent.serviceComponent.serviceType = ServiceMappingType['argument'];
   }
 
   countArguments() {
@@ -73,9 +77,23 @@ export class ServiceComponentConfigurationComponent implements OnInit {
     if (uiCategory == "input") {
       if (type == "form") {
         parameters = this.countArguments();
+        this.serviceComponentService.queryServices(uiCategory, parameters, this.isMatchmaking).subscribe(
+          response => {
+            let serviceComponents = response['body'];
+            serviceComponents = JSON.parse(serviceComponents);
+            console.log("return from server");
+            console.log(serviceComponents);
+            this.serviceComponentOptions = [];
+            this.serviceComponentService.setServiceComponents(serviceComponents);
+            for (let index = 0; index < serviceComponents.length; index++) {
+              this.serviceComponentOptions.push(serviceComponents[index]["name"]);
+            }
+          }
+        )
       }
       else if (type == "input") {
         console.log("can be argument");
+        return;
       }
       else {
         console.log("can be service component");
@@ -83,43 +101,96 @@ export class ServiceComponentConfigurationComponent implements OnInit {
       }
     }
     else if (uiCategory == "informative") {
-
+      this.serviceComponentService.queryOutputServices(this.isMatchmaking).subscribe(
+        response => {
+          let serviceComponents = response['body'];
+          serviceComponents = JSON.parse(serviceComponents);
+          this.serviceComponentOptions = [];
+          this.serviceComponentService.setServiceComponents(serviceComponents);
+          for (let index = 0; index < serviceComponents.length; index++) {
+            this.serviceComponentOptions.push(serviceComponents[index]["name"]);
+          }
+        }
+      )
     }
+  }
 
-    this.serviceComponentService.queryServices(uiCategory, parameters, this.isMatchmaking).subscribe(
+  queryArgumentsByServiceID(serviceID) {
+    this.serviceComponentService.queryArgumentsByServiceID(serviceID).subscribe(
       response => {
-        let serviceComponents = response['body'];
-        serviceComponents = JSON.parse(serviceComponents);
-        console.log("return from server");
-        console.log(serviceComponents);
-        this.serviceComponentOptions = [];
-        this.serviceComponentService.setServiceComponents(serviceComponents);
-        for(let index = 0;index < serviceComponents.length;index++) {
-          this.serviceComponentOptions.push(serviceComponents[index]["name"]) ;
+        let argumentList = response['body'];
+        argumentList = JSON.parse(argumentList);
+        console.log("get argument List")
+        console.log(argumentList);
+        this.argumentOptions = [];
+        for (let index = 0; index < argumentList.length; index++) {
+          this.argumentOptions.push(argumentList[index]["name"]);
         }
       }
     )
   }
 
+  queryOutputService() {
+
+  }
+
   initializeState() {
-    this.argumentOptions = [];
-    this.serviceComponentOptions = [];
+    // this.argumentOptions = [];
+    // this.serviceComponentOptions = [];
   }
 
   ngOnInit() {
     this.graphStorage = this.graphEditorService.getGraphStorage();
     let graph = this.graphStorage.getGraph();
     graph.addListener(mxEvent.CLICK, (sender, event) => {
-      // this.initializeState();
       let selectedVertex = sender.selectionModel.cells[0];
       this.selectedVertexStorage = this.graphStorage.findVertexStorageByID(selectedVertex["id"]);
       this.selectedUIComponent = this.selectedVertexStorage.component;
       this.selectedServiceComponent = this.selectedUIComponent.serviceComponent;
       this.setUiTypeByComponent();
+      console.log("select ui component")
+      console.log(this.selectedUIComponent)
+      if (this.selectedUIComponent.serviceComponent.name.length == 0)
+        this.initializeState();
+      else {
+        if (this.selectedUIComponent.serviceComponent.serviceType == ServiceMappingType['service']) {
+          this.selectedServiceComponentName = this.selectedUIComponent.serviceComponent.name;
+        }
+        else if (this.selectedUIComponent.serviceComponent.serviceType == ServiceMappingType['argument']) {
+          this.selectedArgumentName = this.selectedUIComponent.serviceComponent.name;
+        }
+      }
 
-      // console.log(this.selectedVertexStorage);
-      // console.log(this.selectedUIComponent);
-      // console.log("selected from service compoent")
+
+      if (this.selectedUIComponent.category == "input") {
+        if (this.selectedUIComponent.type == "form") {
+
+        }
+        else if (this.selectedUIComponent.type == "input") {
+          console.log("parrent")
+          // console.log(selectedVertex);
+          let parentVertex = selectedVertex.parent;
+          let parentVertexStorage = this.graphStorage.findVertexStorageByID(parentVertex["id"]);
+          let parentServiceName = parentVertexStorage.component.serviceComponent.name;
+          console.log(parentServiceName);
+          let parentServiceID = this.serviceComponentService.findServiceIDByName(parentServiceName);
+          this.queryArgumentsByServiceID(parentServiceID);
+        }
+      }
+      else if (this.selectedUIComponent.category == "informative") {
+        if (this.selectedUIComponent.type == "table") {
+
+        }
+      }
+      else if (this.selectedUIComponent.category == "navigation") {
+
+      }
+      else if (this.selectedUIComponent.category == "container") {
+
+      }
+      else if (this.selectedUIComponent.category == "layout") {
+
+      }
     })
 
     graph.addListener(mxEvent.DOUBLE_CLICK, (sender, event) => {

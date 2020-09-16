@@ -48,20 +48,38 @@ export default class ServiceComponentService {
     })
   }
 
-  queryServer(uiCategory, parameters, matchmaking) {
-    this.queryServices(uiCategory,parameters,matchmaking).subscribe(
-      response => {
-        let serviceComponents = response["body"] ;
-        console.log("response back");
-        console.log(serviceComponents);
-        return JSON.parse(serviceComponents);
-      }
-    )
+  queryOutputServices(matchmaking) {
+    let url = `http://localhost:8080/getOutputServices/?matchmaking=${matchmaking}`;
+    console.log("url = " + url);
+
+    return this.httpClient.get(url, {
+      headers: new HttpHeaders().set("Content-Type", "application/json"),
+      observe: "response", withCredentials: true, responseType: "text"
+    })
+  }
+
+  // queryServer(uiCategory, parameters, matchmaking) {
+  //   this.queryServices(uiCategory,parameters,matchmaking).subscribe(
+  //     response => {
+  //       let serviceComponents = response["body"] ;
+  //       console.log("response back");
+  //       console.log(serviceComponents);
+  //       return JSON.parse(serviceComponents);
+  //     }
+  //   )
+  // }
+
+  queryArgumentsByServiceID(serviceID) {
+    let url = `http://localhost:8080/getArguments/?serviceID=${serviceID}`;
+    return this.httpClient.get(url, {
+      headers: new HttpHeaders().set("Content-Type", "application/json"),
+      observe: "response", withCredentials: true, responseType: "text"
+    })
   }
 
   setSelectedServiceComponent(serviceComponentName) {
-    for(let index = 0;index < this.serviceComponents.length;index++) {
-      if(serviceComponentName == this.serviceComponents[index]["name"])
+    for (let index = 0; index < this.serviceComponents.length; index++) {
+      if (serviceComponentName == this.serviceComponents[index]["name"])
         this.selectedServiceComponent = this.serviceComponents[index];
     }
     console.log("OK")
@@ -74,5 +92,12 @@ export default class ServiceComponentService {
 
   getSelectedServiceComponentName() {
     return this.selectedServiceComponent.name;
+  }
+
+  findServiceIDByName(serviceName) {
+    for (let index = 0; index < this.serviceComponents.length; index++) {
+      if (serviceName == this.serviceComponents[index].name)
+        return this.serviceComponents[index].serviceID;
+    }
   }
 }
