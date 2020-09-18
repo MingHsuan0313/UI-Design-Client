@@ -31,6 +31,9 @@ import {WizardComponent} from "./containers/default-layout/wizard/wizard.compone
 import { StyleEditorComponent } from './components/style-editor/style-editor.component';
 import { NavEditorComponent } from './components/nav-editor/nav-editor.component';
 import { PageEditorComponent } from './components/page-editor/page-editor.component';
+import { BPELDesignerComponent } from "./containers/bpel-designer/bpel-designer.component";
+import { PaletteComponent } from "./bpel-designer/components/palette/palette.component";
+import { PropertyEditorComponent } from "./bpel-designer/components/property-editor/property-editor.component";
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { PageEditorComponent } from './components/page-editor/page-editor.compon
     DefaultLayoutComponent,
     StyleEditorComponent,
     NavEditorComponent,
-    PageEditorComponent
+    PageEditorComponent,
+    BPELDesignerComponent,
+    PaletteComponent,
+    PropertyEditorComponent
   ],
   imports: [
     PerfectScrollbarModule,
