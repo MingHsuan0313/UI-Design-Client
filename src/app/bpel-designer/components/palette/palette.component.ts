@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { GraphStorage, StyleStorage } from "src/app/models/modelDependency";
 import GraphEditorService from "src/app/services/graph-editor.service";
+import { Process } from "../../models/components/component/containers/process.model";
 
 @Component({
     selector: 'palette',
@@ -42,7 +43,7 @@ export class PaletteComponent implements OnInit {
         const styleStorage = new StyleStorage(styleName, style);
         this.graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
-        var v1 = this.graphStorage.insertSVGVertex(null, null, 'process', newmxGeometry, styleStorage, 'style1');
+        var v1 = this.graphStorage.insertSVGVertex(null, null, new Process(), newmxGeometry, styleStorage, 'style1');
     }
 
 }

@@ -3,6 +3,7 @@ import { DataBinding } from './util/DataBinding';
 import {UIComponent} from '../ui-component-dependency';
 import StyleEditorService from 'src/app/services/externalRepresentation/style-editor.service';
 import { StyleConverter } from '../../shared/styleTable';
+import AbstractComponent from '../shared/AbstractComponent.model';
 
 /**
  * @description
@@ -14,7 +15,7 @@ export class VertexStorage {
   id: string;
   parentId: string;
   value: string;
-  component: UIComponent;
+  component: AbstractComponent;
   styleStorage: StyleStorage;
   children: any;
   dataBinding: DataBinding;
