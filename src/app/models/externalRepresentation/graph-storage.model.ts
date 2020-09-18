@@ -244,6 +244,26 @@ export class GraphStorage {
     return vertexStorage;
   }
 
+  // insert SVG vertex
+  insertSVGVertex(parent, vertexID, vertexValue, geometry, styleStorage, svg) {
+    this.modified = true;
+    let vertex;
+
+    try {
+      this.graph.getModel().beginUpdate();
+      vertex = this.graph.insertVertex(parent, vertexID, vertexValue, geometry.x, geometry.y, geometry.width, geometry.height, svg, null);
+    } finally {
+      this.graph.getModel().endUpdate();
+    }
+    let cloneStyle = {};
+    Object.assign(cloneStyle, styleStorage.style);
+    styleStorage.style = cloneStyle;
+    const vertexStorage = new VertexStorage(vertex, styleStorage, null, null, null);
+    let vertexLength = Object.keys(this.vertexStorageList).length;
+    this.vertexStorageList[vertexLength] = vertexStorage;
+    return vertexStorage;
+  }
+
   insertEdge(sourceVertex, targetVertex) {
     this.modified = true;
     let edge;
