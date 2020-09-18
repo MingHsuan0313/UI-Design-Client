@@ -13,6 +13,7 @@ export class Process implements BPELComponent {
     vertexStorage?: VertexStorage;
     attribute?: ProcessAttribute;
     element?: ProcessElement;
+    componentName: String = "process";
 
     constructor(init?: Partial<Process>) {
         Object.assign(this, init);

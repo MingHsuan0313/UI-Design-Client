@@ -2,6 +2,7 @@ import {StyleStorage, DataBinding} from './modelDependency';
 import {Storage} from '../shared/storage';
 import {UIComponent} from './model';
 import GraphEditorService from '../services/graph-editor.service';
+import AbstractComponent from '../shared/AbstractComponent.model';
 
 /**
  * @description
@@ -13,7 +14,7 @@ export default class VertexStorage {
   id: string;
   parentId: string;
   value: string;
-  component: UIComponent;
+  component: AbstractComponent;
   styleStorage: StyleStorage;
   children: any;
   dataBinding: DataBinding;

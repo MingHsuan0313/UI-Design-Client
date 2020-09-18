@@ -1,6 +1,7 @@
+import AbstractComponent from '../../shared/AbstractComponent.model'
 import VertexStorage from '../vertex-storage.model'
 
-export interface UIComponent {
+export interface UIComponent extends AbstractComponent{
     x?: String;
     y?: String;
     width?: number;
