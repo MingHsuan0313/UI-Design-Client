@@ -1,7 +1,14 @@
 <div style="background-color: #eaeded;;height:100%; position: fixed;">
     <mat-tab-group>
       <mat-tab label="Palette">
-        <!-- components -->
+          <div class="col">
+              <div class="container">
+                <div class="row" (click)="draw()">
+                    <a class="col">process</a>
+                    <img src="src/app/bpel-designer/resources/icon/process.png" class="col">
+                </div>
+              </div>
+          </div>
       </mat-tab>
     </mat-tab-group>
   </div>
