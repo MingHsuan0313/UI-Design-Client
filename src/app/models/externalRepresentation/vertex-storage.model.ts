@@ -4,6 +4,7 @@ import {UIComponent} from '../ui-component-dependency';
 import StyleEditorService from 'src/app/services/externalRepresentation/style-editor.service';
 import { StyleConverter } from '../../shared/styleTable';
 import AbstractComponent from '../shared/AbstractComponent.model';
+import { BPELComponent } from '../bpel-designer/models/components/component/BPELComponent.model';
 
 /**
  * @description
@@ -125,6 +126,10 @@ export class VertexStorage {
 
   getVertex() {
     return this.vertex;
+  }
+
+  getComponent(): AbstractComponent {
+    return this.component;
   }
 
   syncProperties() {

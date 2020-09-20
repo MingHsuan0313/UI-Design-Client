@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { GraphStorage, StyleStorage } from "src/app/models/modelDependency";
 import GraphEditorService from "src/app/services/graph-editor.service";
+import { ProcessAttribute } from "../../models/components/attribute/containers/process-attribute.model";
+import { BPELComponent } from "../../models/components/component/BPELComponent.model";
 import { Process } from "../../models/components/component/containers/process.model";
+import { ProcessElement } from "../../models/components/element/containers/process-element.model";
 
 @Component({
     selector: 'palette',
@@ -44,6 +47,11 @@ export class PaletteComponent implements OnInit {
         this.graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
         var v1 = this.graphStorage.insertSVGVertex(null, null, new Process(), newmxGeometry, styleStorage, 'style1');
+        var processComponentAttribute = ((v1.getComponent() as BPELComponent).getAttribute() as ProcessAttribute);
+        var processComponentElement = ((v1.getComponent() as BPELComponent).getElement() as ProcessElement);
+        console.log(processComponentAttribute);
+        console.log(processComponentElement);
+        //TODO: Parse attributes to PropertyEditorComponent
     }
 
 }

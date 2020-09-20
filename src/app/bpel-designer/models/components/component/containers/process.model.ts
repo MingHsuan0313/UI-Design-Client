@@ -3,7 +3,7 @@ import { BPELComponent } from '../BPELComponent.model'
 import { ProcessAttribute } from '../../attribute/containers/process-attribute.model';
 import { ProcessElement } from '../../element/containers/process-element.model';
 
-export class Process implements BPELComponent {
+export class Process extends BPELComponent {
     id: String;
     x?: String;
     y?: String;
@@ -15,11 +15,10 @@ export class Process implements BPELComponent {
     element?: ProcessElement;
     componentName: String = "process";
 
-    constructor(init?: Partial<Process>) {
-        Object.assign(this, init);
-    }
-
-    getInfo(): any {
-        return this;
+    constructor() {
+        super();
+        this.attribute = new ProcessAttribute();
+        this.element = new ProcessElement();
+        console.log(this.componentName)
     }
 }

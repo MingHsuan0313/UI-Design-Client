@@ -1,7 +1,14 @@
 <div style="background-color: #eaeded;height:100%; position: fixed;">
     <mat-tab-group>
       <mat-tab label="Property-Editor">
-        <!-- components -->
+        <div class="input-group">
+          <div class="input-group-prepend" *ngFor='let kv of kvPairs'>
+            <div class='col'>
+              <span class="input-group-text">{{getKey(kv)}}</span>
+              <textarea class="form-control">{{getValue(kv)}}</textarea>
+            </div>
+          </div>
+        </div>
       </mat-tab>
     </mat-tab-group>
   </div>
