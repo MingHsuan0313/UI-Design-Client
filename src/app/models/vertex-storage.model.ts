@@ -127,7 +127,7 @@ export default class VertexStorage {
 
     if (this.dataBinding.hasDataBinding) {
       const componentValueKey = this.dataBinding.dataBindingName;
-
+      console.log('test')
       // databinding text , button only one value
       if (this.dataBinding.isList == -1) {
         this.component[componentValueKey] = this.vertex.value;

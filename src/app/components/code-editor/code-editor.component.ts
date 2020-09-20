@@ -18,7 +18,6 @@ export class CodeEditorComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CodeEditorDialogComponent>,
     @Inject(MAT_DIALOG_DATA)public data:any,
-    private serviceComponentService : ServiceComponentService
   ) {
   }
 
