@@ -3,7 +3,7 @@ import AbstractComponent from 'src/app/shared/AbstractComponent.model';
 import { BPELComponentAttribute } from '../attribute/BPELComponent-attribute.model';
 import { BPELComponentElement } from '../element/BPELComponent-element.model';
 
-export interface BPELComponent extends AbstractComponent{
+export abstract class BPELComponent implements AbstractComponent{
     id: String;
     x?: String;
     y?: String;
@@ -15,5 +15,28 @@ export interface BPELComponent extends AbstractComponent{
     element?: BPELComponentElement;
     componentName: String;
 
-    getInfo(): any;
+    constructor(init?: Partial<BPELComponent>) {
+        Object.assign(this, init);
+        console.log("construct BPELComponent")
+    }
+
+    getInfo(): any {
+        return this;
+    }
+
+    getComponentName(): String {
+        return this.componentName;
+    }
+
+    setVertexStorage(vertexStorage: VertexStorage): void {
+        this.vertexStorage = vertexStorage;
+    }
+
+    getAttribute(): BPELComponentAttribute {
+        return this.attribute;
+    }
+
+    getElement(): BPELComponentElement {
+        return this.element;
+    }
 }

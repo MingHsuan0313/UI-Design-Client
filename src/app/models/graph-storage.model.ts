@@ -242,7 +242,7 @@ export class GraphStorage {
 
     try {
       this.graph.getModel().beginUpdate();
-      vertex = this.graph.insertVertex(parent, vertexID, BPELComponent.componentName, geometry.x, geometry.y, geometry.width, geometry.height, svg, null);
+      vertex = this.graph.insertVertex(parent, vertexID, BPELComponent.getComponentName(), geometry.x, geometry.y, geometry.width, geometry.height, svg, null);
     } finally {
       this.graph.getModel().endUpdate();
     }
@@ -252,6 +252,7 @@ export class GraphStorage {
     const vertexStorage = new VertexStorage(vertex, styleStorage, BPELComponent, null, null);
     let vertexLength = Object.keys(this.vertexStorageList).length;
     this.vertexStorageList[vertexLength] = vertexStorage;
+    BPELComponent.setVertexStorage(vertexStorage);
     return vertexStorage;
   }
 

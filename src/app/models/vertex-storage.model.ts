@@ -3,6 +3,7 @@ import {Storage} from '../shared/storage';
 import {UIComponent} from './model';
 import GraphEditorService from '../services/graph-editor.service';
 import AbstractComponent from '../shared/AbstractComponent.model';
+import { BPELComponent } from '../bpel-designer/models/components/component/BPELComponent.model';
 
 /**
  * @description
@@ -109,6 +110,10 @@ export default class VertexStorage {
 
   getVertex() {
     return this.vertex;
+  }
+
+  getComponent(): AbstractComponent {
+    return this.component;
   }
 
   syncProperties() {

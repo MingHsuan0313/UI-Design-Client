@@ -5,6 +5,13 @@ export class ProcessAttribute implements BPELComponentAttribute {
     abstractProcesses?: Object[] //TODO:
     targetNamespace?: String;
 
+    constructor() {
+        this.name = "process";
+        let XMLNS_BPEL = "xmlns:bpel=\"http://docs.oasis-open.org/wsbpel/2.0/process/executable\"";
+        this.abstractProcesses = [XMLNS_BPEL];
+        this.targetNamespace = "process.bpel";
+    }
+
     getInfo() {
         return this;
     }
