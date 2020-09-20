@@ -37,8 +37,6 @@ export class PropertyEditorComponent implements OnInit {
             console.log("Parse selected attribute k, v pairs to PropertyEditor")
             console.log(this.kvPairs)
           }
-          //TODO: SYNC BPELComponentAttribute model when input value modified
-          //this.syncEditorWithSelectedVertex(styleObj);
         })
     }
 
@@ -48,5 +46,12 @@ export class PropertyEditorComponent implements OnInit {
 
     getValue(kv) {
         return kv[1];
+    }
+
+    syncSelectedAttribute(attributeKey: any, event: any) {
+        if (attributeKey == 'name') {
+            this.selectedVertex.setValue(event.target.value);
+        }
+        this.selectedAttribute[attributeKey] = event.target.value;
     }
 }

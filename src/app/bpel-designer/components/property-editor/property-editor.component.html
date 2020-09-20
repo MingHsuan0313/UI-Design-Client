@@ -5,7 +5,7 @@
           <div class="input-group-prepend" *ngFor='let kv of kvPairs'>
             <div class='col'>
               <span class="input-group-text">{{getKey(kv)}}</span>
-              <textarea class="form-control">{{getValue(kv)}}</textarea>
+              <textarea class="form-control" (keyup)="syncSelectedAttribute(getKey(kv), $event)">{{getValue(kv)}}</textarea>
             </div>
           </div>
         </div>
