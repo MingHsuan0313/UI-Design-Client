@@ -51,6 +51,7 @@ export class PropertyEditorComponent implements OnInit {
     syncSelectedAttribute(attributeKey: any, event: any) {
         if (attributeKey == 'name') {
             this.selectedVertex.setValue(event.target.value);
+            this.graph.refresh();
         }
         this.selectedAttribute[attributeKey] = event.target.value;
     }
