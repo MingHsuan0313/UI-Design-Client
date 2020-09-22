@@ -15,8 +15,9 @@ export class Process extends BPELComponent {
     element?: ProcessElement;
     componentName: String = "process";
 
-    constructor() {
+    constructor(id: String) {
         super();
+        this.id = id;
         this.attribute = new ProcessAttribute();
         this.element = new ProcessElement();
         console.log(this.componentName)

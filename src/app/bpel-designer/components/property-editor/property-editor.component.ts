@@ -2,6 +2,8 @@ import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from "@
 import { GraphStorage } from "src/app/models/modelDependency";
 import GraphEditorService from "src/app/services/graph-editor.service";
 import { BPELComponentAttribute } from "../../models/components/attribute/BPELComponent-attribute.model";
+import { Process } from "../../models/components/component/containers/process.model";
+import { ProcessElement } from "../../models/components/element/containers/process-element.model";
 
 @Component({
     selector: 'property-editor',
@@ -30,10 +32,14 @@ export class PropertyEditorComponent implements OnInit {
           } else {
             this.selectedVertex = sender.selectionModel.cells[0];
             let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
-            this.selectedAttribute = vertexStorage.getComponent().getAttribute();
+            let selectedComponent = vertexStorage.getComponent();
+            this.selectedAttribute = selectedComponent.getAttribute();
             console.log("Select Vertex");
             console.log(vertexStorage);
             this.kvPairs = Object.entries(this.selectedAttribute);
+            if (selectedComponent instanceof Process) {
+                this.kvPairs.push(["variables", Object.entries((selectedComponent.getElement() as ProcessElement).getVariables().getVariableList()[0])]); //TODO: For now, take first variable for example
+            }
             console.log("Parse selected attribute k, v pairs to PropertyEditor")
             console.log(this.kvPairs)
           }
