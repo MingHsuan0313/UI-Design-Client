@@ -15,8 +15,7 @@ export abstract class BPELComponent implements AbstractComponent{
     element?: BPELComponentElement;
     componentName: String;
 
-    constructor(init?: Partial<BPELComponent>) {
-        Object.assign(this, init);
+    constructor() {
         console.log("construct BPELComponent")
     }
 

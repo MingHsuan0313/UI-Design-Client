@@ -1,3 +1,4 @@
+import { Process } from '../../component/containers/process.model';
 import { BPELComponentAttribute } from '../BPELComponent-attribute.model'
 
 export class ProcessAttribute implements BPELComponentAttribute {
