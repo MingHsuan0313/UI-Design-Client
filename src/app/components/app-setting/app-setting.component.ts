@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import GraphEditorService from '../../services/graph-editor.service';
-import ExportService from '../../services/export.service';
+import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
+import ExportService from '../../services/internalRepresentation/export.service';
 import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({

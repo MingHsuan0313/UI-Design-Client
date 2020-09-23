@@ -15,7 +15,7 @@ import {
  InputStrategy,
  DropdownStrategy,
  LayoutStrategy, 
-} from '../component-strategy-dependency';
+} from './component-strategy-dependency'; 
 import { PropertyGenerator } from '../../shared/property-generator';
 
 export class GraphStorage {

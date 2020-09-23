@@ -1,7 +1,7 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
-import { StyleLibrary } from "../../shared/styleLibrary";
-import { DataBinding } from "../externalRepresentation/util/DataBinding";
-import { GraphStorage , VertexStorage , StyleStorage } from "../graph-dependency";
+import { StyleLibrary } from "../../../shared/styleLibrary";
+import { DataBinding } from "../util/DataBinding";
+import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
 
 
 // no need for data binidng

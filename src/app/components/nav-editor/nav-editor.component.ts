@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import ImportService from '../../services/import.service';
-import ExportService from '../../services/export.service';
-import GraphEditorService from '../../services/graph-editor.service';
+import ImportService from '../../services/internalRepresentation/import.service';
+import ExportService from '../../services/internalRepresentation/export.service';
+import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { Storage } from '../../shared/storage';
 import { VertexStorage, StyleStorage , GraphStorage } from "../../models/graph-dependency";
 import { PropertyGenerator } from '../../shared/property-generator'
 import { DataBinding } from '../../models/externalRepresentation/util/DataBinding'
-import { ICreateComponentStrategy } from '../../models/createComponentStrategy/ICreateComponentStrategy';
-import { ButtonStrategy } from '../../models/createComponentStrategy/ButtonStrategy';
-import { TextStrategy } from '../../models/createComponentStrategy/TextStrategy';
-import { DropdownStrategy } from '../../models/createComponentStrategy/DropdownStrategy';
-import { TableStrategy } from '../../models/createComponentStrategy/TableStrategy';
-import { FormStrategy } from '../../models/createComponentStrategy/FormStrategy';
-import { CardStrategy } from '../../models/createComponentStrategy/CardStrategy';
-import { BreadcrumbStrategy } from '../../models/createComponentStrategy/BreadcrumbStrategy';
-import { IconStrategy } from '../../models/createComponentStrategy/IconStrategy';
-import { InputStrategy } from '../../models/createComponentStrategy/InputStrategy';
-import { LayoutStrategy } from '../../models/createComponentStrategy/LayoutStrategy';
+import { ICreateComponentStrategy } from '../../models/externalRepresentation/createComponentStrategy/ICreateComponentStrategy';
+import { ButtonStrategy } from '../../models/externalRepresentation/createComponentStrategy/ButtonStrategy';
+import { TextStrategy } from '../../models/externalRepresentation/createComponentStrategy/TextStrategy';
+import { DropdownStrategy } from '../../models/externalRepresentation/createComponentStrategy/DropdownStrategy';
+import { TableStrategy } from '../../models/externalRepresentation/createComponentStrategy/TableStrategy';
+import { FormStrategy } from '../../models/externalRepresentation/createComponentStrategy/FormStrategy';
+import { CardStrategy } from '../../models/externalRepresentation/createComponentStrategy/CardStrategy';
+import { BreadcrumbStrategy } from '../../models/externalRepresentation/createComponentStrategy/BreadcrumbStrategy';
+import { IconStrategy } from '../../models/externalRepresentation/createComponentStrategy/IconStrategy';
+import { InputStrategy } from '../../models/externalRepresentation/createComponentStrategy/InputStrategy';
+import { LayoutStrategy } from '../../models/externalRepresentation/createComponentStrategy/LayoutStrategy';
 import { from } from 'rxjs';
-import { UIComponent } from 'src/app/models/ui-components-dependency';
-import StyleEditorService from 'src/app/services/style-editor.service';
+import { UIComponent } from 'src/app/models/ui-component-dependency';
+import StyleEditorService from 'src/app/services/externalRepresentation/style-editor.service';
 import { style } from '@angular/animations';
 
 

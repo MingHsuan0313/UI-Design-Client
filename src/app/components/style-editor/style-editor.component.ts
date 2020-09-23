@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import GraphEditorService from '../../services/graph-editor.service'
-import StyleEditorService from '../../services/style-editor.service';
+import GraphEditorService from '../../services/externalRepresentation/graph-editor.service'
+import StyleEditorService from '../../services/externalRepresentation/style-editor.service';
 import { GraphStorage , VertexStorage , StyleStorage } from "../../models/graph-dependency";
 
 

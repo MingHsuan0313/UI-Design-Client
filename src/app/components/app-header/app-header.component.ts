@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import GraphEditorService from 'src/app/services/graph-editor.service';
+import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 
 @Component({
   selector: 'app-header',

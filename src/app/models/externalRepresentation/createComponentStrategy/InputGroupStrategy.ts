@@ -1,5 +1,5 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
-import { GraphStorage , VertexStorage , StyleStorage } from "../graph-dependency";
+import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
 
 
 export class InputGroupStrategy implements ICreateComponentStrategy {

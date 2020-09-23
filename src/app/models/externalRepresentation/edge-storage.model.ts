@@ -1,4 +1,4 @@
-import NavigationService from '../../services/navigation.service';
+import NavigationService from '../../services/navigation/navigation.service';
 
 export class EdgeStorage {
   edge: any;

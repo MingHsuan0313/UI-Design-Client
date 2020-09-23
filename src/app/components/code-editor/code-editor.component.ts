@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import ServiceComponentService from 'src/app/services/service-component.service';
+import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 import { CodeEditorDialogComponent } from '../code-editor-dialog/code-editor-dialog.component';
 
 @Component({

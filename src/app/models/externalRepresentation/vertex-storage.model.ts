@@ -1,6 +1,6 @@
 import { StyleStorage } from './style-storage.model';
 import { DataBinding } from './util/DataBinding';
-import {UIComponent} from '../ui-components-dependency';
+import {UIComponent} from '../ui-component-dependency';
 
 /**
  * @description

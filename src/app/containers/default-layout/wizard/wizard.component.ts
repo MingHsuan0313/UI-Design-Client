@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Storage} from '../../../shared/storage';
 import {NgForm} from '@angular/forms';
-import GraphEditorService from '../../../services/graph-editor.service';
-import ServiceComponentService from '../../../services/service-component.service';
+import GraphEditorService from '../../../services/externalRepresentation/graph-editor.service';
+import ServiceComponentService from '../../../services/serviceComponent/service-component.service';
 import {PropertyGenerator} from '../../../shared/property-generator';
 import { ServiceComponentModel, ServiceMappingType } from '../../../models/service-component-dependency';
 import {
@@ -17,7 +17,7 @@ import {
   Table,
   Text,
   UIComponent,
-} from '../../../models/ui-components-dependency';
+} from '../../../models/ui-component-dependency';
 
 // import { UIComponent } from "src/app/models/modelDependency";
 

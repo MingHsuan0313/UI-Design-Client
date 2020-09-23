@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UIComponent, FormComposite } from 'src/app/models/ui-components-dependency';
+import { UIComponent, FormComposite } from 'src/app/models/ui-component-dependency';
 import { ServiceComponentModel ,ServiceMappingType } from "../../models/service-component-dependency";
 import { Library } from "../../shared/library";
 import { GraphStorage , VertexStorage , StyleStorage } from "../../models/graph-dependency";
-import GraphEditorService from 'src/app/services/graph-editor.service';
-import ServiceComponentService from 'src/app/services/service-component.service';
+import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
+import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 
 @Component({
   selector: 'app-service-component-configuration',

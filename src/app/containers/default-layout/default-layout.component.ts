@@ -7,12 +7,12 @@ import {
   RouteConfigLoadEnd
 } from '@angular/router';
 import {Storage} from '../../shared/storage';
-import {Layout, Text} from '../../models/ui-components-dependency';
+import {Layout, Text} from '../../models/ui-component-dependency';
 import {PropertyGenerator} from '../../shared/property-generator';
-import GraphEditorService from '../../services/graph-editor.service';
+import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import ImportService from '../../services/import.service';
-import ExportService from '../../services/export.service';
+import ImportService from '../../services/internalRepresentation/import.service';
+import ExportService from '../../services/internalRepresentation/export.service';
 
 @Component({
   selector: 'app-dashboard',

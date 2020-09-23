@@ -1,6 +1,6 @@
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {Storage} from '../shared/storage';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Storage } from "../../shared/storage";
 
 
 @Injectable({

@@ -1,10 +1,10 @@
 // import { Component, OnInit } from '@angular/core';
 import {AfterViewInit, Component, ElementRef, ViewChild, OnInit} from '@angular/core';
-import GraphEditorService from '../../services/graph-editor.service';
+import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import * as html2canvas from 'html2canvas';
-import ImportService from '../../services/import.service';
+import ImportService from '../../services/internalRepresentation/import.service';
+import ExportService from '../../services/internalRepresentation/export.service';
 import { Storage } from '../../shared/storage';
-import ExportService from '../../services/export.service';
 import { StyleStorage } from '../../models/graph-dependency';
 import { StyleLibrary } from '../../shared/styleLibrary';
 

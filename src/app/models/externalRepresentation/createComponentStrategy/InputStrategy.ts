@@ -1,7 +1,7 @@
 import {ICreateComponentStrategy} from "./ICreateComponentStrategy";
-import { GraphStorage , VertexStorage , StyleStorage } from "../graph-dependency";
-import {StyleLibrary} from "../../shared/styleLibrary";
-import { DataBinding } from "../externalRepresentation/util/DataBinding";
+import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
+import {StyleLibrary} from "../../../shared/styleLibrary";
+import { DataBinding } from "../util/DataBinding";
 // no need to databinding
 export class InputStrategy implements ICreateComponentStrategy {
   basex: number;
