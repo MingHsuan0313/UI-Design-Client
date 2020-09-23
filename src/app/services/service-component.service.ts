@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 // import { fakeServiceComponents } from "../../fakedata/fakeServiceComponents";
-import { ServiceComponentModel } from "../models/model";
+import { ServiceComponentModel } from "../models/service-component.model";
 
 @Injectable({
   providedIn: 'root'
@@ -57,17 +57,6 @@ export default class ServiceComponentService {
       observe: "response", withCredentials: true, responseType: "text"
     })
   }
-
-  // queryServer(uiCategory, parameters, matchmaking) {
-  //   this.queryServices(uiCategory,parameters,matchmaking).subscribe(
-  //     response => {
-  //       let serviceComponents = response["body"] ;
-  //       console.log("response back");
-  //       console.log(serviceComponents);
-  //       return JSON.parse(serviceComponents);
-  //     }
-  //   )
-  // }
 
   queryArgumentsByServiceID(serviceID) {
     let url = `http://localhost:8080/getArguments/?serviceID=${serviceID}`;

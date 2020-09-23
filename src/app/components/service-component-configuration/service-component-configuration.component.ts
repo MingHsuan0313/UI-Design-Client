@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GraphStorage } from 'src/app/models/graph-storage.model';
-import { UIComponent, ServiceComponentModel, FormComposite, ServiceMappingType } from 'src/app/models/model';
+import { UIComponent, FormComposite } from 'src/app/models/model';
+import { ServiceComponentModel , ServiceMappingType } from "../../models/service-component.model";
 import { Library } from "../../shared/library";
 import VertexStorage from 'src/app/models/vertex-storage.model';
 import GraphEditorService from 'src/app/services/graph-editor.service';
@@ -21,8 +22,8 @@ export class ServiceComponentConfigurationComponent implements OnInit {
 
   uiType: String; // service or argument or none
 
-  serviceComponentOptions: any[];
-  argumentOptions: any[];
+  serviceComponentOptions: String[];
+  argumentOptions: String[];
 
   isMatchmaking: boolean;
   graphStorage: GraphStorage;
@@ -35,7 +36,6 @@ export class ServiceComponentConfigurationComponent implements OnInit {
     this.argumentOptions = [];
     for (let se of this.serviceComponentOptions)
       console.log(se)
-
   }
 
   setUiTypeByComponent() {

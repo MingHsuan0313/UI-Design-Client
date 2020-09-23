@@ -4,6 +4,7 @@ import {NgForm} from '@angular/forms';
 import GraphEditorService from '../../../services/graph-editor.service';
 import ServiceComponentService from '../../../services/service-component.service';
 import {PropertyGenerator} from '../../../shared/property-generator';
+import { ServiceComponentModel, ServiceMappingType } from '../../../models/service-component.model';
 import {
   BreadcrumbComposite,
   Button,
@@ -16,7 +17,6 @@ import {
   Table,
   Text,
   UIComponent,
-  ServiceMappingType
 } from '../../../models/model';
 
 // import { UIComponent } from "src/app/models/modelDependency";
@@ -56,11 +56,9 @@ export class WizardComponent implements OnInit {
     properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
     properties['selector'] = PropertyGenerator.getSelector(this.componentName);
     properties['type'] = this.componentName;
-    properties['serviceType'] = ServiceMappingType['none'];
-    properties['serviceComponent'] = {
-      'name': '',
-      'preference': 0
-    };
+    // properties['serviceType'] = ServiceMappingType['none'];
+    properties['serviceComponent'] = new ServiceComponentModel(); 
+ 
 
     switch (this.componentName) {
       case 'icon':
