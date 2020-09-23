@@ -2,9 +2,11 @@ import { AfterViewInit, Component } from "@angular/core";
 import { GraphStorage } from "src/app/models/modelDependency";
 import GraphEditorService from "src/app/services/graph-editor.service";
 import { PropertyGenerator } from "src/app/shared/property-generator";
-import { Process } from "../../models/components/component/containers/process.model";
 import { ICreateBPELComponentStrategy } from "../../models/createBPELComponentStrategy/ICreateBPELComponentStrategy";
+import { Process } from "../../models/components/component/containers/process.model";
 import { ProcessStrategy } from "../../models/createBPELComponentStrategy/ProcessStrategy";
+import { Invoke } from "../../models/components/component/basic-activities/invoke.model";
+import { InvokeStrategy } from "../../models/createBPELComponentStrategy/InvokeStrategy";
 
 @Component({
     selector: 'palette',
@@ -39,6 +41,10 @@ export class PaletteComponent implements AfterViewInit {
             case 'process':
                 bpelComponent = new Process(vertexId);
                 this.setStrategy(new ProcessStrategy());
+                break;
+            case 'invoke':
+                bpelComponent = new Invoke(vertexId);
+                this.setStrategy(new InvokeStrategy());
                 break;
             default:
                 console.log("The BPEL component building failed");
