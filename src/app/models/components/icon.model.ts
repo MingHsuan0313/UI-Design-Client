@@ -1,37 +1,33 @@
-import { UIComponent }  from './UIComponent.model'
-import VertexStorage from '../vertex-storage.model'
-
+import { UIComponent } from "./UIComponent.model";
+import { ServiceComponentModel } from "../service-component.model";
 export class Icon implements UIComponent {
-    x: String;
-    y: String;
-    height?: number;
-    width?: number;
-    id: String;
-    selector: String;
-    text: String;
-    type: String;
-    style: Object[];
-    isBasic: boolean;
-    vertexStorage: VertexStorage;
-  
-    constructor(init?: Partial<Icon>) {
-      Object.assign(this, init);
-    }
-  
-    add(component: UIComponent): void {
-    }
-  
-    getInfo(): any {
-      return this;
-    }
-  
-    remove(component: UIComponent): void {
-    }
-  
-    getValue() {
-  
-    }
-    isBasicComponent(): boolean{
-      return this.isBasic;
+  x: String;
+  y: String;
+  width: String;
+  height: String;
+  id: String;
+  selector: String;
+  type: String;
+  style: String;
+  layout: String;
+  text: String;
+  category: String;
+
+  serviceComponent: ServiceComponentModel;
+
+  constructor(init?: Partial<Icon>) {
+    Object.assign(this, init);
+    this.category = "informative";
+    this.serviceComponent = new ServiceComponentModel();
   }
+
+  add(component: UIComponent): void {
   }
+
+  getInfo(): any {
+    return this;
+  }
+
+  remove(component: UIComponent): void {
+  }
+}

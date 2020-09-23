@@ -1,19 +1,20 @@
-import VertexStorage from '../vertex-storage.model'
+import { ServiceComponentModel } from "../service-component.model";
 
 export interface UIComponent {
-    x?: String;
-    y?: String;
-    width?: number;
-    height?: number;
-    id: String;
-    selector: String;
-    type: String;
-    vertexStorage?: VertexStorage;
-    style?: any; // Object[]
-    isBasic?: boolean;
-  
-    add(component: UIComponent): void;
-    remove(component: UIComponent): void;
-    getInfo(): String;
-    isBasicComponent(): boolean;
-  }
+  x: String;
+  y: String;
+  width: String;
+  height: String;
+  id: String;
+  selector: String;
+  type: String;
+  style: Object;
+  layout: String;
+  category: String;
+
+  serviceComponent: ServiceComponentModel;
+
+  add(component: UIComponent): void;
+  remove(component: UIComponent): void;
+  getInfo(): any;
+}
