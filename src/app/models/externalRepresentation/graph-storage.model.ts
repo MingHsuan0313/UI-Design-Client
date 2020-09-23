@@ -1,7 +1,7 @@
 import { VertexStorage } from './vertex-storage.model';
 import { EdgeStorage } from './edge-storage.model';
 import { Storage } from '../../shared/storage';
-import { GraphConfiguration } from "../util/graph-configuration";
+import { GraphConfiguration } from "./util/graph-configuration";
 import { 
  ICreateComponentStrategy,
  ButtonStrategy,

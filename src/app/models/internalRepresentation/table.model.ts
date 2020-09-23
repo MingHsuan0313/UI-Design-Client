@@ -1,5 +1,5 @@
 import { UIComponent } from "./UIComponent.model";
-import { ServiceComponentModel } from "../service-component.model";
+import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 
 export class Table implements UIComponent {
   x: String;

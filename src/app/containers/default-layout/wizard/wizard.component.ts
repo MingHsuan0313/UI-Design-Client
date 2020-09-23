@@ -4,7 +4,7 @@ import {NgForm} from '@angular/forms';
 import GraphEditorService from '../../../services/graph-editor.service';
 import ServiceComponentService from '../../../services/service-component.service';
 import {PropertyGenerator} from '../../../shared/property-generator';
-import { ServiceComponentModel, ServiceMappingType } from '../../../models/service-component.model';
+import { ServiceComponentModel, ServiceMappingType } from '../../../models/service-component-dependency';
 import {
   BreadcrumbComposite,
   Button,

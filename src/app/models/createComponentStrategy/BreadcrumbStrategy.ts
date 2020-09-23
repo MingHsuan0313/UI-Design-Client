@@ -1,6 +1,6 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { BreadcrumbComposite } from "../ui-components-dependency";
-import { DataBinding } from "../util/DataBinding";
+import { DataBinding } from "../externalRepresentation/util/DataBinding";
 import { StyleLibrary } from "../../shared/styleLibrary";
 import { GraphStorage , VertexStorage , StyleStorage } from "../graph-dependency";
 

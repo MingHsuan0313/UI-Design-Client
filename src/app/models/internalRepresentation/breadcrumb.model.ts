@@ -1,5 +1,5 @@
 import { UIComponent } from "./UIComponent.model";
-import { ServiceComponentModel } from "../service-component.model";
+import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 
 export class BreadcrumbComposite implements UIComponent {
   x: String;

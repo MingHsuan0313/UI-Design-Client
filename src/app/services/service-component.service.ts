@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 // import { fakeServiceComponents } from "../../fakedata/fakeServiceComponents";
-import { ServiceComponentModel } from "../models/service-component.model";
+import { ServiceComponentModel } from "../models/service-component-dependency";
 
 @Injectable({
   providedIn: 'root'

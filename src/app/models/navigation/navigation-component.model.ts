@@ -11,5 +11,4 @@ export class NavigationComponent {
   remove(i) {
     this.children.splice(i, 1);
   }
-
 }

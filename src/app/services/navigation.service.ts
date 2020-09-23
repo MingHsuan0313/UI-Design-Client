@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {NavigationComponent} from '../models/navigation-component.model';
+import {NavigationComponent} from '../models/navigation/navigation-component.model';
 import {Storage} from '../shared/storage';
 
 

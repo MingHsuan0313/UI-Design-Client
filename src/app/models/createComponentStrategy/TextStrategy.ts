@@ -1,6 +1,6 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../shared/styleLibrary";
-import { DataBinding } from "../util/DataBinding";
+import { DataBinding } from "../externalRepresentation/util/DataBinding";
 import { GraphStorage , VertexStorage , StyleStorage } from "../graph-dependency";
 
 export class TextStrategy implements ICreateComponentStrategy {

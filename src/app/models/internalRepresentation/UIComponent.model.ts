@@ -1,4 +1,4 @@
-import { ServiceComponentModel } from "../service-component.model";
+import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 
 export interface UIComponent {
   x: String;

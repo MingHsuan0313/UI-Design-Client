@@ -5,7 +5,7 @@ import GraphEditorService from '../../services/graph-editor.service';
 import { Storage } from '../../shared/storage';
 import { VertexStorage, StyleStorage , GraphStorage } from "../../models/graph-dependency";
 import { PropertyGenerator } from '../../shared/property-generator'
-import { DataBinding } from '../../models/util/DataBinding'
+import { DataBinding } from '../../models/externalRepresentation/util/DataBinding'
 import { ICreateComponentStrategy } from '../../models/createComponentStrategy/ICreateComponentStrategy';
 import { ButtonStrategy } from '../../models/createComponentStrategy/ButtonStrategy';
 import { TextStrategy } from '../../models/createComponentStrategy/TextStrategy';

@@ -1,8 +1,4 @@
-export enum ServiceMappingType {
-  service = "ServiceComponent",
-  argument = "Argument",
-  none = "None",
-}
+import { ServiceMappingType } from './service-mapping-type.enum';
 
 export class ServiceComponentModel {
     name:String;

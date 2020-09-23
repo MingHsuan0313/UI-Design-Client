@@ -1,5 +1,5 @@
 import { UIComponent } from "./UIComponent.model";
-import { ServiceComponentModel } from "../service-component.model";
+import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 export class Text implements UIComponent {
   x: String;
   y: String;
