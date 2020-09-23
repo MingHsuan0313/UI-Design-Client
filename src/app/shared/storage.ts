@@ -54,7 +54,7 @@ export class Storage {
   static setLayoutComponent(component) {
     this.layoutComponent = _.cloneDeep(component);
     this.layoutComponent["componentList"] = this.UICDL;
-    this.PageUICDL['componentList'][0] = (this.layoutComponent);
+    this.PageUICDL['componentList'] = (this.layoutComponent);
   }
 
   static getGenre(): any[] {

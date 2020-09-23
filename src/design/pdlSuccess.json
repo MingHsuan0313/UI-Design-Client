@@ -1,0 +1,47 @@
+{
+    "id": "1",
+    "selector": "page1",
+    "componentList": {
+        "componentList": [
+            {
+                "text": "test",
+                "href": "",
+                "id": "3",
+                "selector": "button4",
+                "type": "button",
+                "serviceType": "None",
+                "serviceComponent": {
+                    "name": "",
+                    "preference": 0
+                },
+                "x": 463.5,
+                "y": 225.6,
+                "width": 60,
+                "height": 40,
+                "style": {
+                    "fontSize": "16",
+                    "fontColor": "#000000",
+                    "fillColor": "#5bc0de",
+                    "rounded": true,
+                    "strokeColor": "#269abc"
+                }
+            }
+        ],
+        "header": [],
+        "sidebar": [],
+        "footer": [],
+        "asidebar": [],
+        "id": "2",
+        "selector": "Prime",
+        "type": "layout",
+        "layout": "layout",
+        "x": 0,
+        "y": 0,
+        "width": 1545,
+        "height": 752,
+        "style": {
+            "fillColor": "#ffffff",
+            "strokeColor": "#c8ced3"
+        }
+    }
+}

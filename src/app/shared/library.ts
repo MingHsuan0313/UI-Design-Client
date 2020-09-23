@@ -28,16 +28,16 @@ export const Library = {
 
   // component properties
   "components": {
-    "icon": ["text"],
-    "text": ["text", "href"],
-    "button": ["text", "href"],
-    "input": ["typeInfo"],
-    "dropdown": ["items"],
-    "table": ["headers", "rows"],
-    "card": ["header", "componentList"],
-    "breadcrumb": ["componentList"],
-    "inputgroup": ["componentList"],
-    "form": ["componentList"]
+    "icon": ["name","text"],
+    "text": ["name","text", "href"],
+    "button": ["name","text", "href"],
+    "input": ["name","typeInfo"],
+    "dropdown": ["name","items"],
+    "table": ["name","headers", "rows"],
+    "card": ["name","header", "componentList"],
+    "breadcrumb": ["name","componentList"],
+    "inputgroup": ["name","componentList"],
+    "form": ["name","componentList"]
   },
 
   // Composite component can composite the following components
