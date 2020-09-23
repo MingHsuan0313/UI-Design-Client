@@ -12,12 +12,12 @@ import {
   Dropdown,
   FormComposite,
   Icon,
-  INPUT,
+  InputText,
   InputGroupComposite,
   Table,
   Text,
   UIComponent,
-} from '../../../models/model';
+} from '../../../models/ui-components-dependency';
 
 // import { UIComponent } from "src/app/models/modelDependency";
 
@@ -83,7 +83,7 @@ export class WizardComponent implements OnInit {
         this.component = new InputGroupComposite(properties);
         break;
       case 'input':
-        this.component = new INPUT(properties);
+        this.component = new InputText(properties);
         break;
       case 'breadcrumb':
         this.component = new BreadcrumbComposite(properties);
@@ -131,7 +131,7 @@ export class WizardComponent implements OnInit {
         this.subComponent = new InputGroupComposite(properties);
         break;
       case 'input':
-        this.subComponent = new INPUT(properties);
+        this.subComponent = new InputText(properties);
         break;
       case 'breadcrumb':
         this.component = new BreadcrumbComposite(properties);

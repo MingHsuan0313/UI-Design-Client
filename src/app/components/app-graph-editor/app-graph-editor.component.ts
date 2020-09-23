@@ -3,10 +3,10 @@ import {AfterViewInit, Component, ElementRef, ViewChild, OnInit} from '@angular/
 import GraphEditorService from '../../services/graph-editor.service';
 import * as html2canvas from 'html2canvas';
 import ImportService from '../../services/import.service';
-import {Storage} from '../../shared/storage';
+import { Storage } from '../../shared/storage';
 import ExportService from '../../services/export.service';
-import {StyleStorage} from '../../models/style-storage.model';
-import {StyleLibrary} from '../../shared/styleLibrary';
+import { StyleStorage } from '../../models/graph-dependency';
+import { StyleLibrary } from '../../shared/styleLibrary';
 
 @Component({
   selector: 'app-graph-editor',

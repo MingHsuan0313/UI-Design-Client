@@ -7,7 +7,7 @@ import {
   RouteConfigLoadEnd
 } from '@angular/router';
 import {Storage} from '../../shared/storage';
-import {Layout, Text} from '../../models/model';
+import {Layout, Text} from '../../models/ui-components-dependency';
 import {PropertyGenerator} from '../../shared/property-generator';
 import GraphEditorService from '../../services/graph-editor.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';

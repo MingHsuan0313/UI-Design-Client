@@ -16,7 +16,7 @@ export class InputText implements UIComponent {
 
   serviceComponent: ServiceComponentModel;
 
-  constructor(init?: Partial<INPUT>) {
+  constructor(init?: Partial<InputText>) {
     Object.assign(this, init);
     this.category = "input";
     this.serviceComponent = new ServiceComponentModel();

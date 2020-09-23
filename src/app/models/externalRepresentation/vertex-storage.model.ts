@@ -1,14 +1,13 @@
-import {StyleStorage, DataBinding} from './modelDependency';
-import {Storage} from '../shared/storage';
-import {UIComponent} from './model';
-import GraphEditorService from '../services/graph-editor.service';
+import { StyleStorage } from './style-storage.model';
+import { DataBinding } from '../util/DataBinding';
+import {UIComponent} from '../ui-components-dependency';
 
 /**
  * @description
  * This is the storage of mxGraph Vertex
  * It's stored in GraphStorage
  */
-export default class VertexStorage {
+export class VertexStorage {
   vertex: any;
   id: string;
   parentId: string;

@@ -1,4 +1,4 @@
-import { GraphStorage } from "../modelDependency";
+import { GraphStorage } from "../graph-dependency";
 
 export class GraphConfiguration {
     selectedCells: mxCell[];

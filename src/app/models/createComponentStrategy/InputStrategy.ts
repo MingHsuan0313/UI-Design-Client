@@ -1,7 +1,6 @@
 import {ICreateComponentStrategy} from "./ICreateComponentStrategy";
-import {GraphStorage} from "../graph-storage.model";
+import { GraphStorage , VertexStorage , StyleStorage } from "../graph-dependency";
 import {StyleLibrary} from "../../shared/styleLibrary";
-import {StyleStorage} from "../style-storage.model";
 import { DataBinding } from "../util/DataBinding";
 // no need to databinding
 export class InputStrategy implements ICreateComponentStrategy {

@@ -1,10 +1,8 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
-import { GraphStorage } from "../graph-storage.model";
-import { BreadcrumbComposite } from "../model";
-import { StyleStorage } from "../style-storage.model";
+import { BreadcrumbComposite } from "../ui-components-dependency";
 import { DataBinding } from "../util/DataBinding";
 import { StyleLibrary } from "../../shared/styleLibrary";
-import VertexStorage from "../vertex-storage.model";
+import { GraphStorage , VertexStorage , StyleStorage } from "../graph-dependency";
 
 
 

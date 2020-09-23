@@ -1,10 +1,7 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
-import { GraphStorage } from "../graph-storage.model";
-import { Text } from "../components/text.model";
 import { StyleLibrary } from "../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
-import { StyleStorage } from "../style-storage.model";
-
+import { GraphStorage , VertexStorage , StyleStorage } from "../graph-dependency";
 
 export class IconStrategy implements ICreateComponentStrategy {
   basex: number;

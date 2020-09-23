@@ -1,8 +1,7 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
-import { GraphStorage } from "../graph-storage.model";
 import { StyleLibrary } from "../../shared/styleLibrary";
-import { StyleStorage } from "../style-storage.model";
 import { DataBinding } from "../util/DataBinding";
+import { GraphStorage , VertexStorage , StyleStorage } from "../graph-dependency";
 
 export class ButtonStrategy implements ICreateComponentStrategy {
   basex: number;

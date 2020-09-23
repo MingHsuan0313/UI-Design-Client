@@ -1,7 +1,7 @@
 import {Library} from './library';
 import {HttpHeaders} from '@angular/common/http';
 import {HttpClient} from '@angular/common/http';
-import {Layout, UIComponent} from '../models/model';
+import {Layout, UIComponent} from '../models/ui-components-dependency';
 import {PropertyGenerator} from './property-generator';
 import {NavigationComponent} from '../models/navigation-component.model';
 import * as _ from 'lodash';

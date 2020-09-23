@@ -1,4 +1,4 @@
-import {GraphStorage} from '../graph-storage.model';
+import { GraphStorage , VertexStorage , StyleStorage } from "../graph-dependency";
 
 export interface ICreateComponentStrategy {
   createComponent(graphStorage: GraphStorage, component, parent);

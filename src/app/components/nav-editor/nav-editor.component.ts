@@ -3,8 +3,7 @@ import ImportService from '../../services/import.service';
 import ExportService from '../../services/export.service';
 import GraphEditorService from '../../services/graph-editor.service';
 import { Storage } from '../../shared/storage';
-import vertexStorage from '../../models/vertex-storage.model';
-import { StyleStorage } from '../../models/style-storage.model';
+import { VertexStorage, StyleStorage , GraphStorage } from "../../models/graph-dependency";
 import { PropertyGenerator } from '../../shared/property-generator'
 import { DataBinding } from '../../models/util/DataBinding'
 import { ICreateComponentStrategy } from '../../models/createComponentStrategy/ICreateComponentStrategy';
@@ -19,8 +18,7 @@ import { IconStrategy } from '../../models/createComponentStrategy/IconStrategy'
 import { InputStrategy } from '../../models/createComponentStrategy/InputStrategy';
 import { LayoutStrategy } from '../../models/createComponentStrategy/LayoutStrategy';
 import { from } from 'rxjs';
-import { GraphStorage } from 'src/app/models/graph-storage.model';
-import { UIComponent } from 'src/app/models/model';
+import { UIComponent } from 'src/app/models/ui-components-dependency';
 import StyleEditorService from 'src/app/services/style-editor.service';
 import { style } from '@angular/animations';
 
@@ -167,8 +165,8 @@ export class NavEditorComponent implements OnInit {
           }
           //console.log(JSON.parse(JSON.stringify(pageUICDL)));
           let childCellStyle = styleEditorService.convertStyleDescriptionToJsobObject(childCell.style);
-          let vs: vertexStorage = new vertexStorage(childCell, new StyleStorage("", childCellStyle), uiComponent, dataBindingObject, isPrimary);
-          let parentVertexStorage: vertexStorage = graphStorage.findVertexStorageByID(parentID);
+          let vs: VertexStorage = new VertexStorage(childCell, new StyleStorage("", childCellStyle), uiComponent, dataBindingObject, isPrimary);
+          let parentVertexStorage: VertexStorage = graphStorage.findVertexStorageByID(parentID);
           if (parentVertexStorage != null) {
             if (componentPart == "box") {
               parentVertexStorage.addChild(newChildID, childCell, "componentList", uiComponent);

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { GraphStorage } from 'src/app/models/graph-storage.model';
-import { UIComponent, FormComposite } from 'src/app/models/model';
+import { UIComponent, FormComposite } from 'src/app/models/ui-components-dependency';
 import { ServiceComponentModel , ServiceMappingType } from "../../models/service-component.model";
 import { Library } from "../../shared/library";
-import VertexStorage from 'src/app/models/vertex-storage.model';
+import { GraphStorage , VertexStorage , StyleStorage } from "../../models/graph-dependency";
 import GraphEditorService from 'src/app/services/graph-editor.service';
 import ServiceComponentService from 'src/app/services/service-component.service';
 

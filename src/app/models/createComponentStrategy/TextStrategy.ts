@@ -1,9 +1,7 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
-import { GraphStorage } from "../graph-storage.model";
 import { StyleLibrary } from "../../shared/styleLibrary";
-import { StyleStorage } from "../style-storage.model";
 import { DataBinding } from "../util/DataBinding";
-import { Text } from "../modelDependency";
+import { GraphStorage , VertexStorage , StyleStorage } from "../graph-dependency";
 
 export class TextStrategy implements ICreateComponentStrategy {
   basex: number;

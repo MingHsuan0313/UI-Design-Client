@@ -1,9 +1,8 @@
 import {Injectable, ElementRef} from "@angular/core";
-import {GraphStorage} from "../models/graph-storage.model";
 import {fakeBreadcrumb} from "../../fakedata/fakeBreadcrumb";
 import {StyleLibrary} from "../shared/styleLibrary";
-import {StyleStorage} from "../models/style-storage.model";
 import {Storage} from '../shared/storage'
+import { GraphStorage } from "../models/graph-dependency";
 
 @Injectable({
   providedIn: "root"

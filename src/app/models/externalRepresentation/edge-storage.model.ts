@@ -1,6 +1,6 @@
-import NavigationService from '../services/navigation.service';
+import NavigationService from '../../services/navigation.service';
 
-export default class EdgeStorage {
+export class EdgeStorage {
   edge: any;
   id: string;
   parentID: string;

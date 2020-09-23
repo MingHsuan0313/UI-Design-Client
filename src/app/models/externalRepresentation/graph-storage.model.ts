@@ -1,19 +1,22 @@
-import VertexStorage from './vertex-storage.model';
-import EdgeStorage from './edge-storage.model';
-import { Storage } from './../shared/storage';
-import { ICreateComponentStrategy } from './createComponentStrategy/ICreateComponentStrategy';
-import { ButtonStrategy } from './createComponentStrategy/ButtonStrategy';
-import { TextStrategy } from './createComponentStrategy/TextStrategy';
-import { DropdownStrategy } from './createComponentStrategy/DropdownStrategy';
-import { TableStrategy } from './createComponentStrategy/TableStrategy';
-import { FormStrategy } from './createComponentStrategy/FormStrategy';
-import { CardStrategy } from './createComponentStrategy/CardStrategy';
-import { BreadcrumbStrategy } from './createComponentStrategy/BreadcrumbStrategy';
-import { IconStrategy } from './createComponentStrategy/IconStrategy';
-import { InputStrategy } from './createComponentStrategy/InputStrategy';
-import { LayoutStrategy } from './createComponentStrategy/LayoutStrategy';
-import { GraphConfiguration } from './util/graph-configuration';
-import { PropertyGenerator } from '../shared/property-generator';
+import { VertexStorage } from './vertex-storage.model';
+import { EdgeStorage } from './edge-storage.model';
+import { Storage } from '../../shared/storage';
+import { GraphConfiguration } from "../util/graph-configuration";
+import { 
+ ICreateComponentStrategy,
+ ButtonStrategy,
+ TextStrategy,
+ TableStrategy,
+ BreadcrumbStrategy,
+ CardStrategy,
+ FormStrategy,
+ IconStrategy,
+ InputGroupStrategy,
+ InputStrategy,
+ DropdownStrategy,
+ LayoutStrategy, 
+} from '../component-strategy-dependency';
+import { PropertyGenerator } from '../../shared/property-generator';
 
 export class GraphStorage {
   vertexStorageList: {}; //{index:VertexStorage}
