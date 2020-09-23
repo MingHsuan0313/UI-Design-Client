@@ -7,6 +7,10 @@ import { Process } from "../../models/components/component/containers/process.mo
 import { ProcessStrategy } from "../../models/createBPELComponentStrategy/ProcessStrategy";
 import { Invoke } from "../../models/components/component/basic-activities/invoke.model";
 import { InvokeStrategy } from "../../models/createBPELComponentStrategy/InvokeStrategy";
+import { Receive } from "../../models/components/component/basic-activities/receive.model";
+import { ReceiveStrategy } from "../../models/createBPELComponentStrategy/ReceiveStrategy";
+import { Reply } from "../../models/components/component/basic-activities/reply.model";
+import { ReplyStrategy } from "../../models/createBPELComponentStrategy/ReplyStrategy";
 
 @Component({
     selector: 'palette',
@@ -45,6 +49,14 @@ export class PaletteComponent implements AfterViewInit {
             case 'invoke':
                 bpelComponent = new Invoke(vertexId);
                 this.setStrategy(new InvokeStrategy());
+                break;
+            case 'receive':
+                bpelComponent = new Receive(vertexId);
+                this.setStrategy(new ReceiveStrategy());
+                break;
+            case 'reply':
+                bpelComponent = new Reply(vertexId);
+                this.setStrategy(new ReplyStrategy());
                 break;
             default:
                 console.log("The BPEL component building failed");
