@@ -15,8 +15,9 @@ export abstract class BPELComponent implements AbstractComponent{
     element?: BPELComponentElement;
     componentName: String;
 
-    constructor() {
-        console.log("construct BPELComponent")
+    constructor(id: String) {
+        this.id = id;
+        console.log("construct BPELComponent id = " + id);
     }
 
     getInfo(): any {
