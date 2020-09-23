@@ -1,5 +1,7 @@
-export interface BPELComponentAttribute {
+export abstract class BPELComponentAttribute {
     name?: String;
 
-    getInfo(): any
+    constructor(name?: String) {
+        this.name = name;
+    }
 }
