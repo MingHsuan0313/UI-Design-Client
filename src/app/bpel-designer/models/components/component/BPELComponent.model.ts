@@ -1,8 +1,7 @@
 import VertexStorage from 'src/app/models/vertex-storage.model'
 import AbstractComponent from 'src/app/shared/AbstractComponent.model';
-import { BPELComponentAttribute } from '../attribute/BPELComponent-attribute.model';
-import { BPELComponentElement } from '../element/BPELComponent-element.model';
 
+// Definition of a BPELComponent: A component that can be drawn and showed on the graph-editor
 export abstract class BPELComponent implements AbstractComponent{
     id: String;
     x?: String;
@@ -11,8 +10,8 @@ export abstract class BPELComponent implements AbstractComponent{
     height?: number;
     type: String;
     vertexStorage?: VertexStorage;
-    attribute?: BPELComponentAttribute;
-    element?: BPELComponentElement;
+    attribute?: any; // Because there may be attributes not belonging to BPELComponentAttribute
+    element?: any; // Because there may be elements not belonging to BPELComponentElement
     componentName: String;
 
     constructor(id: String) {
@@ -32,11 +31,11 @@ export abstract class BPELComponent implements AbstractComponent{
         this.vertexStorage = vertexStorage;
     }
 
-    getAttribute(): BPELComponentAttribute {
+    getAttribute(): any {
         return this.attribute;
     }
 
-    getElement(): BPELComponentElement {
+    getElement(): any {
         return this.element;
     }
 }
