@@ -12,10 +12,10 @@ export class BreadcrumbComposite implements UIComponent {
   style: String;
   layout: String;
   componentList: any[] = [];
-  category: String;
 
+  category: String;
+  name: String;
   serviceComponent: ServiceComponentModel;
-  argumentName: String;
 
   constructor(init?: Partial<BreadcrumbComposite>) {
     Object.assign(this, init);

@@ -6,6 +6,7 @@ export class ServiceComponentModel {
     serviceType: ServiceMappingType;
     code: String;
     serviceID: String;
+    className: String; // include package
   
     constructor() {
       this.name = "";
@@ -13,6 +14,7 @@ export class ServiceComponentModel {
       this.serviceType = ServiceMappingType["none"];
       this.code = "";
       this.serviceID = "";
+      this.className = "";
     }
   
     setName(serviceComponentName: String) {

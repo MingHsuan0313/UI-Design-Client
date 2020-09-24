@@ -16,9 +16,10 @@ export class Layout implements UIComponent {
   sidebar: any[] = [];
   footer: any[] = [];
   asidebar: any[] = [];
-  category: String;
 
+  category: String;
   serviceComponent: ServiceComponentModel;
+  name: String;
 
   constructor(init?: Partial<Layout>) {
     Object.assign(this, init);

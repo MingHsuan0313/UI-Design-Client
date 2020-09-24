@@ -12,10 +12,10 @@ export class FormComposite implements UIComponent {
     style: String;
     layout: String;
     componentList: any[] = [];
-    category: String;
 
+    category: String;
     serviceComponent: ServiceComponentModel;
-    argumentName: String;
+    name: String;
 
     constructor(init?: Partial<FormComposite>) {
         Object.assign(this, init);

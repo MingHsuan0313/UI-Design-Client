@@ -12,9 +12,10 @@ export class InputText implements UIComponent {
   style: String;
   layout: String;
   typeInfo: String;  // e.g. input-text, input-password
-  category: String;
 
+  category: String;
   serviceComponent: ServiceComponentModel;
+  name: String;
 
   constructor(init?: Partial<InputText>) {
     Object.assign(this, init);

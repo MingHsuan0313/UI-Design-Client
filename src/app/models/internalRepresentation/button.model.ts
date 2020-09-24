@@ -14,9 +14,10 @@ export class Button implements UIComponent {
   layout: String;
   text: String;
   href: String;
-  category: String;
 
   serviceComponent: ServiceComponentModel;
+  category: String;
+  name: String;
 
   constructor(init?: Partial<Button>) {
     Object.assign(this, init);

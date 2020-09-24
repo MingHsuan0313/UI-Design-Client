@@ -13,9 +13,10 @@ export class Table implements UIComponent {
   layout: String;
   headers: any[];
   rows: any[];
-  category: String;
 
+  category: String;
   serviceComponent: ServiceComponentModel;
+  name: String;
 
   constructor(init?: Partial<Table>) {
     Object.assign(this, init);

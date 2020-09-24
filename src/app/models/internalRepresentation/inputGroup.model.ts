@@ -12,9 +12,10 @@ export class InputGroupComposite implements UIComponent {
   style: String;
   layout: String;
   componentList: any[] = [];
-  category: String;
 
+  category: String;
   serviceComponent: ServiceComponentModel;
+  name: String;
 
   constructor(init?: Partial<InputGroupComposite>) {
     Object.assign(this, init);

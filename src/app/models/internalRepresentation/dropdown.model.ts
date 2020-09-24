@@ -13,9 +13,10 @@ export class Dropdown implements UIComponent {
   style: String;
   layout: String;
   items: any[];
-  category: String;
 
+  category: String;
   serviceComponent: ServiceComponentModel;
+  name: String;
 
   constructor(init?: Partial<Dropdown>) {
     Object.assign(this, init);

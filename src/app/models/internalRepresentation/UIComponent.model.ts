@@ -10,8 +10,9 @@ export interface UIComponent {
   type: String;
   style: Object;
   layout: String;
-  category: String;
 
+  category: String;
+  name: String;
   serviceComponent: ServiceComponentModel;
 
   add(component: UIComponent): void;

@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject} from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
-import { CodeEditorComponent } from '../code-editor/code-editor.component' ;
+import { CodeEditorComponent } from '../code-editor/code-editor.component';
 
 @Component({
   selector: 'app-code-editor-dialog',
@@ -14,20 +14,33 @@ export class CodeEditorDialogComponent implements OnInit {
     private serviceComponentService: ServiceComponentService) { }
 
   openDialog() {
-    let dialogRef = this.dialog.open(CodeEditorComponent, {
-      width: '850px',
-      height: '550px',
-      panelClass: 'backdropBackground',
-      data: {
-        code: this.serviceComponentService.getCode(), 
-        name: this.serviceComponentService.getSelectedServiceComponentName()
-      }
-    });
+    let selectedServiceComponent = this.serviceComponentService.getSelectedServiceComponent();
+    let selectedServiceID = selectedServiceComponent.serviceID;
+    let dialogRef;
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log("This dialog was closed");
-      console.log(result);
-    })
+    this.serviceComponentService.queryCodeByServiceID(selectedServiceID).subscribe(
+      response => {
+        let responseJson = response["body"];
+        let code = JSON.parse(responseJson)["code"];
+        console.log("resposne heree")
+        console.log(code);
+        dialogRef = this.dialog.open(CodeEditorComponent, {
+          width: '850px',
+          height: '550px',
+          panelClass: 'backdropBackground',
+          data: {
+            code: code,
+            className: selectedServiceComponent.className,
+          }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log("This dialog was closed");
+          console.log(result);
+        })
+      }
+    )
+
   }
 
   ngOnInit() {

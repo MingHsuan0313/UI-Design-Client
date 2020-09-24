@@ -12,9 +12,10 @@ export class Text implements UIComponent {
   layout: String;
   text: String;
   href: String;
-  category: String;
 
+  category: String;
   serviceComponent: ServiceComponentModel;
+  name: String;
 
   constructor(init?: Partial<Text>) {
     Object.assign(this, init);

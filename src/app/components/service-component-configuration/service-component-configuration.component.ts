@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UIComponent, FormComposite } from 'src/app/models/ui-component-dependency';
-import { ServiceComponentModel ,ServiceMappingType } from "../../models/service-component-dependency";
+import { ServiceComponentModel, ServiceMappingType } from "../../models/service-component-dependency";
 import { Library } from "../../shared/library";
-import { GraphStorage , VertexStorage , StyleStorage } from "../../models/graph-dependency";
+import { GraphStorage, VertexStorage, StyleStorage } from "../../models/graph-dependency";
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
+import { plainToClass } from 'class-transformer';
 
 @Component({
   selector: 'app-service-component-configuration',
@@ -14,14 +15,14 @@ import ServiceComponentService from 'src/app/services/serviceComponent/service-c
 export class ServiceComponentConfigurationComponent implements OnInit {
   selectedUIComponent: UIComponent;
   selectedVertexStorage: VertexStorage;
-  selectedServiceComponent: ServiceComponentModel;
 
-  selectedServiceComponentName: String;
+  // for angular material option
+  selectedServiceComponent: ServiceComponentModel;
   selectedArgumentName: String;
 
   uiType: String; // service or argument or none
 
-  serviceComponentOptions: String[];
+  serviceComponentOptions: any[];
   argumentOptions: String[];
 
   isMatchmaking: boolean;
@@ -29,7 +30,6 @@ export class ServiceComponentConfigurationComponent implements OnInit {
   constructor(private graphEditorService: GraphEditorService,
     private serviceComponentService: ServiceComponentService) {
     this.isMatchmaking = false;
-    this.selectedServiceComponentName = "select service";
     this.selectedArgumentName = "select argument";
     this.serviceComponentOptions = [];
     this.argumentOptions = [];
@@ -47,10 +47,8 @@ export class ServiceComponentConfigurationComponent implements OnInit {
   }
 
   selectService() {
-    console.log("select service " + this.selectedServiceComponentName);
-    this.serviceComponentService.setSelectedServiceComponent(this.selectedServiceComponentName);
-    this.selectedUIComponent.serviceComponent.name = this.selectedServiceComponentName;
-    this.selectedUIComponent.serviceComponent.serviceType = ServiceMappingType['service'];
+    this.serviceComponentService.setSelectedServiceComponent(this.selectedServiceComponent);
+    this.selectedUIComponent.serviceComponent = this.selectedServiceComponent;
   }
 
   selectArgument() {
@@ -70,48 +68,24 @@ export class ServiceComponentConfigurationComponent implements OnInit {
   }
 
   queryServices() {
-    let uiCategory = this.selectedUIComponent.category;
-    let type = this.selectedUIComponent.type;
-    let parameters = 0;
-    if (uiCategory == "input") {
-      if (type == "form") {
-        parameters = this.countArguments();
-        this.serviceComponentService.queryServices(uiCategory, parameters, this.isMatchmaking).subscribe(
-          response => {
-            let serviceComponents = response['body'];
-            serviceComponents = JSON.parse(serviceComponents);
-            console.log("return from server");
-            console.log(serviceComponents);
-            this.serviceComponentOptions = [];
-            this.serviceComponentService.setServiceComponents(serviceComponents);
-            for (let index = 0; index < serviceComponents.length; index++) {
-              this.serviceComponentOptions.push(serviceComponents[index]["name"]);
-            }
-          }
-        )
-      }
-      else if (type == "input") {
-        console.log("can be argument");
-        return;
-      }
-      else {
-        console.log("can be service component");
-        return;
-      }
-    }
-    else if (uiCategory == "informative") {
-      this.serviceComponentService.queryOutputServices(this.isMatchmaking).subscribe(
-        response => {
-          let serviceComponents = response['body'];
-          serviceComponents = JSON.parse(serviceComponents);
-          this.serviceComponentOptions = [];
-          this.serviceComponentService.setServiceComponents(serviceComponents);
-          for (let index = 0; index < serviceComponents.length; index++) {
-            this.serviceComponentOptions.push(serviceComponents[index]["name"]);
-          }
+    let parameterCount = 0;
+    parameterCount = this.countArguments();
+    this.serviceComponentService.queryServices(this.selectedUIComponent, parameterCount, this.isMatchmaking).subscribe(
+      response => {
+        let serviceComponents = response["body"];
+        serviceComponents = JSON.parse(serviceComponents);
+        console.log("return from server");
+        console.log(serviceComponents);
+        this.serviceComponentOptions = [];
+        this.serviceComponentService.setServiceComponents(serviceComponents);
+
+        for (let index = 0; index < serviceComponents.length; index++) {
+          this.serviceComponentOptions.push(serviceComponents[index]);
         }
-      )
-    }
+        console.log("push service")
+        console.log(this.serviceComponentOptions);
+      }
+    )
   }
 
   queryArgumentsByServiceID(serviceID) {
@@ -127,10 +101,6 @@ export class ServiceComponentConfigurationComponent implements OnInit {
         }
       }
     )
-  }
-
-  queryOutputService() {
-
   }
 
   initializeState() {
@@ -153,7 +123,7 @@ export class ServiceComponentConfigurationComponent implements OnInit {
         this.initializeState();
       else {
         if (this.selectedUIComponent.serviceComponent.serviceType == ServiceMappingType['service']) {
-          this.selectedServiceComponentName = this.selectedUIComponent.serviceComponent.name;
+          this.selectedServiceComponent = this.selectedUIComponent.serviceComponent;
         }
         else if (this.selectedUIComponent.serviceComponent.serviceType == ServiceMappingType['argument']) {
           this.selectedArgumentName = this.selectedUIComponent.serviceComponent.name;
@@ -171,8 +141,8 @@ export class ServiceComponentConfigurationComponent implements OnInit {
           let parentVertex = selectedVertex.parent;
           let parentVertexStorage = this.graphStorage.findVertexStorageByID(parentVertex["id"]);
           let parentServiceName = parentVertexStorage.component.serviceComponent.name;
+          let parentServiceID = parentVertexStorage.component.serviceComponent.serviceID;
           console.log(parentServiceName);
-          let parentServiceID = this.serviceComponentService.findServiceIDByName(parentServiceName);
           this.queryArgumentsByServiceID(parentServiceID);
         }
       }

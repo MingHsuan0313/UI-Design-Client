@@ -13,9 +13,10 @@ export class CardComposite implements UIComponent {
   layout: String;
   header: String;
   componentList: any[] = [];
-  category: String;
 
+  category: String;
   serviceComponent: ServiceComponentModel;
+  name: String;
 
   constructor(init?: Partial<CardComposite>) {
     Object.assign(this, init);

@@ -11,9 +11,10 @@ export class Icon implements UIComponent {
   style: String;
   layout: String;
   text: String;
-  category: String;
 
+  category: String;
   serviceComponent: ServiceComponentModel;
+  name: String;
 
   constructor(init?: Partial<Icon>) {
     Object.assign(this, init);
