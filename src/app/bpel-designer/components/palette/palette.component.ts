@@ -11,6 +11,10 @@ import { Receive } from "../../models/components/component/basic-activities/rece
 import { ReceiveStrategy } from "../../models/createBPELComponentStrategy/ReceiveStrategy";
 import { Reply } from "../../models/components/component/basic-activities/reply.model";
 import { ReplyStrategy } from "../../models/createBPELComponentStrategy/ReplyStrategy";
+import { Assign } from "../../models/components/component/basic-activities/assign/assign.model";
+import { Copy } from "../../models/components/component/basic-activities/assign/copy/copy.model";
+import { AssignStrategy } from "../../models/createBPELComponentStrategy/AssignStrategy";
+import { CopyStrategy } from "../../models/createBPELComponentStrategy/CopyStrategy";
 
 @Component({
     selector: 'palette',
@@ -57,6 +61,14 @@ export class PaletteComponent implements AfterViewInit {
             case 'reply':
                 bpelComponent = new Reply(vertexId);
                 this.setStrategy(new ReplyStrategy());
+                break;
+            case 'assign':
+                bpelComponent = new Assign(vertexId);
+                this.setStrategy(new AssignStrategy());
+                break;
+            case 'copy':
+                bpelComponent = new Copy(vertexId);
+                this.setStrategy(new CopyStrategy());
                 break;
             default:
                 console.log("The BPEL component building failed");
