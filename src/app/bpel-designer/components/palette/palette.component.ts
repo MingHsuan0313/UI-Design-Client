@@ -15,6 +15,8 @@ import { Assign } from "../../models/components/component/basic-activities/assig
 import { Copy } from "../../models/components/component/basic-activities/assign/copy/copy.model";
 import { AssignStrategy } from "../../models/createBPELComponentStrategy/AssignStrategy";
 import { CopyStrategy } from "../../models/createBPELComponentStrategy/CopyStrategy";
+import { Sequence } from "../../models/components/component/structured-activities/sequence.model";
+import { SequenceStrategy } from "../../models/createBPELComponentStrategy/SequenceStrategy";
 
 @Component({
     selector: 'palette',
@@ -69,6 +71,10 @@ export class PaletteComponent implements AfterViewInit {
             case 'copy':
                 bpelComponent = new Copy(vertexId);
                 this.setStrategy(new CopyStrategy());
+                break;
+            case 'sequence':
+                bpelComponent = new Sequence(vertexId);
+                this.setStrategy(new SequenceStrategy());
                 break;
             default:
                 console.log("The BPEL component building failed");
