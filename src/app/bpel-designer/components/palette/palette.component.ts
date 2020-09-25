@@ -17,6 +17,12 @@ import { AssignStrategy } from "../../models/createBPELComponentStrategy/AssignS
 import { CopyStrategy } from "../../models/createBPELComponentStrategy/CopyStrategy";
 import { Sequence } from "../../models/components/component/structured-activities/sequence.model";
 import { SequenceStrategy } from "../../models/createBPELComponentStrategy/SequenceStrategy";
+import { If } from "../../models/components/component/structured-activities/if/if.model";
+import { ElseIfBranchStrategy } from "../../models/createBPELComponentStrategy/ElseIfBranchStrategy";
+import { IfStrategy } from "../../models/createBPELComponentStrategy/IfStrategy";
+import { ElseIfBranch } from "../../models/components/component/structured-activities/if/branch/elseif-branch.model";
+import { ElseBranch } from "../../models/components/component/structured-activities/if/branch/else-branch.model";
+import { ElseBranchStrategy } from "../../models/createBPELComponentStrategy/ElseBranchStrategy";
 
 @Component({
     selector: 'palette',
@@ -75,6 +81,18 @@ export class PaletteComponent implements AfterViewInit {
             case 'sequence':
                 bpelComponent = new Sequence(vertexId);
                 this.setStrategy(new SequenceStrategy());
+                break;
+            case 'if':
+                bpelComponent = new If(vertexId);
+                this.setStrategy(new IfStrategy());
+                break;
+            case 'elseif':
+                bpelComponent = new ElseIfBranch(vertexId);
+                this.setStrategy(new ElseIfBranchStrategy());
+                break;
+            case 'else':
+                bpelComponent = new ElseBranch(vertexId);
+                this.setStrategy(new ElseBranchStrategy());
                 break;
             default:
                 console.log("The BPEL component building failed");
