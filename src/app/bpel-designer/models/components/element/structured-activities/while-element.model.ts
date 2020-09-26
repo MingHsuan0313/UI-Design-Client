@@ -1,8 +1,8 @@
-import { BPELComponent } from "../../../../component/BPELComponent.model";
-import { Condition } from "../../../../component/structured-activities/condition.model";
-import { BPELComponentElement } from "../../../BPELComponent-element.model";
+import { BPELComponent } from "../../component/BPELComponent.model";
+import { Condition } from "../../component/structured-activities/condition.model";
+import { BPELComponentElement } from "../BPELComponent-element.model";
 
-export class ElseIfBranchElement implements BPELComponentElement {
+export class WhileElement implements BPELComponentElement {
     condition: Condition;
     activity: BPELComponent;
 
