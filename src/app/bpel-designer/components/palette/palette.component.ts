@@ -25,6 +25,10 @@ import { ElseBranch } from "../../models/components/component/structured-activit
 import { ElseBranchStrategy } from "../../models/createBPELComponentStrategy/ElseBranchStrategy";
 import { While } from "../../models/components/component/structured-activities/while.model";
 import { WhileStrategy } from "../../models/createBPELComponentStrategy/WhileStrategy";
+import { OnMessage } from "../../models/components/component/structured-activities/pick/onMessage.model";
+import { Pick } from "../../models/components/component/structured-activities/pick/pick.model";
+import { OnMessageStrategy } from "../../models/createBPELComponentStrategy/OnMessageStrategy";
+import { PickStrategy } from "../../models/createBPELComponentStrategy/PickStrategy";
 
 @Component({
     selector: 'palette',
@@ -99,6 +103,14 @@ export class PaletteComponent implements AfterViewInit {
             case 'while':
                 bpelComponent = new While(vertexId);
                 this.setStrategy(new WhileStrategy());
+                break;
+            case 'pick':
+                bpelComponent = new Pick(vertexId);
+                this.setStrategy(new PickStrategy());
+                break;
+            case 'onMessage':
+                bpelComponent = new OnMessage(vertexId);
+                this.setStrategy(new OnMessageStrategy());
                 break;
             default:
                 console.log("The BPEL component building failed");
