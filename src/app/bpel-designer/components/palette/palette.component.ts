@@ -23,6 +23,8 @@ import { IfStrategy } from "../../models/createBPELComponentStrategy/IfStrategy"
 import { ElseIfBranch } from "../../models/components/component/structured-activities/if/branch/elseif-branch.model";
 import { ElseBranch } from "../../models/components/component/structured-activities/if/branch/else-branch.model";
 import { ElseBranchStrategy } from "../../models/createBPELComponentStrategy/ElseBranchStrategy";
+import { While } from "../../models/components/component/structured-activities/while.model";
+import { WhileStrategy } from "../../models/createBPELComponentStrategy/WhileStrategy";
 
 @Component({
     selector: 'palette',
@@ -93,6 +95,10 @@ export class PaletteComponent implements AfterViewInit {
             case 'else':
                 bpelComponent = new ElseBranch(vertexId);
                 this.setStrategy(new ElseBranchStrategy());
+                break;
+            case 'while':
+                bpelComponent = new While(vertexId);
+                this.setStrategy(new WhileStrategy());
                 break;
             default:
                 console.log("The BPEL component building failed");
