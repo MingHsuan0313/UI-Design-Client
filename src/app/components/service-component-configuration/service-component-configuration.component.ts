@@ -5,8 +5,8 @@ import { Library } from "../../shared/library";
 import { GraphStorage, VertexStorage, StyleStorage } from "../../models/graph-dependency";
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
-import { plainToClass } from 'class-transformer';
 
+ 
 @Component({
   selector: 'app-service-component-configuration',
   templateUrl: './service-component-configuration.component.html',
@@ -72,16 +72,24 @@ export class ServiceComponentConfigurationComponent implements OnInit {
     parameterCount = this.countArguments();
     this.serviceComponentService.queryServices(this.selectedUIComponent, parameterCount, this.isMatchmaking).subscribe(
       response => {
-        let serviceComponents = response["body"];
-        serviceComponents = JSON.parse(serviceComponents);
+        console.log(response)
+        console.log(response[0])
+        let serviceComponentsJson = response;
+        let serviceComponentsList: ServiceComponentModel[]= [];
         console.log("return from server");
-        console.log(serviceComponents);
-        this.serviceComponentOptions = [];
-        this.serviceComponentService.setServiceComponents(serviceComponents);
+        console.log(serviceComponentsJson);
+        this.serviceComponentOptions = []
 
-        for (let index = 0; index < serviceComponents.length; index++) {
-          this.serviceComponentOptions.push(serviceComponents[index]);
+        for (let [key, value] of Object.entries(serviceComponentsJson)) {
+          let temp = serviceComponentsJson[key].split(",");
+          console.log(temp)
+          let serviceComponent = new ServiceComponentModel();
+          serviceComponent.setName(temp[0]);
+          serviceComponent.setPreference(temp[1]);
+          this.serviceComponentOptions.push(serviceComponent);
+          serviceComponentsList.push(serviceComponent);
         }
+        this.serviceComponentService.setServiceComponents(serviceComponentsList);
         console.log("push service")
         console.log(this.serviceComponentOptions);
       }
@@ -129,7 +137,6 @@ export class ServiceComponentConfigurationComponent implements OnInit {
           this.selectedArgumentName = this.selectedUIComponent.serviceComponent.name;
         }
       }
-
 
       if (this.selectedUIComponent.category == "input") {
         if (this.selectedUIComponent.type == "form") {

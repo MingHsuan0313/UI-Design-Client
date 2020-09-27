@@ -1,7 +1,7 @@
 <div *ngIf="selectedUIComponent!=undefined && uiType!='none'; else uiComponentNotSelected">
   <span style="font-size: large;">UI Component Category : {{selectedUIComponent.category}}</span>
   <br>
-  <div *ngIf="selectedUIComponent.serviceComponent.name.length >0; else serviceNotSelected">
+  <div *ngIf="selectedUIComponent.serviceComponent.name.length >0; else serviceNotSelected"> 
 
   </div>
 
@@ -10,7 +10,7 @@
     <mat-label>Choose Service</mat-label>
     <mat-select (selectionChange)="selectService()" [(value)]="selectedServiceComponent">
       <mat-option *ngFor="let serviceComponentOption of serviceComponentOptions" [value]="serviceComponentOption">
-        {{serviceComponentOption.name}}
+        {{serviceComponentOption.name}} {{serviceComponentOption.preference}}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -31,5 +31,6 @@
   &nbsp;
   <mat-slide-toggle [color]="color" [checked]="isMatchmaking">Matchmaking</mat-slide-toggle>
 </div>
+
 <ng-template #uiComponentNotSelected><span>UI component has not been selected</span></ng-template>
 <ng-template #serviceNotSelected><span>Service Component has not been selected</span></ng-template>

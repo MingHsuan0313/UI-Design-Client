@@ -38,27 +38,66 @@ export default class ServiceComponentService {
     let uiName = uiComponent.name;
     let uiCategory = uiComponent.category;
     let url = "";
-    if(uiCategory == "input") {
-      if(uiType == "form")
-        url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&uiName=${uiName}&parameterCount=${parameterCount}&matchmaking=${matchmaking}&uiType=${uiType}`;
-    }
-    else if(uiCategory == "informative") {
-      if(uiType == "Table")
-        url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&uiName=${uiName}&parameterCount=${parameterCount}&matchmaking=${matchmaking}&uiType=${uiType}`;
-        // url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&matchmaking=${matchmaking}`;
+    let body;
+  //   if(uiCategory == "input") {
+  //  //   if(uiType == "form")
+  //  //     url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&uiName=${uiName}&parameterCount=${parameterCount}&matchmaking=${matchmaking}&uiType=${uiType}`;
+  //   }
+  //   else if(uiCategory == "informative") {
+  //     if(uiType == "Table")
+  //       url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&uiName=${uiName}&parameterCount=${parameterCount}&matchmaking=${matchmaking}&uiType=${uiType}`;
+  //       // url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&matchmaking=${matchmaking}`;
       
-    }
-    else if(uiCategory == "navigation") {
+  //   }
+  //   else if(uiCategory == "navigation") {
       
+  //   }
+  //   else if(uiCategory == "container") {
+  //     console.log("This is container")
+  //     body = {
+  //       serviceName: uiName+"Service",
+  //       operationName: uiName,
+  //       arguments: []
+  //     }
+  //     if(uiComponent["componentList"]!=undefined){
+  //       for(let subComponent of uiComponent["componentList"]){
+  //         if(subComponent.type=="input" || subComponent.type=="informative"){
+  //           body.arguments.push({
+  //             argumentName: subComponent.name,
+  //             type: subComponent["serviceArgumentType"]!=undefined ? subComponent["serviceArgumentType"] : "String",
+  //             isInput: subComponent.type=="input" ? true : false
+  //           })
+  //         }
+  //       }
+  //     }
+  //     url = `${this.baseUrl}/getMatchingServices`;
+  //   }
+    if(uiType=="form" || uiType=="card" ){
+      body = {
+        "serviceName": uiName+"Service",
+        "operationName": uiName,
+        "arguments": []
+      }
+      
+      if(uiComponent["componentList"]!=undefined){
+        for(let subComponent of uiComponent["componentList"]){
+          console.log(subComponent);
+          if(subComponent.category=="input" || subComponent.category=="informative"){
+            body.arguments.push({
+              "argumentName": subComponent.name,
+              "type": subComponent["serviceArgumentType"]!=undefined ? subComponent["serviceArgumentType"] : "string",
+              "isInput": subComponent.category=="input" ? true : false
+            })
+          }
+        }
+      }
+      
+      url = `${this.baseUrl}/getMatchingServices`;
     }
-    else if(uiCategory == "container") {
 
-    }
+    console.log(JSON.stringify(body))
+    return this.httpClient.post(url, body);
 
-    return this.httpClient.get(url, {
-      headers: new HttpHeaders().set("Content-Type", "application/json"),
-      observe: "response", withCredentials: true, responseType: "text"
-    })
   }
 
   setServiceComponents(serviceComponents) {
@@ -108,4 +147,6 @@ export default class ServiceComponentService {
         return this.serviceComponents[index];
     }
   }
+
+  
 }
