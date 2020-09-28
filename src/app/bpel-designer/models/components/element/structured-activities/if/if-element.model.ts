@@ -4,21 +4,14 @@ import { ElseBranch } from "../../../component/structured-activities/if/branch/e
 import { ElseIfBranch } from "../../../component/structured-activities/if/branch/elseif-branch.model";
 import { BPELComponentElement } from "../../BPELComponent-element.model";
 
-export class IfElement implements BPELComponentElement {
+export class IfElement extends BPELComponentElement {
     condition: Condition;
     activity: BPELComponent;
     elseifList?: ElseIfBranch[];
     else?: ElseBranch;
 
     constructor() {
+        super();
         this.condition = new Condition();
     }
-
-    add(component: BPELComponent): void {
-        throw new Error("Method not implemented.");
-    }
-    remove(component: BPELComponent): void {
-        throw new Error("Method not implemented.");
-    }
-
 }
