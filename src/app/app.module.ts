@@ -19,6 +19,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
 import {MatSelectModule} from '@angular/material/select'; 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 // import {AppHeaderComponent} from './components/app-header/app-header.component';
 
@@ -75,6 +76,7 @@ import { MatFormFieldModule, MatInputModule } from "@angular/material";
     MatSlideToggleModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     CodeEditorComponent,

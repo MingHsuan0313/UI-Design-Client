@@ -5,8 +5,9 @@
     <ngx-monaco-editor style="height: 80%" [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
   <!-- </mat-dialog-content> -->
   <mat-dialog-actions>
-    <button mat-button>Save</button>
+    <button mat-button (click)="compileCode()">Save & Compile</button>
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
     <button mat-button [mat-dialog-close]="true">Close</button>
+   <div *ngIf="isCompiling"><mat-spinner [diameter]="40"></mat-spinner>&nbsp;&nbsp;<span style="font-size: large;">Compiling...</span></div>
   </mat-dialog-actions>
 </div>

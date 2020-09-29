@@ -29,7 +29,6 @@ export default class ServiceComponentService {
     this.selectedServiceComponent = new ServiceComponentModel();
   }
 
-
   getServiceComponents() {
     return this.serviceComponents;
   }
@@ -121,7 +120,6 @@ export default class ServiceComponentService {
 
   }
 
-
   queryArgumentsByServiceID(serviceID: string) {
     let url = `${this.baseUrl}/getArguments`;
     let params: HttpParams;
@@ -135,10 +133,32 @@ export default class ServiceComponentService {
     let url = `${this.baseUrl}/getCode`;
     // let url = `${this.baseUrl}/getCode?serviceID=${serviceID}`;
     let params: HttpParams;
-    params = new HttpParams();
+    params = new HttpParams().set("serviceID",serviceID);
 
     params.append("serviceID", serviceID);
     return this.httpClientService.httpGet(url, params);
+  }
+  
+  postEditedServiceComponent(code: string, className: string) {
+    let url = `${this.baseUrl}/editServiceComponent`;
+    let requestBody = {
+      "code": code,
+      "class": className
+    }  
+    
+    return this.httpClientService.httpPost(url,requestBody);
+  }
+  
+  triggerJenkinsBuild() {
+    let url = "buildByToken/build";
+    let jenkinsToken = "SelabServiceGeneratorToken";
+    let jenkinsJob = "Service Generator Pipeline";
+    let params: HttpParams;
+    params = new HttpParams()
+      .set("token",jenkinsToken)
+      .set("job",jenkinsJob)
+      
+    return this.httpClientService.triggerJenkinsBuild(url,params);
   }
 
   setSelectedServiceComponent(serviceComponent: ServiceComponentModel) {

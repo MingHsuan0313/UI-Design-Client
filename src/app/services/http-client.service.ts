@@ -16,7 +16,7 @@ export class HttpClientService {
     this.port = "8091";
     this.url = `http://localhost:${this.port}/selab/`;
   }
-    
+
   httpGet(endPointUrl: string, params: HttpParams) {
     let uri = this.url + endPointUrl;
     console.log("get here")
@@ -29,4 +29,34 @@ export class HttpClientService {
       params: params
     })
   }
+
+  httpPost(endPointUrl: string, requestBody: Object) {
+    let uri = this.url + endPointUrl;
+    return this.httpClient.post(uri,
+      requestBody,
+      {
+        headers: new HttpHeaders().set("Content-Type", "application/json"),
+        observe: "response", withCredentials: true, responseType: "text"
+      });
+  }
+
+  triggerJenkinsBuild(endPointUrl: string, params: HttpParams) {
+    // Jenkins Server
+    let uri = `http://localhost:8080/${endPointUrl}`;
+
+
+    console.log("get here")
+    console.log(params)
+    console.log(uri)
+
+    return this.httpClient.get(uri, {
+      headers: new HttpHeaders().set("Content-Type", "application/json")
+        .set("Access-Control-Allow-Origin","*"),
+      observe: "response", withCredentials: true,
+      responseType: "text",
+      params: params
+    })
+  }
+
+
 }

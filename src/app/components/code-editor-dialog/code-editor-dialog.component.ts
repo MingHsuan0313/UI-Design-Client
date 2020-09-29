@@ -20,10 +20,8 @@ export class CodeEditorDialogComponent implements OnInit {
 
     this.serviceComponentService.queryCodeByServiceID(selectedServiceID).subscribe(
       response => {
-        let responseJson = response["body"];
-        let code = JSON.parse(responseJson)["code"];
-        console.log("resposne heree")
-        console.log(code);
+        let code = response["body"];
+
         dialogRef = this.dialog.open(CodeEditorComponent, {
           width: '850px',
           height: '550px',

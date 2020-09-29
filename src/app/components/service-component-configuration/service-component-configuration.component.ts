@@ -18,12 +18,12 @@ export class ServiceComponentConfigurationComponent implements OnInit {
 
   // for angular material option
   selectedServiceComponent: ServiceComponentModel;
-  selectedArgumentName: String;
+  selectedArgumentName: string;
 
-  uiType: String; // service or argument or none
+  uiType: string; // service or argument or none
 
   serviceComponentOptions: any[];
-  argumentOptions: String[];
+  argumentOptions: string[];
 
   isMatchmaking: boolean;
   graphStorage: GraphStorage;
@@ -69,28 +69,31 @@ export class ServiceComponentConfigurationComponent implements OnInit {
 
   queryServices() {
     let parameterCount = 0;
-    // parameterCount = this.countArguments();
+    parameterCount = this.countArguments();
     this.serviceComponentService.queryServices(this.selectedUIComponent, parameterCount).subscribe(
       response => {
         console.log(response)
         console.log("tt")
         console.log(JSON.parse(response["body"]))
-        let serviceComponentsJson = response;
-        let serviceComponentsList: ServiceComponentModel[]= [];
+        // let serviceComponentsJson = response;
+        // let serviceComponentsList: ServiceComponentModel[]= [];
+        let serviceComponentList = JSON.parse(response["body"]);
         console.log("return from server");
-        console.log(serviceComponentsJson);
+        // console.log(serviceComponentsJson);
         this.serviceComponentOptions = []
-
-        for (let [key, value] of Object.entries(serviceComponentsJson)) {
-          let temp = serviceComponentsJson[key].split(",");
-          console.log(temp)
-          let serviceComponent = new ServiceComponentModel();
-          serviceComponent.setName(temp[0]);
-          serviceComponent.setPreference(temp[1]);
-          this.serviceComponentOptions.push(serviceComponent);
-          serviceComponentsList.push(serviceComponent);
+        // console.log(serviceComponentList)
+        
+        for(let index = 0;index < serviceComponentList.length;index++) {
+          let serviceComponentModel = new ServiceComponentModel();
+          serviceComponentModel.setName(serviceComponentList[index]["name"]);
+          serviceComponentModel.setClassName(serviceComponentList[index]["className"]);
+          serviceComponentModel.setServiceID(serviceComponentList[index]["serviceID"]);
+          console.log("dd")
+          console.log(serviceComponentList[index]);
+          this.serviceComponentOptions.push(serviceComponentModel);
         }
-        this.serviceComponentService.setServiceComponents(serviceComponentsList);
+
+        this.serviceComponentService.setServiceComponents(serviceComponentList);
         console.log("push service")
         console.log(this.serviceComponentOptions);
       }
