@@ -1,27 +1,15 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 
-export class Layout implements UIComponent {
-  x: String;
-  y: String;
-  width: String;
-  height: String;
-  id: String;
-  selector: String;
-  type: String;       // layout1, layout2, ...
-  style: String;
-  layout: String;
+export class Layout extends UIComponent {
   componentList: any[] = [];
   header: any[] = [];
   sidebar: any[] = [];
   footer: any[] = [];
   asidebar: any[] = [];
 
-  category: String;
-  serviceComponent: ServiceComponentModel;
-  name: String;
-
   constructor(init?: Partial<Layout>) {
+    super();
     Object.assign(this, init);
     this.category = "layout";
     this.serviceComponent = new ServiceComponentModel();

@@ -4,7 +4,6 @@ export class GraphConfiguration {
     selectedCells: mxCell[];
     graphStorage: GraphStorage;
 
-
     constructor(graphStorage: GraphStorage) {
         let editor = graphStorage.editor;
         this.configureEditorKeyBinding(editor);

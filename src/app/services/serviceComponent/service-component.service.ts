@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 // import { fakeServiceComponents } from "../../fakedata/fakeServiceComponents";
 import { ServiceComponentModel } from "../../models/service-component-dependency";
 import { UIComponent } from 'src/app/models/ui-component-dependency';
+import { HttpClientService } from '../http-client.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,14 @@ export default class ServiceComponentService {
 
   // after select from dropdown
   selectedServiceComponent: ServiceComponentModel;
-  
+
   // toggle checkbox
   isMatchMaking: Boolean;
 
-  constructor(private httpClient: HttpClient) {
-    this.baseUrl = "http://localhost:8080";
+  constructor(private httpClient: HttpClient,
+    private httpClientService: HttpClientService
+  ) {
+    this.baseUrl = "services";
     this.serviceComponents = [];
     this.selectedServiceComponent = new ServiceComponentModel();
   }
@@ -30,8 +33,19 @@ export default class ServiceComponentService {
   getServiceComponents() {
     return this.serviceComponents;
   }
+  
+  queryServices(uiComponent: UIComponent, parameterCount) {
+    console.log("Query Services");
+    console.log(uiComponent);
+    let uiType = uiComponent.type;
+    let uiName = uiComponent.name;
+    let uiCategory = uiComponent.category;
 
-  queryServices(uiComponent:UIComponent, parameterCount, matchmaking) {
+    let params: HttpParams;
+    return this.httpClientService.httpGet("",params);
+  }
+
+  queryMatchedServices(uiComponent: UIComponent, parameterCount, matchmaking) {
     console.log("Query Server for service components");
     console.log(this);
     let uiType = uiComponent.type;
@@ -39,59 +53,59 @@ export default class ServiceComponentService {
     let uiCategory = uiComponent.category;
     let url = "";
     let body;
-  //   if(uiCategory == "input") {
-  //  //   if(uiType == "form")
-  //  //     url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&uiName=${uiName}&parameterCount=${parameterCount}&matchmaking=${matchmaking}&uiType=${uiType}`;
-  //   }
-  //   else if(uiCategory == "informative") {
-  //     if(uiType == "Table")
-  //       url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&uiName=${uiName}&parameterCount=${parameterCount}&matchmaking=${matchmaking}&uiType=${uiType}`;
-  //       // url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&matchmaking=${matchmaking}`;
-      
-  //   }
-  //   else if(uiCategory == "navigation") {
-      
-  //   }
-  //   else if(uiCategory == "container") {
-  //     console.log("This is container")
-  //     body = {
-  //       serviceName: uiName+"Service",
-  //       operationName: uiName,
-  //       arguments: []
-  //     }
-  //     if(uiComponent["componentList"]!=undefined){
-  //       for(let subComponent of uiComponent["componentList"]){
-  //         if(subComponent.type=="input" || subComponent.type=="informative"){
-  //           body.arguments.push({
-  //             argumentName: subComponent.name,
-  //             type: subComponent["serviceArgumentType"]!=undefined ? subComponent["serviceArgumentType"] : "String",
-  //             isInput: subComponent.type=="input" ? true : false
-  //           })
-  //         }
-  //       }
-  //     }
-  //     url = `${this.baseUrl}/getMatchingServices`;
-  //   }
-    if(uiType=="form" || uiType=="card" ){
+    //   if(uiCategory == "input") {
+    //  //   if(uiType == "form")
+    //  //     url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&uiName=${uiName}&parameterCount=${parameterCount}&matchmaking=${matchmaking}&uiType=${uiType}`;
+    //   }
+    //   else if(uiCategory == "informative") {
+    //     if(uiType == "Table")
+    //       url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&uiName=${uiName}&parameterCount=${parameterCount}&matchmaking=${matchmaking}&uiType=${uiType}`;
+    //       // url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&matchmaking=${matchmaking}`;
+
+    //   }
+    //   else if(uiCategory == "navigation") {
+
+    //   }
+    //   else if(uiCategory == "container") {
+    //     console.log("This is container")
+    //     body = {
+    //       serviceName: uiName+"Service",
+    //       operationName: uiName,
+    //       arguments: []
+    //     }
+    //     if(uiComponent["componentList"]!=undefined){
+    //       for(let subComponent of uiComponent["componentList"]){
+    //         if(subComponent.type=="input" || subComponent.type=="informative"){
+    //           body.arguments.push({
+    //             argumentName: subComponent.name,
+    //             type: subComponent["serviceArgumentType"]!=undefined ? subComponent["serviceArgumentType"] : "String",
+    //             isInput: subComponent.type=="input" ? true : false
+    //           })
+    //         }
+    //       }
+    //     }
+    //     url = `${this.baseUrl}/getMatchingServices`;
+    //   }
+    if (uiType == "form" || uiType == "card") {
       body = {
-        "serviceName": uiName+"Service",
+        "serviceName": uiName + "Service",
         "operationName": uiName,
         "arguments": []
       }
-      
-      if(uiComponent["componentList"]!=undefined){
-        for(let subComponent of uiComponent["componentList"]){
+
+      if (uiComponent["componentList"] != undefined) {
+        for (let subComponent of uiComponent["componentList"]) {
           console.log(subComponent);
-          if(subComponent.category=="input" || subComponent.category=="informative"){
+          if (subComponent.category == "input" || subComponent.category == "informative") {
             body.arguments.push({
               "argumentName": subComponent.name,
-              "type": subComponent["serviceArgumentType"]!=undefined ? subComponent["serviceArgumentType"] : "string",
-              "isInput": subComponent.category=="input" ? true : false
+              "type": subComponent["serviceArgumentType"] != undefined ? subComponent["serviceArgumentType"] : "string",
+              "isInput": subComponent.category == "input" ? true : false
             })
           }
         }
       }
-      
+
       url = `${this.baseUrl}/getMatchingServices`;
     }
 
@@ -100,35 +114,30 @@ export default class ServiceComponentService {
 
   }
 
-  setServiceComponents(serviceComponents) {
-    this.serviceComponents = serviceComponents;
+
+  queryArgumentsByServiceID(serviceID: string) {
+    let url = `${this.baseUrl}/getArguments`;
+    let params: HttpParams;
+    params.append("serviceID", serviceID);
+    return this.httpClientService.httpGet(url, params);
   }
 
-  queryArgumentsByServiceID(serviceID) {
-    let url = `${this.baseUrl}/getArguments?serviceID=${serviceID}`;
-    return this.httpClient.get(url, {
-      headers: new HttpHeaders().set("Content-Type", "application/json"),
-      observe: "response", withCredentials: true, responseType: "text"
-    })
-  }
-  
   queryCodeByServiceID(serviceID) {
-    let url = `${this.baseUrl}/getCode?serviceID=${serviceID}`;
-
-    return this.httpClient.get(url, {
-      headers: new HttpHeaders().set("Content-Type", "application/json"),
-      observe: "response", withCredentials: true, responseType: "text"
-    })
+    let url = `${this.baseUrl}/getCode`;
+    // let url = `${this.baseUrl}/getCode?serviceID=${serviceID}`;
+    let params: HttpParams;
+    params.append("serviceID", serviceID);
+    return this.httpClientService.httpGet(url, params);
   }
 
   setSelectedServiceComponent(serviceComponent: ServiceComponentModel) {
-    this.selectedServiceComponent = serviceComponent; 
+    this.selectedServiceComponent = serviceComponent;
   }
 
   getSelectedCode() {
     return this.selectedServiceComponent.code;
   }
-  
+
   getSelectedServiceComponent() {
     return this.selectedServiceComponent;
   }
@@ -136,17 +145,19 @@ export default class ServiceComponentService {
   getSelectedServiceComponentName() {
     return this.selectedServiceComponent.name;
   }
-  
+
   getSelectedServiceID() {
-    return this.selectedServiceComponent.serviceID; 
+    return this.selectedServiceComponent.serviceID;
   }
-  
+
+  setServiceComponents(serviceComponents) {
+    this.serviceComponents = serviceComponents;
+  }
+
   findServiceComponentByServiceID(serviceID: String) {
-    for(let index = 0;index < this.serviceComponents.length;index++) {
-      if(this.serviceComponents[index].serviceID == serviceID)
+    for (let index = 0; index < this.serviceComponents.length; index++) {
+      if (this.serviceComponents[index].serviceID == serviceID)
         return this.serviceComponents[index];
     }
   }
-
-  
 }

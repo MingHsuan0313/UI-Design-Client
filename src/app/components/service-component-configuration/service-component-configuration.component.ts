@@ -69,8 +69,8 @@ export class ServiceComponentConfigurationComponent implements OnInit {
 
   queryServices() {
     let parameterCount = 0;
-    parameterCount = this.countArguments();
-    this.serviceComponentService.queryServices(this.selectedUIComponent, parameterCount, this.isMatchmaking).subscribe(
+    // parameterCount = this.countArguments();
+    this.serviceComponentService.queryServices(this.selectedUIComponent, parameterCount).subscribe(
       response => {
         console.log(response)
         console.log(response[0])

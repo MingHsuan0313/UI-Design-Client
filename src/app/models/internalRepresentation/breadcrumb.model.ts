@@ -1,23 +1,11 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 
-export class BreadcrumbComposite implements UIComponent {
-  x: String;
-  y: String;
-  width: String;
-  height: String;
-  id: String;
-  selector: String;
-  type: String;
-  style: String;
-  layout: String;
+export class BreadcrumbComposite extends UIComponent {
   componentList: any[] = [];
 
-  category: String;
-  name: String;
-  serviceComponent: ServiceComponentModel;
-
   constructor(init?: Partial<BreadcrumbComposite>) {
+    super();
     Object.assign(this, init);
     this.category = "navigation";
     this.serviceComponent = new ServiceComponentModel();
