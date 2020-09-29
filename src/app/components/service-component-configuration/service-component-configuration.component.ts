@@ -73,7 +73,8 @@ export class ServiceComponentConfigurationComponent implements OnInit {
     this.serviceComponentService.queryServices(this.selectedUIComponent, parameterCount).subscribe(
       response => {
         console.log(response)
-        console.log(response[0])
+        console.log("tt")
+        console.log(JSON.parse(response["body"]))
         let serviceComponentsJson = response;
         let serviceComponentsList: ServiceComponentModel[]= [];
         console.log("return from server");

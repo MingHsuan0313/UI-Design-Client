@@ -13,12 +13,14 @@ export class HttpClientService {
 
 
   constructor(private httpClient: HttpClient) {
-    this.port = "8080";
+    this.port = "8091";
     this.url = `http://localhost:${this.port}/selab/`;
   }
     
   httpGet(endPointUrl: string, params: HttpParams) {
     let uri = this.url + endPointUrl;
+    console.log("get here")
+    console.log(params)
 
     return this.httpClient.get(uri, {
       headers: new HttpHeaders().set("Content-Type", "application/json"),

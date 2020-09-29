@@ -34,15 +34,22 @@ export default class ServiceComponentService {
     return this.serviceComponents;
   }
   
-  queryServices(uiComponent: UIComponent, parameterCount) {
+  queryServices(uiComponent: UIComponent, parameterCount: number) {
+    let url = `${this.baseUrl}/getServices`;
+    let params: HttpParams;
     console.log("Query Services");
     console.log(uiComponent);
     let uiType = uiComponent.type;
     let uiName = uiComponent.name;
     let uiCategory = uiComponent.category;
-
-    let params: HttpParams;
-    return this.httpClientService.httpGet("",params);
+    let matchmaking = "true";
+    
+    params = new HttpParams().set("uiCategory",uiCategory.toString())
+      .set("uiType",uiType.toString())
+      .set("uiName",uiName.toString())
+      .set("parameterCount",parameterCount.toString())
+      .set("matchmaking",matchmaking);
+    return this.httpClientService.httpGet(url,params);
   }
 
   queryMatchedServices(uiComponent: UIComponent, parameterCount, matchmaking) {
@@ -118,6 +125,8 @@ export default class ServiceComponentService {
   queryArgumentsByServiceID(serviceID: string) {
     let url = `${this.baseUrl}/getArguments`;
     let params: HttpParams;
+    params = new HttpParams();
+
     params.append("serviceID", serviceID);
     return this.httpClientService.httpGet(url, params);
   }
@@ -126,6 +135,8 @@ export default class ServiceComponentService {
     let url = `${this.baseUrl}/getCode`;
     // let url = `${this.baseUrl}/getCode?serviceID=${serviceID}`;
     let params: HttpParams;
+    params = new HttpParams();
+
     params.append("serviceID", serviceID);
     return this.httpClientService.httpGet(url, params);
   }
