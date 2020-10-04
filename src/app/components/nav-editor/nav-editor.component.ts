@@ -70,7 +70,7 @@ export class NavEditorComponent implements OnInit {
 
         pageUICDL["image"] = JSON.stringify(image["img"]);
 
-        this.makeDragableOfDom(pageID, pageUICDL, this.graphEditorService.graphStorage);
+        this.makeDragableOfDom(pageID, pageUICDL, this.graphEditorService.selectedGraphStorage);
 
       }
     )

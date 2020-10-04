@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 import { CodeEditorDialogComponent } from '../code-editor-dialog/code-editor-dialog.component';
+import XTerminalService from './x-terminal/x-terminal.service';
 
 @Component({
   selector: 'app-code-editor',
@@ -16,24 +17,43 @@ export class CodeEditorComponent implements OnInit {
   `
   className: string;
   isCompiling: boolean;
+  logMessage: string;
    
   constructor(
     public dialogRef: MatDialogRef<CodeEditorDialogComponent>,
     private serviceComponentService: ServiceComponentService,
+    private xterminalService: XTerminalService,
     @Inject(MAT_DIALOG_DATA)public data:any,
   ) {
     this.isCompiling = false;
+    this.logMessage = "";
   }
   
   compileCode() {
     console.log("start compiling");
     this.isCompiling = true;
+    this.logMessage = "";
     this.serviceComponentService.postEditedServiceComponent(this.code,this.className).subscribe(
       response => {
         console.log("get from eidit code");
-        console.log(JSON.parse(response["body"]));
+        let responseObject = JSON.parse(response["body"]);
         console.log("using")
         this.isCompiling = false;
+        this.logMessage = responseObject["log"];
+        console.log("Hereee");
+        console.log(responseObject);
+        if(responseObject["statusCode"] == -1) {
+          this.xterminalService.appendErrorMessage("Signature Isn't unique") ;
+          return;
+        }
+        else if(responseObject["statusCode"] == 0) {
+          this.xterminalService.appendErrorMessage(this.logMessage) ;
+          return;
+        }
+        else if(responseObject["statusCode"] == 1) {
+          this.xterminalService.appendSuccessMessage(this.logMessage) ;
+          return;
+        }
         this.serviceComponentService.triggerJenkinsBuild().subscribe(
           response => {
             console.log("trigger jenkins build");
@@ -44,6 +64,10 @@ export class CodeEditorComponent implements OnInit {
     )
   
     // this.serviceComponentService
+  }
+  
+  clearTerminal() {
+    this.xterminalService.clearTerminal();
   }
 
   closeDialog() {

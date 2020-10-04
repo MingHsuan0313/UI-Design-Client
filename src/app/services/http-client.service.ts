@@ -6,19 +6,19 @@ import { Injectable } from '@angular/core';
 })
 export class HttpClientService {
   // UI-Design-Server url
-  url: string;
+  urlPrefix: string;
 
   // UI-Design-Server port 
   port: string;
 
 
   constructor(private httpClient: HttpClient) {
-    this.port = "8091";
-    this.url = `http://localhost:${this.port}/selab/`;
+    this.port = "8090";
+    this.urlPrefix = `http://localhost:${this.port}/selab/`;
   }
 
   httpGet(endPointUrl: string, params: HttpParams) {
-    let uri = this.url + endPointUrl;
+    let uri = this.urlPrefix + endPointUrl;
     console.log("get here")
     console.log(params)
 
@@ -31,7 +31,7 @@ export class HttpClientService {
   }
 
   httpPost(endPointUrl: string, requestBody: Object) {
-    let uri = this.url + endPointUrl;
+    let uri = this.urlPrefix + endPointUrl;
     return this.httpClient.post(uri,
       requestBody,
       {

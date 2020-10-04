@@ -105,11 +105,9 @@ export class ServiceComponentConfigurationComponent implements OnInit {
       response => {
         let argumentList = response['body'];
         argumentList = JSON.parse(argumentList);
-        console.log("get argument List")
-        console.log(argumentList);
         this.argumentOptions = [];
         for (let index = 0; index < argumentList.length; index++) {
-          this.argumentOptions.push(argumentList[index]["name"]);
+          this.argumentOptions.push(argumentList[index]);
         }
       }
     )

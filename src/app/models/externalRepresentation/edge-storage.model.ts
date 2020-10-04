@@ -13,7 +13,8 @@ export class EdgeStorage {
   url: string;
   private navigationService: NavigationService;
 
-  constructor(edge) {
+  constructor(
+    edge) {
     this.edge = edge;
     this.id = edge['id'];
     this.parentID = this.edge['parent']['id'];
@@ -29,6 +30,6 @@ export class EdgeStorage {
     this.source = this.edge['source']['value'];
     this.target = this.edge["target"]["value"];
     this.navigationService = new NavigationService();
-    this.navigationService.createNavigationComponent(this.source, this.url, this.target);
+    this.navigationService.createNavigationComponent(this.source,this.target,this.url);
   }
 }

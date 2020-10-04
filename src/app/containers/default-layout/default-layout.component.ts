@@ -102,7 +102,7 @@ export class DefaultLayoutComponent implements OnInit {
 
   apply() {
     // selector is now meaningless
-    this.layoutComponent = new Layout({id: PropertyGenerator.getID(this.graphEditorService.getMaxID()), selector: this.layout_selected, type: 'layout', layout: 'layout'});
+    this.layoutComponent = new Layout({id: PropertyGenerator.getID(this.graphEditorService.getMaxVertexID()), selector: this.layout_selected, type: 'layout', layout: 'layout'});
     Storage.setLayoutComponent(this.layoutComponent);
     this.graphEditorService.bindComponent(this.layoutComponent);
   }
@@ -111,7 +111,7 @@ export class DefaultLayoutComponent implements OnInit {
     document.getElementById('myForm').style.display = 'none';
     const properties = sf.value;
     console.log(sf.value);
-    properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
+    properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
     properties['selector'] = 'text';
     properties['type'] = 'text';
     properties['layout'] = this.layoutPart;
@@ -232,7 +232,7 @@ export class DefaultLayoutComponent implements OnInit {
         style[mxConstants.STYLE_SPACING] = 10;
 
         style[mxConstants.STYLE_FILLCOLOR] = '#ffffff';
-        this.graphEditorService.graphStorage.getGraph().getStylesheet().putCellStyle('style' + i.toString(), style);
+        this.graphEditorService.selectedGraphStorage.getGraph().getStylesheet().putCellStyle('style' + i.toString(), style);
         return 'style' + i.toString();
       }
     }

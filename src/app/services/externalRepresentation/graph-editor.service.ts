@@ -10,7 +10,7 @@ import { GraphStorage } from "../../models/graph-dependency";
 export default class GraphEditorService {
   graphStorages: GraphStorage[];
   selectedGraphID: string;
-  graphStorage: GraphStorage;
+  selectedGraphStorage: GraphStorage;
 
   constructor() {
     this.graphStorages = [];
@@ -19,10 +19,10 @@ export default class GraphEditorService {
   // argument : native html element reference (container)
   // return : void
   // function : create graph
-  createGraph(element) {
-    this.graphStorage = new GraphStorage(element, "graphContainer" + this.graphStorages.length.toString());
-    this.graphStorages.push(this.graphStorage);
-    this.selectedGraphID = this.graphStorage.getID();
+  createGraph(element: HTMLElement) {
+    this.selectedGraphStorage = new GraphStorage(element, "graphContainer" + this.graphStorages.length.toString());
+    this.graphStorages.push(this.selectedGraphStorage);
+    this.selectedGraphID = this.selectedGraphStorage.getID();
     Storage.createPageUICDL();
     // this.bindComponent(fakeBreadcrumb);
   }
@@ -31,25 +31,25 @@ export default class GraphEditorService {
   // possible to have x y ?
   bindComponent(component, x?, y?) {
     if (x === undefined || y === undefined) {
-      const parent = this.graphStorage.getGraph().getDefaultParent();
-      this.graphStorage.createComponent(component, parent);
+      const parent = this.selectedGraphStorage.getGraph().getDefaultParent();
+      this.selectedGraphStorage.createComponent(component, parent);
     } else {
-      const parent = this.graphStorage.getGraph().getDefaultParent();
-      this.graphStorage.createComponent(component, parent, x, y);
+      const parent = this.selectedGraphStorage.getGraph().getDefaultParent();
+      this.selectedGraphStorage.createComponent(component, parent, x, y);
     }
   }
 
 
   getGraphStorage() {
-    return this.graphStorage;
+    return this.selectedGraphStorage;
   }
 
   syncStorage() {
-    this.graphStorage.syncStorage();
+    this.selectedGraphStorage.syncStorage();
   }
 
   syncMxCells() {
-    this.graphStorage.syncMxCells();
+    this.selectedGraphStorage.syncMxCells();
   }
 
   addArrow() {
@@ -57,10 +57,10 @@ export default class GraphEditorService {
   }
 
   zoomTo(zoomFactor:any){
-    this.graphStorage.zoomTo(zoomFactor);
+    this.selectedGraphStorage.zoomTo(zoomFactor);
   }
 
-  getMaxID(){
+  getMaxVertexID(){
     return this.getGraphStorage().getMaxID();
   }
 

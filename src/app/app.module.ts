@@ -40,6 +40,7 @@ import { CodeEditorComponent } from './components/code-editor/code-editor.compon
 import { CodeEditorDialogComponent } from './components/code-editor-dialog/code-editor-dialog.component';
 import { ServiceComponentConfigurationComponent } from './components/service-component-configuration/service-component-configuration.component';
 import { MatFormFieldModule, MatInputModule } from "@angular/material";
+import { XTerminalComponent } from './components/code-editor/x-terminal/x-terminal.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { MatFormFieldModule, MatInputModule } from "@angular/material";
     PageEditorComponent,
     CodeEditorComponent,
     CodeEditorDialogComponent,
-    ServiceComponentConfigurationComponent
+    ServiceComponentConfigurationComponent,
+    XTerminalComponent,
   ],
   imports: [
     PerfectScrollbarModule,

@@ -10,7 +10,7 @@ import {Storage} from '../../shared/storage';
 export default class NavigationService {
 
 
-  createNavigationComponent(source, url, target) {
+  createNavigationComponent(source: string,target: string,url: string) {
 
     let parent;
 

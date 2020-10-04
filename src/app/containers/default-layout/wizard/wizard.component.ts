@@ -53,7 +53,7 @@ export class WizardComponent implements OnInit {
   }
 
   setComponent(properties): boolean {
-    properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
+    properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
     properties['selector'] = PropertyGenerator.getSelector(this.componentName);
     properties['type'] = this.componentName;
     // properties['serviceType'] = ServiceMappingType['none'];
@@ -99,7 +99,7 @@ export class WizardComponent implements OnInit {
   }
 
   setSubComponent(properties): boolean {
-    properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
+    properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
     properties['selector'] = PropertyGenerator.getSelector(this.subComponentName);
     properties['type'] = this.subComponentName;
     properties['serviceType'] = ServiceMappingType['none'];
@@ -218,7 +218,7 @@ export class WizardComponent implements OnInit {
     let newComponent:any;
     if (this.isCustom) {
       newComponent = this.newCompositeComponent(newComponent, this.component);
-      newComponent['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
+      newComponent['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
       newComponent['selector'] = PropertyGenerator.getSelector(newComponent.type);
       Storage.add(newComponent);
       this.graphEditorService.bindComponent(newComponent);
@@ -242,7 +242,7 @@ export class WizardComponent implements OnInit {
     }
     for (let i in component.componentList) {
       newComponent['componentList'].push(Object.assign({}, component['componentList'][i]));
-      newComponent['componentList'][i]['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxID());
+      newComponent['componentList'][i]['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
       newComponent['componentList'][i]['selector'] = PropertyGenerator.getSelector(newComponent['componentList'][i].type);
     }
     return newComponent;

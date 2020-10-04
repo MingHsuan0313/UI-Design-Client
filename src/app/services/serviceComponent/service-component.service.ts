@@ -123,9 +123,8 @@ export default class ServiceComponentService {
   queryArgumentsByServiceID(serviceID: string) {
     let url = `${this.baseUrl}/getArguments`;
     let params: HttpParams;
-    params = new HttpParams();
+    params = new HttpParams().set("serviceID",serviceID);
 
-    params.append("serviceID", serviceID);
     return this.httpClientService.httpGet(url, params);
   }
 
