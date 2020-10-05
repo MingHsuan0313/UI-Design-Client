@@ -3,7 +3,7 @@ import {Storage} from '../shared/storage';
 import {UIComponent} from './model';
 import GraphEditorService from '../services/graph-editor.service';
 import AbstractComponent from '../shared/AbstractComponent.model';
-import { BPELComponent } from '../bpel-designer/models/components/component/BPELComponent.model';
+import { BPELComponent } from '../bpel-designer/models/components/BPELComponent.model';
 
 /**
  * @description
