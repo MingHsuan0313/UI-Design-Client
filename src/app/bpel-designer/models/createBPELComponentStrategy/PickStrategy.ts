@@ -1,5 +1,5 @@
 import { GraphStorage, StyleStorage } from "src/app/models/modelDependency";
-import { BPELComponent } from "../components/component/BPELComponent.model";
+import { BPELComponent } from "../components/BPELComponent.model";
 import { ICreateBPELComponentStrategy } from "./ICreateBPELComponentStrategy";
 
 export class PickStrategy implements ICreateBPELComponentStrategy {

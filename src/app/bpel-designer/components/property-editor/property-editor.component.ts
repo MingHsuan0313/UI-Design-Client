@@ -1,9 +1,9 @@
 import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from "@angular/core";
 import { GraphStorage } from "src/app/models/modelDependency";
 import GraphEditorService from "src/app/services/graph-editor.service";
-import { BPELComponentAttribute } from "../../models/components/attribute/BPELComponent-attribute.model";
-import { Process } from "../../models/components/component/containers/process.model";
-import { ProcessElement } from "../../models/components/element/containers/process-element.model";
+import { BPELComponentAttribute } from "../../models/components/BPELComponent-attribute.model";
+import { Process } from "../../models/components/containers/process/process.model";
+import { ProcessElement } from "../../models/components/containers/process/process-element.model";
 
 @Component({
     selector: 'property-editor',

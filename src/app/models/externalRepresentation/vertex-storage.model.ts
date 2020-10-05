@@ -4,7 +4,7 @@ import {UIComponent} from '../ui-component-dependency';
 import StyleEditorService from 'src/app/services/externalRepresentation/style-editor.service';
 import { StyleConverter } from '../../shared/styleTable';
 import AbstractComponent from '../shared/AbstractComponent.model';
-import { BPELComponent } from '../bpel-designer/models/components/component/BPELComponent.model';
+import { BPELComponent } from '../bpel-designer/models/components/BPELComponent.model';
 
 /**
  * @description
