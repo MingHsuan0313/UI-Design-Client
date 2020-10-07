@@ -29,6 +29,30 @@ import { OnMessage } from "../../models/components/structured-activities/pick/on
 import { Pick } from "../../models/components/structured-activities/pick/pick.model";
 import { OnMessageStrategy } from "../../models/createBPELComponentStrategy/OnMessageStrategy";
 import { PickStrategy } from "../../models/createBPELComponentStrategy/PickStrategy";
+import { Scope } from "../../models/components/containers/scope/scope.model";
+import { ScopeStrategy } from "../../models/createBPELComponentStrategy/ScopeStrategy";
+import { Validate } from "../../models/components/containers/validate/validate.model";
+import { ValidateStrategy } from "../../models/createBPELComponentStrategy/ValidateStrategy";
+import { Throw } from "../../models/components/basic-activities/throw/throw.model";
+import { ThrowStrategy } from "../../models/createBPELComponentStrategy/ThrowStrategy";
+import { Wait } from "../../models/components/basic-activities/wait/wait.model";
+import { WaitStrategy } from "../../models/createBPELComponentStrategy/WaitStrategy";
+import { Empty } from "../../models/components/basic-activities/empty.model";
+import { Exit } from "../../models/components/basic-activities/exit.model";
+import { Rethrow } from "../../models/components/basic-activities/rethrow.model";
+import { EmptyStrategy } from "../../models/createBPELComponentStrategy/EmptyStrategy";
+import { ExitStrategy } from "../../models/createBPELComponentStrategy/ExitStrategy";
+import { RethrowStrategy } from "../../models/createBPELComponentStrategy/RethrowStrategy";
+import { RepeatUntil } from "../../models/components/structured-activities/repeatUntil/repeatUntil.model";
+import { RepeatUntilStrategy } from "../../models/createBPELComponentStrategy/RepeatUntilStrategy";
+import { Flow } from "../../models/components/structured-activities/flow/flow.model";
+import { FlowStrategy } from "../../models/createBPELComponentStrategy/FlowStrategy";
+import { ForEach } from "../../models/components/structured-activities/forEach/forEach.model";
+import { ForEachStrategy } from "../../models/createBPELComponentStrategy/ForEachStrategy";
+import { Compensate } from "../../models/components/others/compensate.model";
+import { CompensateStrategy } from "../../models/createBPELComponentStrategy/CompensateStrategy";
+import { CompensateScope } from "../../models/components/others/compensateScope/compensateScope.model";
+import { CompensateScopeStrategy } from "../../models/createBPELComponentStrategy/CompensateScopeStrategy";
 
 @Component({
     selector: 'palette',
@@ -64,6 +88,14 @@ export class PaletteComponent implements AfterViewInit {
                 bpelComponent = new Process(vertexId);
                 this.setStrategy(new ProcessStrategy());
                 break;
+            case 'scope':
+                bpelComponent = new Scope(vertexId);
+                this.setStrategy(new ScopeStrategy());
+                break;
+            case 'validate':
+                bpelComponent = new Validate(vertexId);
+                this.setStrategy(new ValidateStrategy());
+                break;
             case 'invoke':
                 bpelComponent = new Invoke(vertexId);
                 this.setStrategy(new InvokeStrategy());
@@ -84,9 +116,33 @@ export class PaletteComponent implements AfterViewInit {
                 bpelComponent = new Copy(vertexId);
                 this.setStrategy(new CopyStrategy());
                 break;
+            case 'throw':
+                bpelComponent = new Throw(vertexId);
+                this.setStrategy(new ThrowStrategy());
+                break;
+            case 'wait':
+                bpelComponent = new Wait(vertexId);
+                this.setStrategy(new WaitStrategy());
+                break;
+            case 'empty':
+                bpelComponent = new Empty(vertexId);
+                this.setStrategy(new EmptyStrategy());
+                break;
+            case 'exit':
+                bpelComponent = new Exit(vertexId);
+                this.setStrategy(new ExitStrategy());
+                break;
+            case 'rethrow':
+                bpelComponent = new Rethrow(vertexId);
+                this.setStrategy(new RethrowStrategy());
+                break;
             case 'sequence':
                 bpelComponent = new Sequence(vertexId);
                 this.setStrategy(new SequenceStrategy());
+                break;
+            case 'flow':
+                bpelComponent = new Flow(vertexId);
+                this.setStrategy(new FlowStrategy());
                 break;
             case 'if':
                 bpelComponent = new If(vertexId);
@@ -104,6 +160,14 @@ export class PaletteComponent implements AfterViewInit {
                 bpelComponent = new While(vertexId);
                 this.setStrategy(new WhileStrategy());
                 break;
+            case 'repeatUntil':
+                bpelComponent = new RepeatUntil(vertexId);
+                this.setStrategy(new RepeatUntilStrategy());
+                break;
+            case 'forEach':
+                bpelComponent = new ForEach(vertexId);
+                this.setStrategy(new ForEachStrategy());
+                break;
             case 'pick':
                 bpelComponent = new Pick(vertexId);
                 this.setStrategy(new PickStrategy());
@@ -111,6 +175,14 @@ export class PaletteComponent implements AfterViewInit {
             case 'onMessage':
                 bpelComponent = new OnMessage(vertexId);
                 this.setStrategy(new OnMessageStrategy());
+                break;
+            case 'compensate':
+                bpelComponent = new Compensate(vertexId);
+                this.setStrategy(new CompensateStrategy());
+                break;
+            case 'compensateScope':
+                bpelComponent = new CompensateScope(vertexId);
+                this.setStrategy(new CompensateScopeStrategy());
                 break;
             default:
                 console.log("The BPEL component building failed");

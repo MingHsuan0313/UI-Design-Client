@@ -1,10 +1,11 @@
 import { BPELComponentAttribute } from "../../BPELComponent-attribute.model";
 
-export class OnMessageAttribute extends BPELComponentAttribute {
+export class OnMessageAttribute {
     variable?: String;
     partnerLink: String;
     operation: String;
     portType?: String;
+    messageExchange?: string;
 
     constructor(name?: String) {
         let variable = "Main.startRequest.0";
@@ -12,7 +13,6 @@ export class OnMessageAttribute extends BPELComponentAttribute {
         let operation = "start";
         let portType = "startInteractionPort";
 
-        super(name);
         this.variable = variable;
         this.partnerLink = partnerLink;
         this.operation = operation;

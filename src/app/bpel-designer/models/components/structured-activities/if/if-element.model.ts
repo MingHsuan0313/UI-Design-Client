@@ -5,6 +5,7 @@ import { ElseIfBranch } from "./branch/elseif-branch.model";
 import { BPELComponentElement } from "../../BPELComponent-element.model";
 
 export class IfElement extends BPELComponentElement {
+    // condition, activity, elseIfList, else are in the order
     condition: Condition;
     activity: BPELComponent;
     elseifList?: ElseIfBranch[];

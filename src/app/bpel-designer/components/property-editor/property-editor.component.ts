@@ -38,7 +38,7 @@ export class PropertyEditorComponent implements OnInit {
             console.log(vertexStorage);
             this.kvPairs = Object.entries(this.selectedAttribute);
             if (selectedComponent instanceof Process) {
-                this.kvPairs.push(["variables", Object.entries((selectedComponent.getElement() as ProcessElement).getVariables().getVariableList()[0])]); //TODO: For now, take first variable for example
+                this.kvPairs.push(["variables", Object.entries((selectedComponent.getElement() as ProcessElement).getVariables().getElement().getVariableList()[0])]); //TODO: For now, take first variable for example
             }
             console.log("Parse selected attribute k, v pairs to PropertyEditor")
             console.log(this.kvPairs)

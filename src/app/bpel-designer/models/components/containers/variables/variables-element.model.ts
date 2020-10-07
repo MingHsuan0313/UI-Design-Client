@@ -7,7 +7,10 @@ export class VariablesElement {
         this.variableList = new Array<Variable>();
         // fake data
         let mainStartRequestVariable = new Variable();
+        console.log("construct fake data <variabe> for new <variables>");
+        console.log(mainStartRequestVariable);
         this.add(mainStartRequestVariable);
+
         console.log("construct <variables> for new <process>");
     }
 

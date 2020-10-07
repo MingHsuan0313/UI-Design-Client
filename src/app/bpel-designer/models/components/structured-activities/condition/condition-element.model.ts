@@ -1,9 +1,9 @@
 export class ConditionElement {
-    boolExpr: String;
+    bool_expr: String;
 
     constructor() {
-        let boolExpr = "'true'";
+        let bool_expr = "'true'";
 
-        this.boolExpr = boolExpr;
+        this.bool_expr = bool_expr;
     }
 }

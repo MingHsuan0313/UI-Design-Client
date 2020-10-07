@@ -6,8 +6,6 @@ export class From {
     element?: FromElement;
 
     constructor() {
-        this.attribute = new FromAttribute();
-        this.element = new FromElement();
-        console.log("consturct a from-spec for the selected <copy>");
+        console.log("consturct a from-spec for the selected <variables> or <copy>");
     }
 }

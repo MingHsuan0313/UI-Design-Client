@@ -6,6 +6,7 @@ export class ReceiveAttribute extends BPELComponentAttribute {
     operation: String;
     portType?: String;
     createInstance?: String; // "yes" | "no"
+    messageExchange?: string;
 
     constructor(name?: String) {
         let variable = "Main.startRequest.0";
