@@ -1,10 +1,11 @@
 <div style="height: 500px">
   <h1 style="font-weight: bold;
-    margin-bottom:0px;
+    margin-bottom:20px;
+    font-size:25px;
     color:white; 
     " mat-dialog-title>View Service Component Source Code</h1>
   <!-- <mat-dialog-content> -->
-  
+
   <!-- </mat-dialog-content> -->
   <mat-dialog-actions style="padding-top:0px">
     <button mat-raised-button color="primary" (click)="compileCode()">Save & Compile</button>
@@ -12,9 +13,11 @@
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
     <button mat-raised-button (click)="clearTerminal()">Clear Terminal</button>
     <button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
-    <div *ngIf="isCompiling">
-      <mat-spinner [diameter]="40"></mat-spinner>&nbsp;&nbsp;<span style="font-size: large;">Compiling...</span>
-    </div>
+
+    &nbsp;&nbsp;&nbsp;
+    <mat-spinner *ngIf="isCompiling" style="position:relative; left:20px" [diameter]="35"></mat-spinner>
+    &nbsp;&nbsp;
+    <span *ngIf="isCompiling" style="color:white; position:relative; left:25px; font-weight:bold; font-size: large;">Compiling...</span>
     <!-- <div *ngIf="logMessage.length > 0"><span>{{logMessage}}</span></div> -->
   </mat-dialog-actions>
   <br>
