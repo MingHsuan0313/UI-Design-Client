@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Storage } from "../../shared/storage";
+import { HttpClientService } from "../http-client.service";
 
 
 @Injectable({
@@ -9,10 +10,13 @@ import { Storage } from "../../shared/storage";
 
 export default class ImportService {
 
+  baseUrl: string;
   files:any[];
   pagesText:any;
   pages: any;
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+    private httpClientService: HttpClientService) {
+    this.baseUrl = "page";
 
   }
   import() {
@@ -39,12 +43,15 @@ export default class ImportService {
   }
 
   getPageUICDL() {
-    return this.httpClient.get("http://localhost:8080",
-      {
-        headers: new HttpHeaders().set("Content-Type", "application/json"),
-        observe: "response", withCredentials: true, responseType: "text"
-      }
-    );
+    let url = this.baseUrl;
+    let params = new HttpParams();
+    return this.httpClientService.httpGet(url,params);
+    // return this.httpClient.get("http://localhost:8080",
+    //   {
+    //     headers: new HttpHeaders().set("Content-Type", "application/json"),
+    //     observe: "response", withCredentials: true, responseType: "text"
+    //   }
+    // );
   }
 
   getFiles() {

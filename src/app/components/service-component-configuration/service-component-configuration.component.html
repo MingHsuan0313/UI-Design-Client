@@ -1,7 +1,7 @@
 <div *ngIf="selectedUIComponent!=undefined && uiType!='none'; else uiComponentNotSelected">
   <span style="font-size: large;">UI Component Category : {{selectedUIComponent.category}}</span>
   <br>
-  <div *ngIf="selectedUIComponent.serviceComponent.name.length >0; else serviceNotSelected"> 
+  <div *ngIf="selectedUIComponent.serviceComponent.name.length >0; else serviceNotSelected">
 
   </div>
 
@@ -15,6 +15,14 @@
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field *ngIf="uiType == 'argument'">
+    <mat-label>Choose Argument Type</mat-label>
+    <mat-select (selectionChange)="selectArgumentType()" [(value)]="selectedArgumentType">
+      <mat-option *ngFor="let argumentTypeOption of argumentTypeOptions" value="{{argumentTypeOption}}">
+        {{argumentTypeOption}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-form-field *ngIf="uiType == 'argument'">
     <mat-label>Choose Argument</mat-label>
     <mat-select (selectionChange)="selectArgument()" [(value)]="selectedArgumentName">

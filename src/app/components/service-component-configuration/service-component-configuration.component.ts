@@ -19,11 +19,13 @@ export class ServiceComponentConfigurationComponent implements OnInit {
   // for angular material option
   selectedServiceComponent: ServiceComponentModel;
   selectedArgumentName: string;
+  selectedArgumentType: string;
 
   uiType: string; // service or argument or none
 
   serviceComponentOptions: any[];
   argumentOptions: string[];
+  argumentTypeOptions: string[];
 
   isMatchmaking: boolean;
   graphStorage: GraphStorage;
@@ -31,8 +33,11 @@ export class ServiceComponentConfigurationComponent implements OnInit {
     private serviceComponentService: ServiceComponentService) {
     this.isMatchmaking = false;
     this.selectedArgumentName = "select argument";
+    this.selectedArgumentType = "select argument type";
     this.serviceComponentOptions = [];
     this.argumentOptions = [];
+    this.argumentTypeOptions = ["String","int","double","boolean"]
+
     for (let se of this.serviceComponentOptions)
       console.log(se)
   }
@@ -54,6 +59,12 @@ export class ServiceComponentConfigurationComponent implements OnInit {
   selectArgument() {
     console.log("select argument " + this.selectedArgumentName);
     this.selectedUIComponent.serviceComponent.name = this.selectedArgumentName;
+    this.selectedUIComponent.serviceComponent.serviceType = ServiceMappingType['argument'];
+  }
+  
+  selectArgumentType() {
+    console.log("select type" + this.selectedArgumentType);
+    this.selectedUIComponent.serviceComponent.argumentType = this.selectedArgumentType;
     this.selectedUIComponent.serviceComponent.serviceType = ServiceMappingType['argument'];
   }
 

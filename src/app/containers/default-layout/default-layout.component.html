@@ -24,7 +24,7 @@
           dropdownToggle (click)="false">
           {{this.layout_selected}}
         </a>
-        <div class="dropdown-menu dropdown-menu" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-menu" aria-labelledby="simple-dropdown">
           <div class="dropdown-header text-center"><strong>Layout</strong></div>
           <a class="dropdown-item" *ngFor="let kind of layout" (click)="setLayout(kind)">{{kind}}</a>
         </div>
@@ -39,7 +39,7 @@
           dropdownToggle (click)="false">
           {{this.genre_selected}}
         </a>
-        <div class="dropdown-menu dropdown-menu" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-menu" aria-labelledby="simple-dropdown">
           <div class="dropdown-header text-center"><strong>Genre</strong></div>
           <a class="dropdown-item" *ngFor="let kind of genre" (click)="setGenre(kind)">{{kind}}</a>
         </div>
@@ -50,7 +50,7 @@
           dropdownToggle (click)="false">
           {{this.category_selected}}
         </a>
-        <div class="dropdown-menu dropdown-menu" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-menu" aria-labelledby="simple-dropdown">
           <div class="dropdown-header text-center"><strong>Category</strong></div>
           <a class="dropdown-item" *ngFor="let kind of categories" (click)="setCategory(kind)">{{kind}}</a>
         </div>
@@ -61,7 +61,7 @@
           dropdownToggle (click)="false">
           {{this.component_selected}}
         </a>
-        <div class="dropdown-menu dropdown-menu" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-menu" aria-labelledby="simple-dropdown">
           <div class="dropdown-header text-center"><strong>Component</strong></div>
           <a class="dropdown-item" *ngFor="let kind of components" (click)="setComponent(kind)">{{kind}}</a>
         </div>
@@ -76,7 +76,7 @@
           dropdownToggle (click)="false">
           Insert Item
         </a>
-        <div class="dropdown-menu dropdown-menu" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-menu" aria-labelledby="simple-dropdown">
           <div class="dropdown-header text-center"><strong>Layout Part</strong></div>
           <a class="dropdown-item" (click)="openForm('header')">header</a>
           <a class="dropdown-item" (click)="openForm('footer')">footer</a>

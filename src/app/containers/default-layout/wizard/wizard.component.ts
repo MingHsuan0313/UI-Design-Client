@@ -32,14 +32,12 @@ export class WizardComponent implements OnInit {
   @Input() componentProperties: any[];
   @Input() componentName: any;
 
-  serviceNoneOption: Object;
-  selectedServiceComponent: Object;
-  component: any;
-  subComponent: any;
-  subComponentName: any;
-  properties: any[] = [];
-  tmp: Map<any, any>;
-  compositeElements: any[] = [];
+  public component: any;
+  public subComponent: any;
+  public subComponentName: any;
+  public properties: any[] = [];
+  public tmp: Map<any, any>;
+  public compositeElements: any[] = [];
   private isComposite = false;
   private isCustom: boolean = false;
 
@@ -181,6 +179,7 @@ export class WizardComponent implements OnInit {
     if (this.setComponent(f.value)) {
       console.log('set component properties');
     }
+    this.clickNext();
   }
 
   onCompositeSubmit(sf: NgForm) {
@@ -247,33 +246,5 @@ export class WizardComponent implements OnInit {
     }
     return newComponent;
   }
-
-  // this is for composition subComponent
-  // type1. Service Component
-  // type2. Argument
-  // type3. None
-  // setServiceType(subComponent: UIComponent, serviceType: ServiceMappingType) {
-  //   console.log('set service Type');
-  //   console.log(subComponent);
-  //   console.log(serviceType);
-  //   subComponent.setServiceType(serviceType);
-  // }
-
-  // setArgument(subComponent: UIComponent, argument) {
-  //   subComponent.setArgument(argument.name);
-  // }
-
-  // setServiceComponent(component: UIComponent, serviceComponent) {
-  //   component.setServiceComponent(serviceComponent);
-  // }
-
-  // setSelectedServiceComponent(serviceComponent) {
-  //   this.selectedServiceComponent = serviceComponent;
-  //   this.setServiceComponent(this.component, serviceComponent);
-  // }
-
-  // setSelectedServiceSubComponent(subComponent, serviceComponent) {
-  //   this.setServiceComponent(subComponent, serviceComponent);
-  // }
 }
 

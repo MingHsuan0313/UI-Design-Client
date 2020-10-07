@@ -7,6 +7,7 @@ export class ServiceComponentModel {
     code: string;
     serviceID: string;
     className: string; // include package
+    argumentType: string; // if serviceType == argument, else ""
   
     constructor() {
       this.name = "";
@@ -15,6 +16,7 @@ export class ServiceComponentModel {
       this.code = "";
       this.serviceID = "";
       this.className = "";
+      this.argumentType = "";
     }
   
     setName(serviceComponentName: string) {
