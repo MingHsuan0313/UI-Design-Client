@@ -1,17 +1,21 @@
 <div style="height: 500px">
-  <h2 style="font-weight: bold;" mat-dialog-title>View Service Component Source Code</h2>
+  <h1 style="font-weight: bold;
+    margin-bottom:0px;" mat-dialog-title>View Service Component Source Code</h1>
   <!-- <mat-dialog-content> -->
-
-    <ngx-monaco-editor style="height: 80%" [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+  
   <!-- </mat-dialog-content> -->
-  <mat-dialog-actions>
-    <button mat-button (click)="compileCode()">Save & Compile</button>
+  <mat-dialog-actions style="padding-top:0px">
+    <button mat-raised-button color="primary" (click)="compileCode()">Save & Compile</button>
+    <button mat-raised-button color="warn" (click)="autoFix()">Auto Fix</button>
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-    <button mat-button [mat-dialog-close]="true">Close</button>
-    <button mat-button (click)="clearTerminal()">Clear Terminal</button>
-   <div *ngIf="isCompiling"><mat-spinner [diameter]="40"></mat-spinner>&nbsp;&nbsp;<span style="font-size: large;">Compiling...</span></div>
-   <!-- <div *ngIf="logMessage.length > 0"><span>{{logMessage}}</span></div> -->
+    <button mat-raised-button (click)="clearTerminal()">Clear Terminal</button>
+    <button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
+    <div *ngIf="isCompiling">
+      <mat-spinner [diameter]="40"></mat-spinner>&nbsp;&nbsp;<span style="font-size: large;">Compiling...</span>
+    </div>
+    <!-- <div *ngIf="logMessage.length > 0"><span>{{logMessage}}</span></div> -->
   </mat-dialog-actions>
-  <br/>
+  <br>
+  <ngx-monaco-editor style="height: 80%" [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
   <app-x-terminal></app-x-terminal>
 </div>

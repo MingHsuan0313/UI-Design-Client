@@ -66,6 +66,10 @@ export class CodeEditorComponent implements OnInit {
     // this.serviceComponentService
   }
   
+  autoFix() {
+    console.log("Trigger Autofix");
+  }
+  
   clearTerminal() {
     this.xterminalService.clearTerminal();
   }
