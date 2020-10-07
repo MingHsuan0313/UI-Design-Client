@@ -25,7 +25,7 @@ export class CodeEditorDialogComponent implements OnInit {
         dialogRef = this.dialog.open(CodeEditorComponent, {
           width: '850px',
           height: '550px',
-          panelClass: 'backdropBackground',
+          panelClass: 'code-editor-dialog',
           data: {
             code: code,
             className: selectedServiceComponent.className,
