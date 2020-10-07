@@ -20,7 +20,7 @@ export class Copy extends BPELComponent {
     constructor(id: String) {
         super(id);
         this.attribute = new CopyAttribute();
-        this.element = new CopyElement(new From(), new To());
+        this.element = new CopyElement();
         console.log(this.componentName);
     }
 }

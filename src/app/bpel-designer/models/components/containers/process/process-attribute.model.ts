@@ -1,13 +1,19 @@
 import { BPELComponentAttribute } from '../../BPELComponent-attribute.model'
 
 export class ProcessAttribute extends BPELComponentAttribute {
-    abstractProcesses?: Object[] //TODO:
-    targetNamespace?: String;
+    abstractProcessesList: String[]; // 1...*
+    targetNamespace: String;
+    queryLanguage?: String;
+    expressionLanguage?: String;
+    exitOnStandardFault?: String;   // "yes | no"
 
     constructor(name?: String) {
-        super(name);
+        // Fake data
         let XMLNS_BPEL = "xmlns:bpel=\"http://docs.oasis-open.org/wsbpel/2.0/process/executable\"";
-        this.abstractProcesses = [XMLNS_BPEL];
-        this.targetNamespace = "process.bpel";
+        let targetNamespace = "process.bpel";
+
+        super(name);
+        this.abstractProcessesList = [XMLNS_BPEL];
+        this.targetNamespace = targetNamespace;
     }
 }

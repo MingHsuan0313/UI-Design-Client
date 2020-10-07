@@ -1,3 +1,2 @@
-export class ToElement {
-    //TODO: to-spec Variants
+export abstract class ToElement {
 }

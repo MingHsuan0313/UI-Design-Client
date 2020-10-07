@@ -5,6 +5,8 @@ export class ReplyAttribute extends BPELComponentAttribute {
     partnerLink: String;
     operation: String;
     portType?: String;
+    messageExchange?: string;
+    faultName?: string;
 
     constructor(name?: String) {
         let variable = "Main.reply";

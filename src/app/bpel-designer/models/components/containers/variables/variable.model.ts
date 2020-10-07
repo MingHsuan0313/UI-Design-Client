@@ -1,14 +1,18 @@
-import { Variables } from "./variables.model";
+import { VariableAttribute } from "./variable-attribute.model";
+import { VariableElement } from "./variable-element.model";
 
 export class Variable {
-    // attributes
-    messageType?: String;
-    name?: String;
-    // TODO: element: <from>
+    attribute: VariableAttribute;
+    element: VariableElement;
 
-    constructor(messageType: String, name: String) {
-        this.messageType = messageType;
-        this.name = name;
-        console.log("consturct a variable (messageType = %s, name = %s) for the <variables> of selected <process>", messageType, name);
+    constructor() {
+        this.attribute = new VariableAttribute();
+        // fake data
+        let name = "Main.startRequest.0";
+        let messageType = "tns:start";
+        this.attribute.name = name;
+        this.attribute.messageType = messageType;
+
+        this.element = new VariableElement();
     }
 }

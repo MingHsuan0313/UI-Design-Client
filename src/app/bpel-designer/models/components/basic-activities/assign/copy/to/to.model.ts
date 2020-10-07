@@ -6,8 +6,6 @@ export class To {
     element?: ToElement;
 
     constructor() {
-        this.attribute = new ToAttribute();
-        this.element = new ToElement();
         console.log("consturct a to-spec for the selected <copy>");
     }
 }
