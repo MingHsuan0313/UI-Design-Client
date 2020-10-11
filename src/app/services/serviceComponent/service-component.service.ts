@@ -32,7 +32,7 @@ export default class ServiceComponentService {
   getServiceComponents() {
     return this.serviceComponents;
   }
-  
+
   queryServices(uiComponent: UIComponent, parameterCount: number) {
     let url = `${this.baseUrl}/getServices`;
     let params: HttpParams;
@@ -42,56 +42,23 @@ export default class ServiceComponentService {
     let uiName = uiComponent.name;
     let uiCategory = uiComponent.category;
     let matchmaking = "true";
-    
-    params = new HttpParams().set("uiCategory",uiCategory.toString())
-      .set("uiType",uiType.toString())
-      .set("uiName",uiName.toString())
-      .set("parameterCount",parameterCount.toString())
-      .set("matchmaking",matchmaking);
-    return this.httpClientService.httpGet(url,params);
+
+    params = new HttpParams().set("uiCategory", uiCategory.toString())
+      .set("uiType", uiType.toString())
+      .set("uiName", uiName.toString())
+      .set("parameterCount", parameterCount.toString())
+      .set("matchmaking", matchmaking);
+    return this.httpClientService.httpGet(url, params, "uiDesignServer");
   }
 
-  queryMatchedServices(uiComponent: UIComponent, parameterCount, matchmaking) {
-    console.log("Query Server for service components");
+  queryMatchedServices(uiComponent: UIComponent, parameterCount) {
+    console.log("query Matched Services");
     console.log(this);
     let uiType = uiComponent.type;
     let uiName = uiComponent.name;
     let uiCategory = uiComponent.category;
     let url = "";
     let body;
-    //   if(uiCategory == "input") {
-    //  //   if(uiType == "form")
-    //  //     url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&uiName=${uiName}&parameterCount=${parameterCount}&matchmaking=${matchmaking}&uiType=${uiType}`;
-    //   }
-    //   else if(uiCategory == "informative") {
-    //     if(uiType == "Table")
-    //       url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&uiName=${uiName}&parameterCount=${parameterCount}&matchmaking=${matchmaking}&uiType=${uiType}`;
-    //       // url = `${this.baseUrl}/getServices?uiCategory=${uiCategory}&matchmaking=${matchmaking}`;
-
-    //   }
-    //   else if(uiCategory == "navigation") {
-
-    //   }
-    //   else if(uiCategory == "container") {
-    //     console.log("This is container")
-    //     body = {
-    //       serviceName: uiName+"Service",
-    //       operationName: uiName,
-    //       arguments: []
-    //     }
-    //     if(uiComponent["componentList"]!=undefined){
-    //       for(let subComponent of uiComponent["componentList"]){
-    //         if(subComponent.type=="input" || subComponent.type=="informative"){
-    //           body.arguments.push({
-    //             argumentName: subComponent.name,
-    //             type: subComponent["serviceArgumentType"]!=undefined ? subComponent["serviceArgumentType"] : "String",
-    //             isInput: subComponent.type=="input" ? true : false
-    //           })
-    //         }
-    //       }
-    //     }
-    //     url = `${this.baseUrl}/getMatchingServices`;
-    //   }
     if (uiType == "form" || uiType == "card") {
       body = {
         "serviceName": uiName + "Service",
@@ -105,7 +72,7 @@ export default class ServiceComponentService {
           if (subComponent.category == "input" || subComponent.category == "informative") {
             body.arguments.push({
               "argumentName": subComponent.name,
-              "type": subComponent["serviceArgumentType"] != undefined ? subComponent["serviceArgumentType"] : "string",
+              "type": subComponent["serviceArgumentType"] != undefined ? subComponent["serviceArgumentType"] : "String",
               "isInput": subComponent.category == "input" ? true : false
             })
           }
@@ -116,48 +83,48 @@ export default class ServiceComponentService {
     }
 
     console.log(JSON.stringify(body))
-    return this.httpClient.post(url, body);
+    return this.httpClientService.httpPost("getMatchingServices", body,"matchMakingServer");
 
   }
 
   queryArgumentsByServiceID(serviceID: string) {
     let url = `${this.baseUrl}/getArguments`;
     let params: HttpParams;
-    params = new HttpParams().set("serviceID",serviceID);
+    params = new HttpParams().set("serviceID", serviceID);
 
-    return this.httpClientService.httpGet(url, params);
+    return this.httpClientService.httpGet(url, params, "uiDesignServer");
   }
 
   queryCodeByServiceID(serviceID) {
     let url = `${this.baseUrl}/getCode`;
     // let url = `${this.baseUrl}/getCode?serviceID=${serviceID}`;
     let params: HttpParams;
-    params = new HttpParams().set("serviceID",serviceID);
+    params = new HttpParams().set("serviceID", serviceID);
 
     params.append("serviceID", serviceID);
-    return this.httpClientService.httpGet(url, params);
+    return this.httpClientService.httpGet(url, params, "uiDesignServer");
   }
-  
+
   postEditedServiceComponent(code: string, className: string) {
     let url = `${this.baseUrl}/editServiceComponent`;
     let requestBody = {
       "code": code,
       "class": className
-    }  
-    
-    return this.httpClientService.httpPost(url,requestBody);
+    }
+
+    return this.httpClientService.httpPost(url, requestBody, "uiDesignServer");
   }
-  
+
   triggerJenkinsBuild() {
     let url = "buildByToken/build";
     let jenkinsToken = "SelabServiceGeneratorToken";
     let jenkinsJob = "Service Generator Pipeline";
     let params: HttpParams;
     params = new HttpParams()
-      .set("token",jenkinsToken)
-      .set("job",jenkinsJob)
-      
-    return this.httpClientService.triggerJenkinsBuild(url,params);
+      .set("token", jenkinsToken)
+      .set("job", jenkinsJob)
+
+    return this.httpClientService.triggerJenkinsBuild(url, params);
   }
 
   setSelectedServiceComponent(serviceComponent: ServiceComponentModel) {

@@ -20,7 +20,7 @@ export default class ExportService {
   postPageUICDL(PDL) {
     console.log(PDL);
     let url = this.baseUrl;
-    return this.httpClientService.httpPost(url,PDL);
+    return this.httpClientService.httpPost(url,PDL,"uiDesignServer");
     // return this.httpClient.post("http://localhost:8080", PDL,
     //   {
     //     headers: new HttpHeaders().set("Content-Type", "application/json"),
@@ -32,7 +32,7 @@ export default class ExportService {
   newProject() {
     let url = `${this.baseUrl}/trunc`
     let params = new HttpParams();
-    return this.httpClientService.httpGet(url,params);
+    return this.httpClientService.httpGet(url,params,"uiDesignServer");
     // return this.httpClient.get("http://localhost:8080/trunc",
     //   {
     //     headers: new HttpHeaders().set("Content-Type", "application/json"),
@@ -43,7 +43,7 @@ export default class ExportService {
 
   postNDL(){
     let url = `${this.baseUrl}/navigation`
-    return this.httpClientService.httpPost(url,Storage.navigationFlow);
+    return this.httpClientService.httpPost(url,Storage.navigationFlow,"uiDesignServer");
     // return this.httpClient.post("http://localhost:8080/navigate", Storage.navigationFlow,
     //   {
     //     headers: new HttpHeaders().set("Content-Type", "application/json"),
@@ -54,7 +54,7 @@ export default class ExportService {
 
   postImage(xml) {
     let url = `${this.baseUrl}/navigation/exportPicture`
-    return this.httpClientService.httpPost(url,xml);
+    return this.httpClientService.httpPost(url,xml,"uiDesignServer");
     // return this.httpClient.post("http://localhost:8080/exportPicture", xml,
     //   {
     //     headers: new HttpHeaders().set("Content-Type", "application/json"),

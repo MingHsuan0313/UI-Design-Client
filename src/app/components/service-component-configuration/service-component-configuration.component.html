@@ -36,8 +36,11 @@
   </div>
   <br>
   <button (click)="queryServices()" mat-raised-button color="primary">Query Services</button>
-  &nbsp;
-  <mat-slide-toggle [color]="color" [checked]="isMatchmaking">Matchmaking</mat-slide-toggle>
+  <br>
+  <mat-spinner *ngIf="isQuerying" style="position:relative; left:20px" [diameter]="35"></mat-spinner>
+  &nbsp;&nbsp;
+  <span *ngIf="isQuerying"
+    style="position:relative; left:25px; font-weight:bold; font-size: large;">Querying...</span>
 </div>
 
 <ng-template #uiComponentNotSelected><span>UI component has not been selected</span></ng-template>

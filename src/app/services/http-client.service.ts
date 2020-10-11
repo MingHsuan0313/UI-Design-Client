@@ -6,19 +6,29 @@ import { Injectable } from '@angular/core';
 })
 export class HttpClientService {
   // UI-Design-Server url
-  urlPrefix: string;
+  uiDesignServerUrl: string;
 
   // UI-Design-Server port 
   port: string;
 
+  // Matchmaking Server Url
+  matchMakingServerUrl: string;
+
 
   constructor(private httpClient: HttpClient) {
     this.port = "8090";
-    this.urlPrefix = `http://localhost:${this.port}/selab/`;
+    this.matchMakingServerUrl = `http://localhost:8080/`;
+    this.uiDesignServerUrl = `http://localhost:8090/selab`;
   }
 
-  httpGet(endPointUrl: string, params: HttpParams) {
-    let uri = this.urlPrefix + endPointUrl;
+  httpGet(endPointUrl: string, params: HttpParams,serverType: string) {
+    let urlPrefix = "";
+    if(serverType == "matchMakingServer")
+      urlPrefix = this.matchMakingServerUrl;
+    else if(serverType == "uiDesignServer")
+      urlPrefix = this.uiDesignServerUrl;
+
+    let uri = urlPrefix + endPointUrl;
     console.log("get here")
     console.log(params)
 
@@ -30,8 +40,14 @@ export class HttpClientService {
     })
   }
 
-  httpPost(endPointUrl: string, requestBody: Object) {
-    let uri = this.urlPrefix + endPointUrl;
+  httpPost(endPointUrl: string, requestBody: Object,serverType: string) {
+    let urlPrefix = "";
+    if(serverType == "matchMakingServer")
+      urlPrefix = this.matchMakingServerUrl;
+    else if(serverType == "uiDesignServer")
+      urlPrefix = this.uiDesignServerUrl;
+
+    let uri = urlPrefix + endPointUrl;
     return this.httpClient.post(uri,
       requestBody,
       {

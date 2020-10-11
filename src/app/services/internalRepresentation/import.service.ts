@@ -45,7 +45,7 @@ export default class ImportService {
   getPageUICDL() {
     let url = this.baseUrl;
     let params = new HttpParams();
-    return this.httpClientService.httpGet(url,params);
+    return this.httpClientService.httpGet(url,params,"uiDesignServer");
     // return this.httpClient.get("http://localhost:8080",
     //   {
     //     headers: new HttpHeaders().set("Content-Type", "application/json"),

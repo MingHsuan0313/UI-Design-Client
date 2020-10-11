@@ -26,12 +26,13 @@ export class ServiceComponentConfigurationComponent implements OnInit {
   serviceComponentOptions: any[];
   argumentOptions: string[];
   argumentTypeOptions: string[];
-
-  isMatchmaking: boolean;
+  
+  
+  isQuerying: boolean;
   graphStorage: GraphStorage;
   constructor(private graphEditorService: GraphEditorService,
     private serviceComponentService: ServiceComponentService) {
-    this.isMatchmaking = false;
+    this.isQuerying = false;
     this.selectedArgumentName = "select argument";
     this.selectedArgumentType = "select argument type";
     this.serviceComponentOptions = [];
@@ -79,10 +80,12 @@ export class ServiceComponentConfigurationComponent implements OnInit {
   }
 
   queryServices() {
+    this.isQuerying = true;
     let parameterCount = 0;
     parameterCount = this.countArguments();
-    this.serviceComponentService.queryServices(this.selectedUIComponent, parameterCount).subscribe(
+    this.serviceComponentService.queryMatchedServices(this.selectedUIComponent, parameterCount).subscribe(
       response => {
+        this.isQuerying = false;
         console.log(response)
         console.log("tt")
         console.log(JSON.parse(response["body"]))
@@ -99,6 +102,7 @@ export class ServiceComponentConfigurationComponent implements OnInit {
           serviceComponentModel.setName(serviceComponentList[index]["name"]);
           serviceComponentModel.setClassName(serviceComponentList[index]["className"]);
           serviceComponentModel.setServiceID(serviceComponentList[index]["serviceID"]);
+          serviceComponentModel.setPreference(serviceComponentList[index]["similarity"])
           console.log("dd")
           console.log(serviceComponentList[index]);
           this.serviceComponentOptions.push(serviceComponentModel);
