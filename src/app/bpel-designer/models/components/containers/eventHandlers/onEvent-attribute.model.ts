@@ -1,10 +1,10 @@
 export class OnEventAttribute {
-    partnerLink: string;
-    portType?: string;
-    operation: string;
-    variable?: string;
-    messageExchange?: string;
+    partnerLink: string = undefined;
+    portType?: string = undefined;
+    operation: string = undefined;
+    variable?: string = undefined;
+    messageExchange?: string = undefined;
     // has either messageType or element, or neither of them.
-    messageType?: string;
-    element?: string;
+    messageType?: string = undefined;
+    element?: string = undefined;
 }

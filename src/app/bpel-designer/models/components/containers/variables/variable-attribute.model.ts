@@ -1,6 +1,6 @@
 export class VariableAttribute {
-    name: String;
-    messageType?: String;
-    type?: String;
-    element?: String;
+    name: String = undefined;
+    messageType?: String = undefined;
+    type?: String = undefined;
+    element?: String = undefined;
 }

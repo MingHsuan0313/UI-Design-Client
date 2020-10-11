@@ -1,8 +1,8 @@
 import { ToAttribute } from "../to-attribute.model";
 
 export class ToAttributeWithVariableAndPropery extends ToAttribute {
-    variable: string;
-    property: string;
+    variable: string = undefined;
+    property: string = undefined;
 
     constructor() {
         super();

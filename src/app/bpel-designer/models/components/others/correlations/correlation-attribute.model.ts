@@ -1,6 +1,6 @@
 export class CorrelationAttribute {
-    set: String;
-    initiate?: String;   // "yes | join | no"
+    set: String = undefined;
+    initiate?: String = undefined;   // "yes | join | no"
     // <invoke> only
-    pattern?: string;   // "request | response | request-response"
+    pattern?: string = undefined;   // "request | response | request-response"
 }

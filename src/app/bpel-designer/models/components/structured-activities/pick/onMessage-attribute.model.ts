@@ -1,13 +1,12 @@
-import { BPELComponentAttribute } from "../../BPELComponent-attribute.model";
-
 export class OnMessageAttribute {
-    variable?: String;
-    partnerLink: String;
-    operation: String;
-    portType?: String;
-    messageExchange?: string;
+    variable?: String = undefined;
+    partnerLink: String = undefined;
+    operation: String = undefined;
+    portType?: String = undefined;
+    messageExchange?: string = undefined;
 
-    constructor(name?: String) {
+    constructor() {
+        // fake data
         let variable = "Main.startRequest.0";
         let partnerLink = "GetDepartmentMain";
         let operation = "start";

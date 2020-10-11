@@ -1,5 +1,5 @@
 export class ImportAttribute {
-    nameSpace?: String;
-    location?: String;
-    importType: String;
+    nameSpace?: String = undefined;
+    location?: String = undefined;
+    importType: String = undefined;
 }

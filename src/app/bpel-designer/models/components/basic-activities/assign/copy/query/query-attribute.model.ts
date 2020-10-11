@@ -1,3 +1,3 @@
 export class QueryAttribute {
-    queryLanguage?: string;
+    queryLanguage?: string = undefined;
 }

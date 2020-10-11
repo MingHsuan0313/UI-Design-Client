@@ -1,3 +1,3 @@
 export class QueryElement {
-    queryContent: string;
+    queryContent: string = undefined;
 }

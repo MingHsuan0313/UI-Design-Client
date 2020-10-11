@@ -1,8 +1,8 @@
 import { FromAttribute } from "../from-attribute.model";
 
 export class FromAttributeWithVariableAndPropery extends FromAttribute {
-    variable: string;
-    property: string;
+    variable: string = undefined;
+    property: string = undefined;
 
     constructor() {
         super();

@@ -1,7 +1,7 @@
 import { ToAttribute } from "../to-attribute.model";
 
 export class ToAttributeWithPartnerLink extends ToAttribute {
-    partnerLink: string;
+    partnerLink: string = undefined;
 
     constructor() {
         super();

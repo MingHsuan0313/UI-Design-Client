@@ -1,4 +1,4 @@
 export class BranchesAttribute {
-    expressionLanguage?: string;
-    successfulBranchesOnly?: string;    // "yes | no"
+    expressionLanguage?: string = undefined;
+    successfulBranchesOnly?: string = undefined;    // "yes | no"
 }

@@ -1,3 +1,4 @@
+import { Scope } from "../../containers/scope/scope.model";
 import { For } from "../for/for.model";
 import { Until } from "../until/until.model";
 import { RepeatEvery } from "./repeatEvery.model";
@@ -8,7 +9,7 @@ export class OnAlarmElement {
     for?: For;
     until?: Until;
     repeatEvery?: RepeatEvery;
-    scope: any; //TODO:
+    scope: Scope;   //TODO:
 
     constructor() {
         // eager creation

@@ -1,4 +1,4 @@
 export class ToPartAttribute {
-    part: String;
-    fromVariable: String;
+    part: String = undefined;
+    fromVariable: String = undefined;
 }

@@ -1,3 +1,3 @@
 export class LinkAttribute {
-    name: string;
+    name: string = undefined;
 }

@@ -1,3 +1,3 @@
 export class FinalCounterValueAttribute {
-    expressionLanguage?: string;
+    expressionLanguage?: string = undefined;
 }

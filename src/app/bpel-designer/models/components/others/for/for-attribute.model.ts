@@ -1,3 +1,3 @@
 export class ForAttribute {
-    expressionLanguage?: string;
+    expressionLanguage?: string = undefined;
 }

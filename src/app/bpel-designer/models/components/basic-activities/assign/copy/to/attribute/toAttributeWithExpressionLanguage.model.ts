@@ -1,7 +1,7 @@
 import { ToAttribute } from "../to-attribute.model";
 
 export class ToAttributeWithExpressionLanguage extends ToAttribute {
-    expressionLanguage?: string;
+    expressionLanguage?: string = undefined;
 
     constructor() {
         super();

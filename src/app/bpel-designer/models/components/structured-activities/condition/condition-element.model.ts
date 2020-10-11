@@ -1,5 +1,5 @@
 export class ConditionElement {
-    bool_expr: String;
+    bool_expr: String = undefined;
 
     constructor() {
         let bool_expr = "'true'";
