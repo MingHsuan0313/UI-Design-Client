@@ -1,3 +1,3 @@
 export class FinalCounterValueElement {
-    unsigned_integer_expressions: string;
+    unsigned_integer_expressions: string = undefined;
 }

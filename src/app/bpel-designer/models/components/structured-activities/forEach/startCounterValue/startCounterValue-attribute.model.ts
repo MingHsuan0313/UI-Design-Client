@@ -1,3 +1,3 @@
 export class StartCounterValueAttribute {
-    expressionLanguage?: string;
+    expressionLanguage?: string = undefined;
 }

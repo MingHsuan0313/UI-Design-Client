@@ -1,7 +1,7 @@
 import { FromElement } from "../from-element.model";
 
 export class FromElementWithExpression extends FromElement {
-    expression: string;
+    expression: string = undefined;
 
     constructor() {
         super();

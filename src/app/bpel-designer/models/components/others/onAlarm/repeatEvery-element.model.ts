@@ -1,3 +1,3 @@
 export class RepeatEveryElement {
-    duration_expr: string;
+    duration_expr: string = undefined;
 }

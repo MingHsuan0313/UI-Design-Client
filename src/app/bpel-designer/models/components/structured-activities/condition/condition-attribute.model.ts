@@ -1,3 +1,3 @@
 export class ConditionAttribute {
-    expressionLanguage?: string;
+    expressionLanguage?: string = undefined;
 }

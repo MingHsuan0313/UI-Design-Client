@@ -1,3 +1,3 @@
 export class JoinConditionElement {
-    bool_expr: String;
+    bool_expr: String = undefined;
 }

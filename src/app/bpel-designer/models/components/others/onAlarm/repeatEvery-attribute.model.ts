@@ -1,3 +1,3 @@
 export class RepeatEveryAttribute {
-    expressionLanguage?: string;
+    expressionLanguage?: string = undefined;
 }

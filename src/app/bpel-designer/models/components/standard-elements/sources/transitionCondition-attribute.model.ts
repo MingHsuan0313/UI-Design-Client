@@ -1,3 +1,3 @@
 export class TransitionConditionAttribute {
-    expressionLanguage?: String;
+    expressionLanguage?: String = undefined;
 }

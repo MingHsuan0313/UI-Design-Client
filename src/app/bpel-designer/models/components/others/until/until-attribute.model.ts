@@ -1,3 +1,3 @@
 export class UntilAttribute {
-    expressionLanguage?: string;
+    expressionLanguage?: string = undefined;
 }

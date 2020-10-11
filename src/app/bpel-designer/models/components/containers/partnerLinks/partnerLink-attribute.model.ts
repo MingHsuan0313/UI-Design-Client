@@ -1,7 +1,7 @@
 export class PartnerLinkAttribute {
-    name: String;
-    partnerLinkType: String;
-    myRole?: String;
-    partnerRole?: String;
-    initializePartnerRole?: String; // "yes | no"
+    name: String = undefined;
+    partnerLinkType: String = undefined;
+    myRole?: String = undefined;
+    partnerRole?: String = undefined;
+    initializePartnerRole?: String = undefined; // "yes | no"
 }
