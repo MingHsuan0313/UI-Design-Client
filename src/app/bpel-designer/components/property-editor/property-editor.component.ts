@@ -4,6 +4,7 @@ import GraphEditorService from "src/app/services/graph-editor.service";
 import { BPELComponentAttribute } from "../../models/components/BPELComponent-attribute.model";
 import { Process } from "../../models/components/containers/process/process.model";
 import { ProcessElement } from "../../models/components/containers/process/process-element.model";
+import { BPELComponentElement } from "../../models/components/BPELComponent-element.model";
 
 @Component({
     selector: 'property-editor',
@@ -14,8 +15,10 @@ export class PropertyEditorComponent implements OnInit {
     graphStorage: GraphStorage;
     graph: any;
     selectedVertex: mxCell;
-    selectedAttribute: BPELComponentAttribute;
-    kvPairs: [string, any][];
+    selectedAttribute: any;
+    selectedElement: any;
+    attributeKVPairs: [string, any][];
+    elementKVPairs: [string, any][];
 
     constructor(private graphEditorService: GraphEditorService){
     }
@@ -28,24 +31,33 @@ export class PropertyEditorComponent implements OnInit {
           if (sender.selectionModel.cells[0] == undefined) {
             this.selectedVertex = null;
             this.selectedAttribute = null;
-            this.kvPairs = null;
+            this.attributeKVPairs = null;
           } else {
             this.selectedVertex = sender.selectionModel.cells[0];
             let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
             let selectedComponent = vertexStorage.getComponent();
             this.selectedAttribute = selectedComponent.getAttribute();
+            this.selectedElement = selectedComponent.getElement();
             console.log("Select Vertex");
             console.log(vertexStorage);
             if (this.selectedAttribute == undefined) {
-                this.kvPairs = [];
-                this.kvPairs.push(["NO any attribute", "NO any attribute content"]);
+                this.attributeKVPairs = [];
+                this.attributeKVPairs.push(["NO any attribute", "NO any attribute content"]);
             } else {
-                this.kvPairs = Object.entries(this.selectedAttribute);
+                this.attributeKVPairs = Object.entries(this.selectedAttribute);
                 if (selectedComponent instanceof Process) {
-                    this.kvPairs.push(["variables", Object.entries((selectedComponent.getElement() as ProcessElement).getVariables().getElement().getVariableList()[0])]); //TODO: For now, take first variable for example
+                    this.attributeKVPairs.push(["variables", Object.entries((selectedComponent.getElement() as ProcessElement).getVariables().getElement().getVariableList()[0])]); //TODO: For now, take first variable for example
                 }
                 console.log("Parse selected attribute k, v pairs to PropertyEditor")
-                console.log(this.kvPairs)
+                console.log(this.attributeKVPairs)
+            }
+            if (this.selectedElement == undefined) {
+                this.elementKVPairs = [];
+                this.elementKVPairs.push(["NO any element", "NO any element content"]);
+            } else {
+                this.elementKVPairs = Object.entries(this.selectedElement);
+                console.log("Parse selected element k, v pairs to PropertyEditor");
+                console.log(this.elementKVPairs);
             }
           }
         })
