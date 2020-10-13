@@ -2,10 +2,20 @@
     <mat-tab-group>
       <mat-tab label="Property-Editor">
         <div class="input-group">
-          <div class="input-group-prepend" *ngFor='let kv of kvPairs'>
-            <div class='col'>
-              <span class="input-group-text">{{getKey(kv)}}</span>
-              <textarea class="form-control" (keyup)="syncSelectedAttribute(getKey(kv), $event)">{{getValue(kv)}}</textarea>
+          <div class='col'>
+            <span>attributes</span>
+            <div class="input-group-prepend" *ngFor='let kv of attributeKVPairs'>
+              <div class='col'>
+                <span class="input-group-text">{{getKey(kv)}}</span>
+                <textarea class="form-control" (keyup)="syncSelectedAttribute(getKey(kv), $event)">{{getValue(kv)}}</textarea>
+              </div>
+            </div>
+            <span>elements</span>
+            <div class="input-group-prepend" *ngFor='let kv of elementKVPairs'>
+              <div class='col'>
+                <span class="input-group-text">{{getKey(kv)}}</span>
+                <textarea class="form-control" (keyup)="syncSelectedAttribute(getKey(kv), $event)">{{getValue(kv)}}</textarea>
+              </div>
             </div>
           </div>
         </div>
