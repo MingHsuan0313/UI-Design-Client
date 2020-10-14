@@ -4,7 +4,7 @@
 * Using MxGraph library(Draw.IO use this library too)
 
 ## System Architecture
-![](UI-Design-Client.png)
+![](UI-Design-Client-Architecture.png)
 
 ## Development server
 
