@@ -1,3 +1,11 @@
+# UI-Design-Client
+* This is a project for user to draw Web page
+* Angular Project
+* Using MxGraph library(Draw.IO use this library too)
+
+## System Architecture
+![](UI-Design-Client.png)
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
