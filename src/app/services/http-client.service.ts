@@ -8,17 +8,17 @@ export class HttpClientService {
   // UI-Design-Server url
   uiDesignServerUrl: string;
 
-  // UI-Design-Server port 
-  port: string;
-
   // Matchmaking Server Url
   matchMakingServerUrl: string;
+  
+  // Jenkins Server Url
+  jenkinsServerUrl: string;
 
 
   constructor(private httpClient: HttpClient) {
-    this.port = "8090";
-    this.matchMakingServerUrl = `http://localhost:8080/`;
-    this.uiDesignServerUrl = `http://localhost:8090/selab`;
+    this.jenkinsServerUrl = `http://localhost:8080/`
+    this.uiDesignServerUrl = `http://localhost:8081/selab`;
+    this.matchMakingServerUrl = `http://localhost:8082/`;
   }
 
   httpGet(endPointUrl: string, params: HttpParams,serverType: string) {
@@ -58,7 +58,7 @@ export class HttpClientService {
 
   triggerJenkinsBuild(endPointUrl: string, params: HttpParams) {
     // Jenkins Server
-    let uri = `http://localhost:8080/${endPointUrl}`;
+    let uri = this.jenkinsServerUrl + endPointUrl;
 
 
     console.log("get here")
