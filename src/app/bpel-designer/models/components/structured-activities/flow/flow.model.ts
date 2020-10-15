@@ -3,17 +3,17 @@ import { BPELComponent } from "../../BPELComponent.model";
 import { FlowElement } from "./flow-element.model";
 
 export class Flow extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     element?: FlowElement;
-    componentName: String = "flow";
+    componentName: string = "flow";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.element = new FlowElement();
         console.log(this.componentName);

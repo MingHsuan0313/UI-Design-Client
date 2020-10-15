@@ -1,13 +1,13 @@
 import { BPELComponentAttribute } from "../../BPELComponent-attribute.model";
 
 export class InvokeAttribute extends BPELComponentAttribute {
-    inputVariable?: String = undefined;
-    outputVariable?: String = undefined;
-    partnerLink: String = undefined;
-    operation: String = undefined;
-    portType?: String = undefined;
+    inputVariable?: string = undefined;
+    outputVariable?: string = undefined;
+    partnerLink: string = undefined;
+    operation: string = undefined;
+    portType?: string = undefined;
 
-    constructor(name?: String) {
+    constructor(name?: string) {
         super(name);
         // fake data
         let inputVariable = "Main.startRequest.0";

@@ -1,4 +1,4 @@
 export class CorrelationSetAttribute {
-    name: String = undefined;
-    properties: String = undefined;
+    name: string = undefined;
+    properties: string = undefined;
 }

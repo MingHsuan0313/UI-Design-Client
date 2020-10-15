@@ -1,3 +1,3 @@
 export class MessageExchangeAttribute {
-    name: String = undefined;
+    name: string = undefined;
 }

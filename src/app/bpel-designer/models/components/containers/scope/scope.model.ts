@@ -4,18 +4,18 @@ import { ScopeAttribute } from './scope-attribute.model';
 import { ScopeElement } from './scope-element.model';
 
 export class Scope extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: ScopeAttribute;
     element?: ScopeElement;
-    componentName: String = "scope";
+    componentName: string = "scope";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new ScopeAttribute();
         this.element = new ScopeElement();

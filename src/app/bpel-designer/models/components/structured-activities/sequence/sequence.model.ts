@@ -4,18 +4,18 @@ import { SequenceElement } from "./sequence-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
 
 export class Sequence extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: SequenceAttribute;
     element?: SequenceElement;
-    componentName: String = "sequence";
+    componentName: string = "sequence";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new SequenceAttribute();
         this.element = new SequenceElement();

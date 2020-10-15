@@ -4,18 +4,18 @@ import { IfElement } from "./if-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
 
 export class If extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: IfAttribute;
     element?: IfElement;
-    componentName: String = "if";
+    componentName: string = "if";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new IfAttribute();
         this.element = new IfElement();

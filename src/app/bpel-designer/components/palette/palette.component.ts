@@ -80,7 +80,7 @@ export class PaletteComponent implements AfterViewInit {
         this.strategy = strategy;
     }
 
-    draw(componentName: String): void {
+    draw(componentName: string): void {
         const vertexId = PropertyGenerator.getID(this.graphEditorService.getMaxID());
         let bpelComponent;
         switch (componentName) {

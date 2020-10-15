@@ -3,17 +3,17 @@ import { BPELComponent } from '../../BPELComponent.model'
 import { WaitElement } from './wait-element.model';
 
 export class Wait extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     element?: WaitElement;
-    componentName: String = "wait";
+    componentName: string = "wait";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.element = new WaitElement();
         console.log(this.componentName)

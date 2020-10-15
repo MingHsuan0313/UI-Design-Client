@@ -4,18 +4,18 @@ import { ProcessAttribute } from './process-attribute.model';
 import { ProcessElement } from './process-element.model';
 
 export class Process extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: ProcessAttribute;
     element?: ProcessElement;
-    componentName: String = "process";
+    componentName: string = "process";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new ProcessAttribute();
         this.element = new ProcessElement();

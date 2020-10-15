@@ -4,18 +4,18 @@ import { PickElement } from "./pick-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
 
 export class Pick extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: PickAttribute;
     element?: PickElement;
-    componentName: String = "pick";
+    componentName: string = "pick";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new PickAttribute();
         this.element = new PickElement();

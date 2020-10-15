@@ -1,8 +1,8 @@
 export abstract class BPELComponentAttribute {
-    name?: String = undefined;
-    suppressJoinFailure?: String = undefined;   // "yes" | "no"
+    name?: string = undefined;
+    suppressJoinFailure?: string = undefined;   // "yes" | "no"
 
-    constructor(name?: String, suppressJoinFailure?: String) {
+    constructor(name?: string, suppressJoinFailure?: string) {
         this.name = name;
         this.suppressJoinFailure = suppressJoinFailure;
     }

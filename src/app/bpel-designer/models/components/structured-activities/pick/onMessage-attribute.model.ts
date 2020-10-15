@@ -1,8 +1,8 @@
 export class OnMessageAttribute {
-    variable?: String = undefined;
-    partnerLink: String = undefined;
-    operation: String = undefined;
-    portType?: String = undefined;
+    variable?: string = undefined;
+    partnerLink: string = undefined;
+    operation: string = undefined;
+    portType?: string = undefined;
     messageExchange?: string = undefined;
 
     constructor() {

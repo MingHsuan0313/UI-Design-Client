@@ -2,16 +2,16 @@ import VertexStorage from 'src/app/models/vertex-storage.model';
 import { BPELComponent } from '../BPELComponent.model'
 
 export class Compensate extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
-    componentName: String = "compensate";
+    componentName: string = "compensate";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         console.log(this.componentName)
     }

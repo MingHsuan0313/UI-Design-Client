@@ -3,17 +3,17 @@ import { ElseBranchElement } from "./else-branch-element.model";
 import { BPELComponent } from "../../../BPELComponent.model";
 
 export class ElseBranch extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     element?: ElseBranchElement;
-    componentName: String = "else-branch";
+    componentName: string = "else-branch";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.element = new ElseBranchElement();
         console.log(this.componentName);

@@ -1,14 +1,14 @@
 import { BPELComponentAttribute } from "../../BPELComponent-attribute.model";
 
 export class ReplyAttribute extends BPELComponentAttribute {
-    variable?: String = undefined;
-    partnerLink: String = undefined;
-    operation: String = undefined;
-    portType?: String = undefined;
+    variable?: string = undefined;
+    partnerLink: string = undefined;
+    operation: string = undefined;
+    portType?: string = undefined;
     messageExchange?: string = undefined;
     faultName?: string = undefined;
 
-    constructor(name?: String) {
+    constructor(name?: string) {
         super(name);
         // fake data
         let variable = "Main.reply";
