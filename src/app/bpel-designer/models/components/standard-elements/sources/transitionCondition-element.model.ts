@@ -1,3 +1,3 @@
 export class TransitionConditionElement {
-    bool_expr: string = undefined;
+    bool_expr: string = "";
 }
