@@ -4,18 +4,18 @@ import { ForEachAttribute } from './forEach-attribute.model';
 import { ForEachElement } from './forEach-element.model';
 
 export class ForEach extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: ForEachAttribute;
     element?: ForEachElement;
-    componentName: String = "forEach";
+    componentName: string = "forEach";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new ForEachAttribute();
         this.element = new ForEachElement();

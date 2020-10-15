@@ -3,17 +3,17 @@ import { BPELComponent } from '../../BPELComponent.model'
 import { ValidateAttribute } from './validate-attribute.model';
 
 export class Validate extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: ValidateAttribute;
-    componentName: String = "validate";
+    componentName: string = "validate";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new ValidateAttribute();
         console.log(this.componentName)

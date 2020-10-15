@@ -1,4 +1,4 @@
 export class ExtensionAttribute {
-    namespace: String = undefined;
-    mustUnderstand: String = undefined; // "yes | no"
+    namespace: string = undefined;
+    mustUnderstand: string = undefined; // "yes | no"
 }

@@ -6,18 +6,18 @@ import { From } from "./from/from.model";
 import { To } from "./to/to.model";
 
 export class Copy extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: CopyAttribute; // Not a BPELComponentAttribute because of lacking of standard attributes
     element?: CopyElement; // Not a BPELComponentElement because of lacking of standard attributes
-    componentName: String = "copy";
+    componentName: string = "copy";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new CopyAttribute();
         this.element = new CopyElement();

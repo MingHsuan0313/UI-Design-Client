@@ -4,18 +4,18 @@ import { AssignElement } from "./assign-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
 
 export class Assign extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: AssignAttribute;
     element?: AssignElement;
-    componentName: String = "assign";
+    componentName: string = "assign";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new AssignAttribute();
         this.element = new AssignElement();

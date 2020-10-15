@@ -3,17 +3,17 @@ import { BPELComponent } from '../../BPELComponent.model'
 import { CompensateScopeAttribute } from './compensateScope-attribute.model';
 
 export class CompensateScope extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: CompensateScopeAttribute;
-    componentName: String = "compensateScope";
+    componentName: string = "compensateScope";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new CompensateScopeAttribute();
         console.log(this.componentName)

@@ -3,17 +3,17 @@ import { BPELComponent } from "../../BPELComponent.model";
 import { RepeatUntilElement } from "./repeatUntil-element.model";
 
 export class RepeatUntil extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     element?: RepeatUntilElement;
-    componentName: String = "repeatUntil";
+    componentName: string = "repeatUntil";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.element = new RepeatUntilElement();
         console.log(this.componentName);

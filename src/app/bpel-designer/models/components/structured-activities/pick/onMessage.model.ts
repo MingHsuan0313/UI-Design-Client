@@ -4,18 +4,18 @@ import { OnMessageElement } from "./onMessage-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
 
 export class OnMessage extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: OnMessageAttribute;
     element?: OnMessageElement;
-    componentName: String = "onMessage";
+    componentName: string = "onMessage";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new OnMessageAttribute();
         this.element = new OnMessageElement();

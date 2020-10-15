@@ -4,18 +4,18 @@ import { InvokeElement } from "./invoke-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
 
 export class Invoke extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: InvokeAttribute;
     element?: InvokeElement;
-    componentName: String = "invoke";
+    componentName: string = "invoke";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new InvokeAttribute();
         this.element = new InvokeElement();

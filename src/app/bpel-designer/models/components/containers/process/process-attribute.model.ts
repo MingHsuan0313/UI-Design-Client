@@ -1,13 +1,13 @@
 import { BPELComponentAttribute } from '../../BPELComponent-attribute.model'
 
 export class ProcessAttribute extends BPELComponentAttribute {
-    abstractProcessesList: String[] = undefined; // 1...*
-    targetNamespace: String = undefined;
-    queryLanguage?: String = undefined;
-    expressionLanguage?: String = undefined;
-    exitOnStandardFault?: String = undefined;   // "yes | no"
+    abstractProcessesList: string[] = undefined; // 1...*
+    targetNamespace: string = undefined;
+    queryLanguage?: string = undefined;
+    expressionLanguage?: string = undefined;
+    exitOnStandardFault?: string = undefined;   // "yes | no"
 
-    constructor(name?: String) {
+    constructor(name?: string) {
         super(name);
         // Fake data
         let XMLNS_BPEL = "xmlns:bpel=\"http://docs.oasis-open.org/wsbpel/2.0/process/executable\"";

@@ -1,3 +1,3 @@
 export class SourceAttribute {
-    linkName: String = undefined;
+    linkName: string = undefined;
 }

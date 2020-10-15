@@ -4,18 +4,18 @@ import { ReceiveAttribute } from "./receive-attribute.model";
 import { ReceiveElement } from "./receive-element.model";
 
 export class Receive extends BPELComponent {
-    id: String;
-    x?: String;
-    y?: String;
+    id: string;
+    x?: string;
+    y?: string;
     width?: number;
     height?: number;
-    type: String;
+    type: string;
     vertexStorage?: VertexStorage;
     attribute?: ReceiveAttribute;
     element?: ReceiveElement;
-    componentName: String = "receive";
+    componentName: string = "receive";
 
-    constructor(id: String) {
+    constructor(id: string) {
         super(id);
         this.attribute = new ReceiveAttribute();
         this.element = new ReceiveElement();

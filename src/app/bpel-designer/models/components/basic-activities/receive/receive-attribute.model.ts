@@ -1,14 +1,14 @@
 import { BPELComponentAttribute } from "../../BPELComponent-attribute.model";
 
 export class ReceiveAttribute extends BPELComponentAttribute {
-    variable?: String = undefined;
-    partnerLink: String = undefined;
-    operation: String = undefined;
-    portType?: String = undefined;
-    createInstance?: String = undefined; // "yes" | "no"
+    variable?: string = undefined;
+    partnerLink: string = undefined;
+    operation: string = undefined;
+    portType?: string = undefined;
+    createInstance?: string = undefined; // "yes" | "no"
     messageExchange?: string = undefined;
 
-    constructor(name?: String) {
+    constructor(name?: string) {
         super(name);
         // fake data
         let variable = "Main.startRequest.0";
