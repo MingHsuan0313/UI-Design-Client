@@ -8,6 +8,8 @@ export class FaultHandlersElement {
     constructor() {
         // eager creation
         this.catchList = new Array<Catch>();
+        this.catchList.push(new Catch());
+        console.log("[CONSTRUCT] construct a new <catch> for the <faultHandlers>");
         this.catchAll = new CatchAll();
     }
 }

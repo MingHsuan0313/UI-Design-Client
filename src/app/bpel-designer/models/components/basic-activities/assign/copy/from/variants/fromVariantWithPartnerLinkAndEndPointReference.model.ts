@@ -5,6 +5,6 @@ export class FromVariantWithPartnerLinkAndEndPointReference extends From {
     constructor() {
         super();
         this.attribute = new FromAttributeWithPartnerLinkAndEndPointReference();
-        console.log("create from-spec FromVariantWithPartnerLinkAndEndPointReference");
+        console.log("The from-spec is FromVariantWithPartnerLinkAndEndPointReference");
     }
 }

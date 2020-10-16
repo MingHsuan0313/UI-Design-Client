@@ -1,5 +1,5 @@
 import { BPELComponent } from "../../BPELComponent.model";
 
 export class CompensationHandlerElement {
-    activity: BPELComponent;
+    activity: BPELComponent = null;
 }

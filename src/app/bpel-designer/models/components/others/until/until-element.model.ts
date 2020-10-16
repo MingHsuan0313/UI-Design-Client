@@ -1,3 +1,3 @@
 export class UntilElement {
-    deadline: string = undefined;
+    deadline: string = "";
 }

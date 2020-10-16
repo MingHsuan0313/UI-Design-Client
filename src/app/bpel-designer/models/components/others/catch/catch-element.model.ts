@@ -1,5 +1,5 @@
 import { BPELComponent } from "../../BPELComponent.model";
 
 export class CatchElement {
-    activity: BPELComponent;
+    activity: BPELComponent = null;
 }

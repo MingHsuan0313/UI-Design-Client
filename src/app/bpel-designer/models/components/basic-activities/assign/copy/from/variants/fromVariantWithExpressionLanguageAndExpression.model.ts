@@ -7,6 +7,6 @@ export class FromVariantWithExpressionLanguageAndExpression extends From {
         super();
         this.attribute = new FromAttributeWithExpressionLanguage();
         this.element = new FromElementWithExpression();
-        console.log("create from-spec FromVariantWithExpressionLanguageAndExpression");
+        console.log("The from-spec is FromVariantWithExpressionLanguageAndExpression");
     }
 }

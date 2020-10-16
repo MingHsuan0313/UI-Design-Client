@@ -5,5 +5,7 @@ export class PartnerLinksElement {
 
     constructor() {
         this.partnerLinkList = new Array<PartnerLink>();
+        this.partnerLinkList.push(new PartnerLink());
+        console.log("[CONSTRUCT] construct a new <partnerLink> for the <partnerLinks>");
     }
 }

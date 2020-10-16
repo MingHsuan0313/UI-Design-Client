@@ -7,6 +7,6 @@ export class FromVariantWithVariableAndPartAndQuery extends From {
         super();
         this.attribute = new FromAttributeWithVariableAndPart();
         this.element = new FromElementWithQuery();
-        console.log("create from-spec FromVariantWithVariableAndPartAndQuery");
+        console.log("The from-spec is FromVariantWithVariableAndPartAndQuery");
     }
 }

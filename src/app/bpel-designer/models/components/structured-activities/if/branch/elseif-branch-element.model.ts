@@ -3,7 +3,7 @@ import { Condition } from "../../condition/condition.model";
 
 export class ElseIfBranchElement {
     condition: Condition;
-    activity: BPELComponent;
+    activity: BPELComponent = null;
 
     constructor() {
         this.condition = new Condition();

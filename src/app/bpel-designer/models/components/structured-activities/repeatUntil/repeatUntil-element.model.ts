@@ -3,7 +3,7 @@ import { BPELComponent } from "../../BPELComponent.model";
 import { Condition } from "../condition/condition.model";
 
 export class RepeatUntilElement extends BPELComponentElement {
-    activity: BPELComponent;
+    activity: BPELComponent = null;
     condition: Condition;
 
     constructor() {

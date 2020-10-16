@@ -1,9 +1,11 @@
 import { ToPart } from "./toPart.model";
 
 export class ToPartsElement {
-    fromPartList: ToPart[]; // 1...*
+    toPartList: ToPart[]; // 1...*
 
     constructor() {
-        this.fromPartList = new Array<ToPart>();
+        this.toPartList = new Array<ToPart>();
+        this.toPartList.push(new ToPart());
+        console.log("[CONSTRUCT] construct a new <toPart> for the toPartList");
     }
 }

@@ -19,6 +19,8 @@ export class InvokeElement extends BPELComponentElement {
         // eager creation
         this.correlations = new Correlations();
         this.catchList = new Array<Catch>();
+        this.catchList.push(new Catch);
+        console.log("[CONSTRUCT] construct a new <catch> for the catchList");
         this.catchAll = new CatchAll();
         this.compensationHandler = new CompensationHandler();
         this.fromParts = new FromParts();

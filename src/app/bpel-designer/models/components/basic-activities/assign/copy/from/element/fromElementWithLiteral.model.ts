@@ -8,6 +8,5 @@ export class FromElementWithLiteral extends FromElement {
         super();
         // eager creation
         this.literal = new Literal();
-        console.log("create from-spec FromElementWithLiteral");
     }
 }

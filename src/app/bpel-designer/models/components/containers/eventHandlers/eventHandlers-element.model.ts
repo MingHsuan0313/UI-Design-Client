@@ -8,6 +8,10 @@ export class EventHandlersElement {
     constructor() {
         // eager creation
         this.onEventList = new Array<OnEvent>();
+        this.onEventList.push(new OnEvent());
+        console.log("[CONSTRUCT] construct a new <onEvent> for the <eventHandlers>");
         this.onAlarmList = new Array<OnAlarm>();
+        this.onAlarmList.push(new OnAlarm());
+        console.log("[CONSTRUCT] construct a new <onAlarm> for the <eventHandlers>");
     }
 }

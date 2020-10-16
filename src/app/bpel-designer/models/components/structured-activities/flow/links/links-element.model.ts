@@ -5,5 +5,7 @@ export class LinksElement {
 
     constructor() {
         this.linkList = new Array<Link>();
+        this.linkList.push(new Link());
+        console.log("[CONSTRUCT] construct a new <link> for the linkList");
     }
 }

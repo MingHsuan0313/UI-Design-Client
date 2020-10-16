@@ -6,6 +6,7 @@ export class SourcesElement {
     constructor() {
         this.sourceList = new Array<Source>();
         this.sourceList.push(new Source());
+        console.log("[CONSTRUCT] construct a new <source> for the <sources>");
     }
 
     // TODO: same id's stacked modals will cause a big disaster

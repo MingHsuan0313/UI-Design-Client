@@ -5,5 +5,7 @@ export class FromPartsElement {
 
     constructor() {
         this.fromPartList = new Array<FromPart>();
+        this.fromPartList.push(new FromPart());
+        console.log("[CONSTRUCT] construct a new <fromPart> for the <fromParts>");
     }
 }

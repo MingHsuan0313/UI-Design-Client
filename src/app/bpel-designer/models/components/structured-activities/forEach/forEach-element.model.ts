@@ -8,7 +8,7 @@ export class ForEachElement extends BPELComponentElement {
     startCounterValue: StartCounterValue;
     finalCounterValue: FinalCounterValue;
     completionCondition?: CompletionCondition;
-    scope: Scope;   //TODO:
+    scope: Scope = null;   //TODO:
 
     constructor() {
         super();

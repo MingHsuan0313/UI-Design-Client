@@ -9,7 +9,9 @@ export class PickElement extends BPELComponentElement {
     constructor() {
         super();
         this.onMessageList = new Array<OnMessage>();
+        this.onMessageList.push(null);
         // eager creation
         this.onAlarmList = new Array<OnAlarm>();
+        this.onAlarmList.push(new OnAlarm());
     }
 }

@@ -1,5 +1,5 @@
 export class ImportAttribute {
-    nameSpace?: string = undefined;
-    location?: string = undefined;
-    importType: string = undefined;
+    nameSpace?: string = "";
+    location?: string = "";
+    importType: string = "";
 }

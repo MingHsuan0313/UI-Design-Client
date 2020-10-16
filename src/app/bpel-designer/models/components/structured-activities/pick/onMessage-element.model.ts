@@ -5,7 +5,7 @@ import { FromParts } from "../../others/fromParts/fromParts.model";
 export class OnMessageElement {
     correlations?: Correlations;
     fromParts?: FromParts;
-    activity: BPELComponent;
+    activity: BPELComponent = null;
 
     constructor() {
         // eager creation
