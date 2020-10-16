@@ -3,6 +3,7 @@ import { GraphStorage } from "src/app/models/modelDependency";
 import GraphEditorService from "src/app/services/graph-editor.service";
 import { Process } from "../../models/components/containers/process/process.model";
 import { ProcessElement } from "../../models/components/containers/process/process-element.model";
+import { BPELComponent } from "../../models/components/BPELComponent.model";
 
 @Component({
     selector: 'property-editor',

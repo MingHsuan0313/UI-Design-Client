@@ -1,3 +1,3 @@
 export class TargetAttribute {
-    linkName: string;
+    linkName: string = "";
 }

@@ -7,6 +7,8 @@ export class TargetsElement {
 
     constructor() {
         this.targetList = new Array<Target>();
+        this.targetList.push(new Target());
+        console.log("[CONSTRUCT] construct a new <target> for the <targets>")
         // eager creation
         this.joinCondition = new JoinCondition();
     }

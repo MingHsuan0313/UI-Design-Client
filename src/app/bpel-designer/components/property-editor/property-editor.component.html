@@ -17,9 +17,12 @@
               <div class='col' *ngIf="firstRecord">
                 <div class='row' *ngFor="let kv of kvs">
                   <span class="input-group-text">{{getKey(kv)}}</span>
-                  <textarea *ngIf="isElementString(getValue(kv)); else modalButton" class="form-control" (keyup)="syncSelectedElement(getKey(kv), $event)">{{getValue(kv)}}</textarea>
+                  <textarea *ngIf="isElementString(getValue(kv)); else modalArrayButton" (keyup)="syncSelectedElement(getKey(kv), $event)">{{getValue(kv)}}</textarea>
+                  <ng-template #modalArrayButton>
+                    <button *ngIf="isElementArray(getValue(kv)); else modalButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleArrayModal" data-whatever="plain-string-val" (click)="showArrayModal(getKey(kv), getValue(kv))">Edit Array</button>
+                  </ng-template>
                   <ng-template #modalButton>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="plain-string-val" (click)="showModal(getKey(kv), getValue(kv))">Edit</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="plain-string-val" (click)="showModal(getKey(kv), getValue(kv))">Edit Element</button>
                   </ng-template>
                 </div>
               </div>

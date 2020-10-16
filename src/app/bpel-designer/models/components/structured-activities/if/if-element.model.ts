@@ -7,12 +7,15 @@ import { BPELComponentElement } from "../../BPELComponent-element.model";
 export class IfElement extends BPELComponentElement {
     // condition, activity, elseIfList, else are in the order
     condition: Condition;
-    activity: BPELComponent;
+    activity: BPELComponent = null;
     elseifList?: ElseIfBranch[];
-    else?: ElseBranch;
+    else?: ElseBranch = null;
 
     constructor() {
         super();
         this.condition = new Condition();
+        // eager creation
+        this.elseifList = new Array<ElseIfBranch>();
+        this.elseifList.push(null);
     }
 }

@@ -1,3 +1,3 @@
 export class BranchesElement {
-    unsigned_integer_expressions: string = undefined;
+    unsigned_integer_expressions: string = "";
 }

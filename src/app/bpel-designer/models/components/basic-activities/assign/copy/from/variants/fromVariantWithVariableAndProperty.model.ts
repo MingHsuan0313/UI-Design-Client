@@ -5,6 +5,6 @@ export class FromVariantWithVariableAndProperty extends From {
     constructor() {
         super();
         this.attribute = new FromAttributeWithVariableAndPropery();
-        console.log("create from-spec FromVariantWithVariableAndProperty");
+        console.log("The from-spec is FromVariantWithVariableAndProperty");
     }
 }

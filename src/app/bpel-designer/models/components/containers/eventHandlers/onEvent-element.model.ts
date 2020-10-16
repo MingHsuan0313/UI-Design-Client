@@ -5,7 +5,7 @@ import { Scope } from "../scope/scope.model";
 export class OnEventElement {
     correlations?: Correlations;
     fromParts?: FromParts;
-    scope: Scope;   //TODO:
+    scope: Scope = null;   //TODO:
 
     constructor() {
         // eager creation

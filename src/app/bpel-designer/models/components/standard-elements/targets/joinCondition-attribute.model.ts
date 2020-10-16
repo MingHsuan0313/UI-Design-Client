@@ -1,3 +1,3 @@
 export class JoinConditionAttribute {
-    expressionLanguage?: string = undefined;
+    expressionLanguage?: string = "";
 }

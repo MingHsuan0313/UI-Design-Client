@@ -8,6 +8,5 @@ export class FromElementWithQuery extends FromElement {
         super();
         // eager creation
         this.query = new Query();
-        console.log("create from-spec FromElementWithQuery");
     }
 }

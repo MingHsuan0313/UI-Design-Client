@@ -1,3 +1,3 @@
 export class LiteralElement {
-    value: string = undefined;
+    value: string = "";
 }

@@ -5,24 +5,7 @@ export class VariablesElement {
 
     constructor() {
         this.variableList = new Array<Variable>();
-        // fake data
-        let mainStartRequestVariable = new Variable();
-        console.log("construct fake data <variabe> for new <variables>");
-        console.log(mainStartRequestVariable);
-        this.add(mainStartRequestVariable);
-
-        console.log("construct <variables> for new <process>");
-    }
-
-    add(variable: Variable): void {
-        this.variableList.push(variable);
-    }
-
-    remove(variable: Variable): void {
-        throw new Error("Method not implemented.");
-    }
-
-    getVariableList() {
-        return this.variableList;
+        this.variableList.push(new Variable());
+        console.log("[CONSTRUCT] construct a new <variabe> for the <variables>");
     }
 }

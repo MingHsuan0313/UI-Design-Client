@@ -1,7 +1,7 @@
 import { ToElement } from "../to-element.model";
 
 export class ToElementWithExpression extends ToElement {
-    expression: string = undefined;
+    expression: string = "";
 
     constructor() {
         super();

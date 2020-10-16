@@ -9,7 +9,7 @@ export class OnAlarmElement {
     for?: For;
     until?: Until;
     repeatEvery?: RepeatEvery;
-    scope: Scope;   //TODO:
+    scope: Scope = null;   //TODO:
 
     constructor() {
         // eager creation

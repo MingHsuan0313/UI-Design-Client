@@ -5,5 +5,7 @@ export class ExtensionsElement {
 
 	constructor() {
         this.extensionList = new Array<Extension>();
+        this.extensionList.push(new Extension());
+        console.log("[CONSTRUCT] construct a new <extension> for the <extensions>");
 	}
 }

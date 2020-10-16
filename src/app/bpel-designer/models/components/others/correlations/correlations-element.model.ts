@@ -5,5 +5,7 @@ export class CorrelationsElement {
 
     constructor() {
         this.correlationList = new Array<Correlation>();
+        this.correlationList.push(new Correlation());
+        console.log("[CONSTRUCT] construct a new <correlation> for the <correlations>");
     }
 }
