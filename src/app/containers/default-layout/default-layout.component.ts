@@ -94,7 +94,7 @@ export class DefaultLayoutComponent implements OnInit {
     console.log('Page UICDL');
     console.log(pageUICDL);
 
-    this.exportService.postPageUICDL(Storage.PageUICDL).subscribe(
+    this.exportService.postPageUICDL(Storage.pageUICDL).subscribe(
       response => console.log(response['body'])
     );
   }
@@ -102,9 +102,10 @@ export class DefaultLayoutComponent implements OnInit {
 
   apply() {
     // selector is now meaningless
-    this.layoutComponent = new Layout({id: PropertyGenerator.getID(this.graphEditorService.getMaxVertexID()), selector: this.layout_selected, type: 'layout'});
-    Storage.setLayoutComponent(this.layoutComponent);
-    this.graphEditorService.bindComponent(this.layoutComponent);
+    // this.layoutComponent = new Layout({id: PropertyGenerator.getID(this.graphEditorService.getMaxVertexID()), selector: this.layout_selected, type: 'layout'});
+    // Storage.setLayoutComponent(this.layoutComponent);
+    // this.graphEditorService.bindComponent(this.layoutComponent);
+    this.graphEditorService.applyLayout(this.layout_selected);
   }
 
   addLayoutItem(sf) {

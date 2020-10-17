@@ -5,13 +5,15 @@ import {Layout, UIComponent} from '../models/ui-component-dependency';
 import {PropertyGenerator} from './property-generator';
 import {NavigationComponent} from '../models/navigation/navigation-component.model';
 import * as _ from 'lodash';
+import { PageUICDL } from '../models/internalRepresentation/pageUICDL.model';
 
 export class Storage {
   static newCompositeList: any[] = [];  // store reusable composite component
   static components: any[] = [];
   static layoutComponent: Layout;
-  static PageUICDL: any = {};
+  static pageUICDL: PageUICDL;
   static library: any = Library;
+
   static layout: any = '';
   static isNewPage = true;
   static pageUICDLList: any[] = [];
@@ -23,6 +25,10 @@ export class Storage {
   // for temporary import
   static PageComponents: any[] = [];
   static images: any[] = [];
+  
+  constructor() {
+    console.log("storage initialization");
+  }
 
   static add(component: UIComponent) {
     console.log("push ui component");
@@ -38,28 +44,12 @@ export class Storage {
     }
   }
 
-  static removeComponentByIDs(componentIDs: String[]) {
-
-  }
-
-  static removeComponentByID(componentID: String) {
-
-  }
-
-  static copyComponentByID(componentID: String) {
-
-  }
-
-  static copyComponentByIDs(componentIDs: String[]) {
-
-  }
-
   static setLayoutComponent(component) {
     this.layoutComponent = _.cloneDeep(component);
     this.layoutComponent["componentList"] = this.components;
     console.log("layout component");
     console.log(this.layoutComponent);
-    this.PageUICDL['componentList'] = (this.layoutComponent);
+    this.pageUICDL['componentList'] = (this.layoutComponent);
   }
 
   static getGenre(): any[] {
@@ -99,23 +89,27 @@ export class Storage {
   }
 
   static getPageUICDL() {
-     const clonedPageUICDL = _.cloneDeep(this.PageUICDL);
+     const clonedPageUICDL = _.cloneDeep(this.pageUICDL);
      return clonedPageUICDL;
   }
 
   static createPageUICDL(){
-    if (this.isNewPage) {
-      this.PageUICDL['id'] = PropertyGenerator.getPageID();
-      this.PageUICDL['selector'] = 'page' + this.PageUICDL['id'];
-      this.pageUICDLList.push(this.PageUICDL);
-      this.isNewPage = false;
-    }
-    this.PageUICDL['componentList'] = [];
+    // if (this.isNewPage) {
+    //   this.pageUICDL['id'] = PropertyGenerator.getPageID();
+    //   this.pageUICDL['selector'] = 'page' + this.pageUICDL['id'];
+    //   this.pageUICDLList.push(this.pageUICDL);
+    //   this.isNewPage = false;
+    // }
+    // this.pageUICDL['componentList'] = [];
   }
 
   static clearTemp() { 
     this.components = [];
     console.log("clear graph")
+  }
+  
+  static setPageUICDL(pageUICDL: PageUICDL) {
+    this.pageUICDL = pageUICDL;  
   }
 }
 

@@ -3,6 +3,7 @@ import { fakeBreadcrumb } from "../../../fakedata/fakeBreadcrumb";
 import { StyleLibrary } from "../../shared/styleLibrary";
 import { Storage } from "../../shared/storage"
 import { GraphStorage } from "../../models/graph-dependency";
+import { PageUICDL } from "src/app/models/internalRepresentation/pageUICDL.model";
 
 @Injectable({
   providedIn: "root"
@@ -23,7 +24,11 @@ export default class GraphEditorService {
     this.selectedGraphStorage = new GraphStorage(element, "graphContainer" + this.graphStorages.length.toString());
     this.graphStorages.push(this.selectedGraphStorage);
     this.selectedGraphID = this.selectedGraphStorage.getID();
-    Storage.createPageUICDL();
+    // Storage.createPageUICDL();
+
+    let pageID = "page" + this.selectedGraphID;
+    let newPageUICDL = new PageUICDL(2);
+    Storage.setPageUICDL(newPageUICDL);
     // this.bindComponent(fakeBreadcrumb);
   }
 
@@ -37,6 +42,10 @@ export default class GraphEditorService {
       const parent = this.selectedGraphStorage.getGraph().getDefaultParent();
       this.selectedGraphStorage.createComponent(component, parent, x, y);
     }
+  }
+  
+  applyLayout(layout: String) {
+    this.selectedGraphStorage.applyLayout(layout);
   }
 
 

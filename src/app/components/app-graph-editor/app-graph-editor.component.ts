@@ -5,8 +5,8 @@ import * as html2canvas from 'html2canvas';
 import ImportService from '../../services/internalRepresentation/import.service';
 import ExportService from '../../services/internalRepresentation/export.service';
 import { Storage } from '../../shared/storage';
-import { StyleStorage } from '../../models/graph-dependency';
 import { StyleLibrary } from '../../shared/styleLibrary';
+import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model';
 
 @Component({
   selector: 'app-graph-editor',

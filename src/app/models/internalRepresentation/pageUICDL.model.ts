@@ -5,6 +5,7 @@ export class PageUICDL {
     public selector: String;
     public category: String;
     public layout: String;
+
     public style: Object;
 
     public body: LayoutComponent;
@@ -12,6 +13,30 @@ export class PageUICDL {
     public sidebar: LayoutComponent;
     public footer: LayoutComponent;
     public asidebar: LayoutComponent;
+    
+    constructor(id:number) {
+        console.log(id)
+        this.id = id.toString();
+        this.selector = `page${id}`;
+        this.category = "page";
+        this.layout = "";
+        this.style = {};
+        this.header = new LayoutComponent((id + 1).toString(),"layout-header");
+        this.sidebar = new LayoutComponent((id + 2).toString(),"layout-sidebar");
+        this.footer = new LayoutComponent((id + 3).toString(),"layout-footer");
+        this.body = new LayoutComponent((id + 4).toString(),"layout-body");
+        this.asidebar = new LayoutComponent((id + 5).toString(),"layout-asidebar");
+    }
+
+    public getLayout(): String {
+        return this.layout;
+    }
+
+    public setLayout(layout: String): void {
+        this.layout = layout;
+    }
+
+
 
     public getId(): String {
         return this.id;

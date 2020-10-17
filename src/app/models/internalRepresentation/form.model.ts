@@ -7,6 +7,7 @@ export class FormComposite extends CompositeComponent{
     constructor(init?: Partial<FormComposite>) {
         super();
         Object.assign(this, init);
+        this.componentList = [];
         this.category = "input";
         this.serviceComponent = new ServiceComponentModel();
     }

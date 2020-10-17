@@ -8,6 +8,7 @@ export class InputGroupComposite extends CompositeComponent{
   constructor(init?: Partial<InputGroupComposite>) {
     super();
     Object.assign(this, init);
+    this.componentList = [];
     this.category = "input";
     this.serviceComponent = new ServiceComponentModel();
   }

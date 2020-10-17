@@ -131,28 +131,30 @@ export class GraphStorage {
 
     // set parent [layout parts] to each components
     if (parent.id < 8) {
-      switch (component['layout']) {
-        case 'header':
-          parent = this.findVertexByID(3);
-          basex = parent['x'];
-          basey = parent['y'];
-          break;
-        case 'footer':
-          parent = this.findVertexByID(4);
-          basex = parent['x'];
-          basey = parent['y'];
-          break;
-        case 'sidebar':
-          parent = this.findVertexByID(5);
-          basex = parent['x'];
-          basey = parent['y'];
-          break;
-        case 'asidebar':
-          parent = this.findVertexByID(7);
-          basex = parent['x'];
-          basey = parent['y'];
-          break;
-      }
+      console.log("hereee");
+      parent = this.findVertexByID(6);
+      // switch (component['layout']) {
+      //   case 'header':
+      //     parent = this.findVertexByID(3);
+      //     basex = parent['x'];
+      //     basey = parent['y'];
+      //     break;
+      //   case 'footer':
+      //     parent = this.findVertexByID(4);
+      //     basex = parent['x'];
+      //     basey = parent['y'];
+      //     break;
+      //   case 'sidebar':
+      //     parent = this.findVertexByID(5);
+      //     basex = parent['x'];
+      //     basey = parent['y'];
+      //     break;
+      //   case 'asidebar':
+      //     parent = this.findVertexByID(7);
+      //     basex = parent['x'];
+      //     basey = parent['y'];
+      //     break;
+      // }
     }
 
     // basic component
@@ -183,12 +185,19 @@ export class GraphStorage {
       } else if (component['type'].startsWith('layout')) {
         // initialized layout into 5 parts
         this.setStrategy(new LayoutStrategy(basex, basey));
-
       }
 
       const compositeVertexStorage = this.strategy.createComponent(this, component, parent);
       return compositeVertexStorage;
     }
+  }
+  
+  applyLayout(layout:String) {
+    console.log("apply layout");
+    Storage.pageUICDL.setLayout(layout);
+    this.setStrategy(new LayoutStrategy(0,0));
+    console.log("set layout strategy: " + layout);
+    this.strategy.createComponent(this);
   }
 
   getGraph() {

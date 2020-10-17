@@ -7,6 +7,7 @@ export class BreadcrumbComposite extends CompositeComponent{
   constructor(init?: Partial<BreadcrumbComposite>) {
     super();
     Object.assign(this, init);
+    this.componentList = [];
     this.category = "navigation";
     this.serviceComponent = new ServiceComponentModel();
   }

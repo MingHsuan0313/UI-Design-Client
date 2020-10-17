@@ -50,11 +50,14 @@ export class WizardComponent implements OnInit {
   }
 
   setComponent(properties): boolean {
+    console.log("properties here");
+    console.log(properties);
     properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
     properties['selector'] = PropertyGenerator.getSelector(this.componentName);
     properties['type'] = this.componentName;
     // properties['serviceType'] = ServiceMappingType['none'];
     properties['serviceComponent'] = new ServiceComponentModel(); 
+    console.log(properties);
  
 
     switch (this.componentName) {
@@ -212,13 +215,16 @@ export class WizardComponent implements OnInit {
   clickFinish() {
     $('#myModal a[href="#building"]').tab('show');
     let newComponent:any;
+    console.log("dd")
     if (this.isCustom) {
+      console.log("ee")
       newComponent = this.newCompositeComponent(newComponent, this.component);
       newComponent['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
       newComponent['selector'] = PropertyGenerator.getSelector(newComponent.type);
       Storage.add(newComponent);
       this.graphEditorService.bindComponent(newComponent);
     } else {
+      console.log("ff")
       Storage.add(this.component);
       this.graphEditorService.bindComponent(this.component);
     }
