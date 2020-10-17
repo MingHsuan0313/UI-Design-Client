@@ -132,7 +132,7 @@ export class GraphStorage {
     // set parent [layout parts] to each components
     if (parent.id < 8) {
       console.log("hereee");
-      parent = this.findVertexByID(6);
+      parent = this.findVertexByID(2);
       // switch (component['layout']) {
       //   case 'header':
       //     parent = this.findVertexByID(3);

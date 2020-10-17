@@ -5,8 +5,10 @@ import { Library } from "../../shared/library";
 import { GraphStorage, VertexStorage, StyleStorage } from "../../models/graph-dependency";
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
+import { LayoutComponent } from 'src/app/models/internalRepresentation/layoutComponent.model';
+import { BasicComponent } from 'src/app/models/internalRepresentation/basicComponent.model';
 
- 
+
 @Component({
   selector: 'app-service-component-configuration',
   templateUrl: './service-component-configuration.component.html',
@@ -26,8 +28,8 @@ export class ServiceComponentConfigurationComponent implements OnInit {
   serviceComponentOptions: any[];
   argumentOptions: string[];
   argumentTypeOptions: string[];
-  
-  
+
+
   isQuerying: boolean;
   graphStorage: GraphStorage;
   constructor(private graphEditorService: GraphEditorService,
@@ -37,7 +39,7 @@ export class ServiceComponentConfigurationComponent implements OnInit {
     this.selectedArgumentType = "select argument type";
     this.serviceComponentOptions = [];
     this.argumentOptions = [];
-    this.argumentTypeOptions = ["String","int","double","boolean"]
+    this.argumentTypeOptions = ["String", "int", "double", "boolean"]
 
     for (let se of this.serviceComponentOptions)
       console.log(se)
@@ -62,7 +64,7 @@ export class ServiceComponentConfigurationComponent implements OnInit {
     this.selectedUIComponent.serviceComponent.name = this.selectedArgumentName;
     this.selectedUIComponent.serviceComponent.serviceType = ServiceMappingType['argument'];
   }
-  
+
   selectArgumentType() {
     console.log("select type" + this.selectedArgumentType);
     this.selectedUIComponent.serviceComponent.argumentType = this.selectedArgumentType;
@@ -96,8 +98,8 @@ export class ServiceComponentConfigurationComponent implements OnInit {
         // console.log(serviceComponentsJson);
         this.serviceComponentOptions = []
         // console.log(serviceComponentList)
-        
-        for(let index = 0;index < serviceComponentList.length;index++) {
+
+        for (let index = 0; index < serviceComponentList.length; index++) {
           let serviceComponentModel = new ServiceComponentModel();
           serviceComponentModel.setName(serviceComponentList[index]["name"]);
           serviceComponentModel.setClassName(serviceComponentList[index]["className"]);
@@ -139,50 +141,57 @@ export class ServiceComponentConfigurationComponent implements OnInit {
     graph.addListener(mxEvent.CLICK, (sender, event) => {
       let selectedVertex = sender.selectionModel.cells[0];
       this.selectedVertexStorage = this.graphStorage.findVertexStorageByID(selectedVertex["id"]);
-      this.selectedUIComponent = this.selectedVertexStorage.component;
-      this.selectedServiceComponent = this.selectedUIComponent.serviceComponent;
-      this.setUiTypeByComponent();
-      console.log("select ui component")
-      console.log(this.selectedUIComponent)
-      if (this.selectedUIComponent.serviceComponent.name.length == 0)
-        this.initializeState();
-      else {
-        if (this.selectedUIComponent.serviceComponent.serviceType == ServiceMappingType['service']) {
-          this.selectedServiceComponent = this.selectedUIComponent.serviceComponent;
-        }
-        else if (this.selectedUIComponent.serviceComponent.serviceType == ServiceMappingType['argument']) {
-          this.selectedArgumentName = this.selectedUIComponent.serviceComponent.name;
-        }
+
+      if(this.selectedVertexStorage.component instanceof BasicComponent) {
+        console.log("ddddddashdkjafafkafkja");
       }
+      if (!(this.selectedVertexStorage.component instanceof LayoutComponent)) {
+        this.selectedUIComponent = this.selectedVertexStorage.component;
+        this.selectedUIComponent = this.selectedVertexStorage.component;
+        this.selectedServiceComponent = this.selectedUIComponent.serviceComponent;
+        this.setUiTypeByComponent();
+        if (this.selectedUIComponent.serviceComponent.name.length == 0)
+          this.initializeState();
+        else {
+          if (this.selectedUIComponent.serviceComponent.serviceType == ServiceMappingType['service']) {
+            this.selectedServiceComponent = this.selectedUIComponent.serviceComponent;
+          }
+          else if (this.selectedUIComponent.serviceComponent.serviceType == ServiceMappingType['argument']) {
+            this.selectedArgumentName = this.selectedUIComponent.serviceComponent.name;
+          }
+        }
 
-      if (this.selectedUIComponent.category == "input") {
-        if (this.selectedUIComponent.type == "form") {
+        if (this.selectedUIComponent.category == "input") {
+          if (this.selectedUIComponent.type == "form") {
+
+          }
+          else if (this.selectedUIComponent.type == "input") {
+            console.log("parrent")
+            // console.log(selectedVertex);
+            let parentVertex = selectedVertex.parent;
+            let parentVertexStorage = this.graphStorage.findVertexStorageByID(parentVertex["id"]);
+            let parentServiceName = parentVertexStorage.component.serviceComponent.name;
+            let parentServiceID = parentVertexStorage.component.serviceComponent.serviceID;
+            console.log(parentServiceName);
+            this.queryArgumentsByServiceID(parentServiceID);
+          }
+        }
+        else if (this.selectedUIComponent.category == "informative") {
+          if (this.selectedUIComponent.type == "table") {
+
+          }
+        }
+        else if (this.selectedUIComponent.category == "navigation") {
 
         }
-        else if (this.selectedUIComponent.type == "input") {
-          console.log("parrent")
-          // console.log(selectedVertex);
-          let parentVertex = selectedVertex.parent;
-          let parentVertexStorage = this.graphStorage.findVertexStorageByID(parentVertex["id"]);
-          let parentServiceName = parentVertexStorage.component.serviceComponent.name;
-          let parentServiceID = parentVertexStorage.component.serviceComponent.serviceID;
-          console.log(parentServiceName);
-          this.queryArgumentsByServiceID(parentServiceID);
-        }
-      }
-      else if (this.selectedUIComponent.category == "informative") {
-        if (this.selectedUIComponent.type == "table") {
+        else if (this.selectedUIComponent.category == "container") {
 
         }
-      }
-      else if (this.selectedUIComponent.category == "navigation") {
+        else if (this.selectedUIComponent.category == "layout") {
 
-      }
-      else if (this.selectedUIComponent.category == "container") {
-
-      }
-      else if (this.selectedUIComponent.category == "layout") {
-
+        }
+      } else {
+        console.log("click layout component");
       }
     })
 

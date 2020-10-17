@@ -8,6 +8,8 @@ export class LayoutComponent extends CompositeComponent {
        this.id = id;
        this.category = "layout";
        this.selector = selector;
+       this.componentList = [];
+       this.style = {};
        console.log("construct layout component " + id);
     }
 }

@@ -42,14 +42,16 @@ export class Storage {
       this.newCompositeList.push(component);
       this.library['genre']['CoreUI']['category']['Containers'].push(component.selector);
     }
+    console.log(this.pageUICDL);
+    this.pageUICDL.body.componentList.push(component);
   }
 
   static setLayoutComponent(component) {
-    this.layoutComponent = _.cloneDeep(component);
-    this.layoutComponent["componentList"] = this.components;
-    console.log("layout component");
-    console.log(this.layoutComponent);
-    this.pageUICDL['componentList'] = (this.layoutComponent);
+    // this.layoutComponent = _.cloneDeep(component);
+    // this.layoutComponent["componentList"] = this.components;
+    // console.log("layout component");
+    // console.log(this.layoutComponent);
+    // this.pageUICDL['componentList'] = (this.layoutComponent);
   }
 
   static getGenre(): any[] {

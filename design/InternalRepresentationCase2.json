@@ -1,0 +1,125 @@
+{
+    "id": "2",
+    "selector": "page2",
+    "category": "page",
+    "layout": "Layout",
+    "style": {},
+    "header": {
+        "id": "3",
+        "category": "layout",
+        "selector": "layout-header",
+        "componentList": []
+    },
+    "sidebar": {
+        "id": "4",
+        "category": "layout",
+        "selector": "layout-sidebar",
+        "componentList": []
+    },
+    "footer": {
+        "id": "5",
+        "category": "layout",
+        "selector": "layout-footer",
+        "componentList": []
+    },
+    "body": {
+        "id": "6",
+        "category": "layout",
+        "selector": "layout-body",
+        "componentList": [
+            {
+                "name": "test",
+                "typeInfo": "",
+                "id": "8",
+                "selector": "input8",
+                "type": "input",
+                "serviceComponent": {
+                    "name": "",
+                    "preference": 0,
+                    "serviceType": "None",
+                    "code": "",
+                    "serviceID": "",
+                    "className": "",
+                    "argumentType": ""
+                },
+                "category": "input",
+                "x": 261.6,
+                "y": 184.5,
+                "width": 200,
+                "height": 30
+            },
+            {
+                "name": "test",
+                "id": "9",
+                "selector": "form9",
+                "type": "form",
+                "serviceComponent": {
+                    "name": "",
+                    "preference": 0,
+                    "serviceType": "None",
+                    "code": "",
+                    "serviceID": "",
+                    "className": "",
+                    "argumentType": ""
+                },
+                "componentList": [
+                    {
+                        "name": "test",
+                        "typeInfo": "",
+                        "id": "10",
+                        "selector": "input10",
+                        "type": "input",
+                        "serviceType": "None",
+                        "serviceComponent": {
+                            "name": "",
+                            "preference": 0,
+                            "serviceType": "None",
+                            "code": "",
+                            "serviceID": "",
+                            "className": "",
+                            "argumentType": ""
+                        },
+                        "category": "input",
+                        "x": 15,
+                        "y": 40,
+                        "width": 200,
+                        "height": 30
+                    },
+                    {
+                        "name": "test",
+                        "typeInfo": "",
+                        "id": "11",
+                        "selector": "input11",
+                        "type": "input",
+                        "serviceType": "None",
+                        "serviceComponent": {
+                            "name": "",
+                            "preference": 0,
+                            "serviceType": "None",
+                            "code": "",
+                            "serviceID": "",
+                            "className": "",
+                            "argumentType": ""
+                        },
+                        "category": "input",
+                        "x": 15,
+                        "y": 80,
+                        "width": 200,
+                        "height": 30
+                    }
+                ],
+                "category": "input",
+                "x": 261.6,
+                "y": 184.5,
+                "width": 250,
+                "height": 120
+            }
+        ]
+    },
+    "asidebar": {
+        "id": "7",
+        "category": "layout",
+        "selector": "layout-asidebar",
+        "componentList": []
+    }
+}
