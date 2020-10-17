@@ -39,15 +39,11 @@ export class StyleEditorComponent implements OnInit {
 
   changeFontColor() {
     let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
-    console.log("hereee")
-    console.log(oldStyle)
     oldStyle.fontColor = this.fontColor;
     let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
     this.selectedStyleStorage.changeFontColor(this.fontColor);
     this.graph.refresh();
-    console.log(this.fontColor);
-    this.graphStorage.setModified();
   }
 
   changeColor(event) {
@@ -57,7 +53,6 @@ export class StyleEditorComponent implements OnInit {
     this.selectedVertex.style = newStyleDescription;
     this.selectedStyleStorage.changeFillColor(this.colorPicker);
     this.graph.refresh();
-    this.graphStorage.setModified();
   }
 
   toggleShadow(event) {
@@ -116,9 +111,6 @@ export class StyleEditorComponent implements OnInit {
       this.selectedVertex = sender.selectionModel.cells[0];
       let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
       this.selectedStyleStorage = vertexStorage.getStyleStorage();
-      // console.log("Select Vertex");
-      // console.log(vertexStorage);
-
       let vertexStyleDescription = this.selectedVertex.style;
       let styleObj = this.styleEditorService.convertStyleDescriptionToJsobObject(vertexStyleDescription);
       this.syncEditorWithSelectedVertex(styleObj);
@@ -129,7 +121,6 @@ export class StyleEditorComponent implements OnInit {
   ngAfterViewInit() {
     this.graph.getSelectionModel().addListener(mxEvent.CHANGE, function (sender, evt) {
       let cells = evt.getProperty('removed');
-      console.log(cells);
     });
   }
 

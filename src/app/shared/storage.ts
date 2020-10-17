@@ -10,7 +10,6 @@ export class Storage {
   static newCompositeList: any[] = [];  // store reusable composite component
   static components: any[] = [];
   static layoutComponent: Layout;
-  static UICDL: any[] = [];
   static PageUICDL: any = {};
   static library: any = Library;
   static layout: any = '';
@@ -26,11 +25,15 @@ export class Storage {
   static images: any[] = [];
 
   static add(component: UIComponent) {
+    console.log("push ui component");
     this.components.push(component);
-    this.UICDL.push(component.getInfo());
+    console.log(this.components);
+
+    console.log("layout component");
+    console.log(this.layoutComponent);
+
     if (component.selector.startsWith('card') || component.selector.startsWith('form')) {
       this.newCompositeList.push(component);
-      console.log("composite is pushed");
       this.library['genre']['CoreUI']['category']['Containers'].push(component.selector);
     }
   }
@@ -53,7 +56,9 @@ export class Storage {
 
   static setLayoutComponent(component) {
     this.layoutComponent = _.cloneDeep(component);
-    this.layoutComponent["componentList"] = this.UICDL;
+    this.layoutComponent["componentList"] = this.components;
+    console.log("layout component");
+    console.log(this.layoutComponent);
     this.PageUICDL['componentList'] = (this.layoutComponent);
   }
 
@@ -106,14 +111,10 @@ export class Storage {
       this.isNewPage = false;
     }
     this.PageUICDL['componentList'] = [];
-
   }
-
-  
 
   static clearTemp() { 
     this.components = [];
-    this.UICDL = [];
     console.log("clear graph")
   }
 }

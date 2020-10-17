@@ -1,6 +1,7 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
-export class Icon extends UIComponent {
+import { BasicComponent } from "./basicComponent.model";
+export class Icon extends BasicComponent{
   text: String;
 
   constructor(init?: Partial<Icon>) {

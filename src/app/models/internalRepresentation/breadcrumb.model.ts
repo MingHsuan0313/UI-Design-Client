@@ -1,8 +1,8 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
+import { CompositeComponent } from "./compositeComponent.model";
 
-export class BreadcrumbComposite extends UIComponent {
-  componentList: any[] = [];
+export class BreadcrumbComposite extends CompositeComponent{
 
   constructor(init?: Partial<BreadcrumbComposite>) {
     super();

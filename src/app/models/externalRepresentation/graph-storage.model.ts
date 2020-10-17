@@ -309,8 +309,6 @@ export class GraphStorage {
   getMaxID() {
     let cellsObject = this.getGraphModel().cells;
     const cells = Object.values(cellsObject);
-
-    console.log(cells);
     let maxID = cells.reduce((acc: number, cur: mxCell) => {
       return Math.max(acc, parseInt(cur.id));
     }, 0);

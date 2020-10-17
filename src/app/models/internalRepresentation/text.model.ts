@@ -1,6 +1,7 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
-export class Text extends UIComponent {
+import { BasicComponent } from "./basicComponent.model";
+export class Text extends BasicComponent {
   text: String;
   href: String;
 

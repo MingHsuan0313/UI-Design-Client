@@ -1,7 +1,8 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
+import { BasicComponent } from "./basicComponent.model";
 
-export class Table extends UIComponent {
+export class Table extends BasicComponent{
   headers: any[];
   rows: any[];
 

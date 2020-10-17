@@ -17,7 +17,7 @@ export class HttpClientService {
 
   constructor(private httpClient: HttpClient) {
     this.jenkinsServerUrl = `http://localhost:8080/`
-    this.uiDesignServerUrl = `http://localhost:8081/selab`;
+    this.uiDesignServerUrl = `http://localhost:8081/selab/`;
     this.matchMakingServerUrl = `http://localhost:8082/`;
   }
 

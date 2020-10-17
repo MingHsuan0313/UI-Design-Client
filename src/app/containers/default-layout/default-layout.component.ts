@@ -59,22 +59,22 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
 
-  setGenre(kind: any) {
-    console.log(kind);
-    this.genre_selected = kind;
+  setGenre(genere: string) {
+    console.log("Set Genere: " + genere);
+    this.genre_selected = genere;
     this.categories = Storage.getCategories(this.genre_selected);
   }
 
-  setCategory(kind: any) {
-    console.log(kind);
-    this.category_selected = kind;
+  setCategory(category: string) {
+    console.log("Set Category: " + category);
+    this.category_selected = category;
     this.components = Storage.getComponents(this.genre_selected, this.category_selected);
     this.component_selected = 'Component';
   }
 
-  setComponent(kind: any) {
-    console.log(kind);
-    this.component_selected = kind;
+  setComponent(componentType: any) {
+    console.log("Set Component Type: " + componentType);
+    this.component_selected = componentType;
   }
 
 
@@ -102,7 +102,7 @@ export class DefaultLayoutComponent implements OnInit {
 
   apply() {
     // selector is now meaningless
-    this.layoutComponent = new Layout({id: PropertyGenerator.getID(this.graphEditorService.getMaxVertexID()), selector: this.layout_selected, type: 'layout', layout: 'layout'});
+    this.layoutComponent = new Layout({id: PropertyGenerator.getID(this.graphEditorService.getMaxVertexID()), selector: this.layout_selected, type: 'layout'});
     Storage.setLayoutComponent(this.layoutComponent);
     this.graphEditorService.bindComponent(this.layoutComponent);
   }
@@ -110,7 +110,6 @@ export class DefaultLayoutComponent implements OnInit {
   addLayoutItem(sf) {
     document.getElementById('myForm').style.display = 'none';
     const properties = sf.value;
-    console.log(sf.value);
     properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
     properties['selector'] = 'text';
     properties['type'] = 'text';
@@ -134,8 +133,7 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   openForm(s) {
-    this.layoutPart = s;
-    console.log(s);
+    console.log("open form 1")
     document.getElementById('myForm').style.display = 'block';
   }
 
@@ -144,6 +142,7 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   openForm2() {
+    console.log("open form 2")
     document.getElementById('navigationForm').style.display = 'block';
   }
 

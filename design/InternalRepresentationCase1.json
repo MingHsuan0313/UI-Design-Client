@@ -1,0 +1,104 @@
+{
+    "id": "2",
+    "selector": "page1",
+    "category": "page",
+    "layout": "prime",
+    "style": {
+
+    },
+    "body": {
+        "id": "3",
+        "selector": "layout-body",
+        "category": "layout",
+        "style": {
+
+        },
+        "componentList": [
+            {
+                "name": "get Item",
+                "id": "8",
+                "selector": "form8",
+                "type": "form",
+                "category": "input",
+                "x": 390.9,
+                "y": 183.3,
+                "width": 250,
+                "height": 80,
+                "style": {
+
+                },
+                "serviceComponent": {
+                    "name": "getItemsByAid-java_lang_String-java_lang_String-java_lang_Integer.wsdl",
+                    "preference": 0.921961013002397,
+                    "serviceType": "ServiceComponent",
+                    "code": "",
+                    "serviceID": "139",
+                    "className": "ntu.csie.selab.inventorysystem.controller.AcquisitionController",
+                    "argumentType": ""
+                },
+                "componentList": [
+                    {
+                        "name": "test",
+                        "typeInfo": "",
+                        "id": "9",
+                        "selector": "input9",
+                        "type": "input",
+                        "category": "input",
+                        "x": 15,
+                        "y": 40,
+                        "width": 200,
+                        "height": 30,
+                        "serviceComponent": {
+                            "name": "token",
+                            "preference": 0,
+                            "serviceType": "Argument",
+                            "code": "",
+                            "serviceID": "",
+                            "className": "",
+                            "argumentType": "String"
+                        },
+                        "style": {
+                            
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "header": {
+        "id": "4",
+        "selector": "layout-header",
+        "category": "layout",
+        "componentList": [],
+        "style": {
+
+        }
+    },
+    "sidebar": {
+        "id": "5",
+        "selector": "layout-sidebar",
+        "category": "layout",
+        "componentList": [],
+        "style": {
+
+        }
+    },
+    "footer": {
+        "id": "6",
+        "selector": "layout-footer",
+        "category": "layout",
+        "componentList": [],
+        "style": {
+
+        }
+    },
+    "asidebar": {
+        "id": "7",
+        "selector": "layout-asidebar",
+        "category": "layout",
+        "componentList": [],
+        "style": {
+            
+        }
+    }
+}

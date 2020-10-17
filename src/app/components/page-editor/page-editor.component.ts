@@ -11,7 +11,7 @@ export class PageEditorComponent implements OnInit {
   flag:boolean = true;
   constructor() { 
     this.pageUICDLList = Storage.pageUICDLList;
-    console.log(this.pageUICDLList);
+    // console.log(this.pageUICDLList);
   }
 
   ngOnInit() {

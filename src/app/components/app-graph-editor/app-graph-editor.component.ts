@@ -1,5 +1,5 @@
 // import { Component, OnInit } from '@angular/core';
-import {AfterViewInit, Component, ElementRef, ViewChild, OnInit} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import * as html2canvas from 'html2canvas';
 import ImportService from '../../services/internalRepresentation/import.service';
@@ -36,8 +36,9 @@ export class AppGraphEditorComponent implements AfterViewInit {
     console.log(this.graphEditorService.getGraphStorage());
   }
 
-  showInternelRepresentation(){
+  showInternelRepresentation() {
     console.log(Storage.getPageUICDL());
+    console.log(JSON.stringify(Storage.getPageUICDL()))
   }
 
   createGraph(elementId) {
@@ -132,13 +133,13 @@ export class AppGraphEditorComponent implements AfterViewInit {
   //   )
   // }
 
-  zoomIn(){
-    this.zoomFactor = this.zoomFactor*1.11;
+  zoomIn() {
+    this.zoomFactor = this.zoomFactor * 1.11;
     this.graphEditorService.zoomTo(this.zoomFactor);
   }
 
-  zoomOut(){
-    this.zoomFactor = this.zoomFactor*0.9;
+  zoomOut() {
+    this.zoomFactor = this.zoomFactor * 0.9;
     this.graphEditorService.zoomTo(this.zoomFactor);
   }
 

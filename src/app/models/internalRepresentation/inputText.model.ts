@@ -1,7 +1,8 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
+import { BasicComponent } from "./basicComponent.model";
 
-export class InputText extends UIComponent {
+export class InputText extends BasicComponent{
   public typeInfo: String;  // e.g. input-text, input-password
 
   constructor(init?: Partial<InputText>) {

@@ -1,7 +1,8 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
+import { CompositeComponent } from "./compositeComponent.model";
 
-export class InputGroupComposite extends UIComponent {
+export class InputGroupComposite extends CompositeComponent{
   componentList: any[] = [];
 
   constructor(init?: Partial<InputGroupComposite>) {

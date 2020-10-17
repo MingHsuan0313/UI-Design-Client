@@ -47,7 +47,6 @@ export class WizardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('start wizard');
   }
 
   setComponent(properties): boolean {
@@ -153,7 +152,6 @@ export class WizardComponent implements OnInit {
       return;
     }
     if (this.componentProperties.includes('componentList')) {
-      console.log('is Composite');
       this.isComposite = true;
     } else {
       this.isComposite = false;
@@ -175,7 +173,7 @@ export class WizardComponent implements OnInit {
   }
 
   onSubmit(f: NgForm) {
-    console.log(f.value);
+    // console.log(f.value);
     if (this.setComponent(f.value)) {
       console.log('set component properties');
     }
@@ -183,7 +181,7 @@ export class WizardComponent implements OnInit {
   }
 
   onCompositeSubmit(sf: NgForm) {
-    console.log(sf.value);
+    // console.log(sf.value);
     if (this.setSubComponent(sf.value)) {
       console.log('ready to add ' + this.subComponentName + ' component to composite component');
       this.component.add(this.subComponent);
@@ -212,7 +210,6 @@ export class WizardComponent implements OnInit {
 
 
   clickFinish() {
-    console.log('finish');
     $('#myModal a[href="#building"]').tab('show');
     let newComponent:any;
     if (this.isCustom) {
@@ -225,6 +222,7 @@ export class WizardComponent implements OnInit {
       Storage.add(this.component);
       this.graphEditorService.bindComponent(this.component);
     }
+    console.log("Create UI Component");
     console.log(this.component);
     this.properties = [];
     this.subComponentName = '';

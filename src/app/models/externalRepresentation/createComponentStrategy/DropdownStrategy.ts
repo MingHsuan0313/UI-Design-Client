@@ -43,7 +43,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
 
   createDropdownBoxVertex(graphStorage, component, parent) {
     const itemCount = component.items.split(" ").length;
-    const dropdownWidth = 220;
+    const dropdownWidth = 200;
     const dropdownHeight = 30 * (itemCount + 1);
 
     // insert dropdown box
@@ -67,7 +67,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     const styleStorage = new StyleStorage(styleName, dropdownHeaderStyle);
     graphStorage.getGraph().getStylesheet().putCellStyle(styleName, dropdownHeaderStyle);
     const dropdownHeaderGeometry = new mxGeometry(0, 20, 200, 30);
-    const dropdownHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), "tttt" + component.id, "", dropdownHeaderGeometry, styleStorage, component);
+    const dropdownHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(),component.id, "", dropdownHeaderGeometry, styleStorage, component);
     parent.addChild(dropdownHeaderVertexStorage.id, dropdownHeaderVertexStorage.getVertex(), "header");
 
     dropdownHeaderVertexStorage.vertex["componentPart"] = "header";

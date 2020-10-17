@@ -1,8 +1,9 @@
 
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
+import { BasicComponent } from "./basicComponent.model";
 
-export class Dropdown extends UIComponent {
+export class Dropdown extends BasicComponent{
   items: any[];
 
   constructor(init?: Partial<Dropdown>) {

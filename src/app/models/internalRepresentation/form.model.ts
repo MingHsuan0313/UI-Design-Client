@@ -1,8 +1,8 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
+import { CompositeComponent } from "./compositeComponent.model";
 
-export class FormComposite extends UIComponent {
-    componentList: any[] = [];
+export class FormComposite extends CompositeComponent{
 
     constructor(init?: Partial<FormComposite>) {
         super();

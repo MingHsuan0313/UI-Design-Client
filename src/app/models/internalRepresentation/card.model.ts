@@ -1,9 +1,9 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
+import { CompositeComponent } from "./compositeComponent.model";
 
-export class CardComposite extends UIComponent {
+export class CardComposite extends CompositeComponent{
   header: String;
-  componentList: any[] = [];
 
   constructor(init?: Partial<CardComposite>) {
     super();
