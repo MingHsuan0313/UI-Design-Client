@@ -53,7 +53,7 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   setLayout(selection: any) {
-    console.log(selection);
+    console.log("Set Layout: " + selection);
     this.layout_selected = selection;
     Storage.layout = this.layout_selected;
   }
@@ -88,7 +88,6 @@ export class DefaultLayoutComponent implements OnInit {
 
   storePDL() {
     const pageUICDL = Storage.getPageUICDL();
-    // console.log(JSON.stringify(pageUICDL));
     console.log('Show Internal Representation');
     console.log(Storage.components);
     console.log('Page UICDL');

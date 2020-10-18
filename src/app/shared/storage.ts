@@ -31,18 +31,12 @@ export class Storage {
   }
 
   static add(component: UIComponent) {
-    console.log("push ui component");
     this.components.push(component);
-    console.log(this.components);
-
-    console.log("layout component");
-    console.log(this.layoutComponent);
 
     if (component.selector.startsWith('card') || component.selector.startsWith('form')) {
       this.newCompositeList.push(component);
       this.library['genre']['CoreUI']['category']['Containers'].push(component.selector);
     }
-    console.log(this.pageUICDL);
     this.pageUICDL.body.componentList.push(component);
   }
 
@@ -81,10 +75,7 @@ export class Storage {
 
   static getCompositeByName(componentName){
     for(let component of this.newCompositeList){
-      console.log(component.selector);
-      console.log(componentName);
       if(component.selector == componentName){
-        console.log("match");
         return component;
       }
     }
@@ -114,6 +105,3 @@ export class Storage {
     this.pageUICDL = pageUICDL;  
   }
 }
-
-
-

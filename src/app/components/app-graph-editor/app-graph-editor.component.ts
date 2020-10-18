@@ -27,9 +27,6 @@ export class AppGraphEditorComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.createGraph('graphContainer0');
-    // console.log('Create graph editor');
-    // this.graphEditorService.createGraph(this.graphContainer.nativeElement);
   }
 
   showExternalRepresentation() {
@@ -80,7 +77,6 @@ export class AppGraphEditorComponent implements AfterViewInit {
     let element = document.getElementById(elementID);
     let originalThis = this;
     html2canvas(element).then(function (canvas) {
-      // console.log(canvas);
       originalThis.saveAs(canvas.toDataURL(), 'file-name.png');
     });
   }
@@ -112,26 +108,6 @@ export class AppGraphEditorComponent implements AfterViewInit {
   decreaseFont() {
     StyleLibrary[0]['fontSize'] -= 10;
   }
-
-  // postXML() {
-  //   let encoder = new mxCodec();
-
-  //   let result = encoder.encode(this.graphEditorService.getGraphStorage().getGraph().getModel());
-  //   let xml = mxUtils.getXml(result);
-  //   let pageUICDL = Storage.getPageUICDL();
-  //   pageUICDL["xml"] = xml;
-  //   this.exportService.postImage(xml).subscribe(
-  //     response => {
-  //       let page = "Page" + this.imageCount++;
-  //       let image = {};
-  //       image["page"] = page;
-  //       image["img"] = 'data:image/png;base64,' + response['body'];
-  //       Storage.images.push(image);
-  //       pageUICDL["image"] = JSON.stringify(image["img"]);
-  //       console.log(pageUICDL);
-  //     }
-  //   )
-  // }
 
   zoomIn() {
     this.zoomFactor = this.zoomFactor * 1.11;

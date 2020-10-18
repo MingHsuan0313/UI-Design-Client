@@ -30,18 +30,13 @@ export class CodeEditorComponent implements OnInit {
   }
   
   compileCode() {
-    console.log("start compiling");
     this.isCompiling = true;
     this.logMessage = "";
     this.serviceComponentService.postEditedServiceComponent(this.code,this.className).subscribe(
       response => {
-        console.log("get from eidit code");
         let responseObject = JSON.parse(response["body"]);
-        console.log("using")
         this.isCompiling = false;
         this.logMessage = responseObject["log"];
-        console.log("Hereee");
-        console.log(responseObject);
         if(responseObject["statusCode"] == -1) {
           this.xterminalService.appendErrorMessage("Signature Isn't unique") ;
           return;
@@ -57,7 +52,6 @@ export class CodeEditorComponent implements OnInit {
         this.serviceComponentService.triggerJenkinsBuild().subscribe(
           response => {
             console.log("trigger jenkins build");
-            // console.log(response);
           }
         )
       }
@@ -79,8 +73,6 @@ export class CodeEditorComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("Hello dataa")
-    console.log(this.data)
     this.code = this.data["code"];
     this.className = this.data["className"];
   }

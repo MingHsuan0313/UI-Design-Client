@@ -86,25 +86,17 @@ export class GraphStorage {
 
     // for copy & recover cell
     for (let key in mxCells) {
-      console.log(key);
       if (!(key in this.vertexStorageList)) {
-        console.log(`key : + ${key} not in vertexStorage`)
         this.createVertexStorageByCell(mxCells[key], key);
       }
     }
 
     // for delete
     for (let key in this.vertexStorageList) {
-      console.log(key);
       if (!(key in mxCells)) {
-        console.log(`key : + ${key} not in vertexStorage`)
         this.deleteVertexStorageByIndex(key);
       }
     }
-
-    console.log("cells here");
-    console.log(mxCells);
-    console.log(this.vertexStorageList);
   }
 
   createVertexStorageByCell(sourceCells,targetCells) {

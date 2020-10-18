@@ -41,8 +41,8 @@ export class ServiceComponentConfigurationComponent implements OnInit {
     this.argumentOptions = [];
     this.argumentTypeOptions = ["String", "int", "double", "boolean"]
 
-    for (let se of this.serviceComponentOptions)
-      console.log(se)
+    // for (let se of this.serviceComponentOptions)
+    //   console.log(se)
   }
 
   setUiTypeByComponent() {
@@ -88,16 +88,10 @@ export class ServiceComponentConfigurationComponent implements OnInit {
     this.serviceComponentService.queryMatchedServices(this.selectedUIComponent, parameterCount).subscribe(
       response => {
         this.isQuerying = false;
-        console.log(response)
-        console.log("tt")
-        console.log(JSON.parse(response["body"]))
         // let serviceComponentsJson = response;
         // let serviceComponentsList: ServiceComponentModel[]= [];
         let serviceComponentList = JSON.parse(response["body"]);
-        console.log("return from server");
-        // console.log(serviceComponentsJson);
         this.serviceComponentOptions = []
-        // console.log(serviceComponentList)
 
         for (let index = 0; index < serviceComponentList.length; index++) {
           let serviceComponentModel = new ServiceComponentModel();
@@ -105,14 +99,10 @@ export class ServiceComponentConfigurationComponent implements OnInit {
           serviceComponentModel.setClassName(serviceComponentList[index]["className"]);
           serviceComponentModel.setServiceID(serviceComponentList[index]["serviceID"]);
           serviceComponentModel.setPreference(serviceComponentList[index]["similarity"])
-          console.log("dd")
-          console.log(serviceComponentList[index]);
           this.serviceComponentOptions.push(serviceComponentModel);
         }
 
         this.serviceComponentService.setServiceComponents(serviceComponentList);
-        console.log("push service")
-        console.log(this.serviceComponentOptions);
       }
     )
   }
@@ -142,9 +132,6 @@ export class ServiceComponentConfigurationComponent implements OnInit {
       let selectedVertex = sender.selectionModel.cells[0];
       this.selectedVertexStorage = this.graphStorage.findVertexStorageByID(selectedVertex["id"]);
 
-      if(this.selectedVertexStorage.component instanceof BasicComponent) {
-        console.log("ddddddashdkjafafkafkja");
-      }
       if (!(this.selectedVertexStorage.component instanceof LayoutComponent)) {
         this.selectedUIComponent = this.selectedVertexStorage.component;
         this.selectedUIComponent = this.selectedVertexStorage.component;
@@ -166,13 +153,11 @@ export class ServiceComponentConfigurationComponent implements OnInit {
 
           }
           else if (this.selectedUIComponent.type == "input") {
-            console.log("parrent")
             // console.log(selectedVertex);
             let parentVertex = selectedVertex.parent;
             let parentVertexStorage = this.graphStorage.findVertexStorageByID(parentVertex["id"]);
             let parentServiceName = parentVertexStorage.component.serviceComponent.name;
             let parentServiceID = parentVertexStorage.component.serviceComponent.serviceID;
-            console.log(parentServiceName);
             this.queryArgumentsByServiceID(parentServiceID);
           }
         }

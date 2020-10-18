@@ -20,11 +20,6 @@ export class XTerminalComponent implements OnInit {
     let term = this.xterminalService.getTerminal();
     this.container = document.getElementById("terminal");
     term.open(this.container);
-    console.log(term);
-    // this.xterminalService.appendErrorMessage("error")
-    // this.xterminalService.appendInfoMessage("info")
-    // this.xterminalService.appendSuccessMessage("success")
-    // this.term.fit();
   }
 
 }

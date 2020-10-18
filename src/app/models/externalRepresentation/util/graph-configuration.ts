@@ -13,77 +13,55 @@ export class GraphConfiguration {
 
     configureEditorKeyBinding(editor: mxEditor) {
         editor.addAction("mx-cut", (event) => {
-            console.log("fire cut");
             editor.execute("cut");
             this.selectedCells = event.graph.selectionModel.cells;
             let selectedCellsIDs = this.getCellsIDs();
-            console.log(selectedCellsIDs);
         })
 
         editor.addAction("mx-copy", (event) => {
             editor.execute("copy");
-            console.log("fire copy");
             this.selectedCells = event.graph.selectionModel.cells;
             let selectedCellsIDs = this.getCellsIDs();
-            console.log(selectedCellsIDs);
         })
 
         editor.addAction("mx-paste", (event) => {
             let sourceIDs = this.getCellsIDs();
-            console.log(event.graph.selectionModel.cells)
             editor.execute("paste");
             let targetIDs = this.getCellsIDs();
             this.graphStorage.createVertexStorageByCell(sourceIDs,targetIDs);
-            console.log("fire paste");
             this.selectedCells = event.graph.selectionModel.cells;
-            console.log(sourceIDs);
-            console.log(event.graph.selectionModel.cells)
-            console.log(targetIDs);
         })
 
         editor.addAction("mx-delete", (event) => {
             this.selectedCells = event.graph.selectionModel.cells;
-            console.log(this.selectedCells)
             editor.execute("delete");
-            console.log("fire delete");
             this.selectedCells = event.graph.selectionModel.cells;
             let selectedCellsIDs = this.getCellsIDs();
-            console.log(selectedCellsIDs);
         })
 
         editor.addAction("mx-selectAll", (event) => {
             editor.execute("selectAll");
-            console.log("fire selectAll");
             this.selectedCells = event.graph.selectionModel.cells;
-            console.log(event);
         })
 
         editor.addAction("mx-undo", (event) => {
             editor.execute("undo");
-            console.log("fire undo");
             this.selectedCells = event.graph.selectionModel.cells;
-            console.log(event);
         })
 
         editor.addAction("mx-redo", (event) => {
             editor.execute("redo");
-            console.log("fire redo");
             this.selectedCells = event.graph.selectionModel.cells;
-            console.log(event);
         })
 
         editor.addAction("mx-group", (event) => {
             editor.execute("group");
-            console.log("fire group");
             this.selectedCells = event.graph.selectionModel.cells;
-            console.log(event);
         })
 
         editor.addAction("mx-ungroup", (event) => {
             editor.execute("ungroup");
-            console.log("fire ungroup");
             this.selectedCells = event.graph.selectionModel.cells;
-            console.log(event);
         })
     }
 

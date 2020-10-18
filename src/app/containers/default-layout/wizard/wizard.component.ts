@@ -50,15 +50,11 @@ export class WizardComponent implements OnInit {
   }
 
   setComponent(properties): boolean {
-    console.log("properties here");
-    console.log(properties);
     properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
     properties['selector'] = PropertyGenerator.getSelector(this.componentName);
     properties['type'] = this.componentName;
     // properties['serviceType'] = ServiceMappingType['none'];
     properties['serviceComponent'] = new ServiceComponentModel(); 
-    console.log(properties);
- 
 
     switch (this.componentName) {
       case 'icon':

@@ -79,12 +79,9 @@ export class NavEditorComponent implements OnInit {
   makeDragableOfDom(id, pageUICDL, graphStorage: GraphStorage) {
     let xml = pageUICDL["xml"];
     let styleEditorService = this.styleEditorService;
-    //console.log(JSON.parse(JSON.stringify(pageUICDL)));
     setTimeout(function (graph) {
       var img = document.getElementById(id);
       var funct = function (graph, evt, cell, x, y) {
-        //console.log(JSON.parse(JSON.stringify(pageUICDL)));
-        //console.log(pageUICDL)
         let doc = mxUtils.parseXml(xml);
         let codec = new mxCodec(doc);
         let elt = doc.documentElement.firstChild.firstChild;
@@ -101,8 +98,6 @@ export class NavEditorComponent implements OnInit {
           let uiComponent: UIComponent;
 
           let findMatchComponent = function (UICDL, selector) {
-            //console.log(selector)
-            //console.log(JSON.parse(JSON.stringify(UICDL)));
             if (UICDL["componentList"] != undefined) {
               for (let component of UICDL["componentList"]) {
                 if (selector == component["selector"]) {
@@ -114,7 +109,6 @@ export class NavEditorComponent implements OnInit {
             }
             return uiComponent;
           }
-          //console.log(JSON.parse(JSON.stringify(pageUICDL)));
           uiComponent = findMatchComponent(pageUICDL, componentSelector);
           // find databinding, isPrimary, componentPart info from xml
           let dataBinding = (elt.getElementsByTagName("DataBinding"))[0];
@@ -146,7 +140,6 @@ export class NavEditorComponent implements OnInit {
             graph.getModel().endUpdate();
           }
           cells.push(childCell);
-          //console.log(JSON.parse(JSON.stringify(pageUICDL)));
           // bind parent cell and child cell in mxgraph
           var parentID = idMapping[elt.getAttribute("parent")];
           if (parentID != null) {
@@ -155,7 +148,6 @@ export class NavEditorComponent implements OnInit {
           }
           // update new id in component info (internel representation)
           uiComponent.id = newChildID;
-          //console.log(JSON.parse(JSON.stringify(pageUICDL)));
           // set layout info to storage 
           if (componentSelector == "Layout" && componentPart == "box") {
             Storage.setLayoutComponent(uiComponent);
@@ -163,7 +155,6 @@ export class NavEditorComponent implements OnInit {
             // set component(not layout) info to storage
             Storage.add(uiComponent);
           }
-          //console.log(JSON.parse(JSON.stringify(pageUICDL)));
           let childCellStyle = styleEditorService.convertStyleDescriptionToJsobObject(childCell.style);
           let vs: VertexStorage = new VertexStorage(childCell, new StyleStorage("", childCellStyle), uiComponent, dataBindingObject, isPrimary);
           let parentVertexStorage: VertexStorage = graphStorage.findVertexStorageByID(parentID);
@@ -176,9 +167,7 @@ export class NavEditorComponent implements OnInit {
           }
           let length = Object.keys(graphStorage.vertexStorageList).length;
           graphStorage.vertexStorageList[length] = vs;
-          console.log(vs)
           elt = elt.nextSibling;
-          //console.log(JSON.parse(JSON.stringify(pageUICDL)));
         }
 
       }
