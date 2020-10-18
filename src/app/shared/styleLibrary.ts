@@ -24,7 +24,8 @@ export const StyleLibrary = [
       fontSize: "16",
       fontColor: "#000000",
       fillColor: "#5bc0de",
-      rounded: true,
+      rounded: "1",
+      shadow: "1",
       strokeColor: "#269abc"
     },
 
@@ -37,10 +38,11 @@ export const StyleLibrary = [
       dropdownHeader: {
         fontSize: "16",
         fontColor: "#333333",
-        rounded: true,
+        rounded: "1",
         strokeColor: "#a6a6a6",
+        // strokeColor: "red",
         fillColor: "#ffffff",
-        border: "#a6a6a6",
+        // border: "red",
 
       },
 
@@ -72,7 +74,7 @@ export const StyleLibrary = [
         strokeColor: "#b8bcc2",
         fontColor: "#4f5d73",
         fontSize: "20",
-        shadow: true,
+        shadow: "1",
       },
 
       tableData_white: {
@@ -80,7 +82,7 @@ export const StyleLibrary = [
         strokeColor: "#d8dbe0",
         fontColor: "#4f5d73",
         fontSize: "20",
-        shadow: true,
+        shadow: "1",
       },
 
       tableData_grey: {
@@ -88,7 +90,7 @@ export const StyleLibrary = [
         strokeColor: "#d8dbe0",
         fontColor: "#4f5d73",
         fontSize: "20",
-        shadow: true,
+        shadow: "1",
       },
     },
 
@@ -110,8 +112,8 @@ export const StyleLibrary = [
       formBox: {
         strokeColor: "#c8ced3",
         fillColor: "#ffffff",
-        rounded: false,
-        shadow: false,
+        rounded: "0",
+        shadow: "0",
       }
     },
 
@@ -148,7 +150,7 @@ export const StyleLibrary = [
     },
 
     Layout1Footer: {
-      border: "#000000",
+      // border: "#000000",
       fillColor: "#f0f3f5",
       strokeColor: "#c8ced3"
     },
