@@ -30,12 +30,11 @@ export class ButtonStrategy implements ICreateComponentStrategy {
     return dataBinding;
   }
 
-  createButtonVertex(graphStorage, component, parent) {
+  createButtonVertex(graphStorage:GraphStorage, component, parent) {
     let dataBinding = this.createDataBinding("text");
     const style = StyleLibrary[0]["button"];
     const styleName = "style" + component.id;
     const styleStorage = new StyleStorage(styleName, style);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
     const width = 15 * component.text.length;
     const height = 40;

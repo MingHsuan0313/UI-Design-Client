@@ -38,7 +38,6 @@ export class FormStrategy implements ICreateComponentStrategy {
         let styleName = "formBoxStyle" + component.id;
         const formBoxStyle = StyleLibrary[0]["form"]["formBox"];
         let styleStorage = new StyleStorage(styleName, formBoxStyle);
-        graphStorage.getGraph().getStylesheet().putCellStyle(styleName, formBoxStyle);
         const formVertexGeometry = new mxGeometry(this.basex, this.basey, 300, 300);
         const formVertexStorage = graphStorage.insertVertex(parent, component.id, "", formVertexGeometry, styleStorage, component);
         formVertexStorage.setIsPrimary(true);

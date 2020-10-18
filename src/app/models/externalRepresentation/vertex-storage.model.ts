@@ -1,6 +1,8 @@
 import { StyleStorage } from './style-storage.model';
 import { DataBinding } from './util/DataBinding';
 import {UIComponent} from '../ui-component-dependency';
+import StyleEditorService from 'src/app/services/externalRepresentation/style-editor.service';
+import { StyleConverter } from '../../shared/styleTable';
 
 /**
  * @description
@@ -51,6 +53,21 @@ export class VertexStorage {
     this.isPrimary = isPrimary;
   }
 
+
+  syncUIComponentStyle(styleEditorService:StyleEditorService) {
+    console.log("sync style");
+    let vertexStorageStyle = styleEditorService.convertStyleDescriptionToJsobObject(this.vertex.style);
+    console.log("style after convertin")
+    let styleConverter = new StyleConverter();
+    if(this.vertex.isPrimary) {
+      console.log("This VertexStorage is primary part of vertex")
+      console.log(this.component);
+      // console.log(vertexStorageStyle);
+      console.log(styleConverter.convertObject(vertexStorageStyle));
+      this.component.setStyle(styleConverter.convertObject(vertexStorageStyle));
+    }
+
+  }
   /**
    *
    * @param value , vertex value wanted to be changed
@@ -121,7 +138,7 @@ export class VertexStorage {
     if (this.isPrimary) {
       this.syncProperties();
     }
-    this.component['style'] = this.getStyle();
+    // this.component['style'] = this.getStyle();
     // if(this.getVertex()["parent"])
 
     if (this.dataBinding.hasDataBinding) {
@@ -152,6 +169,14 @@ export class VertexStorage {
     } else {
       console.log('no need data binding, it may be sync by child vertex already');
     }
+  }
+  
+  public setPrimary(value: Boolean) {
+    this.vertex.isPrimary = value;
+  }
+  
+  public getPrimary() {
+    return this.vertex.isPrimary;
   }
 }
 

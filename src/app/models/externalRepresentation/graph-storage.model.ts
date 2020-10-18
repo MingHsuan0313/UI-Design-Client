@@ -58,6 +58,11 @@ export class GraphStorage {
     this.editor.configure(config);
   }
 
+  syncStyle(styleEditorService) {
+    for(let key in this.vertexStorageList) {
+      this.vertexStorageList[key].syncUIComponentStyle(styleEditorService);
+    }
+  }
   // sync internal storage and external storage
   syncStorage() {
 

@@ -46,7 +46,6 @@ export class CardStrategy implements ICreateComponentStrategy {
     const styleName = "cardBoxStyle" + component.id;
     const cardBoxStyle = StyleLibrary[0]["card"]["cardBox"];
     const styleStorage = new StyleStorage(styleName, cardBoxStyle);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, cardBoxStyle);
     const cardVertexGeometry = new mxGeometry(this.basex, this.basey, 250, 300);
     const cardVertexStorage = graphStorage.insertVertex(parent, component.id, "", cardVertexGeometry, styleStorage, component);
     cardVertexStorage.setIsPrimary(true);
@@ -62,7 +61,6 @@ export class CardStrategy implements ICreateComponentStrategy {
     const styleName = "cardHeaderStyle" + component.id;
     const cardHeaderStyle = StyleLibrary[0]["card"]["cardHeader"];
     const styleStorage = new StyleStorage(styleName, cardHeaderStyle);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, cardHeaderStyle);
     const cardHeaderGeometry = new mxGeometry(0, 0, 250, 50);
     const cardHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, component["header"], cardHeaderGeometry, styleStorage, component, dataBinding);
     parent.addChild(cardHeaderVertexStorage.id, cardHeaderVertexStorage.getVertex(), "header");

@@ -26,7 +26,6 @@ export class InputStrategy implements ICreateComponentStrategy {
     const styleName = "style" + component.id;
     const styleStorage = new StyleStorage(styleName, style);
     const textGeometry = new mxGeometry(this.basex, this.basey, 200, 30);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
     // Initialized
     let inputVertexStorage = graphStorage.insertVertex(parent, component.id, "", textGeometry, styleStorage, component);

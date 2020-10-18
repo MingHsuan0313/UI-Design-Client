@@ -48,7 +48,6 @@ export class TextStrategy implements ICreateComponentStrategy {
 
     let width = (component.text.length)*12;
     const textGeometry = new mxGeometry(this.basex, this.basey, width, 50);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
 
     // Initialized
     let textVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding, true);

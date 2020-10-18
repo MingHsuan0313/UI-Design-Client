@@ -32,7 +32,6 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
     let styleName = "breadCrumbBoxStyle" + component.id;
     const breadcrumbBoxStyle = StyleLibrary[0]["breadcrumb"]["breadcrumbBox"];
     let styleStorage = new StyleStorage(styleName, breadcrumbBoxStyle);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, breadcrumbBoxStyle);
     const breadcrumbVertexGeometry = new mxGeometry(this.basex, this.basey, 50, defaultHeight / 30);
     const breadcrumbVertexStorage = graphStorage.insertVertex(parent, component.id, "", breadcrumbVertexGeometry, styleStorage, component);
     breadcrumbVertexStorage.setIsPrimary(true);
@@ -48,7 +47,6 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
     let styleName = "breadCrumbIndicatorStyle";
     const breadcrumbIndicatorStyle = StyleLibrary[0]["breadcrumb"]["breadcrumbIndicator"];
     let styleStorage = new StyleStorage(styleName, breadcrumbIndicatorStyle);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, breadcrumbIndicatorStyle);
     const breadcrumbVertexGeometry = new mxGeometry(x, y + 10, 20, 20);
     const breadcrumbVertexIndicatorStorage = graphStorage.insertVertex(parent.getVertex(), component.id, "", breadcrumbVertexGeometry, styleStorage, component);
     parent.addChild(breadcrumbVertexIndicatorStorage.id, breadcrumbVertexIndicatorStorage.getVertex(), "indicator");

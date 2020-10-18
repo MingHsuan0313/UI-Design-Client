@@ -4,6 +4,8 @@ import { StyleLibrary } from "../../shared/styleLibrary";
 import { Storage } from "../../shared/storage"
 import { GraphStorage } from "../../models/graph-dependency";
 import { PageUICDL } from "src/app/models/internalRepresentation/pageUICDL.model";
+import StyleEditorService from "./style-editor.service";
+import { StyleConverter } from "../../shared/styleTable";
 
 @Injectable({
   providedIn: "root"
@@ -13,7 +15,7 @@ export default class GraphEditorService {
   selectedGraphID: string;
   selectedGraphStorage: GraphStorage;
 
-  constructor() {
+  constructor(private styleEditorService: StyleEditorService) {
     this.graphStorages = [];
   }
 
@@ -43,7 +45,7 @@ export default class GraphEditorService {
       this.selectedGraphStorage.createComponent(component, parent, x, y);
     }
   }
-  
+
   applyLayout(layout: String) {
     this.selectedGraphStorage.applyLayout(layout);
   }
@@ -54,6 +56,18 @@ export default class GraphEditorService {
   }
 
   syncStorage() {
+    // let styleConverter = new StyleConverter();
+    // let fakeStyleObject = {
+    //   strokeColor: "#c8ced3",
+    //   fillColor: "#ffffff",
+    //   rounded: "1",
+    //   shadow: "1",
+    //   opacity: "0",
+    //   fontSize: "23"
+    // }
+    // console.log("start converting")
+    // console.log(styleConverter.converObject(fakeStyleObject));
+    this.selectedGraphStorage.syncStyle(this.styleEditorService);
     this.selectedGraphStorage.syncStorage();
   }
 
@@ -65,14 +79,14 @@ export default class GraphEditorService {
 
   }
 
-  zoomTo(zoomFactor:any){
+  zoomTo(zoomFactor: any) {
     this.selectedGraphStorage.zoomTo(zoomFactor);
   }
 
-  getMaxVertexID(){
+  getMaxVertexID() {
     return this.getGraphStorage().getMaxID();
   }
 
-  
-  
+
+
 }

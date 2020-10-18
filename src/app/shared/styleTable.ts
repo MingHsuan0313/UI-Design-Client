@@ -1,5 +1,5 @@
 // mapping between css and MxGraph style
-export const styleTable = {
+export const StyleTable = {
     fontSize:"font-size",
     opacity:"opacity",
     fontColor:"color",
@@ -13,36 +13,40 @@ export class StyleConverter {
 
     public styleObj: Object;
 
-    public converObject(plainMxStyleObject: Object) {
+    public convertObject(plainMxStyleObject: Object) {
         this.styleObj = {};
         for(let key in plainMxStyleObject) {
-            this.convertAtrribute(styleTable[key], plainMxStyleObject[key]);
+            this.convertAtrribute(StyleTable[key], plainMxStyleObject[key]);
         }
+        return this.styleObj;
     }
 
     public convertAtrribute(styleAttribute: String,styleValue: any) {
-        if(styleAttribute == styleTable["fontSize"]) {
-            this.styleObj[styleTable["fontSize"]] = styleValue;
+        if(styleValue == undefined || styleValue == null)
+            return;
+        if(styleAttribute == StyleTable["fontSize"]) {
+            this.styleObj[StyleTable["fontSize"]] = styleValue + "px";
 
-        } else if(styleAttribute == styleTable["opacity"]) {
-            this.styleObj[styleTable["opacity"]] = styleValue;
+        } else if(styleAttribute == StyleTable["opacity"]) {
+            this.styleObj[StyleTable["opacity"]] = parseInt(styleValue);
 
-        } else if(styleAttribute == styleTable["fontColor"]) {
-            this.styleObj[styleTable["fontColor"]] = styleValue;
+        } else if(styleAttribute == StyleTable["fontColor"]) {
+            this.styleObj[StyleTable["fontColor"]] = styleValue;
 
-        } else if(styleAttribute == styleTable["rounded"]) {
+        } else if(styleAttribute == StyleTable["rounded"]) {
             if(styleValue == "1")
-                this.styleObj[styleTable["rounded"]] = "2px"
+                this.styleObj[StyleTable["rounded"]] = "5px"
 
-        } else if(styleAttribute == styleTable["strokeColor"]) {
-            this.styleObj[styleTable["strokeColor"]] = styleValue;
+        } else if(styleAttribute == StyleTable["strokeColor"]) {
+            this.styleObj[StyleTable["strokeColor"]] = styleValue;
+            this.styleObj["border-style"] = "solid";
 
-        } else if(styleAttribute == styleTable["fillColor"]) {
-            this.styleObj[styleTable["fillColor"]] = styleValue;
+        } else if(styleAttribute == StyleTable["fillColor"]) {
+            this.styleObj[StyleTable["fillColor"]] = styleValue;
 
-        } else if(styleAttribute == styleTable["shadow"]) {
+        } else if(styleAttribute == StyleTable["shadow"]) {
             if(styleValue == "1")
-                this.styleObj[styleTable["shadow"]] = "1px 1px";
+                this.styleObj[StyleTable["shadow"]] = "1px 1px";
         }
     }
 }

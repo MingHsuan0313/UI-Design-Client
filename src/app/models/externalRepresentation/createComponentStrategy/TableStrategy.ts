@@ -60,7 +60,6 @@ export class TableStrategy implements ICreateComponentStrategy {
     const tableBoxStyle = StyleLibrary[0]["table"]["tableBox"];
     tableBoxStyle["overflow"] = true;
     let styleStorage = new StyleStorage(styleName, tableBoxStyle);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, tableBoxStyle);
     const width = this.gridWidth * colNumber;
     const height = this.gridHeight * 2;
 
@@ -83,7 +82,6 @@ export class TableStrategy implements ICreateComponentStrategy {
       const tableHeaderStyle = StyleLibrary[0]["table"]["tableHeader"];
       tableHeaderStyle["overflow"] = true;
       const styleStorage = new StyleStorage(styleName, tableHeaderStyle);
-      graphStorage.getGraph().getStylesheet().putCellStyle(styleName, tableHeaderStyle);
       const x = i * this.gridWidth;
       const tableHeaderVertexGeometry = new mxGeometry(x, 0, this.gridWidth, this.gridHeight);
       const tableHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, headerList[i], tableHeaderVertexGeometry, styleStorage, component, dataBinding);
@@ -106,7 +104,6 @@ export class TableStrategy implements ICreateComponentStrategy {
       let dataBinding = this.createDataBinding("rows",i);
       const styleName = "tableDatastyle" + component.id;
       const styleStorage = new StyleStorage(styleName, tableDataStyle);
-      graphStorage.getGraph().getStylesheet().putCellStyle(styleName, tableDataStyle);
 
       const x = i * this.gridWidth;
       const y = 1 * this.gridHeight;

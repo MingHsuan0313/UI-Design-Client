@@ -90,6 +90,9 @@ export class UIComponent {
   }
 
   public setStyle(style: Object): void {
+    console.log("ui component set style")
+    console.log(style)
+    console.log(this)
     this.style = style;
   }
 

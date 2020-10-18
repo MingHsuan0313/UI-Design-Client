@@ -3,12 +3,20 @@ import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
 import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
 import { Storage } from '../../../shared/storage';
+import { LayoutComponent } from "../../internalRepresentation/layoutComponent.model";
 
 export class LayoutStrategy implements ICreateComponentStrategy {
   basex: number;
   basey: number;
+  graphNode: HTMLElement;
+  defaultWidth: number;
+  defaultHeight: number;
+  layout: VertexStorage;
 
   constructor(basex?, basey?) {
+    this.graphNode = document.getElementById('graphContainer0');
+    this.defaultWidth = this.graphNode.offsetWidth;
+    this.defaultHeight = this.graphNode.offsetHeight;
     // basic component
     if (basex == undefined || basey == undefined) {
       this.basex = 0;
@@ -18,12 +26,76 @@ export class LayoutStrategy implements ICreateComponentStrategy {
       this.basey = basey;
     }
   }
+  
+  createLayout(graphStorage: GraphStorage,bodyComponent: LayoutComponent) {
+    let parent = graphStorage.getGraph().getDefaultParent();
+    let style = StyleLibrary[0]['Layout1'];
+    let styleName = 'Layout1';
+    let styleStorage = new StyleStorage(styleName, style);
+    const layoutGeometry = new mxGeometry(0, 0, this.defaultWidth, this.defaultHeight);
+    this.layout = graphStorage.insertVertex(parent, null, "", layoutGeometry, styleStorage, bodyComponent);
+    this.layout.setIsPrimary(true);
+    this.layout.vertex["componentPart"] = "box";
+    this.layout.vertex["dataBinding"] = this.createDataBinding("box");
+    this.layout.vertex["isPrimary"] = true;
+  }
+  
+  createHeader(graphStorage: GraphStorage, headerComponent: LayoutComponent) {
+    let style = StyleLibrary[0]['Layout1Header'];
+    let styleName = "Layout1Header";
+    let styleStorage = new StyleStorage(styleName, style);
+    const layoutHeaderGeometry = new mxGeometry(0, 0, this.defaultWidth, this.defaultHeight / 15);
+    const header = graphStorage.insertVertex(this.layout.getVertex(), null, "", layoutHeaderGeometry, styleStorage,headerComponent);
+    header.vertex["componentPart"] = "header";
+    header.vertex["dataBinding"] = this.createDataBinding("header");
+    header.vertex["isPrimary"] = true;
+  }
+  
+  createBody(graphStorage: GraphStorage, bodyComponent: LayoutComponent) {
+    let style = StyleLibrary[0]['Layout1Body'];
+    let styleName = "Layout1Body";
+    let styleStorage = new StyleStorage(styleName, style);
+    const layoutBodyGeometry = new mxGeometry(this.defaultWidth / 7, this.defaultHeight / 15, this.defaultWidth * 5 / 7, this.defaultHeight * 13 / 15);
+    const body = graphStorage.insertVertex(this.layout.getVertex(), null,"", layoutBodyGeometry, styleStorage,bodyComponent);
+    body.vertex["componentPart"] = "body";
+    body.vertex["dataBinding"] = this.createDataBinding("body");
+    body.vertex["isPrimary"] = true; 
+  }
+  
+  createSideBar(graphStorage: GraphStorage, sidebarComponent: LayoutComponent) {
+    let style = StyleLibrary[0]['Layout1Sidebar'];
+    let styleName = "Layout1Sidebar";
+    let styleStorage = new StyleStorage(styleName, style);
+    const layoutSidebarGeometry = new mxGeometry(0, this.defaultHeight / 15, this.defaultWidth / 7, this.defaultHeight * 14 / 15);
+    const siderbar = graphStorage.insertVertex(this.layout.getVertex(), null, "", layoutSidebarGeometry, styleStorage, sidebarComponent);
+    siderbar.vertex["componentPart"] = "siderbar";
+    siderbar.vertex["dataBinding"] = this.createDataBinding("siderbar");
+    siderbar.vertex["isPrimary"] = true; 
+  }
+  
+  createAsideBar(graphStorage: GraphStorage, asidebarComponent: LayoutComponent) {
+    let style = StyleLibrary[0]['Layout1Asidebar'];
+    let styleName = "Layout1Asidebar";
+    let styleStorage = new StyleStorage(styleName, style);
+    const layoutAsidebarGeometry = new mxGeometry(this.defaultWidth * 6 / 7, this.defaultHeight / 15, this.defaultWidth / 7, this.defaultHeight * 14 / 15);
+    const asidebar = graphStorage.insertVertex(this.layout.getVertex(), null, "", layoutAsidebarGeometry, styleStorage,asidebarComponent);
+    asidebar.vertex["componentPart"] = "asidebar";
+    asidebar.vertex["dataBinding"] = this.createDataBinding("asidebar");
+    asidebar.vertex["isPrimary"] = true; 
+  }
+  
+  createFooter(graphStorage: GraphStorage, footerComponent: LayoutComponent) {
+    let style = StyleLibrary[0]['Layout1Footer'];
+    let styleName = "Layout1Footer";
+    let styleStorage = new StyleStorage(styleName, style);
+    const layoutFooterGeometry = new mxGeometry(this.defaultWidth / 7, this.defaultHeight * 14 / 15, this.defaultWidth * 5 / 7, this.defaultHeight * 1 / 15);
+    const footer = graphStorage.insertVertex(this.layout.getVertex(), null, "", layoutFooterGeometry, styleStorage, footerComponent);
+    footer.vertex["componentPart"] = "footer";
+    footer.vertex["dataBinding"] = this.createDataBinding("footer");
+    footer.vertex["isPrimary"] = true
+  }
 
   createComponent(graphStorage: GraphStorage) {
-    let parent = graphStorage.getGraph().getDefaultParent();
-    const graphNode = document.getElementById('graphContainer0');
-    const defaultWidth = graphNode.offsetWidth;
-    const defaultHeight = graphNode.offsetHeight;
     
     let pageUICDL = Storage.pageUICDL;
     let bodyComponent = pageUICDL.getBody();
@@ -32,75 +104,16 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     let footerComponent = pageUICDL.getFooter();
     let asidebarComponent = pageUICDL.getAsidebar();
 
-
-    let style = StyleLibrary[0]['Layout1'];
-    let styleName = 'Layout1';
-    let styleStorage = new StyleStorage(styleName, style);
-    const layoutGeometry = new mxGeometry(0, 0, defaultWidth, defaultHeight);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
-    const layout = graphStorage.insertVertex(parent, null, "", layoutGeometry, styleStorage, bodyComponent);
-    layout.setIsPrimary(true);
-    layout.vertex["componentPart"] = "box";
-    layout.vertex["dataBinding"] = this.createDataBinding("box");
-    layout.vertex["isPrimary"] = true;
-
-    // component.text, component, .... attributeds not yet finished
-
-    style = StyleLibrary[0]['Layout1Header'];
-    styleName = "Layout1Header";
-    styleStorage = new StyleStorage(styleName, style);
-    const layoutHeaderGeometry = new mxGeometry(0, 0, defaultWidth, defaultHeight / 15);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
-    const header = graphStorage.insertVertex(layout.getVertex(), null, "", layoutHeaderGeometry, styleStorage,headerComponent);
-    header.vertex["componentPart"] = "header";
-    header.vertex["dataBinding"] = this.createDataBinding("header");
-    header.vertex["isPrimary"] = false;
-
-    style = StyleLibrary[0]['Layout1Footer'];
-    styleName = "Layout1Footer";
-    styleStorage = new StyleStorage(styleName, style);
-    const layoutFooterGeometry = new mxGeometry(defaultWidth / 7, defaultHeight * 14 / 15, defaultWidth * 5 / 7, defaultHeight * 1 / 15);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
-    const footer = graphStorage.insertVertex(layout.getVertex(), null, "", layoutFooterGeometry, styleStorage, footerComponent);
-    footer.vertex["componentPart"] = "footer";
-    footer.vertex["dataBinding"] = this.createDataBinding("footer");
-    footer.vertex["isPrimary"] = false;
-
-
-    style = StyleLibrary[0]['Layout1Sidebar'];
-    styleName = "Layout1Sidebar";
-    styleStorage = new StyleStorage(styleName, style);
-    const layoutSidebarGeometry = new mxGeometry(0, defaultHeight / 15, defaultWidth / 7, defaultHeight * 14 / 15);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
-    const siderbar = graphStorage.insertVertex(layout.getVertex(), null, "", layoutSidebarGeometry, styleStorage, sidebarComponent);
-    siderbar.vertex["componentPart"] = "siderbar";
-    siderbar.vertex["dataBinding"] = this.createDataBinding("siderbar");
-    siderbar.vertex["isPrimary"] = false;
-
-    style = StyleLibrary[0]['Layout1Body'];
-    styleName = "Layout1Body";
-    styleStorage = new StyleStorage(styleName, style);
-    const layoutBodyGeometry = new mxGeometry(defaultWidth / 7, defaultHeight / 15, defaultWidth * 5 / 7, defaultHeight * 13 / 15);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
-    const body = graphStorage.insertVertex(layout.getVertex(), null,"", layoutBodyGeometry, styleStorage,bodyComponent);
-    body.vertex["componentPart"] = "body";
-    body.vertex["dataBinding"] = this.createDataBinding("body");
-    body.vertex["isPrimary"] = false;
-
-    style = StyleLibrary[0]['Layout1Asidebar'];
-    styleName = "Layout1Asidebar";
-    styleStorage = new StyleStorage(styleName, style);
-    const layoutAsidebarGeometry = new mxGeometry(defaultWidth * 6 / 7, defaultHeight / 15, defaultWidth / 7, defaultHeight * 14 / 15);
-    graphStorage.getGraph().getStylesheet().putCellStyle(styleName, style);
-    const asidebar = graphStorage.insertVertex(layout.getVertex(), null, "", layoutAsidebarGeometry, styleStorage,asidebarComponent);
-    asidebar.vertex["componentPart"] = "asidebar";
-    asidebar.vertex["dataBinding"] = this.createDataBinding("asidebar");
-    asidebar.vertex["isPrimary"] = false;
+    this.createLayout(graphStorage,bodyComponent);
+    this.createHeader(graphStorage,headerComponent);
+    this.createFooter(graphStorage,footerComponent);
+    this.createSideBar(graphStorage,sidebarComponent);
+    this.createBody(graphStorage,bodyComponent);
+    this.createAsideBar(graphStorage,asidebarComponent);
   }
 
   createDataBinding(part: String, index?){
     return new DataBinding(false, part, -1);
   }
-
 }
 
