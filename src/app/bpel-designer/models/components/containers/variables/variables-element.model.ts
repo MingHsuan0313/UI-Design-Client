@@ -8,4 +8,12 @@ export class VariablesElement {
         this.variableList.push(new Variable());
         console.log("[CONSTRUCT] construct a new <variabe> for the <variables>");
     }
+
+    push(): void {
+        this.variableList.push(new Variable());
+    }
+
+    pop(): void {
+        this.variableList.pop();
+    }
 }

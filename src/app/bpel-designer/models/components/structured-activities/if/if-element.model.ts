@@ -18,4 +18,12 @@ export class IfElement extends BPELComponentElement {
         this.elseifList = new Array<ElseIfBranch>();
         this.elseifList.push(null);
     }
+
+    push(): void {
+        throw new Error("<elseif> should be drawn and wrapped in.");
+    }
+
+    pop(): void {
+        throw new Error("<elseif> should be drawn and wrapped out.");
+    }
 }

@@ -12,4 +12,12 @@ export class FaultHandlersElement {
         console.log("[CONSTRUCT] construct a new <catch> for the <faultHandlers>");
         this.catchAll = new CatchAll();
     }
+
+    push(): void {
+        this.catchList.push(new Catch());
+    }
+
+    pop(): void {
+        this.catchList.pop();
+    }
 }

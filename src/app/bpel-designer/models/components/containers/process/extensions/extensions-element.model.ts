@@ -7,5 +7,13 @@ export class ExtensionsElement {
         this.extensionList = new Array<Extension>();
         this.extensionList.push(new Extension());
         console.log("[CONSTRUCT] construct a new <extension> for the <extensions>");
-	}
+    }
+    
+    push(): void {
+        this.extensionList.push(new Extension());
+    }
+
+    pop(): void {
+        this.extensionList.pop();
+    }
 }

@@ -8,4 +8,12 @@ export class PartnerLinksElement {
         this.partnerLinkList.push(new PartnerLink());
         console.log("[CONSTRUCT] construct a new <partnerLink> for the <partnerLinks>");
     }
+
+    push(): void {
+        this.partnerLinkList.push(new PartnerLink());
+    }
+
+    pop(): void {
+        this.partnerLinkList.pop();
+    }
 }

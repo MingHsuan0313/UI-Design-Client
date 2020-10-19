@@ -14,4 +14,15 @@ export class EventHandlersElement {
         this.onAlarmList.push(new OnAlarm());
         console.log("[CONSTRUCT] construct a new <onAlarm> for the <eventHandlers>");
     }
+
+    //TODO: handle respective push() and pop() for onEventList and onAlarmList
+    push(): void {
+        this.onEventList.push(new OnEvent());
+        this.onAlarmList.push(new OnAlarm());
+    }
+
+    pop(): void {
+        this.onEventList.pop();
+        this.onAlarmList.pop();
+    }
 }

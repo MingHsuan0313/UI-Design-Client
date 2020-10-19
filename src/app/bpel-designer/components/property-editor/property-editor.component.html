@@ -53,18 +53,6 @@
       </div>
       <div class="modal-body" *ngIf="isToppestObjectArray(); else DefaultModalBody">
         <div class="col">
-          <!-- attributes: showed when it is default element-->
-          <div class="container">
-            <span>attributes</span>
-            <div class="row" *ngFor='let kvs of attributeKVPairsStack; let lastRecord = last'>
-              <div class='col' *ngIf="lastRecord">
-                <div class='row' *ngFor="let kv of kvs">
-                  <span>{{getKey(kv)}}</span>
-                  <textarea (keyup)="syncSelectedAttribute(getKey(kv), $event)">{{getValue(kv)}}</textarea>
-                </div>
-              </div>
-            </div>
-          </div>
           <!-- elements: showed all time-->
           <div class="container">
             <span>elements</span>
@@ -84,8 +72,8 @@
             </div>
           </div>
           <div class="row">
-            <button type="button" class="btn btn-success" (click)="addArrayElement()">+</button>
-            <button type="button" class="btn btn-warning" (click)="removeArrayElement()">-</button>
+            <button type="button" class="btn btn-success" (click)="pushArrayElement()">Push</button>
+            <button type="button" class="btn btn-warning" (click)="popArrayElement()">Pop</button>
           </div>
         </div>
       </div>
