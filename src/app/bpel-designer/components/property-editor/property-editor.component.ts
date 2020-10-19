@@ -122,7 +122,7 @@ export class PropertyEditorComponent implements OnInit {
         return this.isElementArray(this.objectStack[this.objectStack.length - 1]);
     }
 
-    showModal(key: string, value: any): void {
+    getNextElementModal(key: string, value: any): void {
         this.objectStack.push(value);
         // check if getAttribute() is a function indicating value is not an Array
         if (typeof value.getAttribute == "function" && value.getAttribute() != undefined) {
@@ -149,18 +149,27 @@ export class PropertyEditorComponent implements OnInit {
         console.log(this.elementKVPairsStack);
     }
 
-    close(): void {
+    backPreviousModal(): void {
         this.objectStack.pop();
         this.attributeKVPairsStack.pop();
         this.elementKVPairsStack.pop();
 
-        console.log("[INFO] After close the toppest element: ");
+        console.log("[INFO] After pop the toppest object: ");
         console.log("1. objectStack= ");
         console.log(this.objectStack);
         console.log("2. attributeKVPairsStack = ")
         console.log(this.attributeKVPairsStack);
         console.log("3. elementKVPairsStack =")
         console.log(this.elementKVPairsStack);
+    }
+
+    close(): void {
+        while (this.objectStack.length > 1) {
+            this.objectStack.pop();
+            this.attributeKVPairsStack.pop();
+            this.elementKVPairsStack.pop();
+        }
+        console.log("[Close] pop objectSTack, attributeKVPairsStack, elementKVPairsStack to only exist the vertex component");
     }
 
     addArrayElement(): void {
