@@ -8,4 +8,12 @@ export class ToPartsElement {
         this.toPartList.push(new ToPart());
         console.log("[CONSTRUCT] construct a new <toPart> for the toPartList");
     }
+
+    push(): void {
+        this.toPartList.push(new ToPart());
+    }
+
+    pop(): void {
+        this.toPartList.pop();
+    }
 }

@@ -8,4 +8,12 @@ export class MessageExchangesElement {
         this.messageExchangeList.push(new MessageExchange());
         console.log("[CONSTRUCT] construct a new <messageExchange> for the <messageExchanges>");
     }
+
+    push(): void {
+        this.messageExchangeList.push(new MessageExchange());
+    }
+
+    pop(): void {
+        this.messageExchangeList.pop();
+    }
 }

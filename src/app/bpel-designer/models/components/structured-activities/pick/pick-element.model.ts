@@ -14,4 +14,12 @@ export class PickElement extends BPELComponentElement {
         this.onAlarmList = new Array<OnAlarm>();
         this.onAlarmList.push(new OnAlarm());
     }
+
+    push(): void {
+        this.onAlarmList.push(new OnAlarm());
+    }
+
+    pop(): void {
+        this.onAlarmList.pop();
+    }
 }

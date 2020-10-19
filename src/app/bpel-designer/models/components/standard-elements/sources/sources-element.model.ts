@@ -9,12 +9,11 @@ export class SourcesElement {
         console.log("[CONSTRUCT] construct a new <source> for the <sources>");
     }
 
-    // TODO: same id's stacked modals will cause a big disaster
-    // add() {
-    //     this.sourceList.push(new Source());
-    // }
+    push(): void {
+        this.sourceList.push(new Source());
+    }
 
-    // remove() {
-    //     this.sourceList.pop();
-    // }
+    pop(): void {
+        this.sourceList.pop();
+    }
 }

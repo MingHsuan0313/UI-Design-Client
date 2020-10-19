@@ -8,4 +8,12 @@ export class CorrelationsElement {
         this.correlationList.push(new Correlation());
         console.log("[CONSTRUCT] construct a new <correlation> for the <correlations>");
     }
+
+    push(): void {
+        this.correlationList.push(new Correlation());
+    }
+
+    pop(): void {
+        this.correlationList.pop();
+    }
 }

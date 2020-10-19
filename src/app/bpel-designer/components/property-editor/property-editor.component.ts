@@ -172,13 +172,13 @@ export class PropertyEditorComponent implements OnInit {
         console.log("[Close] pop objectSTack, attributeKVPairsStack, elementKVPairsStack to only exist the vertex component");
     }
 
-    addArrayElement(): void {
-        throw new Error("Method not implemented.");
-        // this.objectStack[this.objectStack.length - 2].getElement().add();
+    pushArrayElement(): void {
+        this.objectStack[this.objectStack.length - 2].getElement().push();
+        this.elementKVPairsStack[this.elementKVPairsStack.length - 1] = Object.entries(this.objectStack[this.objectStack.length - 1]);
     }
 
-    removeArrayElement(): void {
-        throw new Error("Method not implemented.");
-        // this.objectStack[this.objectStack.length - 2].getElement().remove();
+    popArrayElement(): void {
+        this.objectStack[this.objectStack.length - 2].getElement().pop();
+        this.elementKVPairsStack[this.elementKVPairsStack.length - 1] = Object.entries(this.objectStack[this.objectStack.length - 1]);
     }
 }

@@ -12,4 +12,12 @@ export class TargetsElement {
         // eager creation
         this.joinCondition = new JoinCondition();
     }
+
+    push(): void {
+        this.targetList.push(new Target());
+    }
+
+    pop(): void {
+        this.targetList.pop();
+    }
 }

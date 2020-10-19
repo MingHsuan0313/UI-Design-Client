@@ -26,4 +26,12 @@ export class InvokeElement extends BPELComponentElement {
         this.fromParts = new FromParts();
         this.toParts = new ToParts();
     }
+
+    push(): void {
+        this.catchList.push(new Catch());
+    }
+
+    pop(): void {
+        this.catchList.pop();
+    }
 }
