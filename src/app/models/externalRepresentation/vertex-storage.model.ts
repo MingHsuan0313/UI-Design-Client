@@ -127,6 +127,8 @@ export class VertexStorage {
   }
 
   syncProperties() {
+    console.log("sync")
+    console.log(this.component);
     this.component['x'] = this.getVertexX();
     this.component['y'] = this.getVertexY();
     this.component['width'] = this.getVertexWidth();

@@ -3,7 +3,7 @@ import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
 import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
 import { Storage } from '../../../shared/storage';
-import { LayoutComponent } from "../../internalRepresentation/layoutComponent.model";
+import { LayoutComponent } from "../../internalRepresentation/LayoutComponent.model";
 
 export class LayoutStrategy implements ICreateComponentStrategy {
   basex: number;
@@ -34,10 +34,11 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     let styleStorage = new StyleStorage(styleName, style);
     const layoutGeometry = new mxGeometry(0, 0, this.defaultWidth, this.defaultHeight);
     this.layout = graphStorage.insertVertex(parent, null, "", layoutGeometry, styleStorage, bodyComponent);
-    this.layout.setIsPrimary(true);
+
+    this.layout.setIsPrimary(false);
     this.layout.vertex["componentPart"] = "box";
     this.layout.vertex["dataBinding"] = this.createDataBinding("box");
-    this.layout.vertex["isPrimary"] = true;
+    this.layout.vertex["isPrimary"] = false;
   }
   
   createHeader(graphStorage: GraphStorage, headerComponent: LayoutComponent) {
@@ -46,9 +47,11 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     let styleStorage = new StyleStorage(styleName, style);
     const layoutHeaderGeometry = new mxGeometry(0, 0, this.defaultWidth, this.defaultHeight / 15);
     const header = graphStorage.insertVertex(this.layout.getVertex(), null, "", layoutHeaderGeometry, styleStorage,headerComponent);
+
     header.vertex["componentPart"] = "header";
     header.vertex["dataBinding"] = this.createDataBinding("header");
     header.vertex["isPrimary"] = true;
+    header.isPrimary = true;
   }
   
   createBody(graphStorage: GraphStorage, bodyComponent: LayoutComponent) {
@@ -60,6 +63,7 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     body.vertex["componentPart"] = "body";
     body.vertex["dataBinding"] = this.createDataBinding("body");
     body.vertex["isPrimary"] = true; 
+    body.isPrimary = true;
   }
   
   createSideBar(graphStorage: GraphStorage, sidebarComponent: LayoutComponent) {
@@ -71,6 +75,7 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     siderbar.vertex["componentPart"] = "siderbar";
     siderbar.vertex["dataBinding"] = this.createDataBinding("siderbar");
     siderbar.vertex["isPrimary"] = true; 
+    siderbar.isPrimary = true;
   }
   
   createAsideBar(graphStorage: GraphStorage, asidebarComponent: LayoutComponent) {
@@ -82,6 +87,7 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     asidebar.vertex["componentPart"] = "asidebar";
     asidebar.vertex["dataBinding"] = this.createDataBinding("asidebar");
     asidebar.vertex["isPrimary"] = true; 
+    asidebar.isPrimary = true;
   }
   
   createFooter(graphStorage: GraphStorage, footerComponent: LayoutComponent) {
@@ -93,6 +99,7 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     footer.vertex["componentPart"] = "footer";
     footer.vertex["dataBinding"] = this.createDataBinding("footer");
     footer.vertex["isPrimary"] = true
+    footer.isPrimary = true;
   }
 
   createComponent(graphStorage: GraphStorage) {

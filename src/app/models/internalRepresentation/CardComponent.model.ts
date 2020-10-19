@@ -1,11 +1,11 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
-import { CompositeComponent } from "./compositeComponent.model";
+import { CompositeComponent } from "./CompositeComponent.model";
 
-export class CardComposite extends CompositeComponent{
+export class CardComponent extends CompositeComponent{
   header: String;
 
-  constructor(init?: Partial<CardComposite>) {
+  constructor(init?: Partial<CardComponent>) {
     super();
     Object.assign(this, init);
     this.componentList = [];

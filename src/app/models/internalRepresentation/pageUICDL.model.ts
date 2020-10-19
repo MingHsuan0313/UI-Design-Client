@@ -1,4 +1,4 @@
-import { LayoutComponent } from "./layoutComponent.model";
+import { LayoutComponent } from "./LayoutComponent.model";
 
 export class PageUICDL {
     public id: String;

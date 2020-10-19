@@ -1,12 +1,10 @@
-
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
-import { BasicComponent } from "./basicComponent.model";
+import { BasicComponent } from "./BasicComponent.model";
+export class IconComponent extends BasicComponent{
+  text: String;
 
-export class Dropdown extends BasicComponent{
-  items: any[];
-
-  constructor(init?: Partial<Dropdown>) {
+  constructor(init?: Partial<IconComponent>) {
     super();
     Object.assign(this, init);
     this.category = "informative";

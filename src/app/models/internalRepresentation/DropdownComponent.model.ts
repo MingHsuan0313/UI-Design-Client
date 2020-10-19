@@ -1,20 +1,19 @@
+
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
-import { CompositeComponent } from "./compositeComponent.model";
+import { BasicComponent } from "./BasicComponent.model";
 
-export class InputGroupComposite extends CompositeComponent{
-  componentList: any[] = [];
+export class DropdownComponent extends BasicComponent{
+  items: any[];
 
-  constructor(init?: Partial<InputGroupComposite>) {
+  constructor(init?: Partial<DropdownComponent>) {
     super();
     Object.assign(this, init);
-    this.componentList = [];
-    this.category = "input";
+    this.category = "informative";
     this.serviceComponent = new ServiceComponentModel();
   }
 
   add(component: UIComponent): void {
-    this.componentList.push(component);
   }
 
   getInfo(): any {

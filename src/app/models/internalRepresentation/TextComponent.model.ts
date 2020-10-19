@@ -1,13 +1,11 @@
-
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
-import { BasicComponent } from "./basicComponent.model";
-
-export class Button extends BasicComponent{
+import { BasicComponent } from "./BasicComponent.model";
+export class TextComponent extends BasicComponent {
   text: String;
   href: String;
 
-  constructor(init?: Partial<Button>) {
+  constructor(init?: Partial<TextComponent>) {
     super();
     Object.assign(this, init);
     this.category = "informative";

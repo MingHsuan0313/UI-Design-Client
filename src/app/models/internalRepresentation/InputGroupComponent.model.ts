@@ -1,17 +1,20 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
-import { BasicComponent } from "./basicComponent.model";
-export class Icon extends BasicComponent{
-  text: String;
+import { CompositeComponent } from "./CompositeComponent.model";
 
-  constructor(init?: Partial<Icon>) {
+export class InputGroupComponent extends CompositeComponent{
+  componentList: any[] = [];
+
+  constructor(init?: Partial<InputGroupComponent>) {
     super();
     Object.assign(this, init);
-    this.category = "informative";
+    this.componentList = [];
+    this.category = "input";
     this.serviceComponent = new ServiceComponentModel();
   }
 
   add(component: UIComponent): void {
+    this.componentList.push(component);
   }
 
   getInfo(): any {

@@ -1,10 +1,10 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
-import { CompositeComponent } from "./compositeComponent.model";
+import { CompositeComponent } from "./CompositeComponent.model";
 
-export class BreadcrumbComposite extends CompositeComponent{
+export class BreadcrumbComponent extends CompositeComponent{
 
-  constructor(init?: Partial<BreadcrumbComposite>) {
+  constructor(init?: Partial<BreadcrumbComponent>) {
     super();
     Object.assign(this, init);
     this.componentList = [];

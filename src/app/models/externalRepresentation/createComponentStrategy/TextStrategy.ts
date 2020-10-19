@@ -2,6 +2,8 @@ import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
 import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
+import { TextComponent } from "../../ui-component-dependency";
+
 
 export class TextStrategy implements ICreateComponentStrategy {
   basex: number;
@@ -30,11 +32,11 @@ export class TextStrategy implements ICreateComponentStrategy {
     return dataBinding;
   }
 
-  createTextVertex(graphStorage, component, parent) {
+  createTextVertex(graphStorage:GraphStorage, component:TextComponent, parent:mxCell) {
     const dataBinding = this.createDataBinding("text");
 
 
-    let style = {} ;
+    let style = {} ; 
     if (component["href"].length>0) {
       style = Object.assign(style, StyleLibrary[0]["text"]["text_blue"]);
     } else {

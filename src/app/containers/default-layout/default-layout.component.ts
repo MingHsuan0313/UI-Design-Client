@@ -7,7 +7,7 @@ import {
   RouteConfigLoadEnd
 } from '@angular/router';
 import {Storage} from '../../shared/storage';
-import {Layout, Text} from '../../models/ui-component-dependency';
+import {Layout, TextComponent} from '../../models/ui-component-dependency';
 import {PropertyGenerator} from '../../shared/property-generator';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -114,7 +114,7 @@ export class DefaultLayoutComponent implements OnInit {
     properties['selector'] = 'text';
     properties['type'] = 'text';
     properties['layout'] = this.layoutPart;
-    const text = new Text(properties);
+    const text = new TextComponent(properties);
     if (this.layoutPart == 'sidebar') {
       this.layoutComponent['sidebar'].push(text);
     } else if (this.layoutPart == 'header') {

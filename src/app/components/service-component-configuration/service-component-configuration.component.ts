@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UIComponent, FormComposite } from 'src/app/models/ui-component-dependency';
+import { UIComponent, FormComponent } from 'src/app/models/ui-component-dependency';
 import { ServiceComponentModel, ServiceMappingType } from "../../models/service-component-dependency";
 import { Library } from "../../shared/library";
 import { GraphStorage, VertexStorage, StyleStorage } from "../../models/graph-dependency";
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
-import { LayoutComponent } from 'src/app/models/internalRepresentation/layoutComponent.model';
-import { BasicComponent } from 'src/app/models/internalRepresentation/basicComponent.model';
+import { LayoutComponent } from 'src/app/models/internalRepresentation/LayoutComponent.model';
+import { BasicComponent } from 'src/app/models/internalRepresentation/BasicComponent.model';
 
 
 @Component({
@@ -73,7 +73,7 @@ export class ServiceComponentConfigurationComponent implements OnInit {
 
   countArguments() {
     let result = 0;
-    for (let component of (this.selectedUIComponent as FormComposite).componentList) {
+    for (let component of (this.selectedUIComponent as FormComponent).componentList) {
       if (component.category == "input")
         result += 1;
     }

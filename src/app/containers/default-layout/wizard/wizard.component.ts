@@ -6,16 +6,16 @@ import ServiceComponentService from '../../../services/serviceComponent/service-
 import {PropertyGenerator} from '../../../shared/property-generator';
 import { ServiceComponentModel, ServiceMappingType } from '../../../models/service-component-dependency';
 import {
-  BreadcrumbComposite,
-  Button,
-  CardComposite,
-  Dropdown,
-  FormComposite,
-  Icon,
-  InputText,
-  InputGroupComposite,
-  Table,
-  Text,
+  BreadcrumbComponent,
+  ButtonComponent,
+  CardComponent,
+  DropdownComponent,
+  FormComponent,
+  IconComponent,
+  InputTextComponent,
+  InputGroupComponent,
+  TableComponent,
+  TextComponent,
   UIComponent,
 } from '../../../models/ui-component-dependency';
 
@@ -58,34 +58,34 @@ export class WizardComponent implements OnInit {
 
     switch (this.componentName) {
       case 'icon':
-        this.component = new Icon(properties);
+        this.component = new IconComponent(properties);
         break;
       case 'text':
-        this.component = new Text(properties);
+        this.component = new TextComponent(properties);
         break;
       case 'button':
-        this.component = new Button(properties);
+        this.component = new ButtonComponent(properties);
         break;
       case 'dropdown':
-        this.component = new Dropdown(properties);
+        this.component = new DropdownComponent(properties);
         break;
       case 'table':
-        this.component = new Table(properties);
+        this.component = new TableComponent(properties);
         break;
       case 'card':
-        this.component = new CardComposite(properties);
+        this.component = new CardComponent(properties);
         break;
       case 'inputgroup':
-        this.component = new InputGroupComposite(properties);
+        this.component = new InputGroupComponent(properties);
         break;
       case 'input':
-        this.component = new InputText(properties);
+        this.component = new InputTextComponent(properties);
         break;
       case 'breadcrumb':
-        this.component = new BreadcrumbComposite(properties);
+        this.component = new BreadcrumbComponent(properties);
         break;
       case 'form':
-        this.component = new FormComposite(properties);
+        this.component = new FormComponent(properties);
         break;
       default:
         console.log('Component Building Failed');
@@ -106,34 +106,34 @@ export class WizardComponent implements OnInit {
 
     switch (this.subComponentName) {
       case 'icon':
-        this.subComponent = new Icon(properties);
+        this.subComponent = new IconComponent(properties);
         break;
       case 'text':
-        this.subComponent = new Text(properties);
+        this.subComponent = new TextComponent(properties);
         break;
       case 'button':
-        this.subComponent = new Button(properties);
+        this.subComponent = new ButtonComponent(properties);
         break;
       case 'dropdown':
-        this.subComponent = new Dropdown(properties);
+        this.subComponent = new DropdownComponent(properties);
         break;
       case 'table':
-        this.subComponent = new Table(properties);
+        this.subComponent = new TableComponent(properties);
         break;
       case 'card':
-        this.subComponent = new CardComposite(properties);
+        this.subComponent = new CardComponent(properties);
         break;
       case 'inputgroup':
-        this.subComponent = new InputGroupComposite(properties);
+        this.subComponent = new InputGroupComponent(properties);
         break;
       case 'input':
-        this.subComponent = new InputText(properties);
+        this.subComponent = new InputTextComponent(properties);
         break;
       case 'breadcrumb':
-        this.component = new BreadcrumbComposite(properties);
+        this.component = new BreadcrumbComponent(properties);
         break;
       case 'form':
-        this.component = new FormComposite(properties);
+        this.component = new FormComponent(properties);
         break;
       default:
         console.log('Sub Component Building Failed');
@@ -236,7 +236,7 @@ export class WizardComponent implements OnInit {
 
   newCompositeComponent(newComponent, component) {
     if(component["type"].startsWith("form")) {
-      newComponent = new FormComposite();
+      newComponent = new FormComponent();
       newComponent['type'] = "form";
     }
     for (let i in component.componentList) {

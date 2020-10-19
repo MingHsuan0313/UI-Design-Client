@@ -1,10 +1,10 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
-import { CompositeComponent } from "./compositeComponent.model";
+import { CompositeComponent } from "./CompositeComponent.model";
 
-export class FormComposite extends CompositeComponent{
+export class FormComponent extends CompositeComponent{
 
-    constructor(init?: Partial<FormComposite>) {
+    constructor(init?: Partial<FormComponent>) {
         super();
         Object.assign(this, init);
         this.componentList = [];

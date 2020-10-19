@@ -1,14 +1,16 @@
+
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
-import { BasicComponent } from "./basicComponent.model";
+import { BasicComponent } from "./BasicComponent.model";
 
-export class InputText extends BasicComponent{
-  public typeInfo: String;  // e.g. input-text, input-password
+export class ButtonComponent extends BasicComponent{
+  text: String;
+  href: String;
 
-  constructor(init?: Partial<InputText>) {
+  constructor(init?: Partial<ButtonComponent>) {
     super();
     Object.assign(this, init);
-    this.category = "input";
+    this.category = "informative";
     this.serviceComponent = new ServiceComponentModel();
   }
 

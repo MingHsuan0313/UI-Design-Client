@@ -1,5 +1,5 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
-import { BreadcrumbComposite } from "../../ui-component-dependency";
+import { BreadcrumbComponent } from "../../ui-component-dependency";
 import { DataBinding } from "../util/DataBinding";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
@@ -43,7 +43,7 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
     return breadcrumbVertexStorage;
   }
 
-  createBreadcrumbIndicatorVertex(graphStorage, component, parent, x, y, index) {
+  createBreadcrumbIndicatorVertex(graphStorage:GraphStorage, component, parent, x, y, index) {
     let styleName = "breadCrumbIndicatorStyle";
     const breadcrumbIndicatorStyle = StyleLibrary[0]["breadcrumb"]["breadcrumbIndicator"];
     let styleStorage = new StyleStorage(styleName, breadcrumbIndicatorStyle);
@@ -53,6 +53,7 @@ export class BreadcrumbStrategy implements ICreateComponentStrategy {
     
     breadcrumbVertexIndicatorStorage.vertex["componentPart"] = "indicator";
     breadcrumbVertexIndicatorStorage.vertex["isPrimary"] = false;
+    breadcrumbVertexIndicatorStorage.setIsPrimary(true);
     breadcrumbVertexIndicatorStorage.vertex["dataBinding"] = this.createDataBinding("indicator");
     
     return breadcrumbVertexIndicatorStorage;
