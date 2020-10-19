@@ -1,9 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { GraphStorage } from "src/app/models/modelDependency";
 import GraphEditorService from "src/app/services/graph-editor.service";
-import { Process } from "../../models/components/containers/process/process.model";
-import { ProcessElement } from "../../models/components/containers/process/process-element.model";
-import { BPELComponent } from "../../models/components/BPELComponent.model";
+
 
 @Component({
     selector: 'property-editor',
@@ -19,6 +17,7 @@ export class PropertyEditorComponent implements OnInit {
     attributeKVPairsStack: [string, any][][];
     elementKVPairsStack: [string, any][][];
     objectStack: any[];
+    isObjectStackEmpty: boolean = true;
     nullAttributeKVPairs: [string, any][] = [["NO any attribute", "NO any attribute content"]];
     nullElementKVPairs: [string, any][] = [["NO any element", "NO any element content"]];
 
@@ -45,6 +44,7 @@ export class PropertyEditorComponent implements OnInit {
 
             this.objectStack = [];
             this.objectStack.push(selectedComponent);
+            this.isObjectStackEmpty = false;
             console.log("[INFO] Push selected object to objectStack");
             console.log(this.objectStack);
             this.attributeKVPairsStack = [];
@@ -53,9 +53,6 @@ export class PropertyEditorComponent implements OnInit {
                 this.attributeKVPairsStack.push(this.nullAttributeKVPairs);
             } else {
                 this.attributeKVPairsStack.push(Object.entries(this.selectedAttribute));
-                // if (selectedComponent instanceof Process) {
-                //     this.attributeKVPairsStack.push(["variables", Object.entries((selectedComponent.getElement() as ProcessElement).getVariables().getElement().getVariableList()[0])]); //TODO: For now, take first variable for example
-                // }
                 console.log("1. Parse selected attribute k, v pairs to PropertyEditor")
                 console.log(this.attributeKVPairsStack)
             }
@@ -118,17 +115,29 @@ export class PropertyEditorComponent implements OnInit {
         return false;
     }
 
+    isToppestObjectArray(): boolean {
+        if (this.objectStack == undefined) {
+            return false;
+        }
+        return this.isElementArray(this.objectStack[this.objectStack.length - 1]);
+    }
+
     showModal(key: string, value: any): void {
         this.objectStack.push(value);
-        if (value.getAttribute() == undefined) {
-            this.attributeKVPairsStack.push(null);
-        } else {
+        // check if getAttribute() is a function indicating value is not an Array
+        if (typeof value.getAttribute == "function" && value.getAttribute() != undefined) {
             this.attributeKVPairsStack.push(Object.entries(value.getAttribute()));
-        }
-        if (value.getElement() == undefined) {
-            this.elementKVPairsStack.push(null);
         } else {
+            this.attributeKVPairsStack.push(null);
+        }
+        // check if getElement() is a function indicating value is not an Array
+        // [NOTE] treat a Array member as an "element"
+        if (typeof value.getElement == "function" && value.getElement() != undefined) {
             this.elementKVPairsStack.push(Object.entries(value.getElement()));
+        } else if (this.isElementArray(value)) {
+            this.elementKVPairsStack.push(Object.entries(value));
+        } else {
+            this.elementKVPairsStack.push(null);
         }
 
         console.log("[INFO] Editing the default element, show the default modal: ");
@@ -138,43 +147,6 @@ export class PropertyEditorComponent implements OnInit {
         console.log(this.attributeKVPairsStack);
         console.log("3. elementKVPairsStack =")
         console.log(this.elementKVPairsStack);
-        console.log(this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]).getComponent());
-
-        // $('#exampleModal').on('show.bs.modal', function (event) {
-        //     // var button = $(event.relatedTarget)
-        //     var targetNode = key;
-        //     var modal = $(this);
-        //     modal.find('.modal-title').text('Edit <' + targetNode + '>');
-        //     modal.find('.modal-body label').text(targetNode);
-        //   })
-    }
-
-    showArrayModal(key: string, value: any): void {
-        this.objectStack.push(value);
-        this.attributeKVPairsStack.push(null);
-        // treat an array as an element
-        this.elementKVPairsStack.push(Object.entries(value));
-
-        console.log("[INFO] Editing the array element, show the array modal: ");
-        console.log("1. objectStack= ");
-        console.log(this.objectStack);
-        console.log("2. attributeKVPairsStack = ")
-        console.log(this.attributeKVPairsStack);
-        console.log("3. elementKVPairsStack =")
-        console.log(this.elementKVPairsStack);
-        // if (value.getAttribute() == undefined) {
-        //     this.attributeKVPairsStack.push(null);
-        // } else {
-        //     this.attributeKVPairsStack.push(Object.entries(value.getAttribute()));
-        // }
-
-        // $('#exampleModal').on('show.bs.modal', function (event) {
-        //     // var button = $(event.relatedTarget)
-        //     var targetNode = key;
-        //     var modal = $(this);
-        //     modal.find('.modal-title').text('Edit <' + targetNode + '>');
-        //     modal.find('.modal-body label').text(targetNode);
-        //   })
     }
 
     close(): void {
@@ -191,12 +163,13 @@ export class PropertyEditorComponent implements OnInit {
         console.log(this.elementKVPairsStack);
     }
 
-    // TODO: same id's stacked modals will cause a big disaster
-    // addArrayElement(): void {
-    //     this.objectStack[this.objectStack.length - 2].getElement().add();
-    // }
+    addArrayElement(): void {
+        throw new Error("Method not implemented.");
+        // this.objectStack[this.objectStack.length - 2].getElement().add();
+    }
 
-    // removeArrayElement(): void {
-    //     this.objectStack[this.objectStack.length - 2].getElement().remove();
-    // }
+    removeArrayElement(): void {
+        throw new Error("Method not implemented.");
+        // this.objectStack[this.objectStack.length - 2].getElement().remove();
+    }
 }
