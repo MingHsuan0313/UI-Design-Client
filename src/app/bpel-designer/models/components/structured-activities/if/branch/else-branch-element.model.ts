@@ -1,5 +1,13 @@
 import { BPELComponent } from "../../../BPELComponent.model";
 
 export class ElseBranchElement {
-    activity: BPELComponent = null;
+    activity: BPELComponent;
+
+    constructor() {
+        this.activity = null;
+    }
+
+    setActivity(activity: BPELComponent): void {
+        this.activity = activity;
+    }
 }

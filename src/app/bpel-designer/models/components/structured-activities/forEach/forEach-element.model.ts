@@ -1,14 +1,13 @@
-import { BPELComponentElement } from "../../BPELComponent-element.model";
-import { Scope } from "../../containers/scope/scope.model";
+import { BPELComponentElementWithActivity } from "../../BPELComponentElementWithActivity.model";
 import { CompletionCondition } from "./completionCondition/completionCondition.model";
 import { FinalCounterValue } from "./finalCounterValue/finalCounterValue.model";
 import { StartCounterValue } from "./startCounterValue/startCounterValue.model";
 
-export class ForEachElement extends BPELComponentElement {
+export class ForEachElement extends BPELComponentElementWithActivity {
     startCounterValue: StartCounterValue;
     finalCounterValue: FinalCounterValue;
     completionCondition?: CompletionCondition;
-    scope: Scope = null;   //TODO:
+    // scope: Scope = null;   //TODO:
 
     constructor() {
         super();

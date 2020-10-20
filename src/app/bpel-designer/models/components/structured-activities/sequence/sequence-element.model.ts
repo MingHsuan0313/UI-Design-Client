@@ -1,22 +1,12 @@
 import { BPELComponent } from "../../BPELComponent.model";
-import { Process } from "../../containers/process/process.model";
-import { BPELComponentElement } from "../../BPELComponent-element.model";
+import { BPELComponentElementWithActivityList } from "../../BPELComponentElementWithActivityList.model";
 
-export class SequenceElement extends BPELComponentElement {
-    activityList: BPELComponent[];
+export class SequenceElement extends BPELComponentElementWithActivityList {
+    // activityList: BPELComponent[];
 
     constructor() {
         super();
         this.activityList = new Array<BPELComponent>();
-        this.activityList.push(null);
-    }
-
-    add(component: BPELComponent): void {
-        if (component instanceof Process) {
-            console.log("A <process> activity cannot be added to a <sequence>'s element");
-            return;
-        }
-        this.activityList.push(component);
     }
 
     push(): void {

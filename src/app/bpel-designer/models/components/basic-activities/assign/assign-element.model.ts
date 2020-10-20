@@ -1,10 +1,19 @@
 import { Copy } from "./copy/copy.model";
-import { BPELComponentElement } from "../../BPELComponent-element.model";
+import { BPELComponentElementWithActivityList } from "../../BPELComponentElementWithActivityList.model";
 
-export class AssignElement extends BPELComponentElement {
-    copyList: Copy[];
+export class AssignElement extends BPELComponentElementWithActivityList {
+    // copyList: Copy[];
 
-    add(component: Copy): void {
-        this.copyList.push(component);
+    constructor() {
+        super();
+        this.activityList = new Array<Copy>();
+    }
+
+    push(): void {
+        throw new Error("<copy> should be drawn and wrapped in.");
+    }
+
+    pop(): void {
+        throw new Error("<copy> should be drawn and wrapped out.");
     }
 }

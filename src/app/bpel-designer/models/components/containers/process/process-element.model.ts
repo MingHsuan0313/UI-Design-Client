@@ -1,5 +1,3 @@
-import { BPELComponent } from "../../BPELComponent.model";
-import { BPELComponentElement } from "../../BPELComponent-element.model"
 import { Variables } from "../variables/variables.model";
 import { Extensions } from "./extensions/extensions.model";
 import { Import } from "./import/import.model";
@@ -8,8 +6,9 @@ import { MessageExchanges } from "../messageExchanges/messageExchanges.model";
 import { CorrelationSets } from "../correlationSets/correlationSets.model";
 import { FaultHandlers } from "../faultHandlers/faultHandlers.model";
 import { EventHandlers } from "../eventHandlers/eventHandlers.model";
+import { BPELComponentElementWithActivity } from "../../BPELComponentElementWithActivity.model";
 
-export class ProcessElement extends BPELComponentElement {
+export class ProcessElement extends BPELComponentElementWithActivity {
     variables?: Variables;
     extensions?: Extensions;
     import?: Import;
@@ -18,7 +17,7 @@ export class ProcessElement extends BPELComponentElement {
     correlationSets?: CorrelationSets;
     faultHandlers?: FaultHandlers;
     eventHandlers?: EventHandlers;
-    activity: BPELComponent;
+    // activity: BPELComponent;
 
     constructor() {
         super();
@@ -31,9 +30,5 @@ export class ProcessElement extends BPELComponentElement {
         this.correlationSets = new CorrelationSets();
         this.faultHandlers = new FaultHandlers();
         this.eventHandlers = new EventHandlers();
-    }
-
-    getVariables() {
-        return this.variables;
     }
 }

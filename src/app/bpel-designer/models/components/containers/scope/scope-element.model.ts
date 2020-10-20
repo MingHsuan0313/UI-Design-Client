@@ -1,5 +1,4 @@
-import { BPELComponentElement } from "../../BPELComponent-element.model";
-import { BPELComponent } from "../../BPELComponent.model";
+import { BPELComponentElementWithActivity } from "../../BPELComponentElementWithActivity.model";
 import { CompensationHandler } from "../../others/compensationHandler/compensationHandler.model";
 import { CorrelationSets } from "../correlationSets/correlationSets.model";
 import { EventHandlers } from "../eventHandlers/eventHandlers.model";
@@ -9,7 +8,7 @@ import { PartnerLinks } from "../partnerLinks/partnerLinks.model";
 import { Variables } from "../variables/variables.model";
 import { TerminationHandler } from "./terminationHandler/terminationHandler.model";
 
-export class ScopeElement extends BPELComponentElement {
+export class ScopeElement extends BPELComponentElementWithActivity {
     variables?: Variables;
     partnerLinks?: PartnerLinks;
     messageExchanges?: MessageExchanges;
@@ -18,7 +17,7 @@ export class ScopeElement extends BPELComponentElement {
     eventHandlers?: EventHandlers;
     compensationHandler?: CompensationHandler;
     terminationHandler?: TerminationHandler;
-    activity: BPELComponent;
+    // activity: BPELComponent;
 
     constructor() {
         super();
