@@ -2,8 +2,6 @@ import VertexStorage from "src/app/models/vertex-storage.model";
 import { CopyAttribute } from "./copy-attribute.model";
 import { CopyElement } from "./copy-element.model";
 import { BPELComponent } from "../../../BPELComponent.model";
-import { From } from "./from/from.model";
-import { To } from "./to/to.model";
 
 export class Copy extends BPELComponent {
     id: string;

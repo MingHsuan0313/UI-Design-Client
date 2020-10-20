@@ -1,11 +1,10 @@
-import { BPELComponent } from "../../BPELComponent.model";
+import { BPELComponentElementWithActivity } from "../../BPELComponentElementWithActivity.model";
 import { Condition } from "../condition/condition.model";
-import { BPELComponentElement } from "../../BPELComponent-element.model";
 
-export class WhileElement extends BPELComponentElement {
+export class WhileElement extends BPELComponentElementWithActivity {
     // condition, activity are in the order
     condition: Condition;
-    activity: BPELComponent = null;
+    // activity: BPELComponent;
 
     constructor() {
         super();

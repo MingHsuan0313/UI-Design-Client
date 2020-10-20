@@ -1,9 +1,8 @@
-import { BPELComponentElement } from "../../BPELComponent-element.model";
-import { BPELComponent } from "../../BPELComponent.model";
+import { BPELComponentElementWithActivity } from "../../BPELComponentElementWithActivity.model";
 import { Condition } from "../condition/condition.model";
 
-export class RepeatUntilElement extends BPELComponentElement {
-    activity: BPELComponent = null;
+export class RepeatUntilElement extends BPELComponentElementWithActivity {
+    // activity: BPELComponent;
     condition: Condition;
 
     constructor() {

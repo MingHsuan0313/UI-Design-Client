@@ -1,22 +1,19 @@
-import { BPELComponent } from "../../BPELComponent.model";
 import { Condition } from "../condition/condition.model";
-import { ElseBranch } from "./branch/else-branch.model";
 import { ElseIfBranch } from "./branch/elseif-branch.model";
-import { BPELComponentElement } from "../../BPELComponent-element.model";
+import { BPELComponentElementWithActivityAndActivityList } from "../../BPELComponentElementWithActivityAndActivityList.model";
 
-export class IfElement extends BPELComponentElement {
+export class IfElement extends BPELComponentElementWithActivityAndActivityList {
     // condition, activity, elseIfList, else are in the order
     condition: Condition;
-    activity: BPELComponent = null;
-    elseifList?: ElseIfBranch[];
-    else?: ElseBranch = null;
+    // activity: BPELComponent;
+    // elseifList?: ElseIfBranch[];
+    // else?: ElseBranch = null; // _activity: BPELComponent;
 
     constructor() {
         super();
         this.condition = new Condition();
-        // eager creation
-        this.elseifList = new Array<ElseIfBranch>();
-        this.elseifList.push(null);
+        // activity
+        this.activityList = new Array<ElseIfBranch>();
     }
 
     push(): void {
