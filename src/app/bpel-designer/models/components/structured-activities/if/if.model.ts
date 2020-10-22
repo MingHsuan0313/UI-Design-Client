@@ -42,7 +42,8 @@ export class If extends BPELComponent {
             console.log("[Set Activity] set <" + sourceActivity.getComponentName() + ">" + "(id = " + sourceActivity.getId() + ") "
                         + "to <" + this.getComponentName() + ">" + "(id = " + this.getId() + ") " + "'s activity");
         }
-        // 2. update nodes order
-        this.updateBPELDocService.updateOrder(this);
+        // TODO: handle <if> elements order
+        // // 2. update nodes order
+        // this.updateBPELDocService.updateOrder(this);
     }
 }

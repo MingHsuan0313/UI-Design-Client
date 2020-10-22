@@ -24,4 +24,8 @@ export class BPELComponentElementWithActivityAndActivityList extends BPELCompone
     setElseBranchActivityForIf(elseBranchActivity: ElseBranch): void {
         this.elseBranchActivity = elseBranchActivity;
     }
+
+    getActivityList(): BPELComponent[] {
+        return this.activityList;
+    }
 }

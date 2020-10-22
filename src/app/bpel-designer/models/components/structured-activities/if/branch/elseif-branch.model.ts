@@ -25,7 +25,5 @@ export class ElseIfBranch extends BPELComponent {
         this.updateBPELDocService.setActivity(sourceActivity, this);
         console.log("[SET ACTIVITY] set <" + sourceActivity.getComponentName() + ">" + "(id = " + sourceActivity.getId() + ") "
                     + "to <" + this.getComponentName() + ">" + "(id = " + this.getId() + ") " + "'s activity");
-        // 2. update nodes order
-        this.updateBPELDocService.updateOrder(this);
     }
 }

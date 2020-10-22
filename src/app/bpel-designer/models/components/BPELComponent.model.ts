@@ -30,6 +30,10 @@ export abstract class BPELComponent extends BPELNode implements AbstractComponen
         return this.componentName;
     }
 
+    getVertexStorage(): VertexStorage {
+        return this.vertexStorage;
+    }
+
     setVertexStorage(vertexStorage: VertexStorage): void {
         this.vertexStorage = vertexStorage;
     }
@@ -40,19 +44,20 @@ export abstract class BPELComponent extends BPELNode implements AbstractComponen
 
     //Overrided in <pick>, <assign>, <if> to filter the sourceActivity type and do corresponding operations based on it
     updateBPELDoc(sourceActivity: BPELComponent): void {
-        // 1. setActivity / pushActivity
         if (this.getElement() instanceof BPELComponentElementWithActivity) {
+            // 1. setActivity
             this.updateBPELDocService.setActivity(sourceActivity, this);
             console.log("[SET ACTIVITY] set <" + sourceActivity.getComponentName() + ">" + "(id = " + sourceActivity.getId() + ") "
                         + "to <" + this.getComponentName() + ">" + "(id = " + this.getId() + ") " + "'s activity");
         } else if (this.getElement() instanceof BPELComponentElementWithActivityList) {
+            // 1. pushActivity
             this.updateBPELDocService.pushActivity(sourceActivity, this);
             console.log("[PUSH ACTIVITY] set <" + sourceActivity.getComponentName() + ">" + "(id = " + sourceActivity.getId() + ") "
                         + "to <" + this.getComponentName() + ">" + "(id = " + this.getId() + ") " + "'s activity");
+            // 2. update nodes order
+            this.updateBPELDocService.updateOrder(this);
         } else {
             // instanceof BPELComponentElementWithActivityAndActivityList: Overrided in <if>
         }
-        // 2. update nodes order
-        this.updateBPELDocService.updateOrder(this);
     }
 }
