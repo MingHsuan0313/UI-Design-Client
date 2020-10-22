@@ -7,7 +7,7 @@ export class IfElement extends BPELComponentElementWithActivityAndActivityList {
     condition: Condition;
     // activity: BPELComponent;
     // elseifList?: ElseIfBranch[];
-    // else?: ElseBranch = null; // _activity: BPELComponent;
+    // else?: ElseBranch = null; // TODO: temporary solution: elseBranchActivity: ElseBranch;
 
     constructor() {
         super();

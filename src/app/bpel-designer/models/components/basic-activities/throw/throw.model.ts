@@ -1,3 +1,4 @@
+import UpdateBPELDocService from 'src/app/bpel-designer/services/updateBPELDoc.service';
 import VertexStorage from 'src/app/models/vertex-storage.model';
 import { BPELComponent } from '../../BPELComponent.model'
 import { ThrowAttribute } from './throw-attribute.model';
@@ -13,8 +14,8 @@ export class Throw extends BPELComponent {
     attribute?: ThrowAttribute;
     componentName: string = "throw";
 
-    constructor(id: string) {
-        super(id);
+    constructor(id: string, updateBPELDocService: UpdateBPELDocService) {
+        super(id, updateBPELDocService);
         this.attribute = new ThrowAttribute();
         console.log(this.componentName)
     }

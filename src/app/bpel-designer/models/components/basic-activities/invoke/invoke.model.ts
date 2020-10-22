@@ -2,6 +2,7 @@ import VertexStorage from "src/app/models/vertex-storage.model";
 import { InvokeAttribute } from "./invoke-attribute.model";
 import { InvokeElement } from "./invoke-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
+import UpdateBPELDocService from "src/app/bpel-designer/services/updateBPELDoc.service";
 
 export class Invoke extends BPELComponent {
     id: string;
@@ -15,8 +16,8 @@ export class Invoke extends BPELComponent {
     element?: InvokeElement;
     componentName: string = "invoke";
 
-    constructor(id: string) {
-        super(id);
+    constructor(id: string, updateBPELDocService: UpdateBPELDocService) {
+        super(id, updateBPELDocService);
         this.attribute = new InvokeAttribute();
         this.element = new InvokeElement();
         console.log(this.componentName);
