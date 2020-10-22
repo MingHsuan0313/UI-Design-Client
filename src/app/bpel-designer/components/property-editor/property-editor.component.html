@@ -2,6 +2,7 @@
     <mat-tab-group>
       <mat-tab label="Property-Editor">
         <div class="input-group">
+          <button class="btn btn-success" (click)="sendUserSettedTargetContainerActivityEvent()">Send targetContainerActivity to Palette(via BPELDesigner)</button>
           <div class='col'>
             <span>attributes</span>
             <div class="input-group-prepend" *ngFor='let kvs of attributeKVPairsStack; let firstRecord = first'>

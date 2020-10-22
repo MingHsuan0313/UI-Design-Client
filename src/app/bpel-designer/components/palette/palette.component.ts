@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from "@angular/core";
+import { AfterViewInit, Component, Input } from "@angular/core";
 import { GraphStorage } from "src/app/models/modelDependency";
 import GraphEditorService from "src/app/services/graph-editor.service";
 import { PropertyGenerator } from "src/app/shared/property-generator";
@@ -69,6 +69,8 @@ export class PaletteComponent implements AfterViewInit {
     basex: number = 0;
     basey: number = 0;
     CREATE_VERTEX_DISPLACEMENT_DISTANCE: number = 130;
+
+    @Input() userSettedTargetContainerActivity: BPELComponent;
 
     constructor(private updateBPELDocService: UpdateBPELDocService, private graphEditorService: GraphEditorService) {
     }
@@ -229,11 +231,14 @@ export class PaletteComponent implements AfterViewInit {
             bpelComponent instanceof Pick || bpelComponent instanceof OnMessage ||
             bpelComponent instanceof Assign) {
             // Depth-firstly set the targetContainerActivity
-            // TODO: Provide a UI button in PropertyEditorComponent for User to set the targetContainerActivity
             this.targetContainerActivity = bpelComponent;
         }
         console.log("[targetContainerActivity] = ", this.targetContainerActivity.getComponentName() + "(id = " + this.targetContainerActivity.getId() + ")");
         console.log(this.graphStorage);
     }
 
+    syncTargetContainerActivity(): void {
+        this.targetContainerActivity = this.userSettedTargetContainerActivity;
+        console.log("[targetContainerActivity changed] = ", this.targetContainerActivity.getComponentName() + "(id = " + this.targetContainerActivity.getId() + ")");
+    }
 }
