@@ -3,9 +3,9 @@
         <!-- TODO: solve height 100% incorrect view -->
         <div class="container-fluid" style="height: 700px ;padding-right:0;">
             <div class="row" style="height:700px; ">
-                <palette class="col"></palette>
+                <palette class="col" [userSettedTargetContainerActivity]="targetContainerActivity"></palette>
                 <app-graph-editor class="col-8"></app-graph-editor>
-                <property-editor class="col"></property-editor>
+                <property-editor class="col" (userSettedTargetContainerActivityEvent)="receiveTargetContainerActivity($event)"></property-editor>
             </div>
         </div>
     </main>

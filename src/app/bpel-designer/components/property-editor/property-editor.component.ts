@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { GraphStorage } from "src/app/models/modelDependency";
 import GraphEditorService from "src/app/services/graph-editor.service";
+import { BPELComponent } from "../../models/components/BPELComponent.model";
 
 
 @Component({
@@ -20,6 +21,9 @@ export class PropertyEditorComponent implements OnInit {
     isObjectStackEmpty: boolean = true;
     nullAttributeKVPairs: [string, any][] = [["NO any attribute", "NO any attribute content"]];
     nullElementKVPairs: [string, any][] = [["NO any element", "NO any element content"]];
+
+    userSettedTargetContainerActivity: BPELComponent;
+    @Output() userSettedTargetContainerActivityEvent: EventEmitter<BPELComponent> = new EventEmitter<BPELComponent>();
 
     constructor(private graphEditorService: GraphEditorService){
     }
@@ -180,5 +184,12 @@ export class PropertyEditorComponent implements OnInit {
     popArrayElement(): void {
         this.objectStack[this.objectStack.length - 2].getElement().pop();
         this.elementKVPairsStack[this.elementKVPairsStack.length - 1] = Object.entries(this.objectStack[this.objectStack.length - 1]);
+    }
+
+    sendUserSettedTargetContainerActivityEvent(): void {
+        let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
+        let selectedComponent = vertexStorage.getComponent();
+        this.userSettedTargetContainerActivity = selectedComponent;
+        this.userSettedTargetContainerActivityEvent.emit(this.userSettedTargetContainerActivity);
     }
 }
