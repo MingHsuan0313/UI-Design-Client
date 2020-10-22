@@ -1,15 +1,16 @@
 import { BPELComponentElement } from "./BPELComponent-element.model";
 import { BPELComponent } from "./BPELComponent.model";
+import { ElseBranch } from "./structured-activities/if/branch/else-branch.model";
 
 export class BPELComponentElementWithActivityAndActivityList extends BPELComponentElement {
     activity: BPELComponent;
     activityList: BPELComponent[];
-    _activity: BPELComponent;   // TODO: temporary solution for <if>, which has an activity + <elseif> list + <else> (2 activities + 1 activityList)
+    elseBranchActivity: ElseBranch;   // TODO: temporary solution for <if>, which has an activity + <elseif> list + <else> (2 activities + 1 activityList)
 
     constructor() {
         super();
         this.activity = null;
-        this._activity = null;
+        this.elseBranchActivity = null;
     }
 
     setActivity(activity: BPELComponent): void {
@@ -20,7 +21,7 @@ export class BPELComponentElementWithActivityAndActivityList extends BPELCompone
         this.activityList.push(activity);
     }
 
-    _setActivity(activity: BPELComponent): void {
-        this._activity = activity;
+    setElseBranchActivityForIf(elseBranchActivity: ElseBranch): void {
+        this.elseBranchActivity = elseBranchActivity;
     }
 }
