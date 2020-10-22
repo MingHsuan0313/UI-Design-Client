@@ -66,6 +66,9 @@ export class PaletteComponent implements AfterViewInit {
     graphStorage: GraphStorage;
     strategy: ICreateBPELComponentStrategy;
     targetContainerActivity: BPELComponent = null;
+    basex: number = 0;
+    basey: number = 0;
+    CREATE_VERTEX_DISPLACEMENT_DISTANCE: number = 130;
 
     constructor(private updateBPELDocService: UpdateBPELDocService, private graphEditorService: GraphEditorService) {
     }
@@ -108,107 +111,108 @@ export class PaletteComponent implements AfterViewInit {
         switch (componentName) {
             case 'process':
                 bpelComponent = new Process(vertexId, this.updateBPELDocService);
-                this.setStrategy(new ProcessStrategy());
+                this.setStrategy(new ProcessStrategy(this.basex, this.basey));
                 break;
             case 'scope':
                 bpelComponent = new Scope(vertexId, this.updateBPELDocService);
-                this.setStrategy(new ScopeStrategy());
+                this.setStrategy(new ScopeStrategy(this.basex, this.basey));
                 break;
             case 'validate':
                 bpelComponent = new Validate(vertexId, this.updateBPELDocService);
-                this.setStrategy(new ValidateStrategy());
+                this.setStrategy(new ValidateStrategy(this.basex, this.basey));
                 break;
             case 'invoke':
                 bpelComponent = new Invoke(vertexId, this.updateBPELDocService);
-                this.setStrategy(new InvokeStrategy());
+                this.setStrategy(new InvokeStrategy(this.basex, this.basey));
                 break;
             case 'receive':
                 bpelComponent = new Receive(vertexId, this.updateBPELDocService);
-                this.setStrategy(new ReceiveStrategy());
+                this.setStrategy(new ReceiveStrategy(this.basex, this.basey));
                 break;
             case 'reply':
                 bpelComponent = new Reply(vertexId, this.updateBPELDocService);
-                this.setStrategy(new ReplyStrategy());
+                this.setStrategy(new ReplyStrategy(this.basex, this.basey));
                 break;
             case 'assign':
                 bpelComponent = new Assign(vertexId, this.updateBPELDocService);
-                this.setStrategy(new AssignStrategy());
+                this.setStrategy(new AssignStrategy(this.basex, this.basey));
                 break;
             case 'copy':
                 bpelComponent = new Copy(vertexId, this.updateBPELDocService);
-                this.setStrategy(new CopyStrategy());
+                this.setStrategy(new CopyStrategy(this.basex, this.basey));
                 break;
             case 'throw':
                 bpelComponent = new Throw(vertexId, this.updateBPELDocService);
-                this.setStrategy(new ThrowStrategy());
+                this.setStrategy(new ThrowStrategy(this.basex, this.basey));
                 break;
             case 'wait':
                 bpelComponent = new Wait(vertexId, this.updateBPELDocService);
-                this.setStrategy(new WaitStrategy());
+                this.setStrategy(new WaitStrategy(this.basex, this.basey));
                 break;
             case 'empty':
                 bpelComponent = new Empty(vertexId, this.updateBPELDocService);
-                this.setStrategy(new EmptyStrategy());
+                this.setStrategy(new EmptyStrategy(this.basex, this.basey));
                 break;
             case 'exit':
                 bpelComponent = new Exit(vertexId, this.updateBPELDocService);
-                this.setStrategy(new ExitStrategy());
+                this.setStrategy(new ExitStrategy(this.basex, this.basey));
                 break;
             case 'rethrow':
                 bpelComponent = new Rethrow(vertexId, this.updateBPELDocService);
-                this.setStrategy(new RethrowStrategy());
+                this.setStrategy(new RethrowStrategy(this.basex, this.basey));
                 break;
             case 'sequence':
                 bpelComponent = new Sequence(vertexId, this.updateBPELDocService);
-                this.setStrategy(new SequenceStrategy());
+                this.setStrategy(new SequenceStrategy(this.basex, this.basey));
                  break;
             case 'flow':
                 bpelComponent = new Flow(vertexId, this.updateBPELDocService);
-                this.setStrategy(new FlowStrategy());
+                this.setStrategy(new FlowStrategy(this.basex, this.basey));
                 break;
             case 'if':
                 bpelComponent = new If(vertexId, this.updateBPELDocService);
-                this.setStrategy(new IfStrategy());
+                this.setStrategy(new IfStrategy(this.basex, this.basey));
                 break;
             case 'elseif':
                 bpelComponent = new ElseIfBranch(vertexId, this.updateBPELDocService);
-                this.setStrategy(new ElseIfBranchStrategy());
+                this.setStrategy(new ElseIfBranchStrategy(this.basex, this.basey));
                 break;
             case 'else':
                 bpelComponent = new ElseBranch(vertexId, this.updateBPELDocService);
-                this.setStrategy(new ElseBranchStrategy());
+                this.setStrategy(new ElseBranchStrategy(this.basex, this.basey));
                 break;
             case 'while':
                 bpelComponent = new While(vertexId, this.updateBPELDocService);
-                this.setStrategy(new WhileStrategy());
+                this.setStrategy(new WhileStrategy(this.basex, this.basey));
                 break;
             case 'repeatUntil':
                 bpelComponent = new RepeatUntil(vertexId, this.updateBPELDocService);
-                this.setStrategy(new RepeatUntilStrategy());
+                this.setStrategy(new RepeatUntilStrategy(this.basex, this.basey));
                 break;
             case 'forEach':
                 bpelComponent = new ForEach(vertexId, this.updateBPELDocService);
-                this.setStrategy(new ForEachStrategy());
+                this.setStrategy(new ForEachStrategy(this.basex, this.basey));
                 break;
             case 'pick':
                 bpelComponent = new Pick(vertexId, this.updateBPELDocService);
-                this.setStrategy(new PickStrategy());
+                this.setStrategy(new PickStrategy(this.basex, this.basey));
                 break;
             case 'onMessage':
                 bpelComponent = new OnMessage(vertexId, this.updateBPELDocService);
-                this.setStrategy(new OnMessageStrategy());
+                this.setStrategy(new OnMessageStrategy(this.basex, this.basey));
                 break;
             case 'compensate':
                 bpelComponent = new Compensate(vertexId, this.updateBPELDocService);
-                this.setStrategy(new CompensateStrategy());
+                this.setStrategy(new CompensateStrategy(this.basex, this.basey));
                 break;
             case 'compensateScope':
                 bpelComponent = new CompensateScope(vertexId, this.updateBPELDocService);
-                this.setStrategy(new CompensateScopeStrategy());
+                this.setStrategy(new CompensateScopeStrategy(this.basex, this.basey));
                 break;
             default:
                 console.log("The BPEL component building failed");
         }
+        this.basex += this.CREATE_VERTEX_DISPLACEMENT_DISTANCE;
         let bpelComponentVertexStorage = this.strategy.createComponent(this.graphStorage, bpelComponent, null);
         console.log(bpelComponentVertexStorage);
 

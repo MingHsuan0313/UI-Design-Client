@@ -330,6 +330,10 @@ export class GraphStorage {
 
     console.log(cells);
     let maxID = cells.reduce((acc: number, cur: mxCell) => {
+      // if edge has no id
+      if (cur.id == "") {
+        return acc
+      }
       return Math.max(acc, parseInt(cur.id));
     }, 0);
     return maxID;

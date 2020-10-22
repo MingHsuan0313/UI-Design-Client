@@ -9,6 +9,16 @@ export class BPELNodesOrderUpdater {
     }
 
     updateOrder(targetActivity: BPELComponent): void {
-        //TODO:
+        if (this.graphStorage == undefined) {
+            this.graphStorage = this.graphEditorService.getGraphStorage();
+        }
+        let activityList = targetActivity.getElement().getActivityList();
+        if (activityList.length > 1) {
+            let second2lastActivity = activityList[activityList.length - 2];
+            let lastActivity = activityList[activityList.length - 1];
+            this.graphStorage.insertEdge(second2lastActivity.getVertexStorage().getVertex(), lastActivity.getVertexStorage().getVertex());
+            console.log("[Connect Edge] from <" + second2lastActivity.getComponentName() + ">" + "(id = " + second2lastActivity.getId() + ") "
+                        + "to <" + lastActivity.getComponentName() + ">" + "(id = " + lastActivity.getId() + ") " + "'s activity");
+        }
     }
 }
