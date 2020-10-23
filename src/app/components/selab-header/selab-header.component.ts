@@ -1,12 +1,6 @@
 
 import {Component, Input, OnInit} from '@angular/core';
 
-import {
-  Router,
-  NavigationEnd,
-  ActivatedRoute,
-  RouteConfigLoadEnd
-} from '@angular/router';
 import {Storage} from '../../shared/storage';
 import {Layout, TextComponent} from '../../models/ui-component-dependency';
 import {PropertyGenerator} from '../../shared/property-generator';
@@ -23,7 +17,6 @@ import ExportService from '../../services/internalRepresentation/export.service'
 export class SelabHeaderComponent implements OnInit {
   public navItems = null;
   public sidebarMinimized = true;
-  private changes: MutationObserver;
   public element: HTMLElement = document.body;
 
   // test_data
@@ -40,7 +33,6 @@ export class SelabHeaderComponent implements OnInit {
   storageComponents: any[] = Storage.components;
   private layoutComponent: any;
   private layoutPart: any;
-  private files: any[];
   public userName = 'undefined';
   private images: any[] = [];
 
@@ -59,7 +51,6 @@ export class SelabHeaderComponent implements OnInit {
     Storage.layout = this.layout_selected;
   }
 
-
   setGenre(genere: string) {
     console.log("Set Genere: " + genere);
     this.genre_selected = genere;
@@ -77,7 +68,6 @@ export class SelabHeaderComponent implements OnInit {
     console.log("Set Component Type: " + componentType);
     this.component_selected = componentType;
   }
-
 
   fresh() {
     this.componentProperties = [];
@@ -99,12 +89,7 @@ export class SelabHeaderComponent implements OnInit {
     );
   }
 
-
   apply() {
-    // selector is now meaningless
-    // this.layoutComponent = new Layout({id: PropertyGenerator.getID(this.graphEditorService.getMaxVertexID()), selector: this.layout_selected, type: 'layout'});
-    // Storage.setLayoutComponent(this.layoutComponent);
-    // this.graphEditorService.bindComponent(this.layoutComponent);
     this.graphEditorService.applyLayout(this.layout_selected);
   }
 
@@ -133,15 +118,6 @@ export class SelabHeaderComponent implements OnInit {
     sf.resetForm(sf['value']);
   }
 
-  openForm(s) {
-    console.log("open form 1")
-    document.getElementById('myForm').style.display = 'block';
-  }
-
-  closeForm() {
-    document.getElementById('myForm').style.display = 'none';
-  }
-
   openForm2() {
     console.log("open form 2")
     document.getElementById('navigationForm').style.display = 'block';
@@ -149,10 +125,6 @@ export class SelabHeaderComponent implements OnInit {
 
   import() {
     this.importService.import();
-  }
-
-  showFiles() {
-    this.files = this.importService.pages;
   }
 
   save() {
@@ -164,28 +136,6 @@ export class SelabHeaderComponent implements OnInit {
     document.getElementById('navigationForm').style.display = 'none';
   }
 
-  insertEdge(sf) {
-    const graphStorage = this.graphEditorService.getGraphStorage();
-    const graph = graphStorage.getGraph();
-    const parent = graph.getDefaultParent();
-    const graphNode = document.getElementById('graphContainer0');
-    const defaultWidth = graphNode.offsetWidth;
-    const defaultHeight = graphNode.offsetHeight;
-    let style = new Object();
-    style[mxConstants.STYLE_ROUNDED] = true;
-    style[mxConstants.STYLE_FONTSIZE] = 20;
-    graph.getStylesheet().putCellStyle('rounded', style);
-    let v1 = graphStorage.findVertex(sf['value']['source']);
-    let srcStyle = this.findImageStyle(sf['value']['source']);
-    let tarStyle = this.findImageStyle(sf['value']['target']);
-    if (v1 == null) {
-      v1 = graph.insertVertex(parent, null, "", defaultWidth / 2 - 400, defaultHeight / 2, 150, 90, srcStyle, '');
-    }
-    let v2 = graph.insertVertex(parent, null, "", defaultWidth / 2, defaultHeight / 2, 150, 90, tarStyle, '');
-    graphStorage.insertEdge(v1, v2);
-    document.getElementById('navigationForm').style.display = 'none';
-  }
-
   storeNDL() {
     this.exportService.postNDL().subscribe(
       response => console.log(response['body'])
@@ -194,47 +144,5 @@ export class SelabHeaderComponent implements OnInit {
 
   showImage() {
     this.images = Storage.images;
-
-  }
-
-  findImageStyle(page) {
-    for (let i = 0; i < this.images.length; i++) {
-      if (this.images[i]['page'] == page) {
-
-        var style = {};
-
-        style = mxUtils.clone(style); 
-        style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;
-
-        style[mxConstants.STYLE_STROKECOLOR] = '#ffffff';
-
-        style[mxConstants.STYLE_FONTCOLOR] = '#2422a0';
-
-        style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
-
-        style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_BOTTOM;
-
-        style[mxConstants.STYLE_FONTSIZE] = 30;
-
-        style[mxConstants.STYLE_IMAGE_ALIGN] = mxConstants.ALIGN_CENTER;
-
-        style[mxConstants.STYLE_IMAGE_VERTICAL_ALIGN] = mxConstants.ALIGN_CENTER;
-
-        //style[mxConstants.STYLE_IMAGE] = 'images/icons48/gear.png';
-        style[mxConstants.STYLE_IMAGE] = Storage.images[i]['img'];
-
-        style[mxConstants.STYLE_IMAGE_WIDTH] = 300;
-
-        style[mxConstants.STYLE_IMAGE_HEIGHT] = 200;
-
-        style[mxConstants.STYLE_SPACING_TOP] = 30;
-
-        style[mxConstants.STYLE_SPACING] = 10;
-
-        style[mxConstants.STYLE_FILLCOLOR] = '#ffffff';
-        this.graphEditorService.selectedGraphStorage.getGraph().getStylesheet().putCellStyle('style' + i.toString(), style);
-        return 'style' + i.toString();
-      }
-    }
   }
 }
