@@ -71,20 +71,8 @@
           (click)="fresh()">Launch Wizard
       </li>
       <app-wizard [componentName]="component_selected" [componentProperties]="componentProperties"></app-wizard>
-      <li class="nav-item dropdown px-4" dropdown>
-        <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-          dropdownToggle (click)="false">
-          Insert Item
-        </a>
-        <div class="dropdown-menu" aria-labelledby="simple-dropdown">
-          <div class="dropdown-header text-center"><strong>Layout Part</strong></div>
-          <a class="dropdown-item" (click)="openForm('header')">header</a>
-          <a class="dropdown-item" (click)="openForm('footer')">footer</a>
-          <a class="dropdown-item" (click)="openForm('sidebar')">sidebar</a>
-          <a class="dropdown-item" (click)="openForm('asidebar')">asidebar</a>
-        </div>
-      </li>
       <li class="btn btn-ghost-dark btn-pill px-4" (click)="openForm2()">Navigation Mechanism</li>
     </ul>
   </div>
 </app-header>
+<selab-header-navigation-form></selab-header-navigation-form>

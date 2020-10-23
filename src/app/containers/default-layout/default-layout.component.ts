@@ -100,45 +100,7 @@ export class DefaultLayoutComponent implements OnInit {
 
 
   apply() {
-    // selector is now meaningless
-    // this.layoutComponent = new Layout({id: PropertyGenerator.getID(this.graphEditorService.getMaxVertexID()), selector: this.layout_selected, type: 'layout'});
-    // Storage.setLayoutComponent(this.layoutComponent);
-    // this.graphEditorService.bindComponent(this.layoutComponent);
     this.graphEditorService.applyLayout(this.layout_selected);
-  }
-
-  addLayoutItem(sf) {
-    document.getElementById('myForm').style.display = 'none';
-    const properties = sf.value;
-    properties['id'] = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
-    properties['selector'] = 'text';
-    properties['type'] = 'text';
-    properties['layout'] = this.layoutPart;
-    const text = new TextComponent(properties);
-    if (this.layoutPart == 'sidebar') {
-      this.layoutComponent['sidebar'].push(text);
-    } else if (this.layoutPart == 'header') {
-      this.layoutComponent['header'].push(text);
-    } else if (this.layoutPart == 'footer') {
-      this.layoutComponent['footer'].push(text);
-    } else if (this.layoutPart == 'asidebar') {
-      this.layoutComponent['asidebar'].push(text);
-    }
-    this.graphEditorService.bindComponent(text);
-
-    for (const element of properties) {
-      sf['value'][element] = '';
-    }
-    sf.resetForm(sf['value']);
-  }
-
-  openForm(s) {
-    console.log("open form 1")
-    document.getElementById('myForm').style.display = 'block';
-  }
-
-  closeForm() {
-    document.getElementById('myForm').style.display = 'none';
   }
 
   openForm2() {
@@ -237,7 +199,3 @@ export class DefaultLayoutComponent implements OnInit {
     }
   }
 }
-
-
-
-

@@ -43,6 +43,7 @@ import { SelabFooterComponent } from './components/selab-footer/selab-footer.com
 import { SelabHeaderComponent } from './components/selab-header/selab-header.component';
 import { SelabSettingComponent } from './components/selab-setting/selab-setting.component';
 import { SelabBodyComponent } from './components/selab-body/selab-body.component';
+import { SelabHeaderNavigationFormComponent } from './components/selab-header-navigation-form/selab-header-navigation-form.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { SelabBodyComponent } from './components/selab-body/selab-body.component
     ServiceComponentConfigurationComponent,
     XTerminalComponent,
     SelabBodyComponent,
+    SelabHeaderNavigationFormComponent,
   ],
   imports: [
     PerfectScrollbarModule,

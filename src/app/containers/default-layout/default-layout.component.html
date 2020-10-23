@@ -2,33 +2,6 @@
 <selab-body></selab-body>
 <selab-footer></selab-footer>
 
-<div class="form-popup" id="myForm"
-     style="display: none;position:fixed;top:8%;right:30%;z-index: 9;width:350px;height:100px">
-  <form #li="ngForm" (ngSubmit)="addLayoutItem(li);">
-    <div class="card">
-      <div class="card-body">
-        <div class="form-group row">
-          <label class="col-5" for="text-part" style="text-align: center">Text:</label>
-          <div class="col-md-7">
-            <input type="text" id="text-part" name="text" ngModel>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-5" for="href-part" style="text-align: center">Href:</label>
-          <div class="col-md-7">
-            <input type="text" id="href-part" name="href" ngModel>
-          </div>
-        </div>
-      </div>
-      <div class="card-footer" style="display: flex;justify-content: center;">
-        <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
-        <button type="reset" class="btn btn-sm btn-danger" (click)="closeForm()"><i class="fa fa-ban"></i> Cancel
-        </button>
-      </div>
-    </div>
-  </form>
-</div>
-
 <div class="form-popup" id="navigationForm"
      style="position:fixed;display:none;top:8%;right:30%;z-index: 9;width:350px;height:100px">
   <form #ie="ngForm" (ngSubmit)="insertEdge(ie);">
