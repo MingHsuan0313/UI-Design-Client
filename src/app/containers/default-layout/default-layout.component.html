@@ -18,7 +18,6 @@
         </div>
       </li>
 
-
       <li class="nav-item dropdown px-4" dropdown>
         <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
           dropdownToggle (click)="false">
@@ -85,30 +84,12 @@
         </div>
       </li>
       <li class="btn btn-ghost-dark btn-pill px-4" (click)="openForm2()">Navigation Mechanism</li>
-
-    
     </ul>
   </div>
 </app-header>
 
-<div class="app-body">
-  <!-- Main content -->
-  <main class="main">
-    <!-- Breadcrumb -->
-    <div class="container-fluid" style="height: 100% ;padding-right:0;">
-      <div class="row" style="height:100%; ">
-        <selab-graph-editor class="col-10"></selab-graph-editor>
-        <div class="col-2" style="height:100%;width:100%; margin: 0; padding: 0; " >
-          <selab-setting></selab-setting> 
-        </div>
-      </div>
-
-    </div><!-- /.container-fluid -->
-  </main>
-</div>
-<app-footer style=" background-color: #e4e5e6 ">
-  <span><a href="#">SELab</a> &copy; 2020 </span>
-</app-footer>
+<selab-body></selab-body>
+<selab-footer></selab-footer>
 
 <div class="form-popup" id="myForm"
      style="display: none;position:fixed;top:8%;right:30%;z-index: 9;width:350px;height:100px">

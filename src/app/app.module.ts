@@ -1,6 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
@@ -41,6 +42,7 @@ import { XTerminalComponent } from './components/code-editor/x-terminal/x-termin
 import { SelabFooterComponent } from './components/selab-footer/selab-footer.component';
 import { SelabHeaderComponent } from './components/selab-header/selab-header.component';
 import { SelabSettingComponent } from './components/selab-setting/selab-setting.component';
+import { SelabBodyComponent } from './components/selab-body/selab-body.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { SelabSettingComponent } from './components/selab-setting/selab-setting.
     CodeEditorDialogComponent,
     ServiceComponentConfigurationComponent,
     XTerminalComponent,
+    SelabBodyComponent,
   ],
   imports: [
     PerfectScrollbarModule,
