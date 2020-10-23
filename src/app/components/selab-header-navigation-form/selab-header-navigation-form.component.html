@@ -1,0 +1,26 @@
+<div class="form-popup" id="navigationForm"
+     style="position:fixed;display:none;top:8%;right:30%;z-index: 9;width:350px;height:100px">
+  <form #ie="ngForm" (ngSubmit)="insertEdge(ie);">
+    <div class="card">
+      <div class="card-body">
+        <div class="form-group row">
+          <label class="col-5" for="source-part" style="text-align: center">Source:</label>
+          <div class="col-md-7">
+            <input type="text" id="source-part" name="source" ngModel>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-5" for="target-part" style="text-align: center">Target:</label>
+          <div class="col-md-7">
+            <input type="text" id="target-part" name="target" ngModel>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer" style="display: flex;justify-content: center;">
+        <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+        <button type="reset" class="btn btn-sm btn-danger" (click)="closeForm2()"><i class="fa fa-ban"></i> Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

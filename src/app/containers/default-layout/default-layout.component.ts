@@ -1,14 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-import {
-  Router,
-  NavigationEnd,
-  ActivatedRoute,
-  RouteConfigLoadEnd
-} from '@angular/router';
 import {Storage} from '../../shared/storage';
-import {Layout, TextComponent} from '../../models/ui-component-dependency';
-import {PropertyGenerator} from '../../shared/property-generator';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import ImportService from '../../services/internalRepresentation/import.service';
@@ -22,7 +14,6 @@ import ExportService from '../../services/internalRepresentation/export.service'
 export class DefaultLayoutComponent implements OnInit {
   public navItems = null;
   public sidebarMinimized = true;
-  private changes: MutationObserver;
   public element: HTMLElement = document.body;
 
   // test_data
@@ -37,11 +28,7 @@ export class DefaultLayoutComponent implements OnInit {
   componentProperties: any[];
 
   storageComponents: any[] = Storage.components;
-  private layoutComponent: any;
-  private layoutPart: any;
-  private files: any[];
   public userName = 'undefined';
-  private images: any[] = [];
 
 
   constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService, private importService: ImportService, private exportService: ExportService) {
@@ -103,17 +90,8 @@ export class DefaultLayoutComponent implements OnInit {
     this.graphEditorService.applyLayout(this.layout_selected);
   }
 
-  openForm2() {
-    console.log("open form 2")
-    document.getElementById('navigationForm').style.display = 'block';
-  }
-
   import() {
     this.importService.import();
-  }
-
-  showFiles() {
-    this.files = this.importService.pages;
   }
 
   save() {
@@ -121,81 +99,9 @@ export class DefaultLayoutComponent implements OnInit {
     this.graphEditorService.syncStorage();
   }
 
-  closeForm2() {
-    document.getElementById('navigationForm').style.display = 'none';
-  }
-
-  insertEdge(sf) {
-    const graphStorage = this.graphEditorService.getGraphStorage();
-    const graph = graphStorage.getGraph();
-    const parent = graph.getDefaultParent();
-    const graphNode = document.getElementById('graphContainer0');
-    const defaultWidth = graphNode.offsetWidth;
-    const defaultHeight = graphNode.offsetHeight;
-    let style = new Object();
-    style[mxConstants.STYLE_ROUNDED] = true;
-    style[mxConstants.STYLE_FONTSIZE] = 20;
-    graph.getStylesheet().putCellStyle('rounded', style);
-    let v1 = graphStorage.findVertex(sf['value']['source']);
-    let srcStyle = this.findImageStyle(sf['value']['source']);
-    let tarStyle = this.findImageStyle(sf['value']['target']);
-    if (v1 == null) {
-      v1 = graph.insertVertex(parent, null, "", defaultWidth / 2 - 400, defaultHeight / 2, 150, 90, srcStyle, '');
-    }
-    let v2 = graph.insertVertex(parent, null, "", defaultWidth / 2, defaultHeight / 2, 150, 90, tarStyle, '');
-    graphStorage.insertEdge(v1, v2);
-    document.getElementById('navigationForm').style.display = 'none';
-  }
-
   storeNDL() {
     this.exportService.postNDL().subscribe(
       response => console.log(response['body'])
     );
-  }
-
-  showImage() {
-    this.images = Storage.images;
-
-  }
-
-  findImageStyle(page) {
-    for (let i = 0; i < this.images.length; i++) {
-      if (this.images[i]['page'] == page) {
-
-        var style = {};
-
-        style = mxUtils.clone(style); 
-        style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;
-
-        style[mxConstants.STYLE_STROKECOLOR] = '#ffffff';
-
-        style[mxConstants.STYLE_FONTCOLOR] = '#2422a0';
-
-        style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
-
-        style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_BOTTOM;
-
-        style[mxConstants.STYLE_FONTSIZE] = 30;
-
-        style[mxConstants.STYLE_IMAGE_ALIGN] = mxConstants.ALIGN_CENTER;
-
-        style[mxConstants.STYLE_IMAGE_VERTICAL_ALIGN] = mxConstants.ALIGN_CENTER;
-
-        //style[mxConstants.STYLE_IMAGE] = 'images/icons48/gear.png';
-        style[mxConstants.STYLE_IMAGE] = Storage.images[i]['img'];
-
-        style[mxConstants.STYLE_IMAGE_WIDTH] = 300;
-
-        style[mxConstants.STYLE_IMAGE_HEIGHT] = 200;
-
-        style[mxConstants.STYLE_SPACING_TOP] = 30;
-
-        style[mxConstants.STYLE_SPACING] = 10;
-
-        style[mxConstants.STYLE_FILLCOLOR] = '#ffffff';
-        this.graphEditorService.selectedGraphStorage.getGraph().getStylesheet().putCellStyle('style' + i.toString(), style);
-        return 'style' + i.toString();
-      }
-    }
   }
 }
