@@ -4,12 +4,12 @@ import ExportService from '../../services/internalRepresentation/export.service'
 import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
-  selector: 'app-setting',
-  templateUrl: './app-setting.component.html',
-  styleUrls: ['./app-setting.component.scss'],
+  selector: 'selab-setting',
+  templateUrl: './selab-setting.component.html',
+  styleUrls: ['./selab-setting.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppSettingComponent implements OnInit {
+export class SelabSettingComponent implements OnInit {
 
   files: any[] = [];
   image: any;
@@ -32,5 +32,3 @@ export class AppSettingComponent implements OnInit {
     console.log(this.files);
   }
 }
-
-

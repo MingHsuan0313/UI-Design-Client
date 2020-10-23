@@ -89,27 +89,7 @@
     
     </ul>
   </div>
-<!-- 
-  <div class="container-fluid ">
-    <ul class="nav navbar-nav ">
-      <li class="nav-item px-4">
-        <a class="nav-link" role="button" (click)="showER()">Show ER</a>
-      </li>
-      <li class="nav-item px-4">
-        <a class="nav-link" role="button" (click)="showIR()">Show IR</a>
-      </li>
-      <li class="nav-item px-4">
-        <a class="nav-link" role="button" (click)="newProject()">New Project</a>
-      </li>
-    </ul>
-  </div> -->
-
-
-
-
 </app-header>
-
-
 
 <div class="app-body">
   <!-- Main content -->
@@ -117,24 +97,9 @@
     <!-- Breadcrumb -->
     <div class="container-fluid" style="height: 100% ;padding-right:0;">
       <div class="row" style="height:100%; ">
-        <app-graph-editor class="col-10"></app-graph-editor>
-        <!-- <div class="col-2">
-          <button class="btn btn-instagram" (click)="showFiles()">show topics</button>
-          <br><br>
-          <form>
-            <div *ngFor="let file of files"><strong>{{file.selector}}</strong>
-              <div *ngFor="let f of file['components']">->{{f}}</div>
-            </div>
-          </form>
-          <button class="btn btn-primary" (click)="showImage()">show images</button>
-          <div *ngFor="let f of images">->
-            <a>{{f["page"]}}</a>
-            <img [src]="f.img" alt="image" style="height: 100px;width: 200px">
-          </div>
-          <router-outlet></router-outlet>
-        </div> -->
+        <selab-graph-editor class="col-10"></selab-graph-editor>
         <div class="col-2" style="height:100%;width:100%; margin: 0; padding: 0; " >
-          <app-setting></app-setting> 
+          <selab-setting></selab-setting> 
         </div>
       </div>
 
@@ -198,7 +163,5 @@
     </div>
   </form>
 </div>
-
-
 
 <app-code-editor-dialog></app-code-editor-dialog>

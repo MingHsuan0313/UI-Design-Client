@@ -9,11 +9,11 @@ import { StyleLibrary } from '../../shared/styleLibrary';
 import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model';
 
 @Component({
-  selector: 'app-graph-editor',
-  templateUrl: './app-graph-editor.component.html',
-  styleUrls: ['./app-graph-editor.component.scss']
+  selector: 'selab-graph-editor',
+  templateUrl: './selab-graph-editor.component.html',
+  styleUrls: ['./selab-graph-editor.component.scss']
 })
-export class AppGraphEditorComponent implements AfterViewInit {
+export class SelabGraphEditorComponent implements AfterViewInit {
   private zoomFactor = 1;
   //imageCount = 1;
   constructor(private graphEditorService: GraphEditorService, private exportService: ExportService) {

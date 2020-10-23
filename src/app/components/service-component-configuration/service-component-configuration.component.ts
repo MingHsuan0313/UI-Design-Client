@@ -12,7 +12,7 @@ import { BasicComponent } from 'src/app/models/internalRepresentation/BasicCompo
 @Component({
   selector: 'app-service-component-configuration',
   templateUrl: './service-component-configuration.component.html',
-  styleUrls: ['./service-component-configuration.component.css']
+  styleUrls: ['./service-component-configuration.component.scss']
 })
 export class ServiceComponentConfigurationComponent implements OnInit {
   selectedUIComponent: UIComponent;
