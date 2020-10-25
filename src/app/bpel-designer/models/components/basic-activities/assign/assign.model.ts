@@ -24,7 +24,7 @@ export class Assign extends BPELComponent {
         console.log(this.componentName);
     }
 
-    updateBPELDoc(sourceActivity: Copy): void {
+    updateBPELDoc(sourceActivity: BPELComponent): void {
         if (sourceActivity instanceof Copy) {
             // 1. push <copy>
             this.updateBPELDocService.pushActivity(sourceActivity, this);
@@ -33,7 +33,7 @@ export class Assign extends BPELComponent {
             // 2. update nodes order
             this.updateBPELDocService.updateOrder(this);
         } else {
-            alert("[PUSH ACTIVITY ERROR]");
+            alert("[PUSH ACTIVITY ERROR] " + sourceActivity.getComponentName());
             throw new Error("<" + this.componentName + "> can only push <copy> to activityList");
         }
     }

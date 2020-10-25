@@ -56,6 +56,7 @@ import { CompensateScopeStrategy } from "../../models/createBPELComponentStrateg
 import UpdateBPELDocService from "../../services/updateBPELDoc.service";
 import VertexStorage from "src/app/models/vertex-storage.model";
 import { BPELComponent } from "../../models/components/BPELComponent.model";
+import IOBPELDocService from "../../services/ioBPELDoc/ioBPELDoc.service";
 
 @Component({
     selector: 'palette',
@@ -69,10 +70,48 @@ export class PaletteComponent implements AfterViewInit {
     basex: number = 0;
     basey: number = 0;
     CREATE_VERTEX_DISPLACEMENT_DISTANCE: number = 130;
+    importingTargetContainerActivityNameWithIdStack: string[] = new Array<string>();
+    importingComponentNameWithIdComponentMap: Map<string, BPELComponent> = new Map<string, BPELComponent>();
 
     @Input() userSettedTargetContainerActivity: BPELComponent;
 
-    constructor(private updateBPELDocService: UpdateBPELDocService, private graphEditorService: GraphEditorService) {
+    constructor(private updateBPELDocService: UpdateBPELDocService, private graphEditorService: GraphEditorService, private ioBPELDocService: IOBPELDocService) {
+        // Scenario: import a BPEL doc
+        ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId: [string[], string]) => {
+            let componentNameWithIdStack = componentNameWithIdStack_curParentNodeNameWithId[0];
+            let curParentNodeNameWithId = componentNameWithIdStack_curParentNodeNameWithId[1];
+
+            if (componentNameWithIdStack.length) {
+                let lastComponentNameWithId = componentNameWithIdStack[componentNameWithIdStack.length - 1];
+                // have not drawn
+                if (!this.importingComponentNameWithIdComponentMap.get(lastComponentNameWithId)) {
+                    let componentName = this.extractComponentNameOfComponentNameWithId(lastComponentNameWithId);
+                    let bpelComponent;
+                    // check if given a parent activity
+                    if (curParentNodeNameWithId != undefined) {
+                        let importingTargetContainerActivity = this.importingComponentNameWithIdComponentMap.get(curParentNodeNameWithId);
+                        bpelComponent = this.draw(componentName, importingTargetContainerActivity);
+                    } else {
+                        bpelComponent = this.draw(componentName);
+                    }
+                    // drawn successfully because it belongs to a BPELComponent
+                    if (bpelComponent) {
+                        this.importingComponentNameWithIdComponentMap.set(lastComponentNameWithId, bpelComponent);
+                        // check instanceof types in the following set:
+                        // {BPELComponentElementWithActivity, BPELComponentElementWithActivityList, BPELComponentElementWithActivityAndActivityList, ElseIfBranch, ElseBranch}
+                        if (bpelComponent instanceof Process || bpelComponent instanceof Scope ||
+                            bpelComponent instanceof Sequence ||bpelComponent instanceof Flow ||
+                            bpelComponent instanceof If || bpelComponent instanceof ElseIfBranch || bpelComponent instanceof ElseBranch ||
+                            bpelComponent instanceof While || bpelComponent instanceof RepeatUntil || bpelComponent instanceof ForEach ||
+                            bpelComponent instanceof Pick || bpelComponent instanceof OnMessage ||
+                            bpelComponent instanceof Assign) {
+                            // push new targetContainerActivity
+                            this.importingTargetContainerActivityNameWithIdStack.push(lastComponentNameWithId);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     ngAfterViewInit(): void {
@@ -107,7 +146,11 @@ export class PaletteComponent implements AfterViewInit {
         this.strategy = strategy;
     }
 
-    draw(componentName: string): void {
+    extractComponentNameOfComponentNameWithId(componentNameWithId: string): string {
+        return componentNameWithId.split('_')[0];
+    }
+
+    draw(componentName: string, importingTargetContainerActivity?: BPELComponent): BPELComponent {
         const vertexId = PropertyGenerator.getID(this.graphEditorService.getMaxID());
         let bpelComponent;
         switch (componentName) {
@@ -213,28 +256,36 @@ export class PaletteComponent implements AfterViewInit {
                 break;
             default:
                 console.log("The BPEL component building failed");
+                return null;
         }
         this.basex += this.CREATE_VERTEX_DISPLACEMENT_DISTANCE;
         let bpelComponentVertexStorage = this.strategy.createComponent(this.graphStorage, bpelComponent, null);
         console.log(bpelComponentVertexStorage);
 
-        // set targetContainerActivity and update BPEL doc
-        if (this.targetContainerActivity != null) {
-            this.targetContainerActivity.updateBPELDoc(bpelComponent);
-        }
-        // check instanceof types in the following set:
-        // {BPELComponentElementWithActivity, BPELComponentElementWithActivityList, BPELComponentElementWithActivityAndActivityList, ElseIfBranch, ElseBranch}
-        if (bpelComponent instanceof Process || bpelComponent instanceof Scope ||
-            bpelComponent instanceof Sequence ||bpelComponent instanceof Flow ||
-            bpelComponent instanceof If || bpelComponent instanceof ElseIfBranch || bpelComponent instanceof ElseBranch ||
-            bpelComponent instanceof While || bpelComponent instanceof RepeatUntil || bpelComponent instanceof ForEach ||
-            bpelComponent instanceof Pick || bpelComponent instanceof OnMessage ||
-            bpelComponent instanceof Assign) {
-            // Depth-firstly set the targetContainerActivity
-            this.targetContainerActivity = bpelComponent;
+        if (importingTargetContainerActivity != undefined) {
+            importingTargetContainerActivity.updateBPELDoc(bpelComponent);
+            this.targetContainerActivity = importingTargetContainerActivity;
+        } else {
+            // set targetContainerActivity and update BPEL doc
+            if (this.targetContainerActivity != null) {
+                this.targetContainerActivity.updateBPELDoc(bpelComponent);
+            }
+            // check instanceof types in the following set:
+            // {BPELComponentElementWithActivity, BPELComponentElementWithActivityList, BPELComponentElementWithActivityAndActivityList, ElseIfBranch, ElseBranch}
+            if (bpelComponent instanceof Process || bpelComponent instanceof Scope ||
+                bpelComponent instanceof Sequence ||bpelComponent instanceof Flow ||
+                bpelComponent instanceof If || bpelComponent instanceof ElseIfBranch || bpelComponent instanceof ElseBranch ||
+                bpelComponent instanceof While || bpelComponent instanceof RepeatUntil || bpelComponent instanceof ForEach ||
+                bpelComponent instanceof Pick || bpelComponent instanceof OnMessage ||
+                bpelComponent instanceof Assign) {
+                // Depth-firstly set the targetContainerActivity
+                this.targetContainerActivity = bpelComponent;
+            }
         }
         console.log("[targetContainerActivity] = ", this.targetContainerActivity.getComponentName() + "(id = " + this.targetContainerActivity.getId() + ")");
         console.log(this.graphStorage);
+
+        return bpelComponent;
     }
 
     syncTargetContainerActivity(): void {

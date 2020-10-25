@@ -1,11 +1,15 @@
 import { GraphStorage } from "src/app/models/modelDependency";
 import GraphEditorService from "src/app/services/graph-editor.service";
+import IOBPELDocService from "./ioBPELDoc.service";
 
 export class IOBPELDocParser {
     graphStorage: GraphStorage;
     curParentBPELNode: Element = null;
+    componentNameWithIdStack: string[] = new Array<string>();
+    idCnt: number = 2;  // consistent with mxGraph Id
+    componentIdMap: Map<Element, string> = new Map<Element, string>();
 
-    constructor(private graphEditorService : GraphEditorService) {
+    constructor(private ioBPELDocService: IOBPELDocService, private graphEditorService : GraphEditorService) {
     }
 
     parseImportBPELDoc(xmlBPELDoc: XMLDocument): void {
@@ -15,9 +19,23 @@ export class IOBPELDocParser {
     }
 
     dfsTraverseAndDraw(rootNode: Element): void {
-        //TODO: Use "rootNode.nodeName" to check whether it is a BPELComponent via PaletteComponent Dependency Injection
+        if (rootNode && !this.componentIdMap.get(rootNode)) {
+            let id = String(this.idCnt);
+            this.componentIdMap.set(rootNode, id);
+            this.componentNameWithIdStack.push(rootNode.nodeName + "_" + id)
+            this.idCnt += 1;
+        }
+        // notify current componentNameWithIdStack to PaletteComponent TODO: Setting attributes and elements in PropertyEditorComponent
+        if (!this.curParentBPELNode) {
+            this.ioBPELDocService.next(this.componentNameWithIdStack, undefined);
+        } else {
+            this.ioBPELDocService.next(this.componentNameWithIdStack, this.curParentBPELNode.nodeName + "_" + this.componentIdMap.get(this.curParentBPELNode));
+        }
+        console.log("[componentNameWithIdStack]");
+        console.log(this.componentNameWithIdStack);
+
         console.log("===");
-        console.log("parentNode = " + (this.curParentBPELNode != null? this.curParentBPELNode.nodeName : "null"));
+        console.log("parentNode = " + (this.curParentBPELNode != null? this.curParentBPELNode.nodeName + "_" + this.componentIdMap.get(this.curParentBPELNode) : "null"));
         console.log("curNode= " + rootNode.nodeName);
         // 1. attribute key and value
         let curNodeAttributeNames = rootNode.getAttributeNames();
@@ -43,6 +61,7 @@ export class IOBPELDocParser {
         // rescursion ends, so reset curParentBPELNode to rootNode's parent
         if (rootNode.parentElement != null) {
             this.curParentBPELNode = rootNode.parentElement;
+            this.componentNameWithIdStack.pop();
         }
     }
 
