@@ -151,6 +151,8 @@ export class PaletteComponent implements AfterViewInit {
     }
 
     draw(componentName: string, importingTargetContainerActivity?: BPELComponent): BPELComponent {
+        console.log("============ Subscribed: PaletteComponent.draw() BEGIN ============");
+
         const vertexId = PropertyGenerator.getID(this.graphEditorService.getMaxID());
         let bpelComponent;
         switch (componentName) {
@@ -285,6 +287,7 @@ export class PaletteComponent implements AfterViewInit {
         console.log("[targetContainerActivity] = ", this.targetContainerActivity.getComponentName() + "(id = " + this.targetContainerActivity.getId() + ")");
         console.log(this.graphStorage);
 
+        console.log("============ Subscribed: PaletteComponent.draw() END ============");
         return bpelComponent;
     }
 

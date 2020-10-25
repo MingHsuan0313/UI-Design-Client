@@ -19,22 +19,7 @@ export class IOBPELDocParser {
     }
 
     dfsTraverseAndDraw(rootNode: Element): void {
-        if (rootNode && !this.componentIdMap.get(rootNode)) {
-            let id = String(this.idCnt);
-            this.componentIdMap.set(rootNode, id);
-            this.componentNameWithIdStack.push(rootNode.nodeName + "_" + id)
-            this.idCnt += 1;
-        }
-        // notify current componentNameWithIdStack to PaletteComponent TODO: Setting attributes and elements in PropertyEditorComponent
-        if (!this.curParentBPELNode) {
-            this.ioBPELDocService.next(this.componentNameWithIdStack, undefined);
-        } else {
-            this.ioBPELDocService.next(this.componentNameWithIdStack, this.curParentBPELNode.nodeName + "_" + this.componentIdMap.get(this.curParentBPELNode));
-        }
-        console.log("[componentNameWithIdStack]");
-        console.log(this.componentNameWithIdStack);
-
-        console.log("===");
+        console.log("============ Current DFS Traverse Info BEGIN ============");
         console.log("parentNode = " + (this.curParentBPELNode != null? this.curParentBPELNode.nodeName + "_" + this.componentIdMap.get(this.curParentBPELNode) : "null"));
         console.log("curNode= " + rootNode.nodeName);
         // 1. attribute key and value
@@ -49,6 +34,21 @@ export class IOBPELDocParser {
         if (rootNode.childNodes.length == 1 && rootNode.childNodes[0].nodeValue) {
             console.log("*** textContent=");
             console.log(rootNode.childNodes[0].nodeValue);
+        }
+        console.log("============ Current DFS Traverse Info END ============");
+
+        // keep every node's id record
+        if (rootNode && !this.componentIdMap.get(rootNode)) {
+            let id = String(this.idCnt);
+            this.componentIdMap.set(rootNode, id);
+            this.componentNameWithIdStack.push(rootNode.nodeName + "_" + id)
+            this.idCnt += 1;
+        }
+        // notify current componentNameWithIdStack to PaletteComponent TODO: Setting attributes and elements in PropertyEditorComponent
+        if (!this.curParentBPELNode) {
+            this.ioBPELDocService.next(this.componentNameWithIdStack, undefined);
+        } else {
+            this.ioBPELDocService.next(this.componentNameWithIdStack, this.curParentBPELNode.nodeName + "_" + this.componentIdMap.get(this.curParentBPELNode));
         }
 
         // recursively DFS traverse child nodes
