@@ -1,12 +1,12 @@
 import { BPELComponentAttribute } from "../../BPELComponent-attribute.model";
 
 export class ReplyAttribute extends BPELComponentAttribute {
-    variable?: string = undefined;
-    partnerLink: string = undefined;
-    operation: string = undefined;
-    portType?: string = undefined;
-    messageExchange?: string = undefined;
-    faultName?: string = undefined;
+    variable?: string = "";
+    partnerLink: string = "";
+    operation: string = "";
+    portType?: string = "";
+    messageExchange?: string = "";
+    faultName?: string = "";
 
     constructor(name?: string) {
         super(name);

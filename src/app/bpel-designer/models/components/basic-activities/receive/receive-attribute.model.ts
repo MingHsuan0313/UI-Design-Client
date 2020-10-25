@@ -1,12 +1,12 @@
 import { BPELComponentAttribute } from "../../BPELComponent-attribute.model";
 
 export class ReceiveAttribute extends BPELComponentAttribute {
-    variable?: string = undefined;
-    partnerLink: string = undefined;
-    operation: string = undefined;
-    portType?: string = undefined;
-    createInstance?: string = undefined; // "yes" | "no"
-    messageExchange?: string = undefined;
+    variable?: string = "";
+    partnerLink: string = "";
+    operation: string = "";
+    portType?: string = "";
+    createInstance?: string = ""; // "yes" | "no"
+    messageExchange?: string = "";
 
     constructor(name?: string) {
         super(name);

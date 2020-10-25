@@ -24,7 +24,7 @@ export class GraphStorage {
   graph: mxGraph;
   id: string;
   graphConfiguration: GraphConfiguration;
-
+  edgeIdCnt: number = -1;  // TODO: temporary solution, start from -1 to avoid conflict with getMaxId()
 
 
   strategy: ICreateComponentStrategy;
@@ -266,8 +266,8 @@ export class GraphStorage {
       style[mxConstants.STYLE_FONTSIZE] = 16;
       this.graph.getStylesheet().putCellStyle('edgeStyle', style);
       this.graph.getModel().beginUpdate();
-      edge = this.graph.insertEdge(parent, '', '', sourceVertex, targetVertex, 'edgeStyle');
-
+      edge = this.graph.insertEdge(parent, String(this.edgeIdCnt), '', sourceVertex, targetVertex, 'edgeStyle');
+      this.edgeIdCnt -= 1;
     } finally {
       this.graph.getModel().endUpdate();
     }

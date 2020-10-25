@@ -34,14 +34,8 @@ export class CopyElement {
         this.provideTo.set("ToVariantWithVariableAndProperty", new ToVariantWithVariableAndPropertyCreator());
         this.provideTo.set("ToVariantWithExpressionLanguageAndExpression", new ToVariantWithExpressionLanguageAndExpressionCreator());
 
-        // consturct default from-spec and to-spec
-        this.from = this.constructDefaultFromSpec();
+        // consturct default to-spec
         this.to = this.constructDefaultToSpec();
-    }
-
-    constructDefaultFromSpec(): From {
-        // Default from-spec: "FromVariantWithVariableAndPartAndQuery"
-        return this.provideFrom.get("FromVariantWithVariableAndPartAndQuery").createFrom();
     }
 
     constructDefaultToSpec(): To {
@@ -55,6 +49,10 @@ export class CopyElement {
         } else {
             console.log("The form-spec does not exist");
         }
+    }
+
+    setFrom(from: From): void {
+        this.from = from;
     }
 
     createTo(toName: string): To {
