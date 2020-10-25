@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { element } from "@angular/core/src/render3/instructions";
+import { Observable, Subject } from "rxjs";
 import GraphEditorService from "src/app/services/graph-editor.service";
 import { IOBPELDocParser } from "./ioBPELDocParser.service";
 import { IOBPELDocValidator } from "./ioBPELDocValidator.service";
@@ -10,10 +10,12 @@ import { IOBPELDocValidator } from "./ioBPELDocValidator.service";
 export default class IOBPELDocService {
     ioBPELDocValidator: IOBPELDocValidator;
     ioBPELDocParser: IOBPELDocParser;
+    componentNameWithIdStack_CurParentNodeNameWithIdSource = new Subject<[string[], string]>();
+    componentNameWithIdStack_CurParentNodeNameWithIdObservable: Observable<[string[], string]> = this.componentNameWithIdStack_CurParentNodeNameWithIdSource.asObservable();
 
     constructor(private graphEditorService : GraphEditorService) {
         this.ioBPELDocValidator = new IOBPELDocValidator(graphEditorService);
-        this.ioBPELDocParser = new IOBPELDocParser(graphEditorService);
+        this.ioBPELDocParser = new IOBPELDocParser(this, graphEditorService);
     }
 
     importBPELDoc(event: any): void {
@@ -40,6 +42,14 @@ export default class IOBPELDocService {
                 throw new Error(INVALID_BPEL_DOC_MSG);
             }
         };
+    }
+
+    next(componentNameWithIdStack: string[], curParentNodeNameWithId: string): void {
+        this.componentNameWithIdStack_CurParentNodeNameWithIdSource.next([componentNameWithIdStack, curParentNodeNameWithId]);
+    }
+
+    subscribe(observer: any) {
+        return this.componentNameWithIdStack_CurParentNodeNameWithIdObservable.subscribe(observer);
     }
 
     exportBPELDoc(bpelDocFilename: string): void {
