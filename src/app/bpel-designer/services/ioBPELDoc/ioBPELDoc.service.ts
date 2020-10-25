@@ -10,7 +10,7 @@ import { IOBPELDocValidator } from "./ioBPELDocValidator.service";
 export default class IOBPELDocService {
     ioBPELDocValidator: IOBPELDocValidator;
     ioBPELDocParser: IOBPELDocParser;
-    componentNameWithIdStack_CurParentNodeNameWithIdSource = new Subject<[string[], string]>();
+    componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMapSource = new Subject<[string[], string, Map<string, string>]>();
 
     constructor(private graphEditorService : GraphEditorService) {
         this.ioBPELDocValidator = new IOBPELDocValidator(graphEditorService);
@@ -43,16 +43,18 @@ export default class IOBPELDocService {
         };
     }
 
-    next(componentNameWithIdStack: string[], curParentNodeNameWithId: string): void {
-        this.componentNameWithIdStack_CurParentNodeNameWithIdSource.next([componentNameWithIdStack, curParentNodeNameWithId]);
+    next(componentNameWithIdStack: string[], curParentNodeNameWithId: string, curNodeAttributesMap: Map<string, string>): void {
         console.log("[Subject.Next: componentNameWithIdStack]")
         console.log(componentNameWithIdStack);
         console.log("[Subject.Next: curParentNodeNameWithId]")
         console.log(curParentNodeNameWithId);
+        console.log("[Subject.Next: curNodeAttributesMap]")
+        console.log(curNodeAttributesMap);
+        this.componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMapSource.next([componentNameWithIdStack, curParentNodeNameWithId, curNodeAttributesMap]);
     }
 
     subscribe(observer: any) {
-        return this.componentNameWithIdStack_CurParentNodeNameWithIdSource.subscribe(observer);
+        return this.componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMapSource.subscribe(observer);
     }
 
     exportBPELDoc(bpelDocFilename: string): void {

@@ -77,9 +77,10 @@ export class PaletteComponent implements AfterViewInit {
 
     constructor(private updateBPELDocService: UpdateBPELDocService, private graphEditorService: GraphEditorService, private ioBPELDocService: IOBPELDocService) {
         // Scenario: import a BPEL doc
-        ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId: [string[], string]) => {
-            let componentNameWithIdStack = componentNameWithIdStack_curParentNodeNameWithId[0];
-            let curParentNodeNameWithId = componentNameWithIdStack_curParentNodeNameWithId[1];
+        ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap: [string[], string, Map<string, string>]) => {
+            let componentNameWithIdStack = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap[0];
+            let curParentNodeNameWithId = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap[1];
+            let curNodeAttributesMap = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap[2];
 
             if (componentNameWithIdStack.length) {
                 let lastComponentNameWithId = componentNameWithIdStack[componentNameWithIdStack.length - 1];
@@ -90,7 +91,7 @@ export class PaletteComponent implements AfterViewInit {
                     // check if given a parent activity
                     if (curParentNodeNameWithId != undefined) {
                         let importingTargetContainerActivity = this.importingComponentNameWithIdComponentMap.get(curParentNodeNameWithId);
-                        bpelComponent = this.draw(componentName, importingTargetContainerActivity);
+                        bpelComponent = this.draw(componentName, importingTargetContainerActivity, curNodeAttributesMap);
                     } else {
                         bpelComponent = this.draw(componentName);
                     }
@@ -150,7 +151,7 @@ export class PaletteComponent implements AfterViewInit {
         return componentNameWithId.split('_')[0];
     }
 
-    draw(componentName: string, importingTargetContainerActivity?: BPELComponent): BPELComponent {
+    draw(componentName: string, importingTargetContainerActivity?: BPELComponent, fromAttributesMap?: Map<string, string>): BPELComponent {
         console.log("============ Subscribed: PaletteComponent.draw() BEGIN ============");
 
         const vertexId = PropertyGenerator.getID(this.graphEditorService.getMaxID());
@@ -188,6 +189,19 @@ export class PaletteComponent implements AfterViewInit {
                 bpelComponent = new Copy(vertexId, this.updateBPELDocService);
                 this.setStrategy(new CopyStrategy(this.basex, this.basey));
                 break;
+            case 'from':    // For set the from-spec for <copy>
+                let fromSpec;
+                let copyElement = (importingTargetContainerActivity as Copy).getElement();
+                if (fromAttributesMap == undefined) {
+                    fromSpec = "FromVariantWithLiteral";
+                    copyElement.setFrom(copyElement.createFrom(fromSpec));
+                }
+                else if (fromAttributesMap.get("part") && fromAttributesMap.get("variable")) {
+                    fromSpec = "FromVariantWithVariableAndPartAndQuery";
+                    copyElement.setFrom(copyElement.createFrom(fromSpec));
+                }
+                console.log("Set the from-spec for <copy>");
+                return null;
             case 'throw':
                 bpelComponent = new Throw(vertexId, this.updateBPELDocService);
                 this.setStrategy(new ThrowStrategy(this.basex, this.basey));

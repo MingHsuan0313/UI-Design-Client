@@ -1,6 +1,6 @@
 export abstract class BPELComponentAttribute {
-    name?: string = undefined;
-    suppressJoinFailure?: string = undefined;   // "yes" | "no"
+    name?: string = "";
+    suppressJoinFailure?: string = "";   // "yes" | "no"
 
     constructor(name?: string, suppressJoinFailure?: string) {
         this.name = name;

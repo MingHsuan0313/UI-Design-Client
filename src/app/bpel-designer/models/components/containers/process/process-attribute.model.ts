@@ -1,11 +1,11 @@
 import { BPELComponentAttribute } from '../../BPELComponent-attribute.model'
 
 export class ProcessAttribute extends BPELComponentAttribute {
-    abstractProcessesList: string[] = undefined; // 1...*
-    targetNamespace: string = undefined;
-    queryLanguage?: string = undefined;
-    expressionLanguage?: string = undefined;
-    exitOnStandardFault?: string = undefined;   // "yes | no"
+    abstractProcessesList: string[] = [""]; // 1...*
+    targetNamespace: string = "";
+    queryLanguage?: string = "";
+    expressionLanguage?: string = "";
+    exitOnStandardFault?: string = "";   // "yes | no"
 
     constructor(name?: string) {
         super(name);

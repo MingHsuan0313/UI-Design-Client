@@ -30,50 +30,107 @@ export class PropertyEditorComponent implements OnInit {
     constructor(private graphEditorService: GraphEditorService, private ioBPELDocService: IOBPELDocService) {
         this.initBPELComponentDict();
 
-        ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId: [string[], string]) => {
+        ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap: [string[], string, Map<string, string>]) => {
             console.log("============ Subscribed: PropertyEditorComponent.getNextElementModal(), sync() BEGIN ============");
 
-            let componentNameWithIdStack = componentNameWithIdStack_curParentNodeNameWithId[0];
-            let curParentNodeNameWithId = componentNameWithIdStack_curParentNodeNameWithId[1];
+            let componentNameWithIdStack = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap[0];
+            let curParentNodeNameWithId = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap[1];
+            let curNodeAttributesMap = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap[2];
 
             if (componentNameWithIdStack.length) {
-                let lastNodeNameWithId = componentNameWithIdStack[componentNameWithIdStack.length - 1];
+                let lastNodeIdx = componentNameWithIdStack.length - 1;
+                let lastNodeNameWithId = componentNameWithIdStack[lastNodeIdx];
                 let lastNodeName = this.extractNameOfComponentNameWithId(lastNodeNameWithId);
+                let lastNodeId = this.extractIdOfComponentNameWithId(lastNodeNameWithId);
 
                 if (curParentNodeNameWithId != undefined) {
-                    console.log("[FUCK] curParentNodeNameWithId = " + curParentNodeNameWithId);
+                    console.log("[curParentNodeNameWithId] = " + curParentNodeNameWithId);
                     // not belong to BPELComponent
                     if (!this.bpelComponentDict.get(lastNodeName)) {
                         // variables has no id on graphStorage
-                        // idx-- to backtracking
-                        // e.g. process <- sequence <- sources <- source
+                        // idx-- to backtracking to find nearestBPELComponentParentIdx
+                        // e.g. process <- "sequence" <- sources <- source
                         let curParentIdx = componentNameWithIdStack.indexOf(curParentNodeNameWithId);
-                        let nearestBPELComponentIdx;
-                        let nearestBPELComponentVertexStorage;
-                        for (let i = curParentIdx; i >= 0; i--) {
-                            let nearestBPELComponentParentId = this.extractIdOfComponentNameWithId(componentNameWithIdStack[i]);
-                            if (this.graphStorage.findVertexStorageByID(nearestBPELComponentParentId) != undefined) {
-                                nearestBPELComponentVertexStorage = this.graphStorage.findVertexStorageByID(nearestBPELComponentParentId);
-                                nearestBPELComponentIdx = i;
+                        let nearestBPELComponentParentIdx = curParentIdx;
+                        let nearestBPELComponentParentVertexId;
+                        while (true) {
+                            let componentNameWithId = componentNameWithIdStack[nearestBPELComponentParentIdx];
+                            let componentName = this.extractNameOfComponentNameWithId(componentNameWithId);
+                            nearestBPELComponentParentVertexId = this.extractIdOfComponentNameWithId(componentNameWithId);
+                            if (this.bpelComponentDict.get(componentName))
                                 break;
-                            }
+                            nearestBPELComponentParentIdx -= 1;
                         }
-                        let editingNode = nearestBPELComponentVertexStorage.getComponent();
-                        console.log("nearestBPELComponentIdx = " + nearestBPELComponentIdx + " curParentIdx = " + curParentIdx);
-                        for (let i = nearestBPELComponentIdx; i <= curParentIdx; i++) {
+                        let editingNode = this.graphStorage.findVertexStorageByID(nearestBPELComponentParentVertexId).getComponent();
+                        console.log("From nearestBPELComponentIdx = " + nearestBPELComponentParentIdx + " to push objectStack, curParentIdx = " + curParentIdx + " lastNodeIdx = " + lastNodeIdx);
+                        for (let i = nearestBPELComponentParentIdx; i <= lastNodeIdx; i++) {
                             console.log("editingNode =");
                             console.log(editingNode);
 
                             this.getNextElementModal("", editingNode);
-                            let childElementName = this.extractNameOfComponentNameWithId(componentNameWithIdStack[i + 1]);
-                            this.elementKVPairsStack[this.elementKVPairsStack.length - 1].forEach(([key, value]) => {
-                                if (key == childElementName) {
-                                    editingNode = value;
+                            if (i != lastNodeIdx) {
+                                console.log("i = " + i + " lastNodeIdx = " + lastNodeIdx);
+                                let childElementName = this.extractNameOfComponentNameWithId(componentNameWithIdStack[i + 1]);
+                                let isEditingNodeChanged = false;
+                                this.elementKVPairsStack[this.elementKVPairsStack.length - 1].forEach(([key, value]: [string, any]) => {
+                                    if (key == childElementName) {
+                                        editingNode = value;
+                                        isEditingNodeChanged = true;
+                                    }
+                                });
+                                // childElementName belongs to editingNode's "<ELEMENT_NAME>List" array element
+                                if (!isEditingNodeChanged) {
+                                    // naming convention: "<ELEMENT_NAME>List"
+                                    let LIST_SUFFIX = "List"
+                                    this.elementKVPairsStack[this.elementKVPairsStack.length - 1].forEach(([key, value]: [string, any]) => {
+                                        if (key == childElementName + LIST_SUFFIX) {
+                                            editingNode = value;
+                                            isEditingNodeChanged = true;
+                                        }
+                                    });
                                 }
-                            });
+                                console.log("changed editingNode =");
+                                console.log(editingNode);
+                            } else {
+                                if (this.isElementString(editingNode)) {
+                                    console.log("[IS_EDITINGNODE_STRING]");
+                                } else if (this.isElementArray(editingNode)) {
+                                    console.log("[IS_IS_EDITINGNODE_ARRAY, elementKVPairsStack=]");
+                                    this.pushArrayElement();
+                                    this.getNextElementModal("", editingNode[editingNode.length - 1]);
+                                    console.log(this.elementKVPairsStack);
+                                }
+                                // sync all attributes for current objectStack[-1]
+                                this.setAttributesForImportingCurNode(curNodeAttributesMap);
+                            }
                         }
                         this.close();
+                    } else {
+                        let bpelComponent = this.graphStorage.findVertexStorageByID(lastNodeId).getComponent();
+                        this.getNextElementModal("", bpelComponent);
+                        // sync all attributes for current objectStack[-1]
+                        this.setAttributesForImportingCurNode(curNodeAttributesMap);
+                        this.close();
                     }
+                } else {
+                    // BPEL Doc first node is <process> id=2 (supposed to be consistent with mxGraph)
+                    this.getNextElementModal("", this.graphStorage.findVertexStorageByID(2).getComponent());
+                    let abstractProcessesList = "";
+                    // sync all attributes for current objectStack[-1]
+                    if (curNodeAttributesMap != undefined) {
+                        curNodeAttributesMap.forEach((value: string, key: string, map: Map<string, string>) => {
+                            // abstractProcessesList
+                            if (key.startsWith("xmlns")) {
+                                abstractProcessesList += (key + "=" + "\"" + value + "\" ");
+                                let newEventTargetValue = {"target": {"value": abstractProcessesList}};
+                                this.syncSelectedAttribute("abstractProcessesList", newEventTargetValue);
+                            } else {
+                                let newEventTargetValue = {"target": {"value": value}};
+                                this.syncSelectedAttribute(key, newEventTargetValue);
+                            }
+                        });
+                    }
+                    this.close();
                 }
             }
             console.log("============ Subscribed: PropertyEditorComponent.getNextElementModal(), sync() END ============");
@@ -132,11 +189,12 @@ export class PropertyEditorComponent implements OnInit {
     }
 
     syncSelectedAttribute(attributeKey: any, event: any) {
+        let toppestObject = this.objectStack[this.objectStack.length - 1];
         console.log("[INFO] the toppest object = ");
-        console.log(this.objectStack[this.objectStack.length - 1]);
+        console.log(toppestObject);
         console.log("Editing attribute field = " + attributeKey);
-        this.objectStack[this.objectStack.length - 1].getAttribute()[attributeKey] = event.target.value;
-        console.log(this.objectStack[this.objectStack.length - 1].getAttribute()[attributeKey]);
+        toppestObject.getAttribute()[attributeKey] = event.target.value;
+        console.log("Editing attribute setting value = " + toppestObject.getAttribute()[attributeKey]);
 
         if (attributeKey == 'name') {
             this.graph.getModel().beginUpdate();
@@ -278,11 +336,20 @@ export class PropertyEditorComponent implements OnInit {
         this.bpelComponentDict.set("compensateScope", true);
     }
 
-    extractNameOfComponentNameWithId(componentNameWithId: string): string {
+    private extractNameOfComponentNameWithId(componentNameWithId: string): string {
         return componentNameWithId.split('_')[0];
     }
 
-    extractIdOfComponentNameWithId(componentNameWithId: string): string {
+    private extractIdOfComponentNameWithId(componentNameWithId: string): string {
         return componentNameWithId.split('_')[1];
+    }
+
+    private setAttributesForImportingCurNode(curNodeAttributesMap: Map<string, string>) {
+        if (curNodeAttributesMap != undefined) {
+            curNodeAttributesMap.forEach((value: string, key: string, map: Map<string, string>) => {
+                let newEventTargetValue = { "target": { "value": value } };
+                this.syncSelectedAttribute(key, newEventTargetValue);
+            });
+        }
     }
 }
