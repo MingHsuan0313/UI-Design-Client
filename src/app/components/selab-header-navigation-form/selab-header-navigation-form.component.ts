@@ -77,4 +77,8 @@ export class SelabHeaderNavigationFormComponent implements OnInit {
       }
     }
   }
+
+  closeForm() {
+    document.getElementById('navigationForm').style.display = 'none';
+  }
 }

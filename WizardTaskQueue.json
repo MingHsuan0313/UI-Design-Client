@@ -1,0 +1,60 @@
+{
+    "tasks": {
+        "0": {
+            "ComponentName": {
+                "type": "form"
+            },
+            "ServiceComponent": {
+                "operation": "getDepartment",
+                "serviceID": "11",
+                "return": {
+                    "name": "",
+                    "id": "",
+                    "description": "",
+                    "category": {
+                        "name": "",
+                        "id": "",
+                        "item": {
+                            "name": "",
+                            "id": "",
+                            "description": ""
+                        }
+                    }
+                }
+            }
+        },
+        "1": {
+            "ComponentName": {
+                "type": "form"
+            },
+            "ServiceComponent": {
+                "operation": "",
+                "serviceID": ""
+            }
+        }
+    },
+    "ServiceComponents": [
+        {
+            "operation": "addDepartment",
+            "serviceID": "11"
+        },
+        {
+            "operation": "getDepartment",
+            "serviceID": "21",
+            "return": {
+                "name": "",
+                "id": "",
+                "description": "",
+                "category": {
+                    "name": "",
+                    "id": "",
+                    "item": {
+                        "name": "",
+                        "id": "",
+                        "description": ""
+                    }
+                }
+            }
+        }
+    ]
+}

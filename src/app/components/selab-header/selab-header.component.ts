@@ -132,9 +132,6 @@ export class SelabHeaderComponent implements OnInit {
     this.graphEditorService.syncStorage();
   }
 
-  closeForm2() {
-    document.getElementById('navigationForm').style.display = 'none';
-  }
 
   storeNDL() {
     this.exportService.postNDL().subscribe(

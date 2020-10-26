@@ -30,7 +30,6 @@ import {
 
 import { AppComponent } from "./app.component";
 import { SelabGraphEditorComponent } from "./components/selab-graph-editor/selab-graph-editor.component";
-import { NavigationComponent } from "./containers/default-layout/navigation/navigation.component";
 import { WizardComponent } from "./containers/default-layout/wizard/wizard.component";
 import { StyleEditorComponent } from './components/style-editor/style-editor.component';
 import { NavEditorComponent } from './components/nav-editor/nav-editor.component';
@@ -44,6 +43,12 @@ import { SelabHeaderComponent } from './components/selab-header/selab-header.com
 import { SelabSettingComponent } from './components/selab-setting/selab-setting.component';
 import { SelabBodyComponent } from './components/selab-body/selab-body.component';
 import { SelabHeaderNavigationFormComponent } from './components/selab-header-navigation-form/selab-header-navigation-form.component';
+import { SelabWizardComponent } from './components/selab-wizard/selab-wizard.component';
+import { BuildTabComponent } from './components/selab-wizard/build-tab/build-tab.component';
+import { ComposeTabComponent } from './components/selab-wizard/compose-tab/compose-tab.component';
+import { PipelineTabComponent } from './components/selab-wizard/pipeline-tab/pipeline-tab.component';
+import { InformationTabComponent } from './components/selab-wizard/information-tab/information-tab.component';
+import { BindServiceTabComponent } from './components/selab-wizard/bind-service-tab/bind-service-tab.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +58,6 @@ import { SelabHeaderNavigationFormComponent } from './components/selab-header-na
     SelabHeaderComponent,
     SelabSettingComponent,
     WizardComponent,
-    NavigationComponent,
     DefaultLayoutComponent,
     StyleEditorComponent,
     NavEditorComponent,
@@ -64,6 +68,12 @@ import { SelabHeaderNavigationFormComponent } from './components/selab-header-na
     XTerminalComponent,
     SelabBodyComponent,
     SelabHeaderNavigationFormComponent,
+    SelabWizardComponent,
+    BuildTabComponent,
+    ComposeTabComponent,
+    PipelineTabComponent,
+    InformationTabComponent,
+    BindServiceTabComponent,
   ],
   imports: [
     PerfectScrollbarModule,
