@@ -1,4 +1,3 @@
-import { VertexStorage } from "src/app/models/graph-dependency";
 import AbstractComponent from 'src/app/shared/AbstractComponent.model';
 import UpdateBPELDocService from '../../services/updateBPELDoc.service';
 import { BPELComponentElementWithActivity } from './BPELComponentElementWithActivity.model';
@@ -13,7 +12,6 @@ export abstract class BPELComponent extends BPELNode implements AbstractComponen
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     componentName: string;
 
     constructor(id: string, protected updateBPELDocService: UpdateBPELDocService) {
@@ -28,14 +26,6 @@ export abstract class BPELComponent extends BPELNode implements AbstractComponen
 
     getComponentName(): string {
         return this.componentName;
-    }
-
-    getVertexStorage(): VertexStorage {
-        return this.vertexStorage;
-    }
-
-    setVertexStorage(vertexStorage: VertexStorage): void {
-        this.vertexStorage = vertexStorage;
     }
 
     getId(): string {

@@ -1,4 +1,3 @@
-import { VertexStorage } from "src/app/models/graph-dependency";
 import { WhileAttribute } from "./while-attribute.model";
 import { WhileElement } from "./while-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
@@ -11,7 +10,6 @@ export class While extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     attribute?: WhileAttribute;
     element?: WhileElement;
     componentName: string = "while";

@@ -1,5 +1,4 @@
 import UpdateBPELDocService from "src/app/bpel-designer/services/updateBPELDoc.service";
-import { VertexStorage } from "src/app/models/graph-dependency";
 import { BPELComponent } from "../../BPELComponent.model";
 import { ReplyAttribute } from "./reply-attribute.model";
 import { ReplyElement } from "./reply-element.model";
@@ -11,7 +10,6 @@ export class Reply extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     attribute?: ReplyAttribute;
     element?: ReplyElement;
     componentName: string = "reply";

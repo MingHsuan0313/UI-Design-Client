@@ -1,4 +1,3 @@
-import { VertexStorage } from "src/app/models/graph-dependency";
 import { PickAttribute } from "./pick-attribute.model";
 import { PickElement } from "./pick-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
@@ -12,7 +11,6 @@ export class Pick extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     attribute?: PickAttribute;
     element?: PickElement;
     componentName: string = "pick";

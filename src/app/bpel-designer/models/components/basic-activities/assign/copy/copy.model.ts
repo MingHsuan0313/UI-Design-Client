@@ -1,4 +1,3 @@
-import { VertexStorage } from "src/app/models/graph-dependency";
 import { CopyAttribute } from "./copy-attribute.model";
 import { CopyElement } from "./copy-element.model";
 import { BPELComponent } from "../../../BPELComponent.model";
@@ -11,7 +10,6 @@ export class Copy extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     attribute?: CopyAttribute; // Not a BPELComponentAttribute because of lacking of standard attributes
     element?: CopyElement; // Not a BPELComponentElement because of lacking of standard attributes
     componentName: string = "copy";

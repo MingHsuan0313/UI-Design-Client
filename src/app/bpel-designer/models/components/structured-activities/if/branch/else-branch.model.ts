@@ -1,4 +1,3 @@
-import { VertexStorage } from "src/app/models/graph-dependency";
 import { ElseBranchElement } from "./else-branch-element.model";
 import { BPELComponent } from "../../../BPELComponent.model";
 import UpdateBPELDocService from "src/app/bpel-designer/services/updateBPELDoc.service";
@@ -10,7 +9,6 @@ export class ElseBranch extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     element?: ElseBranchElement;
     componentName: string = "else-branch";
 

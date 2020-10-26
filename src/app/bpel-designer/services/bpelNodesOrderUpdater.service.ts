@@ -16,7 +16,9 @@ export class BPELNodesOrderUpdater {
         if (activityList.length > 1) {
             let second2lastActivity = activityList[activityList.length - 2];
             let lastActivity = activityList[activityList.length - 1];
-            this.graphStorage.insertEdge(second2lastActivity.getVertexStorage().getVertex(), lastActivity.getVertexStorage().getVertex());
+            let second2lastVertexStorage = this.graphStorage.findVertexStorageByID(second2lastActivity.getId());
+            let lastActivityVertexStorage = this.graphStorage.findVertexStorageByID(lastActivity.getId());
+            this.graphStorage.insertEdge(second2lastVertexStorage.getVertex(), lastActivityVertexStorage.getVertex());
             console.log("[Connect Edge] from <" + second2lastActivity.getComponentName() + ">" + "(id = " + second2lastActivity.getId() + ") "
                         + "to <" + lastActivity.getComponentName() + ">" + "(id = " + lastActivity.getId() + ") " + "'s activity");
         }

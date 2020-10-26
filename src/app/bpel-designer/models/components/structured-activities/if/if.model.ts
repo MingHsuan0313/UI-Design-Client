@@ -1,4 +1,3 @@
-import { VertexStorage } from "src/app/models/graph-dependency";
 import { IfAttribute } from "./if-attribute.model";
 import { IfElement } from "./if-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
@@ -13,7 +12,6 @@ export class If extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     attribute?: IfAttribute;
     element?: IfElement;
     componentName: string = "if";

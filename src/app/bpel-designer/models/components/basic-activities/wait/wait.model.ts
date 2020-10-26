@@ -1,5 +1,4 @@
 import UpdateBPELDocService from 'src/app/bpel-designer/services/updateBPELDoc.service';
-import { VertexStorage } from "src/app/models/graph-dependency";;
 import { BPELComponent } from '../../BPELComponent.model'
 import { WaitElement } from './wait-element.model';
 
@@ -10,7 +9,6 @@ export class Wait extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     element?: WaitElement;
     componentName: string = "wait";
 

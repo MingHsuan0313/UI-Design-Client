@@ -1,4 +1,3 @@
-import { VertexStorage } from "src/app/models/graph-dependency";
 import { InvokeAttribute } from "./invoke-attribute.model";
 import { InvokeElement } from "./invoke-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
@@ -11,7 +10,6 @@ export class Invoke extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     attribute?: InvokeAttribute;
     element?: InvokeElement;
     componentName: string = "invoke";

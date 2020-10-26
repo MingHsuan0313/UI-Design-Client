@@ -1,5 +1,4 @@
 import UpdateBPELDocService from 'src/app/bpel-designer/services/updateBPELDoc.service';
-import { VertexStorage } from "src/app/models/graph-dependency";;
 import { BPELComponent } from '../../BPELComponent.model'
 import { ProcessAttribute } from './process-attribute.model';
 import { ProcessElement } from './process-element.model';
@@ -11,7 +10,6 @@ export class Process extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     attribute?: ProcessAttribute;
     element?: ProcessElement;
     componentName: string = "process";

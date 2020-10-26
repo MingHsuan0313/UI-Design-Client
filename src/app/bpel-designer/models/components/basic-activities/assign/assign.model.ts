@@ -1,4 +1,3 @@
-import { VertexStorage } from "src/app/models/graph-dependency";
 import { AssignAttribute } from "./assign-attribute.model";
 import { AssignElement } from "./assign-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
@@ -12,7 +11,6 @@ export class Assign extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     attribute?: AssignAttribute;
     element?: AssignElement;
     componentName: string = "assign";

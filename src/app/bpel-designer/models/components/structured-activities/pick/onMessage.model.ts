@@ -1,4 +1,3 @@
-import { VertexStorage } from "src/app/models/graph-dependency";
 import { OnMessageAttribute } from "./onMessage-attribute.model";
 import { OnMessageElement } from "./onMessage-element.model";
 import { BPELComponent } from "../../BPELComponent.model";
@@ -11,7 +10,6 @@ export class OnMessage extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     attribute?: OnMessageAttribute;
     element?: OnMessageElement;
     componentName: string = "onMessage";

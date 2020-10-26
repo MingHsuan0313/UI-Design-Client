@@ -1,5 +1,4 @@
 import UpdateBPELDocService from 'src/app/bpel-designer/services/updateBPELDoc.service';
-import { VertexStorage } from "src/app/models/graph-dependency";;
 import { BPELComponent } from '../../BPELComponent.model'
 import { ScopeAttribute } from './scope-attribute.model';
 import { ScopeElement } from './scope-element.model';
@@ -11,7 +10,6 @@ export class Scope extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     attribute?: ScopeAttribute;
     element?: ScopeElement;
     componentName: string = "scope";

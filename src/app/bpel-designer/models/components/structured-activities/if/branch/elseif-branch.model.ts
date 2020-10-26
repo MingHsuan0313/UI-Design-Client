@@ -1,4 +1,3 @@
-import { VertexStorage } from "src/app/models/graph-dependency";
 import { ElseIfBranchElement } from "./elseif-branch-element.model";
 import { BPELComponent } from "../../../BPELComponent.model";
 import UpdateBPELDocService from "src/app/bpel-designer/services/updateBPELDoc.service";
@@ -10,7 +9,6 @@ export class ElseIfBranch extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     element?: ElseIfBranchElement;
     componentName: string = "elseif-branch";
 

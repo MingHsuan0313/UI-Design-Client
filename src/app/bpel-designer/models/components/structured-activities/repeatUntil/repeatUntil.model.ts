@@ -1,5 +1,4 @@
 import UpdateBPELDocService from "src/app/bpel-designer/services/updateBPELDoc.service";
-import { VertexStorage } from "src/app/models/graph-dependency";
 import { BPELComponent } from "../../BPELComponent.model";
 import { RepeatUntilElement } from "./repeatUntil-element.model";
 
@@ -10,7 +9,6 @@ export class RepeatUntil extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     element?: RepeatUntilElement;
     componentName: string = "repeatUntil";
 

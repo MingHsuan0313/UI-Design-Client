@@ -1,5 +1,4 @@
 import UpdateBPELDocService from 'src/app/bpel-designer/services/updateBPELDoc.service';
-import { VertexStorage } from "src/app/models/graph-dependency";;
 import { BPELComponent } from '../../BPELComponent.model'
 import { ForEachAttribute } from './forEach-attribute.model';
 import { ForEachElement } from './forEach-element.model';
@@ -11,7 +10,6 @@ export class ForEach extends BPELComponent {
     width?: number;
     height?: number;
     type: string;
-    vertexStorage?: VertexStorage;
     attribute?: ForEachAttribute;
     element?: ForEachElement;
     componentName: string = "forEach";
