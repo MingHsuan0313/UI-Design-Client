@@ -48,6 +48,9 @@ import { ComposeTabComponent } from './components/selab-wizard/compose-tab/compo
 import { PipelineTabComponent } from './components/selab-wizard/pipeline-tab/pipeline-tab.component';
 import { InformationTabComponent } from './components/selab-wizard/information-tab/information-tab.component';
 import { BindServiceTabComponent } from './components/selab-wizard/bind-service-tab/bind-service-tab.component';
+import { BPELDesignerComponent } from "./containers/bpel-designer/bpel-designer.component";
+import { PaletteComponent } from "./bpel-designer/components/palette/palette.component";
+import { PropertyEditorComponent } from "./bpel-designer/components/property-editor/property-editor.component";
 
 @NgModule({
   declarations: [
@@ -73,6 +76,9 @@ import { BindServiceTabComponent } from './components/selab-wizard/bind-service-
     PipelineTabComponent,
     InformationTabComponent,
     BindServiceTabComponent,
+    BPELDesignerComponent,
+    PaletteComponent,
+    PropertyEditorComponent
   ],
   imports: [
     PerfectScrollbarModule,

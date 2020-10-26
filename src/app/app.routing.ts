@@ -2,6 +2,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 // Import Containers
 import {DefaultLayoutComponent} from './containers';
+import { BPELDesignerComponent } from './containers/bpel-designer/bpel-designer.component';
+import {NavigationComponent} from 'src/app/models/navigation-dependency';
 
 
 export const routes: Routes = [
@@ -13,6 +15,17 @@ export const routes: Routes = [
   {
     path: 'index',
     component: DefaultLayoutComponent,
+    children: [
+      {
+        path: ':id',
+        component: NavigationComponent
+
+      }
+    ]
+  },
+  {
+    path: 'bpel',
+    component: BPELDesignerComponent,
   }
 ];
 

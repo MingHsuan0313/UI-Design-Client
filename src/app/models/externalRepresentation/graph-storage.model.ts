@@ -27,7 +27,7 @@ export class GraphStorage {
   graph: mxGraph;
   id: string;
   graphConfiguration: GraphConfiguration;
-
+  edgeIdCnt: number = -1;  // TODO: temporary solution, start from -1 to avoid conflict with getMaxId()
 
 
   strategy: ICreateComponentStrategy;
@@ -244,6 +244,26 @@ export class GraphStorage {
     return vertexStorage;
   }
 
+  // insert SVG vertex
+  insertSVGVertex(parent, vertexID, BPELComponent, geometry, styleStorage, svg) {
+    this.modified = true;
+    let vertex;
+
+    try {
+      this.graph.getModel().beginUpdate();
+      vertex = this.graph.insertVertex(parent, vertexID, BPELComponent.getComponentName(), geometry.x, geometry.y, geometry.width, geometry.height, svg, null);
+    } finally {
+      this.graph.getModel().endUpdate();
+    }
+    let cloneStyle = {};
+    Object.assign(cloneStyle, styleStorage.style);
+    styleStorage.style = cloneStyle;
+    const vertexStorage = new VertexStorage(vertex, styleStorage, BPELComponent, null, null);
+    let vertexLength = Object.keys(this.vertexStorageList).length;
+    this.vertexStorageList[vertexLength] = vertexStorage;
+    return vertexStorage;
+  }
+
   insertEdge(sourceVertex, targetVertex) {
     this.modified = true;
     let edge;
@@ -254,8 +274,8 @@ export class GraphStorage {
       style[mxConstants.STYLE_FONTSIZE] = 16;
       this.graph.getStylesheet().putCellStyle('edgeStyle', style);
       this.graph.getModel().beginUpdate();
-      edge = this.graph.insertEdge(parent, '', '', sourceVertex, targetVertex, 'edgeStyle');
-
+      edge = this.graph.insertEdge(parent, String(this.edgeIdCnt), '', sourceVertex, targetVertex, 'edgeStyle');
+      this.edgeIdCnt -= 1;
     } finally {
       this.graph.getModel().endUpdate();
     }
@@ -316,6 +336,10 @@ export class GraphStorage {
     let cellsObject = this.getGraphModel().cells;
     const cells = Object.values(cellsObject);
     let maxID = cells.reduce((acc: number, cur: mxCell) => {
+      // if edge has no id
+      if (cur.id == "") {
+        return acc
+      }
       return Math.max(acc, parseInt(cur.id));
     }, 0);
     return maxID;

@@ -1,6 +1,7 @@
+import AbstractComponent from "src/app/shared/AbstractComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 
-export class UIComponent {
+export class UIComponent implements AbstractComponent{
   public id: String;
   public selector: String;
   public category: String;

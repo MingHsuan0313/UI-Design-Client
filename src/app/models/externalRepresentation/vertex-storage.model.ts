@@ -1,8 +1,9 @@
 import { StyleStorage } from './style-storage.model';
 import { DataBinding } from './util/DataBinding';
-import {UIComponent} from '../ui-component-dependency';
 import StyleEditorService from 'src/app/services/externalRepresentation/style-editor.service';
 import { StyleConverter } from '../../shared/styleTable';
+import AbstractComponent from '../../shared/AbstractComponent.model';
+import { UIComponent } from '../ui-component-dependency';
 
 /**
  * @description
@@ -14,7 +15,7 @@ export class VertexStorage {
   id: string;
   parentId: string;
   value: string;
-  component: UIComponent;
+  component: AbstractComponent;
   styleStorage: StyleStorage;
   children: any;
   dataBinding: DataBinding;
@@ -64,7 +65,7 @@ export class VertexStorage {
       console.log(this.component);
       // console.log(vertexStorageStyle);
       console.log(styleConverter.convertObject(vertexStorageStyle));
-      this.component.setStyle(styleConverter.convertObject(vertexStorageStyle));
+      (this.component as UIComponent).setStyle(styleConverter.convertObject(vertexStorageStyle));
     }
 
   }
@@ -124,6 +125,10 @@ export class VertexStorage {
 
   getVertex() {
     return this.vertex;
+  }
+
+  getComponent(): any {
+    return this.component;
   }
 
   syncProperties() {

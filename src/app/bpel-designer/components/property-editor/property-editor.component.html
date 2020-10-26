@@ -1,0 +1,123 @@
+<div style="background-color: #eaeded;height:100%; position: fixed;">
+    <mat-tab-group>
+      <mat-tab label="Property-Editor">
+        <div class="input-group">
+          <button class="btn btn-success" (click)="sendUserSettedTargetContainerActivityEvent()">Send targetContainerActivity to Palette(via BPELDesigner)</button>
+          <div class='col'>
+            <span>attributes</span>
+            <div class="input-group-prepend" *ngFor='let kvs of attributeKVPairsStack; let firstRecord = first'>
+              <div class='col' *ngIf="firstRecord">
+                <div class='row' *ngFor="let kv of kvs">
+                  <span class="input-group-text">{{getKey(kv)}}</span>
+                  <textarea class="form-control" (keyup)="syncSelectedAttribute(getKey(kv), $event)">{{getValue(kv)}}</textarea>
+                </div>
+              </div>
+            </div>
+            <span>elements</span>
+            <div class="input-group-prepend" *ngFor='let kvs of elementKVPairsStack; let firstRecord = first'>
+              <div class='col' *ngIf="firstRecord">
+                <div class='row' *ngFor="let kv of kvs">
+                  <span class="input-group-text">{{getKey(kv)}}</span>
+                  <textarea *ngIf="isElementString(getValue(kv)); else modalArrayButton" (keyup)="syncSelectedElement(getKey(kv), $event)">{{getValue(kv)}}</textarea>
+                  <ng-template #modalArrayButton>
+                    <button *ngIf="isElementArray(getValue(kv)); else modalButton" type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" (click)="getNextElementModal(getKey(kv), getValue(kv))">Edit Array</button>
+                  </ng-template>
+                  <ng-template #modalButton>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="getNextElementModal(getKey(kv), getValue(kv))">Edit Element</button>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+<!-- test modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+        <!-- nav-tabs for the hierarchy of objects -->
+        <div class="row" *ngIf="!isObjectStackEmpty" >
+          <ul class="nav nav-tabs" *ngFor="let obj of objectStack" role="tablist" id="myTab" style="display: flex">
+            <li class="nav-item" role="presentation" style="flex: 1;text-align: center">
+              <a class="nav-link" role="button">
+                <strong>{{obj.constructor.name}}</strong>
+              </a>
+            </li>
+            <span><i class="nav-icon icon-arrow-right"></i></span>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-body" *ngIf="isToppestObjectArray(); else DefaultModalBody">
+        <div class="col">
+          <!-- elements: showed all time-->
+          <div class="container">
+            <span>elements</span>
+            <div class="row" *ngFor='let kvs of elementKVPairsStack; let lastRecord = last'>
+              <div class='col' *ngIf="lastRecord">
+                <div class='row' *ngFor="let kv of kvs">
+                  <span>{{getKey(kv)}}</span>
+                  <textarea *ngIf="isElementString(getValue(kv)); else modalArrayButton" (keyup)="syncSelectedElement(getKey(kv), $event)">{{getValue(kv)}}</textarea>
+                  <ng-template #modalArrayButton>
+                    <button *ngIf="isElementArray(getValue(kv)); else modalButton" type="button" class="btn btn-info" (click)="getNextElementModal(getKey(kv), getValue(kv))">Edit Array</button>
+                  </ng-template>
+                  <ng-template #modalButton>
+                    <button type="button" class="btn btn-primary" (click)="getNextElementModal(getKey(kv), getValue(kv))">Edit Element</button>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-success" (click)="pushArrayElement()">Push</button>
+            <button type="button" class="btn btn-warning" (click)="popArrayElement()">Pop</button>
+          </div>
+        </div>
+      </div>
+      <ng-template #DefaultModalBody>
+        <div class="modal-body">
+          <div class="col">
+            <!-- attributes: showed when it is default element-->
+            <div class="container">
+              <span>attributes</span>
+              <div class="row" *ngFor='let kvs of attributeKVPairsStack; let lastRecord = last'>
+                <div class='col' *ngIf="lastRecord">
+                  <div class='row' *ngFor="let kv of kvs">
+                    <span>{{getKey(kv)}}</span>
+                    <textarea (keyup)="syncSelectedAttribute(getKey(kv), $event)">{{getValue(kv)}}</textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- elements: showed all time-->
+            <div class="container">
+              <span>elements</span>
+              <div class="row" *ngFor='let kvs of elementKVPairsStack; let lastRecord = last'>
+                <div class='col' *ngIf="lastRecord">
+                  <div class='row' *ngFor="let kv of kvs">
+                    <span>{{getKey(kv)}}</span>
+                    <textarea *ngIf="isElementString(getValue(kv)); else modalArrayButton" (keyup)="syncSelectedElement(getKey(kv), $event)">{{getValue(kv)}}</textarea>
+                    <ng-template #modalArrayButton>
+                      <button *ngIf="isElementArray(getValue(kv)); else modalButton" type="button" class="btn btn-info" (click)="getNextElementModal(getKey(kv), getValue(kv))">Edit Array</button>
+                    </ng-template>
+                    <ng-template #modalButton>
+                      <button type="button" class="btn btn-primary" (click)="getNextElementModal(getKey(kv), getValue(kv))">Edit Element</button>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" (click)="backPreviousModal()" *ngIf="(objectStack != undefined && objectStack.length > 2)">Back</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="close()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

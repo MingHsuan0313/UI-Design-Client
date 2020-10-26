@@ -1,0 +1,136 @@
+<div style="background-color: #eaeded;;height:100%; position: fixed;">
+    <mat-tab-group>
+      <mat-tab label="Palette">
+          <button class="btn btn-success" (click)="syncTargetContainerActivity()">Sync targetContainerActivity</button>
+          <div class="col">
+              <div class="container">
+                <hr>
+                <div class="row justify-content-center">
+                  <a>Containers</a>
+                </div>
+                <hr>
+
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">process</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/process_or_scope_or_pick.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">scope</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/process_or_scope_or_pick.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">validate</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/validate.png">
+                </div>
+
+                <hr>
+                <div class="row justify-content-center">
+                  <a>Basic activities</a>
+                </div>
+                <hr>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">invoke</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/invoke.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">receive</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/receive.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">reply</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/reply.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">assign</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/assign.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">copy</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/copy.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">throw</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/throw_or_rethrow.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">wait</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/wait.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">empty</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/empty.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">exit</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/exit.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">rethrow</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/throw_or_rethrow.png">
+                </div>
+
+                <hr>
+                <div class="row justify-content-center">
+                  <a>Structured activities</a>
+                </div>
+                <hr>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">sequence</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/sequence.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">flow</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/flow.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">if</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/if.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">elseif</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/elseif_branch.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">else</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/else_branch.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">while</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/while.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">repeatUntil</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/repeatUntil.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">forEach</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/forEach.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">pick</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/process_or_scope_or_pick.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">onMessage</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/onMessage.png">
+                </div>
+
+                <hr>
+                <div class="row justify-content-center">
+                  <a>Others</a>
+                </div>
+                <hr>
+
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">compensate</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/compensate.png">
+                </div>
+                <div class="row">
+                  <a class="col" (click)="onClick($event)">compensateScope</a>
+                  <img class="img-thumbnail" src="src/app/bpel-designer/resources/icon/compensateScope.png">
+                </div>
+              </div>
+          </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
