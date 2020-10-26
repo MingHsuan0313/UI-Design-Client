@@ -1,7 +1,7 @@
 <div class="app-body">
     <main class="main">
         <!-- TODO: solve height 100% incorrect view -->
-        <div class="container-fluid" style="height: 700px ;padding-right:0;">
+        <div class="container-fluid" style="height: 1300px ;padding-right:0;">
             <div class="row">
                 <label class="btn btn-info">
                     <input class="col" type="file" (change)="importBPELDoc($event)" style="display:none;">
@@ -11,7 +11,7 @@
                     <button class="btn btn-info" type="button" (click)="exportBPELDoc('graph.bpel')">Export BPEL</button>
                 </label>
             </div>
-            <div class="row" style="height:700px; ">
+            <div class="row" style="height:1300px; ">
                 <palette class="col" [userSettedTargetContainerActivity]="targetContainerActivity"></palette>
                 <app-graph-editor class="col-8"></app-graph-editor>
                 <property-editor class="col" (userSettedTargetContainerActivityEvent)="receiveTargetContainerActivity($event)"></property-editor>

@@ -67,7 +67,7 @@ export class PaletteComponent implements AfterViewInit {
     graphStorage: GraphStorage;
     strategy: ICreateBPELComponentStrategy;
     targetContainerActivity: BPELComponent = null;
-    basex: number = 0;
+    basex: number = 500;
     basey: number = 0;
     CREATE_VERTEX_DISPLACEMENT_DISTANCE: number = 130;
     importingTargetContainerActivityNameWithIdStack: string[] = new Array<string>();
@@ -274,7 +274,7 @@ export class PaletteComponent implements AfterViewInit {
                 console.log("The BPEL component building failed");
                 return null;
         }
-        this.basex += this.CREATE_VERTEX_DISPLACEMENT_DISTANCE;
+        this.basey += this.CREATE_VERTEX_DISPLACEMENT_DISTANCE;
         let bpelComponentVertexStorage = this.strategy.createComponent(this.graphStorage, bpelComponent, null);
         console.log(bpelComponentVertexStorage);
 
