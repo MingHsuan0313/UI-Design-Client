@@ -1,3 +1,40 @@
-<p>
-  selab-wizard works!
-</p>
+<h1>Wizard<span *ngIf="isPipeline == true">&nbsp;&nbsp;(IsPipeline)</span></h1>
+
+<hr>
+
+<mat-tab-group mat-align-tabs="start">
+  <mat-tab *ngFor="let link of links" label="{{link}}">
+    <div *ngIf="link == 'Build'">
+      <build-tab
+        [isPipeline]="isPipeline"
+      ></build-tab>
+    </div>
+
+    <div *ngIf="link == 'Compose Component'">
+      <compose-tab
+        [isPipeline]="isPipeline"
+      ></compose-tab>
+    </div>
+
+    <div *ngIf="link == 'Information'">
+      <information-tab
+        [isPipeline]="isPipeline"
+      ></information-tab>
+    </div>
+
+    <div *ngIf="link == 'Bind Service'">
+      <bind-service-tab
+      ></bind-service-tab>
+    </div>
+
+    <div *ngIf="link == 'Pipeline'">
+      <pipeline-tab
+      ></pipeline-tab>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+<hr>
+<mat-dialog-actions>
+  <button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
+</mat-dialog-actions>

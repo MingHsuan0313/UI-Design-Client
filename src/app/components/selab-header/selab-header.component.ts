@@ -149,6 +149,16 @@ export class SelabHeaderComponent implements OnInit {
   }
   
   openWizard() {
-    this.dialog.open(SelabWizardComponent);
+    this.dialog.open(SelabWizardComponent,{
+      width: '60%',
+      height: '60%',
+      data: {
+        isPipeline: true,
+        isComposite: true,
+        genere: this.genre_selected,
+        category: this.category_selected,
+        type: this.component_selected
+      }
+    });
   }
 }

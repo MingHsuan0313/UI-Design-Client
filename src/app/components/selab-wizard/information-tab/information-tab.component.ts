@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'information-tab',
@@ -6,10 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./information-tab.component.css']
 })
 export class InformationTabComponent implements OnInit {
-
+  @Input() isPipeline: boolean;
   constructor() { }
 
   ngOnInit() {
+    console.log("Build Tab:" + this.isPipeline)
   }
-
 }
