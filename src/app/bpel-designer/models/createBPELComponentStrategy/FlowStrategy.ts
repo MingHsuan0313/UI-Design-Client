@@ -1,4 +1,4 @@
-import { GraphStorage, StyleStorage } from "src/app/models/modelDependency";
+import { GraphStorage, StyleStorage } from "src/app/models/graph-dependency";
 import { BPELComponent } from "../components/BPELComponent.model";
 import { ICreateBPELComponentStrategy } from "./ICreateBPELComponentStrategy";
 

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import GraphEditorService from "src/app/services/graph-editor.service";
+import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { BPELComponent } from "../models/components/BPELComponent.model";
 import { ElseBranch } from "../models/components/structured-activities/if/branch/else-branch.model";
 import { If } from "../models/components/structured-activities/if/if.model";

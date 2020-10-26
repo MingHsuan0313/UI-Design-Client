@@ -1,4 +1,4 @@
-import VertexStorage from "src/app/models/vertex-storage.model";
+import { VertexStorage } from "src/app/models/graph-dependency";
 import { WhileAttribute } from "./while-attribute.model";
 import { WhileElement } from "./while-element.model";
 import { BPELComponent } from "../../BPELComponent.model";

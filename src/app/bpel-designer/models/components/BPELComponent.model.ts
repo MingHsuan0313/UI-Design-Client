@@ -1,4 +1,4 @@
-import VertexStorage from 'src/app/models/vertex-storage.model'
+import { VertexStorage } from "src/app/models/graph-dependency";
 import AbstractComponent from 'src/app/shared/AbstractComponent.model';
 import UpdateBPELDocService from '../../services/updateBPELDoc.service';
 import { BPELComponentElementWithActivity } from './BPELComponentElementWithActivity.model';

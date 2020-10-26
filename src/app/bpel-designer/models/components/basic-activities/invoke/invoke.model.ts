@@ -1,4 +1,4 @@
-import VertexStorage from "src/app/models/vertex-storage.model";
+import { VertexStorage } from "src/app/models/graph-dependency";
 import { InvokeAttribute } from "./invoke-attribute.model";
 import { InvokeElement } from "./invoke-element.model";
 import { BPELComponent } from "../../BPELComponent.model";

@@ -1,5 +1,5 @@
 import AbstractComponent from '../../shared/AbstractComponent.model'
-import VertexStorage from '../vertex-storage.model'
+import { VertexStorage } from "src/app/models/graph-dependency";
 
 export interface UIComponent extends AbstractComponent{
     x?: String;

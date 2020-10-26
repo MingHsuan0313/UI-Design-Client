@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input } from "@angular/core";
-import { GraphStorage } from "src/app/models/modelDependency";
-import GraphEditorService from "src/app/services/graph-editor.service";
+import { GraphStorage } from "src/app/models/graph-dependency";
+import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { PropertyGenerator } from "src/app/shared/property-generator";
 import { ICreateBPELComponentStrategy } from "../../models/createBPELComponentStrategy/ICreateBPELComponentStrategy";
 import { Process } from "../../models/components/containers/process/process.model";
@@ -54,7 +54,7 @@ import { CompensateStrategy } from "../../models/createBPELComponentStrategy/Com
 import { CompensateScope } from "../../models/components/others/compensateScope/compensateScope.model";
 import { CompensateScopeStrategy } from "../../models/createBPELComponentStrategy/CompensateScopeStrategy";
 import UpdateBPELDocService from "../../services/updateBPELDoc.service";
-import VertexStorage from "src/app/models/vertex-storage.model";
+import { VertexStorage } from "src/app/models/graph-dependency";
 import { BPELComponent } from "../../models/components/BPELComponent.model";
 import IOBPELDocService from "../../services/ioBPELDoc/ioBPELDoc.service";
 
@@ -154,7 +154,7 @@ export class PaletteComponent implements AfterViewInit {
     draw(componentName: string, importingTargetContainerActivity?: BPELComponent, fromAttributesMap?: Map<string, string>): BPELComponent {
         console.log("============ Subscribed: PaletteComponent.draw() BEGIN ============");
 
-        const vertexId = PropertyGenerator.getID(this.graphEditorService.getMaxID());
+        const vertexId = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
         let bpelComponent;
         switch (componentName) {
             case 'process':

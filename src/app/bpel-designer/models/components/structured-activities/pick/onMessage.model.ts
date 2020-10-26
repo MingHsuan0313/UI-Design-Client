@@ -1,4 +1,4 @@
-import VertexStorage from "src/app/models/vertex-storage.model";
+import { VertexStorage } from "src/app/models/graph-dependency";
 import { OnMessageAttribute } from "./onMessage-attribute.model";
 import { OnMessageElement } from "./onMessage-element.model";
 import { BPELComponent } from "../../BPELComponent.model";

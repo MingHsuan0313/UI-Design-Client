@@ -133,8 +133,8 @@ export class ServiceComponentConfigurationComponent implements OnInit {
       this.selectedVertexStorage = this.graphStorage.findVertexStorageByID(selectedVertex["id"]);
 
       if (!(this.selectedVertexStorage.component instanceof LayoutComponent)) {
-        this.selectedUIComponent = this.selectedVertexStorage.component;
-        this.selectedUIComponent = this.selectedVertexStorage.component;
+        this.selectedUIComponent = this.selectedVertexStorage.component as UIComponent;
+        this.selectedUIComponent = this.selectedVertexStorage.component as UIComponent;
         this.selectedServiceComponent = this.selectedUIComponent.serviceComponent;
         this.setUiTypeByComponent();
         if (this.selectedUIComponent.serviceComponent.name.length == 0)
@@ -156,8 +156,8 @@ export class ServiceComponentConfigurationComponent implements OnInit {
             // console.log(selectedVertex);
             let parentVertex = selectedVertex.parent;
             let parentVertexStorage = this.graphStorage.findVertexStorageByID(parentVertex["id"]);
-            let parentServiceName = parentVertexStorage.component.serviceComponent.name;
-            let parentServiceID = parentVertexStorage.component.serviceComponent.serviceID;
+            let parentServiceName = (parentVertexStorage.component as UIComponent).serviceComponent.name;
+            let parentServiceID = (parentVertexStorage.component as UIComponent).serviceComponent.serviceID;
             this.queryArgumentsByServiceID(parentServiceID);
           }
         }

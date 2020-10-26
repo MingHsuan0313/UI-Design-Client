@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
-import GraphEditorService from "src/app/services/graph-editor.service";
+import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { IOBPELDocParser } from "./ioBPELDocParser.service";
 import { IOBPELDocValidator } from "./ioBPELDocValidator.service";
 

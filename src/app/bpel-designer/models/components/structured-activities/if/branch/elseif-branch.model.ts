@@ -1,4 +1,4 @@
-import VertexStorage from "src/app/models/vertex-storage.model";
+import { VertexStorage } from "src/app/models/graph-dependency";
 import { ElseIfBranchElement } from "./elseif-branch-element.model";
 import { BPELComponent } from "../../../BPELComponent.model";
 import UpdateBPELDocService from "src/app/bpel-designer/services/updateBPELDoc.service";

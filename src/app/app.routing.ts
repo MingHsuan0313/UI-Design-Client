@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 // Import Containers
 import {DefaultLayoutComponent} from './containers';
 import { BPELDesignerComponent } from './containers/bpel-designer/bpel-designer.component';
-import {NavigationComponent} from './containers/default-layout/navigation/navigation.component';
+import {NavigationComponent} from 'src/app/models/navigation-dependency';
 
 
 export const routes: Routes = [

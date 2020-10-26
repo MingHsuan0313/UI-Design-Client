@@ -1,5 +1,5 @@
-import { GraphStorage } from "src/app/models/modelDependency";
-import GraphEditorService from "src/app/services/graph-editor.service";
+import { GraphStorage } from "src/app/models/graph-dependency";
+import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { BPELComponent } from "../models/components/BPELComponent.model";
 
 export class BPELNodesOrderUpdater {

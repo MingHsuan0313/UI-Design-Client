@@ -1,4 +1,4 @@
-import VertexStorage from "src/app/models/vertex-storage.model";
+import { VertexStorage } from "src/app/models/graph-dependency";
 import { IfAttribute } from "./if-attribute.model";
 import { IfElement } from "./if-element.model";
 import { BPELComponent } from "../../BPELComponent.model";

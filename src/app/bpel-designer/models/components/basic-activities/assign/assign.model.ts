@@ -1,4 +1,4 @@
-import VertexStorage from "src/app/models/vertex-storage.model";
+import { VertexStorage } from "src/app/models/graph-dependency";
 import { AssignAttribute } from "./assign-attribute.model";
 import { AssignElement } from "./assign-element.model";
 import { BPELComponent } from "../../BPELComponent.model";

@@ -1,5 +1,5 @@
 import UpdateBPELDocService from 'src/app/bpel-designer/services/updateBPELDoc.service';
-import VertexStorage from 'src/app/models/vertex-storage.model';
+import { VertexStorage } from "src/app/models/graph-dependency";;
 import { BPELComponent } from '../../BPELComponent.model'
 import { ForEachAttribute } from './forEach-attribute.model';
 import { ForEachElement } from './forEach-element.model';

@@ -1,4 +1,4 @@
-import VertexStorage from "src/app/models/vertex-storage.model";
+import { VertexStorage } from "src/app/models/graph-dependency";
 import { PickAttribute } from "./pick-attribute.model";
 import { PickElement } from "./pick-element.model";
 import { BPELComponent } from "../../BPELComponent.model";

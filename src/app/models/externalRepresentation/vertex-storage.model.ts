@@ -1,10 +1,9 @@
 import { StyleStorage } from './style-storage.model';
 import { DataBinding } from './util/DataBinding';
-import {UIComponent} from '../ui-component-dependency';
 import StyleEditorService from 'src/app/services/externalRepresentation/style-editor.service';
 import { StyleConverter } from '../../shared/styleTable';
-import AbstractComponent from '../shared/AbstractComponent.model';
-import { BPELComponent } from '../bpel-designer/models/components/BPELComponent.model';
+import AbstractComponent from '../../shared/AbstractComponent.model';
+import { UIComponent } from '../ui-component-dependency';
 
 /**
  * @description
@@ -66,7 +65,7 @@ export class VertexStorage {
       console.log(this.component);
       // console.log(vertexStorageStyle);
       console.log(styleConverter.convertObject(vertexStorageStyle));
-      this.component.setStyle(styleConverter.convertObject(vertexStorageStyle));
+      (this.component as UIComponent).setStyle(styleConverter.convertObject(vertexStorageStyle));
     }
 
   }
@@ -128,7 +127,7 @@ export class VertexStorage {
     return this.vertex;
   }
 
-  getComponent(): AbstractComponent {
+  getComponent(): any {
     return this.component;
   }
 
