@@ -36,7 +36,7 @@ export class IOBPELDocParser {
         let componentNameWithId = rootNode.nodeName + "_" + this.componentIdMap.get(rootNode);
         console.log("curNode= " + componentNameWithId);
         // 1. attribute key and value
-        let curNodeAttributeNames = rootNode.getAttributeNames();
+        let curNodeAttributeNames = (rootNode as any).getAttributeNames();
         if (curNodeAttributeNames.length) {
             let attributesMap = new Map<string, string>();
             console.log("*** attributes=");
