@@ -64,10 +64,13 @@
         </div>
       </li>
       <span><i class="nav-icon icon-arrow-right"></i></span>
-      <li class="btn btn-ghost-dark btn-pill px-4" data-toggle="modal" data-target="#myModal"
+      <li class="btn btn-ghost-dark btn-pill px-4" (click)="openWizard()">Launch Wizard
+      </li>
+
+      <!-- <li class="btn btn-ghost-dark btn-pill px-4" data-toggle="modal" data-target="#myModal"
           (click)="fresh()">Launch Wizard
       </li>
-      <app-wizard [componentName]="component_selected" [componentProperties]="componentProperties"></app-wizard>
+      <app-wizard [componentName]="component_selected" [componentProperties]="componentProperties"></app-wizard> -->
       <li class="btn btn-ghost-dark btn-pill px-4" (click)="openForm2()">Navigation Mechanism</li>
     </ul>
   </div>

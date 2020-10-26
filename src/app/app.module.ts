@@ -9,16 +9,15 @@ import { AppRoutingModule } from "./app.routing";
 import { DefaultLayoutComponent } from "./containers";
 import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
-import {MatSelectModule} from '@angular/material/select'; 
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'; 
+import { MatSelectModule } from '@angular/material/select'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { MatFormFieldModule, MatInputModule } from "@angular/material";
-// import {AppHeaderComponent} from './components/app-header/app-header.component';
 
 import {
   AppAsideModule,
@@ -99,7 +98,8 @@ import { BindServiceTabComponent } from './components/selab-wizard/bind-service-
   ],
   entryComponents: [
     CodeEditorComponent,
-    CodeEditorDialogComponent
+    CodeEditorDialogComponent,
+    SelabWizardComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

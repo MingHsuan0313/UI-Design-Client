@@ -1,13 +1,15 @@
 
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
-import {Storage} from '../../shared/storage';
-import {Layout, TextComponent} from '../../models/ui-component-dependency';
-import {PropertyGenerator} from '../../shared/property-generator';
+import { Storage } from '../../shared/storage';
+import { Layout, TextComponent } from '../../models/ui-component-dependency';
+import { PropertyGenerator } from '../../shared/property-generator';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import ImportService from '../../services/internalRepresentation/import.service';
 import ExportService from '../../services/internalRepresentation/export.service';
+import { MatDialog } from '@angular/material';
+import { SelabWizardComponent } from '../selab-wizard/selab-wizard.component';
 
 @Component({
   selector: 'selab-header',
@@ -37,7 +39,11 @@ export class SelabHeaderComponent implements OnInit {
   private images: any[] = [];
 
 
-  constructor(private httpClient: HttpClient, private graphEditorService: GraphEditorService, private importService: ImportService, private exportService: ExportService) {
+  constructor(private httpClient: HttpClient,
+    private graphEditorService: GraphEditorService,
+    private importService: ImportService,
+    private exportService: ExportService,
+    public dialog: MatDialog) {
 
   }
 
@@ -132,7 +138,6 @@ export class SelabHeaderComponent implements OnInit {
     this.graphEditorService.syncStorage();
   }
 
-
   storeNDL() {
     this.exportService.postNDL().subscribe(
       response => console.log(response['body'])
@@ -141,5 +146,9 @@ export class SelabHeaderComponent implements OnInit {
 
   showImage() {
     this.images = Storage.images;
+  }
+  
+  openWizard() {
+    this.dialog.open(SelabWizardComponent);
   }
 }
