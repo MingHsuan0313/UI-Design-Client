@@ -77,10 +77,10 @@ export class PaletteComponent implements AfterViewInit {
 
     constructor(private updateBPELDocService: UpdateBPELDocService, private graphEditorService: GraphEditorService, private ioBPELDocService: IOBPELDocService) {
         // Scenario: import a BPEL doc
-        ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap: [string[], string, Map<string, string>]) => {
-            let componentNameWithIdStack = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap[0];
-            let curParentNodeNameWithId = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap[1];
-            let curNodeAttributesMap = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap[2];
+        ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent: [string[], string, Map<string, string>, string]) => {
+            let componentNameWithIdStack = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent[0];
+            let curParentNodeNameWithId = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent[1];
+            let curNodeAttributesMap = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent[2];
 
             if (componentNameWithIdStack.length) {
                 let lastComponentNameWithId = componentNameWithIdStack[componentNameWithIdStack.length - 1];

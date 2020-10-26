@@ -10,7 +10,7 @@ import { IOBPELDocValidator } from "./ioBPELDocValidator.service";
 export default class IOBPELDocService {
     ioBPELDocValidator: IOBPELDocValidator;
     ioBPELDocParser: IOBPELDocParser;
-    componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMapSource = new Subject<[string[], string, Map<string, string>]>();
+    componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContentSource = new Subject<[string[], string, Map<string, string>, string]>();
 
     constructor(private graphEditorService : GraphEditorService) {
         this.ioBPELDocValidator = new IOBPELDocValidator(graphEditorService);
@@ -43,18 +43,20 @@ export default class IOBPELDocService {
         };
     }
 
-    next(componentNameWithIdStack: string[], curParentNodeNameWithId: string, curNodeAttributesMap: Map<string, string>): void {
+    next(componentNameWithIdStack: string[], curParentNodeNameWithId: string, curNodeAttributesMap: Map<string, string>, curNodeElementTextContent: string): void {
         console.log("[Subject.Next: componentNameWithIdStack]")
         console.log(componentNameWithIdStack);
         console.log("[Subject.Next: curParentNodeNameWithId]")
         console.log(curParentNodeNameWithId);
         console.log("[Subject.Next: curNodeAttributesMap]")
         console.log(curNodeAttributesMap);
-        this.componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMapSource.next([componentNameWithIdStack, curParentNodeNameWithId, curNodeAttributesMap]);
+        console.log("[Subject.Next: curNodeElementTextContent]")
+        console.log(curNodeElementTextContent);
+        this.componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContentSource.next([componentNameWithIdStack, curParentNodeNameWithId, curNodeAttributesMap, curNodeElementTextContent]);
     }
 
     subscribe(observer: any) {
-        return this.componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMapSource.subscribe(observer);
+        return this.componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContentSource.subscribe(observer);
     }
 
     exportBPELDoc(bpelDocFilename: string): void {

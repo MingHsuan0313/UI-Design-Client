@@ -30,12 +30,13 @@ export class PropertyEditorComponent implements OnInit {
     constructor(private graphEditorService: GraphEditorService, private ioBPELDocService: IOBPELDocService) {
         this.initBPELComponentDict();
 
-        ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap: [string[], string, Map<string, string>]) => {
+        ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent: [string[], string, Map<string, string>, string]) => {
             console.log("============ Subscribed: PropertyEditorComponent.getNextElementModal(), sync() BEGIN ============");
 
-            let componentNameWithIdStack = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap[0];
-            let curParentNodeNameWithId = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap[1];
-            let curNodeAttributesMap = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap[2];
+            let componentNameWithIdStack = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent[0];
+            let curParentNodeNameWithId = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent[1];
+            let curNodeAttributesMap = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent[2];
+            let curNodeElementTextContent = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent[3];
 
             if (componentNameWithIdStack.length) {
                 let lastNodeIdx = componentNameWithIdStack.length - 1;
@@ -100,16 +101,18 @@ export class PropertyEditorComponent implements OnInit {
                                     this.getNextElementModal("", editingNode[editingNode.length - 1]);
                                     console.log(this.elementKVPairsStack);
                                 }
-                                // sync all attributes for current objectStack[-1]
+                                // sync all attributes, element textContent for current objectStack[-1]
                                 this.setAttributesForImportingCurNode(curNodeAttributesMap);
+                                this.setElemenetTextContentForImportingCurNode(curNodeElementTextContent);
                             }
                         }
                         this.close();
                     } else {
                         let bpelComponent = this.graphStorage.findVertexStorageByID(lastNodeId).getComponent();
                         this.getNextElementModal("", bpelComponent);
-                        // sync all attributes for current objectStack[-1]
+                        // sync all attributes, element textContent for current objectStack[-1]
                         this.setAttributesForImportingCurNode(curNodeAttributesMap);
+                        this.setElemenetTextContentForImportingCurNode(curNodeElementTextContent);
                         this.close();
                     }
                 } else {
@@ -208,11 +211,15 @@ export class PropertyEditorComponent implements OnInit {
     }
 
     syncSelectedElement(elementKey: any, event: any) {
+        let toppestObject = this.objectStack[this.objectStack.length - 1];
         console.log("[INFO] the toppest object = ");
-        console.log(this.objectStack[this.objectStack.length - 1]);
-        console.log("Editing element field = " + elementKey);
-        this.objectStack[this.objectStack.length - 1].getElement()[elementKey] = event.target.value;
-        console.log(this.objectStack[this.objectStack.length - 1].getElement()[elementKey]);
+        console.log(toppestObject);
+        let textContentKey = elementKey;
+        if (elementKey == null)
+            textContentKey = Object.keys(toppestObject.getElement())[0];
+        console.log("Editing element field = " + textContentKey);
+        toppestObject.getElement()[textContentKey] = event.target.value;
+        console.log("Editing element setting textContent value = " + toppestObject.getElement()[textContentKey]);
     }
 
     isElementString(elementField: any): boolean {
@@ -350,6 +357,13 @@ export class PropertyEditorComponent implements OnInit {
                 let newEventTargetValue = { "target": { "value": value } };
                 this.syncSelectedAttribute(key, newEventTargetValue);
             });
+        }
+    }
+
+    private setElemenetTextContentForImportingCurNode(curNodeElementTextContent: string) {
+        if (curNodeElementTextContent != undefined) {
+            let newEventTargetValue = { "target": { "value": curNodeElementTextContent } };
+            this.syncSelectedElement(null, newEventTargetValue);
         }
     }
 }

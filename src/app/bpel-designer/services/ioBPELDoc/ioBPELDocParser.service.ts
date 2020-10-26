@@ -7,6 +7,7 @@ export class IOBPELDocParser {
     curParentBPELNode: Element = null;
     componentNameWithIdStack: string[] = new Array<string>();
     componentNameWithIdAttributesMap: Map<string, Map<string, string>> = new Map<string, Map<string, string>>();
+    componentNameWithIdElementTextContentMap: Map<string, string> = new Map<string, string>();
     idCnt: number = 2;  // consistent with mxGraph Id
     componentIdMap: Map<Element, string> = new Map<Element, string>();
 
@@ -49,16 +50,24 @@ export class IOBPELDocParser {
         }
         // 2. text content, e.g. <literal>, <condition>...
         if (rootNode.childNodes.length == 1 && rootNode.childNodes[0].nodeValue) {
+            let textContent = rootNode.childNodes[0].nodeValue;
             console.log("*** textContent=");
-            console.log(rootNode.childNodes[0].nodeValue);
+            console.log(textContent);
+            this.componentNameWithIdElementTextContentMap.set(componentNameWithId, textContent);
         }
         console.log("============ Current DFS Traverse Info END ============");
 
         // notify current componentNameWithIdStack to PaletteComponent TODO: Setting attributes and elements in PropertyEditorComponent
         if (!this.curParentBPELNode) {
-            this.ioBPELDocService.next(this.componentNameWithIdStack, undefined, this.componentNameWithIdAttributesMap.get(componentNameWithId));
+            this.ioBPELDocService.next(this.componentNameWithIdStack,
+                                        undefined,
+                                        this.componentNameWithIdAttributesMap.get(componentNameWithId),
+                                        this.componentNameWithIdElementTextContentMap.get(componentNameWithId));
         } else {
-            this.ioBPELDocService.next(this.componentNameWithIdStack, this.curParentBPELNode.nodeName + "_" + this.componentIdMap.get(this.curParentBPELNode), this.componentNameWithIdAttributesMap.get(componentNameWithId));
+            this.ioBPELDocService.next(this.componentNameWithIdStack,
+                                        this.curParentBPELNode.nodeName + "_" + this.componentIdMap.get(this.curParentBPELNode),
+                                        this.componentNameWithIdAttributesMap.get(componentNameWithId),
+                                        this.componentNameWithIdElementTextContentMap.get(componentNameWithId));
         }
 
         // recursively DFS traverse child nodes
