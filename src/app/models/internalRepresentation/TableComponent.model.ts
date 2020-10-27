@@ -8,8 +8,9 @@ export class TableComponent extends BasicComponent{
 
   constructor(init?: Partial<TableComponent>) {
     super();
-    Object.assign(this, init);
+    // Object.assign(this, init);
     this.category = "informative";
+    this.type = "table";
     this.serviceComponent = new ServiceComponentModel();
   }
 

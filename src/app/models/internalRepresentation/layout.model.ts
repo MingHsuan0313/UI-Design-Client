@@ -12,6 +12,7 @@ export class Layout extends UIComponent {
     super();
     Object.assign(this, init);
     this.category = "layout";
+    this.type = "layout";
     this.serviceComponent = new ServiceComponentModel();
   }
 

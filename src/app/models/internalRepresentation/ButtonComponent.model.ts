@@ -9,8 +9,9 @@ export class ButtonComponent extends BasicComponent{
 
   constructor(init?: Partial<ButtonComponent>) {
     super();
-    Object.assign(this, init);
-    this.category = "informative";
+    // Object.assign(this, init);
+    this.category = "navigation";
+    this.type = "button";
     this.serviceComponent = new ServiceComponentModel();
   }
 

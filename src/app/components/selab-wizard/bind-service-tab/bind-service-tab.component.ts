@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { UIComponent } from 'src/app/models/ui-component-dependency';
 
 @Component({
   selector: 'bind-service-tab',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bind-service-tab.component.css']
 })
 export class BindServiceTabComponent implements OnInit {
+  @Input() uiComponent: UIComponent;
 
   constructor() { }
 

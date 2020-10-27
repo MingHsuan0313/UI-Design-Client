@@ -3,12 +3,13 @@ import { ServiceComponentModel } from "../serviceComponent/service-component.mod
 import { CompositeComponent } from "./CompositeComponent.model";
 
 export class BreadcrumbComponent extends CompositeComponent{
-
+  
   constructor(init?: Partial<BreadcrumbComponent>) {
     super();
-    Object.assign(this, init);
+    // Object.assign(this, init);
     this.componentList = [];
     this.category = "navigation";
+    this.type = "breadcrumb";
     this.serviceComponent = new ServiceComponentModel();
   }
 

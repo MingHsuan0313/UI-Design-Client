@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { SelabHeaderComponent } from '../selab-header/selab-header.component';
+import { UIComponentFactory } from './uicomponent-factory';
 
 @Component({
   selector: 'selab-wizard',
@@ -9,11 +11,12 @@ import { SelabHeaderComponent } from '../selab-header/selab-header.component';
 })
 export class SelabWizardComponent implements OnInit {
 
-  links = [];
+  tabs = [];
   isPipeline:boolean = false;
   genere: string = ""; // CoreUI, Material...
   type: string = ""; // form, dropdown...
   category: string = ""; // informative, input control...
+  uiComponent: UIComponent; // uiComponent being create
 
   constructor(
     public dialogRef: MatDialogRef<SelabHeaderComponent>,
@@ -30,17 +33,21 @@ export class SelabWizardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initialization();
+    let uiComponentFactory: UIComponentFactory = new UIComponentFactory();
+    this.uiComponent = uiComponentFactory.create(this.type);
+    console.log("Wizar start create ui component below");
+    console.log(this.uiComponent);
     console.log("Open dialog accept data below");
     console.log(this.data);
-    this.initialization();
 
     // composite component
     if(this.data.isComposite) {
-      this.links = ["Build","Compose Component","Information","Bind Service","Pipeline"];
+      this.tabs = ["Build Component","Compose Component","Information","Bind Service","Pipeline"];
     }
     // basic component
     else {
-      this.links = ["Build","Information"];
+      this.tabs = ["Build Component","Information"];
     }
   }
 }

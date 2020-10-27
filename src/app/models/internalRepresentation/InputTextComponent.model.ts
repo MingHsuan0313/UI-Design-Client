@@ -7,7 +7,8 @@ export class InputTextComponent extends BasicComponent{
 
   constructor(init?: Partial<InputTextComponent>) {
     super();
-    Object.assign(this, init);
+    // Object.assign(this, init);
+    this.type = "input"
     this.category = "input";
     this.serviceComponent = new ServiceComponentModel();
   }

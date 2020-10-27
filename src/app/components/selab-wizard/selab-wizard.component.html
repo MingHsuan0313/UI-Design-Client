@@ -1,33 +1,39 @@
-<h1>Wizard<span *ngIf="isPipeline == true">&nbsp;&nbsp;(IsPipeline)</span></h1>
+<h1 style="display:inline;white-space: nowrap;">Wizard</h1>
+&nbsp;&nbsp;
+<span *ngIf="isPipeline == true" class="w3-tag w3-blue">Pipeline</span>
 
 <hr>
 
 <mat-tab-group mat-align-tabs="start">
-  <mat-tab *ngFor="let link of links" label="{{link}}">
-    <div *ngIf="link == 'Build'">
+  <mat-tab *ngFor="let tab of tabs" label="{{link}}">
+    <div *ngIf="tab == 'Build Component'">
       <build-tab
         [isPipeline]="isPipeline"
+        [uiComponent]="uiComponent"
       ></build-tab>
     </div>
 
-    <div *ngIf="link == 'Compose Component'">
+    <div *ngIf="tab == 'Compose Component'">
       <compose-tab
         [isPipeline]="isPipeline"
+        [uiComponent]="uiComponent"
       ></compose-tab>
     </div>
 
-    <div *ngIf="link == 'Information'">
+    <div *ngIf="tab == 'Information'">
       <information-tab
         [isPipeline]="isPipeline"
+        [uiComponent]="uiComponent"
       ></information-tab>
     </div>
 
-    <div *ngIf="link == 'Bind Service'">
+    <div *ngIf="tab == 'Bind Service'">
       <bind-service-tab
+        [uiComponent]="uiComponent"
       ></bind-service-tab>
     </div>
 
-    <div *ngIf="link == 'Pipeline'">
+    <div *ngIf="tab == 'Pipeline'">
       <pipeline-tab
       ></pipeline-tab>
     </div>

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { UIComponent } from 'src/app/models/ui-component-dependency';
 
 @Component({
   selector: 'compose-tab',
@@ -7,6 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ComposeTabComponent implements OnInit {
   @Input() isPipeline: boolean;
+  @Input() uiComponent: UIComponent;
+
   constructor() { }
 
   ngOnInit() {

@@ -149,12 +149,18 @@ export class SelabHeaderComponent implements OnInit {
   }
   
   openWizard() {
+    let compositeComponents = ["card","breadcrumb","inputgroup","form"];
+    let isComposite = false;
+    if(compositeComponents.indexOf(this.component_selected) >= 0)
+      isComposite = true;
+
+    if(this)
     this.dialog.open(SelabWizardComponent,{
-      width: '60%',
+      width: '50%',
       height: '60%',
       data: {
         isPipeline: true,
-        isComposite: true,
+        isComposite: isComposite,
         genere: this.genre_selected,
         category: this.category_selected,
         type: this.component_selected

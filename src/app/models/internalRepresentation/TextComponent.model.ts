@@ -7,8 +7,9 @@ export class TextComponent extends BasicComponent {
 
   constructor(init?: Partial<TextComponent>) {
     super();
-    Object.assign(this, init);
+    // Object.assign(this, init);
     this.category = "informative";
+    this.type = "text";
     this.serviceComponent = new ServiceComponentModel();
   }
 

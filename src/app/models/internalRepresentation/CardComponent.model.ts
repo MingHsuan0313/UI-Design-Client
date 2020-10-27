@@ -7,9 +7,10 @@ export class CardComponent extends CompositeComponent{
 
   constructor(init?: Partial<CardComponent>) {
     super();
-    Object.assign(this, init);
+    // Object.assign(this, init);
     this.componentList = [];
     this.category = "informative";
+    this.type = "card";
     this.serviceComponent = new ServiceComponentModel();
   }
 

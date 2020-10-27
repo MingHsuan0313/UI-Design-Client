@@ -10,6 +10,7 @@ export class LayoutComponent extends CompositeComponent {
        this.selector = selector;
        this.componentList = [];
        this.style = {};
+       this.type = "layout";
        console.log("construct layout component " + id);
     }
 }

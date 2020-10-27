@@ -4,12 +4,13 @@ import { ServiceComponentModel } from "../serviceComponent/service-component.mod
 import { BasicComponent } from "./BasicComponent.model";
 
 export class DropdownComponent extends BasicComponent{
-  items: any[];
+  items: string;
 
   constructor(init?: Partial<DropdownComponent>) {
     super();
-    Object.assign(this, init);
+    // Object.assign(this, init);
     this.category = "informative";
+    this.type = "dropdown";
     this.serviceComponent = new ServiceComponentModel();
   }
 
@@ -21,5 +22,9 @@ export class DropdownComponent extends BasicComponent{
   }
 
   remove(component: UIComponent): void {
+  }
+  
+  setItems(items: string) {
+    this.items = items;
   }
 }

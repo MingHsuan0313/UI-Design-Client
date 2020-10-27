@@ -6,7 +6,8 @@ export class IconComponent extends BasicComponent{
 
   constructor(init?: Partial<IconComponent>) {
     super();
-    Object.assign(this, init);
+    // Object.assign(this, init);
+    this.type = "icon";
     this.category = "informative";
     this.serviceComponent = new ServiceComponentModel();
   }
