@@ -8,6 +8,7 @@ import { ElseBranchElement } from "../models/components/structured-activities/if
 import { ElseBranch } from "../models/components/structured-activities/if/branch/else-branch.model";
 import { ElseIfBranchElement } from "../models/components/structured-activities/if/branch/elseif-branch-element.model";
 import { If } from "../models/components/structured-activities/if/if.model";
+import { OnMessageElement } from "../models/components/structured-activities/pick/onMessage-element.model";
 
 export class ActivityUpdater {
     graphStorage: GraphStorage;
@@ -20,7 +21,8 @@ export class ActivityUpdater {
 
         if (targetActivityElement instanceof BPELComponentElementWithActivity
             || targetActivityElement instanceof BPELComponentElementWithActivityAndActivityList
-            || targetActivityElement instanceof ElseIfBranchElement || targetActivityElement instanceof ElseBranchElement) {
+            || targetActivityElement instanceof ElseIfBranchElement || targetActivityElement instanceof ElseBranchElement
+            || targetActivityElement instanceof OnMessageElement) {
               targetActivityElement.setActivity(sourceActivity);
 
           //TODO: put the sourceActivity vertex to the default displacement/selected coordinates
