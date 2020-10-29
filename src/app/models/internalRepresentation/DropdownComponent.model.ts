@@ -3,15 +3,23 @@ import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { BasicComponent } from "./BasicComponent.model";
 
-export class DropdownComponent extends BasicComponent{
-  items: string;
+export class DropdownComponent extends BasicComponent {
+  items: String;
 
-  constructor(init?: Partial<DropdownComponent>) {
+  constructor(properties?) {
     super();
-    // Object.assign(this, init);
+    if (properties != undefined) {
+      this.items = properties["items"];
+      this.name = properties["name"];
+    }
     this.category = "informative";
     this.type = "dropdown";
     this.serviceComponent = new ServiceComponentModel();
+  }
+
+  setUIComponent(properties) {
+    this.items = properties["items"];
+    this.name = properties["name"];
   }
 
   add(component: UIComponent): void {
@@ -23,7 +31,7 @@ export class DropdownComponent extends BasicComponent{
 
   remove(component: UIComponent): void {
   }
-  
+
   setItems(items: string) {
     this.items = items;
   }

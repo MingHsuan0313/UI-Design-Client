@@ -39,6 +39,20 @@ export const Library = {
     "inputgroup": ["name","componentList"],
     "form": ["name","componentList"]
   },
+  
+  // wizard form properties
+  "formProperties": {
+    "icon": ["name","text"],
+    "text": ["name","text", "href"],
+    "button": ["name","text", "href"],
+    "input": ["name","typeInfo"],
+    "dropdown": ["name","items"],
+    "table": ["name","headers", "rows"],
+    "card": ["name","header"],
+    "breadcrumb": ["name"],
+    "inputgroup": ["name"],
+    "form": ["name"]
+  },
 
   // Composite component can composite the following components
   "compositeComponents": {

@@ -1,2 +1,16 @@
 <br>
 <h3>Ready To Build: {{uiComponent.type}}</h3>
+<div>
+    <mat-form-field *ngFor="let propertyName of buildFormProperties" appearance="outline">
+        <mat-label>{{propertyName}}</mat-label>
+        <input 
+            [ngModel]="inputValue"
+            (ngModelChange)="valueChange($event,propertyName)"
+            matInput 
+            placeholder="Placeholder" >
+        &nbsp;
+    </mat-form-field>
+
+    <hr>
+    <button type="button" (click)="createComponent()" mat-raised-button color="primary">Create</button>
+</div>

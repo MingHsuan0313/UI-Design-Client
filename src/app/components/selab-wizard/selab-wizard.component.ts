@@ -25,29 +25,50 @@ export class SelabWizardComponent implements OnInit {
     
   }
 
+  // receive data from dialog input
   initialization() {
     this.isPipeline = this.data.isPipeline;
     this.genere = this.data.genere;
     this.type = this.data.type;
     this.category = this.data.category;
+    let uiComponentFactory: UIComponentFactory = new UIComponentFactory();
+    this.uiComponent = uiComponentFactory.create(this.type);
+
+  }
+  
+  checkWizardStatus() {
+    let openCorrect = true;
+    let description = "";
+    console.log(this)
+    if(this.genere == "Genre")
+      description += "You need to choose Genre\n";
+    if(this.category == "Category")
+      description += "You need to choose Category\n";
+    if(this.uiComponent == undefined)
+      description += "You need to choose UI Component\n";
+
+    console.log(description)
+    if(description.length > 0) {
+      this.dialogRef.close();
+      alert(description);
+      return false;
+    }
+    return true;
   }
 
   ngOnInit() {
     this.initialization();
-    let uiComponentFactory: UIComponentFactory = new UIComponentFactory();
-    this.uiComponent = uiComponentFactory.create(this.type);
-    console.log("Wizar start create ui component below");
-    console.log(this.uiComponent);
-    console.log("Open dialog accept data below");
-    console.log(this.data);
+
+    if(!this.checkWizardStatus()) 
+      return;
 
     // composite component
     if(this.data.isComposite) {
-      this.tabs = ["Build Component","Compose Component","Information","Bind Service","Pipeline"];
+      this.tabs = ["Build Component","Compose Component","Check Status","Bind Service","Generate Pipeline"];
     }
     // basic component
     else {
-      this.tabs = ["Build Component","Information"];
+      this.tabs = ["Build Component","Check Status"];
     }
   }
 }

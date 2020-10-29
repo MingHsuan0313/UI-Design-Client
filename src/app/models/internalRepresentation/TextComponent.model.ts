@@ -5,12 +5,24 @@ export class TextComponent extends BasicComponent {
   text: String;
   href: String;
 
-  constructor(init?: Partial<TextComponent>) {
+  constructor(properties?) {
     super();
-    // Object.assign(this, init);
+    if(properties != undefined) {
+      this.name = properties["name"];
+      this.text = properties["text"];
+      this.href = properties["href"];
+    }
     this.category = "informative";
     this.type = "text";
     this.serviceComponent = new ServiceComponentModel();
+  }
+
+  setUIComponent(properties) {
+     if(properties != undefined) {
+      this.name = properties["name"];
+      this.text = properties["text"];
+      this.href = properties["href"];
+    }
   }
 
   add(component: UIComponent): void {

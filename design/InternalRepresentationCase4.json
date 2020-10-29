@@ -50,7 +50,7 @@
                 "serviceComponent": {
                     "name": "",
                     "preference": 0,
-                    "serviceType": "None",
+                    "serviceType": "Argument",
                     "code": "",
                     "serviceID": "",
                     "className": "",

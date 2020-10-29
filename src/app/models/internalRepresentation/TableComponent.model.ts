@@ -2,16 +2,29 @@ import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { BasicComponent } from "./BasicComponent.model";
 
-export class TableComponent extends BasicComponent{
+export class TableComponent extends BasicComponent {
   headers: any[];
   rows: any[];
 
-  constructor(init?: Partial<TableComponent>) {
+  constructor(properties?) {
     super();
-    // Object.assign(this, init);
-    this.category = "informative";
+    if (properties != undefined) {
+      this.name = properties["name"];
+      this.headers = properties["headers"];
+      this.rows = properties["rows"];
+      this.category = "informative";
+    }
     this.type = "table";
     this.serviceComponent = new ServiceComponentModel();
+  }
+
+  setUIComponent(properties) {
+     if (properties != undefined) {
+      this.name = properties["name"];
+      this.headers = properties["headers"];
+      this.rows = properties["rows"];
+      this.category = "informative";
+    }
   }
 
   add(component: UIComponent): void {

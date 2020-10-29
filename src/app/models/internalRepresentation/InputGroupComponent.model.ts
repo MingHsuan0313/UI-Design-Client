@@ -2,16 +2,22 @@ import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { CompositeComponent } from "./CompositeComponent.model";
 
-export class InputGroupComponent extends CompositeComponent{
+export class InputGroupComponent extends CompositeComponent {
   componentList: any[] = [];
 
-  constructor(init?: Partial<InputGroupComponent>) {
+  constructor(properties?) {
     super();
-    // Object.assign(this, init);
+    if (properties != undefined) {
+      this.name = properties["name"];
+    }
     this.type = "inputgroup";
     this.componentList = [];
     this.category = "input";
     this.serviceComponent = new ServiceComponentModel();
+  }
+
+  setUIComponent(properties) {
+    this.name = properties["name"];
   }
 
   add(component: UIComponent): void {

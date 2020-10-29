@@ -2,6 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ReactiveFormsModule } from "@angular/forms";
 
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
@@ -100,7 +101,9 @@ import { PropertyEditorComponent } from "./bpel-designer/components/property-edi
     MatSlideToggleModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatProgressSpinnerModule
+    MatInputModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     CodeEditorComponent,

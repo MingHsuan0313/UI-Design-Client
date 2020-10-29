@@ -2,15 +2,21 @@ import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { CompositeComponent } from "./CompositeComponent.model";
 
-export class BreadcrumbComponent extends CompositeComponent{
-  
-  constructor(init?: Partial<BreadcrumbComponent>) {
+export class BreadcrumbComponent extends CompositeComponent {
+
+  constructor(properties?) {
     super();
-    // Object.assign(this, init);
+    if (properties != undefined) {
+      this.name = properties["name"];
+    }
     this.componentList = [];
     this.category = "navigation";
     this.type = "breadcrumb";
     this.serviceComponent = new ServiceComponentModel();
+  }
+
+  setUIComponent(properties) {
+    this.name = properties["name"];
   }
 
   add(component: UIComponent): void {
