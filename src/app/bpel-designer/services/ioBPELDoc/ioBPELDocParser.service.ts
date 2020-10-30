@@ -3,6 +3,7 @@ import GraphEditorService from "src/app/services/externalRepresentation/graph-ed
 import IOBPELDocService from "./ioBPELDoc.service";
 
 const enum Tag {
+    XMLNS = "http://docs.oasis-open.org/wsbpel/2.0/process/executable",
     PROCESS = "process",
     ABSTRACT_PROCESSES_LIST = "abstractProcessesList",
     ATTRIBUTE = "attribute",
@@ -118,7 +119,7 @@ export class IOBPELDocParser {
         let processIRObj = JSON.parse(JSON.stringify(processBPELComponent, replacer));
         console.log(processIRObj);
         // create a new XML-based BPEL Doc
-        let retBPELDoc = this.dfsInternalRepresentationJSONAndCreateNode(Tag.PROCESS, processIRObj, document.createElement(Tag.PROCESS));
+        let retBPELDoc = this.dfsInternalRepresentationJSONAndCreateNode(Tag.PROCESS, processIRObj, document.createElementNS(Tag.XMLNS, Tag.PROCESS));
         console.log("[return BPEL Doc]");
         console.log(retBPELDoc);
 
@@ -166,7 +167,7 @@ export class IOBPELDocParser {
                             if (trackingKey == Tag.ACTIVITY || trackingKey == Tag.ACTIVITY_LIST || trackingKey.includes(Tag.LIST))
                                 rootNode = this.dfsInternalRepresentationJSONAndCreateNode(trackingKey, curJSONValue[trackingKey], rootNode);
                             else {
-                                let childNode = document.createElement(trackingKey);
+                                let childNode = document.createElementNS(Tag.XMLNS, trackingKey);
                                 this.setNodeAttributes(curJSONValue[trackingKey][Tag.ATTRIBUTE], childNode);
                                 let dfsResult = this.dfsInternalRepresentationJSONAndCreateNode(trackingKey, curJSONValue[trackingKey], childNode);
                                 rootNode.appendChild(dfsResult);
@@ -183,7 +184,7 @@ export class IOBPELDocParser {
                             rootNode = this.dfsInternalRepresentationJSONAndCreateNode(Tag.ACTIVITY, curJSONValue[trackingKey], rootNode);
                         } else {
                             console.log("[2-1-2.curJSONKey == signature List]");
-                            let childNode = document.createElement(this.eraseStringListSuffix(curJSONKey));
+                            let childNode = document.createElementNS(Tag.XMLNS, this.eraseStringListSuffix(curJSONKey));
                             this.setNodeAttributes(curJSONValue[trackingKey][Tag.ATTRIBUTE], childNode);
                             // TODO: check array give next curJSONKey=null is OK?
                             let dfsResult = this.dfsInternalRepresentationJSONAndCreateNode(null, curJSONValue[trackingKey], childNode);
@@ -194,7 +195,7 @@ export class IOBPELDocParser {
                         console.log("[2-2.curJSONValue != array]");
                         if (curJSONKey == Tag.ACTIVITY) {
                             console.log("[2-2-1.curJSONValue is a activity (e.g. <copy>)");
-                            let childNode = document.createElement(curJSONValue[Tag.COMPONENT_NAME]);
+                            let childNode = document.createElementNS(Tag.XMLNS, curJSONValue[Tag.COMPONENT_NAME]);
                             this.setNodeAttributes(curJSONValue[Tag.ATTRIBUTE], childNode)
                             let dfsResult = this.dfsInternalRepresentationJSONAndCreateNode(trackingKey, curJSONValue[trackingKey], childNode);
                             rootNode.appendChild(dfsResult);
