@@ -170,8 +170,7 @@ export class IOBPELDocParser {
                                 let childNode = document.createElementNS(Tag.XMLNS, trackingKey);
                                 this.setNodeAttributes(curJSONValue[trackingKey][Tag.ATTRIBUTE], childNode);
                                 let dfsResult = this.dfsInternalRepresentationJSONAndCreateNode(trackingKey, curJSONValue[trackingKey], childNode);
-                                rootNode.appendChild(dfsResult);
-                                console.log("@@ append nodeName = " + dfsResult.nodeName + " to rootNodeName = " + rootNode.nodeName);
+                                rootNode = this.appendDFSResultToRootNodeIfNotEagerCreation(dfsResult, rootNode);
                             }
                         }
                     }
@@ -188,8 +187,7 @@ export class IOBPELDocParser {
                             this.setNodeAttributes(curJSONValue[trackingKey][Tag.ATTRIBUTE], childNode);
                             // TODO: check array give next curJSONKey=null is OK?
                             let dfsResult = this.dfsInternalRepresentationJSONAndCreateNode(null, curJSONValue[trackingKey], childNode);
-                            rootNode.appendChild(dfsResult);
-                            console.log("@@ append nodeName = " + dfsResult.nodeName + " to rootNodeName = " + rootNode.nodeName);
+                            rootNode = this.appendDFSResultToRootNodeIfNotEagerCreation(dfsResult, rootNode);
                         }
                     } else {
                         console.log("[2-2.curJSONValue != array]");
@@ -198,8 +196,7 @@ export class IOBPELDocParser {
                             let childNode = document.createElementNS(Tag.XMLNS, curJSONValue[Tag.COMPONENT_NAME]);
                             this.setNodeAttributes(curJSONValue[Tag.ATTRIBUTE], childNode)
                             let dfsResult = this.dfsInternalRepresentationJSONAndCreateNode(trackingKey, curJSONValue[trackingKey], childNode);
-                            rootNode.appendChild(dfsResult);
-                            console.log("@@ append nodeName = " + dfsResult.nodeName + " to rootNodeName = " + rootNode.nodeName);
+                            rootNode = this.appendDFSResultToRootNodeIfNotEagerCreation(dfsResult, rootNode);
                         } else {
                             console.log("[2-2-2.curJSONValue is INITIAL_PROCESS_VALUE or a specific signature (e.g. <variable>)");
                             rootNode = this.dfsInternalRepresentationJSONAndCreateNode(trackingKey, curJSONValue[trackingKey], rootNode);
@@ -248,5 +245,15 @@ export class IOBPELDocParser {
     private isPlainString(value: any): boolean {
         value = (typeof value != "string")? JSON.stringify(value): value;
         return value[0] != "{";
+    }
+
+    private appendDFSResultToRootNodeIfNotEagerCreation(dfsResult: Element, rootNode: Element): Element {
+        if (dfsResult.hasAttributes() || dfsResult.hasChildNodes()) {
+            rootNode.appendChild(dfsResult);
+            console.log("[append dfsResult] nodeName = " + dfsResult.nodeName + " to root nodeName = " + rootNode.nodeName);
+        } else {
+            console.log("[discard dfsResult] nodeName = " + dfsResult.nodeName + " because it is a eager creation, so we should not append to root nodeName = " + rootNode.nodeName);
+        }
+        return rootNode;
     }
 }
