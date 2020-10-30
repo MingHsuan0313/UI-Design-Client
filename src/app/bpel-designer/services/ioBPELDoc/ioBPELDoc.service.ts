@@ -70,17 +70,17 @@ export default class IOBPELDocService {
         }
     }
 
-    downloadXMLToClientSide(xml: XMLDocument, filename: string): void {
+    downloadXMLToClientSide(xml: Element, filename: string): void {
         var a = document.createElement("a");
         document.body.appendChild(a);
         a.setAttribute("style", "display: none");
 
-        var blob = new Blob([new XMLSerializer().serializeToString(xml.documentElement)], {type: "text/xml;"}),
+        var blob = new Blob([new XMLSerializer().serializeToString(xml)], {type: "text/xml;"}),
             url = window.URL.createObjectURL(blob);
         a.href = url;
         a.download = filename;
         a.click();
         window.URL.revokeObjectURL(url);
-
+        alert(filename + " has been downloaded!");
     }
 }

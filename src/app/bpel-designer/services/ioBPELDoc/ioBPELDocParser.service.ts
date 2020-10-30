@@ -94,7 +94,7 @@ export class IOBPELDocParser {
         }
     }
 
-    parseExportBPELDoc(): XMLDocument {
+    parseExportBPELDoc(): Element {
         this.graphStorage = this.graphEditorService.getGraphStorage();
         let processBPELComponent = this.graphStorage.findVertexStorageByID(2).getComponent();
         console.log(processBPELComponent);
@@ -117,15 +117,12 @@ export class IOBPELDocParser {
         let processIRObj = JSON.parse(JSON.stringify(processBPELComponent, replacer));
         console.log(processIRObj);
         // create a new XML-based BPEL Doc
-        let xmlDoc = document.implementation.createDocument(null, Tag.PROCESS, null);
-        let processNode = xmlDoc.documentElement;
-        let ret = this.dfsInternalRepresentationJSONAndCreateNode(Tag.PROCESS, processIRObj, processNode);
-        console.log("[return XML Doc]");
-        console.log(ret);
+        let retBPELDoc = this.dfsInternalRepresentationJSONAndCreateNode(Tag.PROCESS, processIRObj, document.createElement(Tag.PROCESS));
+        console.log("[return BPEL Doc]");
+        console.log(retBPELDoc);
 
-        //TODO:
-        console.log("paser export done");
-        throw new Error("Not finished yet");
+        alert("parser export done");
+        return retBPELDoc;
     }
 
     dfsInternalRepresentationJSONAndCreateNode(curJSONKey: string, curJSONValue: any, rootNode: Element): Element {
