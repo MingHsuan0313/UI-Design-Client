@@ -153,13 +153,14 @@ export class IOBPELDocParser {
                 if (curJSONKey == Tag.ELEMENT) {
                     console.log("[1.curJSONKey == element]");
                     // curJSONValue is the "element"'s textContent node
-                    if (curJSONValueOwnsKeys.length == 1 && !Array.isArray(curJSONValue[curJSONValueOwnsKeys[0]]) && !this.isJSONString(curJSONValue[curJSONValueOwnsKeys[0]])) {
+                    if (curJSONValueOwnsKeys.length == 1 && !Array.isArray(curJSONValue[curJSONValueOwnsKeys[0]]) &&
+                    curJSONValue[curJSONValueOwnsKeys[0]] != null && this.isPlainString(curJSONValue[curJSONValueOwnsKeys[0]])) {
                         console.log("[1-1.curJSONValue == element-textContent]")
                         let textContent = curJSONValue[curJSONValueOwnsKeys[0]];
                         if (textContent != "") {
-                            let childNode = document.createElement(textContent);
+                            let childNode = document.createTextNode(textContent);
                             rootNode.appendChild(childNode);
-                            console.log("@@ append nodeName = " + childNode.nodeName + " to rootNodeName = " + rootNode.nodeName);
+                            console.log("@@ append textNode value = " + childNode.nodeValue + " to rootNodeName = " + rootNode.nodeName);
                         }
                     } else {
                         console.log("[1-2.curJSONValue == specific signature List (e.g. \"variableList\") or specific signature (e.g. \"variables\", \"activity\", \"activityList\")")
@@ -233,13 +234,8 @@ export class IOBPELDocParser {
         return str.replace(Tag.LIST, "");
     }
 
-    private isJSONString(value: any): boolean {
+    private isPlainString(value: any): boolean {
         value = (typeof value != "string")? JSON.stringify(value): value;
-        try {
-            JSON.parse(value);
-        } catch (e) {
-            return false;
-        }
-        return true;
+        return value[0] != "{";
     }
 }
