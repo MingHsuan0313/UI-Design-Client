@@ -4,6 +4,7 @@ import IOBPELDocService from "./ioBPELDoc.service";
 
 const enum Tag {
     PROCESS = "process",
+    ABSTRACT_PROCESSES_LIST = "abstractProcessesList",
     ATTRIBUTE = "attribute",
     ELEMENT = "element",
     ACTIVITY = "activity",
@@ -214,15 +215,27 @@ export class IOBPELDocParser {
     }
 
     private setNodeAttributes(attributesKVParis: string, node: any): void {
-        //TODO: handle <process> "abstractprocesseslist"
         console.log("attributesKVPairs=");
         console.log(attributesKVParis);
         // has attributes
         if (attributesKVParis != undefined) {
             for (let key of Object.keys(attributesKVParis)) {
                 // if an attribute value is not empty
-                if (attributesKVParis[key] != "")
-                    node.setAttribute(key, attributesKVParis[key]);
+                if (attributesKVParis[key] != "") {
+                    // handle <process>'s attribute "abstractProcessesList"
+                    if (key == Tag.ABSTRACT_PROCESSES_LIST) {
+                        const enum Separator { SPACE = " ", EQUAL = "=" };
+                        for (let abstractProcess of attributesKVParis[key].split(Separator.SPACE)) {
+                            const abstractProcessName = abstractProcess.split(Separator.EQUAL)[0];
+                            const abstractProcessValue = abstractProcess.split(Separator.EQUAL)[1];
+                            if (abstractProcessName && abstractProcessValue) {
+                                node.setAttribute(abstractProcessName, abstractProcessValue.replaceAll('\"', ''));
+                            }
+                        }
+                    } else {
+                        node.setAttribute(key, attributesKVParis[key]);
+                    }
+                }
             }
         }
     }
