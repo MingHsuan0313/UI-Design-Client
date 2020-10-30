@@ -2,6 +2,16 @@ import { GraphStorage } from "src/app/models/graph-dependency";
 import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import IOBPELDocService from "./ioBPELDoc.service";
 
+const enum Tag {
+    PROCESS = "process",
+    ATTRIBUTE = "attribute",
+    ELEMENT = "element",
+    ACTIVITY = "activity",
+    LIST = "List",
+    ACTIVITY_LIST = "activityList",
+    COMPONENT_NAME = "componentName"
+}
+
 export class IOBPELDocParser {
     graphStorage: GraphStorage;
     curParentBPELNode: Element = null;
@@ -85,8 +95,151 @@ export class IOBPELDocParser {
     }
 
     parseExportBPELDoc(): XMLDocument {
+        this.graphStorage = this.graphEditorService.getGraphStorage();
+        let processBPELComponent = this.graphStorage.findVertexStorageByID(2).getComponent();
+        console.log(processBPELComponent);
+
+        // discard "updateBPELDocService" to avoid circular structure to JSON
+        // sort the properties by their keys in descending order to let activity & activityList begin last key
+        function replacer(key: string, value: any) {
+            let UPDATE_BPEL_DOC_SERVICE = "updateBPELDocService";
+            let FILTER_FIELDS = ["id", "x", "y", "width", "height", "provideFrom", "provideTo"];
+            if (key != UPDATE_BPEL_DOC_SERVICE && !FILTER_FIELDS.includes(key)) {
+                return value instanceof Object && !(value instanceof Array) ?
+                Object.keys(value).sort().reverse().reduce((sorted, key) => {
+                    sorted[key] = value[key];
+                    return sorted;
+                }, {}):
+                value;
+            }
+        }
+
+        let processIRObj = JSON.parse(JSON.stringify(processBPELComponent, replacer));
+        console.log(processIRObj);
+        // create a new XML-based BPEL Doc
+        let xmlDoc = document.implementation.createDocument(null, Tag.PROCESS, null);
+        let processNode = xmlDoc.documentElement;
+        let ret = this.dfsInternalRepresentationJSONAndCreateNode(Tag.PROCESS, processIRObj, processNode);
+        console.log("[return XML Doc]");
+        console.log(ret);
+
         //TODO:
-        console.log("pasert export done");
-        return null;
+        console.log("paser export done");
+        throw new Error("Not finished yet");
+    }
+
+    dfsInternalRepresentationJSONAndCreateNode(curJSONKey: string, curJSONValue: any, rootNode: Element): Element {
+        if (curJSONKey == Tag.PROCESS) {
+            console.log("[0.curJSONValue is the INITIAL_PROCESS's value");
+            this.setNodeAttributes(curJSONValue[Tag.ATTRIBUTE], rootNode)
+            rootNode = this.dfsInternalRepresentationJSONAndCreateNode(null, curJSONValue, rootNode);
+        } else {
+            let curJSONValueOwnsKeys = Object.keys(curJSONValue);
+            for (let trackingKey of curJSONValueOwnsKeys) {
+                /* DEBUG INFO */
+                console.log("================== dfsInternalRepresentationJSONAndCreateNode INFO BEGIN ==================");
+                console.log("* curJSONKey =");
+                console.log(curJSONKey);
+                console.log("* curJSONValue =");
+                console.log(curJSONValue);
+                console.log("* All keys of curJSONValue=");
+                console.log(curJSONValueOwnsKeys);
+                console.log("* tracking key of all keys of curJSONValue =");
+                console.log(trackingKey);
+                console.log("================== dfsInternalRepresentationJSONAndCreateNode INFO END ==================");
+                /* DEBUG INFO */
+                if (trackingKey == Tag.ATTRIBUTE || trackingKey == Tag.COMPONENT_NAME)
+                    continue;
+                if (curJSONKey == Tag.ELEMENT) {
+                    console.log("[1.curJSONKey == element]");
+                    // curJSONValue is the "element"'s textContent node
+                    if (curJSONValueOwnsKeys.length == 1 && !Array.isArray(curJSONValue[curJSONValueOwnsKeys[0]]) && !this.isJSONString(curJSONValue[curJSONValueOwnsKeys[0]])) {
+                        console.log("[1-1.curJSONValue == element-textContent]")
+                        let textContent = curJSONValue[curJSONValueOwnsKeys[0]];
+                        if (textContent != "") {
+                            let childNode = document.createElement(textContent);
+                            rootNode.appendChild(childNode);
+                            console.log("@@ append nodeName = " + childNode.nodeName + " to rootNodeName = " + rootNode.nodeName);
+                        }
+                    } else {
+                        console.log("[1-2.curJSONValue == specific signature List (e.g. \"variableList\") or specific signature (e.g. \"variables\", \"activity\", \"activityList\")")
+                        if (curJSONValue[trackingKey] != null) {
+                            if (trackingKey == Tag.ACTIVITY || trackingKey == Tag.ACTIVITY_LIST || trackingKey.includes(Tag.LIST))
+                                rootNode = this.dfsInternalRepresentationJSONAndCreateNode(trackingKey, curJSONValue[trackingKey], rootNode);
+                            else {
+                                let childNode = document.createElement(trackingKey);
+                                this.setNodeAttributes(curJSONValue[trackingKey][Tag.ATTRIBUTE], childNode);
+                                let dfsResult = this.dfsInternalRepresentationJSONAndCreateNode(trackingKey, curJSONValue[trackingKey], childNode);
+                                rootNode.appendChild(dfsResult);
+                                console.log("@@ append nodeName = " + dfsResult.nodeName + " to rootNodeName = " + rootNode.nodeName);
+                            }
+                        }
+                    }
+                } else {
+                    console.log("[2.curJSONKey != element]");
+                    if (Array.isArray(curJSONValue)) {
+                        console.log("[2-1.curJSONValue == array]");
+                        if (curJSONKey == Tag.ACTIVITY_LIST) {
+                            console.log("[2-1-1.curJSONKey == activityList]");
+                            rootNode = this.dfsInternalRepresentationJSONAndCreateNode(Tag.ACTIVITY, curJSONValue[trackingKey], rootNode);
+                        } else {
+                            console.log("[2-1-2.curJSONKey == signature List]");
+                            let childNode = document.createElement(this.eraseStringListSuffix(curJSONKey));
+                            this.setNodeAttributes(curJSONValue[trackingKey][Tag.ATTRIBUTE], childNode);
+                            // TODO: check array give next curJSONKey=null is OK?
+                            let dfsResult = this.dfsInternalRepresentationJSONAndCreateNode(null, curJSONValue[trackingKey], childNode);
+                            rootNode.appendChild(dfsResult);
+                            console.log("@@ append nodeName = " + dfsResult.nodeName + " to rootNodeName = " + rootNode.nodeName);
+                        }
+                    } else {
+                        console.log("[2-2.curJSONValue != array]");
+                        if (curJSONKey == Tag.ACTIVITY) {
+                            console.log("[2-2-1.curJSONValue is a activity (e.g. <copy>)");
+                            let childNode = document.createElement(curJSONValue[Tag.COMPONENT_NAME]);
+                            this.setNodeAttributes(curJSONValue[Tag.ATTRIBUTE], childNode)
+                            let dfsResult = this.dfsInternalRepresentationJSONAndCreateNode(trackingKey, curJSONValue[trackingKey], childNode);
+                            rootNode.appendChild(dfsResult);
+                            console.log("@@ append nodeName = " + dfsResult.nodeName + " to rootNodeName = " + rootNode.nodeName);
+                        } else {
+                            console.log("[2-2-2.curJSONValue is INITIAL_PROCESS_VALUE or a specific signature (e.g. <variable>)");
+                            rootNode = this.dfsInternalRepresentationJSONAndCreateNode(trackingKey, curJSONValue[trackingKey], rootNode);
+                        }
+                    }
+                }
+            }
+        }
+        console.log(" ******* Return BEGIN *********");
+        console.log("* return rootNode =");
+        console.log(rootNode);
+        console.log(" ******* Return END *********");
+        return rootNode;
+    }
+
+    private setNodeAttributes(attributesKVParis: string, node: any): void {
+        //TODO: handle <process> "abstractprocesseslist"
+        console.log("attributesKVPairs=");
+        console.log(attributesKVParis);
+        // has attributes
+        if (attributesKVParis != undefined) {
+            for (let key of Object.keys(attributesKVParis)) {
+                // if an attribute value is not empty
+                if (attributesKVParis[key] != "")
+                    node.setAttribute(key, attributesKVParis[key]);
+            }
+        }
+    }
+
+    private eraseStringListSuffix(str: string): string {
+        return str.replace(Tag.LIST, "");
+    }
+
+    private isJSONString(value: any): boolean {
+        value = (typeof value != "string")? JSON.stringify(value): value;
+        try {
+            JSON.parse(value);
+        } catch (e) {
+            return false;
+        }
+        return true;
     }
 }
