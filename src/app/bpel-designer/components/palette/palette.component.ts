@@ -152,24 +152,13 @@ export class PaletteComponent implements AfterViewInit {
 
     draw(componentName: string, importingTargetContainerActivity?: BPELComponent, fromAttributesMap?: Map<string, string>): BPELComponent {
         console.log("============ Subscribed: PaletteComponent.draw() BEGIN ============");
-        if (this.targetContainerActivity != null) {
-            let targetContainerVertex = this.graphStorage.findVertexByID(this.targetContainerActivity.getId());
-            this.basey = targetContainerVertex.getGeometry().y;
-            // find lastVertexChildOfTargetContainerVertexChildren
-            let lastVertexChildOfTargetContainerVertexChildren = null;
-            for (let i = 0; i < targetContainerVertex.getChildCount(); i++) {
-                lastVertexChildOfTargetContainerVertexChildren = (lastVertexChildOfTargetContainerVertexChildren == null ||
-                                                                  parseInt(targetContainerVertex.getChildAt(i).getId()) > parseInt(lastVertexChildOfTargetContainerVertexChildren.getId()))?
-                                                                  targetContainerVertex.getChildAt(i): lastVertexChildOfTargetContainerVertexChildren;
-            }
-            if (lastVertexChildOfTargetContainerVertexChildren != null) {
-                let newCoordY = lastVertexChildOfTargetContainerVertexChildren.getGeometry().y + lastVertexChildOfTargetContainerVertexChildren.getGeometry().height;
-                this.basey = newCoordY;
-            } else if (parseInt(targetContainerVertex.getParent().getParent().getId()) >= 2) {
-                this.basey = 0;
-            }
+        // MUST SET FIRST: scenario: import a BPEL doc
+        if (importingTargetContainerActivity != undefined) {
+            this.targetContainerActivity = importingTargetContainerActivity;
         }
-
+        // update the newly-creating vertex basey
+        this.basey = this.calculateTargetBaseY();
+        // select strategy and create the component
         const vertexId = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
         let bpelComponent;
         switch (componentName) {
@@ -290,30 +279,28 @@ export class PaletteComponent implements AfterViewInit {
                 console.log("The BPEL component building failed");
                 return null;
         }
-        let parentVertex = this.targetContainerActivity? this.graphStorage.findVertexByID(this.targetContainerActivity.getId()): null;
-        let bpelComponentVertexStorage = this.strategy.createComponent(this.graphStorage, bpelComponent, parentVertex);
-        console.log(bpelComponentVertexStorage);
-
-        if (importingTargetContainerActivity != undefined) {
-            importingTargetContainerActivity.updateBPELDoc(bpelComponent);
-            this.targetContainerActivity = importingTargetContainerActivity;
+        // set importingTargetContainerActivity, set parent, create component, and set next targetContainerActivity
+        let bpelComponentVertexStorage;
+        // update BPEL doc
+        if (this.targetContainerActivity != null) {
+            let parentVertex = this.graphStorage.findVertexByID(this.targetContainerActivity.getId());
+            bpelComponentVertexStorage = this.strategy.createComponent(this.graphStorage, bpelComponent, parentVertex);
+            this.targetContainerActivity.updateBPELDoc(bpelComponent);
         } else {
-            // set targetContainerActivity and update BPEL doc
-            if (this.targetContainerActivity != null) {
-                this.targetContainerActivity.updateBPELDoc(bpelComponent);
-            }
-            // check instanceof types in the following set:
-            // {BPELComponentElementWithActivity, BPELComponentElementWithActivityList, BPELComponentElementWithActivityAndActivityList, ElseIfBranch, ElseBranch}
-            if (bpelComponent instanceof Process || bpelComponent instanceof Scope ||
-                bpelComponent instanceof Sequence ||bpelComponent instanceof Flow ||
-                bpelComponent instanceof If || bpelComponent instanceof ElseIfBranch || bpelComponent instanceof ElseBranch ||
-                bpelComponent instanceof While || bpelComponent instanceof RepeatUntil || bpelComponent instanceof ForEach ||
-                bpelComponent instanceof Pick || bpelComponent instanceof OnMessage ||
-                bpelComponent instanceof Assign) {
-                // Depth-firstly set the targetContainerActivity
-                this.targetContainerActivity = bpelComponent;
-            }
+            bpelComponentVertexStorage = this.strategy.createComponent(this.graphStorage, bpelComponent, null);
         }
+        // check instanceof types in the following set targetContainerActivity
+        // {BPELComponentElementWithActivity, BPELComponentElementWithActivityList, BPELComponentElementWithActivityAndActivityList, ElseIfBranch, ElseBranch}
+        if (bpelComponent instanceof Process || bpelComponent instanceof Scope ||
+            bpelComponent instanceof Sequence ||bpelComponent instanceof Flow ||
+            bpelComponent instanceof If || bpelComponent instanceof ElseIfBranch || bpelComponent instanceof ElseBranch ||
+            bpelComponent instanceof While || bpelComponent instanceof RepeatUntil || bpelComponent instanceof ForEach ||
+            bpelComponent instanceof Pick || bpelComponent instanceof OnMessage ||
+            bpelComponent instanceof Assign) {
+            // Depth-firstly set the targetContainerActivity
+            this.targetContainerActivity = bpelComponent;
+        }
+        console.log(bpelComponentVertexStorage);
         console.log("[targetContainerActivity] = ", this.targetContainerActivity.getComponentName() + "(id = " + this.targetContainerActivity.getId() + ")");
         console.log(this.graphStorage);
 
@@ -324,5 +311,27 @@ export class PaletteComponent implements AfterViewInit {
     syncTargetContainerActivity(): void {
         this.targetContainerActivity = this.userSettedTargetContainerActivity;
         console.log("[targetContainerActivity changed] = ", this.targetContainerActivity.getComponentName() + "(id = " + this.targetContainerActivity.getId() + ")");
+    }
+
+    private calculateTargetBaseY(): number {
+        if (this.targetContainerActivity != null) {
+            let targetContainerVertex = this.graphStorage.findVertexByID(this.targetContainerActivity.getId());
+            let retBasey = targetContainerVertex.getGeometry().y;
+            // find lastVertexChildOfTargetContainerVertexChildren
+            let lastVertexChildOfTargetContainerVertexChildren = null;
+            for (let i = 0; i < targetContainerVertex.getChildCount(); i++) {
+                lastVertexChildOfTargetContainerVertexChildren = (lastVertexChildOfTargetContainerVertexChildren == null ||
+                                                                  parseInt(targetContainerVertex.getChildAt(i).getId()) > parseInt(lastVertexChildOfTargetContainerVertexChildren.getId()))?
+                                                                  targetContainerVertex.getChildAt(i): lastVertexChildOfTargetContainerVertexChildren;
+            }
+            if (lastVertexChildOfTargetContainerVertexChildren != null) {
+                let newCoordY = lastVertexChildOfTargetContainerVertexChildren.getGeometry().y + lastVertexChildOfTargetContainerVertexChildren.getGeometry().height;
+                retBasey = newCoordY;
+            } else if (parseInt(targetContainerVertex.getParent().getParent().getId()) >= 2) {
+                retBasey = 0;
+            }
+            return retBasey;
+        }
+        return this.basey;
     }
 }
