@@ -40,7 +40,7 @@ export class AssignStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let assignGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let assignVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, assignGeometry, styleStorage, styleName);
+        let assignVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, assignGeometry, styleStorage, styleName);
 
         return assignVertexStorage;
     }

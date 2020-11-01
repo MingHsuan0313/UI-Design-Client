@@ -40,7 +40,7 @@ export class WaitStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let waitGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let waitVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, waitGeometry, styleStorage, styleName);
+        let waitVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, waitGeometry, styleStorage, styleName);
 
         return waitVertexStorage;
     }

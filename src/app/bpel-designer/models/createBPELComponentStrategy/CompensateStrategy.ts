@@ -40,7 +40,7 @@ export class CompensateStrategy implements ICreateBPELComponentStrategy {
         const width = 150;
         const height = 150;
         let compensateGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let compensateVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, compensateGeometry, styleStorage, styleName);
+        let compensateVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, compensateGeometry, styleStorage, styleName);
 
         return compensateVertexStorage;
     }

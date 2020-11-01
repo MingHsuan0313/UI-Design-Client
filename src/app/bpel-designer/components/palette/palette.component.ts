@@ -67,9 +67,8 @@ export class PaletteComponent implements AfterViewInit {
     graphStorage: GraphStorage;
     strategy: ICreateBPELComponentStrategy;
     targetContainerActivity: BPELComponent = null;
-    basex: number = 500;
+    basex: number = 100;
     basey: number = 0;
-    CREATE_VERTEX_DISPLACEMENT_DISTANCE: number = 130;
     importingTargetContainerActivityNameWithIdStack: string[] = new Array<string>();
     importingComponentNameWithIdComponentMap: Map<string, BPELComponent> = new Map<string, BPELComponent>();
 
@@ -153,6 +152,21 @@ export class PaletteComponent implements AfterViewInit {
 
     draw(componentName: string, importingTargetContainerActivity?: BPELComponent, fromAttributesMap?: Map<string, string>): BPELComponent {
         console.log("============ Subscribed: PaletteComponent.draw() BEGIN ============");
+        if (this.targetContainerActivity != null) {
+            let targetContainerVertex = this.graphStorage.findVertexByID(this.targetContainerActivity.getId());
+            this.basey = targetContainerVertex.getGeometry().y;
+            // find lastVertexChildOfTargetContainerVertexChildren
+            let lastVertexChildOfTargetContainerVertexChildren = null;
+            for (let i = 0; i < targetContainerVertex.getChildCount(); i++) {
+                lastVertexChildOfTargetContainerVertexChildren = (lastVertexChildOfTargetContainerVertexChildren == null ||
+                                                                  parseInt(targetContainerVertex.getChildAt(i).getId()) > parseInt(lastVertexChildOfTargetContainerVertexChildren.getId()))?
+                                                                  targetContainerVertex.getChildAt(i): lastVertexChildOfTargetContainerVertexChildren;
+            }
+            if (lastVertexChildOfTargetContainerVertexChildren != null) {
+                let newCoordY = lastVertexChildOfTargetContainerVertexChildren.getGeometry().y + lastVertexChildOfTargetContainerVertexChildren.getGeometry().height;
+                this.basey = newCoordY;
+            }
+        }
 
         const vertexId = PropertyGenerator.getID(this.graphEditorService.getMaxVertexID());
         let bpelComponent;
@@ -274,8 +288,8 @@ export class PaletteComponent implements AfterViewInit {
                 console.log("The BPEL component building failed");
                 return null;
         }
-        this.basey += this.CREATE_VERTEX_DISPLACEMENT_DISTANCE;
-        let bpelComponentVertexStorage = this.strategy.createComponent(this.graphStorage, bpelComponent, null);
+        let parentVertex = this.targetContainerActivity? this.graphStorage.findVertexByID(this.targetContainerActivity.getId()): null;
+        let bpelComponentVertexStorage = this.strategy.createComponent(this.graphStorage, bpelComponent, parentVertex);
         console.log(bpelComponentVertexStorage);
 
         if (importingTargetContainerActivity != undefined) {

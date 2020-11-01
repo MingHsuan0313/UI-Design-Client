@@ -40,7 +40,7 @@ export class ReceiveStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let receiveGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let receiveVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, receiveGeometry, styleStorage, styleName);
+        let receiveVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, receiveGeometry, styleStorage, styleName);
 
         return receiveVertexStorage;
     }

@@ -40,7 +40,7 @@ export class OnMessageStrategy implements ICreateBPELComponentStrategy {
         const width = 75;
         const height = 75;
         let onMessageGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let onMessageVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, onMessageGeometry, styleStorage, styleName);
+        let onMessageVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, onMessageGeometry, styleStorage, styleName);
 
         return onMessageVertexStorage;
     }

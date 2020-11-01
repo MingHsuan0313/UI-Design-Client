@@ -40,7 +40,7 @@ export class SequenceStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let sequenceGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let sequenceVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, sequenceGeometry, styleStorage, styleName);
+        let sequenceVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, sequenceGeometry, styleStorage, styleName);
 
         return sequenceVertexStorage;
     }

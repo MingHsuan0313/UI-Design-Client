@@ -40,7 +40,7 @@ export class ElseIfBranchStrategy implements ICreateBPELComponentStrategy {
         const width = 75;
         const height = 75;
         let elseifGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let elseifVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, elseifGeometry, styleStorage, styleName);
+        let elseifVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, elseifGeometry, styleStorage, styleName);
 
         return elseifVertexStorage;
     }

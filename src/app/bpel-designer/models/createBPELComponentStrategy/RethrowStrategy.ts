@@ -40,7 +40,7 @@ export class RethrowStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let rethrowGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let rethrowVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, rethrowGeometry, styleStorage, styleName);
+        let rethrowVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, rethrowGeometry, styleStorage, styleName);
 
         return rethrowVertexStorage;
     }

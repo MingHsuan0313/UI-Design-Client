@@ -40,7 +40,7 @@ export class ProcessStrategy implements ICreateBPELComponentStrategy {
         const width = 200;
         const height = 200;
         let processGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let processVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, processGeometry, styleStorage, styleName);
+        let processVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, processGeometry, styleStorage, styleName);
 
         return processVertexStorage;
     }
