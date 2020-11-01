@@ -3,11 +3,24 @@ import GraphEditorService from "src/app/services/externalRepresentation/graph-ed
 import IOBPELDocService from "./ioBPELDoc.service";
 
 const enum SORT_ORDER {
+    // <if> or other structured activities
     CONDITION = "condition",
     ELSE_IF = "elseif",
     ELSE = "else",
     ACTIVITY = "activity",
     ACTIVITY_LIST = "activityList",
+    // standard-elements
+    SOURCES = "sources",
+    TARGETS = "targets",
+    // <process>
+    EXTENSIONS = "extensions",
+    IMPORT = "import",
+    PARTNERLINKS = "partnerLinks",
+    MESSAGEEXCHANGES = "messageExchanges",
+    VARIABLES = "variables",
+    CORRELATIONSETS = "correlationSets",
+    FAULTHANDLERS = "faultHandlers",
+    EVENTHANDLERS = "eventHandlers"
 }
 
 const enum Tag {
@@ -109,21 +122,40 @@ export class IOBPELDocParser {
         let processBPELComponent = this.graphStorage.findVertexStorageByID(2).getComponent();
         console.log(processBPELComponent);
 
-        // helper: special sort order compare function
-        function compare(a: string, b: string) {
-            let IF_ORDER_EXPRESSION_LESS = (a == SORT_ORDER.CONDITION && b == SORT_ORDER.ACTIVITY) ||
-                                        (a == SORT_ORDER.ACTIVITY && b == SORT_ORDER.ACTIVITY_LIST) ||
+        // helper: special BPEL SPEC nodes order compareFunction
+        function bpelCompareFunction(a: string, b: string) {
+            let IF_ORDER_EXPRESSION_LESS = (a == SORT_ORDER.CONDITION && (b == SORT_ORDER.ACTIVITY || b == SORT_ORDER.ACTIVITY_LIST || b == SORT_ORDER.ELSE)) ||
+                                        (a == SORT_ORDER.ACTIVITY && (b == SORT_ORDER.ACTIVITY_LIST || b == SORT_ORDER.ELSE)) ||
                                         (a == SORT_ORDER.ACTIVITY_LIST && b == SORT_ORDER.ELSE);
-            let IF_ORDER_EXPRESSION_GREATER = (a == SORT_ORDER.ACTIVITY && b == SORT_ORDER.CONDITION) ||
-                                        (a == SORT_ORDER.ACTIVITY_LIST && b == SORT_ORDER.ACTIVITY) ||
+            let IF_ORDER_EXPRESSION_GREATER = ((a == SORT_ORDER.ACTIVITY || a == SORT_ORDER.ACTIVITY_LIST || a == SORT_ORDER.ELSE) && b == SORT_ORDER.CONDITION) ||
+                                        ((a == SORT_ORDER.ACTIVITY_LIST || a == SORT_ORDER.ELSE) && b == SORT_ORDER.ACTIVITY) ||
                                         (a == SORT_ORDER.ELSE && b == SORT_ORDER.ACTIVITY_LIST);
+            let STANDARD_ELEMENTS_SPEC_ORDER_EXPRESSION_LESS = (a == SORT_ORDER.TARGETS) || (a == SORT_ORDER.SOURCES && b != SORT_ORDER.TARGETS);
+            let STANDARD_ELEMENTS_SPEC_ORDER_EXPRESSION_GREATER = (b == SORT_ORDER.TARGETS) || (b == SORT_ORDER.SOURCES && a != SORT_ORDER.TARGETS);
+            let PROCESS_SPEC_ORDER_EXPRESSION_LESS = (a == SORT_ORDER.EXTENSIONS && (b == SORT_ORDER.IMPORT || b == SORT_ORDER.PARTNERLINKS || b == SORT_ORDER.MESSAGEEXCHANGES || b == SORT_ORDER.VARIABLES || b == SORT_ORDER.CORRELATIONSETS || b == SORT_ORDER.FAULTHANDLERS || b == SORT_ORDER.EVENTHANDLERS || b == SORT_ORDER.ACTIVITY)) ||
+                                                    (a == SORT_ORDER.IMPORT && (b == SORT_ORDER.PARTNERLINKS || b == SORT_ORDER.MESSAGEEXCHANGES || b == SORT_ORDER.VARIABLES || b == SORT_ORDER.CORRELATIONSETS || b == SORT_ORDER.FAULTHANDLERS || b == SORT_ORDER.EVENTHANDLERS || b == SORT_ORDER.ACTIVITY)) ||
+                                                    (a == SORT_ORDER.PARTNERLINKS && (b == SORT_ORDER.MESSAGEEXCHANGES || b == SORT_ORDER.VARIABLES || b == SORT_ORDER.CORRELATIONSETS || b == SORT_ORDER.FAULTHANDLERS || b == SORT_ORDER.EVENTHANDLERS || b == SORT_ORDER.ACTIVITY)) ||
+                                                    (a == SORT_ORDER.MESSAGEEXCHANGES && (b == SORT_ORDER.VARIABLES || b == SORT_ORDER.CORRELATIONSETS || b == SORT_ORDER.FAULTHANDLERS || b == SORT_ORDER.EVENTHANDLERS || b == SORT_ORDER.ACTIVITY)) ||
+                                                    (a == SORT_ORDER.VARIABLES && (b == SORT_ORDER.CORRELATIONSETS || b == SORT_ORDER.FAULTHANDLERS || b == SORT_ORDER.EVENTHANDLERS || b == SORT_ORDER.ACTIVITY)) ||
+                                                    (a == SORT_ORDER.CORRELATIONSETS && (b == SORT_ORDER.FAULTHANDLERS || b == SORT_ORDER.EVENTHANDLERS || b == SORT_ORDER.ACTIVITY)) ||
+                                                    (a == SORT_ORDER.FAULTHANDLERS && (b == SORT_ORDER.EVENTHANDLERS || b == SORT_ORDER.ACTIVITY)) ||
+                                                    (a == SORT_ORDER.EVENTHANDLERS && b == SORT_ORDER.ACTIVITY);
+            let PROCESS_SPEC_ORDER_EXPRESSION_GREATER = ((a == SORT_ORDER.IMPORT || a == SORT_ORDER.PARTNERLINKS || a == SORT_ORDER.MESSAGEEXCHANGES || a == SORT_ORDER.VARIABLES || a == SORT_ORDER.CORRELATIONSETS || a == SORT_ORDER.FAULTHANDLERS || a == SORT_ORDER.EVENTHANDLERS || a == SORT_ORDER.ACTIVITY) && b == SORT_ORDER.EXTENSIONS) ||
+                                                    ((a == SORT_ORDER.PARTNERLINKS || a == SORT_ORDER.MESSAGEEXCHANGES || a == SORT_ORDER.VARIABLES || a == SORT_ORDER.CORRELATIONSETS || a == SORT_ORDER.FAULTHANDLERS || a == SORT_ORDER.EVENTHANDLERS || a == SORT_ORDER.ACTIVITY) && b == SORT_ORDER.IMPORT) ||
+                                                    ((a == SORT_ORDER.MESSAGEEXCHANGES || a == SORT_ORDER.VARIABLES || a == SORT_ORDER.CORRELATIONSETS || a == SORT_ORDER.FAULTHANDLERS || a == SORT_ORDER.EVENTHANDLERS || a == SORT_ORDER.ACTIVITY) && b == SORT_ORDER.PARTNERLINKS) ||
+                                                    ((a == SORT_ORDER.VARIABLES || a == SORT_ORDER.CORRELATIONSETS || a == SORT_ORDER.FAULTHANDLERS || a == SORT_ORDER.EVENTHANDLERS || a == SORT_ORDER.ACTIVITY) && b == SORT_ORDER.MESSAGEEXCHANGES) ||
+                                                    ((a == SORT_ORDER.CORRELATIONSETS || a == SORT_ORDER.FAULTHANDLERS || a == SORT_ORDER.EVENTHANDLERS || a == SORT_ORDER.ACTIVITY) && b == SORT_ORDER.VARIABLES) ||
+                                                    ((a == SORT_ORDER.FAULTHANDLERS || a == SORT_ORDER.EVENTHANDLERS || a == SORT_ORDER.ACTIVITY) && b == SORT_ORDER.CORRELATIONSETS) ||
+                                                    ((a == SORT_ORDER.EVENTHANDLERS || a == SORT_ORDER.ACTIVITY) && b == SORT_ORDER.FAULTHANDLERS) ||
+                                                    (a == SORT_ORDER.ACTIVITY && b == SORT_ORDER.EVENTHANDLERS);
             // a, b double-ended conditions should both be specified
-            if ((a < b && !IF_ORDER_EXPRESSION_GREATER) || IF_ORDER_EXPRESSION_LESS)
+            // TODO: check when <process> order cannot work?
+            if ((a < b && !IF_ORDER_EXPRESSION_GREATER && !PROCESS_SPEC_ORDER_EXPRESSION_GREATER && !STANDARD_ELEMENTS_SPEC_ORDER_EXPRESSION_GREATER) ||
+                IF_ORDER_EXPRESSION_LESS || PROCESS_SPEC_ORDER_EXPRESSION_LESS || STANDARD_ELEMENTS_SPEC_ORDER_EXPRESSION_LESS)
                 return -1;
-            else if (a > b)
+            if (a > b)
                 return 1;
-            else
-                return 0
+            return 0;
         }
 
         // discard "updateBPELDocService" to avoid circular structure to JSON
@@ -133,7 +165,7 @@ export class IOBPELDocParser {
             let FILTER_FIELDS = ["id", "x", "y", "width", "height", "provideFrom", "provideTo"];
             if (key != UPDATE_BPEL_DOC_SERVICE && !FILTER_FIELDS.includes(key)) {
                 return value instanceof Object && !(value instanceof Array) ?
-                Object.keys(value).sort(compare).reduce((sorted, key) => {
+                Object.keys(value).sort(bpelCompareFunction).reduce((sorted, key) => {
                     sorted[key] = value[key];
                     return sorted;
                 }, {}):
