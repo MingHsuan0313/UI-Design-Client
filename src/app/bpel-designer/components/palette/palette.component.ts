@@ -165,6 +165,8 @@ export class PaletteComponent implements AfterViewInit {
             if (lastVertexChildOfTargetContainerVertexChildren != null) {
                 let newCoordY = lastVertexChildOfTargetContainerVertexChildren.getGeometry().y + lastVertexChildOfTargetContainerVertexChildren.getGeometry().height;
                 this.basey = newCoordY;
+            } else if (parseInt(targetContainerVertex.getParent().getParent().getId()) >= 2) {
+                this.basey = 0;
             }
         }
 
