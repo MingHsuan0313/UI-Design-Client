@@ -6,6 +6,7 @@ import { BasicComponent } from "./BasicComponent.model";
 export class ButtonComponent extends BasicComponent {
   text: String;
   href: String;
+  trigger: Boolean;
 
   constructor(properties?) {
     super();
@@ -30,6 +31,27 @@ export class ButtonComponent extends BasicComponent {
 
   getInfo(): any {
     return this;
+  }
+
+  getProperties() {
+    return [
+      {
+        "type": "String",
+        "value": "name"
+      },
+      {
+        "type": "String",
+        "value": "text"
+      },
+      {
+        "type": "String",
+        "value": "href"
+      },
+      {
+        "type": "Boolean",
+        "value": "trigger"
+      },
+    ]
   }
 
   remove(component: UIComponent): void {

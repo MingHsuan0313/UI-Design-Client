@@ -1,16 +1,24 @@
 <br>
 <h3>Ready To Build: {{uiComponent.type}}</h3>
 <div>
-    <mat-form-field *ngFor="let propertyName of buildFormProperties" appearance="outline">
-        <mat-label>{{propertyName}}</mat-label>
-        <input 
-            [ngModel]="inputValue"
-            (ngModelChange)="valueChange($event,propertyName)"
-            matInput 
-            placeholder="Placeholder" >
-        &nbsp;
-    </mat-form-field>
+    <div *ngFor="let property of buildFormProperties">
+        <div *ngIf="property.type == 'String'">
+            <mat-form-field appearance="outline">
+                <mat-label>{{property.value}}</mat-label>
+                <input [ngModel]="inputValue" (ngModelChange)="valueChange($event,property.value)" matInput
+                    placeholder="Placeholder">
+                &nbsp;
+            </mat-form-field>
+        </div>
+        <div *ngIf="property.type == 'Boolean'">
+            <mat-slide-toggle [ngModel]="inputValue" (ngModelChange)="valueChange($event,property.value)" matInput>
+                {{property.value}}</mat-slide-toggle>
+        </div>
+    </div>
 
     <hr>
-    <button type="button" (click)="createComponent()" mat-raised-button color="primary">Create</button>
+    <mat-dialog-actions>
+        <button type="button" (click)="createComponent()" mat-raised-button color="primary">Create</button>
+        <button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
+    </mat-dialog-actions>
 </div>

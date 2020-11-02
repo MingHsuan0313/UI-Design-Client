@@ -11,10 +11,9 @@ import { Library } from '../../../shared/library';
 export class BuildTabComponent implements OnInit {
   @Input() isPipeline: boolean;
   @Input() uiComponent: UIComponent;
-  buildFormProperties: string[];
+  buildFormProperties: any;
   inputValue: string;
 
-  form: FormGroup;
   formData: {};
 
   constructor() {
@@ -22,14 +21,14 @@ export class BuildTabComponent implements OnInit {
   }
   
   buildForm() {
-    let formGroupObject:Object = {};
     for(let index = 0;index < this.buildFormProperties.length;index++) {
-      formGroupObject[this.buildFormProperties[index]] = new FormControl();
-      this.formData[this.buildFormProperties[index]] = "";
+      if(this.buildFormProperties[index]["type"] == "Boolean") {
+        this.formData[this.buildFormProperties[index]["value"]] = "false";
+      }
+      else if(this.buildFormProperties[index]["type"] == "String") {
+        this.formData[this.buildFormProperties[index]["value"]] = "";
+      }
     }
-    console.log("construc form data");
-    console.log(this.formData);
-    this.form = new FormGroup(formGroupObject as any);
   }
   
   valueChange(event,propertyName) {
@@ -47,8 +46,10 @@ export class BuildTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.buildFormProperties = Library.formProperties[this.uiComponent.type.toString()];
+    this.buildFormProperties = this.uiComponent.getProperties();
     this.buildForm();
+    console.log("form property")
+    console.log(this.buildFormProperties)
     console.log("Build1 Tab:" + this.isPipeline)
   }
 }

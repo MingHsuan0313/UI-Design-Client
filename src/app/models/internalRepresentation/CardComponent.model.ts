@@ -21,6 +21,23 @@ export class CardComponent extends CompositeComponent {
     this.header = properties["header"];
     this.name = properties["name"];
   }
+  
+  getProperties() {
+    return [
+      {
+        "type": "String",
+        "value": "name"
+      },
+      {
+        "type": "String",
+        "value": "header"
+      }
+    ]
+  }
+  
+  getChildrenOptions() {
+    return ["text", "dropdown", "button", "table"]
+  }
 
   add(component: any): void {
     this.componentList.push(component);

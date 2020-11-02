@@ -7,7 +7,7 @@ export class TextComponent extends BasicComponent {
 
   constructor(properties?) {
     super();
-    if(properties != undefined) {
+    if (properties != undefined) {
       this.name = properties["name"];
       this.text = properties["text"];
       this.href = properties["href"];
@@ -17,8 +17,26 @@ export class TextComponent extends BasicComponent {
     this.serviceComponent = new ServiceComponentModel();
   }
 
+  getProperties() {
+    return [
+      {
+        "type": "String",
+        "value": "name"
+      },
+      {
+        'type': "String",
+        "value": "text"
+      },
+      {
+        "type": "String",
+        "value": "href"
+      }
+    ]
+  }
+
+
   setUIComponent(properties) {
-     if(properties != undefined) {
+    if (properties != undefined) {
       this.name = properties["name"];
       this.text = properties["text"];
       this.href = properties["href"];

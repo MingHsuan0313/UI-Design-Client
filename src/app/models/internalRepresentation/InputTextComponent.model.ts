@@ -2,13 +2,13 @@ import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { BasicComponent } from "./BasicComponent.model";
 
-export class InputTextComponent extends BasicComponent{
+export class InputTextComponent extends BasicComponent {
   public typeInfo: String;  // e.g. input-text, input-password
   public label: String;
 
   constructor(properties?) {
     super();
-    if(properties != undefined) {
+    if (properties != undefined) {
       this.typeInfo = properties["typeInfo"];
       this.label = properties["name"];
       this.name = properties["name"];
@@ -19,10 +19,23 @@ export class InputTextComponent extends BasicComponent{
     this.serviceComponent = new ServiceComponentModel();
   }
 
+  getProperties() {
+    return [
+      {
+        "type": "String",
+        "value": "name"
+      },
+      {
+        "type": "String",
+        "value": "label"
+      }
+    ]
+  }
+
   setUIComponent(properties) {
-      this.typeInfo = properties["typeInfo"];
-      this.label = properties["name"];
-      this.name = properties["name"];
+    this.typeInfo = properties["typeInfo"];
+    this.label = properties["name"];
+    this.name = properties["name"];
   }
 
   add(component: UIComponent): void {

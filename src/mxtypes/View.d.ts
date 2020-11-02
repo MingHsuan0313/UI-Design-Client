@@ -51,3 +51,8 @@ declare class mxHierarchicalLayout {
   execute(parent: any);
 
 }
+
+declare class mxGraphView {
+  constructor(graph: mxGraph)
+  destroy();
+}

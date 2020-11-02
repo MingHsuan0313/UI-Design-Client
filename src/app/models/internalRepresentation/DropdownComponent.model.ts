@@ -17,6 +17,19 @@ export class DropdownComponent extends BasicComponent {
     this.serviceComponent = new ServiceComponentModel();
   }
 
+  getProperties() {
+    return [
+      {
+        "type": "String",
+        "value": "name"
+      },
+      {
+        "type": "String",
+        "value": "items"
+      }
+    ]
+  }
+
   setUIComponent(properties) {
     this.items = properties["items"];
     this.name = properties["name"];

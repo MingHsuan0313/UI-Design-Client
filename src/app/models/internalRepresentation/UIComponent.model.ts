@@ -100,4 +100,5 @@ export class UIComponent implements AbstractComponent{
   add(component: UIComponent) { }
   remove(component: UIComponent) { }
   getInfo() { }
+  getProperties(){}
 }

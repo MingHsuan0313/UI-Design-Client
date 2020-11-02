@@ -28,6 +28,7 @@ export class GraphStorage {
   id: string;
   graphConfiguration: GraphConfiguration;
   edgeIdCnt: number = -1;  // TODO: temporary solution, start from -1 to avoid conflict with getMaxId()
+  graphView: mxGraphView;
 
 
   strategy: ICreateComponentStrategy;
@@ -43,6 +44,12 @@ export class GraphStorage {
 
     this.initializeEditor(element, "assets/keyhandler.xml");
     this.graphConfiguration = new GraphConfiguration(this);
+    this.graphView = new mxGraphView(this.editor.graph);
+    console.log("view heree")
+    console.log(this.graphView)
+    // console.log(JSON.stringify(this.graph));
+
+    // this.graphView.destroy();
 
   }
 

@@ -18,6 +18,19 @@ export class FormComponent extends CompositeComponent {
     setUIComponent(properties) {
         this.name = properties["name"];
     }
+    
+    getProperties() {
+        return [
+            {
+                "type": "String",
+                "value": "name"
+            }
+        ]
+    }
+    
+    getChildrenOptions() {
+        return ["text","button","input","dropdown"];
+    }
 
     add(component: UIComponent): void {
         this.componentList.push(component);

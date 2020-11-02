@@ -20,6 +20,19 @@ export class InputGroupComponent extends CompositeComponent {
     this.name = properties["name"];
   }
 
+  getProperties() {
+    return [
+      {
+        "type": "String",
+        "value": "name"
+      }
+    ]
+  }
+  
+  getChildrenOptions() {
+    return ["text","button","icon","dropdown"];
+  }
+
   add(component: UIComponent): void {
     this.componentList.push(component);
   }

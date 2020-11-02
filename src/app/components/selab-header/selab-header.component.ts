@@ -156,8 +156,8 @@ export class SelabHeaderComponent implements OnInit {
 
     if(this)
     this.dialog.open(SelabWizardComponent,{
-      width: '50%',
-      height: '60%',
+      width: '55%',
+      height: '65%',
       data: {
         isPipeline: true,
         isComposite: isComposite,

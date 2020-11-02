@@ -17,9 +17,26 @@ export class TableComponent extends BasicComponent {
     this.type = "table";
     this.serviceComponent = new ServiceComponentModel();
   }
+  getProperties() {
+    return [
+      {
+        "type": "String",
+        "value": "name"
+      },
+      {
+        "type": "String",
+        "value": "headers"
+      },
+      {
+        "type": "String",
+        "value": "rows"
+      }
+    ]
+  }
+
 
   setUIComponent(properties) {
-     if (properties != undefined) {
+    if (properties != undefined) {
       this.name = properties["name"];
       this.headers = properties["headers"];
       this.rows = properties["rows"];
