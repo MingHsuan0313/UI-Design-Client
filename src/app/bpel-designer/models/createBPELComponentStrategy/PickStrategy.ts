@@ -40,7 +40,7 @@ export class PickStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let pickGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let pickVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, pickGeometry, styleStorage, styleName);
+        let pickVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, pickGeometry, styleStorage, styleName);
 
         return pickVertexStorage;
     }

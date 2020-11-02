@@ -40,7 +40,7 @@ export class ExitStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let exitGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let exitVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, exitGeometry, styleStorage, styleName);
+        let exitVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, exitGeometry, styleStorage, styleName);
 
         return exitVertexStorage;
     }

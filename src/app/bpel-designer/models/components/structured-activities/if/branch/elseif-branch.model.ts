@@ -10,7 +10,7 @@ export class ElseIfBranch extends BPELComponent {
     height?: number;
     type: string;
     element?: ElseIfBranchElement;
-    componentName: string = "elseif-branch";
+    componentName: string = "elseif";
 
     constructor(id: string, updateBPELDocService: UpdateBPELDocService) {
         super(id, updateBPELDocService);

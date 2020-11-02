@@ -40,7 +40,7 @@ export class InvokeStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let invokeGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let invokeVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, invokeGeometry, styleStorage, styleName);
+        let invokeVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, invokeGeometry, styleStorage, styleName);
 
         return invokeVertexStorage;
     }

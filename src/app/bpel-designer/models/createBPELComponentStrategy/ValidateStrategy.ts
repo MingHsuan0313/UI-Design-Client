@@ -40,7 +40,7 @@ export class ValidateStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let validateGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let validateVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, validateGeometry, styleStorage, styleName);
+        let validateVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, validateGeometry, styleStorage, styleName);
 
         return validateVertexStorage;
     }

@@ -5,12 +5,12 @@ import { ElseBranch } from "./structured-activities/if/branch/else-branch.model"
 export class BPELComponentElementWithActivityAndActivityList extends BPELComponentElement {
     activity: BPELComponent;
     activityList: BPELComponent[];
-    elseBranchActivity: ElseBranch;   // TODO: temporary solution for <if>, which has an activity + <elseif> list + <else> (2 activities + 1 activityList)
+    else: ElseBranch;   // TODO: temporary solution for <if>, which has an activity + <elseif> list + <else> (2 activities + 1 activityList)
 
     constructor() {
         super();
         this.activity = null;
-        this.elseBranchActivity = null;
+        this.else = null;
     }
 
     setActivity(activity: BPELComponent): void {
@@ -22,7 +22,7 @@ export class BPELComponentElementWithActivityAndActivityList extends BPELCompone
     }
 
     setElseBranchActivityForIf(elseBranchActivity: ElseBranch): void {
-        this.elseBranchActivity = elseBranchActivity;
+        this.else = elseBranchActivity;
     }
 
     getActivityList(): BPELComponent[] {

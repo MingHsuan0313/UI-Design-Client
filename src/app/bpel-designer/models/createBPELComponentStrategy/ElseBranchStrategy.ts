@@ -40,7 +40,7 @@ export class ElseBranchStrategy implements ICreateBPELComponentStrategy {
         const width = 75;
         const height = 75;
         let elseGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let elseVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, elseGeometry, styleStorage, styleName);
+        let elseVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, elseGeometry, styleStorage, styleName);
 
         return elseVertexStorage;
     }

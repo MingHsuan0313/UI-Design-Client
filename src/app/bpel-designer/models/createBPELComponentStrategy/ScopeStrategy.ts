@@ -40,7 +40,7 @@ export class ScopeStrategy implements ICreateBPELComponentStrategy {
         const width = 150;
         const height = 150;
         let scopeGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let scopeVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, scopeGeometry, styleStorage, styleName);
+        let scopeVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, scopeGeometry, styleStorage, styleName);
 
         return scopeVertexStorage;
     }

@@ -40,7 +40,7 @@ export class CopyStrategy implements ICreateBPELComponentStrategy {
         const width = 75;
         const height = 75;
         let copyGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let copyVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, copyGeometry, styleStorage, styleName);
+        let copyVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, copyGeometry, styleStorage, styleName);
 
         return copyVertexStorage;
     }

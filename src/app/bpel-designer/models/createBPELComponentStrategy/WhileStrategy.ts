@@ -40,7 +40,7 @@ export class WhileStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let whileGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let whileVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, whileGeometry, styleStorage, styleName);
+        let whileVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, whileGeometry, styleStorage, styleName);
 
         return whileVertexStorage;
     }

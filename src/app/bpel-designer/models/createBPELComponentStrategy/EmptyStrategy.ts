@@ -40,7 +40,7 @@ export class EmptyStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let emptyGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let emptyVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, emptyGeometry, styleStorage, styleName);
+        let emptyVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, emptyGeometry, styleStorage, styleName);
 
         return emptyVertexStorage;
     }
