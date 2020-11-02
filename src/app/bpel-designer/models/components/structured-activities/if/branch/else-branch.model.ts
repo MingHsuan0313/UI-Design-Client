@@ -10,7 +10,7 @@ export class ElseBranch extends BPELComponent {
     height?: number;
     type: string;
     element?: ElseBranchElement;
-    componentName: string = "else-branch";
+    componentName: string = "else";
 
     constructor(id: string, updateBPELDocService: UpdateBPELDocService) {
         super(id, updateBPELDocService);

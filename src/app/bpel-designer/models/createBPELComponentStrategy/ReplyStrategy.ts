@@ -40,7 +40,7 @@ export class ReplyStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let replyGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let replyVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, replyGeometry, styleStorage, styleName);
+        let replyVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, replyGeometry, styleStorage, styleName);
 
         return replyVertexStorage;
     }

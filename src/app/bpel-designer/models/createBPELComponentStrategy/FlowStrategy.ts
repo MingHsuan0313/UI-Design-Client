@@ -40,7 +40,7 @@ export class FlowStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let flowGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let flowVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, flowGeometry, styleStorage, styleName);
+        let flowVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, flowGeometry, styleStorage, styleName);
 
         return flowVertexStorage;
     }

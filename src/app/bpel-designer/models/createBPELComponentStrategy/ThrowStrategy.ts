@@ -40,7 +40,7 @@ export class ThrowStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let throwGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let throwVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, throwGeometry, styleStorage, styleName);
+        let throwVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, throwGeometry, styleStorage, styleName);
 
         return throwVertexStorage;
     }

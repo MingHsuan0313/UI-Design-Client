@@ -40,7 +40,7 @@ export class ForEachStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let forEachGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let forEachVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, forEachGeometry, styleStorage, styleName);
+        let forEachVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, forEachGeometry, styleStorage, styleName);
 
         return forEachVertexStorage;
     }

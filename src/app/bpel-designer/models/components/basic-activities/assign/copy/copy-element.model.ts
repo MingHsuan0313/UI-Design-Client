@@ -34,12 +34,18 @@ export class CopyElement {
         this.provideTo.set("ToVariantWithVariableAndProperty", new ToVariantWithVariableAndPropertyCreator());
         this.provideTo.set("ToVariantWithExpressionLanguageAndExpression", new ToVariantWithExpressionLanguageAndExpressionCreator());
 
-        // consturct default to-spec
+        // consturct default from-sepc, to-spec
+        this.from = this.constructDefaultFromSpec();
         this.to = this.constructDefaultToSpec();
     }
 
+    constructDefaultFromSpec(): From {
+        // Default from-spec: "FromVariantWithVariableAndPartAndQuery"
+        return this.provideFrom.get("FromVariantWithVariableAndPartAndQuery").createFrom();
+    }
+
     constructDefaultToSpec(): To {
-        // Default from-spec: "ToVariantWithVariableAndPartAndQuery"
+        // Default to-spec: "ToVariantWithVariableAndPartAndQuery"
         return this.provideTo.get("ToVariantWithVariableAndPartAndQuery").createTo();
     }
 

@@ -20,4 +20,11 @@ export class OnMessage extends BPELComponent {
         this.element = new OnMessageElement();
         console.log(this.componentName);
     }
+
+    updateBPELDoc(sourceActivity: BPELComponent): void {
+        // 1. setActivity
+        this.updateBPELDocService.setActivity(sourceActivity, this);
+        console.log("[SET ACTIVITY] set <" + sourceActivity.getComponentName() + ">" + "(id = " + sourceActivity.getId() + ") "
+                    + "to <" + this.getComponentName() + ">" + "(id = " + this.getId() + ") " + "'s activity");
+    }
 }

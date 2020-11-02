@@ -1,0 +1,203 @@
+<process
+	xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+	xmlns:HashMap.get="http://140.112.90.144:7122/java/util/HashMap/get-java_util_HashMap-java_lang_String"
+	xmlns:HierarchyController.initMethod="http://140.112.90.144:7122/InventorySystemBackendMarksTonyModify/ntu/csie/selab/inventorysystem/controller/HierarchyController/initMethod"
+	xmlns:HierarchyController.viewDepartmentList="http://140.112.90.144:7122/InventorySystemBackendMarksTonyModify/ntu/csie/selab/inventorysystem/controller/HierarchyController/viewDepartmentList-java_lang_String-java_lang_String"
+	xmlns:Iterator.hasNext="http://140.112.90.144:7122/java/util/Iterator/hasNext-java_util_Iterator"
+	xmlns:Iterator.initMethod="http://140.112.90.144:7122/java/util/Iterator/initMethod-java_lang_Iterable"
+	xmlns:Iterator.next="http://140.112.90.144:7122/java/util/Iterator/next-java_util_Iterator"
+	xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+	xmlns:tns="User://GetDepartments" targetNamespace="User://GetDepartments"
+	xmlns:AddDepartment="User://AddDepartment"
+	xmlns:imsMain="User://imsMain">
+	<variables>
+		<variable messageType="HashMap.get:getResponse" name="departmentName"/>
+		<variable messageType="Iterator.next:nextResponse" name="curDepartment"/>
+		<variable messageType="HashMap.get:getRequest" name="HashMap.getRequest.1"/>
+		<variable messageType="Iterator.initMethod:initMethodResponse" name="departmentListIterator"/>
+		<variable messageType="HashMap.get:getRequest" name="HashMap.getRequest.0"/>
+		<variable messageType="HashMap.get:getResponse" name="departmentId"/>
+		<variable messageType="HierarchyController.viewDepartmentList:viewDepartmentListRequest" name="HierarchyController.viewDepartmentListRequest.0"/>
+		<variable messageType="Iterator.hasNext:hasNextResponse" name="hasNext"/>
+		<variable messageType="HierarchyController.viewDepartmentList:viewDepartmentListResponse" name="departmentList"/>
+		<variable messageType="Iterator.hasNext:hasNextRequest" name="Iterator.hasNextRequest.1"/>
+		<variable messageType="Iterator.hasNext:hasNextRequest" name="Iterator.hasNextRequest.0"/>
+		<variable messageType="tns:outputPort.output" name="Main.reply"/>
+		<variable messageType="Iterator.next:nextRequest" name="Iterator.nextRequest.0"/>
+		<variable messageType="HierarchyController.initMethod:initMethodResponse" name="hierarchyController"/>
+		<variable messageType="Iterator.initMethod:initMethodRequest" name="Iterator.initMethodRequest.0"/>
+		<variable messageType="tns:start" name="Main.startRequest.0"/>
+		<variable messageType="AddDepartment:start" name="AddDepartmentMain.startRequest.0"/>
+		<variable messageType="tns:createInstanceFlag" name="AddDepartmentMain.createInstanceFlag.0"/>
+		<variable messageType="imsMain:start" name="imsMain.startRequest.0"/>
+		<variable messageType="tns:start" name="temp_for_navigationPort"/>
+		<variable messageType="tns:viewCategoryListRequest" name="Main.viewCategoryListRequest.0"/>
+	</variables>
+	<sequence>
+		<receive createInstance="yes" operation="start" partnerLink="GetDepartmentsMain" portType="tns:startInteractionPort" variable="Main.startRequest.0"/>
+		<assign>
+			<copy>
+				<from>
+					<literal>false</literal>
+				</from>
+				<to part="flag" variable="AddDepartmentMain.createInstanceFlag.0"/>
+			</copy>
+		</assign>
+		<while>
+			<condition>'true'</condition>
+			<sequence>
+				<receive operation="start" partnerLink="GetDepartmentsMain" portType="tns:startInteractionPort" variable="Main.startRequest.0"/>
+				<invoke operation="initMethod" outputVariable="hierarchyController" partnerLink="HierarchyController" portType="HierarchyController.initMethod:initMethodPort"/>
+				<sequence>
+					<assign>
+						<copy>
+							<from part="serviceResult" variable="hierarchyController"/>
+							<to part="self" variable="HierarchyController.viewDepartmentListRequest.0"/>
+						</copy>
+						<copy>
+							<from part="uid" variable="Main.startRequest.0"/>
+							<to part="uid" variable="HierarchyController.viewDepartmentListRequest.0"/>
+						</copy>
+						<copy>
+							<from part="token" variable="Main.startRequest.0"/>
+							<to part="token" variable="HierarchyController.viewDepartmentListRequest.0"/>
+						</copy>
+					</assign>
+					<invoke inputVariable="HierarchyController.viewDepartmentListRequest.0" operation="viewDepartmentList" outputVariable="departmentList" partnerLink="HierarchyController" portType="HierarchyController.viewDepartmentList:viewDepartmentListPort"/>
+				</sequence>
+				<sequence>
+					<assign>
+						<copy>
+							<from part="serviceResult" variable="departmentList"/>
+							<to part="iterable" variable="Iterator.initMethodRequest.0"/>
+						</copy>
+					</assign>
+					<invoke inputVariable="Iterator.initMethodRequest.0" operation="initMethod" outputVariable="departmentListIterator" partnerLink="Iterator" portType="Iterator.initMethod:initMethodPort"/>
+				</sequence>
+				<sequence>
+					<assign>
+						<copy>
+							<from part="serviceResult" variable="departmentListIterator"/>
+							<to part="self" variable="Iterator.hasNextRequest.0"/>
+						</copy>
+					</assign>
+					<invoke inputVariable="Iterator.hasNextRequest.0" operation="hasNext" outputVariable="hasNext" partnerLink="Iterator" portType="Iterator.hasNext:hasNextPort"/>
+				</sequence>
+				<sequence>
+					<while>
+						<condition>hasNext/serviceResult/text()='true'</condition>
+						<sequence>
+							<sequence>
+								<assign>
+									<copy>
+										<from part="serviceResult" variable="departmentListIterator"/>
+										<to part="self" variable="Iterator.nextRequest.0"/>
+									</copy>
+								</assign>
+								<invoke inputVariable="Iterator.nextRequest.0" operation="next" outputVariable="curDepartment" partnerLink="Iterator" portType="Iterator.next:nextPort"/>
+							</sequence>
+							<sequence>
+								<assign>
+									<copy>
+										<from part="serviceResult" variable="curDepartment"/>
+										<to part="self" variable="HashMap.getRequest.0"/>
+									</copy>
+									<copy>
+										<from>
+											<literal>id</literal>
+										</from>
+										<to part="key" variable="HashMap.getRequest.0"/>
+									</copy>
+								</assign>
+								<invoke inputVariable="HashMap.getRequest.0" operation="get" outputVariable="departmentId" partnerLink="HashMap" portType="HashMap.get:getPort"/>
+							</sequence>
+							<sequence>
+								<assign>
+									<copy>
+										<from part="serviceResult" variable="curDepartment"/>
+										<to part="self" variable="HashMap.getRequest.1"/>
+									</copy>
+									<copy>
+										<from>
+											<literal>name</literal>
+										</from>
+										<to part="key" variable="HashMap.getRequest.1"/>
+									</copy>
+								</assign>
+								<invoke inputVariable="HashMap.getRequest.1" operation="get" outputVariable="departmentName" partnerLink="HashMap" portType="HashMap.get:getPort"/>
+							</sequence>
+							<sequence>
+								<assign>
+									<copy>
+										<from part="serviceResult" variable="departmentId"/>
+										<to part="id" variable="Main.reply"/>
+									</copy>
+									<copy>
+										<from part="serviceResult" variable="departmentName"/>
+										<to part="name" variable="Main.reply"/>
+									</copy>
+								</assign>
+								<reply operation="output" partnerLink="Client" portType="tns:outputPort" variable="Main.reply"/>
+							</sequence>
+							<sequence>
+								<assign>
+									<copy>
+										<from part="serviceResult" variable="departmentListIterator"/>
+										<to part="self" variable="Iterator.hasNextRequest.1"/>
+									</copy>
+								</assign>
+								<invoke inputVariable="Iterator.hasNextRequest.1" operation="hasNext" outputVariable="hasNext" partnerLink="Iterator" portType="Iterator.hasNext:hasNextPort"/>
+							</sequence>
+						</sequence>
+					</while>
+				</sequence>
+				<receive operation="viewCategoryList" partnerLink="GetDepartmentsMain" portType="tns:pageInteractionPort" variable="Main.viewCategoryListRequest.0"/>
+				<assign>
+					<copy>
+						<from part="start" variable="Main.startRequest.0"/>
+						<to part="start" variable="AddDepartmentMain.startRequest.0"/>
+					</copy>
+					<copy>
+						<from part="uid" variable="Main.startRequest.0"/>
+						<to part="uid" variable="AddDepartmentMain.startRequest.0"/>
+					</copy>
+					<copy>
+						<from part="token" variable="Main.startRequest.0"/>
+						<to part="token" variable="AddDepartmentMain.startRequest.0"/>
+					</copy>
+				</assign>
+				<assign>
+					<copy>
+						<from part="start" variable="Main.startRequest.0"/>
+						<to part="start" variable="imsMain.startRequest.0"/>
+					</copy>
+				</assign>
+				<pick>
+					<onMessage operation="AddDepartmentPage" portType="tns:navigationPort" partnerLink="GetDepartmentsMain" variable="temp_for_navigationPort">
+						<if>
+							<condition>AddDepartmentMain.createInstanceFlag.0='true'</condition>
+							<reply operation="AddDepartmentParameterRequest" partnerLink="Client" portType="tns:outputPort" variable="AddDepartmentMain.startRequest.0"/>
+							<else>
+								<sequence>
+									<invoke partnerLink="AddDepartmentMain" portType="AddDepartment:startInteractionPort" inputVariable="AddDepartmentMain.startRequest.0" operation="start" virtualClientID="1" concreteClientAccess="yes"/>
+									<assign>
+										<copy>
+											<from>
+												<literal>true</literal>
+											</from>
+											<to part="flag" variable="AddDepartmentMain.createInstanceFlag.0"/>
+										</copy>
+									</assign>
+									<reply operation="AddDepartmentParameterRequest" partnerLink="Client" portType="tns:outputPort" variable="AddDepartmentMain.startRequest.0"/>
+								</sequence>
+							</else>
+						</if>
+					</onMessage>
+					<onMessage operation="imsMainPage" portType="tns:navigationPort" partnerLink="GetDepartmentsMain" variable="Main.startRequest.0">
+						<reply operation="imsMainParameterRequest" partnerLink="Client" portType="tns:outputPort" variable="imsMain.startRequest.0"/>
+					</onMessage>
+				</pick>
+			</sequence>
+		</while>
+	</sequence>
+</process>

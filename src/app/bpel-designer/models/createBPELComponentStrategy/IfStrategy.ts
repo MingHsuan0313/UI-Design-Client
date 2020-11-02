@@ -40,7 +40,7 @@ export class IfStrategy implements ICreateBPELComponentStrategy {
         const width = 100;
         const height = 100;
         let ifGeometry = new mxGeometry(this.basex, this.basey, width, height);
-        let ifVertexStorage = graphStorage.insertSVGVertex(null, component.id, component, ifGeometry, styleStorage, styleName);
+        let ifVertexStorage = graphStorage.insertSVGVertex(parent, component.id, component, ifGeometry, styleStorage, styleName);
 
         return ifVertexStorage;
     }

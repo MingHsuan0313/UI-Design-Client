@@ -29,7 +29,6 @@ export class GraphStorage {
   graphConfiguration: GraphConfiguration;
   edgeIdCnt: number = -1;  // TODO: temporary solution, start from -1 to avoid conflict with getMaxId()
 
-
   strategy: ICreateComponentStrategy;
   // true if modified and haven't been saved yet
   modified: Boolean;
@@ -284,7 +283,7 @@ export class GraphStorage {
     return edge;
   }
 
-  findVertexByID(id) {
+  findVertexByID(id): mxCell {
     for (let key in this.vertexStorageList) {
       if (this.vertexStorageList[key].id == id) {
         return this.vertexStorageList[key].vertex;

@@ -9,11 +9,5 @@ export class ProcessAttribute extends BPELComponentAttribute {
 
     constructor(name?: string) {
         super(name);
-        // Fake data
-        let XMLNS_BPEL = "xmlns:bpel=\"http://docs.oasis-open.org/wsbpel/2.0/process/executable\"";
-        let targetNamespace = "process.bpel";
-
-        this.abstractProcessesList = [XMLNS_BPEL];
-        this.targetNamespace = targetNamespace;
     }
 }

@@ -11,12 +11,22 @@ export class IOBPELDocValidator {
     }
 
     isImportBPELDocValid(xmlBPELDoc: XMLDocument): boolean {
-        //TODO:
+        //TODO: More comprehensive validation rules
         return true;
     }
 
     isExportBPELDocValid(): boolean {
-        //TODO:
-        return true;
+        let graphStorage = this.graphEditorService.getGraphStorage();
+        //TODO: More comprehensive validation rules
+        const enum Process {
+            VERTEX_ID = 2,  // consistent with Graph Editor
+            COMPONENT_NAME = "process"
+        }
+        let firstVertex = graphStorage.findVertexStorageByID(Process.VERTEX_ID);
+        if (firstVertex) {
+            if (firstVertex.getComponent().getComponentName() == Process.COMPONENT_NAME)
+                return true
+        }
+        return false;
     }
 }
