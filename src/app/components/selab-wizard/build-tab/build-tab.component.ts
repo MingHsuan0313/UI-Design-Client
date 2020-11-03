@@ -11,6 +11,7 @@ import { Library } from '../../../shared/library';
 export class BuildTabComponent implements OnInit {
   @Input() isPipeline: boolean;
   @Input() uiComponent: UIComponent;
+  @Input() isComposite: boolean;
   buildFormProperties: any;
   inputValue: string;
 
@@ -19,37 +20,75 @@ export class BuildTabComponent implements OnInit {
   constructor() {
     this.formData = {};
   }
-  
+
   buildForm() {
-    for(let index = 0;index < this.buildFormProperties.length;index++) {
-      if(this.buildFormProperties[index]["type"] == "Boolean") {
+    for (let index = 0; index < this.buildFormProperties.length; index++) {
+      if (this.buildFormProperties[index]["type"] == "Boolean") {
         this.formData[this.buildFormProperties[index]["value"]] = "false";
       }
-      else if(this.buildFormProperties[index]["type"] == "String") {
+      else if (this.buildFormProperties[index]["type"] == "String") {
         this.formData[this.buildFormProperties[index]["value"]] = "";
       }
     }
   }
-  
-  valueChange(event,propertyName) {
+
+  valueChange(event, propertyName) {
     this.formData[propertyName] = event;
-    console.log("update form data");
-    console.log(this.formData);
   }
-  
+
   createComponent() {
     console.log(this.formData);
+    this.uiComponent.setUIComponent(this.formData);
+    if (!this.checkIsFormFill()) {
+      alert("You need to fill all input");
+      return;
+    }
+
+    if (this.isComposite)
+      this.navigateToComposeTab();
+    else
+      this.navigateToStatusTab();
+    
+    this.formData = {};
   }
-  
-  concateString(str1,str2) {
+
+  concateString(str1, str2) {
     return str1 + str2;
+  }
+
+  checkIsFormFill(): boolean {
+    if(Object.keys(this.formData).length == 0)
+      return false;
+    let isCorrect = true;
+    for (let key in this.formData) {
+      if (this.formData[key] == "") {
+        isCorrect = false;
+        break;
+      }
+    }
+    return isCorrect;
+  }
+
+  navigateToComposeTab() {
+    let tabLinkElements = document.getElementsByClassName("mat-tab-label-content");
+    for (let index = 0; index < tabLinkElements.length; index++) {
+      if ((tabLinkElements[index] as HTMLElement).innerText == "Compose Component") {
+          console.log("hello");
+          (tabLinkElements[index] as HTMLElement).click();
+      }
+    }
+  }
+
+  navigateToStatusTab() {
+    let tabLinkElements = document.getElementsByClassName("mat-tab-label-conten");
+    for (let index = 0; index < tabLinkElements.length; index++) {
+      if ((tabLinkElements[index] as HTMLElement).innerText == "Check Status")
+        (tabLinkElements[index] as HTMLElement).click();
+    }
   }
 
   ngOnInit() {
     this.buildFormProperties = this.uiComponent.getProperties();
     this.buildForm();
-    console.log("form property")
-    console.log(this.buildFormProperties)
-    console.log("Build1 Tab:" + this.isPipeline)
   }
 }

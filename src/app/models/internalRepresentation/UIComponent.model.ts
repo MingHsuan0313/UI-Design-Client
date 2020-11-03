@@ -13,9 +13,17 @@ export class UIComponent implements AbstractComponent{
   public type: String;
   public name: String;
   public serviceComponent: ServiceComponentModel;
+  
+  constructor() {
+    this.name = "";
+  }
 
   public getName(): String {
     return this.name;
+  }
+  
+  public setUIComponent(properties) {
+
   }
 
   public setName(name: String): void {
@@ -97,8 +105,6 @@ export class UIComponent implements AbstractComponent{
     this.style = style;
   }
 
-  add(component: UIComponent) { }
-  remove(component: UIComponent) { }
   getInfo() { }
   getProperties(){}
 }

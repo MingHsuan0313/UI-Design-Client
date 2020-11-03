@@ -13,6 +13,7 @@ export class SelabWizardComponent implements OnInit {
 
   tabs = [];
   isPipeline:boolean = false;
+  isComposite: boolean = false;
   genere: string = ""; // CoreUI, Material...
   type: string = ""; // form, dropdown...
   category: string = ""; // informative, input control...
@@ -29,6 +30,7 @@ export class SelabWizardComponent implements OnInit {
   initialization() {
     this.isPipeline = this.data.isPipeline;
     this.genere = this.data.genere;
+    this.isComposite = this.data.isComposite;
     this.type = this.data.type;
     this.category = this.data.category;
     let uiComponentFactory: UIComponentFactory = new UIComponentFactory();
@@ -54,6 +56,10 @@ export class SelabWizardComponent implements OnInit {
       return false;
     }
     return true;
+  }
+  
+  checkUIComponent() {
+    console.log(this.uiComponent);
   }
 
   ngOnInit() {
