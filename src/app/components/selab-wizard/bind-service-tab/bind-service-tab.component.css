@@ -1,0 +1,11 @@
+.argument-block span {
+    font-size: large;
+}
+
+.argument-block > ul {
+    list-style-type: none;
+}
+
+.argument-block > ul > li {
+    padding-top: 2px;
+}

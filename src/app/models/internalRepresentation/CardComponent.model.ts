@@ -44,7 +44,13 @@ export class CardComponent extends CompositeComponent {
   }
 
   getInfo(): any {
-    return this;
+    return {
+      card: {
+        name: this.name,
+        header: this.header,
+        children: this.expandChildren()
+      } 
+    }
   }
 
   remove(component: UIComponent): void {

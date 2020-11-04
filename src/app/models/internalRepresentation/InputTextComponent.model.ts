@@ -42,7 +42,13 @@ export class InputTextComponent extends BasicComponent {
   }
 
   getInfo(): any {
-    return this;
+    return {
+      [this.getSelector().toString()]: {
+        name: this.name,
+        label: this.label,
+        service: this.serviceComponent.getInfo()
+      }
+    }
   }
 
   remove(component: UIComponent): void {

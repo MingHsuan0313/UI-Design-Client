@@ -1,7 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { SelabHeaderComponent } from '../selab-header/selab-header.component';
+import { InformationTabComponent } from './information-tab/information-tab.component';
 import { UIComponentFactory } from './uicomponent-factory';
 
 @Component({
@@ -18,6 +20,7 @@ export class SelabWizardComponent implements OnInit {
   type: string = ""; // form, dropdown...
   category: string = ""; // informative, input control...
   uiComponent: UIComponent; // uiComponent being create
+  @ViewChild("status") infoTab: InformationTabComponent;
 
   constructor(
     public dialogRef: MatDialogRef<SelabHeaderComponent>,
@@ -33,18 +36,25 @@ export class SelabWizardComponent implements OnInit {
     this.isComposite = this.data.isComposite;
     this.type = this.data.type;
     this.category = this.data.category;
-    let uiComponentFactory: UIComponentFactory = new UIComponentFactory();
-    this.uiComponent = uiComponentFactory.create(this.type);
-
+    this.uiComponent = UIComponentFactory.create(this.type);
+  }
+  
+  // this function if for update componet tree structure for information tab
+  tabChanged(tabChangeEvent: MatTabChangeEvent) {
+    console.log("tab change");
+    console.log(tabChangeEvent);
+    if(tabChangeEvent.tab.textLabel == "Check Status")
+      this.infoTab.update();
   }
   
   checkWizardStatus() {
     let openCorrect = true;
     let description = "";
+    console.log("open wizard : check status")
     console.log(this)
-    if(this.genere == "Genre")
+    if(this.genere == "Genre" || this.genere == "")
       description += "You need to choose Genre\n";
-    if(this.category == "Category")
+    if(this.category == "Category" || this.category == "")
       description += "You need to choose Category\n";
     if(this.uiComponent == undefined)
       description += "You need to choose UI Component\n";
@@ -64,7 +74,6 @@ export class SelabWizardComponent implements OnInit {
 
   ngOnInit() {
     this.initialization();
-
     if(!this.checkWizardStatus()) 
       return;
 

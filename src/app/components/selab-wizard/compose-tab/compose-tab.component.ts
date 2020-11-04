@@ -11,6 +11,8 @@ import { UIComponentFactory } from '../uicomponent-factory';
 export class ComposeTabComponent implements OnInit {
   @Input() isPipeline: boolean;
   @Input() uiComponent: CompositeComponent;
+  
+  isClean: boolean;
 
   childrenOptions: string[];
   composeTarget: string;
@@ -22,9 +24,9 @@ export class ComposeTabComponent implements OnInit {
   formData: {};
 
   chooseChild(event, option) {
+    this.isClean = true;
     this.composeTarget = option;
-    let uiComponentFactory: UIComponentFactory = new UIComponentFactory();
-    this.subComponent = uiComponentFactory.create(this.composeTarget);
+    this.subComponent = UIComponentFactory.create(this.composeTarget);
     console.log("create sub component");
     this.subComponentProperties = this.subComponent.getProperties();
     this.buildForm();
@@ -36,16 +38,19 @@ export class ComposeTabComponent implements OnInit {
   }
 
   constructor() {
+    this.isClean = false;
     this.formData = {};
   }
 
   insertComponent() {
+    this.isClean = false;
     if (!this.checkIsFormFill()) {
       alert("You need to fill all input");
       return;
     }
     this.subComponent.setUIComponent(this.formData);
-    this.uiComponent.addSubComponent(this.deepCopySubComponent());
+    // this.uiComponent.addSubComponent(this.deepCopySubComponent());
+    this.uiComponent.addSubComponent(this.subComponent);
     this.formData = {};
   }
   
@@ -75,6 +80,7 @@ export class ComposeTabComponent implements OnInit {
   }
   
   buildForm() {
+    this.formData = {};
     for (let index = 0; index < this.subComponentProperties.length; index++) {
       if (this.subComponentProperties[index]["type"] == "Boolean") {
         this.formData[this.subComponentProperties[index]["value"]] = "false";

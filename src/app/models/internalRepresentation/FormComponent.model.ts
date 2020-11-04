@@ -36,9 +36,24 @@ export class FormComponent extends CompositeComponent {
         this.componentList.push(component);
     }
 
-    getInfo(): any {
-        return this;
+    getInfo() {
+        return {
+           name: this.name,
+           service: this.serviceComponent.getInfo(),
+           children: this.expandChildren()
+        };
     }
+    
+    // expandChildren() {
+    //     let children = {};
+    //     for(let index = 0;index < this.componentList.length;index++) {
+    //         children[(this.componentList[index].getSelector()).toString()]
+    //          = this.componentList[index]
+    //             .getInfo()[this.componentList[index]
+    //             .getSelector().toString()];
+    //     }
+    //     return children;
+    // }
 
     remove(component: UIComponent): void {
     }

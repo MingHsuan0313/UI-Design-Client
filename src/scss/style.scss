@@ -24,3 +24,9 @@
 .mat-tab-body-wrapper{
     flex-grow: 1;
 }
+
+// for chip component
+.mat-form-field-underline {
+    position: relative !important;
+    margin-top: 15px;
+}

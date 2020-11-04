@@ -18,6 +18,13 @@ export class ServiceComponentModel {
       this.className = "";
       this.argumentType = "";
     }
+    
+    getInfo() {
+      return {
+        name: this.name,
+        type: this.serviceType
+      } 
+    }
   
     setName(serviceComponentName: string) {
       this.name = serviceComponentName;

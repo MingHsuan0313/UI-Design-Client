@@ -29,9 +29,14 @@ export class ButtonComponent extends BasicComponent {
   add(component: UIComponent): void {
   }
 
-  getInfo(): any {
-    return this;
-  }
+  getInfo() {
+    return {
+      [this.getSelector().toString()]:{
+        name: this.name,
+        text: this.text,
+        service: this.serviceComponent.getInfo()
+    }}
+ }
 
   getProperties() {
     return [

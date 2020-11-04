@@ -18,16 +18,16 @@ export class BreadcrumbComponent extends CompositeComponent {
   setUIComponent(properties) {
     this.name = properties["name"];
   }
-  
+
   getProperties() {
     return [
       {
         "type": "String",
-        "value" : "name"
+        "value": "name"
       }
     ]
   }
-  
+
   getChildrenOptions() {
     return ["text"];
   }
@@ -36,8 +36,12 @@ export class BreadcrumbComponent extends CompositeComponent {
     this.componentList.push(component);
   }
 
-  getInfo(): any {
-    return this;
+  getInfo() {
+    return {
+      name: this.name,
+      service: this.serviceComponent.getInfo(),
+      children: this.expandChildren()
+    }
   }
 
   remove(component: UIComponent): void {

@@ -104,6 +104,14 @@ export class UIComponent implements AbstractComponent{
     console.log(this)
     this.style = style;
   }
+  
+  public getType() {
+    return this.type;
+  }
+  
+  public setType(type) {
+    this.type = type;
+  }
 
   getInfo() { }
   getProperties(){}

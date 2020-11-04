@@ -46,8 +46,15 @@ export class TextComponent extends BasicComponent {
   add(component: UIComponent): void {
   }
 
-  getInfo(): any {
-    return this;
+  getInfo() {
+    return {
+      [this.getSelector().toString()]: {
+        name: this.name,
+        href: this.href,
+        text: this.text,
+        service:this.serviceComponent.getInfo()
+      }
+    };
   }
 
   remove(component: UIComponent): void {

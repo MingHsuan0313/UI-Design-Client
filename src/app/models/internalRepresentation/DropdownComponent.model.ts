@@ -39,7 +39,13 @@ export class DropdownComponent extends BasicComponent {
   }
 
   getInfo(): any {
-    return this;
+    return {
+      [this.getSelector().toString()]: {
+        name: this.name,
+        items: this.items,
+        service:this.serviceComponent.getInfo()
+      }
+    }
   }
 
   remove(component: UIComponent): void {

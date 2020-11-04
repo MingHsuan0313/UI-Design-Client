@@ -11,13 +11,18 @@ import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'; 
 import { MatSelectModule } from '@angular/material/select'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
-import { MatFormFieldModule, MatInputModule } from "@angular/material";
+import { MatFormFieldModule, MatIconModule, MatInputModule } from "@angular/material";
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatTreeModule } from '@angular/material/tree'; 
+import {MatChipsModule} from '@angular/material/chips'; 
+import { MatIcon } from '@angular/material'; 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import {
@@ -90,6 +95,7 @@ import { PropertyEditorComponent } from "./bpel-designer/components/property-edi
     FormsModule,
     HttpClientModule,
     AppAsideModule,
+    MatTreeModule,
     AppBreadcrumbModule.forRoot(),
     AppHeaderModule,
     AppFooterModule,
@@ -100,8 +106,12 @@ import { PropertyEditorComponent } from "./bpel-designer/components/property-edi
     MatDialogModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatCheckboxModule,
     MatFormFieldModule,
+    MatAutocompleteModule,
     MatInputModule,
+    MatChipsModule,
+    MatIconModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule
   ],

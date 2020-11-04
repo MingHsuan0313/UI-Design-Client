@@ -153,6 +153,9 @@ export class SelabHeaderComponent implements OnInit {
     let isComposite = false;
     if(compositeComponents.indexOf(this.component_selected) >= 0)
       isComposite = true;
+      
+    console.log("hello")
+    console.log(this.genre_selected);
 
     if(this)
     this.dialog.open(SelabWizardComponent,{

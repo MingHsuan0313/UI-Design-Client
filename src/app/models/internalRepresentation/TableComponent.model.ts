@@ -47,8 +47,14 @@ export class TableComponent extends BasicComponent {
   add(component: UIComponent): void {
   }
 
-  getInfo(): any {
-    return this;
+  getInfo() {
+    return {
+      [this.getSelector().toString()]: {
+        name: this.name,
+        headers: this.headers,
+        service:this.serviceComponent.getInfo()
+      }
+    };
   }
 
   remove(component: UIComponent): void {

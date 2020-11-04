@@ -10,7 +10,23 @@ import { TextComponent,
     BreadcrumbComponent } from "src/app/models/ui-component-dependency";
 
 export class UIComponentFactory {
-    create(type:string): UIComponent {
+    static nextID: number = 0;
+
+    constructor() {
+    }
+    
+    static getAllComponentTypes() {
+       return [
+           "text",
+           "button",
+           "card",
+           "dropdown",
+           "icon",
+           "input"
+       ] 
+    }
+
+    static create(type:string): UIComponent {
         console.log("start creating : " + type);
         let uiComponent : UIComponent;
         if(type == "text") {
@@ -43,6 +59,13 @@ export class UIComponentFactory {
         else if(type == "breadcrumb") {
             uiComponent = new BreadcrumbComponent();
         }
+        else {
+            return;
+        }
+        uiComponent.setId(this.nextID.toString());
+        uiComponent.setSelector(`${uiComponent.getType()}-${this.nextID}`);
+        this.nextID += 1;
+
         return uiComponent
     }
 }
