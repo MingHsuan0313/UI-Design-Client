@@ -1,17 +1,17 @@
 &nbsp;&nbsp;&nbsp;&nbsp;
 
-<span *ngFor="let item of navItems">
-  <!-- Handle branch node buttons here -->
-  <span *ngIf="item.children && item.children.length > 0">
-    <button mat-button [matMenuTriggerFor]="menu.childMenu" [disabled]="item.disabled">
-      {{item.displayName}}
-    </button>
-    <app-menu-item #menu [items]="item.children"></app-menu-item>
-  </span>
-  <!-- Leaf node buttons here -->
-  <span *ngIf="!item.children || item.children.length === 0">
-    <button mat-button color="primary" [routerLink]="item.route">
-      {{item.displayName}}
-    </button>
-  </span>
+<div style="display:inline; position:absolute; right: 350px;">
+<!-- Handle branch node buttons here -->
+<span *ngIf="menuData.children && menuData.children.length > 0">
+  <button mat-raised-button color="primary" [matMenuTriggerFor]="menu.childMenu">
+    Return Data: {{menuData.displayName}}
+  </button>
+  <app-menu-item #menu [items]="menuData.children"></app-menu-item>
 </span>
+<!-- Leaf node buttons here -->
+<span *ngIf="!menuData.children || menuData.children.length === 0">
+  <button mat-raised-button color="primary">
+    Return Data: {{menuData.displayName}}
+  </button>
+</span>
+</div>

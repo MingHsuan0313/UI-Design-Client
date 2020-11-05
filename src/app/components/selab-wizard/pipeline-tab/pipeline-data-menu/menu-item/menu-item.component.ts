@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { NavItem } from '../nav-item';
+import { NavigationItem } from '../navigationItem';
 
 @Component({
   selector: 'app-menu-item',
@@ -7,7 +7,7 @@ import { NavItem } from '../nav-item';
   styleUrls: ['./menu-item.component.css']
 })
 export class MenuItemComponent implements OnInit {
-  @Input() items: NavItem[];
+  @Input() items: NavigationItem[];
   @ViewChild('childMenu') public childMenu;
 
   constructor() { }

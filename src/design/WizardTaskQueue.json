@@ -74,9 +74,40 @@
             ]
         ]
     ],
-    "testing": {
-        "department": ["name","description","category"],
-        "category": ["item","name","id"],
-        "item": ["name","description","id"]
+    "navItem": {
+        "displayName": "department",
+        "children": [
+            {
+                "displayName": "name"
+            },
+            {
+                "displayName": "description"
+            },
+            {
+                "displayName": "category",
+                "children": [
+                    {
+                        "displayName": "item",
+                        "children": [
+                            {
+                                "displayName": "name"
+                            },
+                            {
+                                "displayName": "description"
+                            },
+                            {
+                                "displayName": "id"
+                            }
+                        ]
+                    },
+                    {
+                        "displayName": "name"
+                    },
+                    {
+                        "displayName": "id"
+                    }
+                ]
+            }
+        ]
     }
 }
