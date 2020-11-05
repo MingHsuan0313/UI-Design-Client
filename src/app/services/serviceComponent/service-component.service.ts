@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { ServiceComponentModel } from "../../models/service-component-dependency";
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { HttpClientService } from '../http-client.service';
+import { HttpParamsOptions } from '@angular/common/http/src/params';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +52,7 @@ export default class ServiceComponentService {
     return this.httpClientService.httpGet(url, params, "uiDesignServer");
   }
 
-  queryMatchedServices(uiComponent: UIComponent, parameterCount) {
+  queryMatchedServices(uiComponent: UIComponent) {
     console.log("query Matched Services");
     console.log(this);
     let uiType = uiComponent.type;
@@ -91,6 +92,7 @@ export default class ServiceComponentService {
     let url = `${this.baseUrl}/getArguments`;
     let params: HttpParams;
     params = new HttpParams().set("serviceID", serviceID);
+    console.log("arguement url " + url)
 
     return this.httpClientService.httpGet(url, params, "uiDesignServer");
   }
@@ -103,6 +105,15 @@ export default class ServiceComponentService {
 
     params.append("serviceID", serviceID);
     return this.httpClientService.httpGet(url, params, "uiDesignServer");
+  }
+  
+  queryReturnByServiceID(serviceID) {
+    let url = `${this.baseUrl}/getReturn`;
+    
+    let params: HttpParams;
+    params = new HttpParams()
+              .set("serviceID",serviceID);
+    return this.httpClientService.httpGet(url,params,"uiDesignServer");
   }
 
   postEditedServiceComponent(code: string, className: string) {

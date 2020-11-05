@@ -56,5 +56,27 @@
                 }
             }
         }
-    ]
+    ],
+    "return": [
+        "department",
+        "name",
+        "id",
+        "description",
+        [
+            "category",
+            "name",
+            "id",
+            [
+                "item",
+                "name",
+                "id",
+                "description"
+            ]
+        ]
+    ],
+    "testing": {
+        "department": ["name","description","category"],
+        "category": ["item","name","id"],
+        "item": ["name","description","id"]
+    }
 }

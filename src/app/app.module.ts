@@ -2,6 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
 
 import {FormsModule} from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
@@ -19,9 +20,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { MatFormFieldModule, MatIconModule, MatInputModule } from "@angular/material";
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTreeModule } from '@angular/material/tree'; 
-import {MatChipsModule} from '@angular/material/chips'; 
+import { MatChipsModule } from '@angular/material/chips'; 
+import { MatMenuModule } from '@angular/material/menu';
 import { MatIcon } from '@angular/material'; 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
@@ -57,6 +59,8 @@ import { BindServiceTabComponent } from './components/selab-wizard/bind-service-
 import { BPELDesignerComponent } from "./containers/bpel-designer/bpel-designer.component";
 import { PaletteComponent } from "./bpel-designer/components/palette/palette.component";
 import { PropertyEditorComponent } from "./bpel-designer/components/property-editor/property-editor.component";
+import { PipelineDataMenuComponent } from './components/selab-wizard/pipeline-tab/pipeline-data-menu/pipeline-data-menu.component';
+import { MenuItemComponent } from './components/selab-wizard/pipeline-tab/pipeline-data-menu/menu-item/menu-item.component';
 
 @NgModule({
   declarations: [
@@ -84,11 +88,14 @@ import { PropertyEditorComponent } from "./bpel-designer/components/property-edi
     BindServiceTabComponent,
     BPELDesignerComponent,
     PaletteComponent,
-    PropertyEditorComponent
+    PropertyEditorComponent,
+    PipelineDataMenuComponent,
+    MenuItemComponent
   ],
   imports: [
     PerfectScrollbarModule,
     AppRoutingModule,
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     MonacoEditorModule.forRoot() ,
@@ -112,6 +119,7 @@ import { PropertyEditorComponent } from "./bpel-designer/components/property-edi
     MatInputModule,
     MatChipsModule,
     MatIconModule,
+    MatMenuModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule
   ],

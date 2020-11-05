@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { SelabHeaderComponent } from '../selab-header/selab-header.component';
 import { InformationTabComponent } from './information-tab/information-tab.component';
+import { PipelineTabComponent } from './pipeline-tab/pipeline-tab.component';
 import { UIComponentFactory } from './uicomponent-factory';
 
 @Component({
@@ -21,6 +22,7 @@ export class SelabWizardComponent implements OnInit {
   category: string = ""; // informative, input control...
   uiComponent: UIComponent; // uiComponent being create
   @ViewChild("status") infoTab: InformationTabComponent;
+  @ViewChild("pipeline") pipelineTab: PipelineTabComponent;
 
   constructor(
     public dialogRef: MatDialogRef<SelabHeaderComponent>,
@@ -45,6 +47,8 @@ export class SelabWizardComponent implements OnInit {
     console.log(tabChangeEvent);
     if(tabChangeEvent.tab.textLabel == "Check Status")
       this.infoTab.update();
+    else if(tabChangeEvent.tab.textLabel == "Generate Pipeline")
+      this.pipelineTab.update();
   }
   
   checkWizardStatus() {

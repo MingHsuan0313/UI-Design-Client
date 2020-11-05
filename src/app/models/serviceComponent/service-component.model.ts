@@ -28,26 +28,32 @@ export class ServiceComponentModel {
   
     setName(serviceComponentName: string) {
       this.name = serviceComponentName;
+      return this;
     }
     
     setServiceID(serviceID: string) {
       this.serviceID = serviceID;
+      return this;
     }
   
     setPreference(preference: number) {
       this.preference = preference;
+      return this;
     }
     
     setClassName(className: string) {
       this.className = className;
+      return this;
     }
   
     setServiceType(serviceType: ServiceMappingType) {
       this.serviceType = serviceType;
+      return this;
     }
   
     setCode(code: string) {
       this.code = code;
+      return this;
     }
     
     getServiceID() {

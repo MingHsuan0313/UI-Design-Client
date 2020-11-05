@@ -7,6 +7,9 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { UIComponentFactory } from '../uicomponent-factory';
+import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
+import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
+import { PipelineDataMenuComponent } from './pipeline-data-menu/pipeline-data-menu.component';
 
 @Component({
   selector: 'pipeline-tab',
@@ -16,43 +19,64 @@ import { UIComponentFactory } from '../uicomponent-factory';
 export class PipelineTabComponent implements OnInit {
 
   @Input() uiComponent: UIComponent;
+  returnData: {};
+
   visible = true;
   selectable = true;
   removable = true;
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = [];
-  allFruits: string[] = [];
+  uiComponentCtrl = new FormControl();
+  filtereduiComponentTypes: Observable<string[]>;
+  selecteduiComponentTypes: string[] = [];
+  alluiComponentTypes: string[] = [];
 
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('componentTypeInput') fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
-  constructor() {
-    this.allFruits = UIComponentFactory.getAllComponentTypes();
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+  @ViewChild('returnDataMenu') dataMenu: PipelineDataMenuComponent;
+  constructor(private serviceComponentService: ServiceComponentService) {
+    this.returnData = {};
+    this.alluiComponentTypes = UIComponentFactory.getAllComponentTypes();
+    this.filtereduiComponentTypes = this.uiComponentCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
+      map((componentType: string | null) => componentType ? this._filter(componentType) : this.alluiComponentTypes.slice()));
   }
 
   nextPipe() {
     console.log("next pipe");
-    console.log(this.fruits);
+    console.log(this.selecteduiComponentTypes);
   }
 
   ngOnInit() {
   }
   
+  update() {
+    this.serviceComponentService
+      .queryReturnByServiceID("2")
+      .subscribe((response) => {
+        console.log("pipeline-tab");
+        
+        this.returnData = JSON.parse(response["body"]);
+        console.log(response["body"])
+        console.log(this.returnData);
+        this.dataMenu.update(this.returnData,this.uiComponent.getServiceComponent());
+        console.log("Hello World");
+      },(err) => {
+        console.log("error") 
+        console.log(err);
+      })
+  }
+  
   add(event: MatChipInputEvent): void {
-    // Add fruit only when MatAutocomplete is not open
+    // Add component only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
     if (!this.matAutocomplete.isOpen) {
       const input = event.input;
       const value = event.value;
 
-      // Add our fruit
+      // Add our UI Component
       if ((value || '').trim()) {
-        this.fruits.push(value.trim());
+        this.selecteduiComponentTypes.push(value.trim());
       }
 
       // Reset the input value
@@ -60,28 +84,27 @@ export class PipelineTabComponent implements OnInit {
         input.value = '';
       }
 
-      this.fruitCtrl.setValue(null);
+      this.uiComponentCtrl.setValue(null);
     }
   }
 
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
+  remove(componentType: string): void {
+    const index = this.selecteduiComponentTypes.indexOf(componentType);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.selecteduiComponentTypes.splice(index, 1);
     }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
+    this.selecteduiComponentTypes.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
+    this.uiComponentCtrl.setValue(null);
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    return this.alluiComponentTypes.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
-
 }

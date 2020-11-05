@@ -23,7 +23,7 @@
     </div>
 
     <div class="selab-tab-style" *ngIf="tab == 'Generate Pipeline'">
-      <pipeline-tab [uiComponent]="uiComponent"></pipeline-tab>
+      <pipeline-tab #pipeline [uiComponent]="uiComponent"></pipeline-tab>
     </div>
   </mat-tab>
 </mat-tab-group>

@@ -1,21 +1,22 @@
 <br>
-<h3> Root Component: {{uiComponent.type}} </h3>
+<h3 style="display:inline"> Root Component: {{uiComponent.type}} </h3>
+<pipeline-data-menu #returnDataMenu></pipeline-data-menu>
 <h3> Service return value goes to:</h3>
 <br>
 
 <mat-form-field class="example-chip-list">
   <mat-chip-list #chipList>
-    <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (removed)="remove(fruit)">
-      {{fruit}}
+    <mat-chip *ngFor="let selecteduiComponentType of selecteduiComponentTypes" [selectable]="selectable" [removable]="removable" (removed)="remove(selecteduiComponentType)">
+      {{selecteduiComponentType}}
       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
     </mat-chip>
-    <input placeholder="New UIComponent..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto"
+    <input placeholder="New UIComponent..." #componentTypeInput [formControl]="uiComponentCtrl" [matAutocomplete]="auto"
       [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
       [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-    <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-      {{fruit}}
+    <mat-option *ngFor="let uiComponentType of filtereduiComponentTypes | async" [value]="uiComponentType">
+      {{uiComponentType}}
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>
