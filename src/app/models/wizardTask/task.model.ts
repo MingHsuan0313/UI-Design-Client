@@ -1,4 +1,4 @@
-import { Operation } from "./Operation.model";
+import { Operation } from "./operation.model";
 
 export class Task {
     public componentType: string;

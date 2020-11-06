@@ -30,6 +30,8 @@
     "@coreui/coreui-pro": "2.0.25",
     "@coreui/icons": "0.3.0",
     "@ng-bootstrap/ng-bootstrap": "^4.1.1",
+    "@ngrx/core": "^1.2.0",
+    "@ngrx/store": "^10.0.1",
     "@types/html2canvas": "0.5.32",
     "angular-calendar": "^0.26.3",
     "angular2-datatable": "^0.6.0",

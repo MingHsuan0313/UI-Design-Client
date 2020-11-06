@@ -1,6 +1,4 @@
 import { Injectable, ElementRef } from "@angular/core";
-import { fakeBreadcrumb } from "../../../fakedata/fakeBreadcrumb";
-import { StyleLibrary } from "../../shared/styleLibrary";
 import { Storage } from "../../shared/storage"
 import { GraphStorage } from "../../models/graph-dependency";
 import { PageUICDL } from "src/app/models/internalRepresentation/pageUICDL.model";
