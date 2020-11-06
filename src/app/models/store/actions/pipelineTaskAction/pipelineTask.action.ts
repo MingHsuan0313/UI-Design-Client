@@ -9,7 +9,7 @@ export class PipelineCreateTaskAction {
 
 }
 
-export class PipelineCreateOperationTaskAction {
+export class PipelineCreateOperationAction {
 
 }
 

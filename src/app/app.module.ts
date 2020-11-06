@@ -61,6 +61,10 @@ import { PaletteComponent } from "./bpel-designer/components/palette/palette.com
 import { PropertyEditorComponent } from "./bpel-designer/components/property-editor/property-editor.component";
 import { PipelineDataMenuComponent } from './components/selab-wizard/pipeline-tab/pipeline-data-menu/pipeline-data-menu.component';
 import { MenuItemComponent } from './components/selab-wizard/pipeline-tab/pipeline-data-menu/menu-item/menu-item.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { PipelineTaskReducer } from "./models/store/reducers/PipelineTasksReducer";
+import { StoreModule } from "@ngrx/store";
 
 @NgModule({
   declarations: [
@@ -121,7 +125,11 @@ import { MenuItemComponent } from './components/selab-wizard/pipeline-tab/pipeli
     MatIconModule,
     MatMenuModule,
     MatProgressSpinnerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forRoot({
+      pipelineTaskReducer: PipelineTaskReducer
+    })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   entryComponents: [
     CodeEditorComponent,
