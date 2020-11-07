@@ -38,6 +38,7 @@ export class SelabWizardComponent implements OnInit {
     this.isComposite = this.data.isComposite;
     this.type = this.data.type;
     this.category = this.data.category;
+
     this.uiComponent = UIComponentFactory.create(this.type);
   }
   
@@ -54,7 +55,7 @@ export class SelabWizardComponent implements OnInit {
   checkWizardStatus() {
     let openCorrect = true;
     let description = "";
-    console.log("open wizard : check status")
+    console.log("open wizard : check status");
     console.log(this)
     if(this.genere == "Genre" || this.genere == "")
       description += "You need to choose Genre\n";
