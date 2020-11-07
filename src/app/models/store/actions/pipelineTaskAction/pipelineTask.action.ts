@@ -3,7 +3,7 @@ import { PipelineStorage,Task,Operation } from '../../../wizard-task-dependency'
 
 export enum PipelineActionTypes {
     CREATE_TASK_ACTION = "[Pipeline] Create Task",
-    CREATE_OPERATION_ACTION = "[Pipeline] Create Task",
+    CREATE_OPERATION_ACTION = "[Pipeline] Create Operation",
     READ_TASKS_ACTION = "[Pipeline] Read Tasks",
     READ_OPERATIONPOOL_ACTION =  "[Pipeline] Read Operations",
     DELETE_TASKS_ACTION = "[Pipeline] Delete Tasks"
@@ -26,7 +26,6 @@ export class PipelineReadTasksAction {
 
 export class PipelineReadOperationPoolAction {
     public type = PipelineActionTypes['READ_OPERATIONPOOL_ACTION'];
-
 }
 
 export class PipelineDeleteTaskAction {

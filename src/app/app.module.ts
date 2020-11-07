@@ -63,8 +63,27 @@ import { PipelineDataMenuComponent } from './components/selab-wizard/pipeline-ta
 import { MenuItemComponent } from './components/selab-wizard/pipeline-tab/pipeline-data-menu/menu-item/menu-item.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { PipelineTaskReducer } from "./models/store/reducers/PipelineTasksReducer";
-import { StoreModule } from "@ngrx/store";
+import { reducer } from "./models/store/reducers/PipelineTasksReducer";
+import { Action, StoreModule } from "@ngrx/store";
+import { PipelineStorage } from "./models/wizard-task-dependency";
+import { AppState } from "./models/store/app.state";
+
+const appState = {
+  pipelineStorage: new PipelineStorage()
+}
+
+export const rootReducer = (
+  state = appState,
+  action: Action 
+) => {
+  return {
+    pipelineStorage: reducer(state.pipelineStorage,action)
+  }; 
+}
+
+export function reducerFactory() {
+  return rootReducer;
+}
 
 @NgModule({
   declarations: [
@@ -126,9 +145,9 @@ import { StoreModule } from "@ngrx/store";
     MatMenuModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({
-      pipelineTaskReducer: PipelineTaskReducer
-    })
+    StoreModule.forRoot(undefined,{
+      reducerFactory
+    }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   entryComponents: [

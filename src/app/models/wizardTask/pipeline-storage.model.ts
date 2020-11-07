@@ -5,27 +5,36 @@ export class PipelineStorage {
     tasks: Map<string,Task>;
     operationPool: Operation[];
     
-    addTask(task:Task) {
-        let indexkey = this.tasks.size;
-        this.tasks.set(indexkey.toString(),task);
-        return this;
+    constructor() {
+        this.tasks = new Map();
+        this.operationPool = [];
     }
     
-    addOperation(operation:Operation) {
-        this.operationPool.push(operation);
-        return this;
-    }
+    // addTask(task:Task) {
+    //     let indexkey = this.tasks.size;
+    //     this.tasks.set(indexkey.toString(),task);
+    //     return this;
+    // }
     
-    readTasks() {
-        return this.tasks;
-    }
+    // addOperation(operation:Operation) {
+    //     console.log("add operation...")
+    //     console.log(operation)
+    //     this.operationPool.push(operation);
+    //     console.log(this);
+    //     console.log("wait a minuted")
+    //     return this;
+    // }
     
-    readOperationPool() {
-        return this.operationPool;
-    }
+    // readTasks() {
+    //     return this.tasks;
+    // }
     
-    removeAllTasks() {
-       this.tasks.clear() 
-       return this;
-    }
+    // readOperationPool() {
+    //     return this.operationPool;
+    // }
+    
+    // removeAllTasks() {
+    //    this.tasks.clear() 
+    //    return this;
+    // }
 }
