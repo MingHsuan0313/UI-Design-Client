@@ -106,6 +106,7 @@ export class PipelineTabComponent implements OnInit {
   }
   
   update() {
+    console.log("pipeline tab update");
     let testingObj = {
       "department": {
         "name": "",

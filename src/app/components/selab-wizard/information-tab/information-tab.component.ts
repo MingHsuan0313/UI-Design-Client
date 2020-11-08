@@ -1,8 +1,11 @@
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
 import { AfterViewInit, Component, Injectable, Input, OnInit } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, observable, of as observableOf } from 'rxjs';
 import { CompositeComponent } from 'src/app/models/internalRepresentation/CompositeComponent.model';
+import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentationAction/internalRepresentation.action';
+import { AppState } from 'src/app/models/store/app.state';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 
 @Component({
@@ -20,12 +23,16 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
   database: InformationDatabase;
 
 
-  constructor() {
+  constructor(private store: Store<AppState>) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
       this._isExpandable, this._getChildren);
     this.treeControl = new FlatTreeControl<FileFlatNode>(this._getLevel, this._isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
+  }
+  
+  finish() {
+    this.store.dispatch(new IRInsertUIComponentAction(this.uiComponent));
   }
 
   transformer = (node: InformationNode, level: number) => {

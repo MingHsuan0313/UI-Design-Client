@@ -1,6 +1,15 @@
 <h1 style="display:inline;white-space: nowrap;">Wizard</h1>
-&nbsp;&nbsp;
-<span *ngIf="isPipeline == true" class="w3-tag w3-blue">Pipeline</span>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<!-- <span *ngIf="isPipeline == true" class="w3-tag w3-blue">Pipeline</span> -->
+
+<button *ngIf="isPipeline == true" mat-raised-button
+        style="background-color: #333333; color: white;line-height: 25px;"
+        matTooltip="This Wizard is opened by pipeline"
+        aria-label="Button that displays a tooltip when focused or hovered over"
+        disabled
+>
+  Pipeline
+</button>
 
 <pipeline-data-menu *ngIf="isPipeline == true" [operation]="operation"></pipeline-data-menu>
 
@@ -31,7 +40,7 @@
 </mat-tab-group>
 
 
-<mat-dialog-actions>
+<!-- <mat-dialog-actions>
   <button mat-raised-button (click)="checkUIComponent()" color="accent">Check UI Component</button>
   <button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
-</mat-dialog-actions>
+</mat-dialog-actions> -->

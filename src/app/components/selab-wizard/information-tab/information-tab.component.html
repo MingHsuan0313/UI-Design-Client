@@ -1,17 +1,22 @@
 <br>
 <h3 style="display: inline;"> Root Component: {{uiComponent.type}} </h3>
 
-<mat-tree [dataSource] = "dataSource" [treeControl] = "treeControl">
-    <mat-tree-node *matTreeNodeDef = "let node" matTreeNodeToggle matTreeNodePadding>
-       <button mat-icon-button disabled></button>
-       <span>{{node.filename}} : {{node.type}}</span>
-    </mat-tree-node>
-    <mat-tree-node *matTreeNodeDef = "let node;when: hasChild" matTreeNodePadding>
-       <button mat-icon-button matTreeNodeToggle [attr.aria-label] = "'toggle ' + node.filename">
-          <mat-icon class = "mat-icon-rtl-mirror">
-             <span>{{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</span>
-          </mat-icon>
-       </button>
-       <span>{{node.filename}}</span>
-    </mat-tree-node>
- </mat-tree>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+   <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+      <button mat-icon-button disabled></button>
+      <span>{{node.filename}} : {{node.type}}</span>
+   </mat-tree-node>
+   <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+         <mat-icon class="mat-icon-rtl-mirror">
+            <span>{{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</span>
+         </mat-icon>
+      </button>
+      <span>{{node.filename}}</span>
+   </mat-tree-node>
+</mat-tree>
+<hr>
+<mat-dialog-actions>
+   <button (click)="finish()" mat-raised-button color="primary">Finish</button>
+   <button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
+</mat-dialog-actions>

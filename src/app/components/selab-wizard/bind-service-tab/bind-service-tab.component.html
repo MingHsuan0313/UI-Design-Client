@@ -6,7 +6,8 @@
   <mat-form-field appearance="outline">
     <mat-label>Service Candidates</mat-label>
     <mat-select disableRipple>
-      <mat-option *ngFor="let option of serviceOptions" value="option" (click)="chooseService($event,option)">{{option.name}}
+      <mat-option *ngFor="let option of serviceOptions" value="option" (click)="chooseService($event,option)">
+        {{option.name}}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -32,7 +33,8 @@
           <mat-form-field *ngIf="subComponent.serviceComponent.serviceType === 'Argument'" appearance="outline">
             <mat-label>Binding Argument</mat-label>
             <mat-select disableRipple>
-              <mat-option *ngFor="let option of argumentOptions" value="{{option}}" (click)="chooseArgument($event,option,subComponent)">
+              <mat-option *ngFor="let option of argumentOptions" value="{{option}}"
+                (click)="chooseArgument($event,option,subComponent)">
                 {{ option }}
               </mat-option>
             </mat-select>
@@ -42,3 +44,8 @@
     </div>
   </div>
 </div>
+<hr>
+<mat-dialog-actions>
+  <button type="button" (click)="createComponent()" mat-raised-button color="primary">Create</button>
+  <button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
+</mat-dialog-actions>

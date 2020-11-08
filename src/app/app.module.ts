@@ -24,6 +24,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTreeModule } from '@angular/material/tree'; 
 import { MatChipsModule } from '@angular/material/chips'; 
 import { MatMenuModule } from '@angular/material/menu';
+import {MatTooltipModule} from '@angular/material/tooltip'; 
 import { MatIcon } from '@angular/material'; 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
@@ -70,6 +71,7 @@ import { AppState, ExternalRepresentation, InternalRepresentation } from "./mode
 import { PageUICDL } from "./models/internalRepresentation/pageUICDL.model";
 import { externalRepresentationReducer } from "./models/store/reducers/ExternalRepresentationReducer";
 import { internalRepresentationReducer } from "./models/store/reducers/InternalRepresentationReducer";
+import { irComponentListReducer } from "./models/store/reducers/IRComponentListReducer";
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -84,7 +86,7 @@ export const rootReducer = (
   return {
     pipelineStorage: pipelineStorageReducer(state.pipelineStorage,action),
     externalRepresentation: externalRepresentationReducer(state.externalRepresentation,action),
-    internalRepresentation: internalRepresentationReducer(state.internalRepresentation,action)
+    internalRepresentation: internalRepresentationReducer(state.internalRepresentation,action),
   }; 
 }
 
@@ -151,6 +153,7 @@ export function reducerFactory() {
     MatIconModule,
     MatMenuModule,
     MatProgressSpinnerModule,
+    MatTooltipModule,
     ReactiveFormsModule,
     StoreModule.forRoot(undefined,{
       reducerFactory

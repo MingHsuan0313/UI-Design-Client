@@ -4,6 +4,10 @@ import { GraphStorage } from "../../models/graph-dependency";
 import { PageUICDL } from "src/app/models/internalRepresentation/pageUICDL.model";
 import StyleEditorService from "./style-editor.service";
 import { StyleConverter } from "../../shared/styleTable";
+import { AppState } from "src/app/models/store/app.state";
+import { Action, Store } from "@ngrx/store";
+import { IRInitializePageUICDLAction } from "src/app/models/store/actions/internalRepresentationAction/internalRepresentation.action";
+import { irComponentListReducer } from "src/app/models/store/reducers/IRComponentListReducer";
 
 @Injectable({
   providedIn: "root"
@@ -13,7 +17,9 @@ export default class GraphEditorService {
   selectedGraphID: string;
   selectedGraphStorage: GraphStorage;
 
-  constructor(private styleEditorService: StyleEditorService) {
+  constructor(private styleEditorService: StyleEditorService,
+    private store: Store<AppState> 
+    ) {
     this.graphStorages = [];
   }
 
@@ -29,6 +35,8 @@ export default class GraphEditorService {
     let pageID = "page" + this.selectedGraphID;
     let newPageUICDL = new PageUICDL(2);
     Storage.setPageUICDL(newPageUICDL);
+    this.store.dispatch(new IRInitializePageUICDLAction(newPageUICDL));
+    // this.store.addReducer("12222",(state = newPageUICDL.body.componentList,action:Action) => irComponentListReducer(state,action))
     // this.bindComponent(fakeBreadcrumb);
   }
 
