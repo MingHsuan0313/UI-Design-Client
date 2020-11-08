@@ -11,13 +11,13 @@ export interface AppState {
 export class InternalRepresentation {
     pageUICDLs: PageUICDL[];
     constructor() {
-        
+        this.pageUICDLs = []
     }
 }
 
 export class ExternalRepresentation{
-    pageUICDLs: GraphStorage[];
+    graphStorages: GraphStorage[];
     constructor() {
-        
+        this.graphStorages = [];
     }
 }

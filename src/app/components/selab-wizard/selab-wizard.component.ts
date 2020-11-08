@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { PipelineCreateOperationAction, PipelineCreateTaskAction, PipelineReadTasksAction } from 'src/app/models/store/actions/pipelineTaskAction/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
-import { operationPoolSelector } from 'src/app/models/store/reducers/PipelineTaskSelector';
+import { operationPoolSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { Operation, Task } from 'src/app/models/wizard-task-dependency';
 import { SelabHeaderComponent } from '../selab-header/selab-header.component';

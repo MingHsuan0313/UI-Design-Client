@@ -63,11 +63,13 @@ import { PipelineDataMenuComponent } from './components/selab-wizard/pipeline-ta
 import { MenuItemComponent } from './components/selab-wizard/pipeline-tab/pipeline-data-menu/menu-item/menu-item.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { reducer } from "./models/store/reducers/PipelineTasksReducer";
+import { pipelineStorageReducer } from "./models/store/reducers/PipelineStorageReducer";
 import { Action, StoreModule } from "@ngrx/store";
 import { PipelineStorage } from "./models/wizard-task-dependency";
 import { AppState, ExternalRepresentation, InternalRepresentation } from "./models/store/app.state";
 import { PageUICDL } from "./models/internalRepresentation/pageUICDL.model";
+import { externalRepresentationReducer } from "./models/store/reducers/ExternalRepresentationReducer";
+import { internalRepresentationReducer } from "./models/store/reducers/InternalRepresentationReducer";
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -80,7 +82,9 @@ export const rootReducer = (
   action: Action 
 ) => {
   return {
-    pipelineStorage: reducer(state.pipelineStorage,action)
+    pipelineStorage: pipelineStorageReducer(state.pipelineStorage,action),
+    externalRepresentation: externalRepresentationReducer(state.externalRepresentation,action),
+    internalRepresentation: internalRepresentationReducer(state.internalRepresentation,action)
   }; 
 }
 
