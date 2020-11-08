@@ -4,7 +4,8 @@ import { PipelineStorage,Task,Operation } from '../../../wizard-task-dependency'
 export enum PipelineActionTypes {
     CREATE_TASK_ACTION = "[Pipeline] Create Task",
     CREATE_OPERATION_ACTION = "[Pipeline] Create Operation",
-    DELETE_TASKS_ACTION = "[Pipeline] Delete Tasks"
+    DELETE_TASKS_ACTION = "[Pipeline] Delete Tasks",
+    DELETE_OPERATION_POOL_ACTION = "[Pipeline] Delete Operation Pool"
 }
 
 export class PipelineCreateTaskAction implements Action {
@@ -24,5 +25,10 @@ export class PipelineDeleteTaskAction {
 
 export class PipelineDeleteTasksAction {
     public type = PipelineActionTypes['DELETE_TASKS_ACTION'];
+    constructor(){}
+}
+
+export class PipelineDeleteOperationPoolAction {
+    public type = PipelineActionTypes['DELETE_OPERATION_POOL_ACTION'];
     constructor(){}
 }

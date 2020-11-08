@@ -71,11 +71,11 @@ import { AppState, ExternalRepresentation, InternalRepresentation } from "./mode
 import { PageUICDL } from "./models/internalRepresentation/pageUICDL.model";
 import { externalRepresentationReducer } from "./models/store/reducers/ExternalRepresentationReducer";
 import { internalRepresentationReducer } from "./models/store/reducers/InternalRepresentationReducer";
-import { irComponentListReducer } from "./models/store/reducers/IRComponentListReducer";
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
   internalRepresentation: new InternalRepresentation(),
+
   externalRepresentation: new ExternalRepresentation()
 }
 

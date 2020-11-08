@@ -4,6 +4,7 @@ import {
     PipelineActionTypes,
     PipelineCreateOperationAction,
     PipelineCreateTaskAction,
+    PipelineDeleteOperationPoolAction,
     PipelineDeleteTaskAction,
     PipelineDeleteTasksAction,
 } from '../actions/pipelineTaskAction/pipelineTask.action';
@@ -37,7 +38,7 @@ class PipelineStorageReducer {
     }
 
     @Action
-    public deleteOperations(store: PipelineStorage, action: PipelineDeleteTasksAction): PipelineStorage {
+    public deleteOperations(store: PipelineStorage, action: PipelineDeleteOperationPoolAction): PipelineStorage {
         store = {...store};
         store.operationPool = [];
         return store;

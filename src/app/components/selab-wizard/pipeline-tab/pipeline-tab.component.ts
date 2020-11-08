@@ -14,7 +14,7 @@ import { SelabHeaderComponent } from '../../selab-header/selab-header.component'
 import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
 import { Operation, Task } from 'src/app/models/wizard-task-dependency';
-import { PipelineCreateOperationAction, PipelineCreateTaskAction } from 'src/app/models/store/actions/pipelineTaskAction/pipelineTask.action';
+import { PipelineCreateOperationAction, PipelineCreateTaskAction, PipelineDeleteTasksAction } from 'src/app/models/store/actions/pipelineTaskAction/pipelineTask.action';
 import { tasksSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
 import { SelabWizardComponent } from '../selab-wizard.component';
 
@@ -82,11 +82,12 @@ export class PipelineTabComponent implements OnInit {
     let tasks;
     tasksObservable.subscribe((data) => {
         tasks = data; 
+        let tasksCount = Object.keys(tasks).length;
         for(let index = 0;index < Object.keys(tasks).length;index++) {
           let isComposite = false;
           if (compositeComponents.indexOf(tasks[index].componentType) >= 0)
             isComposite = true;
-          this.wizard.open(SelabWizardComponent, {
+          let wizardRef = this.wizard.open(SelabWizardComponent, {
               width: '55%',
               height: '65%',
               data: {
@@ -98,6 +99,16 @@ export class PipelineTabComponent implements OnInit {
               disableClose: true,
               autoFocus: true
           })
+          wizardRef.afterClosed().subscribe(
+            () => {
+              console.log("closed...")
+              tasksCount--;
+              if(tasksCount == 0) {
+                console.log("all tasks done")
+                this.store.dispatch(new PipelineDeleteTasksAction())
+              }
+            }
+          )
         }
     })
   }
@@ -107,6 +118,7 @@ export class PipelineTabComponent implements OnInit {
   
   update() {
     console.log("pipeline tab update");
+
     let testingObj = {
       "department": {
         "name": "",
