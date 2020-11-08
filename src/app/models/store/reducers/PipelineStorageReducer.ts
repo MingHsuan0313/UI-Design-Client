@@ -12,12 +12,8 @@ import {
 class PipelineStorageReducer {
     @Action
     public createTask(store: PipelineStorage, action: PipelineCreateTaskAction): PipelineStorage {
-        console.log("create task [reducer]")
         store = { ...store };
         let indexkey = Object.keys(store.tasks).length;
-
-        console.log(store)
-        console.log(indexkey)
         store.tasks = {...store.tasks ,[indexkey.toString()]:action.task};
         return store;
     }
