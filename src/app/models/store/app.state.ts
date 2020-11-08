@@ -4,6 +4,20 @@ import { PipelineStorage } from "../wizard-task-dependency";
 
 export interface AppState {
     pipelineStorage: PipelineStorage;
-    // internalRepresentation: PageUICDL;
-    // externalRepresentation: GraphStorage;
+    internalRepresentation: InternalRepresentation;
+    externalRepresentation: ExternalRepresentation;
+}
+
+export class InternalRepresentation {
+    pageUICDLs: PageUICDL[];
+    constructor() {
+        
+    }
+}
+
+export class ExternalRepresentation{
+    pageUICDLs: GraphStorage[];
+    constructor() {
+        
+    }
 }

@@ -59,17 +59,16 @@ export class PipelineTabComponent implements OnInit {
                           .setClassName(serviceComponent.getClassName())
                           .setServiceID(serviceComponent.getServiceID())
                           .setReturnData(this.returnData);
-    console.log(operation)
     this.store.dispatch(new PipelineCreateOperationAction(operation));
     for(let index = 0;index < this.selecteduiComponentTypes.length;index++) {
       let componentType = this.selecteduiComponentTypes[index];
+
       let task = new Task()
                       .setComponentType(componentType)
                       .setOperation(operation);
-      console.log(task)
       this.store.dispatch(new PipelineCreateTaskAction(task));
     }
-    console.log('ttttt')
+    this.dialogRef.close();
   }
 
   ngOnInit() {
@@ -94,14 +93,10 @@ export class PipelineTabComponent implements OnInit {
     this.serviceComponentService
       .queryReturnByServiceID("2")
       .subscribe((response) => {
-        console.log("pipeline-tab");
         
         // this.returnData = JSON.parse(response["body"]);
         this.returnData = testingObj;
-        console.log(response["body"])
-        console.log(this.returnData);
         this.dataMenu.update(this.returnData,this.uiComponent.getServiceComponent());
-        console.log("Hello World");
       },(err) => {
         console.log("error") 
         console.log(err);

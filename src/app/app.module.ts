@@ -66,10 +66,13 @@ import { environment } from '../environments/environment';
 import { reducer } from "./models/store/reducers/PipelineTasksReducer";
 import { Action, StoreModule } from "@ngrx/store";
 import { PipelineStorage } from "./models/wizard-task-dependency";
-import { AppState } from "./models/store/app.state";
+import { AppState, ExternalRepresentation, InternalRepresentation } from "./models/store/app.state";
+import { PageUICDL } from "./models/internalRepresentation/pageUICDL.model";
 
 const appState = {
-  pipelineStorage: new PipelineStorage()
+  pipelineStorage: new PipelineStorage(),
+  internalRepresentation: new InternalRepresentation(),
+  externalRepresentation: new ExternalRepresentation()
 }
 
 export const rootReducer = (

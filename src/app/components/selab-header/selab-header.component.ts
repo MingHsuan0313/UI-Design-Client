@@ -43,7 +43,7 @@ export class SelabHeaderComponent implements OnInit {
     private graphEditorService: GraphEditorService,
     private importService: ImportService,
     private exportService: ExportService,
-    public dialog: MatDialog) {
+    public wizard: MatDialog) {
 
   }
 
@@ -158,10 +158,7 @@ export class SelabHeaderComponent implements OnInit {
     console.log(this.genre_selected);
 
     if (this) {
-      let dialogConfig = new MatDialogConfig();
-      dialogConfig.disableClose = true;
-      dialogConfig.autoFocus = true;
-      this.dialog.open(SelabWizardComponent, {
+      this.wizard.open(SelabWizardComponent, {
         width: '55%',
         height: '65%',
         data: {
@@ -169,7 +166,8 @@ export class SelabHeaderComponent implements OnInit {
           isComposite: isComposite,
           genere: this.genre_selected,
           category: this.category_selected,
-          type: this.component_selected
+          type: this.component_selected,
+          returnData: {}
         },
         disableClose: true,
         autoFocus: true
