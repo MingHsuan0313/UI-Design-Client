@@ -6,7 +6,6 @@ import {
     PipelineCreateTaskAction,
     PipelineDeleteTaskAction,
     PipelineDeleteTasksAction,
-    PipelineReadOperationPoolAction, PipelineReadTasksAction
 } from '../actions/pipelineTaskAction/pipelineTask.action';
 
 const initialState: PipelineStorage = new PipelineStorage();
@@ -16,7 +15,9 @@ class PipelineTaskReducer {
     public createTask(store: PipelineStorage, action: PipelineCreateTaskAction): PipelineStorage {
         console.log("create action [reducer]")
         store = { ...store };
-        let indexkey = store.tasks.size;
+        let indexkey = Object.keys(store.tasks).length;
+        console.log(store)
+        console.log(indexkey)
         store.tasks = {...store.tasks ,[indexkey.toString()]:action.task};
         return store;
     }
@@ -30,19 +31,17 @@ class PipelineTaskReducer {
     }
 
     @Action
-    public readTasks(store: PipelineStorage, action: PipelineReadTasksAction): Map<string, Task> {
-        return store.tasks;
-    }
-
-    @Action
-    public readOperationPool(store: PipelineStorage, action: PipelineReadOperationPoolAction): Operation[] {
-        return store.operationPool;
-
-    }
-
-    @Action
     public deleteTasks(store: PipelineStorage, action: PipelineDeleteTasksAction): PipelineStorage {
-        return store.removeAllTasks();
+        store = {...store};
+        store.tasks = new Map();
+        return store;
+    }
+
+    @Action
+    public deleteOperations(store: PipelineStorage, action: PipelineDeleteTasksAction): PipelineStorage {
+        store = {...store};
+        store.operationPool = [];
+        return store;
     }
 }
 

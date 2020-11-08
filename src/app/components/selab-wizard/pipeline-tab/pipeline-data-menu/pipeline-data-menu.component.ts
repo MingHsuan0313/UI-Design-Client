@@ -18,22 +18,7 @@ export class PipelineDataMenuComponent implements OnInit {
   update(returnData, serviceComponent: ServiceComponentModel) {
     this.returnData = returnData;
     this.menuTitle = serviceComponent.getName();
-    let testingObj = {
-      "department": {
-        "name": "",
-        "description": "",
-        "category": {
-          "item": {
-            "name": "",
-            "description": "",
-            "id": ""
-          },
-          "name": "",
-          "id": ""
-        }
-      }
-    }
-    this.convertReturnDataToMenuData(testingObj,this.menuData);
+    this.convertReturnDataToMenuData(returnData,this.menuData);
     this.menuData = this.menuData.children[0];
   }
 

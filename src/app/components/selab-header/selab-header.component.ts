@@ -8,7 +8,7 @@ import GraphEditorService from '../../services/externalRepresentation/graph-edit
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import ImportService from '../../services/internalRepresentation/import.service';
 import ExportService from '../../services/internalRepresentation/export.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { SelabWizardComponent } from '../selab-wizard/selab-wizard.component';
 
 @Component({
@@ -147,27 +147,33 @@ export class SelabHeaderComponent implements OnInit {
   showImage() {
     this.images = Storage.images;
   }
-  
+
   openWizard() {
-    let compositeComponents = ["card","breadcrumb","inputgroup","form"];
+    let compositeComponents = ["card", "breadcrumb", "inputgroup", "form"];
     let isComposite = false;
-    if(compositeComponents.indexOf(this.component_selected) >= 0)
+    if (compositeComponents.indexOf(this.component_selected) >= 0)
       isComposite = true;
-      
+
     console.log("hello")
     console.log(this.genre_selected);
 
-    if(this)
-    this.dialog.open(SelabWizardComponent,{
-      width: '55%',
-      height: '65%',
-      data: {
-        isPipeline: true,
-        isComposite: isComposite,
-        genere: this.genre_selected,
-        category: this.category_selected,
-        type: this.component_selected
-      }
-    });
+    if (this) {
+      let dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      this.dialog.open(SelabWizardComponent, {
+        width: '55%',
+        height: '65%',
+        data: {
+          isPipeline: true,
+          isComposite: isComposite,
+          genere: this.genre_selected,
+          category: this.category_selected,
+          type: this.component_selected
+        },
+        disableClose: true,
+        autoFocus: true
+      });
+    }
   }
 }
