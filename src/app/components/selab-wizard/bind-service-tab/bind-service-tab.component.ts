@@ -64,11 +64,7 @@ export class BindServiceTabComponent implements OnInit {
   queryService() {
     this.isQueryingService = true;
     console.log("query service");
-    // this.serviceComponentService
-    //   .queryMatchedServices(this.uiComponent)
-    //   .subscribe((data) => {
-    //     console.log(data);
-    //   })
+
     this.serviceComponentService
       .queryServices(this.uiComponent,2)
       .subscribe(
@@ -85,9 +81,6 @@ export class BindServiceTabComponent implements OnInit {
   }
 
   toggleIsArgument(event, subComponent: UIComponent) {
-    console.log("toggle is argument");
-    console.log(event);
-    console.log(subComponent);
     if (event)
       subComponent.getServiceComponent().setServiceType(ServiceMappingType["argument"]);
     else

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
+import { Operation } from 'src/app/models/wizard-task-dependency';
 import { NavigationItem } from './navigationItem';
 
 @Component({
@@ -8,17 +9,16 @@ import { NavigationItem } from './navigationItem';
   styleUrls: ['./pipeline-data-menu.component.css']
 })
 export class PipelineDataMenuComponent implements OnInit {
-  returnData: {};
   menuData: NavigationItem;
   menuTitle: string;
+  @Input() operation: Operation;
   constructor() {
     this.menuData = new NavigationItem();
   }
 
-  update(returnData, serviceComponent: ServiceComponentModel) {
-    this.returnData = returnData;
-    this.menuTitle = serviceComponent.getName();
-    this.convertReturnDataToMenuData(returnData,this.menuData);
+  update(operation: Operation) {
+    this.menuTitle = operation.name;
+    this.convertReturnDataToMenuData(operation.returnData,this.menuData);
     this.menuData = this.menuData.children[0];
   }
 
@@ -43,5 +43,13 @@ export class PipelineDataMenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("start pipeline menu")
+
+    // if open from pipeline
+    if(this.operation != undefined) {
+      this.menuTitle = this.operation.name;
+      this.convertReturnDataToMenuData(this.operation.returnData,this.menuData);
+      this.menuData = this.menuData.children[0];
+    }
   }
 }

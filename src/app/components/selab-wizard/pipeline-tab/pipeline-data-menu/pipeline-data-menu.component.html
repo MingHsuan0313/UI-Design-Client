@@ -3,7 +3,7 @@
 <div style="display:inline; position:relative; left: 100px;">
 <!-- Handle branch node buttons here -->
 <span *ngIf="menuData.children && menuData.children.length > 0">
-  <button mat-raised-button color="primary" [matMenuTriggerFor]="menu.childMenu">
+  <button mat-raised-button style="background-color: #333333; color:white" [matMenuTriggerFor]="menu.childMenu">
     Return Data: {{menuData.displayName}}
   </button>
   <app-menu-item #menu [items]="menuData.children"></app-menu-item>

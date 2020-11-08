@@ -2,6 +2,8 @@
 &nbsp;&nbsp;
 <span *ngIf="isPipeline == true" class="w3-tag w3-blue">Pipeline</span>
 
+<pipeline-data-menu *ngIf="isPipeline == true" [operation]="operation"></pipeline-data-menu>
+
 <hr>
 
 <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChanged($event)">
@@ -28,6 +30,8 @@
   </mat-tab>
 </mat-tab-group>
 
-<button mat-raised-button (click)="checkUIComponent()" color="primary">Check UI Component</button>
-<!-- <mat-dialog-actions>
-</mat-dialog-actions> -->
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="checkUIComponent()" color="accent">Check UI Component</button>
+  <button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
+</mat-dialog-actions>

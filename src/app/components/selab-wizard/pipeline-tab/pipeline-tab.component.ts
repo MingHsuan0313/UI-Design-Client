@@ -3,7 +3,7 @@ import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete, MatDialogRef } from '@angular/material';
+import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete, MatDialogRef, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { UIComponentFactory } from '../uicomponent-factory';
@@ -15,6 +15,8 @@ import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
 import { Operation, Task } from 'src/app/models/wizard-task-dependency';
 import { PipelineCreateOperationAction, PipelineCreateTaskAction } from 'src/app/models/store/actions/pipelineTaskAction/pipelineTask.action';
+import { tasksSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
+import { SelabWizardComponent } from '../selab-wizard.component';
 
 @Component({
   selector: 'pipeline-tab',
@@ -41,6 +43,7 @@ export class PipelineTabComponent implements OnInit {
   @ViewChild('returnDataMenu') dataMenu: PipelineDataMenuComponent;
   constructor(private serviceComponentService: ServiceComponentService,
     public dialogRef: MatDialogRef<SelabHeaderComponent> ,
+    public wizard: MatDialog,
     private store: Store<AppState>
     ) {
     this.returnData = {};
@@ -69,6 +72,34 @@ export class PipelineTabComponent implements OnInit {
       this.store.dispatch(new PipelineCreateTaskAction(task));
     }
     this.dialogRef.close();
+    this.startPipeline();
+  }
+  
+  startPipeline() {
+    let compositeComponents = ["card", "breadcrumb", "inputgroup", "form"];
+
+    let tasksObservable = this.store.select(tasksSelector());   
+    let tasks;
+    tasksObservable.subscribe((data) => {
+        tasks = data; 
+        for(let index = 0;index < Object.keys(tasks).length;index++) {
+          let isComposite = false;
+          if (compositeComponents.indexOf(tasks[index].componentType) >= 0)
+            isComposite = true;
+          this.wizard.open(SelabWizardComponent, {
+              width: '55%',
+              height: '65%',
+              data: {
+                isPipeline: true,
+                isComposite: isComposite, 
+                type: tasks[index].componentType,
+                operation: tasks[index].operation
+              },
+              disableClose: true,
+              autoFocus: true
+          })
+        }
+    })
   }
 
   ngOnInit() {
@@ -93,10 +124,15 @@ export class PipelineTabComponent implements OnInit {
     this.serviceComponentService
       .queryReturnByServiceID("2")
       .subscribe((response) => {
+        this.returnData = testingObj;
+        let operation = new Operation()
+                              .setServiceID(this.uiComponent.getServiceComponent().getServiceID())
+                              .setName(this.uiComponent.getServiceComponent().getName())
+                              .setReturnData(this.returnData)
+                              .setClassName(this.uiComponent.getServiceComponent().getClassName())
         
         // this.returnData = JSON.parse(response["body"]);
-        this.returnData = testingObj;
-        this.dataMenu.update(this.returnData,this.uiComponent.getServiceComponent());
+        this.dataMenu.update(operation);
       },(err) => {
         console.log("error") 
         console.log(err);

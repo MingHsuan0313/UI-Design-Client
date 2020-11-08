@@ -26,6 +26,9 @@ export class SelabWizardComponent implements OnInit {
   type: string = ""; // form, dropdown...
   category: string = ""; // informative, input control...
   uiComponent: UIComponent; // uiComponent being create
+
+  // it has return data if in pipeline mode
+  operation: Operation;
   @ViewChild("status") infoTab: InformationTabComponent;
   @ViewChild("pipeline") pipelineTab: PipelineTabComponent;
 
@@ -34,28 +37,6 @@ export class SelabWizardComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     store: Store<AppState>
   ) {
-    // store.subscribe(() => {
-    //   console.log("update");
-    // })
-    // let operation = new Operation().setName("tt").setClassName("ss");
-    // store.dispatch(new PipelineCreateOperationAction(operation));;
-    // let task = new Task().setOperation(operation).setComponentType("form");
-    // store.dispatch(new PipelineCreateTaskAction(task));
-    // let tasks = store.select(state => 
-    //   state.pipelineStorage
-    // )
-    // tasks.subscribe((data) => {
-    //   console.log(data)
-    // })
-    
-    // let operations = store.select(operationPoolSelector());
-    // operations.subscribe((data) => {
-    //   console.log(data);
-    // })
-
-    // console.log(operations);
-
-    // console.log("ssdsd");
   }
 
   // receive data from dialog input
@@ -65,6 +46,12 @@ export class SelabWizardComponent implements OnInit {
     this.isComposite = this.data.isComposite;
     this.type = this.data.type;
     this.category = this.data.category;
+
+    if(this.isPipeline) {
+      this.operation = this.data.operation;
+      console.log("isPipeline...")  
+      console.log(this.operation)
+    }
 
     this.uiComponent = UIComponentFactory.create(this.type);
   }

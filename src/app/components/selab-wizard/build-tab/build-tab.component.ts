@@ -80,7 +80,7 @@ export class BuildTabComponent implements OnInit {
   }
 
   navigateToStatusTab() {
-    let tabLinkElements = document.getElementsByClassName("mat-tab-label-conten");
+    let tabLinkElements = document.getElementsByClassName("mat-tab-label-content");
     for (let index = 0; index < tabLinkElements.length; index++) {
       if ((tabLinkElements[index] as HTMLElement).innerText == "Check Status")
         (tabLinkElements[index] as HTMLElement).click();

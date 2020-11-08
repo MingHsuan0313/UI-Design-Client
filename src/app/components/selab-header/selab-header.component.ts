@@ -162,10 +162,11 @@ export class SelabHeaderComponent implements OnInit {
         width: '55%',
         height: '65%',
         data: {
-          isPipeline: true,
+          isPipeline: false,
           isComposite: isComposite,
           genere: this.genre_selected,
           category: this.category_selected,
+
           type: this.component_selected,
           returnData: {}
         },
