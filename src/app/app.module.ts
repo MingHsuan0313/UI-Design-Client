@@ -71,6 +71,7 @@ import { AppState, ExternalRepresentation, InternalRepresentation } from "./mode
 import { PageUICDL } from "./models/internalRepresentation/pageUICDL.model";
 import { externalRepresentationReducer } from "./models/store/reducers/ExternalRepresentationReducer";
 import { internalRepresentationReducer } from "./models/store/reducers/InternalRepresentationReducer";
+import { ConfirmDialogComponent } from './components/utils/confirm-dialog/confirm-dialog.component';
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -122,7 +123,8 @@ export function reducerFactory() {
     PaletteComponent,
     PropertyEditorComponent,
     PipelineDataMenuComponent,
-    MenuItemComponent
+    MenuItemComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     PerfectScrollbarModule,
@@ -163,7 +165,8 @@ export function reducerFactory() {
   entryComponents: [
     CodeEditorComponent,
     CodeEditorDialogComponent,
-    SelabWizardComponent
+    SelabWizardComponent,
+    ConfirmDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

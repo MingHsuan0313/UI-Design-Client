@@ -1,5 +1,6 @@
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
 import { AfterViewInit, Component, Injectable, Input, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, observable, of as observableOf } from 'rxjs';
@@ -7,6 +8,8 @@ import { CompositeComponent } from 'src/app/models/internalRepresentation/Compos
 import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentationAction/internalRepresentation.action';
 import { AppState } from 'src/app/models/store/app.state';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
+import { SelabWizardComponent } from '../selab-wizard.component';
 
 @Component({
   selector: 'information-tab',
@@ -23,7 +26,10 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
   database: InformationDatabase;
 
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>,
+    public dialog: MatDialog ,
+    public wizard: MatDialogRef<SelabWizardComponent>
+    ) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
       this._isExpandable, this._getChildren);
     this.treeControl = new FlatTreeControl<FileFlatNode>(this._getLevel, this._isExpandable);
@@ -32,7 +38,24 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
   }
   
   finish() {
-    this.store.dispatch(new IRInsertUIComponentAction(this.uiComponent));
+    this.confirmDialog();
+  }
+  
+  confirmDialog() {
+    const message = `Are you sure you want to store this UI Component into PageUICDL?`;
+    const dialogData = new ConfirmDialogModel("Confirm Action",message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent,{
+      maxWidth:"400px",
+      data: dialogData
+    });
+    
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if(dialogResult == true) {
+        this.store.dispatch(new IRInsertUIComponentAction(this.uiComponent));
+        this.wizard.close();
+      }
+    })
   }
 
   transformer = (node: InformationNode, level: number) => {

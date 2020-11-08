@@ -17,6 +17,9 @@ import { Operation, Task } from 'src/app/models/wizard-task-dependency';
 import { PipelineCreateOperationAction, PipelineCreateTaskAction, PipelineDeleteTasksAction } from 'src/app/models/store/actions/pipelineTaskAction/pipelineTask.action';
 import { tasksSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
 import { SelabWizardComponent } from '../selab-wizard.component';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
+import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentationAction/internalRepresentation.action';
+import { departmentReturn } from '../../fakeReturnData';
 
 @Component({
   selector: 'pipeline-tab',
@@ -42,10 +45,10 @@ export class PipelineTabComponent implements OnInit {
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @ViewChild('returnDataMenu') dataMenu: PipelineDataMenuComponent;
   constructor(private serviceComponentService: ServiceComponentService,
-    public dialogRef: MatDialogRef<SelabHeaderComponent> ,
-    public wizard: MatDialog,
+    public wizard: MatDialogRef<SelabWizardComponent>,
+    public dialog: MatDialog,
     private store: Store<AppState>
-    ) {
+  ) {
     this.returnData = {};
     this.alluiComponentTypes = UIComponentFactory.getAllComponentTypes();
     this.filtereduiComponentTypes = this.uiComponentCtrl.valueChanges.pipe(
@@ -56,102 +59,105 @@ export class PipelineTabComponent implements OnInit {
   nextPipe() {
     console.log("next pipe");
     console.log(this.selecteduiComponentTypes);
-    let serviceComponent = this.uiComponent.getServiceComponent();
-    let operation = new Operation()
-                          .setName(serviceComponent.getName())
-                          .setClassName(serviceComponent.getClassName())
-                          .setServiceID(serviceComponent.getServiceID())
-                          .setReturnData(this.returnData);
-    this.store.dispatch(new PipelineCreateOperationAction(operation));
-    for(let index = 0;index < this.selecteduiComponentTypes.length;index++) {
-      let componentType = this.selecteduiComponentTypes[index];
 
-      let task = new Task()
-                      .setComponentType(componentType)
-                      .setOperation(operation);
-      this.store.dispatch(new PipelineCreateTaskAction(task));
-    }
-    this.dialogRef.close();
-    this.startPipeline();
   }
-  
+
+  confirmDialog() {
+    const message = `Are you sure you want to store this UI Component into PageUICDL and start pipeline?`;
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult == true) {
+        this.store.dispatch(new IRInsertUIComponentAction(this.uiComponent));
+        let serviceComponent = this.uiComponent.getServiceComponent();
+        let operation = new Operation()
+          .setName(serviceComponent.getName())
+          .setClassName(serviceComponent.getClassName())
+          .setServiceID(serviceComponent.getServiceID())
+          .setReturnData(this.returnData);
+        this.store.dispatch(new PipelineCreateOperationAction(operation));
+        for (let index = 0; index < this.selecteduiComponentTypes.length; index++) {
+          let componentType = this.selecteduiComponentTypes[index];
+
+          let task = new Task()
+            .setComponentType(componentType)
+            .setOperation(operation);
+          this.store.dispatch(new PipelineCreateTaskAction(task));
+        }
+        this.wizard.close();
+        this.startPipeline();
+      }
+    })
+  }
+
   startPipeline() {
     let compositeComponents = ["card", "breadcrumb", "inputgroup", "form"];
 
-    let tasksObservable = this.store.select(tasksSelector());   
+    let tasksObservable = this.store.select(tasksSelector());
     let tasks;
     tasksObservable.subscribe((data) => {
-        tasks = data; 
-        let tasksCount = Object.keys(tasks).length;
-        for(let index = 0;index < Object.keys(tasks).length;index++) {
-          let isComposite = false;
-          if (compositeComponents.indexOf(tasks[index].componentType) >= 0)
-            isComposite = true;
-          let wizardRef = this.wizard.open(SelabWizardComponent, {
-              width: '55%',
-              height: '65%',
-              data: {
-                isPipeline: true,
-                isComposite: isComposite, 
-                type: tasks[index].componentType,
-                operation: tasks[index].operation
-              },
-              disableClose: true,
-              autoFocus: true
-          })
-          wizardRef.afterClosed().subscribe(
-            () => {
-              console.log("closed...")
-              tasksCount--;
-              if(tasksCount == 0) {
-                console.log("all tasks done")
-                this.store.dispatch(new PipelineDeleteTasksAction())
-              }
+      tasks = data;
+      let tasksCount = Object.keys(tasks).length;
+      for (let index = 0; index < Object.keys(tasks).length; index++) {
+        let isComposite = false;
+        if (compositeComponents.indexOf(tasks[index].componentType) >= 0)
+          isComposite = true;
+        let wizardRef = this.dialog.open(SelabWizardComponent, {
+          width: '55%',
+          height: '65%',
+          data: {
+            isPipeline: true,
+            isComposite: isComposite,
+            type: tasks[index].componentType,
+            operation: tasks[index].operation
+          },
+          disableClose: true,
+          autoFocus: true
+        })
+        wizardRef.afterClosed().subscribe(
+          () => {
+            console.log("closed...")
+            tasksCount--;
+            if (tasksCount == 0) {
+              console.log("all tasks done")
+              this.store.dispatch(new PipelineDeleteTasksAction())
             }
-          )
-        }
+          }
+        )
+      }
     })
   }
 
   ngOnInit() {
   }
-  
+
   update() {
     console.log("pipeline tab update");
+    let departmentOperationReturn = departmentReturn;
 
-    let testingObj = {
-      "department": {
-        "name": "",
-        "description": "",
-        "category": {
-          "item": {
-            "name": "",
-            "description": "",
-            "id": ""
-          },
-          "name": "",
-          "id": ""
-        }
-      }
-    }
     this.serviceComponentService
       .queryReturnByServiceID("2")
       .subscribe((response) => {
-        this.returnData = testingObj;
+        this.returnData = departmentOperationReturn;
         let operation = new Operation()
-                              .setServiceID(this.uiComponent.getServiceComponent().getServiceID())
-                              .setName(this.uiComponent.getServiceComponent().getName())
-                              .setReturnData(this.returnData)
-                              .setClassName(this.uiComponent.getServiceComponent().getClassName())
-        
+          .setServiceID(this.uiComponent.getServiceComponent().getServiceID())
+          .setName(this.uiComponent.getServiceComponent().getName())
+          .setReturnData(this.returnData)
+          .setClassName(this.uiComponent.getServiceComponent().getClassName())
+
         // this.returnData = JSON.parse(response["body"]);
         this.dataMenu.update(operation);
-      },(err) => {
-        console.log("error") 
+      }, (err) => {
+        console.log("error")
         console.log(err);
       })
   }
-  
+
   add(event: MatChipInputEvent): void {
     // Add component only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
