@@ -116,10 +116,10 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     let dropdownItemListVertexStorage = this.createDropdownItemListVertex(graphStorage, component, dropdownBoxVertexStorage);
     this.createDropdownItemVertexs(graphStorage, component, dropdownItemListVertexStorage, dropdownBoxVertexStorage);
 
-    component["x"] = dropdownBoxVertexStorage.getVertexX();
-    component["y"] = dropdownBoxVertexStorage.getVertexY();
-    component["width"] = dropdownBoxVertexStorage.getVertexWidth();
-    component["height"] = dropdownBoxVertexStorage.getVertexHeight();
+    // component["x"] = dropdownBoxVertexStorage.getVertexX();
+    // component["y"] = dropdownBoxVertexStorage.getVertexY();
+    // component["width"] = dropdownBoxVertexStorage.getVertexWidth();
+    // component["height"] = dropdownBoxVertexStorage.getVertexHeight();
     // component["style"] = dropdownBoxVertexStorage.getStyle();
 
     return dropdownBoxVertexStorage;

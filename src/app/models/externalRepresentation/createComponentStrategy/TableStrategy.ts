@@ -124,10 +124,10 @@ export class TableStrategy implements ICreateComponentStrategy {
     this.createTableHeaderVertex(graphStorage, component, tableBoxVertexStorage);
     this.createTableDataVertex(graphStorage, component, tableBoxVertexStorage);
 
-    component.x = tableBoxVertexStorage.getVertexX();
-    component.y = tableBoxVertexStorage.getVertexY();
-    component.width = tableBoxVertexStorage.getVertexWidth();
-    component.height = tableBoxVertexStorage.getVertexHeight();
+    // component.x = tableBoxVertexStorage.getVertexX();
+    // component.y = tableBoxVertexStorage.getVertexY();
+    // component.width = tableBoxVertexStorage.getVertexWidth();
+    // component.height = tableBoxVertexStorage.getVertexHeight();
     // component.style = tableBoxVertexStorage.getStyle();
 
     return tableBoxVertexStorage;

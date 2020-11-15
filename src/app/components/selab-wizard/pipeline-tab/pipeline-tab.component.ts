@@ -20,6 +20,7 @@ import { SelabWizardComponent } from '../selab-wizard.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
 import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { departmentReturn } from '../../fakeReturnData';
+import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 
 @Component({
   selector: 'pipeline-tab',
@@ -47,7 +48,8 @@ export class PipelineTabComponent implements OnInit {
   constructor(private serviceComponentService: ServiceComponentService,
     public wizard: MatDialogRef<SelabWizardComponent>,
     public dialog: MatDialog,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private graphEditorService: GraphEditorService
   ) {
     this.returnData = {};
     this.alluiComponentTypes = UIComponentFactory.getAllComponentTypes();
@@ -74,6 +76,7 @@ export class PipelineTabComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
         this.store.dispatch(new IRInsertUIComponentAction(this.uiComponent));
+        this.graphEditorService.bindComponent(this.uiComponent);
         let serviceComponent = this.uiComponent.getServiceComponent();
         let operation = new Operation()
           .setName(serviceComponent.getName())

@@ -36,10 +36,10 @@ export class InputStrategy implements ICreateComponentStrategy {
     inputVertexStorage.vertex["isPrimary"] = true;
     // component.vertexStorage = vertexStorage;
     // component["style"] = inputVertexStorage.getStyle();
-    component["x"] = inputVertexStorage.getVertexX();
-    component["y"] = inputVertexStorage.getVertexY();
-    component["width"] = inputVertexStorage.getVertexWidth();
-    component["height"] = inputVertexStorage.getVertexHeight();
+    // component["x"] = inputVertexStorage.getVertexX();
+    // component["y"] = inputVertexStorage.getVertexY();
+    // component["width"] = inputVertexStorage.getVertexWidth();
+    // component["height"] = inputVertexStorage.getVertexHeight();
     return inputVertexStorage;
   }
 

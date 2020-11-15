@@ -16,6 +16,10 @@ export class UIComponent implements AbstractComponent{
   
   constructor() {
     this.name = "";
+    this.x = "";
+    this.y = "";
+    this.width = "";
+    this.height = "";
   }
 
   public getName(): String {

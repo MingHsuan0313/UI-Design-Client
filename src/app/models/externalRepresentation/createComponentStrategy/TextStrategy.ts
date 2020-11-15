@@ -64,10 +64,10 @@ export class TextStrategy implements ICreateComponentStrategy {
   createComponent(graphStorage: GraphStorage, component, parent) {
     let textVertexStorage = this.createTextVertex(graphStorage, component ,parent);
 
-    component["x"] = textVertexStorage.getVertexX();
-    component["y"] = textVertexStorage.getVertexY();
-    component["width"] = textVertexStorage.getVertexWidth();
-    component["height"] = textVertexStorage.getVertexHeight();
+    // component["x"] = textVertexStorage.getVertexX();
+    // component["y"] = textVertexStorage.getVertexY();
+    // component["width"] = textVertexStorage.getVertexWidth();
+    // component["height"] = textVertexStorage.getVertexHeight();
     //component["style"] = textVertexStorage.getStyle();
     return textVertexStorage;
   }

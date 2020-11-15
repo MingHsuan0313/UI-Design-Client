@@ -8,6 +8,7 @@ import { CompositeComponent } from 'src/app/models/internalRepresentation/Compos
 import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { AppState } from 'src/app/models/store/app.state';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
+import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
 import { SelabWizardComponent } from '../selab-wizard.component';
 
@@ -28,7 +29,8 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
 
   constructor(private store: Store<AppState>,
     public dialog: MatDialog ,
-    public wizard: MatDialogRef<SelabWizardComponent>
+    public wizard: MatDialogRef<SelabWizardComponent>,
+    private graphEditorService: GraphEditorService
     ) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
       this._isExpandable, this._getChildren);
@@ -53,6 +55,7 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if(dialogResult == true) {
         this.store.dispatch(new IRInsertUIComponentAction(this.uiComponent));
+        this.graphEditorService.bindComponent(this.uiComponent);
         this.wizard.close();
       }
     })

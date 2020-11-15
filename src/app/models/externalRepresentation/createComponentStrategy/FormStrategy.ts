@@ -68,10 +68,10 @@ export class FormStrategy implements ICreateComponentStrategy {
         // this does not refresh dropdown vertex position; i guess
         graphStorage.getGraph().refresh();
 
-        component.x = formBoxVertexStorage.getVertexX();
-        component.y = formBoxVertexStorage.getVertexY();
-        component.width = formBoxVertexStorage.getVertexWidth();
-        component.height = formBoxVertexStorage.getVertexHeight();
+        // component.x = formBoxVertexStorage.getVertexX();
+        // component.y = formBoxVertexStorage.getVertexY();
+        // component.width = formBoxVertexStorage.getVertexWidth();
+        // component.height = formBoxVertexStorage.getVertexHeight();
         // component["style"] = formBoxVertexStorage.getStyle();
         return formBoxVertexStorage;
     }

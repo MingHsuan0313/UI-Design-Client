@@ -6,7 +6,7 @@ class ExternalRepresentationReducer {
     @Action
     public initialization(store: ExternalRepresentation,action: ERInitializationAction): ExternalRepresentation {
         console.log("Initialize...")
-        console.log(action.graphStorage);
+
         return store; 
     }
 }
