@@ -5,7 +5,7 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, observable, of as observableOf } from 'rxjs';
 import { CompositeComponent } from 'src/app/models/internalRepresentation/CompositeComponent.model';
-import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentationAction/internalRepresentation.action';
+import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { AppState } from 'src/app/models/store/app.state';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';

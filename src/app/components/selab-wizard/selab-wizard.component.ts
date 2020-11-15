@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { PipelineCreateOperationAction, PipelineCreateTaskAction, PipelineReadTasksAction } from 'src/app/models/store/actions/pipelineTaskAction/pipelineTask.action';
+import { PipelineCreateOperationAction, PipelineCreateTaskAction, PipelineReadTasksAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
 import { operationPoolSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
@@ -70,6 +70,7 @@ export class SelabWizardComponent implements OnInit {
     let openCorrect = true;
     let description = "";
     console.log("open wizard : check status");
+
     console.log(this)
     if (this.genere == "Genre" || this.genere == "")
       description += "You need to choose Genre\n";

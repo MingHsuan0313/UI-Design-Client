@@ -1,6 +1,6 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
-import { IRInitializePageUICDLAction, IRInsertUIComponentAction } from "../actions/internalRepresentationAction/internalRepresentation.action";
+import { IRInitializePageUICDLAction, IRInsertUIComponentAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 
 class InternalRepresentationReducer {

@@ -14,11 +14,11 @@ import { SelabHeaderComponent } from '../../selab-header/selab-header.component'
 import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
 import { Operation, Task } from 'src/app/models/wizard-task-dependency';
-import { PipelineCreateOperationAction, PipelineCreateTaskAction, PipelineDeleteTasksAction } from 'src/app/models/store/actions/pipelineTaskAction/pipelineTask.action';
+import { PipelineCreateOperationAction, PipelineCreateTaskAction, PipelineDeleteTasksAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { tasksSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
 import { SelabWizardComponent } from '../selab-wizard.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
-import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentationAction/internalRepresentation.action';
+import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { departmentReturn } from '../../fakeReturnData';
 
 @Component({

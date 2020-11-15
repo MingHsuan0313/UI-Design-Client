@@ -7,7 +7,7 @@ import {
     PipelineDeleteOperationPoolAction,
     PipelineDeleteTaskAction,
     PipelineDeleteTasksAction,
-} from '../actions/pipelineTaskAction/pipelineTask.action';
+} from '../actions/pipelineTask.action';
 
 class PipelineStorageReducer {
     @Action

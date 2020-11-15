@@ -6,8 +6,9 @@ import StyleEditorService from "./style-editor.service";
 import { StyleConverter } from "../../shared/styleTable";
 import { AppState } from "src/app/models/store/app.state";
 import { Action, Store } from "@ngrx/store";
-import { IRInitializePageUICDLAction } from "src/app/models/store/actions/internalRepresentationAction/internalRepresentation.action";
+import { IRInitializePageUICDLAction } from "src/app/models/store/actions/internalRepresentation.action";
 import { irComponentListReducer } from "src/app/models/store/reducers/IRComponentListReducer";
+import { ERInitializationAction, ERTestAction } from "src/app/models/store/actions/externalRepresentation.action";
 
 @Injectable({
   providedIn: "root"
@@ -36,6 +37,8 @@ export default class GraphEditorService {
     let newPageUICDL = new PageUICDL(2);
     Storage.setPageUICDL(newPageUICDL);
     this.store.dispatch(new IRInitializePageUICDLAction(newPageUICDL));
+    this.store.dispatch(new ERInitializationAction());
+    this.store.dispatch(new ERTestAction());
     // this.store.addReducer("12222",(state = newPageUICDL.body.componentList,action:Action) => irComponentListReducer(state,action))
     // this.bindComponent(fakeBreadcrumb);
   }
