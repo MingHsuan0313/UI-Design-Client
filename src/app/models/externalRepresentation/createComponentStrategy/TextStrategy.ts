@@ -3,6 +3,8 @@ import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
 import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
 import { TextComponent } from "../../ui-component-dependency";
+import { SelabEditor } from "../selab-editor.model";
+import { SelabVertex } from "../../store/selabVertex.model";
 
 
 export class TextStrategy implements ICreateComponentStrategy {
@@ -32,44 +34,37 @@ export class TextStrategy implements ICreateComponentStrategy {
     return dataBinding;
   }
 
-  createTextVertex(graphStorage:GraphStorage, component:TextComponent, parent:mxCell) {
+  createTextVertex(selabEditor: SelabEditor, component:TextComponent, parent:mxCell): mxCell {
     const dataBinding = this.createDataBinding("text");
-
-
     let style = {} ; 
+
     if (component["href"].length>0) {
       style = Object.assign(style, StyleLibrary[0]["text"]["text_blue"]);
     } else {
       style = Object.assign(style, StyleLibrary[0]["text"]["text_black"]);
     }
 
+    let width = (component.text.length) * 12;
+    let textGeometry = new mxGeometry(this.basex, this.basey, width, 50);
+    let selabVertex = new SelabVertex(component.getId(),component.getId(),parent.id)
+    selabVertex = selabVertex 
+                    .setIsPrimary(true)
+                    .setValue(component.getValue())
+                    .setDataBinding(dataBinding);
 
-    const styleName = "style"+"Text"+ component.id;
+    let textCell = selabEditor.insertVertex(selabVertex,component,textGeometry,style);
+    console.log(textCell)
+    textCell["componentPart"] = "box";
+    textCell["dataBinding"] = this.createDataBinding("box");
+    textCell["isPrimary"] = true;
+    selabEditor.getGraph().refresh();
 
-    const styleStorage = new StyleStorage(styleName, style);
-
-    let width = (component.text.length)*12;
-    const textGeometry = new mxGeometry(this.basex, this.basey, width, 50);
-
-    // Initialized
-    let textVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component, dataBinding, true);
-    textVertexStorage.vertex["componentPart"] = "box";
-    textVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
-    textVertexStorage.vertex["isPrimary"] = true;
-    // graphStorage.getGraph().updateCellSize(textVertexStorage.getVertex(), true);
-    graphStorage.getGraph().refresh(textVertexStorage.getVertex());
-    return textVertexStorage;
+    return textCell;
   }
 
-  createComponent(graphStorage: GraphStorage, component, parent) {
-    let textVertexStorage = this.createTextVertex(graphStorage, component ,parent);
-
-    // component["x"] = textVertexStorage.getVertexX();
-    // component["y"] = textVertexStorage.getVertexY();
-    // component["width"] = textVertexStorage.getVertexWidth();
-    // component["height"] = textVertexStorage.getVertexHeight();
-    //component["style"] = textVertexStorage.getStyle();
-    return textVertexStorage;
+  createComponent(graphStorage, component, parent): mxCell {
+    let textVertex = this.createTextVertex(graphStorage, component ,parent);
+    return textVertex;
   }
 }
 

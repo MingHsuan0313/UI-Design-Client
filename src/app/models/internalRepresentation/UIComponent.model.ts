@@ -22,8 +22,8 @@ export class UIComponent implements AbstractComponent{
     this.height = "";
   }
 
-  public getName(): String {
-    return this.name;
+  public getName():  string{
+    return this.name.toString();
   }
   
   public setUIComponent(properties) {
@@ -82,8 +82,8 @@ export class UIComponent implements AbstractComponent{
     this.category = category;
   }
 
-  public getId(): String {
-    return this.id;
+  public getId():  string {
+    return this.id.toString();
   }
 
   public setId(id: String): void {
@@ -117,6 +117,7 @@ export class UIComponent implements AbstractComponent{
     this.type = type;
   }
 
+  getValue() {}
   getInfo() { }
   getProperties(){}
 }

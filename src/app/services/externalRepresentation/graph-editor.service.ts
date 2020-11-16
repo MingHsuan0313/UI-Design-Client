@@ -8,6 +8,8 @@ import { AppState } from "src/app/models/store/app.state";
 import { Action, Store } from "@ngrx/store";
 import { IRInitializePageUICDLAction } from "src/app/models/store/actions/internalRepresentation.action";
 import { ERInitializationAction, ERTestAction } from "src/app/models/store/actions/externalRepresentation.action";
+import { Configuration } from "./util/configuration";
+import { SelabEditor } from "src/app/models/externalRepresentation/selab-editor.model";
 
 @Injectable({
   providedIn: "root"
@@ -17,38 +19,50 @@ export default class GraphEditorService {
   selectedGraphID: string;
   selectedGraphStorage: GraphStorage;
 
+  editors: Map<string,SelabEditor>;
+  selectedEditor: SelabEditor;
+
   constructor(private styleEditorService: StyleEditorService,
     private store: Store<AppState> 
     ) {
     this.graphStorages = [];
+    this.editors = new Map();
+  }
+  
+  createEditor(element: HTMLElement) {
+    let editor = new SelabEditor(element,this.store);
+    console.log("craete editor")
+    console.log(editor)
+    this.editors.set(Object.keys(this.editors).length.toString(),editor);
+    this.selectedEditor = editor;
+  }
+  
+  getGraph(): mxGraph {
+    return this.selectedEditor.getGraph();
+  }
+  
+  getGraphModel(): mxGraphModel {
+    return this.selectedEditor.getGraphModel();
+  }
+  
+  getGraphView(): mxGraphView {
+    return this.selectedEditor.getGraphView();
   }
 
-  // argument : native html element reference (container)
-  // return : void
-  // function : create graph
   createGraph(element: HTMLElement) {
-    this.selectedGraphStorage = new GraphStorage(element, "graphContainer" + this.graphStorages.length.toString());
+    this.selectedGraphStorage = new GraphStorage(element, "graphContainer" + this.graphStorages.length.toString(),this.store);
     this.graphStorages.push(this.selectedGraphStorage);
     this.selectedGraphID = this.selectedGraphStorage.getID();
-    // Storage.createPageUICDL();
-
     let pageID = "page" + this.selectedGraphID;
-    let newPageUICDL = new PageUICDL(2);
-    Storage.setPageUICDL(newPageUICDL);
-    this.store.dispatch(new IRInitializePageUICDLAction(newPageUICDL));
-    // this.store.dispatch(new ERInitializationAction());
-    this.store.dispatch(new ERTestAction());
-    // this.store.addReducer("12222",(state = newPageUICDL.body.componentList,action:Action) => irComponentListReducer(state,action))
-    // this.bindComponent(fakeBreadcrumb);
   }
 
-  // object => svg
-  // possible to have x y ?
   bindComponent(component, x?, y?) {
     if (x === undefined || y === undefined) {
-      console.log("dddeeeqejhq")
-      const parent = this.selectedGraphStorage.getGraph().getDefaultParent();
-      this.selectedGraphStorage.createComponent(component, parent);
+      // const parent = this.selectedGraphStorage.getGraph().getDefaultParent();
+      // this.selectedGraphStorage.createComponent(component, parent);
+      const parent = this.selectedEditor.getGraph().getDefaultParent();
+      this.selectedEditor.createComponent(component,parent);
+
     } else {
       const parent = this.selectedGraphStorage.getGraph().getDefaultParent();
       this.selectedGraphStorage.createComponent(component, parent, x, y);
@@ -65,17 +79,6 @@ export default class GraphEditorService {
   }
 
   syncStorage() {
-    // let styleConverter = new StyleConverter();
-    // let fakeStyleObject = {
-    //   strokeColor: "#c8ced3",
-    //   fillColor: "#ffffff",
-    //   rounded: "1",
-    //   shadow: "1",
-    //   opacity: "0",
-    //   fontSize: "23"
-    // }
-    // console.log("start converting")
-    // console.log(styleConverter.converObject(fakeStyleObject));
     this.selectedGraphStorage.syncStyle(this.styleEditorService);
     this.selectedGraphStorage.syncStorage();
   }
@@ -95,7 +98,4 @@ export default class GraphEditorService {
   getMaxVertexID() {
     return this.getGraphStorage().getMaxID();
   }
-
-
-
 }

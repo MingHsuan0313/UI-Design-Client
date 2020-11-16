@@ -131,8 +131,8 @@ declare class mxGraph {
   createGraphView();
   createCellRenderer();
   createCellEditor();
-  getModel();
-  getView();
+  getModel(): mxGraphModel;
+  getView(): mxGraphView;
   getStylesheet();
   setStylesheet(stylesheet);
   getSelectionModel();

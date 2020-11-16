@@ -17,6 +17,11 @@ import {
  LayoutStrategy, 
 } from './component-strategy-dependency'; 
 import { PropertyGenerator } from '../../shared/property-generator';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/app.state';
+import { SelabVertex } from '../store/selabVertex.model';
+import { UIComponent } from '../ui-component-dependency';
+import { ERInsertVertexAction } from '../store/actions/externalRepresentation.action';
 
 export class GraphStorage {
   vertexStorageList: {}; //{index:VertexStorage}
@@ -35,7 +40,7 @@ export class GraphStorage {
   modified: Boolean;
 
   // create graph
-  constructor(element, id) {
+  constructor(element, id,private store:Store<AppState>) {
     this.modified = false;
     this.vertexStorageList = {};
     this.edgeStorageList = [];
@@ -245,6 +250,8 @@ export class GraphStorage {
     Object.assign(cloneStyle, styleStorage.style);
     styleStorage.style = cloneStyle;
     const vertexStorage = new VertexStorage(vertex, styleStorage, uicomponent, dataBinding, isPrimary);
+    let selabVertex = new SelabVertex(vertexStorage.id,(vertexStorage.component as UIComponent).id.toString(),vertexStorage.parentId);
+    this.store.dispatch(new ERInsertVertexAction(selabVertex));
     let vertexLength = Object.keys(this.vertexStorageList).length;
     this.vertexStorageList[vertexLength] = vertexStorage;
     return vertexStorage;

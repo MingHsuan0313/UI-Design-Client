@@ -1,6 +1,7 @@
 import { GraphStorage } from "../externalRepresentation/graph-storage.model";
 import { PageUICDL } from "../internalRepresentation/pageUICDL.model";
 import { PipelineStorage } from "../wizard-task-dependency";
+import { SelabGraph } from "./selabGraph.model";
 
 export interface AppState {
     pipelineStorage: PipelineStorage;
@@ -16,7 +17,7 @@ export class InternalRepresentation {
 }
 
 export class ExternalRepresentation{
-    graphStorages: GraphStorage[];
+    graphStorages: SelabGraph[];
     constructor() {
         this.graphStorages = [];
     }

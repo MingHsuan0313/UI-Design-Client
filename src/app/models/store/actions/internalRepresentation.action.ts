@@ -4,11 +4,11 @@ import { UIComponent } from 'src/app/models/ui-component-dependency';
 
 export enum IRActionTypes {
     INITIALIZATION = "[InternalRepresentation] Initialize PageUICDL",
-    INSERT_UI_COMPONENT_ACTION = "[InternalRepresentation] Insert UI Component",    
+    INSERT_UI_COMPONENT = "[InternalRepresentation] Insert UI Component",    
 }
     
 export class IRInsertUIComponentAction implements Action {
-    public type = IRActionTypes["INSERT_UI_COMPONENT_ACTION"];
+    public type = IRActionTypes["INSERT_UI_COMPONENT"];
     constructor(public uiComponent: UIComponent) {}
 }
 

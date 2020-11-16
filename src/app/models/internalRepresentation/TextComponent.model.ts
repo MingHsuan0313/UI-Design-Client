@@ -33,6 +33,10 @@ export class TextComponent extends BasicComponent {
       }
     ]
   }
+  
+  getValue(): string {
+    return this.text.toString();
+  }
 
 
   setUIComponent(properties) {

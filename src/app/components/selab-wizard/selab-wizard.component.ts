@@ -49,8 +49,6 @@ export class SelabWizardComponent implements OnInit {
 
     if(this.isPipeline) {
       this.operation = this.data.operation;
-      console.log("isPipeline...")  
-      console.log(this.operation)
     }
 
     this.uiComponent = UIComponentFactory.create(this.type);
@@ -58,8 +56,6 @@ export class SelabWizardComponent implements OnInit {
 
   // this function if for update componet tree structure for information tab
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
-    console.log("tab change");
-    console.log(tabChangeEvent);
     if (tabChangeEvent.tab.textLabel == "Check Status")
       this.infoTab.update();
     else if (tabChangeEvent.tab.textLabel == "Generate Pipeline")
@@ -71,7 +67,6 @@ export class SelabWizardComponent implements OnInit {
     let description = "";
     console.log("open wizard : check status");
 
-    console.log(this)
     if (this.genere == "Genre" || this.genere == "")
       description += "You need to choose Genre\n";
     if (this.category == "Category" || this.category == "")
@@ -79,7 +74,6 @@ export class SelabWizardComponent implements OnInit {
     if (this.uiComponent == undefined)
       description += "You need to choose UI Component\n";
 
-    console.log(description)
     if (description.length > 0) {
       this.dialogRef.close();
       alert(description);

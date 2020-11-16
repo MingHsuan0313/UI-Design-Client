@@ -7,6 +7,11 @@ import ExportService from '../../services/internalRepresentation/export.service'
 import { Storage } from '../../shared/storage';
 import { StyleLibrary } from '../../shared/styleLibrary';
 import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model';
+import { AppState } from 'src/app/models/store/app.state';
+import { Store } from '@ngrx/store';
+import { ERInitializationAction } from 'src/app/models/store/actions/externalRepresentation.action';
+import { SelabGraph } from 'src/app/models/store/selabGraph.model';
+import { IRInitializePageUICDLAction } from 'src/app/models/store/actions/internalRepresentation.action';
 
 @Component({
   selector: 'selab-graph-editor',
@@ -16,35 +21,43 @@ import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model
 export class SelabGraphEditorComponent implements AfterViewInit {
   private zoomFactor = 1;
   //imageCount = 1;
-  constructor(private graphEditorService: GraphEditorService, private exportService: ExportService) {
+  constructor(private graphEditorService: GraphEditorService,
+     private exportService: ExportService,
+     private store: Store<AppState>) {
   }
 
-  // @ViewChild('graphContainer') graphContainer: ElementRef;
-
   getModified() {
-    // return true;
-    return this.graphEditorService.getGraphStorage().getModified();
+    // return this.graphEditorService.getGraphStorage().getModified();
   }
 
   ngAfterViewInit() {
   }
 
   showExternalRepresentation() {
-    console.log(this.graphEditorService.getGraphStorage());
+    // console.log(this.graphEditorService.getGraphStorage());
+    console.log(this.graphEditorService.getGraphModel());
   }
 
   showInternelRepresentation() {
     console.log(Storage.getPageUICDL());
+
     console.log(JSON.stringify(Storage.getPageUICDL()))
   }
 
   createGraph(elementId) {
     let element = document.getElementById(elementId);
-    this.graphEditorService.createGraph(element);
+    console.log(elementId.split('-')[1])
+    let pageID = parseInt(elementId.split('-')[1]);
+    let newPageUICDL = new PageUICDL(pageID);
+    Storage.setPageUICDL(newPageUICDL);
+    // this.graphEditorService.createGraph(element);
+    this.store.dispatch(new IRInitializePageUICDLAction(newPageUICDL));
+    this.graphEditorService.createEditor(element);
+    this.store.dispatch(new ERInitializationAction(new SelabGraph(elementId)))
   }
 
   ngOnInit() {
-    this.createGraph('graphContainer0');
+    this.createGraph('graphContainer-0');
     console.log('Create graph editor');
   }
 
@@ -118,8 +131,6 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     this.zoomFactor = this.zoomFactor * 0.9;
     this.graphEditorService.zoomTo(this.zoomFactor);
   }
-
-
 }
 
 

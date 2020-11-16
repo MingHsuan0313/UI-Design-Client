@@ -19,7 +19,7 @@ class InternalRepresentationReducer {
     public insertUIComponent(store: InternalRepresentation,action :IRInsertUIComponentAction): InternalRepresentation {
         store = {...store};
         console.log("insert ui action")
-        store.pageUICDLs = {...store.pageUICDLs}
+        store.pageUICDLs = [...store.pageUICDLs]
         store.pageUICDLs[0] = ({...store.pageUICDLs[0]} as any)
         store.pageUICDLs[0].body = ({...store.pageUICDLs[0].body} as any)
         store.pageUICDLs[0].body.componentList = ([...store.pageUICDLs[0].body.componentList,action.uiComponent] as any)

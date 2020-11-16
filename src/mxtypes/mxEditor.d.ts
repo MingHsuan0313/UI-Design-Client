@@ -1,5 +1,5 @@
 declare class mxEditor {
-    graph: any;
+    graph: mxGraph;
     keyHandler: any;
     modified: Boolean;
     constructor(config);
