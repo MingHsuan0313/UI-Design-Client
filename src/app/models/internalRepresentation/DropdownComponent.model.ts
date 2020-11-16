@@ -29,6 +29,10 @@ export class DropdownComponent extends BasicComponent {
       }
     ]
   }
+  
+  getValue(index: number): string {
+    return this.items.split(" ")[index];
+  }
 
   setUIComponent(properties) {
     this.items = properties["items"];

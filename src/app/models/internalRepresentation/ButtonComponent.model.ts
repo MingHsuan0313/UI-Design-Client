@@ -28,6 +28,10 @@ export class ButtonComponent extends BasicComponent {
 
   add(component: UIComponent): void {
   }
+  
+  getValue(): string {
+    return this.text.toString();
+  }
 
   getInfo() {
     return {

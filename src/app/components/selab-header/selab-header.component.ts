@@ -154,9 +154,6 @@ export class SelabHeaderComponent implements OnInit {
     if (compositeComponents.indexOf(this.component_selected) >= 0)
       isComposite = true;
 
-    console.log("hello")
-    console.log(this.genre_selected);
-
     if (this) {
       this.wizard.open(SelabWizardComponent, {
         width: '55%',

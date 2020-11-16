@@ -2,6 +2,9 @@ import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
 import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
+import { SelabEditor } from "../selab-editor.model";
+import { ButtonComponent } from "../../ui-component-dependency";
+import { SelabVertex } from "../../store/selabVertex.model";
 
 export class ButtonStrategy implements ICreateComponentStrategy {
   basex: number;
@@ -30,32 +33,34 @@ export class ButtonStrategy implements ICreateComponentStrategy {
     return dataBinding;
   }
 
-  createButtonVertex(graphStorage:GraphStorage, component, parent) {
+  createButtonVertex(selabEditor:SelabEditor, component:ButtonComponent, parent:mxCell) {
     let dataBinding = this.createDataBinding("text");
     const style = StyleLibrary[0]["button"];
-    const styleName = "style" + component.id;
-    const styleStorage = new StyleStorage(styleName, style);
 
     const width = 15 * component.text.length;
     const height = 40;
     const buttonGeometry = new mxGeometry(this.basex, this.basey, width, height);
-    let buttonVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, buttonGeometry, styleStorage, component,dataBinding, true);
-    buttonVertexStorage.vertex["componentPart"] = "box";
-    buttonVertexStorage.vertex["dataBinding"] = dataBinding;
-    buttonVertexStorage.vertex["isPrimary"] = true;
-
-    return buttonVertexStorage;
+    let selabVertex = new SelabVertex()
+                            .setID(component.getId())
+                            .setUIComponentID(component.getId())
+                            .setParentID(parent.id)
+                            .setIsPrimary(true)
+                            .setValue(component.getValue())
+                            .setDataBinding(dataBinding)
+    let buttonCell = selabEditor.insertVertex(selabVertex,component,buttonGeometry,style);
+    buttonCell["componentPart"] = "box";
+    buttonCell["dataBinding"] = dataBinding;
+    buttonCell["isPrimary"] = true;
+    return buttonCell;
   }
 
-  createComponent(graphStorage: GraphStorage, component, parent) {
-    let buttonVertexStorage = this.createButtonVertex(graphStorage, component, parent);
-
+  createComponent(selabEditor: SelabEditor, component:ButtonComponent, parent:mxCell): mxCell{
+    let buttonVertex = this.createButtonVertex(selabEditor, component, parent);
+    return buttonVertex;
     // component["x"] = buttonVertexStorage.getVertexX();
     // component["y"] = buttonVertexStorage.getVertexY();
     // component["width"] = buttonVertexStorage.getVertexWidth();
     // component["height"] = buttonVertexStorage.getVertexHeight();
     // component["style"] = buttonVertexStorage.getStyle();
-
-    return buttonVertexStorage;
   }
 }

@@ -74,8 +74,8 @@ export class UIComponent implements AbstractComponent{
     this.height = height;
   }
 
-  public getCategory(): String {
-    return this.category;
+  public getCategory(): string {
+    return this.category.toString();
   }
 
   public setCategory(category: String): void {
@@ -90,8 +90,8 @@ export class UIComponent implements AbstractComponent{
     this.id = id;
   }
 
-  public getSelector(): String {
-    return this.selector;
+  public getSelector(): string{
+    return this.selector.toString();
   }
 
   public setSelector(selector: String): void {
@@ -117,7 +117,7 @@ export class UIComponent implements AbstractComponent{
     this.type = type;
   }
 
-  getValue() {}
+  getValue(index?) {}
   getInfo() { }
   getProperties(){}
 }

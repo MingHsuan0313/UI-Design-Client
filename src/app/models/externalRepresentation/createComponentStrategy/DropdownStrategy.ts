@@ -1,7 +1,11 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
-import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
+import { GraphStorage, VertexStorage, StyleStorage } from "../../graph-dependency";
+import { SelabEditor } from "../selab-editor.model";
+import { UIComponent } from "../../ui-component-dependency";
+import { DropdownComponent } from "../../internalRepresentation/DropdownComponent.model";
+import { SelabVertex } from "../../store/selabVertex.model";
 
 export class DropdownStrategy implements ICreateComponentStrategy {
   basex: number;
@@ -21,7 +25,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
   // part: like Box,Header,ItemList,Item...etc
   createDataBinding(part: String, index?) {
     if (part == "box")
-    return new DataBinding(false, part, -1);
+      return new DataBinding(false, part, -1);
     else if (part == "header")
       return new DataBinding(false, part, -1);
     else if (part == "itemList")
@@ -38,90 +42,99 @@ export class DropdownStrategy implements ICreateComponentStrategy {
       return dataBinding;
     }
     else
-    return new DataBinding(false, part, -1);
+      return new DataBinding(false, part, -1);
   }
 
-  createDropdownBoxVertex(graphStorage, component, parent) {
+  createDropdownBoxVertex(selabEditor: SelabEditor, component: DropdownComponent, parent: mxCell): mxCell {
+    console.log("box start")
     const itemCount = component.items.split(" ").length;
     const dropdownWidth = 200;
     const dropdownHeight = 30 * (itemCount + 1);
-
-    // insert dropdown box
-    let styleName = "dropdownBoxStyle" + component.id;
     const dropdownBoxStyle = StyleLibrary[0]["dropdown"]["dropdownBox"];
-    let styleStorage = new StyleStorage(styleName, dropdownBoxStyle);
     const dropdownBoxVertexGeometry = new mxGeometry(this.basex, this.basey, dropdownWidth, dropdownHeight);
-    const dropdownBoxVertexStorage = graphStorage.insertVertex(parent, component.id, "", dropdownBoxVertexGeometry, styleStorage, component);
-    dropdownBoxVertexStorage.setIsPrimary(true);
 
-    dropdownBoxVertexStorage.vertex["componentPart"] = "box";
-    dropdownBoxVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
-    dropdownBoxVertexStorage.vertex["isPrimary"] = true;
-    return dropdownBoxVertexStorage;
+    let id = (parseInt(component.getId())).toString();
+    let selabVertex = new SelabVertex()
+      .setID(component.getSelector() + "-" + id)
+      .setUIComponentID(component.getId())
+      .setParentID(parent.id)
+      .setIsPrimary(true)
+    let dropdownBoxCell = selabEditor.insertVertex(selabVertex, component, dropdownBoxVertexGeometry, dropdownBoxStyle);
+    dropdownBoxCell["componentPart"] = "box";
+    dropdownBoxCell["dataBinding"] = this.createDataBinding("box");
+    dropdownBoxCell["isPrimary"] = true;
+    return dropdownBoxCell;
   }
 
-  createDropdownHeaderVertex(graphStorage, component, parent) {
-    const styleName = "dropdownHeaderStyle" + component.id;
+  createDropdownHeaderVertex(selabEditor: SelabEditor, component: DropdownComponent, parent: mxCell): mxCell {
+    console.log("header start")
     const dropdownHeaderStyle = StyleLibrary[0]["dropdown"]["dropdownHeader"];
-    const styleStorage = new StyleStorage(styleName, dropdownHeaderStyle);
     const dropdownHeaderGeometry = new mxGeometry(0, 20, 200, 30);
-    const dropdownHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(),component.id, "", dropdownHeaderGeometry, styleStorage, component);
-    parent.addChild(dropdownHeaderVertexStorage.id, dropdownHeaderVertexStorage.getVertex(), "header");
-
-    dropdownHeaderVertexStorage.vertex["componentPart"] = "header";
-    dropdownHeaderVertexStorage.vertex["dataBinding"] = this.createDataBinding("header");
-    dropdownHeaderVertexStorage.vertex["isPrimary"] = false;
-    return dropdownHeaderVertexStorage;
+    let id = (parseInt(component.getId()) + 1).toString();
+    let selabVertex = new SelabVertex()
+      .setID(component.getSelector() + "-" + id)
+      .setUIComponentID(component.getId())
+      .setIsPrimary(false)
+      .setParentID(parent.id)
+    let dropdownHeaderCell = selabEditor.insertVertex(selabVertex, component, dropdownHeaderGeometry, dropdownHeaderStyle);
+    dropdownHeaderCell["componentPart"] = "header";
+    dropdownHeaderCell["dataBinding"] = this.createDataBinding("header");
+    dropdownHeaderCell["isPrimary"] = false;
+    console.log("header end")
+    return dropdownHeaderCell;
   }
 
-  createDropdownItemListVertex(graphStorage, component, parent) {
-    const styleName = "dropdownListStyle" + component.id;
+  createDropdownItemListVertex(selabEditor: SelabEditor, component: DropdownComponent, parent: mxCell): mxCell {
+    console.log("item list start");
     const dropdownListStyle = StyleLibrary[0]["dropdown"]["dropdownList"];
-    const styleStorage = new StyleStorage(styleName, dropdownListStyle);
-
-    const dropdownListGeometry = new mxGeometry(0, 0, 200, parent.getVertexHeight() - 30);
-    const dropdownItemListVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, "", dropdownListGeometry, styleStorage, component);
-    parent.addChild(dropdownItemListVertexStorage.id, dropdownItemListVertexStorage.getVertex(), "itemList");
-
-    dropdownItemListVertexStorage.vertex["componentPart"] = "itemList";
-    dropdownItemListVertexStorage.vertex["dataBinding"] = this.createDataBinding("itemList");
-    dropdownItemListVertexStorage.vertex["isPrimary"] = false;
-    return dropdownItemListVertexStorage;
+    const dropdownListGeometry = new mxGeometry(0, 0, 200, parseInt(parent.geometry.height) - 30);
+    let id = (parseInt(component.getId()) + 2).toString();
+    let selabVertex = new SelabVertex()
+      .setID(component.getSelector() + "-" + id)
+      .setUIComponentID(component.getId())
+      .setParentID(parent.id)
+      .setIsPrimary(false);
+    let dropdownListCell = selabEditor.insertVertex(selabVertex, component, dropdownListGeometry, dropdownListStyle);
+    dropdownListCell["componentPart"] = "itemList";
+    dropdownListCell["dataBinding"] = this.createDataBinding("itemList");
+    dropdownListCell["isPrimary"] = false;
+    return dropdownListCell;
   }
 
-  createDropdownItemVertexs(graphStorage, component, parent, grandparent) {
+  createDropdownItemVertexs(selabEditor: SelabEditor, component:DropdownComponent, parent:mxCell) {
+    console.log("item start")
     let index = 0;
     const itemList = component.items.split(" ");
     // insert dropdown item
     for (const element of itemList) {
-      let dataBinding = this.createDataBinding("item",index);
+      let dataBinding = this.createDataBinding("item", index);
       const dropdownItemGeometry = new mxGeometry(0, 23 + 30 + 30 * index, 200, 30);
-      const styleName = "dropdownItemstyle" + component.id;
+      let id = (parseInt(component.getId()) + 3 + index).toString();
       const dropdownItemStyle = StyleLibrary[0]["dropdown"]["dropdownItem"];
-      const styleStorage = new StyleStorage(styleName, dropdownItemStyle);
-      const dropdownItemVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, element, dropdownItemGeometry, styleStorage, component, dataBinding);
-      grandparent.addChild(dropdownItemVertexStorage.id, dropdownItemVertexStorage.getVertex(), "items");
+      let selabVertex = new SelabVertex()
+        .setID(component.getSelector() + "-" + id)
+        .setUIComponentID(component.getId())
+        .setParentID(parent.id)
+        .setIsPrimary(false)
+        .setDataBinding(dataBinding)
+        .setValue(component.getValue(index));
       
-      dropdownItemVertexStorage.vertex["componentPart"] = "item";
-      dropdownItemVertexStorage.vertex["dataBinding"] = this.createDataBinding("item", index);
-      dropdownItemVertexStorage.vertex["isPrimary"] = false;
+      let dropdownItemCell = selabEditor.insertVertex(selabVertex, component, dropdownItemGeometry,dropdownItemStyle);
+      dropdownItemCell["componentPart"] = "item";
+      dropdownItemCell["dataBinding"] = this.createDataBinding("item", index);
+      dropdownItemCell["isPrimary"] = false;
       index += 1;
     }
+    console.log("item end")
   }
 
-  createComponent(graphStorage: GraphStorage, component, parent) {
+  createComponent(selabEditor: SelabEditor, component:DropdownComponent, parent:mxCell): mxCell {
     console.log("dropdown strategy hereeee");
-    let dropdownBoxVertexStorage = this.createDropdownBoxVertex(graphStorage, component, parent);
-    let dropdownHeaderVertexStorage = this.createDropdownHeaderVertex(graphStorage, component, dropdownBoxVertexStorage);
-    let dropdownItemListVertexStorage = this.createDropdownItemListVertex(graphStorage, component, dropdownBoxVertexStorage);
-    this.createDropdownItemVertexs(graphStorage, component, dropdownItemListVertexStorage, dropdownBoxVertexStorage);
-
-    // component["x"] = dropdownBoxVertexStorage.getVertexX();
-    // component["y"] = dropdownBoxVertexStorage.getVertexY();
-    // component["width"] = dropdownBoxVertexStorage.getVertexWidth();
-    // component["height"] = dropdownBoxVertexStorage.getVertexHeight();
-    // component["style"] = dropdownBoxVertexStorage.getStyle();
-
+    let dropdownBoxVertexStorage = this.createDropdownBoxVertex(selabEditor, component, parent);
+    let dropdownHeaderVertexStorage = this.createDropdownHeaderVertex(selabEditor, component, dropdownBoxVertexStorage);
+    let dropdownItemListVertexStorage = this.createDropdownItemListVertex(selabEditor, component, dropdownBoxVertexStorage);
+    this.createDropdownItemVertexs(selabEditor, component, dropdownItemListVertexStorage);
+    console.log("createComponent")
     return dropdownBoxVertexStorage;
   }
 }

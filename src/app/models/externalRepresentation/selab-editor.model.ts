@@ -80,7 +80,6 @@ export class SelabEditor {
         if (uiComponent['type'].startsWith('layout')) {
             basex = 0;
             basey = 0;
-
         } else if (basex == undefined || basey == undefined) {
             basex = defaultWidth * 3 / 10;
             basey = defaultHeight * 3 / 10;
@@ -91,7 +90,6 @@ export class SelabEditor {
             console.log("hereee");
         }
 
-        // basic component
         if (uiComponent['componentList'] == undefined) {
             if (uiComponent['type'] == 'button') {
                 this.setStrategy(new ButtonStrategy(basex, basey));
@@ -106,10 +104,8 @@ export class SelabEditor {
             } else if (uiComponent['type'].startsWith('input')) {
                 this.setStrategy(new InputStrategy(basex, basey));
             }
-
             return this.createComponentStrategy.createComponent(this, uiComponent, parent);
         } else {
-
             if (uiComponent['type'] == 'card') {
                 this.setStrategy(new CardStrategy(basex, basey));
             } else if (uiComponent['type'] == 'breadcrumb') {
@@ -120,20 +116,20 @@ export class SelabEditor {
                 // initialized layout into 5 parts
                 this.setStrategy(new LayoutStrategy(basex, basey));
             }
-
             const compositeVertexStorage = this.createComponentStrategy.createComponent(this, uiComponent, parent);
             return compositeVertexStorage;
         }
     }
 
     getVertexByID(id: string): mxCell {
+        console.log(id)
+        console.log('-----')
         let model = this.getGraphModel();
         let cells = model.cells;
-        for (let index = 0; index < Object.keys(cells).length; index++) {
-            if (cells[index].id == id)
-                return cells[index];
-        }
-        return null;
+        if(id in cells)
+            return cells[id];
+        else
+            return null;
     }
 
     convertJsonObjectToStyleDescription(styleObj: any): String {
@@ -150,5 +146,4 @@ export class SelabEditor {
         }
         return styleDescription;
     }
-
 }

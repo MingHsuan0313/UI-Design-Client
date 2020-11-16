@@ -61,4 +61,13 @@ export class SelabVertex {
     setIsPrimary(isPrimary: boolean): SelabVertex {
         return new SelabVertex(this.id,this.uiComponentID,this.parentID,this.value,this.dataBinding,isPrimary);
     }
+    
+    setParentID(parentID:string) {
+        return new SelabVertex(this.id,this.uiComponentID,parentID,this.value,this.dataBinding,this.isPrimary);
+    }
+
+    setID(id:string) {
+        return new SelabVertex(id,this.uiComponentID,this.parentID,this.value,this.dataBinding,this.isPrimary);
+    }
+
 }
