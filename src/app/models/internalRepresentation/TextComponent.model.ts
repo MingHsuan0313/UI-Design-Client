@@ -1,20 +1,19 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { BasicComponent } from "./BasicComponent.model";
+import { UIComponentBuilder } from "../UIComponentBuilder";
 export class TextComponent extends BasicComponent {
-  text: String;
-  href: String;
+  text: string;
+  href: string;
 
-  constructor(properties?) {
-    super();
-    if (properties != undefined) {
-      this.name = properties["name"];
+  constructor(uiComponentBuilder: UIComponentBuilder) {
+    super(uiComponentBuilder);
+    let properties = uiComponentBuilder.getProperties();
+    if (uiComponentBuilder.getProperties() != undefined) {
+      console.log("this time i am heree")
       this.text = properties["text"];
       this.href = properties["href"];
     }
-    this.category = "informative";
-    this.type = "text";
-    this.serviceComponent = new ServiceComponentModel();
   }
 
   getProperties() {
@@ -33,30 +32,43 @@ export class TextComponent extends BasicComponent {
       }
     ]
   }
-  
+
   getValue(): string {
-    return this.text.toString();
+    return this.text;
+  }
+
+  setServiceComponent(serviceComponent: ServiceComponentModel): TextComponent{
+    return this.uiComponentBuilder
+      .setServiceComponet(serviceComponent)
+      .buildTextComponent();
   }
 
 
-  setUIComponent(properties) {
-    if (properties != undefined) {
-      this.name = properties["name"];
-      this.text = properties["text"];
-      this.href = properties["href"];
-    }
+  setProperties(properties: Object): TextComponent {
+    return this.uiComponentBuilder
+      .setProperties(properties)
+      .buildTextComponent();
+  }
+  
+  setName(name: string): TextComponent {
+    return this.uiComponentBuilder
+            .setName(name)
+            .buildTextComponent();
   }
 
   add(component: UIComponent): void {
   }
 
   getInfo() {
+    console.log("get info")
+    console.log(this.name)
+    console.log(this.href)
     return {
-      [this.getSelector().toString()]: {
+      [this.selector]: {
         name: this.name,
         href: this.href,
         text: this.text,
-        service:this.serviceComponent.getInfo()
+        service: this.serviceComponent.getInfo()
       }
     };
   }

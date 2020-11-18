@@ -36,6 +36,10 @@ export class BindServiceTabComponent implements OnInit {
 
     this.queryArguments();
   }
+  
+  update(uiComponent:UIComponent) {
+    this.uiComponent = uiComponent;
+  }
 
   chooseArgument(event, option,subComponent:UIComponent) {
     console.log("choose option");

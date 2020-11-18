@@ -1,22 +1,20 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { BasicComponent } from "./BasicComponent.model";
+import { UIComponentBuilder } from "../UIComponentBuilder";
+import { Input } from "@angular/core";
 
 export class InputTextComponent extends BasicComponent {
   public typeInfo: String;  // e.g. input-text, input-password
   public label: String;
 
-  constructor(properties?) {
-    super();
+  constructor(uiComponentBuilder: UIComponentBuilder) {
+    super(uiComponentBuilder);
+    let properties = uiComponentBuilder.getProperties();
     if (properties != undefined) {
       this.typeInfo = properties["typeInfo"];
-      this.label = properties["name"];
-      this.name = properties["name"];
+      this.label = properties["label"];
     }
-
-    this.type = "input"
-    this.category = "input";
-    this.serviceComponent = new ServiceComponentModel();
   }
 
   getProperties() {
@@ -32,10 +30,16 @@ export class InputTextComponent extends BasicComponent {
     ]
   }
 
-  setUIComponent(properties) {
-    this.typeInfo = properties["typeInfo"];
-    this.label = properties["name"];
-    this.name = properties["name"];
+  setProperties(properties:Object): InputTextComponent {
+    return this.uiComponentBuilder
+            .setProperties(properties)
+            .buildInputComponent();
+  }
+  
+  setName(name: string): InputTextComponent {
+    return this.uiComponentBuilder
+            .setName(name)
+            .buildInputComponent();
   }
 
   add(component: UIComponent): void {

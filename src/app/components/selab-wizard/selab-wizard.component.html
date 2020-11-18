@@ -15,14 +15,14 @@
 
 <hr>
 
-<mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChanged($event)">
+<mat-tab-group #selabtabs mat-align-tabs="start" (selectedTabChange)="tabChanged($event)">
   <mat-tab *ngFor="let tab of tabs" label="{{tab}}">
     <div class="selab-tab-style" *ngIf="tab == 'Build Component'">
-      <build-tab [isComposite]="isComposite" [isPipeline]="isPipeline" [uiComponent]="uiComponent"></build-tab>
+      <build-tab #build [isComposite]="isComposite" [isPipeline]="isPipeline" [uiComponent]="uiComponent"></build-tab>
     </div>
 
     <div class="selab-tab-style" *ngIf="tab == 'Compose Component'">
-      <compose-tab [isPipeline]="isPipeline" [uiComponent]="uiComponent"></compose-tab>
+      <compose-tab #compose [isPipeline]="isPipeline" [uiComponent]="uiComponent"></compose-tab>
     </div>
 
     <div class="selab-tab-style" *ngIf="tab == 'Check Status'">
@@ -30,7 +30,7 @@
     </div>
 
     <div class="selab-tab-style" *ngIf="tab == 'Bind Service'">
-      <bind-service-tab [uiComponent]="uiComponent"></bind-service-tab>
+      <bind-service-tab #service [uiComponent]="uiComponent"></bind-service-tab>
     </div>
 
     <div class="selab-tab-style" *ngIf="tab == 'Generate Pipeline'">

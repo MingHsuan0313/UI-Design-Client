@@ -36,6 +36,10 @@ export class ComposeTabComponent implements OnInit {
     this.formData[value] = event;
     console.log(this.formData);
   }
+  
+  update(uiComponent:UIComponent) {
+    this.uiComponent = (uiComponent as CompositeComponent);
+  }
 
   constructor() {
     this.isClean = false;
@@ -48,9 +52,12 @@ export class ComposeTabComponent implements OnInit {
       alert("You need to fill all input");
       return;
     }
-    this.subComponent.setUIComponent(this.formData);
+    this.subComponent = this.subComponent.setProperties(this.formData);
+    // this.subComponent.setUIComponent(this.formData);
     // this.uiComponent.addSubComponent(this.deepCopySubComponent());
-    this.uiComponent.addSubComponent(this.subComponent);
+    this.uiComponent = this.uiComponent.addSubComponent(this.subComponent);
+    console.log("finish insert")
+    console.log(this.uiComponent)
     this.formData = {};
   }
   

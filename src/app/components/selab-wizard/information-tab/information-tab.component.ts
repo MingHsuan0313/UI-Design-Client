@@ -75,7 +75,8 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
     console.log("Build Tab:" + this.isPipeline)
   }
 
-  update() {
+  update(uiComponent: UIComponent) {
+    this.uiComponent = uiComponent;
     console.log("Update");
     console.log(this.uiComponent.getInfo());
     this.database = new InformationDatabase(JSON.stringify(this.uiComponent.getInfo()));

@@ -139,7 +139,8 @@ export class PipelineTabComponent implements OnInit {
   ngOnInit() {
   }
 
-  update() {
+  update(uiComponent:UIComponent) {
+    this.uiComponent = uiComponent;
     console.log("pipeline tab update");
     let departmentOperationReturn = departmentReturn;
 

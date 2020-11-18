@@ -38,7 +38,14 @@ export class BuildTabComponent implements OnInit {
 
   createComponent() {
     console.log(this.formData);
-    this.uiComponent.setUIComponent(this.formData);
+    console.log("dddd")
+    console.log(this.uiComponent)
+    // this.uiComponent.setUIComponent(this.formData);
+    this.uiComponent = this.uiComponent
+                          .setProperties(this.formData)
+                          .setName(this.formData["name"]);
+    console.log("after createtion")
+    console.log(this.uiComponent)
     if (!this.checkIsFormFill()) {
       alert("You need to fill all input");
       return;
@@ -48,7 +55,7 @@ export class BuildTabComponent implements OnInit {
       this.navigateToComposeTab();
     else
       this.navigateToStatusTab();
-    
+
     this.formData = {};
   }
 
@@ -57,7 +64,7 @@ export class BuildTabComponent implements OnInit {
   }
 
   checkIsFormFill(): boolean {
-    if(Object.keys(this.formData).length == 0)
+    if (Object.keys(this.formData).length == 0)
       return false;
     let isCorrect = true;
     for (let key in this.formData) {
@@ -68,13 +75,17 @@ export class BuildTabComponent implements OnInit {
     }
     return isCorrect;
   }
+  
+  update(uiComponent: UIComponent) {
+    this.uiComponent = uiComponent;
+  }
 
   navigateToComposeTab() {
     let tabLinkElements = document.getElementsByClassName("mat-tab-label-content");
     for (let index = 0; index < tabLinkElements.length; index++) {
       if ((tabLinkElements[index] as HTMLElement).innerText == "Compose Component") {
-          console.log("hello");
-          (tabLinkElements[index] as HTMLElement).click();
+        console.log("hello");
+        (tabLinkElements[index] as HTMLElement).click();
       }
     }
   }

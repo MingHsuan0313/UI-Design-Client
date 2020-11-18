@@ -1,24 +1,33 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { CompositeComponent } from "./CompositeComponent.model";
+import { UIComponentBuilder } from "../UIComponentBuilder";
 
 export class FormComponent extends CompositeComponent {
 
-    constructor(properties?) {
-        super();
-        if (properties != undefined) {
-            this.name = properties["name"];
-        }
-        this.componentList = [];
-        this.category = "input";
-        this.type = "form";
-        this.serviceComponent = new ServiceComponentModel();
+    constructor(uiComponentBuilder: UIComponentBuilder) {
+        super(uiComponentBuilder);
+        this.componentList = uiComponentBuilder.componentList;
     }
 
-    setUIComponent(properties) {
-        this.name = properties["name"];
+    setServiceComponent(serviceComponent: ServiceComponentModel): FormComponent{
+        return this.uiComponentBuilder
+            .setServiceComponet(serviceComponent)
+            .buildFormComponent();
     }
-    
+
+    setName(name: string): FormComponent{
+        return this.uiComponentBuilder
+            .setName(name)
+            .buildFormComponent();
+    }
+
+    setProperties(properties: Object): FormComponent {
+        return this.uiComponentBuilder
+            .setProperties(properties)
+            .buildFormComponent();
+    }
+
     getProperties() {
         return [
             {
@@ -27,23 +36,25 @@ export class FormComponent extends CompositeComponent {
             }
         ]
     }
-    
+
     getChildrenOptions() {
-        return ["text","button","input","dropdown"];
+        return ["text", "button", "input", "dropdown"];
     }
 
-    add(component: UIComponent): void {
-        this.componentList.push(component);
+    addSubComponent(component: UIComponent): FormComponent{ 
+        return this.uiComponentBuilder
+                .addComponent(component,"form")
+                .buildFormComponent()
     }
 
     getInfo() {
         return {
-           name: this.name,
-           service: this.serviceComponent.getInfo(),
-           children: this.expandChildren()
+            name: this.name,
+            service: this.serviceComponent.getInfo(),
+            children: this.expandChildren()
         };
     }
-    
+
     // expandChildren() {
     //     let children = {};
     //     for(let index = 0;index < this.componentList.length;index++) {

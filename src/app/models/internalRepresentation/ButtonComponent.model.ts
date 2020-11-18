@@ -2,30 +2,42 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { BasicComponent } from "./BasicComponent.model";
+import { UIComponentBuilder } from "../UIComponentBuilder";
+import { TextComponent } from "./TextComponent.model";
 
 export class ButtonComponent extends BasicComponent {
   text: String;
   href: String;
   trigger: Boolean;
 
-  constructor(properties?) {
-    super();
+  constructor(uiComponentBuilder: UIComponentBuilder) {
+    super(uiComponentBuilder);
+    let properties = uiComponentBuilder.getProperties();
     if (properties != undefined) {
-      this.name = properties["name"];
       this.text = properties["text"];
       this.href = properties["href"];
+      this.trigger = properties["trigger"];
     }
-    this.category = "navigation";
-    this.type = "button";
-    this.serviceComponent = new ServiceComponentModel();
   }
 
-  setUIComponent(properties) {
-    this.name = properties["name"];
-    this.text = properties["text"];
-    this.href = properties["href"];
+  setProperties(properties: object): ButtonComponent {
+    return this.uiComponentBuilder
+      .setProperties(properties)
+      .buildButtonComponent();
   }
-
+  
+  setName(name: string): ButtonComponent {
+    return this.uiComponentBuilder
+            .setName(name)
+            .buildButtonComponent();
+  }
+  
+  setServiceComponent(serviceComponent: ServiceComponentModel): ButtonComponent {
+    return this.uiComponentBuilder
+      .setServiceComponet(serviceComponent)
+      .buildButtonComponent();
+  }
+  
   add(component: UIComponent): void {
   }
   
@@ -38,6 +50,7 @@ export class ButtonComponent extends BasicComponent {
       [this.getSelector().toString()]:{
         name: this.name,
         text: this.text,
+        href: this.href,
         service: this.serviceComponent.getInfo()
     }}
  }

@@ -1,123 +1,65 @@
 import AbstractComponent from "src/app/shared/AbstractComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
+import { UIComponentBuilder } from "../UIComponentBuilder";
 
-export class UIComponent implements AbstractComponent{
-  public id: String;
-  public selector: String;
-  public category: String;
-  public style: Object;
-  public x: String;
-  public y: String;
-  public width: String;
-  public height: String;
-  public type: String;
-  public name: String;
-  public serviceComponent: ServiceComponentModel;
+export class UIComponent {
+  protected readonly id: string;
+  protected readonly selector: string;
+  protected readonly category: string;
+  protected readonly style: Map<string,string>;
+  protected readonly geometry: mxGeometry;
+  protected readonly type: string;
+  protected readonly name: string;
+  protected readonly serviceComponent: ServiceComponentModel;
+  protected readonly uiComponentBuilder: UIComponentBuilder;
   
-  constructor() {
-    this.name = "";
-    this.x = "";
-    this.y = "";
-    this.width = "";
-    this.height = "";
+  constructor(uiComponentBuilder?: UIComponentBuilder) {
+    this.name = uiComponentBuilder.name;
+    this.id = uiComponentBuilder.id;
+    this.selector = uiComponentBuilder.selector;
+    this.category = uiComponentBuilder.category;
+    this.type = uiComponentBuilder.type; 
+    this.uiComponentBuilder = uiComponentBuilder;
+    this.serviceComponent = new ServiceComponentModel();
   }
 
   public getName():  string{
-    return this.name.toString();
-  }
-  
-  public setUIComponent(properties) {
-
-  }
-
-  public setName(name: String): void {
-    this.name = name;
+    return this.name;
   }
 
   public getServiceComponent(): ServiceComponentModel {
     return this.serviceComponent;
   }
 
-  public setServiceComponent(serviceComponent: ServiceComponentModel): void {
-    this.serviceComponent = serviceComponent;
-  }
-
-  public getX(): String {
-    return this.x;
-  }
-
-  public setX(x: String): void {
-    this.x = x;
-  }
-
-  public getY(): String {
-    return this.y;
-  }
-
-  public setY(y: String): void {
-    this.y = y;
-  }
-
-  public getWidth(): String {
-    return this.width;
-  }
-
-  public setWidth(width: String): void {
-    this.width = width;
-  }
-
-  public getHeight(): String {
-    return this.height;
-  }
-
-  public setHeight(height: String): void {
-    this.height = height;
-  }
-
   public getCategory(): string {
-    return this.category.toString();
-  }
-
-  public setCategory(category: String): void {
-    this.category = category;
+    return this.category;
   }
 
   public getId():  string {
-    return this.id.toString();
-  }
-
-  public setId(id: String): void {
-    this.id = id;
+    return this.id;
   }
 
   public getSelector(): string{
-    return this.selector.toString();
-  }
-
-  public setSelector(selector: String): void {
-    this.selector = selector;
+    return this.selector;
   }
 
   public getStyle(): Object {
     return this.style;
-  }
-
-  public setStyle(style: Object): void {
-    console.log("ui component set style")
-    console.log(style)
-    console.log(this)
-    this.style = style;
   }
   
   public getType() {
     return this.type;
   }
   
-  public setType(type) {
-    this.type = type;
+  setProperties(properties: Object): UIComponent {
+    return new UIComponent();
+  }
+  
+  setName(name: string): UIComponent {
+    return new UIComponent();
   }
 
-  getValue(index?) {}
-  getInfo() { }
-  getProperties(){}
+  getValue(index?) {} // vertex value binding
+  getInfo() { } // for Internal Representation (pageUICDL Output)
+  getProperties(){} // form property
 }

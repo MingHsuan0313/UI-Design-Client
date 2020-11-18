@@ -1,10 +1,11 @@
 import { LayoutComponent } from "./LayoutComponent.model";
 
 export class PageUICDL {
-    public id: String;
-    public selector: String;
-    public category: String;
-    public layout: String;
+    public id: string;
+    public selector: string;
+    public name: string; // unique
+    public category: string;
+    public layout: string;
 
     public style: Object;
 
@@ -28,37 +29,37 @@ export class PageUICDL {
         this.asidebar = new LayoutComponent((id + 5).toString(),"layout-asidebar");
     }
 
-    public getLayout(): String {
+    public getLayout(): string {
         return this.layout;
     }
 
-    public setLayout(layout: String): void {
+    public setLayout(layout: string) {
         this.layout = layout;
     }
 
 
 
-    public getId(): String {
+    public getId(): string {
         return this.id;
     }
 
-    public setId(id: String): void {
+    public setId(id: string): void {
         this.id = id;
     }
 
-    public getSelector(): String {
+    public getSelector(): string {
         return this.selector;
     }
 
-    public setSelector(selector: String): void {
+    public setSelector(selector: string): void {
         this.selector = selector;
     }
 
-    public getCategory(): String {
+    public getCategory(): string {
         return this.category;
     }
 
-    public setCategory(category: String): void {
+    public setCategory(category: string): void {
         this.category = category;
     }
 
