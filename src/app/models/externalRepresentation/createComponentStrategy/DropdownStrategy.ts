@@ -68,6 +68,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
 
   createDropdownHeaderVertex(selabEditor: SelabEditor, component: DropdownComponent, parent: mxCell): mxCell {
     console.log("header start")
+
     const dropdownHeaderStyle = StyleLibrary[0]["dropdown"]["dropdownHeader"];
     const dropdownHeaderGeometry = new mxGeometry(0, 20, 200, 30);
     let id = (parseInt(component.getId()) + 1).toString();
