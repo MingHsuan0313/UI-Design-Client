@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import { ERInitializationAction } from 'src/app/models/store/actions/externalRepresentation.action';
 import { SelabGraph } from 'src/app/models/store/selabGraph.model';
 import { IRInitializePageUICDLAction } from 'src/app/models/store/actions/internalRepresentation.action';
+import { MatIconRegistry } from '@angular/material';
 
 @Component({
   selector: 'selab-graph-editor',
@@ -22,8 +23,9 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   private zoomFactor = 1;
   //imageCount = 1;
   constructor(private graphEditorService: GraphEditorService,
-     private exportService: ExportService,
-     private store: Store<AppState>) {
+    private exportService: ExportService,
+    private store: Store<AppState>,
+  ) {
   }
 
   ngAfterViewInit() {

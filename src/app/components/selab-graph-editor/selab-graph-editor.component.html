@@ -1,19 +1,33 @@
 <!-- <button (click)="convertToCanvas()" class="info">GraphEditor To Canvas</button> -->
-<button type="button" (click)="showExternalRepresentation()" class="btn btn-outline-dark">Show ER</button>
+<!-- <button type="button" (click)="postXML()" class="btn btn-outline-dark">Post XML</button> -->
+<!-- <div style="display:inline-block" *ngIf="getModified()">
+    Graph need to be saved
+</div> -->
+
+<!-- <button type="button" (click)="showExternalRepresentation()" class="btn btn-outline-dark">Show ER</button>
 <button type="button" (click)="showInternelRepresentation()" class="btn btn-outline-dark">Show IR</button>
 <button type="button" (click)="newProject()" class="btn btn-outline-dark">New Project</button>
 <button type="button" (click)="newPage()" class="btn btn-outline-dark">New Page</button>
 <button type="button" (click)="clearGraph()" class="btn btn-outline-dark">Clear Graph</button>
 <button type="button" (click)="increaseFont()" class="btn btn-outline-dark">Larger Font</button>
 <button type="button" (click)="decreaseFont()" class="btn btn-outline-dark">Smaller Font</button>
-<!-- <button type="button" (click)="postXML()" class="btn btn-outline-dark">Post XML</button> -->
 <button type="button" (click)="zoomIn()" class="btn btn-outline-dark" style="margin-left: 1%">+</button>
-<button type="button" (click)="zoomOut()" class="btn btn-outline-dark">-</button>
-<!-- <div style="display:inline-block" *ngIf="getModified()">
-    Graph need to be saved
-</div> -->
-<div
-    style="overflow:scroll" 
-    class="geEditor"
-    id="graphContainer-0">
+<button type="button" (click)="zoomOut()" class="btn btn-outline-dark">-</button> -->
+<!-- <mat-toolbar style="height: 30px; min-height: 30px;background-color: #1f2329; color: white;"> -->
+<mat-toolbar style="height: 30px; min-height: 30px;" color=primary>
+    <mat-toolbar-row>
+        <button mat-button [matMenuTriggerFor]="utilMenu">Util</button>
+        <button mat-button><mat-icon style="margin-bottom:10px;" svgIcon="zoomIn"></mat-icon></button>
+        <button mat-button><mat-icon style="margin-bottom:10px ;" svgIcon="zoomOut"></mat-icon></button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-menu #utilMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item matTooltip="Show Internal Representation(pageUICDL) in console">Show IR</button> 
+  <button mat-menu-item matTooltip="Show External Representation(graphStorage) in console">Show ER</button> 
+  <button mat-menu-item matTooltip="Create New Page">New Page</button> 
+  <button mat-menu-item>Clear Graph</button> 
+</mat-menu>
+
+<div style="overflow:scroll; padding-left:10px" class="geEditor" id="graphContainer-0">
 </div>

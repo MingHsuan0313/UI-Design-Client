@@ -1,78 +1,62 @@
 <app-header [fixed]="true" [asideMenuToggler]="false" [sidebarToggler]="false">
   <div class="container-fluid">
-    <ul class="nav navbar-nav">
-      <li class="nav-item px-4">
-        <a class="nav-link" role="button" (click)="import()">Import </a>
-        <input type="file"
-              id="pictures" name="pictures"
-              accept="image/png, image/jpeg" multiple style="font-size: 16px;display: none">
-      </li>
-      <li class="nav-item px-4">
-        <a class="nav-link" role="button" (click)="save()">Save</a>
-      </li>
-      <li class="nav-item px-4" dropdown>
-        <a class="nav-link" role="button" data-toggle="dropdown" dropdownToggle>Export</a>
-        <div class="dropdown-menu" *dropdownMenu style="">
-          <a class="dropdown-item" (click)="storePDL()">Page Description</a>
-          <a class="dropdown-item" (click)="storeNDL()">Navigation Description</a>
-        </div>
-      </li>
-
-      <li class="nav-item dropdown px-4" dropdown>
-        <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-          dropdownToggle (click)="false">
-          {{this.layout_selected}}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="simple-dropdown">
-          <div class="dropdown-header text-center"><strong>Layout</strong></div>
-          <a class="dropdown-item" *ngFor="let kind of layout" (click)="setLayout(kind)">{{kind}}</a>
-        </div>
-      </li>
-      <span><i class="nav-icon icon-arrow-right-circle px-sm-1"></i></span>
-      <button type="button" style="width: 110px" class="btn btn-secondary" (click)="apply()">Apply Layout</button>
-
-      <li class="nav-item dropdown px-4" dropdown>
-        <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-          dropdownToggle (click)="false">
-          {{this.genre_selected}}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="simple-dropdown">
-          <div class="dropdown-header text-center"><strong>Genre</strong></div>
-          <a class="dropdown-item" *ngFor="let kind of genre" (click)="setGenre(kind)">{{kind}}</a>
-        </div>
-      </li>
-      <span><i class="nav-icon icon-arrow-right"></i></span>
-      <li class="nav-item dropdown px-4" dropdown>
-        <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-          dropdownToggle (click)="false">
-          {{this.category_selected}}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="simple-dropdown">
-          <div class="dropdown-header text-center"><strong>Category</strong></div>
-          <a class="dropdown-item" *ngFor="let kind of categories" (click)="setCategory(kind)">{{kind}}</a>
-        </div>
-      </li>
-      <span><i class="nav-icon icon-arrow-right"></i></span>
-      <li class="nav-item dropdown px-4" dropdown>
-        <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-          dropdownToggle (click)="false">
-          {{this.component_selected}}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="simple-dropdown">
-          <div class="dropdown-header text-center"><strong>Component</strong></div>
-          <a class="dropdown-item" *ngFor="let kind of components" (click)="setComponent(kind)">{{kind}}</a>
-        </div>
-      </li>
-      <span><i class="nav-icon icon-arrow-right"></i></span>
-      <li class="btn btn-ghost-dark btn-pill px-4" (click)="openWizard()">Launch Wizard
-      </li>
-
-      <!-- <li class="btn btn-ghost-dark btn-pill px-4" data-toggle="modal" data-target="#myModal"
-          (click)="fresh()">Launch Wizard
-      </li> -->
-      <app-wizard [componentName]="component_selected" [componentProperties]="componentProperties"></app-wizard>
-      <li class="btn btn-ghost-dark btn-pill px-4" (click)="openForm2()">Navigation Mechanism</li>
-    </ul>
+    <div class="row">
+      <button mat-button>Save</button>
+      <button mat-button>Import</button>
+      <button mat-button [matMenuTriggerFor]="exportMenu">Export</button>
+      <button mat-button [matMenuTriggerFor]="layoutMenu">Layout</button>
+      <button style="width: 100%; inline-size: inherit;" mat-button [matMenuTriggerFor]="genereMenu" matTooltip="Choose UI Component">UI Component</button>
+      <button style="width: 100%; inline-size: inherit;" mat-button>Launch Wizard</button>
+    </div>
   </div>
 </app-header>
 <selab-header-navigation-form></selab-header-navigation-form>
+
+
+<mat-menu #exportMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item matTooltip="Page Description Language">PDL</button>
+  <button mat-menu-item matTooltip="Navigation Description Language">NDL</button>
+</mat-menu>
+
+<mat-menu #layoutMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item>Prime</button>
+  <button mat-menu-item>Layout1</button>
+  <button mat-menu-item>Layout2</button>
+</mat-menu>
+
+<mat-menu #genereMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [matMenuTriggerFor]="categoryMenu" matTooltip="">Angular Material</button> 
+  <button mat-menu-item matTooltip="">CoreUI</button> 
+  <button mat-menu-item matTooltip="">HTML</button> 
+</mat-menu>
+
+<mat-menu #categoryMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [matMenuTriggerFor]="informativeMenu" matTooltip="">Informative</button> 
+  <button mat-menu-item [matMenuTriggerFor]="navigationMenu" matTooltip="">Navigation</button> 
+  <button mat-menu-item [matMenuTriggerFor]="inputMenu" matTooltip="">Input Control</button> 
+  <button mat-menu-item [matMenuTriggerFor]="containerMenu" matTooltip="">Container</button> 
+</mat-menu>
+
+<mat-menu #informativeMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item>text</button> 
+  <button mat-menu-item>table</button> 
+  <button mat-menu-item>card</button> 
+  <button mat-menu-item>icons</button> 
+</mat-menu>
+
+<mat-menu #navigationMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item>text</button> 
+  <button mat-menu-item>button</button> 
+  <button mat-menu-item>breadcrumb</button> 
+</mat-menu>
+
+<mat-menu #inputMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item>input</button> 
+  <button mat-menu-item>form</button> 
+  <button mat-menu-item>dropdown</button> 
+</mat-menu>
+
+<mat-menu #containerMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item>form</button> 
+  <button mat-menu-item>card</button> 
+</mat-menu>

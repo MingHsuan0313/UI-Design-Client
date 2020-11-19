@@ -19,6 +19,7 @@ export default class GraphEditorService {
   selectedGraphID: string;
   selectedGraphStorage: GraphStorage;
 
+
   editors: Map<string,SelabEditor>;
   selectedEditor: SelabEditor;
 

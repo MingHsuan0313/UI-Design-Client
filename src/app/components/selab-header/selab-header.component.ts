@@ -2,7 +2,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Storage } from '../../shared/storage';
-import { Layout, TextComponent } from '../../models/ui-component-dependency';
+import { TextComponent } from '../../models/ui-component-dependency';
 import { PropertyGenerator } from '../../shared/property-generator';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';

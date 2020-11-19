@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 import {FormsModule} from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
@@ -147,6 +148,7 @@ export function reducerFactory() {
     MatDialogModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatToolbarModule,
     MatCheckboxModule,
     MatFormFieldModule,
     MatAutocompleteModule,

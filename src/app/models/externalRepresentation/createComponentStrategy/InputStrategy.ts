@@ -27,6 +27,7 @@ export class InputStrategy implements ICreateComponentStrategy {
     const style = StyleLibrary[0]["input"];
     const textGeometry = new mxGeometry(this.basex, this.basey, 200, 30);
 
+
     let selabVertex = new SelabVertex(component.getId(),component.getId(),parent.id);
     selabVertex = selabVertex
                     .setIsPrimary(true)
