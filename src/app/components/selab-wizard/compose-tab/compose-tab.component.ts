@@ -52,8 +52,9 @@ export class ComposeTabComponent implements OnInit {
       alert("You need to fill all input");
       return;
     }
-    this.subComponent = this.subComponent.setProperties(this.formData);
-    // this.subComponent.setUIComponent(this.formData);
+    this.subComponent = this.subComponent
+                              .setProperties(this.formData)
+                              .setName(this.formData["name"])
     // this.uiComponent.addSubComponent(this.deepCopySubComponent());
     this.uiComponent = this.uiComponent.addSubComponent(this.subComponent);
     console.log("finish insert")

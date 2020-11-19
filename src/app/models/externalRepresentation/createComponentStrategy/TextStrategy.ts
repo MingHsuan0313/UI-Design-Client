@@ -47,7 +47,9 @@ export class TextStrategy implements ICreateComponentStrategy {
     let width = (component.text.length) * 12;
     let textGeometry = new mxGeometry(this.basex, this.basey, width, 50);
     let selabVertex = new SelabVertex(component.getId(),component.getId(),parent.id)
+    let id = (parseInt(component.getId())).toString();
     selabVertex = selabVertex 
+                    .setID(id)
                     .setIsPrimary(true)
                     .setValue(component.getValue())
                     .setDataBinding(dataBinding);

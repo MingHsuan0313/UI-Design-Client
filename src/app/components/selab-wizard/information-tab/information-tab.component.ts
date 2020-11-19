@@ -6,8 +6,10 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, observable, of as observableOf } from 'rxjs';
 import { CompositeComponent } from 'src/app/models/internalRepresentation/CompositeComponent.model';
 import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
+import { PipelineCreateOperationAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
+import { Operation } from 'src/app/models/wizard-task-dependency';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
 import { SelabWizardComponent } from '../selab-wizard.component';
@@ -55,6 +57,16 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
         this.store.dispatch(new IRInsertUIComponentAction(this.uiComponent));
+        let serviceComponent = this.uiComponent.getServiceComponent();
+        console.log("dddddddddddasdjhaj")
+        console.log(serviceComponent.getServiceID())
+        if(serviceComponent.getServiceID().toString().length > 0) {
+          let operation: Operation = new Operation()
+                                          .setClassName(serviceComponent.getClassName())
+                                          .setName(serviceComponent.getName())
+                                          .setServiceID(serviceComponent.getServiceID())
+          this.store.dispatch(new PipelineCreateOperationAction(operation));
+        }
         this.graphEditorService.bindComponent(this.uiComponent);
         this.wizard.close();
       }

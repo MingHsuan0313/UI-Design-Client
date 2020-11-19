@@ -61,7 +61,6 @@ export class BindServiceTabComponent implements OnInit {
       (err) => {
         console.log("error");
         console.log(err);
-        
       })
   }
 

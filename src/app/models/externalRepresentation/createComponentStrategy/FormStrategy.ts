@@ -1,8 +1,10 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
-import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
-
+import { GraphStorage, VertexStorage, StyleStorage } from "../../graph-dependency";
+import { SelabEditor } from "../selab-editor.model";
+import { FormComponent } from "../../ui-component-dependency";
+import { SelabVertex } from "../../store/selabVertex.model";
 
 // no need for data binidng
 export class FormStrategy implements ICreateComponentStrategy {
@@ -10,7 +12,7 @@ export class FormStrategy implements ICreateComponentStrategy {
     basex: number;
     basey: number;
 
-    constructor(basex?, basey?) {
+    constructor(basex?: number, basey?: number) {
         // basic component
         if (basex == undefined || basey == undefined) {
             this.basex = 0;
@@ -22,7 +24,7 @@ export class FormStrategy implements ICreateComponentStrategy {
         this.strategyName = "Form Strategy";
     }
 
-    createDataBinding(part, index?) {
+    createDataBinding(part: string, index?: number) {
         let dataBindingName = "header";
         let hasDataBining = true;
         let isList = -1;
@@ -34,45 +36,39 @@ export class FormStrategy implements ICreateComponentStrategy {
         return dataBinding;
     }
 
-    createFormBoxVertex(graphStorage, component, parent) {
-        let styleName = "formBoxStyle" + component.id;
+    createFormBoxVertex(selabEditor: SelabEditor, component: FormComponent, parent: mxCell): mxCell {
         const formBoxStyle = StyleLibrary[0]["form"]["formBox"];
-        let styleStorage = new StyleStorage(styleName, formBoxStyle);
         const formVertexGeometry = new mxGeometry(this.basex, this.basey, 300, 300);
-        const formVertexStorage = graphStorage.insertVertex(parent, component.id, "", formVertexGeometry, styleStorage, component);
-        formVertexStorage.setIsPrimary(true);
-        formVertexStorage.vertex["componentPart"] = "box";
-        formVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
-        formVertexStorage.vertex["isPrimary"] = true;
-        return formVertexStorage;
+        let id = (parseInt(component.getId())).toString();
+        let selabVertex = new SelabVertex()
+            .setID(component.getSelector() + "-" + id)
+            .setParentID(parent.id)
+            .setIsPrimary(true)
+            .setUIComponentID(component.getId())
+        let formBoxCell = selabEditor.insertVertex(selabVertex, component, formVertexGeometry, formBoxStyle);
+
+        // const formVertexStorage = selabEditor.insertVertex(parent, component.id, "", formVertexGeometry, styleStorage, component);
+        // formVertexStorage.setIsPrimary(true);
+        formBoxCell["componentPart"] = "box";
+        formBoxCell["dataBinding"] = this.createDataBinding("box");
+        formBoxCell["isPrimary"] = true;
+        return formBoxCell;
     }
 
-    createComponent(graphStorage: GraphStorage, component, parent) {
-        let formBoxVertexStorage = this.createFormBoxVertex(graphStorage, component, parent);
-
-
-        let p1= 15;
+    createComponent(selabEditor: SelabEditor, component: FormComponent, parent: mxCell) {
+        let formBoxCell = this.createFormBoxVertex(selabEditor, component, parent);
+        let p1 = 15;
         let p2 = 40;
         let maxWidth = 0;
         for (let subUIComponent of component["componentList"]) {
-            let vertexStorage = graphStorage.createComponent(subUIComponent, formBoxVertexStorage.getVertex(), p1, p2)
-            if (vertexStorage.getVertexWidth() > maxWidth)
-                maxWidth = vertexStorage.getVertexWidth();
-            p2 = p2 + vertexStorage.getVertexHeight() + 10;
-            formBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
+            let vertex = selabEditor.createComponent(subUIComponent, formBoxCell, p1, p2)
+            if (vertex["geometry"].width > maxWidth)
+                maxWidth = vertex["geometry"].width;
+            p2 = p2 + vertex["geometry"].width + 10;
         }
-
-        let newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth+50, p2);
-        formBoxVertexStorage.getVertex().setGeometry(newmxGeometry);
-
-        // this does not refresh dropdown vertex position; i guess
-        graphStorage.getGraph().refresh();
-
-        // component.x = formBoxVertexStorage.getVertexX();
-        // component.y = formBoxVertexStorage.getVertexY();
-        // component.width = formBoxVertexStorage.getVertexWidth();
-        // component.height = formBoxVertexStorage.getVertexHeight();
-        // component["style"] = formBoxVertexStorage.getStyle();
-        return formBoxVertexStorage;
+        let newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth + 50, p2);
+        formBoxCell.setGeometry(newmxGeometry);
+        selabEditor.getGraph().refresh();
+        return formBoxCell;
     }
 }

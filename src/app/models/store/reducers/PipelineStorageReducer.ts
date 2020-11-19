@@ -22,7 +22,7 @@ class PipelineStorageReducer {
     public createOperation(store: PipelineStorage, action: PipelineCreateOperationAction): PipelineStorage {
         console.log("create operation [reducer]")
         store = { ...store };
-        store.operationPool = [...store.operationPool, action.operation];
+        store.operationPool = {...store.operationPool,[action.operation.serviceID]: action.operation};
         return store;
     }
 

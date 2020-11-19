@@ -14,7 +14,7 @@ export class FormComponent extends CompositeComponent {
     setServiceComponent(serviceComponent: ServiceComponentModel): FormComponent {
         let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
         return uiComponentBuilder
-            .setServiceComponet(serviceComponent)
+            .setServiceComponent(serviceComponent)
             .buildFormComponent();
     }
 
@@ -46,7 +46,8 @@ export class FormComponent extends CompositeComponent {
     }
 
     addSubComponent(component: UIComponent): FormComponent {
-        return this.uiComponentBuilder
+        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+        return uiComponentBuilder
             .addComponent(component, "form")
             .buildFormComponent()
     }

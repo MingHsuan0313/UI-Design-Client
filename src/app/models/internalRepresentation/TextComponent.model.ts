@@ -41,7 +41,7 @@ export class TextComponent extends BasicComponent {
   setServiceComponent(serviceComponent: ServiceComponentModel): TextComponent{
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
-      .setServiceComponet(serviceComponent)
+      .setServiceComponent(serviceComponent)
       .buildTextComponent();
   }
 
