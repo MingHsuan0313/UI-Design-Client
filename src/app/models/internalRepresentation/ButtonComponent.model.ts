@@ -4,6 +4,7 @@ import { ServiceComponentModel } from "../serviceComponent/service-component.mod
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { TextComponent } from "./TextComponent.model";
+import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 
 export class ButtonComponent extends BasicComponent {
   text: String;
@@ -21,19 +22,22 @@ export class ButtonComponent extends BasicComponent {
   }
 
   setProperties(properties: object): ButtonComponent {
-    return this.uiComponentBuilder
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
       .setProperties(properties)
       .buildButtonComponent();
   }
   
   setName(name: string): ButtonComponent {
-    return this.uiComponentBuilder
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
             .setName(name)
             .buildButtonComponent();
   }
   
   setServiceComponent(serviceComponent: ServiceComponentModel): ButtonComponent {
-    return this.uiComponentBuilder
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
       .setServiceComponet(serviceComponent)
       .buildButtonComponent();
   }

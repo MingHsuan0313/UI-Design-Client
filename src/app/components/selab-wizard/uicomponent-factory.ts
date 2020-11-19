@@ -1,4 +1,6 @@
-import { TextComponent, 
+import { LayoutComponent } from "src/app/models/internalRepresentation/LayoutComponent.model";
+import {
+    TextComponent,
     UIComponent,
     ButtonComponent,
     CardComponent,
@@ -7,87 +9,109 @@ import { TextComponent,
     InputGroupComponent,
     InputTextComponent,
     FormComponent,
-    BreadcrumbComponent } from "src/app/models/ui-component-dependency";
+    BreadcrumbComponent
+} from "src/app/models/ui-component-dependency";
 import { UIComponentBuilder } from "src/app/models/UIComponentBuilder";
 
 export class UIComponentFactory {
     static nextID: number = 0;
+    static uiComponentBuilders: Map<string, UIComponentBuilder> = new Map();
 
     constructor() {
     }
-    
+
     static getAllComponentTypes() {
-       return [
-           "text",
-           "button",
-           "card",
-           "dropdown",
-           "icon",
-           "input"
-       ] 
+        return [
+            "text",
+            "button",
+            "card",
+            "dropdown",
+            "icon",
+            "input"
+        ]
     }
 
-    static create(type:string): UIComponent {
+    static create(type: string): UIComponent {
         console.log("start creating : " + type);
-        let uiComponent : UIComponent;
-        if(type == "text") {
-            uiComponent = new UIComponentBuilder() 
-                                .setID(`${this.nextID}`)
-                                .setType(type)
-                                .setCategory("informative")
-                                .setSelector(`${type}-${this.nextID}`)
-                                .buildTextComponent();
+        let uiComponent: UIComponent;
+        let uiComponentBuilder: UIComponentBuilder;
+        if (type == "text") {
+            uiComponentBuilder = new UIComponentBuilder()
+                .setID(`${this.nextID}`)
+                .setType(type)
+                .setCategory("informative")
+                .setSelector(`${type}-${this.nextID}`)
+            uiComponent = uiComponentBuilder.buildTextComponent();
+            this.uiComponentBuilders.set(uiComponent.getId(), uiComponentBuilder);
         }
-        else if(type == "button") {
-            uiComponent = new UIComponentBuilder()
-                                .setCategory("navigation")
-                                .setType("button")
-                                .setID(`${this.nextID}`)
-                                .setSelector(`${type}-${this.nextID}`)
-                                .buildButtonComponent();
-
+        else if (type == "button") {
+            uiComponentBuilder = new UIComponentBuilder()
+                .setCategory("navigation")
+                .setType("button")
+                .setID(`${this.nextID}`)
+                .setSelector(`${type}-${this.nextID}`);
+            uiComponent = uiComponentBuilder.buildButtonComponent();
+            this.uiComponentBuilders.set(uiComponent.getId(), uiComponentBuilder);
         }
-        else if(type == "table") {
-            uiComponent = new UIComponentBuilder()
-                                .setCategory("informative")
-                                .setID(`${this.nextID}`)
-                                .setSelector(`${type}-${this.nextID}`)
-                                .setType("table")
-                                .buildTableComponent();
+        else if (type == "table") {
+            uiComponentBuilder = new UIComponentBuilder()
+                .setCategory("informative")
+                .setID(`${this.nextID}`)
+                .setSelector(`${type}-${this.nextID}`)
+                .setType("table")
+            uiComponent = uiComponentBuilder.buildTableComponent();
+            this.uiComponentBuilders.set(uiComponent.getId(), uiComponentBuilder);
         }
-        else if(type == "card") {
+        else if (type == "card") {
             uiComponent = new CardComponent();
         }
-        else if(type == "dropdown") {
-           uiComponent = new DropdownComponent();
+        else if (type == "dropdown") {
+            uiComponentBuilder = new UIComponentBuilder()
+                .setCategory("informative")
+                .setID(`${this.nextID}`)
+                .setSelector(`${type}-${this.nextID}`)
+                .setType("dropdown")
+            uiComponent = uiComponentBuilder.buildDropdownComponent()
+            this.uiComponentBuilders.set(uiComponent.getId(), uiComponentBuilder);
         }
-        else if(type == "icon") {
+        else if (type == "icon") {
             uiComponent = new IconComponent();
         }
-        else if(type == "input") {
-            uiComponent = new UIComponentBuilder()
-                                .setCategory("input")
-                                .setType("input")
-                                .setID(`${this.nextID}`)
-                                .setSelector(`${type}-${this.nextID}`)
-                                .buildInputComponent();
+        else if (type == "input") {
+            uiComponentBuilder = new UIComponentBuilder()
+                .setCategory("input")
+                .setType("input")
+                .setID(`${this.nextID}`)
+                .setSelector(`${type}-${this.nextID}`)
+            uiComponent = uiComponentBuilder.buildInputComponent();
+            this.uiComponentBuilders.set(uiComponent.getId(), uiComponentBuilder);
         }
-        else if(type == "inputgroup") {
+        else if (type == "inputgroup") {
             uiComponent = new InputGroupComponent();
         }
-        else if(type == "icon") {
+        else if (type == "icon") {
             uiComponent = new IconComponent();
         }
-        else if(type == "form") {
-            uiComponent = new UIComponentBuilder()
-                                .setCategory("input")
-                                .setType("form")
-                                .setSelector(`${type}-${this.nextID}`)
-                                .setID(`${this.nextID}`)
-                                .buildFormComponent();
+        else if (type == "form") {
+            uiComponentBuilder = new UIComponentBuilder()
+                .setCategory("input")
+                .setType("form")
+                .setSelector(`${type}-${this.nextID}`)
+                .setID(`${this.nextID}`);
+            uiComponent = uiComponentBuilder.buildFormComponent();
+            this.uiComponentBuilders.set(uiComponent.getId(), uiComponentBuilder);
         }
-        else if(type == "breadcrumb") {
+        else if (type == "breadcrumb") {
             uiComponent = new BreadcrumbComponent();
+        }
+        else if (type == "layout") {
+            uiComponentBuilder = new UIComponentBuilder()
+                .setCategory("layout")
+                .setType("layout")
+                .setSelector(`${type}-${this.nextID}`)
+                .setID(`${this.nextID}`);
+            uiComponent = uiComponentBuilder.buildLayoutComponent();
+            this.uiComponentBuilders.set(uiComponent.getId(), uiComponentBuilder);
         }
         else {
             return;

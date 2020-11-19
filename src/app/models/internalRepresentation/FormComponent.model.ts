@@ -2,6 +2,7 @@ import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { CompositeComponent } from "./CompositeComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
+import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 
 export class FormComponent extends CompositeComponent {
 
@@ -10,20 +11,23 @@ export class FormComponent extends CompositeComponent {
         this.componentList = uiComponentBuilder.componentList;
     }
 
-    setServiceComponent(serviceComponent: ServiceComponentModel): FormComponent{
-        return this.uiComponentBuilder
+    setServiceComponent(serviceComponent: ServiceComponentModel): FormComponent {
+        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+        return uiComponentBuilder
             .setServiceComponet(serviceComponent)
             .buildFormComponent();
     }
 
-    setName(name: string): FormComponent{
-        return this.uiComponentBuilder
+    setName(name: string): FormComponent {
+        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+        return uiComponentBuilder
             .setName(name)
             .buildFormComponent();
     }
 
     setProperties(properties: Object): FormComponent {
-        return this.uiComponentBuilder
+        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+        return uiComponentBuilder
             .setProperties(properties)
             .buildFormComponent();
     }
@@ -41,10 +45,10 @@ export class FormComponent extends CompositeComponent {
         return ["text", "button", "input", "dropdown"];
     }
 
-    addSubComponent(component: UIComponent): FormComponent{ 
+    addSubComponent(component: UIComponent): FormComponent {
         return this.uiComponentBuilder
-                .addComponent(component,"form")
-                .buildFormComponent()
+            .addComponent(component, "form")
+            .buildFormComponent()
     }
 
     getInfo() {

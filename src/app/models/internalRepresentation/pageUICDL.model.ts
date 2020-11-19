@@ -1,4 +1,6 @@
+import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 import { LayoutComponent } from "./LayoutComponent.model";
+import { UIComponent } from "./UIComponent.model";
 
 export class PageUICDL {
     public id: string;
@@ -14,19 +16,26 @@ export class PageUICDL {
     public sidebar: LayoutComponent;
     public footer: LayoutComponent;
     public asidebar: LayoutComponent;
-    
-    constructor(id:number) {
+
+    constructor(id: number) {
         console.log(id)
         this.id = id.toString();
         this.selector = `page${id}`;
         this.category = "page";
         this.layout = "";
         this.style = {};
-        this.header = new LayoutComponent((id + 1).toString(),"layout-header");
-        this.sidebar = new LayoutComponent((id + 2).toString(),"layout-sidebar");
-        this.footer = new LayoutComponent((id + 3).toString(),"layout-footer");
-        this.body = new LayoutComponent((id + 4).toString(),"layout-body");
-        this.asidebar = new LayoutComponent((id + 5).toString(),"layout-asidebar");
+        this.header = (UIComponentFactory.create("layout") as LayoutComponent);
+        this.sidebar = (UIComponentFactory.create("layout") as LayoutComponent);
+        this.footer = (UIComponentFactory.create("layout") as LayoutComponent);
+        this.body = (UIComponentFactory.create("layout") as LayoutComponent);
+        this.asidebar = (UIComponentFactory.create("layout") as LayoutComponent);
+    }
+    
+    getInfo() {
+        return {
+            id: this.id,
+            selector: this.selector
+        }
     }
 
     public getLayout(): string {

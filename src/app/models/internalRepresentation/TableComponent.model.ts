@@ -2,10 +2,11 @@ import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
+import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 
 export class TableComponent extends BasicComponent {
-  headers: any[];
-  rows: any[];
+  headers: string;
+  rows: string;
 
   constructor(uiComponentBuilder: UIComponentBuilder) {
     super(uiComponentBuilder);
@@ -17,19 +18,23 @@ export class TableComponent extends BasicComponent {
   }
 
   setServiceComponent(serviceComponent: ServiceComponentModel): TableComponent{
-    return this.uiComponentBuilder
-      .setServiceComponet(serviceComponent)
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+
+      .setServiceComponent(serviceComponent)
       .buildTableComponent();
   }
 
   setName(name: string): TableComponent{
-    return this.uiComponentBuilder
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
       .setName(name)
       .buildTableComponent();
   }
 
   setProperties(properties: Object): TableComponent{
-    return this.uiComponentBuilder
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
       .setProperties(properties)
       .buildTableComponent();
   }
@@ -50,14 +55,13 @@ export class TableComponent extends BasicComponent {
       }
     ]
   }
-
-
-  setUIComponent(properties) {
-    if (properties != undefined) {
-      this.name = properties["name"];
-      this.headers = properties["headers"];
-      this.rows = properties["rows"];
-      this.category = "informative";
+  
+  getValue(part: string,index: number): string {
+    if(part == "header") {
+      return this.headers.split(" ")[index]    
+    }
+    else if(part == "row") {
+      return this.rows.split(" ")[index]    
     }
   }
 

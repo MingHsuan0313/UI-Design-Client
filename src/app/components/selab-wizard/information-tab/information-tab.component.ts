@@ -28,32 +28,32 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
 
 
   constructor(private store: Store<AppState>,
-    public dialog: MatDialog ,
+    public dialog: MatDialog,
     public wizard: MatDialogRef<SelabWizardComponent>,
     private graphEditorService: GraphEditorService
-    ) {
+  ) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
       this._isExpandable, this._getChildren);
     this.treeControl = new FlatTreeControl<FileFlatNode>(this._getLevel, this._isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   }
-  
+
   finish() {
     this.confirmDialog();
   }
-  
+
   confirmDialog() {
     const message = `Are you sure you want to store this UI Component into PageUICDL?`;
-    const dialogData = new ConfirmDialogModel("Confirm Action",message);
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
 
-    const dialogRef = this.dialog.open(ConfirmDialogComponent,{
-      maxWidth:"400px",
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
       data: dialogData
     });
-    
+
     dialogRef.afterClosed().subscribe(dialogResult => {
-      if(dialogResult == true) {
+      if (dialogResult == true) {
         this.store.dispatch(new IRInsertUIComponentAction(this.uiComponent));
         this.graphEditorService.bindComponent(this.uiComponent);
         this.wizard.close();
@@ -77,8 +77,6 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
 
   update(uiComponent: UIComponent) {
     this.uiComponent = uiComponent;
-    console.log("Update");
-    console.log(this.uiComponent.getInfo());
     this.database = new InformationDatabase(JSON.stringify(this.uiComponent.getInfo()));
     this.database.dataChange.subscribe(data => this.dataSource.data = data);
   }

@@ -2,19 +2,18 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { BasicComponent } from "./BasicComponent.model";
+import { UIComponentBuilder } from "../UIComponentBuilder";
+import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 
 export class DropdownComponent extends BasicComponent {
   items: String;
 
-  constructor(properties?) {
-    super();
+  constructor(uiComponentBuilder: UIComponentBuilder) {
+    super(uiComponentBuilder);
+    let properties = uiComponentBuilder.getProperties();
     if (properties != undefined) {
       this.items = properties["items"];
-      this.name = properties["name"];
     }
-    this.category = "informative";
-    this.type = "dropdown";
-    this.serviceComponent = new ServiceComponentModel();
   }
 
   getProperties() {
@@ -34,9 +33,26 @@ export class DropdownComponent extends BasicComponent {
     return this.items.split(" ")[index];
   }
 
-  setUIComponent(properties) {
-    this.items = properties["items"];
-    this.name = properties["name"];
+  setServiceComponent(serviceComponent: ServiceComponentModel): DropdownComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setServiceComponet(serviceComponent)
+      .buildDropdownComponent();
+  }
+
+
+  setProperties(properties: Object): DropdownComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setProperties(properties)
+      .buildDropdownComponent();
+  }
+  
+  setName(name: string): DropdownComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+            .setName(name)
+            .buildDropdownComponent();
   }
 
   add(component: UIComponent): void {

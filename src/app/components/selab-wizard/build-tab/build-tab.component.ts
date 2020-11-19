@@ -37,15 +37,9 @@ export class BuildTabComponent implements OnInit {
   }
 
   createComponent() {
-    console.log(this.formData);
-    console.log("dddd")
-    console.log(this.uiComponent)
-    // this.uiComponent.setUIComponent(this.formData);
     this.uiComponent = this.uiComponent
                           .setProperties(this.formData)
                           .setName(this.formData["name"]);
-    console.log("after createtion")
-    console.log(this.uiComponent)
     if (!this.checkIsFormFill()) {
       alert("You need to fill all input");
       return;

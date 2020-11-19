@@ -2,6 +2,9 @@ import {ICreateComponentStrategy} from "./ICreateComponentStrategy";
 import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
 import {StyleLibrary} from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
+import { SelabEditor } from "../selab-editor.model";
+import { UIComponent } from "../../internalRepresentation/UIComponent.model";
+import { SelabVertex } from "../../store/selabVertex.model";
 // no need to databinding
 export class InputStrategy implements ICreateComponentStrategy {
   basex: number;
@@ -20,27 +23,19 @@ export class InputStrategy implements ICreateComponentStrategy {
     
   }
 
-  createComponent(graphStorage: GraphStorage, component, parent) {
+  createComponent(selabEditor: SelabEditor, component: UIComponent, parent: mxCell): mxCell {
     const style = StyleLibrary[0]["input"];
-
-    const styleName = "style" + component.id;
-    const styleStorage = new StyleStorage(styleName, style);
     const textGeometry = new mxGeometry(this.basex, this.basey, 200, 30);
 
-    // Initialized
-    let inputVertexStorage = graphStorage.insertVertex(parent, component.id, "", textGeometry, styleStorage, component);
-    inputVertexStorage.setIsPrimary(true);
+    let selabVertex = new SelabVertex(component.getId(),component.getId(),parent.id);
+    selabVertex = selabVertex
+                    .setIsPrimary(true)
 
-    inputVertexStorage.vertex["componentPart"] = "box";
-    inputVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
-    inputVertexStorage.vertex["isPrimary"] = true;
-    // component.vertexStorage = vertexStorage;
-    // component["style"] = inputVertexStorage.getStyle();
-    // component["x"] = inputVertexStorage.getVertexX();
-    // component["y"] = inputVertexStorage.getVertexY();
-    // component["width"] = inputVertexStorage.getVertexWidth();
-    // component["height"] = inputVertexStorage.getVertexHeight();
-    return inputVertexStorage;
+    let inputTextCell = selabEditor.insertVertex(selabVertex,component,textGeometry,style);
+    inputTextCell["componentPart"] = "box";
+    inputTextCell["dataBinding"] = this.createDataBinding("box");
+    inputTextCell["isPrimary"] = true;
+    return inputTextCell;
   }
 
   createDataBinding(part: String, index?){

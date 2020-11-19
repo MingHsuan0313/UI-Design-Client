@@ -6,7 +6,6 @@ import { ExternalRepresentation } from "../app.state";
 class ExternalRepresentationReducer {
     @Action
     public initialization(store: ExternalRepresentation, action: ERInitializationAction): ExternalRepresentation {
-        console.log("Initialize...")
         store = { ...store };
         store.graphStorages = [...store.graphStorages, action.graphStorage];
         return store;
@@ -14,7 +13,6 @@ class ExternalRepresentationReducer {
 
     @Action
     public insertVertex(store: ExternalRepresentation, action: ERInsertVertexAction) {
-        console.log("insert vertex");
         store = { ...store };
         store.graphStorages = [...store.graphStorages];
         store.graphStorages[0] = ({...store.graphStorages[0]});

@@ -13,7 +13,6 @@ export class SelabEditor {
     createComponentStrategy: ICreateComponentStrategy;
 
     constructor(element: HTMLElement, store: Store<AppState>) {
-        console.log(element);
         this.initializeEditor(element, "assets/keyhandler.xml");
         this.store = store;
     }
@@ -122,8 +121,6 @@ export class SelabEditor {
     }
 
     getVertexByID(id: string): mxCell {
-        console.log(id)
-        console.log('-----')
         let model = this.getGraphModel();
         let cells = model.cells;
         if(id in cells)

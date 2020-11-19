@@ -2,8 +2,10 @@ import { Geometry } from "ngx-perfect-scrollbar";
 import { BreadcrumbComponent } from "./internalRepresentation/BreadcrumbComponent.model";
 import { ButtonComponent } from "./internalRepresentation/ButtonComponent.model";
 import { CompositeComponent } from "./internalRepresentation/CompositeComponent.model";
+import { DropdownComponent } from "./internalRepresentation/DropdownComponent.model";
 import { FormComponent } from "./internalRepresentation/FormComponent.model";
 import { IconComponent } from "./internalRepresentation/IconComponent.model";
+import { LayoutComponent } from "./internalRepresentation/LayoutComponent.model";
 import { TableComponent } from "./internalRepresentation/TableComponent.model";
 import { ServiceComponentModel } from "./serviceComponent/service-component.model";
 import { TextComponent, InputTextComponent, UIComponent } from "./ui-component-dependency";
@@ -68,9 +70,14 @@ export class UIComponentBuilder {
         return this;
     }
 
-    setServiceComponet(serviceComponent: ServiceComponentModel) {
+    setServiceComponent(serviceComponent: ServiceComponentModel) {
         this.serviceComponent = serviceComponent;
         return this;
+    }
+    
+    buildLayoutComponent(): LayoutComponent {
+       let layoutComponent: LayoutComponent = new  LayoutComponent(this);
+       return layoutComponent;
     }
 
     buildTextComponent(): TextComponent {
@@ -86,6 +93,11 @@ export class UIComponentBuilder {
     buildButtonComponent(): ButtonComponent {
        let buttonComponent: ButtonComponent = new ButtonComponent(this);
        return buttonComponent;
+    }
+    
+    buildDropdownComponent(): DropdownComponent {
+        let dropdownComponent: DropdownComponent = new DropdownComponent(this);
+        return dropdownComponent;
     }
     
     buildFormComponent(): FormComponent {

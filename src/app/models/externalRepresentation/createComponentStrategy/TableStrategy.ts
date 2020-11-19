@@ -1,7 +1,10 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
-import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
+import { GraphStorage, VertexStorage, StyleStorage } from "../../graph-dependency";
+import { SelabEditor } from "../selab-editor.model";
+import { TableComponent } from "../../internalRepresentation/TableComponent.model";
+import { SelabVertex } from "../../store/selabVertex.model";
 
 export class TableStrategy implements ICreateComponentStrategy {
   basex: number;
@@ -48,90 +51,95 @@ export class TableStrategy implements ICreateComponentStrategy {
       );
       return dataBinding;
     }
-    else 
+    else
       return new DataBinding(false, part, -1);
   }
 
-  createTableBoxVertex(graphStorage, component, parent) {
+  createTableBoxVertex(selabEditor: SelabEditor, component: TableComponent, parent: mxCell): mxCell {
     const headerList = component.headers.trim().split(" ");
     const colNumber = headerList.length;
 
-    let styleName = "tableBoxstyle" + component.id;
     const tableBoxStyle = StyleLibrary[0]["table"]["tableBox"];
     tableBoxStyle["overflow"] = true;
-    let styleStorage = new StyleStorage(styleName, tableBoxStyle);
     const width = this.gridWidth * colNumber;
     const height = this.gridHeight * 2;
 
+    let id = (parseInt(component.getId())).toString();
+    let selabVertex = new SelabVertex()
+      .setID(component.getSelector() + "-" + id)
+      .setUIComponentID(component.getId())
+      .setParentID(parent.id)
+      .setIsPrimary(true);
+
     const tableBoxVertexGeometry = new mxGeometry(this.basex, this.basey, width, height);
-    const tableBoxVertexStorage = graphStorage.insertVertex(parent, component.id, "", tableBoxVertexGeometry, styleStorage, component);
-    tableBoxVertexStorage.setIsPrimary(true);
-    tableBoxVertexStorage.vertex["componentPart"] = "box";
-    tableBoxVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
-    tableBoxVertexStorage.vertex["isPrimary"] = true;
-    return tableBoxVertexStorage;
+    let tableBoxCell = selabEditor.insertVertex(selabVertex, component, tableBoxVertexGeometry, tableBoxStyle);
+
+    tableBoxCell["componentPart"] = "box";
+    tableBoxCell["dataBinding"] = this.createDataBinding("box");
+    tableBoxCell["isPrimary"] = true;
+    return tableBoxCell;
   }
 
-  createTableHeaderVertex(graphStorage, component, parent) {
+  createTableHeaderVertex(selabEditor: SelabEditor, component: TableComponent, parent: mxCell) {
     const headerList = component.headers.trim().split(" ");
     const colNumber = headerList.length;
 
     for (let i = 0; i < colNumber; i++) {
-      let dataBinding = this.createDataBinding("headers",i);
-      const styleName = "tableHeaderstyle" + component.id + ":" + i;
+      let dataBinding = this.createDataBinding("headers", i);
       const tableHeaderStyle = StyleLibrary[0]["table"]["tableHeader"];
       tableHeaderStyle["overflow"] = true;
-      const styleStorage = new StyleStorage(styleName, tableHeaderStyle);
       const x = i * this.gridWidth;
-      const tableHeaderVertexGeometry = new mxGeometry(x, 0, this.gridWidth, this.gridHeight);
-      const tableHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, headerList[i], tableHeaderVertexGeometry, styleStorage, component, dataBinding);
-      parent.addChild(tableHeaderVertexStorage.id, tableHeaderVertexStorage.getVertex(), "headers");
+      let id = (parseInt(component.getId()) + 1 + i).toString();
+      let selabVertex = new SelabVertex()
+        .setID(component.getSelector() + '-' + id)
+        .setUIComponentID(component.getId())
+        .setIsPrimary(false)
+        .setDataBinding(dataBinding)
+        .setParentID(parent.id)
+        .setValue(component.getValue("header",i));
 
-      tableHeaderVertexStorage.vertex["componentPart"] = "header";
-      tableHeaderVertexStorage.vertex["dataBinding"] = this.createDataBinding("header");
-      tableHeaderVertexStorage.vertex["isPrimary"] = false;
+      const tableHeaderVertexGeometry = new mxGeometry(x, 0, this.gridWidth, this.gridHeight);
+      let tableHeaderCell = selabEditor.insertVertex(selabVertex, component, tableHeaderVertexGeometry, tableHeaderStyle);
+      tableHeaderCell["componentPart"] = "header";
+      tableHeaderCell["dataBinding"] = this.createDataBinding("header");
+      tableHeaderCell["isPrimary"] = false;
     }
   }
 
-  createTableDataVertex(graphStorage, component, parent) {
+  createTableDataVertex(selabEditor: SelabEditor, component: TableComponent, parent: mxCell) {
     const tableDataStyle = StyleLibrary[0]["table"]["tableData_grey"];
     const headerList = component.headers.trim().split(" ");
     const colNumber = headerList.length;
     const rows = component.rows.trim().split(" ");
-
     tableDataStyle["overflow"] = true;
-    for (let i = 0; i < colNumber; i++) {
-      let dataBinding = this.createDataBinding("rows",i);
-      const styleName = "tableDatastyle" + component.id;
-      const styleStorage = new StyleStorage(styleName, tableDataStyle);
 
+    for (let i = 0; i < colNumber; i++) {
+      let dataBinding = this.createDataBinding("rows", i);
       const x = i * this.gridWidth;
       const y = 1 * this.gridHeight;
       const tableDataVertexGeometry = new mxGeometry(x, y, this.gridWidth, this.gridHeight);
-      const tableDataVertexStorage = graphStorage.insertVertex(parent.getVertex(),
-        component.id, rows[i], tableDataVertexGeometry, styleStorage, component, dataBinding);
-      parent.addChild(tableDataVertexStorage.id, tableDataVertexStorage.getVertex(), "rows");
-      tableDataVertexStorage.vertex["componentPart"] = "rows";
-      tableDataVertexStorage.vertex["dataBinding"] = this.createDataBinding("rows", i);
-      tableDataVertexStorage.vertex["isPrimary"] = false;
+      let id = (parseInt(component.getId()) + colNumber + 1 + i).toString();
+      let selabVertex = new SelabVertex()
+        .setID(component.getSelector() + "-" + id)
+        .setUIComponentID(component.getId())
+        .setIsPrimary(false)
+        .setParentID(parent.id)
+        .setDataBinding(dataBinding)
+        .setValue(component.getValue("row",i))
+
+      let tableDataCell = selabEditor.insertVertex(selabVertex, component, tableDataVertexGeometry, tableDataStyle);
+      tableDataCell["componentPart"] = "rows";
+      tableDataCell["dataBinding"] = this.createDataBinding("rows", i);
+      tableDataCell["isPrimary"] = false;
     }
   }
 
-  createComponent(graphStorage: GraphStorage, component, parent) {
+  createComponent(selabEditor: SelabEditor, component: TableComponent, parent: mxCell) {
     mxConstants.SHADOW_OPACITY = 0.3;
-
-    let tableBoxVertexStorage = this.createTableBoxVertex(graphStorage, component, parent);
-    this.createTableHeaderVertex(graphStorage, component, tableBoxVertexStorage);
-    this.createTableDataVertex(graphStorage, component, tableBoxVertexStorage);
-
-    // component.x = tableBoxVertexStorage.getVertexX();
-    // component.y = tableBoxVertexStorage.getVertexY();
-    // component.width = tableBoxVertexStorage.getVertexWidth();
-    // component.height = tableBoxVertexStorage.getVertexHeight();
-    // component.style = tableBoxVertexStorage.getStyle();
-
+    let tableBoxVertexStorage = this.createTableBoxVertex(selabEditor, component, parent);
+    this.createTableHeaderVertex(selabEditor, component, tableBoxVertexStorage);
+    this.createTableDataVertex(selabEditor, component, tableBoxVertexStorage);
     return tableBoxVertexStorage;
   }
-
 }
 

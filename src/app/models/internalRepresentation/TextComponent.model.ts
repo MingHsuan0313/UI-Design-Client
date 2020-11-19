@@ -2,6 +2,7 @@ import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
+import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 export class TextComponent extends BasicComponent {
   text: string;
   href: string;
@@ -38,20 +39,23 @@ export class TextComponent extends BasicComponent {
   }
 
   setServiceComponent(serviceComponent: ServiceComponentModel): TextComponent{
-    return this.uiComponentBuilder
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
       .setServiceComponet(serviceComponent)
       .buildTextComponent();
   }
 
 
   setProperties(properties: Object): TextComponent {
-    return this.uiComponentBuilder
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
       .setProperties(properties)
       .buildTextComponent();
   }
   
   setName(name: string): TextComponent {
-    return this.uiComponentBuilder
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
             .setName(name)
             .buildTextComponent();
   }
@@ -61,8 +65,6 @@ export class TextComponent extends BasicComponent {
 
   getInfo() {
     console.log("get info")
-    console.log(this.name)
-    console.log(this.href)
     return {
       [this.selector]: {
         name: this.name,

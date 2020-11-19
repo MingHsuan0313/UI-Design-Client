@@ -26,21 +26,15 @@ export class SelabGraphEditorComponent implements AfterViewInit {
      private store: Store<AppState>) {
   }
 
-  getModified() {
-    // return this.graphEditorService.getGraphStorage().getModified();
-  }
-
   ngAfterViewInit() {
   }
 
   showExternalRepresentation() {
-    // console.log(this.graphEditorService.getGraphStorage());
     console.log(this.graphEditorService.getGraphModel());
   }
 
   showInternelRepresentation() {
     console.log(Storage.getPageUICDL());
-
     console.log(JSON.stringify(Storage.getPageUICDL()))
   }
 

@@ -31,10 +31,10 @@ export default class GraphEditorService {
   
   createEditor(element: HTMLElement) {
     let editor = new SelabEditor(element,this.store);
-    console.log("craete editor")
-    console.log(editor)
     this.editors.set(Object.keys(this.editors).length.toString(),editor);
     this.selectedEditor = editor;
+    console.log("create editor")
+    console.log(editor)
   }
   
   getGraph(): mxGraph {

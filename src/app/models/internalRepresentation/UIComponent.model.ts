@@ -11,7 +11,6 @@ export class UIComponent {
   protected readonly type: string;
   protected readonly name: string;
   protected readonly serviceComponent: ServiceComponentModel;
-  protected readonly uiComponentBuilder: UIComponentBuilder;
   
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     this.name = uiComponentBuilder.name;
@@ -19,7 +18,6 @@ export class UIComponent {
     this.selector = uiComponentBuilder.selector;
     this.category = uiComponentBuilder.category;
     this.type = uiComponentBuilder.type; 
-    this.uiComponentBuilder = uiComponentBuilder;
     this.serviceComponent = new ServiceComponentModel();
   }
 
@@ -58,8 +56,13 @@ export class UIComponent {
   setName(name: string): UIComponent {
     return new UIComponent();
   }
+  
+  deleteBuilder() {
 
-  getValue(index?) {} // vertex value binding
-  getInfo() { } // for Internal Representation (pageUICDL Output)
+  }
+
+  getInfo(): any {
+
+  } // for Internal Representation (pageUICDL Output)
   getProperties(){} // form property
 }
