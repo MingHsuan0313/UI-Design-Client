@@ -36,7 +36,7 @@ export class DropdownComponent extends BasicComponent {
   setServiceComponent(serviceComponent: ServiceComponentModel): DropdownComponent{
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
-      .setServiceComponet(serviceComponent)
+      .setServiceComponent(serviceComponent)
       .buildDropdownComponent();
   }
 

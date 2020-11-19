@@ -64,7 +64,7 @@ export class FormStrategy implements ICreateComponentStrategy {
             let vertex = selabEditor.createComponent(subUIComponent, formBoxCell, p1, p2)
             if (vertex["geometry"].width > maxWidth)
                 maxWidth = vertex["geometry"].width;
-            p2 = p2 + vertex["geometry"].width + 10;
+            p2 = p2 + vertex["geometry"].height + 10;
         }
         let newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth + 50, p2);
         formBoxCell.setGeometry(newmxGeometry);

@@ -93,7 +93,6 @@ export class SelabWizardComponent implements OnInit {
   checkWizardStatus() {
     let openCorrect = true;
     let description = "";
-    console.log("open wizard : check status");
 
     if (this.genere == "Genre" || this.genere == "")
       description += "You need to choose Genre\n";

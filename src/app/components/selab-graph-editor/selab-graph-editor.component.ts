@@ -40,7 +40,6 @@ export class SelabGraphEditorComponent implements AfterViewInit {
 
   createGraph(elementId) {
     let element = document.getElementById(elementId);
-    console.log(elementId.split('-')[1])
     let pageID = parseInt(elementId.split('-')[1]);
     let newPageUICDL = new PageUICDL(pageID);
     Storage.setPageUICDL(newPageUICDL);

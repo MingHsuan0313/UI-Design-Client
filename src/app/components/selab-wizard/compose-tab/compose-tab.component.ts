@@ -27,14 +27,12 @@ export class ComposeTabComponent implements OnInit {
     this.isClean = true;
     this.composeTarget = option;
     this.subComponent = UIComponentFactory.create(this.composeTarget);
-    console.log("create sub component");
     this.subComponentProperties = this.subComponent.getProperties();
     this.buildForm();
   }
 
   valueChange(event, value) {
     this.formData[value] = event;
-    console.log(this.formData);
   }
   
   update(uiComponent:UIComponent) {
@@ -57,8 +55,6 @@ export class ComposeTabComponent implements OnInit {
                               .setName(this.formData["name"])
     // this.uiComponent.addSubComponent(this.deepCopySubComponent());
     this.uiComponent = this.uiComponent.addSubComponent(this.subComponent);
-    console.log("finish insert")
-    console.log(this.uiComponent)
     this.formData = {};
   }
   

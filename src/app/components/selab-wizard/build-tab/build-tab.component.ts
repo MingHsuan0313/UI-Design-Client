@@ -78,7 +78,6 @@ export class BuildTabComponent implements OnInit {
     let tabLinkElements = document.getElementsByClassName("mat-tab-label-content");
     for (let index = 0; index < tabLinkElements.length; index++) {
       if ((tabLinkElements[index] as HTMLElement).innerText == "Compose Component") {
-        console.log("hello");
         (tabLinkElements[index] as HTMLElement).click();
       }
     }

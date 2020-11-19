@@ -52,14 +52,13 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: "400px",
       data: dialogData
+
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
         this.store.dispatch(new IRInsertUIComponentAction(this.uiComponent));
         let serviceComponent = this.uiComponent.getServiceComponent();
-        console.log("dddddddddddasdjhaj")
-        console.log(serviceComponent.getServiceID())
         if(serviceComponent.getServiceID().toString().length > 0) {
           let operation: Operation = new Operation()
                                           .setClassName(serviceComponent.getClassName())

@@ -43,8 +43,6 @@ export class PipelineDataMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("start pipeline menu")
-
     // if open from pipeline
     if(this.operation != undefined) {
       this.menuTitle = this.operation.name;

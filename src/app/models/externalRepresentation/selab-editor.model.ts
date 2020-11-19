@@ -86,7 +86,6 @@ export class SelabEditor {
 
         // set parent [layout parts] to each components
         if (parent.id < 8) {
-            console.log("hereee");
         }
 
         if (uiComponent['componentList'] == undefined) {
