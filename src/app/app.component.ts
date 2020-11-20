@@ -12,6 +12,9 @@ export class AppComponent implements OnInit {
     this.matIconRegistry
       .addSvgIcon('zoomIn',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/zoom_in-24px.svg'))
       .addSvgIcon('zoomOut',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/zoom_out-24px.svg'))
+      .addSvgIcon('delete',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/delete-24px.svg'))
+      .addSvgIcon('undo',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/undo-24px.svg'))
+      .addSvgIcon('redo',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/redo-24px.svg'))
   }
 
   ngOnInit() {

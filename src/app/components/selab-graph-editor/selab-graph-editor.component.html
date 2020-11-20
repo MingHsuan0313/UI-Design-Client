@@ -16,17 +16,29 @@
 <!-- <mat-toolbar style="height: 30px; min-height: 30px;background-color: #1f2329; color: white;"> -->
 <mat-toolbar style="height: 30px; min-height: 30px;" color=primary>
     <mat-toolbar-row>
-        <button mat-button [matMenuTriggerFor]="utilMenu">Util</button>
-        <button mat-button><mat-icon style="margin-bottom:10px;" svgIcon="zoomIn"></mat-icon></button>
-        <button mat-button><mat-icon style="margin-bottom:10px ;" svgIcon="zoomOut"></mat-icon></button>
+        <button mat-button style="min-width: 20px;" [matMenuTriggerFor]="utilMenu">Util</button>
+        <button mat-button style="min-width: 10px;" matTooltip="zoomIn">
+            <mat-icon style="margin-bottom:10px;" svgIcon="zoomIn"></mat-icon>
+        </button>
+        <button mat-button style="min-width: 10px;" matTooltip="zoomOut">
+            <mat-icon style="margin-bottom:10px ;" svgIcon="zoomOut"></mat-icon>
+        </button>
+        <button mat-button style="min-width: 10px;" matTooltip="undo">
+            <mat-icon style="margin-bottom:10px ;" svgIcon="undo"></mat-icon>
+        </button>
+        <button mat-button style="min-width: 10px;" matTooltip="redo">
+            <mat-icon style="margin-bottom:10px ;" svgIcon="redo"></mat-icon>
+        </button>
+        <button mat-button style="min-width: 10px;" matTooltip="delete">
+            <mat-icon style="margin-bottom:10px ;" svgIcon="delete"></mat-icon>
+        </button>
     </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-menu #utilMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item matTooltip="Show Internal Representation(pageUICDL) in console">Show IR</button> 
-  <button mat-menu-item matTooltip="Show External Representation(graphStorage) in console">Show ER</button> 
-  <button mat-menu-item matTooltip="Create New Page">New Page</button> 
-  <button mat-menu-item>Clear Graph</button> 
+    <button mat-menu-item matTooltip="Show Internal Representation(pageUICDL) in console">Show IR</button>
+    <button mat-menu-item matTooltip="Show External Representation(graphStorage) in console">Show ER</button>
+    <button mat-menu-item matTooltip="Create New Page">New Page</button>
 </mat-menu>
 
 <div style="overflow:scroll; padding-left:10px" class="geEditor" id="graphContainer-0">

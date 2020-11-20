@@ -1,16 +1,21 @@
 <app-header [fixed]="true" [asideMenuToggler]="false" [sidebarToggler]="false">
   <div class="container-fluid">
     <div class="row">
-      <button mat-button>Save</button>
-      <button mat-button>Import</button>
-      <button mat-button [matMenuTriggerFor]="exportMenu">Export</button>
+      <button mat-button [matMenuTriggerFor]="fileMenu">File</button>
       <button mat-button [matMenuTriggerFor]="layoutMenu">Layout</button>
-      <button style="width: 100%; inline-size: inherit;" mat-button [matMenuTriggerFor]="genereMenu" matTooltip="Choose UI Component">UI Component</button>
+      <button style="width: 100%; inline-size: inherit;" mat-button [matMenuTriggerFor]="genereMenu"
+        matTooltip="Choose UI Component">UI Component</button>
       <button style="width: 100%; inline-size: inherit;" mat-button>Launch Wizard</button>
     </div>
   </div>
 </app-header>
 <selab-header-navigation-form></selab-header-navigation-form>
+
+<mat-menu #fileMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item>Save</button>
+  <button mat-menu-item>Import</button>
+  <button mat-menu-item [matMenuTriggerFor]="exportMenu">Export</button>
+</mat-menu>
 
 
 <mat-menu #exportMenu="matMenu" [overlapTrigger]="false">
@@ -25,38 +30,38 @@
 </mat-menu>
 
 <mat-menu #genereMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [matMenuTriggerFor]="categoryMenu" matTooltip="">Angular Material</button> 
-  <button mat-menu-item matTooltip="">CoreUI</button> 
-  <button mat-menu-item matTooltip="">HTML</button> 
+  <button mat-menu-item [matMenuTriggerFor]="categoryMenu" matTooltip="">Angular Material</button>
+  <button mat-menu-item matTooltip="">CoreUI</button>
+  <button mat-menu-item matTooltip="">HTML</button>
 </mat-menu>
 
 <mat-menu #categoryMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [matMenuTriggerFor]="informativeMenu" matTooltip="">Informative</button> 
-  <button mat-menu-item [matMenuTriggerFor]="navigationMenu" matTooltip="">Navigation</button> 
-  <button mat-menu-item [matMenuTriggerFor]="inputMenu" matTooltip="">Input Control</button> 
-  <button mat-menu-item [matMenuTriggerFor]="containerMenu" matTooltip="">Container</button> 
+  <button mat-menu-item [matMenuTriggerFor]="informativeMenu" matTooltip="">Informative</button>
+  <button mat-menu-item [matMenuTriggerFor]="navigationMenu" matTooltip="">Navigation</button>
+  <button mat-menu-item [matMenuTriggerFor]="inputMenu" matTooltip="">Input Control</button>
+  <button mat-menu-item [matMenuTriggerFor]="containerMenu" matTooltip="">Container</button>
 </mat-menu>
 
 <mat-menu #informativeMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item>text</button> 
-  <button mat-menu-item>table</button> 
-  <button mat-menu-item>card</button> 
-  <button mat-menu-item>icons</button> 
+  <button mat-menu-item>text</button>
+  <button mat-menu-item>table</button>
+  <button mat-menu-item>card</button>
+  <button mat-menu-item>icons</button>
 </mat-menu>
 
 <mat-menu #navigationMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item>text</button> 
-  <button mat-menu-item>button</button> 
-  <button mat-menu-item>breadcrumb</button> 
+  <button mat-menu-item>text</button>
+  <button mat-menu-item>button</button>
+  <button mat-menu-item>breadcrumb</button>
 </mat-menu>
 
 <mat-menu #inputMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item>input</button> 
-  <button mat-menu-item>form</button> 
-  <button mat-menu-item>dropdown</button> 
+  <button mat-menu-item>input</button>
+  <button mat-menu-item>form</button>
+  <button mat-menu-item>dropdown</button>
 </mat-menu>
 
 <mat-menu #containerMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item>form</button> 
-  <button mat-menu-item>card</button> 
+  <button mat-menu-item>form</button>
+  <button mat-menu-item>card</button>
 </mat-menu>
