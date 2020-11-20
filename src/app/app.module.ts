@@ -73,6 +73,7 @@ import { PageUICDL } from "./models/internalRepresentation/pageUICDL.model";
 import { externalRepresentationReducer } from "./models/store/reducers/ExternalRepresentationReducer";
 import { internalRepresentationReducer } from "./models/store/reducers/InternalRepresentationReducer";
 import { ConfirmDialogComponent } from './components/utils/confirm-dialog/confirm-dialog.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar'; 
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -150,6 +151,7 @@ export function reducerFactory() {
     MatSelectModule,
     MatToolbarModule,
     MatCheckboxModule,
+    MatSnackBarModule,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,

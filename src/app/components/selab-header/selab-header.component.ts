@@ -8,7 +8,7 @@ import GraphEditorService from '../../services/externalRepresentation/graph-edit
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import ImportService from '../../services/internalRepresentation/import.service';
 import ExportService from '../../services/internalRepresentation/export.service';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { SelabWizardComponent } from '../selab-wizard/selab-wizard.component';
 
 @Component({
@@ -19,6 +19,7 @@ import { SelabWizardComponent } from '../selab-wizard/selab-wizard.component';
 export class SelabHeaderComponent implements OnInit {
   public navItems = null;
   public sidebarMinimized = true;
+
   public element: HTMLElement = document.body;
 
   // test_data
@@ -43,6 +44,7 @@ export class SelabHeaderComponent implements OnInit {
     private graphEditorService: GraphEditorService,
     private importService: ImportService,
     private exportService: ExportService,
+    private snackBar: MatSnackBar,
     public wizard: MatDialog) {
 
   }
@@ -85,11 +87,11 @@ export class SelabHeaderComponent implements OnInit {
 
   storePDL() {
     const pageUICDL = Storage.getPageUICDL();
-    console.log('Show Internal Representation');
-    console.log(Storage.components);
-    console.log('Page UICDL');
-    console.log(pageUICDL);
-
+    // console.log('Show Internal Representation');
+    // console.log(Storage.components);
+    // console.log('Page UICDL');
+    // console.log(pageUICDL);
+    this.openSnackBar("save PDL to database", "save");
     this.exportService.postPageUICDL(Storage.pageUICDL).subscribe(
       response => console.log(response['body'])
     );
@@ -134,11 +136,13 @@ export class SelabHeaderComponent implements OnInit {
   }
 
   save() {
+    this.openSnackBar("synchronize vertex with ui component", "sync");
     this.graphEditorService.syncMxCells();
     this.graphEditorService.syncStorage();
   }
 
   storeNDL() {
+    this.openSnackBar("save NDL to database", "save");
     this.exportService.postNDL().subscribe(
       response => console.log(response['body'])
     );
@@ -146,6 +150,36 @@ export class SelabHeaderComponent implements OnInit {
 
   showImage() {
     this.images = Storage.images;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    })
+  }
+
+  launchWizard(genere: string, category: string, type: string) {
+    let compositeComponentTypes = ["card", "breadcrumb", "inputgroup", "form"];
+    let isComposite = false;
+    if (compositeComponentTypes.indexOf(type) >= 0)
+      isComposite = true;
+
+    if (this) {
+      this.wizard.open(SelabWizardComponent, {
+        width: '55%',
+        height: '65%',
+        data: {
+          isPipeline: false,
+          isComposite: isComposite,
+          genere: genere,
+          category: category,
+          type: type,
+          returnData: {}
+        },
+        disableClose: true,
+        autoFocus: true
+      });
+    }
   }
 
   openWizard() {

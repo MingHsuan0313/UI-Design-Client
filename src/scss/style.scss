@@ -43,6 +43,10 @@
   margin-top: 40px !important;
 }
 
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color:#082038;
+}
+
  /* width */
 ::-webkit-scrollbar {
   width: 5px;
@@ -62,3 +66,7 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 } 
+
+selab-graph-editor .mat-tab-label{
+  height: 100%;
+}
