@@ -87,10 +87,6 @@ export class SelabHeaderComponent implements OnInit {
 
   storePDL() {
     const pageUICDL = Storage.getPageUICDL();
-    // console.log('Show Internal Representation');
-    // console.log(Storage.components);
-    // console.log('Page UICDL');
-    // console.log(pageUICDL);
     this.openSnackBar("save PDL to database", "save");
     this.exportService.postPageUICDL(Storage.pageUICDL).subscribe(
       response => console.log(response['body'])

@@ -57,7 +57,8 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
-        this.store.dispatch(new IRInsertUIComponentAction(this.uiComponent));
+        let id = this.graphEditorService.getSelectedGraphID();
+        this.store.dispatch(new IRInsertUIComponentAction(id,this.uiComponent));
         let serviceComponent = this.uiComponent.getServiceComponent();
         if(serviceComponent.getServiceID().toString().length > 0) {
           let operation: Operation = new Operation()

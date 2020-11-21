@@ -32,7 +32,6 @@ export class UIComponentFactory {
     }
 
     static create(type: string): UIComponent {
-        console.log("start creating : " + type);
         let uiComponent: UIComponent;
         let uiComponentBuilder: UIComponentBuilder;
         if (type == "text") {

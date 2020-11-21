@@ -6,8 +6,6 @@ import StyleEditorService from "./style-editor.service";
 import { StyleConverter } from "../../shared/styleTable";
 import { AppState } from "src/app/models/store/app.state";
 import { Action, Store } from "@ngrx/store";
-import { IRInitializePageUICDLAction } from "src/app/models/store/actions/internalRepresentation.action";
-import { ERInitializationAction, ERTestAction } from "src/app/models/store/actions/externalRepresentation.action";
 import { Configuration } from "./util/configuration";
 import { SelabEditor } from "src/app/models/externalRepresentation/selab-editor.model";
 
@@ -31,11 +29,19 @@ export default class GraphEditorService {
   }
   
   createEditor(element: HTMLElement) {
-    let editor = new SelabEditor(element,this.store);
-    this.editors.set(Object.keys(this.editors).length.toString(),editor);
+    let editor = new SelabEditor(element,this.store,this);
+    this.editors.set(element.id,editor);
+    this.selectedGraphID = element.id;
     this.selectedEditor = editor;
-    console.log("create editor")
-    console.log(editor)
+  }
+  
+  getSelectedGraphID(): string {
+    return this.selectedEditor.id;
+  }
+  
+  setSelectedEditor(editorID: string) {
+    this.selectedEditor = this.editors.get(editorID);
+    this.selectedGraphID = this.selectedEditor.id;
   }
   
   getGraph(): mxGraph {
@@ -48,6 +54,11 @@ export default class GraphEditorService {
   
   getGraphView(): mxGraphView {
     return this.selectedEditor.getGraphView();
+  }
+
+  zoomTo(zoomFactor: any) {
+    let graph = this.getGraph();
+    graph.zoomTo(zoomFactor,graph.centerZoom);
   }
 
   createGraph(element: HTMLElement) {
@@ -92,9 +103,6 @@ export default class GraphEditorService {
 
   }
 
-  zoomTo(zoomFactor: any) {
-    this.selectedGraphStorage.zoomTo(zoomFactor);
-  }
 
   getMaxVertexID() {
     return this.getGraphStorage().getMaxID();

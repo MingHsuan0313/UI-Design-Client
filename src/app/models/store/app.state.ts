@@ -9,16 +9,18 @@ export interface AppState {
     externalRepresentation: ExternalRepresentation;
 }
 
+// using graphID find PageUICDL
 export class InternalRepresentation {
-    pageUICDLs: PageUICDL[];
+    pageUICDLs: Map<string,PageUICDL>;
     constructor() {
-        this.pageUICDLs = []
+        this.pageUICDLs = new Map<string,PageUICDL>();
     }
 }
 
+// using graphID find graphStorage
 export class ExternalRepresentation{
-    graphStorages: SelabGraph[];
+    graphStorages: Map<string,SelabGraph>;
     constructor() {
-        this.graphStorages = [];
+        this.graphStorages = new Map<string,SelabGraph>(); 
     }
 }

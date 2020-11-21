@@ -18,7 +18,6 @@ export class PageUICDL {
     public asidebar: LayoutComponent;
 
     constructor(id: number) {
-        console.log(id)
         this.id = id.toString();
         this.selector = `page${id}`;
         this.category = "page";

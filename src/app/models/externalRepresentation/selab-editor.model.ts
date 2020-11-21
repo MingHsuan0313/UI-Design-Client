@@ -1,4 +1,5 @@
 import { Store } from "@ngrx/store";
+import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { Configuration } from "src/app/services/externalRepresentation/util/configuration";
 import { ERInsertVertexAction } from "../store/actions/externalRepresentation.action";
 import { AppState } from "../store/app.state";
@@ -9,11 +10,15 @@ import { ICreateComponentStrategy } from "./createComponentStrategy/ICreateCompo
 
 export class SelabEditor {
     editor: mxEditor;
+    id: string;
     store: Store<AppState>
     createComponentStrategy: ICreateComponentStrategy;
 
-    constructor(element: HTMLElement, store: Store<AppState>) {
+    constructor(element: HTMLElement,
+         store: Store<AppState>,
+         private graphEditorService: GraphEditorService) {
         this.initializeEditor(element, "assets/keyhandler.xml");
+        this.id = element.id;
         this.store = store;
     }
 
@@ -63,7 +68,8 @@ export class SelabEditor {
                     styleDescription, "")
             vertex["selector"] = component.getSelector();
             vertex["type"] = component.getType();
-            this.store.dispatch(new ERInsertVertexAction(selabVertex));
+            let graphID = this.graphEditorService.getSelectedGraphID();
+            this.store.dispatch(new ERInsertVertexAction(graphID,selabVertex));
         } finally {
             this.getGraph().getModel().endUpdate();
         }
@@ -72,7 +78,10 @@ export class SelabEditor {
     }
 
     createComponent(uiComponent: UIComponent, parent: mxCell, basex?, basey?) {
-        const graphNode = document.getElementById('graphContainer-0');
+        let graphID = this.graphEditorService.getSelectedGraphID();
+        console.log("create Component")
+        console.log(graphID)
+        const graphNode = document.getElementById(graphID);
         const defaultWidth = graphNode.offsetWidth;
         const defaultHeight = graphNode.offsetHeight;
 

@@ -1,23 +1,42 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
-import { IRInitializePageUICDLAction, IRInsertUIComponentAction } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 
 class InternalRepresentationReducer {
     @Action
-    public initializePageUICDL(store: InternalRepresentation,action :IRInitializePageUICDLAction): InternalRepresentation {
+    public insertPageUICDL(store: InternalRepresentation,action : IRInsertPageUICDLAction): InternalRepresentation {
         store = {...store};
-        store.pageUICDLs = [...store.pageUICDLs,action.pageUICDL];
+        store.pageUICDLs = {...store.pageUICDLs,[action.pageUICDL.id]:action.pageUICDL};
+        return store;
+    }
+    
+    @Action
+    public deletePageUICDL(store: InternalRepresentation, action: IRDeletePageUICDLAction): InternalRepresentation {
+        store = {...store};     
+        store.pageUICDLs = {...store.pageUICDLs};
+        delete store.pageUICDLs[action.id];
+        return store;
+    }
+    
+    @Action
+    public clearPageUICDL(store: InternalRepresentation, action: IRClearPageUICDLAction): InternalRepresentation {
+        store = {...store};
+        store.pageUICDLs = {...store.pageUICDLs};
+        store.pageUICDLs[action.id] = {...store.pageUICDLs[action.id]};
+        store.pageUICDLs[action.id].body = {...store.pageUICDLs[action.id].body};
+        store.pageUICDLs[action.id].body.componentList = [];
         return store;
     }
 
     @Action
     public insertUIComponent(store: InternalRepresentation,action :IRInsertUIComponentAction): InternalRepresentation {
         store = {...store};
-        store.pageUICDLs = [...store.pageUICDLs]
-        store.pageUICDLs[0] = ({...store.pageUICDLs[0]} as any)
-        store.pageUICDLs[0].body = ({...store.pageUICDLs[0].body} as any)
-        store.pageUICDLs[0].body.componentList = ([...store.pageUICDLs[0].body.componentList,action.uiComponent] as any)
+        store.pageUICDLs = {...store.pageUICDLs};
+        let id = action.id;
+        store.pageUICDLs[id] = ({...store.pageUICDLs[id]} as any)
+        store.pageUICDLs[id].body = ({...store.pageUICDLs[id].body} as any)
+        store.pageUICDLs[id].body.componentList = ([...store.pageUICDLs[id].body.componentList,action.uiComponent] as any)
         return store; 
     }
 }
