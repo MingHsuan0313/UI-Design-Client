@@ -81,8 +81,9 @@ export default class GraphEditorService {
     }
   }
 
-  applyLayout(layout: String) {
-    this.selectedGraphStorage.applyLayout(layout);
+  applyLayout(layout: string) {
+    this.selectedEditor.applyLayout(layout);
+    // this.selectedGraphStorage.applyLayout(layout);
   }
 
 

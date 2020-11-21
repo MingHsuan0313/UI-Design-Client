@@ -1,9 +1,11 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
-import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
+import { SelabEditor } from '../../externalRepresentation/selab-editor.model';
 import { Storage } from '../../../shared/storage';
 import { LayoutComponent } from "../../internalRepresentation/LayoutComponent.model";
+import { SelabVertex } from "../../store/selabVertex.model";
+import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 
 export class LayoutStrategy implements ICreateComponentStrategy {
   basex: number;
@@ -11,12 +13,11 @@ export class LayoutStrategy implements ICreateComponentStrategy {
   graphNode: HTMLElement;
   defaultWidth: number;
   defaultHeight: number;
-  layout: VertexStorage;
 
   constructor(basex?, basey?) {
-    this.graphNode = document.getElementById('graphContainer0');
-    this.defaultWidth = this.graphNode.offsetWidth;
-    this.defaultHeight = this.graphNode.offsetHeight;
+    this.graphNode = document.getElementById('graphContainer-0');
+    this.defaultWidth = this.graphNode.offsetWidth - 25;
+    this.defaultHeight = this.graphNode.offsetHeight - 15;
     // basic component
     if (basex == undefined || basey == undefined) {
       this.basex = 0;
@@ -27,96 +28,125 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     }
   }
   
-  createLayout(graphStorage: GraphStorage,bodyComponent: LayoutComponent) {
-    let parent = graphStorage.getGraph().getDefaultParent();
+  createLayout(selabEditor: SelabEditor,bodyComponent: LayoutComponent) {
+    let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1'];
-    let styleName = 'Layout1';
-    let styleStorage = new StyleStorage(styleName, style);
     const layoutGeometry = new mxGeometry(0, 0, this.defaultWidth, this.defaultHeight);
-    this.layout = graphStorage.insertVertex(parent, null, "", layoutGeometry, styleStorage, bodyComponent);
+    // this.layout = selabEditor.insertVertex(parent, null, "", layoutGeometry, styleStorage, bodyComponent);
+    let id = (parseInt(bodyComponent.getId())).toString();
+    let selabVertex = new SelabVertex()
+      .setID(bodyComponent.getSelector() + "-" + id)
+      .setUIComponentID(bodyComponent.getId())
+      .setParentID(parent.id)
+      .setIsPrimary(true);
 
-    this.layout.setIsPrimary(false);
-    this.layout.vertex["componentPart"] = "box";
-    this.layout.vertex["dataBinding"] = this.createDataBinding("box");
-    this.layout.vertex["isPrimary"] = false;
+    let layoutBodyCell = selabEditor.insertVertex(selabVertex, bodyComponent, layoutGeometry, style);
+    layoutBodyCell["componentPart"] = "box";
+    layoutBodyCell["dataBinding"] = this.createDataBinding("box");
+    layoutBodyCell["isPrimary"] = false;
   }
   
-  createHeader(graphStorage: GraphStorage, headerComponent: LayoutComponent) {
+  createHeader(selabEditor: SelabEditor, headerComponent: LayoutComponent) {
+    let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Header'];
-    let styleName = "Layout1Header";
-    let styleStorage = new StyleStorage(styleName, style);
     const layoutHeaderGeometry = new mxGeometry(0, 0, this.defaultWidth, this.defaultHeight / 15);
-    const header = graphStorage.insertVertex(this.layout.getVertex(), null, "", layoutHeaderGeometry, styleStorage,headerComponent);
+    let id = (parseInt(headerComponent.getId())).toString();
+    let selabVertex = new SelabVertex()
+      .setID(headerComponent.getSelector() + "-" + id)
+      .setUIComponentID(headerComponent.getId())
+      .setParentID(parent.id)
+      .setIsPrimary(true);
 
-    header.vertex["componentPart"] = "header";
-    header.vertex["dataBinding"] = this.createDataBinding("header");
-    header.vertex["isPrimary"] = true;
-    header.isPrimary = true;
+    let layoutHeaderCell = selabEditor.insertVertex(selabVertex, headerComponent, layoutHeaderGeometry, style);
+    layoutHeaderCell["componentPart"] = "header";
+    layoutHeaderCell["dataBinding"] = this.createDataBinding("header");
+    layoutHeaderCell["isPrimary"] = true;
   }
   
-  createBody(graphStorage: GraphStorage, bodyComponent: LayoutComponent) {
+  createBody(selabEditor: SelabEditor, bodyComponent: LayoutComponent) {
+    let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Body'];
-    let styleName = "Layout1Body";
-    let styleStorage = new StyleStorage(styleName, style);
     const layoutBodyGeometry = new mxGeometry(this.defaultWidth / 7, this.defaultHeight / 15, this.defaultWidth * 5 / 7, this.defaultHeight * 13 / 15);
-    const body = graphStorage.insertVertex(this.layout.getVertex(), null,"", layoutBodyGeometry, styleStorage,bodyComponent);
-    body.vertex["componentPart"] = "body";
-    body.vertex["dataBinding"] = this.createDataBinding("body");
-    body.vertex["isPrimary"] = true; 
-    body.isPrimary = true;
+    let id = (parseInt(bodyComponent.getId())).toString();
+    let selabVertex = new SelabVertex()
+      .setID(bodyComponent.getSelector() + "-" + id)
+      .setUIComponentID(bodyComponent.getId())
+      .setParentID(parent.id)
+      .setIsPrimary(true);
+    let layoutBodyCell = selabEditor.insertVertex(selabVertex, bodyComponent, layoutBodyGeometry, style);
+    layoutBodyCell["componentPart"] = "body";
+    layoutBodyCell["dataBinding"] = this.createDataBinding("body");
+    layoutBodyCell["isPrimary"] = true; 
   }
   
-  createSideBar(graphStorage: GraphStorage, sidebarComponent: LayoutComponent) {
+  createSideBar(selabEditor: SelabEditor, sidebarComponent: LayoutComponent) {
+    let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Sidebar'];
-    let styleName = "Layout1Sidebar";
-    let styleStorage = new StyleStorage(styleName, style);
     const layoutSidebarGeometry = new mxGeometry(0, this.defaultHeight / 15, this.defaultWidth / 7, this.defaultHeight * 14 / 15);
-    const siderbar = graphStorage.insertVertex(this.layout.getVertex(), null, "", layoutSidebarGeometry, styleStorage, sidebarComponent);
-    siderbar.vertex["componentPart"] = "siderbar";
-    siderbar.vertex["dataBinding"] = this.createDataBinding("siderbar");
-    siderbar.vertex["isPrimary"] = true; 
-    siderbar.isPrimary = true;
+    let id = (parseInt(sidebarComponent.getId())).toString();
+    let selabVertex = new SelabVertex()
+      .setID(sidebarComponent.getSelector() + "-" + id)
+      .setUIComponentID(sidebarComponent.getId())
+      .setParentID(parent.id)
+      .setIsPrimary(true);
+
+    let layoutSiderbarCell = selabEditor.insertVertex(selabVertex, sidebarComponent, layoutSidebarGeometry, style);
+    layoutSiderbarCell["componentPart"] = "siderbar";
+    layoutSiderbarCell["dataBinding"] = this.createDataBinding("siderbar");
+    layoutSiderbarCell["isPrimary"] = true; 
   }
   
-  createAsideBar(graphStorage: GraphStorage, asidebarComponent: LayoutComponent) {
+  createAsideBar(selabEditor: SelabEditor, asidebarComponent: LayoutComponent) {
+    let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Asidebar'];
-    let styleName = "Layout1Asidebar";
-    let styleStorage = new StyleStorage(styleName, style);
     const layoutAsidebarGeometry = new mxGeometry(this.defaultWidth * 6 / 7, this.defaultHeight / 15, this.defaultWidth / 7, this.defaultHeight * 14 / 15);
-    const asidebar = graphStorage.insertVertex(this.layout.getVertex(), null, "", layoutAsidebarGeometry, styleStorage,asidebarComponent);
-    asidebar.vertex["componentPart"] = "asidebar";
-    asidebar.vertex["dataBinding"] = this.createDataBinding("asidebar");
-    asidebar.vertex["isPrimary"] = true; 
-    asidebar.isPrimary = true;
+    let id = (parseInt(asidebarComponent.getId())).toString();
+    let selabVertex = new SelabVertex()
+      .setID(asidebarComponent.getSelector() + "-" + id)
+      .setUIComponentID(asidebarComponent.getId())
+      .setParentID(parent.id)
+      .setIsPrimary(true);
+    let layoutAsidebarCell = selabEditor.insertVertex(selabVertex, asidebarComponent, layoutAsidebarGeometry, style);
+
+    layoutAsidebarCell["componentPart"] = "asidebar";
+    layoutAsidebarCell["dataBinding"] = this.createDataBinding("asidebar");
+    layoutAsidebarCell["isPrimary"] = true; 
   }
   
-  createFooter(graphStorage: GraphStorage, footerComponent: LayoutComponent) {
+  createFooter(selabEditor: SelabEditor, footerComponent: LayoutComponent) {
+    let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Footer'];
-    let styleName = "Layout1Footer";
-    let styleStorage = new StyleStorage(styleName, style);
     const layoutFooterGeometry = new mxGeometry(this.defaultWidth / 7, this.defaultHeight * 14 / 15, this.defaultWidth * 5 / 7, this.defaultHeight * 1 / 15);
-    const footer = graphStorage.insertVertex(this.layout.getVertex(), null, "", layoutFooterGeometry, styleStorage, footerComponent);
-    footer.vertex["componentPart"] = "footer";
-    footer.vertex["dataBinding"] = this.createDataBinding("footer");
-    footer.vertex["isPrimary"] = true
-    footer.isPrimary = true;
+    let id = (parseInt(footerComponent.getId())).toString();
+    let selabVertex = new SelabVertex()
+      .setID(footerComponent.getSelector() + "-" + id)
+      .setUIComponentID(footerComponent.getId())
+      .setParentID(parent.id)
+      .setIsPrimary(true);
+
+    let layoutFooterCell = selabEditor.insertVertex(selabVertex, footerComponent, layoutFooterGeometry, style);
+    layoutFooterCell["componentPart"] = "footer";
+    layoutFooterCell["dataBinding"] = this.createDataBinding("footer");
+    layoutFooterCell["isPrimary"] = true
   }
 
-  createComponent(graphStorage: GraphStorage) {
-    
-    let pageUICDL = Storage.pageUICDL;
+  createLayoutComponent(selabEditor: SelabEditor,pageUICDL: PageUICDL) {
     let bodyComponent = pageUICDL.getBody();
     let headerComponent = pageUICDL.getHeader();
     let sidebarComponent = pageUICDL.getSidebar();
     let footerComponent = pageUICDL.getFooter();
     let asidebarComponent = pageUICDL.getAsidebar();
 
-    this.createLayout(graphStorage,bodyComponent);
-    this.createHeader(graphStorage,headerComponent);
-    this.createFooter(graphStorage,footerComponent);
-    this.createSideBar(graphStorage,sidebarComponent);
-    this.createBody(graphStorage,bodyComponent);
-    this.createAsideBar(graphStorage,asidebarComponent);
+    this.createLayout(selabEditor,bodyComponent);
+    this.createHeader(selabEditor,headerComponent);
+    this.createFooter(selabEditor,footerComponent);
+    this.createSideBar(selabEditor,sidebarComponent);
+    this.createBody(selabEditor,bodyComponent);
+    this.createAsideBar(selabEditor,asidebarComponent);
+  }
+  
+  createComponent(selabEditor) {
+
   }
 
   createDataBinding(part: String, index?){

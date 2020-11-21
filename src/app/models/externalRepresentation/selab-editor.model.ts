@@ -3,6 +3,7 @@ import GraphEditorService from "src/app/services/externalRepresentation/graph-ed
 import { Configuration } from "src/app/services/externalRepresentation/util/configuration";
 import { ERInsertVertexAction } from "../store/actions/externalRepresentation.action";
 import { AppState } from "../store/app.state";
+import { pageUICDLSelector } from "../store/reducers/InternalRepresentationSelector";
 import { SelabVertex } from "../store/selabVertex.model";
 import { UIComponent } from "../ui-component-dependency";
 import { BreadcrumbStrategy, ButtonStrategy, CardStrategy, DropdownStrategy, FormStrategy, IconStrategy, InputStrategy, LayoutStrategy, TableStrategy, TextStrategy } from "./component-strategy-dependency";
@@ -15,8 +16,8 @@ export class SelabEditor {
     createComponentStrategy: ICreateComponentStrategy;
 
     constructor(element: HTMLElement,
-         store: Store<AppState>,
-         private graphEditorService: GraphEditorService) {
+        store: Store<AppState>,
+        private graphEditorService: GraphEditorService) {
         this.initializeEditor(element, "assets/keyhandler.xml");
         this.id = element.id;
         this.store = store;
@@ -54,6 +55,18 @@ export class SelabEditor {
         this.createComponentStrategy = strategy;
     }
 
+    applyLayout(layout: string) {
+        console.log("apply Layout")
+        this.setStrategy(new LayoutStrategy(0, 0));
+        let pageUICDLs = this.store.select(pageUICDLSelector());
+        pageUICDLs.subscribe((data) => {
+            let id = this.graphEditorService.getSelectedGraphID();
+            console.log(data[id]);
+            (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this, data[id]);
+        });
+
+    }
+
     insertVertex(selabVertex: SelabVertex, component: UIComponent, geometry: mxGeometry, style: object): mxCell {
         let vertex;
         let id = selabVertex.getID();
@@ -69,7 +82,7 @@ export class SelabEditor {
             vertex["selector"] = component.getSelector();
             vertex["type"] = component.getType();
             let graphID = this.graphEditorService.getSelectedGraphID();
-            this.store.dispatch(new ERInsertVertexAction(graphID,selabVertex));
+            this.store.dispatch(new ERInsertVertexAction(graphID, selabVertex));
         } finally {
             this.getGraph().getModel().endUpdate();
         }
@@ -120,8 +133,16 @@ export class SelabEditor {
             } else if (uiComponent['type'] == 'form') {
                 this.setStrategy(new FormStrategy(basex, basey));
             } else if (uiComponent['type'].startsWith('layout')) {
+                console.log("Hello")
                 // initialized layout into 5 parts
-                this.setStrategy(new LayoutStrategy(basex, basey));
+                // this.setStrategy(new LayoutStrategy(basex, basey));
+                // let pageUICDLs = this.store.select(pageUICDLSelector());
+                // pageUICDLs.subscribe((data) => {
+                //     let id = this.graphEditorService.getSelectedGraphID();
+                //     console.log(data[id]);
+                //     (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this,data[id]);
+                // });
+                // return;
             }
             const compositeVertexStorage = this.createComponentStrategy.createComponent(this, uiComponent, parent);
             return compositeVertexStorage;
@@ -131,7 +152,7 @@ export class SelabEditor {
     getVertexByID(id: string): mxCell {
         let model = this.getGraphModel();
         let cells = model.cells;
-        if(id in cells)
+        if (id in cells)
             return cells[id];
         else
             return null;

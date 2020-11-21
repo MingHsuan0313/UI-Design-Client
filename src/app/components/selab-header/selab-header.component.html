@@ -25,7 +25,7 @@
 </mat-menu>
 
 <mat-menu #layoutMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item>Prime</button>
+  <button mat-menu-item (click)="applyLayout('prime')">Prime</button>
   <button mat-menu-item>Layout1</button>
   <button mat-menu-item>Layout2</button>
 </mat-menu>
