@@ -92,6 +92,7 @@ export class StyleEditorComponent implements OnInit {
     if (this.rounded) {
       oldStyle.rounded = "1";
       this.selectedStyleStorage.changeRounded("1");
+
     }
     else {
       oldStyle.rounded = "0";
@@ -104,24 +105,24 @@ export class StyleEditorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.graphStorage = this.graphEditorService.getGraphStorage();
-    this.graph = this.graphEditorService.getGraphStorage().getGraph();
+    // this.graphStorage = this.graphEditorService.getGraphStorage();
+    // this.graph = this.graphEditorService.getGraphStorage().getGraph();
 
-    this.graph.addListener(mxEvent.CLICK, (sender, event) => {
-      this.selectedVertex = sender.selectionModel.cells[0];
-      let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
-      this.selectedStyleStorage = vertexStorage.getStyleStorage();
-      let vertexStyleDescription = this.selectedVertex.style;
-      let styleObj = this.styleEditorService.convertStyleDescriptionToJsobObject(vertexStyleDescription);
-      this.syncEditorWithSelectedVertex(styleObj);
-    })
-    this.styleEditorService.convertStyleDescriptionToJsobObject("fillColor=#ffffff;fontSize=20;")
+    // this.graph.addListener(mxEvent.CLICK, (sender, event) => {
+    //   this.selectedVertex = sender.selectionModel.cells[0];
+    //   let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
+    //   this.selectedStyleStorage = vertexStorage.getStyleStorage();
+    //   let vertexStyleDescription = this.selectedVertex.style;
+    //   let styleObj = this.styleEditorService.convertStyleDescriptionToJsobObject(vertexStyleDescription);
+    //   this.syncEditorWithSelectedVertex(styleObj);
+    // })
+    // this.styleEditorService.convertStyleDescriptionToJsobObject("fillColor=#ffffff;fontSize=20;")
   }
 
   ngAfterViewInit() {
-    this.graph.getSelectionModel().addListener(mxEvent.CHANGE, function (sender, evt) {
-      let cells = evt.getProperty('removed');
-    });
+    // this.graph.getSelectionModel().addListener(mxEvent.CHANGE, function (sender, evt) {
+    //   let cells = evt.getProperty('removed');
+    // });
   }
 
   syncEditorWithSelectedVertex(styleObj) {

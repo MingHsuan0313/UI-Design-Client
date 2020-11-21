@@ -14,6 +14,7 @@ export class InternalRepresentation {
     pageUICDLs: Map<string,PageUICDL>;
     constructor() {
         this.pageUICDLs = new Map<string,PageUICDL>();
+
     }
 }
 

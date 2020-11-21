@@ -71,3 +71,12 @@ selab-graph-editor .mat-tab-label{
   height: 100%;
   padding-right: 0px;
 }
+
+selab-setting .mat-tab-body-content {
+  position: fixed;
+}
+
+selab-setting .mat-tab-label {
+  font-size: large;
+  font-weight: bold;
+}
