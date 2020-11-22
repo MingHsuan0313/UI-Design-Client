@@ -1,5 +1,5 @@
 // import { Component, OnInit } from '@angular/core';
-import { AfterViewInit, Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, OnInit, Input } from '@angular/core';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import * as html2canvas from 'html2canvas';
 import ImportService from '../../services/internalRepresentation/import.service';
@@ -14,8 +14,11 @@ import { SelabGraph } from 'src/app/models/store/selabGraph.model';
 import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRRenamePageAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { MatDialog, MatIconRegistry, MatSnackBar, MatTabGroup } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { pageUICDLSelector } from 'src/app/models/store/reducers/InternalRepresentationSelector';
+import { pageUICDLSelector, uiComponentSelector } from 'src/app/models/store/reducers/InternalRepresentationSelector';
 import { TabNameDialogComponent } from './tab-name-dialog/tab-name-dialog.component';
+import { ComponentInfoComponent } from '../selab-setting/component-info/component-info.component';
+import { vertexSelector } from 'src/app/models/store/reducers/ExternalRepresentationSelector';
+import { SelabSettingComponent } from '../selab-setting/selab-setting.component';
 
 @Component({
   selector: 'selab-graph-editor',
@@ -27,6 +30,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   public tabs: TabModel[] = [new TabModel("page0", "graphContainer-0")];
   selected = new FormControl(0);
   @ViewChild("tabGroup") tabGroup: MatTabGroup;
+  @Input() setting: SelabSettingComponent;
   //imageCount = 1;
   constructor(private graphEditorService: GraphEditorService,
     private exportService: ExportService,
@@ -43,12 +47,12 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     console.log(this.graphEditorService.getGraphModel());
     this.openSnackBar("show GraphModel in console", "display");
   }
-  
+
   changeTabName(index: number) {
     console.log("change tab name");
     this.openDialog(index);
   }
-  
+
   openDialog(index) {
     let currentTabName = this.tabs[index];
     let data = {
@@ -64,8 +68,10 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       let id = this.graphEditorService.getSelectedGraphID();
       console.log("new Tabname " + result);
-      this.tabs[index].name = result;
-      this.store.dispatch(new IRRenamePageAction(id,result));
+      if ((result as string).length != 0) {
+        this.tabs[index].name = result;
+        this.store.dispatch(new IRRenamePageAction(id, result));
+      }
     });
   }
 
@@ -119,7 +125,38 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     // this.graphEditorService.createGraph(element);
     this.store.dispatch(new IRInsertPageUICDLAction(newPageUICDL));
     this.graphEditorService.createEditor(element);
+    this.configure();
     this.store.dispatch(new ERInsertGraphStorageAction(new SelabGraph(elementId)))
+  }
+
+  configure() {
+    let graph = this.graphEditorService.getGraph()
+    let graphID = this.graphEditorService.getSelectedGraphID();
+    graph.addListener(mxEvent.CLICK, (sender, event) => {
+      this.setting.clear();
+      let selectedVertex = sender.selectionModel.cells[0];
+      console.log('grpah being click')
+      console.log(graphID)
+      console.log('vertex being click');
+      if(selectedVertex != undefined) {
+        
+        console.log(selectedVertex.id);
+        let vertexObservable = this.store.select(vertexSelector(graphID,selectedVertex.id));
+        vertexObservable.subscribe((data) => {
+          console.log(data);
+          let componentObservable = this.store.select(uiComponentSelector(graphID,data.uiComponentID));
+          componentObservable.subscribe((component) => {
+            if(component != undefined) {
+              console.log(component);
+              console.log(component.getInfo());
+              this.setting.update(component);
+            }
+            else
+              console.log("component is undefined");
+          })
+        })
+      }
+    })
   }
 
   onTabChange(event) {

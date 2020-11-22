@@ -8,6 +8,7 @@ import { AppState } from "src/app/models/store/app.state";
 import { Action, Store } from "@ngrx/store";
 import { Configuration } from "./util/configuration";
 import { SelabEditor } from "src/app/models/externalRepresentation/selab-editor.model";
+import { UIComponent } from "src/app/models/ui-component-dependency";
 
 @Injectable({
   providedIn: "root"
@@ -20,11 +21,13 @@ export default class GraphEditorService {
 
   editors: Map<string,SelabEditor>;
   selectedEditor: SelabEditor;
+  selectedUIComponent: UIComponent;
 
   constructor(private styleEditorService: StyleEditorService,
     private store: Store<AppState> 
     ) {
     this.graphStorages = [];
+    this.selectedUIComponent = undefined;
     this.editors = new Map();
   }
   

@@ -13,6 +13,7 @@ export enum IRActionTypes {
 export class IRInsertUIComponentAction implements Action {
     public type = IRActionTypes["INSERT_UI_COMPONENT"];
     constructor(public id: string,public uiComponent: UIComponent) {}
+
 }
 
 export class IRRenamePageAction implements Action {

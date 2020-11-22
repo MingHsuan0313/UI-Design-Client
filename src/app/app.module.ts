@@ -20,9 +20,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
-import { MatFormFieldModule, MatIconModule, MatInputModule } from "@angular/material";
+import { MatFormFieldModule, MatIconModule, MatInputModule, MatListModule } from "@angular/material";
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTreeModule } from '@angular/material/tree'; 
+import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips'; 
 import { MatMenuModule } from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip'; 
@@ -74,7 +75,8 @@ import { externalRepresentationReducer } from "./models/store/reducers/ExternalR
 import { internalRepresentationReducer } from "./models/store/reducers/InternalRepresentationReducer";
 import { ConfirmDialogComponent } from './components/utils/confirm-dialog/confirm-dialog.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { TabNameDialogComponent } from './components/selab-graph-editor/tab-name-dialog/tab-name-dialog.component'; 
+import { TabNameDialogComponent } from './components/selab-graph-editor/tab-name-dialog/tab-name-dialog.component';
+import { ComponentInfoComponent } from './components/selab-setting/component-info/component-info.component'; 
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -128,7 +130,8 @@ export function reducerFactory() {
     PipelineDataMenuComponent,
     MenuItemComponent,
     ConfirmDialogComponent,
-    TabNameDialogComponent
+    TabNameDialogComponent,
+    ComponentInfoComponent
   ],
   imports: [
     PerfectScrollbarModule,
@@ -154,6 +157,8 @@ export function reducerFactory() {
     MatToolbarModule,
     MatCheckboxModule,
     MatSnackBarModule,
+    MatDividerModule,
+    MatListModule,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,

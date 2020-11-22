@@ -22,6 +22,7 @@ class InternalRepresentationReducer {
     @Action
     public renamePage(store: InternalRepresentation, action: IRRenamePageAction): InternalRepresentation {
         console.log("rename");
+
        store = {...store};
        store.pageUICDLs = {...store.pageUICDLs};
        store.pageUICDLs[action.id] = {...store.pageUICDLs[action.id]};

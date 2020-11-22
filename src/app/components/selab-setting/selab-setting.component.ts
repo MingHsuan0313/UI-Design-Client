@@ -1,7 +1,9 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import ExportService from '../../services/internalRepresentation/export.service';
 import {MatTabsModule} from '@angular/material/tabs';
+import { ComponentInfoComponent } from './component-info/component-info.component';
+import { UIComponent } from 'src/app/models/ui-component-dependency';
 
 @Component({
   selector: 'selab-setting',
@@ -13,11 +15,20 @@ export class SelabSettingComponent implements OnInit {
 
   files: any[] = [];
   image: any;
+  @ViewChild("settingInfo") componentInfo: ComponentInfoComponent;
 
   constructor(private graphEditorService: GraphEditorService, private exportService: ExportService) {
   }
 
   ngOnInit() {
+  }
+  
+  update(uiComponent: UIComponent) {
+    this.componentInfo.update(uiComponent);
+  }
+  
+  clear() {
+    this.componentInfo.clear();
   }
 
   insertArrow() {
