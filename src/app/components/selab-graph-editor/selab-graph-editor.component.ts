@@ -11,10 +11,11 @@ import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
 import { ERClearGraphStorageActition, ERDeleteGraphStorageAction, ERInsertGraphStorageAction } from 'src/app/models/store/actions/externalRepresentation.action';
 import { SelabGraph } from 'src/app/models/store/selabGraph.model';
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction } from 'src/app/models/store/actions/internalRepresentation.action';
-import { MatIconRegistry, MatSnackBar, MatTabGroup } from '@angular/material';
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRRenamePageAction } from 'src/app/models/store/actions/internalRepresentation.action';
+import { MatDialog, MatIconRegistry, MatSnackBar, MatTabGroup } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { pageUICDLSelector } from 'src/app/models/store/reducers/InternalRepresentationSelector';
+import { TabNameDialogComponent } from './tab-name-dialog/tab-name-dialog.component';
 
 @Component({
   selector: 'selab-graph-editor',
@@ -30,7 +31,8 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   constructor(private graphEditorService: GraphEditorService,
     private exportService: ExportService,
     private store: Store<AppState>,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
   }
 
@@ -40,6 +42,31 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   showExternalRepresentation() {
     console.log(this.graphEditorService.getGraphModel());
     this.openSnackBar("show GraphModel in console", "display");
+  }
+  
+  changeTabName(index: number) {
+    console.log("change tab name");
+    this.openDialog(index);
+  }
+  
+  openDialog(index) {
+    let currentTabName = this.tabs[index];
+    let data = {
+      tabName: currentTabName
+    };
+    const dialogRef = this.dialog.open(TabNameDialogComponent, {
+      // width:'20%' ,
+      // height: '25%',
+      data: data,
+      autoFocus: true,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      let id = this.graphEditorService.getSelectedGraphID();
+      console.log("new Tabname " + result);
+      this.tabs[index].name = result;
+      this.store.dispatch(new IRRenamePageAction(id,result));
+    });
   }
 
   openSnackBar(message: string, action: string) {

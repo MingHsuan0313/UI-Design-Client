@@ -42,6 +42,7 @@ export class BreadcrumbComponent extends CompositeComponent {
       service: this.serviceComponent.getInfo(),
       children: this.expandChildren()
     }
+
   }
 
   remove(component: UIComponent): void {

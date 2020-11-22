@@ -31,6 +31,7 @@ export class LayoutStrategy implements ICreateComponentStrategy {
   createLayout(selabEditor: SelabEditor,bodyComponent: LayoutComponent) {
     let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1'];
+
     const layoutGeometry = new mxGeometry(0, 0, this.defaultWidth, this.defaultHeight);
     // this.layout = selabEditor.insertVertex(parent, null, "", layoutGeometry, styleStorage, bodyComponent);
     let id = (parseInt(bodyComponent.getId())).toString();

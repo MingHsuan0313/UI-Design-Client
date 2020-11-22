@@ -6,23 +6,23 @@
 
 <!-- <button type="button" (click)="showInternelRepresentation()" class="btn btn-outline-dark">Show IR</button> -->
 <!-- <mat-toolbar style="height: 30px; min-height: 30px;background-color: #1f2329; color: white;"> -->
-<mat-toolbar style="height: 30px; min-height: 30px; background-color: #082038; color:white">
+<mat-toolbar style="height: 40px; min-height: 30px; background-color: #f7f7f7; color:black">
     <mat-toolbar-row>
-        <button mat-button style="min-width: 20px;" [matMenuTriggerFor]="utilMenu">Util</button>
+        <button mat-button style="padding-left: 26px; font-size:large; min-width: 20px;" [matMenuTriggerFor]="utilMenu">Util</button>
         <button (click)="zoomIn()" mat-button style="min-width: 10px;" matTooltip="zoomIn">
-            <mat-icon style="margin-bottom:15px;" svgIcon="zoomIn"></mat-icon>
+            <mat-icon style="margin-bottom:10px;" svgIcon="zoomIn"></mat-icon>
         </button>
         <button (click)="zoomOut()" mat-button style="min-width: 10px;" matTooltip="zoomOut">
-            <mat-icon style="margin-bottom:15px ;" svgIcon="zoomOut"></mat-icon>
+            <mat-icon style="margin-bottom:10px ;" svgIcon="zoomOut"></mat-icon>
         </button>
         <button mat-button style="min-width: 10px;" matTooltip="undo">
-            <mat-icon style="margin-bottom:15px ;" svgIcon="undo"></mat-icon>
+            <mat-icon style="margin-bottom:10px ;" svgIcon="undo"></mat-icon>
         </button>
         <button mat-button style="min-width: 10px;" matTooltip="redo">
-            <mat-icon style="margin-bottom:15px ;" svgIcon="redo"></mat-icon>
+            <mat-icon style="margin-bottom:10px ;" svgIcon="redo"></mat-icon>
         </button>
         <button (click)="clearGraph()" mat-button style="min-width: 10px;" matTooltip="delete">
-            <mat-icon style="margin-bottom:15px ;" svgIcon="delete"></mat-icon>
+            <mat-icon style="margin-bottom:10px ;" svgIcon="delete"></mat-icon>
         </button>
     </mat-toolbar-row>
 </mat-toolbar>
@@ -36,12 +36,14 @@
     (selectedTabChange)="onTabChange($event)" headerPosition="below">
     <mat-tab *ngFor="let tab of tabs; let index = index" label="{{tab}}">
         <ng-template mat-tab-label>
-            <span style="font-size: large; color:#188038 !important"> {{tab.name}} </span>
+            <span (dblclick)="changeTabName(index)" style="font-size: large; color:#188038 !important"> {{tab.name}} </span>
+            <!-- <input type="text" value="{{tab.name}}" readonly="true" ondblclick="this.readOnly='';"> -->
+
             <button (click)="closePage(index)" mat-button style="min-width: 10px;" matTooltip="close">
                 <mat-icon style="margin-bottom:15px;" svgIcon="close"></mat-icon>
             </button>
         </ng-template>
-        <div style="height:800px; overflow:scroll; padding-left:10px" class="geEditor" id="{{tab.graphID}}">
+        <div style="height:790px; overflow:scroll; padding-left:10px" class="geEditor" id="{{tab.graphID}}">
         </div>
     </mat-tab>
 

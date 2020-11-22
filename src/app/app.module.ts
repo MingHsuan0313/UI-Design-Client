@@ -73,7 +73,8 @@ import { PageUICDL } from "./models/internalRepresentation/pageUICDL.model";
 import { externalRepresentationReducer } from "./models/store/reducers/ExternalRepresentationReducer";
 import { internalRepresentationReducer } from "./models/store/reducers/InternalRepresentationReducer";
 import { ConfirmDialogComponent } from './components/utils/confirm-dialog/confirm-dialog.component';
-import {MatSnackBarModule} from '@angular/material/snack-bar'; 
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { TabNameDialogComponent } from './components/selab-graph-editor/tab-name-dialog/tab-name-dialog.component'; 
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -126,7 +127,8 @@ export function reducerFactory() {
     PropertyEditorComponent,
     PipelineDataMenuComponent,
     MenuItemComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    TabNameDialogComponent
   ],
   imports: [
     PerfectScrollbarModule,
@@ -170,7 +172,8 @@ export function reducerFactory() {
     CodeEditorComponent,
     CodeEditorDialogComponent,
     SelabWizardComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    TabNameDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

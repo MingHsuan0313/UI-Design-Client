@@ -1,6 +1,6 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction, IRRenamePageAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 
 class InternalRepresentationReducer {
@@ -18,6 +18,17 @@ class InternalRepresentationReducer {
         delete store.pageUICDLs[action.id];
         return store;
     }
+    
+    @Action
+    public renamePage(store: InternalRepresentation, action: IRRenamePageAction): InternalRepresentation {
+        console.log("rename");
+       store = {...store};
+       store.pageUICDLs = {...store.pageUICDLs};
+       store.pageUICDLs[action.id] = {...store.pageUICDLs[action.id]};
+       store.pageUICDLs[action.id].name = action.pageName;
+       return store;
+    }
+
     
     @Action
     public clearPageUICDL(store: InternalRepresentation, action: IRClearPageUICDLAction): InternalRepresentation {
