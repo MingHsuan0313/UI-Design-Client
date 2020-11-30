@@ -42,6 +42,7 @@ export class ComponentInfoComponent implements OnInit {
       let grpah = editor.getGraph();
       grpah.addListener(mxEvent.CLICK, (sender, event) => {
         let selectedVertex = sender.selectionModel.cells[0];
+
         console.log('grpah being click')
         console.log(this);
         console.log('vertex being click');

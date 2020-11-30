@@ -7,6 +7,12 @@
       name="fillColor333" id="bgColor">
     <br style="margin-bottom:3px">
 
+    <label class="input-label" for="fillColor">Border Color</label>
+    <input style="position: relative; left:93px;" (change)="changeColor(event)" [(ngModel)]="colorPicker" type="color"
+      name="fillColor333" id="bgColor">
+    <br style="margin-bottom:3px">
+
+
     <label class="input-label" for="opacity">Opacity</label>
     <input style="position:relative; left: 130px; width: 25%; height:20px" (change)="changeOpacity()"
       [(ngModel)]="opacity" type="number" name="opacity" id="opacity">

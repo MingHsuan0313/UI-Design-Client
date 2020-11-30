@@ -135,25 +135,23 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     graph.addListener(mxEvent.CLICK, (sender, event) => {
       this.setting.clear();
       let selectedVertex = sender.selectionModel.cells[0];
-      console.log('grpah being click')
-      console.log(graphID)
-      console.log('vertex being click');
-      if(selectedVertex != undefined) {
-        
+      if (selectedVertex != undefined) {
         console.log(selectedVertex.id);
-        let vertexObservable = this.store.select(vertexSelector(graphID,selectedVertex.id));
+        let vertexObservable = this.store.select(vertexSelector(graphID, selectedVertex.id));
         vertexObservable.subscribe((data) => {
           console.log(data);
-          let componentObservable = this.store.select(uiComponentSelector(graphID,data.uiComponentID));
-          componentObservable.subscribe((component) => {
-            if(component != undefined) {
-              console.log(component);
-              console.log(component.getInfo());
-              this.setting.update(component);
-            }
-            else
-              console.log("component is undefined");
-          })
+          if (data != undefined) {
+            let componentObservable = this.store.select(uiComponentSelector(graphID, data.uiComponentID));
+            componentObservable.subscribe((component) => {
+              if (component != undefined) {
+                console.log(component);
+                console.log(component.getInfo());
+                this.setting.update(component);
+              }
+              else
+                console.log("component is undefined");
+            })
+          }
         })
       }
     })

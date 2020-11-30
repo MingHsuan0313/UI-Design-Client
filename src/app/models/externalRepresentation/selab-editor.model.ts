@@ -132,19 +132,7 @@ export class SelabEditor {
                 this.setStrategy(new BreadcrumbStrategy(basex, basey));
             } else if (uiComponent['type'] == 'form') {
                 this.setStrategy(new FormStrategy(basex, basey));
-            } else if (uiComponent['type'].startsWith('layout')) {
-                console.log("Hello")
-                // initialized layout into 5 parts
-                // this.setStrategy(new LayoutStrategy(basex, basey));
-                // let pageUICDLs = this.store.select(pageUICDLSelector());
-                // pageUICDLs.subscribe((data) => {
-                //     let id = this.graphEditorService.getSelectedGraphID();
-                //     console.log(data[id]);
-                //     (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this,data[id]);
-                // });
-                // return;
-            }
-            const compositeVertexStorage = this.createComponentStrategy.createComponent(this, uiComponent, parent);
+            } const compositeVertexStorage = this.createComponentStrategy.createComponent(this, uiComponent, parent);
             return compositeVertexStorage;
         }
     }

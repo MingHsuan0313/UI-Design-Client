@@ -6,6 +6,7 @@ export enum PipelineActionTypes {
     CREATE_OPERATION_ACTION = "[Pipeline] Create Operation",
     DELETE_TASKS_ACTION = "[Pipeline] Delete Tasks",
     DELETE_OPERATION_POOL_ACTION = "[Pipeline] Delete Operation Pool"
+
 }
 
 export class PipelineCreateTaskAction implements Action {
