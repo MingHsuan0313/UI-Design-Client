@@ -1,6 +1,7 @@
 import { Geometry } from "ngx-perfect-scrollbar";
 import { BreadcrumbComponent } from "./internalRepresentation/BreadcrumbComponent.model";
 import { ButtonComponent } from "./internalRepresentation/ButtonComponent.model";
+import { CardComponent } from "./internalRepresentation/CardComponent.model";
 import { CompositeComponent } from "./internalRepresentation/CompositeComponent.model";
 import { DropdownComponent } from "./internalRepresentation/DropdownComponent.model";
 import { FormComponent } from "./internalRepresentation/FormComponent.model";
@@ -103,6 +104,16 @@ export class UIComponentBuilder {
     buildFormComponent(): FormComponent {
         let formComponent: FormComponent = new FormComponent(this);
         return formComponent;
+    }
+    
+    buildCardComponent(): CardComponent {
+        let cardComponent: CardComponent = new CardComponent(this);
+        return cardComponent;
+    }
+    
+    buildBreadcrumbComponent(): BreadcrumbComponent {
+        let breadCrumbComponent: BreadcrumbComponent = new BreadcrumbComponent(this);
+        return breadCrumbComponent;
     }
     
     buildTableComponent(): TableComponent {

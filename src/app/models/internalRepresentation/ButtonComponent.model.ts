@@ -38,7 +38,7 @@ export class ButtonComponent extends BasicComponent {
   setServiceComponent(serviceComponent: ServiceComponentModel): ButtonComponent {
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
-      .setServiceComponet(serviceComponent)
+      .setServiceComponent(serviceComponent)
       .buildButtonComponent();
   }
   

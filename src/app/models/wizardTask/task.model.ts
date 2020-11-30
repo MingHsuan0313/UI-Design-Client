@@ -1,7 +1,8 @@
-import { Operation } from "./operation.model";
+import { Operation } from "../store/serviceEntry.model";
 
 export class Task {
     public componentType: string;
+
     public operation: Operation;
 
     public getComponentType(): string {

@@ -1,27 +1,42 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { CompositeComponent } from "./CompositeComponent.model";
+import { UIComponentBuilder } from "../UIComponentBuilder";
+import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 
 export class CardComponent extends CompositeComponent {
   header: String;
 
-  constructor(properties?) {
-    super();
-    if (properties) {
+  constructor(uiComponentbuilder: UIComponentBuilder) {
+    super(uiComponentbuilder);
+    let properties = uiComponentbuilder.getProperties();
+    if (properties != undefined) {
       this.header = properties["header"];
-      this.name = properties["name"];
     }
-    this.componentList = [];
-    this.category = "informative";
-    this.type = "card";
-    this.serviceComponent = new ServiceComponentModel();
+    this.componentList = uiComponentbuilder.componentList;
   }
 
-  setUIComponent(properties) {
-    this.header = properties["header"];
-    this.name = properties["name"];
+  setServiceComponent(serviceComponent: ServiceComponentModel): CardComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setServiceComponent(serviceComponent)
+      .buildCardComponent();
   }
-  
+
+  setName(name: string): CardComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setName(name)
+      .buildCardComponent();
+  }
+
+  setProperties(properties: Object): CardComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setProperties(properties)
+      .buildCardComponent();
+  }
+
   getProperties() {
     return [
       {
@@ -34,7 +49,7 @@ export class CardComponent extends CompositeComponent {
       }
     ]
   }
-  
+
   getChildrenOptions() {
     return ["text", "dropdown", "button", "table"]
   }
@@ -49,7 +64,7 @@ export class CardComponent extends CompositeComponent {
         name: this.name,
         header: this.header,
         children: this.expandChildren()
-      } 
+      }
     }
   }
 

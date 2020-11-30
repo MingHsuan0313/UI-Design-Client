@@ -1,20 +1,50 @@
 <div style="background-color: #f7f7f7;
   height:100%;
   width: 100%;
-  "
-  >
+  ">
   <mat-tab-group>
-    <mat-tab label="Component Setting"> 
-      <app-style-editor></app-style-editor> 
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <button mat-button
+          style="min-width: 15px; margin-bottom:10px; padding-left: 0px; padding-right: 0px; height: 20px;"
+          matTooltip="Setting">
+          <span>
+            <mat-icon style="color: black;" svgIcon="note"></mat-icon>
+          </span></button>
+      </ng-template>
+
+      <app-style-editor></app-style-editor>
       <hr>
       <app-component-info #settingInfo></app-component-info>
       <!-- <app-service-component-configuration></app-service-component-configuration> -->
     </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <button mat-button
+          style="min-width: 15px; margin-bottom:10px; padding-left: 0px; padding-right: 0px; height: 20px;"
+          matTooltip="EndPoint Testing">
+          <span>
+            <mat-icon style="color: black;" svgIcon="setting"></mat-icon>
+          </span></button>
+      </ng-template>
+      <app-endpoint-test></app-endpoint-test>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <button mat-button
+          style="min-width: 15px; margin-bottom:10px; padding-left: 0px; padding-right: 0px; height: 20px;"
+          matTooltip="navigation">
+          <span>
+            <mat-icon style="color: black;" svgIcon="navigation"></mat-icon>
+          </span></button>
+      </ng-template>
+      <app-nav-editor></app-nav-editor>
+    </mat-tab>
+
     <!-- <mat-tab label="Pages"> 
       <app-page-editor></app-page-editor>  
     </mat-tab> -->
-    <mat-tab label="Nav">
-      <app-nav-editor></app-nav-editor>
-    </mat-tab>
+    <!-- <mat-tab label="Nav">
+    </mat-tab> -->
   </mat-tab-group>
 </div>

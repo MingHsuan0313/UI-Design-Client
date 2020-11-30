@@ -16,12 +16,13 @@ export class AppComponent implements OnInit {
       .addSvgIcon('undo',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/undo-24px.svg'))
       .addSvgIcon('redo',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/redo-24px.svg'))
       .addSvgIcon('close',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/close-24px.svg'))
+      .addSvgIcon('setting',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/settings-24px.svg'))
+      .addSvgIcon('note',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/notes-24px.svg'))
+      .addSvgIcon('navigation',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/navigation-24px.svg'))
   }
-
   ngOnInit() {
 
   }
-
 }
 
 

@@ -1,22 +1,35 @@
 import { UIComponent } from "./UIComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { CompositeComponent } from "./CompositeComponent.model";
+import { UIComponentBuilder } from "../UIComponentBuilder";
+import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 
 export class BreadcrumbComponent extends CompositeComponent {
 
-  constructor(properties?) {
-    super();
-    if (properties != undefined) {
-      this.name = properties["name"];
-    }
-    this.componentList = [];
-    this.category = "navigation";
-    this.type = "breadcrumb";
-    this.serviceComponent = new ServiceComponentModel();
+  constructor(uiComponentBuilder: UIComponentBuilder) {
+    super(uiComponentBuilder);
+    this.componentList = uiComponentBuilder.componentList;
   }
 
-  setUIComponent(properties) {
-    this.name = properties["name"];
+  setServiceComponent(serviceComponent: ServiceComponentModel): BreadcrumbComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setServiceComponent(serviceComponent)
+      .buildBreadcrumbComponent();
+  }
+
+  setName(name: string): BreadcrumbComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setName(name)
+      .buildBreadcrumbComponent();
+  }
+
+  setProperties(properties: Object): BreadcrumbComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setProperties(properties)
+      .buildBreadcrumbComponent();
   }
 
   getProperties() {

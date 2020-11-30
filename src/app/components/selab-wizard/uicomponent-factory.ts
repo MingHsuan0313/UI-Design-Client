@@ -62,7 +62,13 @@ export class UIComponentFactory {
             this.uiComponentBuilders.set(uiComponent.getId(), uiComponentBuilder);
         }
         else if (type == "card") {
-            uiComponent = new CardComponent();
+            uiComponentBuilder = new UIComponentBuilder()
+                .setCategory("informative")
+                .setID(`${this.nextID}`)
+                .setSelector(`${type}-${this.nextID}`)
+                .setType("card")
+            uiComponent = uiComponentBuilder.buildCardComponent();
+            this.uiComponentBuilders.set(uiComponent.getId(),uiComponentBuilder);
         }
         else if (type == "dropdown") {
             uiComponentBuilder = new UIComponentBuilder()
@@ -101,7 +107,13 @@ export class UIComponentFactory {
             this.uiComponentBuilders.set(uiComponent.getId(), uiComponentBuilder);
         }
         else if (type == "breadcrumb") {
-            uiComponent = new BreadcrumbComponent();
+            uiComponentBuilder = new UIComponentBuilder()
+                .setCategory("informative")
+                .setType("breadcrumb")
+                .setSelector(`${type}-${this.nextID}`)
+                .setID(`${this.nextID}`);
+            uiComponent = uiComponentBuilder.buildBreadcrumbComponent();
+            this.uiComponentBuilders.set(uiComponent.getId(),uiComponentBuilder);
         }
         else if (type == "layout") {
             uiComponentBuilder = new UIComponentBuilder()

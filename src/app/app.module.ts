@@ -1,4 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
+import { MatExpansionModule } from '@angular/material/expansion';
 import { NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -76,7 +77,8 @@ import { internalRepresentationReducer } from "./models/store/reducers/InternalR
 import { ConfirmDialogComponent } from './components/utils/confirm-dialog/confirm-dialog.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { TabNameDialogComponent } from './components/selab-graph-editor/tab-name-dialog/tab-name-dialog.component';
-import { ComponentInfoComponent } from './components/selab-setting/component-info/component-info.component'; 
+import { ComponentInfoComponent } from './components/selab-setting/component-info/component-info.component';
+import { EndpointTestComponent } from './components/selab-setting/endpoint-test/endpoint-test.component'; 
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -131,7 +133,8 @@ export function reducerFactory() {
     MenuItemComponent,
     ConfirmDialogComponent,
     TabNameDialogComponent,
-    ComponentInfoComponent
+    ComponentInfoComponent,
+    EndpointTestComponent
   ],
   imports: [
     PerfectScrollbarModule,
@@ -157,6 +160,7 @@ export function reducerFactory() {
     MatToolbarModule,
     MatCheckboxModule,
     MatSnackBarModule,
+    MatExpansionModule,
     MatDividerModule,
     MatListModule,
     MatFormFieldModule,
