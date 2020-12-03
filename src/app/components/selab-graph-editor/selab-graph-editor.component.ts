@@ -13,16 +13,15 @@ import { ERClearGraphStorageActition, ERDeleteGraphStorageAction, ERInsertGraphS
 import { SelabGraph } from 'src/app/models/store/selabGraph.model';
 import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRRenamePageAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { MatDialog,
-  MatIconRegistry,
   MatSnackBar,
   MatTabGroup,
   MatSnackBarVerticalPosition } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { pageUICDLSelector, uiComponentSelector } from 'src/app/models/store/reducers/InternalRepresentationSelector';
 import { TabNameDialogComponent } from './tab-name-dialog/tab-name-dialog.component';
-import { ComponentInfoComponent } from '../selab-setting/component-info/component-info.component';
 import { vertexSelector } from 'src/app/models/store/reducers/ExternalRepresentationSelector';
 import { SelabSettingComponent } from '../selab-setting/selab-setting.component';
+
 
 @Component({
   selector: 'selab-graph-editor',
@@ -32,19 +31,16 @@ import { SelabSettingComponent } from '../selab-setting/selab-setting.component'
 export class SelabGraphEditorComponent implements AfterViewInit {
   private zoomFactor = 1;
   public tabs: TabModel[] = [new TabModel("page0", "graphContainer-0")];
-  currentTabIndex: number;
   selected = new FormControl(0);
   verticalPosition: MatSnackBarVerticalPosition = "top";
   @ViewChild("tabGroup") tabGroup: MatTabGroup;
   @Input() setting: SelabSettingComponent;
-  //imageCount = 1;
   constructor(private graphEditorService: GraphEditorService,
     private exportService: ExportService,
     private store: Store<AppState>,
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
-    this.currentTabIndex = 0;
   }
 
   ngAfterViewInit() {
@@ -170,14 +166,9 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   onTabChange(event) {
-    console.log("tab change")
-    console.log(event)
-    console.log(this.tabs)
-    this.currentTabIndex = event.index;
     let index = event.index;
     let graphID = this.tabs[index].graphID;
     this.graphEditorService.setSelectedEditor(graphID);
-    this.tabs[index].isModified = this.graphEditorService.isModified();
   }
 
   closePage(index) {
@@ -208,7 +199,6 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   ngOnInit() {
     setTimeout(() =>
       this.createGraph("graphContainer-0"), 500);
-    // this.addPage(),500);
   }
 
   saveAs(uri, filename) {
@@ -258,7 +248,6 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   decreaseFont() {
     StyleLibrary[0]['fontSize'] -= 10;
   }
-
 }
 
 export class TabModel {
@@ -272,4 +261,3 @@ export class TabModel {
     this.isModified = false;
   }
 }
-

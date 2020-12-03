@@ -1,10 +1,9 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { MatExpansionModule } from '@angular/material/expansion';
 import { NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 import {FormsModule} from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
@@ -13,23 +12,6 @@ import { DefaultLayoutComponent } from "./containers";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle'; 
-import { MatSelectModule } from '@angular/material/select'; 
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MonacoEditorModule } from 'ngx-monaco-editor';
-import { MatFormFieldModule, MatIconModule, MatInputModule, MatListModule } from "@angular/material";
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatTreeModule } from '@angular/material/tree'; 
-import { MatDividerModule } from '@angular/material/divider';
-import { MatChipsModule } from '@angular/material/chips'; 
-import { MatMenuModule } from '@angular/material/menu';
-import {MatTooltipModule} from '@angular/material/tooltip'; 
-import { MatIcon } from '@angular/material'; 
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import {
   AppAsideModule,
@@ -75,10 +57,10 @@ import { PageUICDL } from "./models/internalRepresentation/pageUICDL.model";
 import { externalRepresentationReducer } from "./models/store/reducers/ExternalRepresentationReducer";
 import { internalRepresentationReducer } from "./models/store/reducers/InternalRepresentationReducer";
 import { ConfirmDialogComponent } from './components/utils/confirm-dialog/confirm-dialog.component';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { TabNameDialogComponent } from './components/selab-graph-editor/tab-name-dialog/tab-name-dialog.component';
 import { ComponentInfoComponent } from './components/selab-setting/component-info/component-info.component';
 import { EndpointTestComponent } from './components/selab-setting/endpoint-test/endpoint-test.component'; 
+import { AngularMaterialModule } from "./angular-material/angular-material.module";
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -137,6 +119,7 @@ export function reducerFactory() {
     EndpointTestComponent
   ],
   imports: [
+    AngularMaterialModule,
     PerfectScrollbarModule,
     AppRoutingModule,
     CommonModule,
@@ -146,31 +129,11 @@ export function reducerFactory() {
     FormsModule,
     HttpClientModule,
     AppAsideModule,
-    MatTreeModule,
     AppBreadcrumbModule.forRoot(),
     AppHeaderModule,
     AppFooterModule,
     AppSidebarModule,
     BsDropdownModule.forRoot(),
-    MatTabsModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatSlideToggleModule,
-    MatSelectModule,
-    MatToolbarModule,
-    MatCheckboxModule,
-    MatSnackBarModule,
-    MatExpansionModule,
-    MatDividerModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatChipsModule,
-    MatIconModule,
-    MatMenuModule,
-    MatProgressSpinnerModule,
-    MatTooltipModule,
     ReactiveFormsModule,
     StoreModule.forRoot(undefined,{
       reducerFactory
