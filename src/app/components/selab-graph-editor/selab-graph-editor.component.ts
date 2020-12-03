@@ -2,6 +2,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, OnInit, Input } from '@angular/core';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import * as html2canvas from 'html2canvas';
+
 import ImportService from '../../services/internalRepresentation/import.service';
 import ExportService from '../../services/internalRepresentation/export.service';
 import { Storage } from '../../shared/storage';
@@ -12,15 +13,18 @@ import { Store } from '@ngrx/store';
 import { ERClearGraphStorageActition, ERDeleteGraphStorageAction, ERInsertGraphStorageAction } from 'src/app/models/store/actions/externalRepresentation.action';
 import { SelabGraph } from 'src/app/models/store/selabGraph.model';
 import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRRenamePageAction } from 'src/app/models/store/actions/internalRepresentation.action';
-import { MatDialog,
+import {
+  MatDialog,
   MatSnackBar,
   MatTabGroup,
-  MatSnackBarVerticalPosition } from '@angular/material';
+  MatSnackBarVerticalPosition
+} from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { pageUICDLSelector, uiComponentSelector } from 'src/app/models/store/reducers/InternalRepresentationSelector';
 import { TabNameDialogComponent } from './tab-name-dialog/tab-name-dialog.component';
 import { vertexSelector } from 'src/app/models/store/reducers/ExternalRepresentationSelector';
 import { SelabSettingComponent } from '../selab-setting/selab-setting.component';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../utils/confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -50,7 +54,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     console.log(this.graphEditorService.getGraph());
     this.openSnackBar("show GraphModel in console", "display");
   }
-  
+
   isModified(graphID: string) {
     return this.graphEditorService.isModified(graphID);
   }
@@ -59,7 +63,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     console.log("change tab name");
     this.openDialog(index);
   }
-  
+
   openDialog(index) {
     let currentTabName = this.tabs[index];
     let data = {
@@ -140,20 +144,21 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   configure() {
     let graph = this.graphEditorService.getGraph()
     let graphID = this.graphEditorService.getSelectedGraphID();
+    this.setting.configureStyleEditor();
     graph.addListener(mxEvent.CLICK, (sender, event) => {
       this.setting.clear();
       let selectedVertex = sender.selectionModel.cells[0];
       if (selectedVertex != undefined) {
-        console.log(selectedVertex.id);
+        // console.log(selectedVertex.id);
         let vertexObservable = this.store.select(vertexSelector(graphID, selectedVertex.id));
         vertexObservable.subscribe((data) => {
-          console.log(data);
+          // console.log(data);
           if (data != undefined) {
             let componentObservable = this.store.select(uiComponentSelector(graphID, data.uiComponentID));
             componentObservable.subscribe((component) => {
               if (component != undefined) {
-                console.log(component);
-                console.log(component.getInfo());
+                // console.log(component);
+                // console.log(component.getInfo());
                 this.setting.update(component);
               }
               else
@@ -227,12 +232,24 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   clearGraph() {
-    const graphModel = this.graphEditorService.getGraphModel();
-    graphModel.clear();
-    this.openSnackBar("clear both GraphStorage and PageUICDL", "clear");
-    let graphID = this.graphEditorService.getSelectedGraphID();
-    this.store.dispatch(new ERClearGraphStorageActition(graphID));
-    this.store.dispatch(new IRClearPageUICDLAction(graphID));
+    const message = `Are you sure you want to clear graph and pageUICDL?`;
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult == true) {
+        const graphModel = this.graphEditorService.getGraphModel();
+        graphModel.clear();
+        this.openSnackBar("clear both GraphStorage and PageUICDL", "clear");
+        let graphID = this.graphEditorService.getSelectedGraphID();
+        this.store.dispatch(new ERClearGraphStorageActition(graphID));
+        this.store.dispatch(new IRClearPageUICDLAction(graphID));
+      }
+    })
   }
 
   newProject() {

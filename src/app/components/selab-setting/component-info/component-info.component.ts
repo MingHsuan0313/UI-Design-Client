@@ -35,18 +35,16 @@ export class ComponentInfoComponent implements OnInit {
   hasChild = (_: number, _nodeData: FileFlatNode) => _nodeData.expandable;
 
   ngOnInit() {
-    console.log("initialize")
     let editors = this.graphEditorServive.editors; 
     editors.forEach((editor: SelabEditor,key: string)  => {
-      console.log("hey")
       let grpah = editor.getGraph();
       grpah.addListener(mxEvent.CLICK, (sender, event) => {
         let selectedVertex = sender.selectionModel.cells[0];
 
-        console.log('grpah being click')
-        console.log(this);
-        console.log('vertex being click');
-        console.log(selectedVertex);
+        // console.log('grpah being click')
+        // console.log(this);
+        // console.log('vertex being click');
+        // console.log(selectedVertex);
       })
     })
   }
@@ -61,8 +59,8 @@ export class ComponentInfoComponent implements OnInit {
   }
 
   update(uiComponent: UIComponent) {
-    console.log("update")
-    console.log(uiComponent)
+    // console.log("update")
+    // console.log(uiComponent)
     this.database = new InformationDatabase(JSON.stringify(uiComponent.getInfo()));
     this.database.dataChange.subscribe(data => this.dataSource.data = data);
   }

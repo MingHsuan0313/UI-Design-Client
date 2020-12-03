@@ -7,15 +7,15 @@ import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-
 import { IServiceEntry } from "../store/serviceEntry.model";
 
 export class InputTextComponent extends BasicComponent {
-  public typeInfo: String;  // e.g. input-text, input-password
-  public label: String;
+  public typeInfo: string;  // e.g. input-text, input-password
+  public label: string;
 
   constructor(uiComponentBuilder: UIComponentBuilder) {
     super(uiComponentBuilder);
     let properties = uiComponentBuilder.getProperties();
     if (properties != undefined) {
       this.typeInfo = properties["typeInfo"];
-      this.label = properties["label"];
+      this.label = properties["name"];
     }
   }
 
@@ -25,10 +25,6 @@ export class InputTextComponent extends BasicComponent {
         "type": "String",
         "value": "name"
       },
-      {
-        "type": "String",
-        "value": "label"
-      }
     ]
   }
 

@@ -29,10 +29,10 @@ export default class GraphEditorService {
   }
   
   isModified(graphID:string) {
-    // return this.selectedEditor.getGraph().isModi
-    if(this.selectedEditor == undefined)
+    if(this.editors == undefined)
       return false;
-    return this.editors.get(graphID).getEditor().modified.valueOf();
+    if(this.editors.get(graphID) != undefined)
+      return this.editors.get(graphID).getEditor().modified.valueOf();
   }
   
   createEditor(element: HTMLElement) {

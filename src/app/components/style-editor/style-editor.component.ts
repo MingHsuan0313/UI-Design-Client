@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service'
 import StyleEditorService from '../../services/externalRepresentation/style-editor.service';
-import { GraphStorage , VertexStorage , StyleStorage } from "../../models/graph-dependency";
+import { GraphStorage, VertexStorage, StyleStorage } from "../../models/graph-dependency";
 
 
 @Component({
@@ -11,20 +11,37 @@ import { GraphStorage , VertexStorage , StyleStorage } from "../../models/graph-
 })
 export class StyleEditorComponent implements OnInit {
   graph: any;
-  graphStorage: GraphStorage;
   selectedVertex: any;
-  selectedStyleStorage: StyleStorage;
 
-  colorPicker: String;
-  opacity: boolean;
+  fillColor: string;
+  borderColor: string;
+  opacity: string;
+  fontSize: string;
+  fontColor: string;
   shadow: boolean;
   rounded: boolean;
-  fontSize: String;
-  fontColor: String;
 
   constructor(private graphEditorService: GraphEditorService,
     private styleEditorService: StyleEditorService) {
-    this.colorPicker = "#ffffff";
+  }
+
+  configure() {
+    let graph = this.graphEditorService.getGraph();
+
+    graph.addListener(mxEvent.CLICK, (sender, event) => {
+      console.log("style editor sync heree");
+      this.selectedVertex = sender.selectionModel.cells[0];
+      console.log(this.selectedVertex);
+      if (this.selectedVertex != undefined) {
+        let styleObj = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
+        console.log(styleObj);
+      }
+      // let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
+      // this.selectedStyleStorage = vertexStorage.getStyleStorage();
+      // let vertexStyleDescription = this.selectedVertex.style;
+      // this.syncEditorWithSelectedVertex(styleObj);
+    })
+    // this.styleEditorService.convertStyleDescriptionToJsobObject("fillColor=#ffffff;fontSize=20;")
   }
 
   changeFontSize() {
@@ -32,9 +49,9 @@ export class StyleEditorComponent implements OnInit {
     oldStyle.fontSize = this.fontSize;
     let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
-    this.selectedStyleStorage.changeFontSize(this.fontSize);
+    // this.selectedStyleStorage.changeFontSize(this.fontSize);
     this.graph.refresh();
-    this.graphStorage.setModified();
+    // this.graphStorage.setModified();
   }
 
   changeFontColor() {
@@ -42,16 +59,16 @@ export class StyleEditorComponent implements OnInit {
     oldStyle.fontColor = this.fontColor;
     let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
-    this.selectedStyleStorage.changeFontColor(this.fontColor);
+    // this.selectedStyleStorage.changeFontColor(this.fontColor);
     this.graph.refresh();
   }
 
   changeColor(event) {
     let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
-    oldStyle.fillColor = this.colorPicker;
+    // oldStyle.fillColor = this.colorPicker;
     let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
-    this.selectedStyleStorage.changeFillColor(this.colorPicker);
+    // this.selectedStyleStorage.changeFillColor(this.colorPicker);
     this.graph.refresh();
   }
 
@@ -159,11 +176,11 @@ export class StyleEditorComponent implements OnInit {
     else
       this.opacity = false;
 
-    if(styleObj["fontSize"] != undefined) {
+    if (styleObj["fontSize"] != undefined) {
       this.fontSize = styleObj["fontSize"];
     }
 
-    if(styleObj["fontColor"] != undefined) {
+    if (styleObj["fontColor"] != undefined) {
       this.fontColor = styleObj["fontColor"];
     }
   }

@@ -110,9 +110,9 @@ export const StyleLibrary = [
 
     form: {
       formBox: {
-        strokeColor: "#c8ced3",
+        strokeColor: "#000000",
         fillColor: "#ffffff",
-        rounded: "0",
+        rounded: "0.5",
         shadow: "0",
       }
     },
@@ -130,8 +130,11 @@ export const StyleLibrary = [
     },
 
     input: {
+      fontColor: "#c8ced3",
       strokeColor: "#000000",
-      fillColor: "#ffffff"
+      fillColor: "#ffffff",
+      align:"left",
+      rounded: "1",
     },
 
     Layout1: {

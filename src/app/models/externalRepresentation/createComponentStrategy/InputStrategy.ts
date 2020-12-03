@@ -5,6 +5,7 @@ import { DataBinding } from "../util/DataBinding";
 import { SelabEditor } from "../selab-editor.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
 import { SelabVertex } from "../../store/selabVertex.model";
+import { InputTextComponent } from "../../ui-component-dependency";
 // no need to databinding
 export class InputStrategy implements ICreateComponentStrategy {
   basex: number;
@@ -23,7 +24,7 @@ export class InputStrategy implements ICreateComponentStrategy {
     
   }
 
-  createComponent(selabEditor: SelabEditor, component: UIComponent, parent: mxCell): mxCell {
+  createComponent(selabEditor: SelabEditor, component: InputTextComponent, parent: mxCell): mxCell {
     const style = StyleLibrary[0]["input"];
     const textGeometry = new mxGeometry(this.basex, this.basey, 200, 30);
 
@@ -31,6 +32,7 @@ export class InputStrategy implements ICreateComponentStrategy {
     let selabVertex = new SelabVertex(component.getId(),component.getId(),parent.id);
     selabVertex = selabVertex
                     .setIsPrimary(true)
+                    .setValue(component.label)
 
     let inputTextCell = selabEditor.insertVertex(selabVertex,component,textGeometry,style);
     inputTextCell["componentPart"] = "box";
