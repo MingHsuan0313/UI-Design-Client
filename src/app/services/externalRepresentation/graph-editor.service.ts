@@ -6,6 +6,7 @@ import { AppState } from "src/app/models/store/app.state";
 import { Action, Store } from "@ngrx/store";
 import { SelabEditor } from "src/app/models/externalRepresentation/selab-editor.model";
 import { UIComponent } from "src/app/models/ui-component-dependency";
+import { IRSyncWithERAction } from "src/app/models/store/actions/internalRepresentation.action";
 
 @Injectable({
   providedIn: "root"
@@ -99,8 +100,13 @@ export default class GraphEditorService {
   }
 
   syncStorage() {
-    this.selectedGraphStorage.syncStyle(this.styleEditorService);
-    this.selectedGraphStorage.syncStorage();
+    // for(let editor in this.editors)
+    this.editors.forEach((selabEditor, key) => {
+      let model = selabEditor.getGraphModel().cells;
+      this.store.dispatch(new IRSyncWithERAction(key,model))
+    })
+    // this.selectedGraphStorage.syncStyle(this.styleEditorService);
+    // this.selectedGraphStorage.syncStorage();
   }
 
   syncMxCells() {

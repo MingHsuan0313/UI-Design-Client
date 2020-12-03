@@ -3,19 +3,21 @@
   </div>
   <div style="font-size: large; padding:3%; width:300px">
     <label class="input-label" for="fillColor">Fill</label>
-    <input style="position: relative; left:170px;" (change)="changeColor(event)" [(ngModel)]="colorPicker" type="color"
-      name="fillColor333" id="bgColor">
+    <input style="position: relative; left:170px;" (change)="changeFillColor()" [(ngModel)]="fillColor" type="color"
+      name="fillColor333" id="bgColor"> 
     <br style="margin-bottom:3px">
 
     <label class="input-label" for="fillColor">Border Color</label>
-    <input style="position: relative; left:93px;" (change)="changeColor(event)" [(ngModel)]="colorPicker" type="color"
+    <input style="position: relative; left:93px;" (change)="changeBorderColor()" [(ngModel)]="borderColor" type="color"
       name="fillColor333" id="bgColor">
     <br style="margin-bottom:3px">
 
 
     <label class="input-label" for="opacity">Opacity</label>
     <input style="position:relative; left: 130px; width: 25%; height:20px" (change)="changeOpacity()"
-      [(ngModel)]="opacity" type="number" name="opacity" id="opacity">
+      [(ngModel)]="opacity" type="number" name="opacity" id="opacity"
+      min="0" max="100" 
+      >
     <br style="margin-bottom:3px">
 
     <label class="input-label" for="fontSize">FontSize</label>
@@ -30,10 +32,10 @@
 
 
     <label class="input-label" for="shadow">Shadow</label> &nbsp;
-    <input (change)="toggleShadow(event)" [(ngModel)]="shadow" type="checkbox" name="shadow" id="shadow">
+    <input (change)="toggleShadow()" [(ngModel)]="shadow" type="checkbox" name="shadow" id="shadow">
     <br style="margin-bottom:3px">
 
     <label class="input-label" for="rounded">Rounded</label> &nbsp;
-    <input (change)="toggleRounded(event)" [(ngModel)]="rounded" type="checkbox" name="rounded" id="rounded">
+    <input (change)="toggleRounded()" [(ngModel)]="rounded" type="checkbox" name="rounded" id="rounded">
   </div>
 </div>

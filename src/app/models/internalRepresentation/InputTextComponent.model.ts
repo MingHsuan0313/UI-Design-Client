@@ -19,7 +19,8 @@ export class InputTextComponent extends BasicComponent {
     }
   }
 
-  getProperties() {
+
+  getProperties(){
     return [
       {
         "type": "String",

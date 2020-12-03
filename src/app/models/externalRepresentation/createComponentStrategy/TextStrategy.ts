@@ -59,6 +59,7 @@ export class TextStrategy implements ICreateComponentStrategy {
     textCell["componentPart"] = "box";
     textCell["dataBinding"] = this.createDataBinding("box");
     textCell["isPrimary"] = true;
+    textCell["componentID"] = component.getId();
     selabEditor.getGraph().refresh();
 
     return textCell;

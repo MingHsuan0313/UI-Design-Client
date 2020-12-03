@@ -13,7 +13,7 @@ export default class StyleEditorService {
     console.log("style description here")
     console.log(styleDescription);
     let styleProperties = styleDescription.split(";");
-    let styleModel = new StyleModel();
+    let styleModel = {};
     for (let index = 0; index < styleProperties.length; index++) {
       let property = styleProperties[index];
       let propertyKey = property.split("=")[0];

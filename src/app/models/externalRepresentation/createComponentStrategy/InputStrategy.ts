@@ -38,6 +38,7 @@ export class InputStrategy implements ICreateComponentStrategy {
     inputTextCell["componentPart"] = "box";
     inputTextCell["dataBinding"] = this.createDataBinding("box");
     inputTextCell["isPrimary"] = true;
+    inputTextCell["componentID"] = component.getId();
     return inputTextCell;
   }
 

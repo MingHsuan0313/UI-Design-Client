@@ -1,6 +1,6 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction, IRRenamePageAction } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction, IRRenamePageAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 
 class InternalRepresentationReducer {
@@ -8,6 +8,17 @@ class InternalRepresentationReducer {
     public insertPageUICDL(store: InternalRepresentation,action : IRInsertPageUICDLAction): InternalRepresentation {
         store = {...store};
         store.pageUICDLs = {...store.pageUICDLs,[action.pageUICDL.id]:action.pageUICDL};
+        return store;
+    }
+    
+    @Action
+    public syncWithER(store: InternalRepresentation, action: IRSyncWithERAction): InternalRepresentation {
+        store = {...store};
+        let graphModel = action.graphModel;
+        for (let cell in graphModel) {
+            console.log("cell");
+            console.log(cell);
+        }
         return store;
     }
     

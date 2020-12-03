@@ -77,6 +77,7 @@ export class TableStrategy implements ICreateComponentStrategy {
     tableBoxCell["componentPart"] = "box";
     tableBoxCell["dataBinding"] = this.createDataBinding("box");
     tableBoxCell["isPrimary"] = true;
+    tableBoxCell["componentID"] = component.getId();
     return tableBoxCell;
   }
 
@@ -103,6 +104,7 @@ export class TableStrategy implements ICreateComponentStrategy {
       tableHeaderCell["componentPart"] = "header";
       tableHeaderCell["dataBinding"] = this.createDataBinding("header");
       tableHeaderCell["isPrimary"] = false;
+      tableHeaderCell["componentID"] = component.getId();
     }
   }
 
@@ -131,6 +133,7 @@ export class TableStrategy implements ICreateComponentStrategy {
       tableDataCell["componentPart"] = "rows";
       tableDataCell["dataBinding"] = this.createDataBinding("rows", i);
       tableDataCell["isPrimary"] = false;
+      tableDataCell["componentID"] = component.getId();
     }
   }
 

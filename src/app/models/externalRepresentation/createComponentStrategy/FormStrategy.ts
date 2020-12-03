@@ -52,6 +52,7 @@ export class FormStrategy implements ICreateComponentStrategy {
         formBoxCell["componentPart"] = "box";
         formBoxCell["dataBinding"] = this.createDataBinding("box");
         formBoxCell["isPrimary"] = true;
+        formBoxCell["componentID"] = component.getId();
         return formBoxCell;
     }
 

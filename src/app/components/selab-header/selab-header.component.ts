@@ -141,7 +141,7 @@ export class SelabHeaderComponent implements OnInit {
 
   save() {
     this.openSnackBar("synchronize vertex with ui component", "sync");
-    this.graphEditorService.syncMxCells();
+    // this.graphEditorService.syncMxCells();
     this.graphEditorService.syncStorage();
   }
 

@@ -63,6 +63,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     dropdownBoxCell["componentPart"] = "box";
     dropdownBoxCell["dataBinding"] = this.createDataBinding("box");
     dropdownBoxCell["isPrimary"] = true;
+    dropdownBoxCell["componentID"] = component.getId();
     return dropdownBoxCell;
   }
 
@@ -81,6 +82,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     dropdownHeaderCell["componentPart"] = "header";
     dropdownHeaderCell["dataBinding"] = this.createDataBinding("header");
     dropdownHeaderCell["isPrimary"] = false;
+    dropdownHeaderCell["componentID"] = component.getId();
     console.log("header end")
     return dropdownHeaderCell;
   }
@@ -99,6 +101,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
     dropdownListCell["componentPart"] = "itemList";
     dropdownListCell["dataBinding"] = this.createDataBinding("itemList");
     dropdownListCell["isPrimary"] = false;
+    dropdownListCell["componentID"] = component.getId();
     return dropdownListCell;
   }
 
@@ -124,6 +127,7 @@ export class DropdownStrategy implements ICreateComponentStrategy {
       dropdownItemCell["componentPart"] = "item";
       dropdownItemCell["dataBinding"] = this.createDataBinding("item", index);
       dropdownItemCell["isPrimary"] = false;
+      dropdownItemCell["componentID"] = component.getId();
       index += 1;
     }
     console.log("item end")
