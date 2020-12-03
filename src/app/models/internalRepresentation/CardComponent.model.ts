@@ -3,6 +3,7 @@ import { ServiceComponentModel } from "../serviceComponent/service-component.mod
 import { CompositeComponent } from "./CompositeComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
+import { IServiceEntry } from "../store/serviceEntry.model";
 
 export class CardComponent extends CompositeComponent {
   header: String;
@@ -16,7 +17,7 @@ export class CardComponent extends CompositeComponent {
     this.componentList = uiComponentbuilder.componentList;
   }
 
-  setServiceComponent(serviceComponent: ServiceComponentModel): CardComponent{
+  setServiceComponent(serviceComponent: IServiceEntry): CardComponent{
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
       .setServiceComponent(serviceComponent)

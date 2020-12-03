@@ -8,7 +8,10 @@ import GraphEditorService from '../../services/externalRepresentation/graph-edit
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import ImportService from '../../services/internalRepresentation/import.service';
 import ExportService from '../../services/internalRepresentation/export.service';
-import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
+import { MatDialog,
+  MatDialogConfig,
+  MatSnackBar,
+  MatSnackBarVerticalPosition } from '@angular/material';
 import { SelabWizardComponent } from '../selab-wizard/selab-wizard.component';
 
 @Component({
@@ -19,6 +22,7 @@ import { SelabWizardComponent } from '../selab-wizard/selab-wizard.component';
 export class SelabHeaderComponent implements OnInit {
   public navItems = null;
   public sidebarMinimized = true;
+  verticalPosition: MatSnackBarVerticalPosition = "top";
 
   public element: HTMLElement = document.body;
 
@@ -155,6 +159,7 @@ export class SelabHeaderComponent implements OnInit {
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
+      verticalPosition: this.verticalPosition
     })
   }
 
@@ -166,8 +171,8 @@ export class SelabHeaderComponent implements OnInit {
 
     if (this) {
       this.wizard.open(SelabWizardComponent, {
-        width: '55%',
-        height: '65%',
+        width: '40%',
+        height: '60%',
         data: {
           isPipeline: false,
           isComposite: isComposite,
@@ -182,28 +187,28 @@ export class SelabHeaderComponent implements OnInit {
     }
   }
 
-  openWizard() {
-    let compositeComponents = ["card", "breadcrumb", "inputgroup", "form"];
-    let isComposite = false;
-    if (compositeComponents.indexOf(this.component_selected) >= 0)
-      isComposite = true;
+  // openWizard() {
+  //   let compositeComponents = ["card", "breadcrumb", "inputgroup", "form"];
+  //   let isComposite = false;
+  //   if (compositeComponents.indexOf(this.component_selected) >= 0)
+  //     isComposite = true;
 
-    if (this) {
-      this.wizard.open(SelabWizardComponent, {
-        width: '55%',
-        height: '65%',
-        data: {
-          isPipeline: false,
-          isComposite: isComposite,
-          genere: this.genre_selected,
-          category: this.category_selected,
+  //   if (this) {
+  //     this.wizard.open(SelabWizardComponent, {
+  //       width: '55%',
+  //       height: '65%',
+  //       data: {
+  //         isPipeline: false,
+  //         isComposite: isComposite,
+  //         genere: this.genre_selected,
+  //         category: this.category_selected,
 
-          type: this.component_selected,
-          returnData: {}
-        },
-        disableClose: true,
-        autoFocus: true
-      });
-    }
-  }
+  //         type: this.component_selected,
+  //         returnData: {}
+  //       },
+  //       disableClose: true,
+  //       autoFocus: true
+  //     });
+  //   }
+  // }
 }

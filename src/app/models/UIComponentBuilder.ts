@@ -9,6 +9,7 @@ import { IconComponent } from "./internalRepresentation/IconComponent.model";
 import { LayoutComponent } from "./internalRepresentation/LayoutComponent.model";
 import { TableComponent } from "./internalRepresentation/TableComponent.model";
 import { ServiceComponentModel } from "./serviceComponent/service-component.model";
+import { IServiceEntry } from "./store/serviceEntry.model";
 import { TextComponent, InputTextComponent, UIComponent } from "./ui-component-dependency";
 
 export class UIComponentBuilder {
@@ -19,7 +20,7 @@ export class UIComponentBuilder {
     public type: string;
     public style: Map<string, string>;
     public geometry: mxGeometry;
-    public serviceComponent: ServiceComponentModel;
+    public serviceComponent: IServiceEntry;
     public properties: Object; // specific component properties: eg dropdown item, card header...
     public componentList: UIComponent[];
 
@@ -71,7 +72,7 @@ export class UIComponentBuilder {
         return this;
     }
 
-    setServiceComponent(serviceComponent: ServiceComponentModel) {
+    setServiceComponent(serviceComponent: IServiceEntry) {
         this.serviceComponent = serviceComponent;
         return this;
     }

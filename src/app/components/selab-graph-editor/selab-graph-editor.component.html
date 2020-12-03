@@ -37,11 +37,13 @@
     <mat-tab *ngFor="let tab of tabs; let index = index" label="{{tab}}">
         <ng-template mat-tab-label>
             <span (dblclick)="changeTabName(index)" style="font-size: large; color:#188038 !important"> {{tab.name}} </span>
-            <!-- <input type="text" value="{{tab.name}}" readonly="true" ondblclick="this.readOnly='';"> -->
-
+            <span
+                *ngIf="isModified(tab.graphID) == true"
+             style="margin-left:10px; font-weight:10px;">*</span>
             <button (click)="closePage(index)" mat-button style="min-width: 10px;" matTooltip="close">
                 <mat-icon style="margin-bottom:15px;" svgIcon="close"></mat-icon>
             </button>
+
         </ng-template>
         <div style="height:790px; overflow:scroll; padding-left:10px" class="geEditor" id="{{tab.graphID}}">
         </div>

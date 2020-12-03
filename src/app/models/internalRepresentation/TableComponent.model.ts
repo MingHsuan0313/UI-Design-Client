@@ -3,6 +3,7 @@ import { ServiceComponentModel } from "../serviceComponent/service-component.mod
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
+import { IServiceEntry } from "../store/serviceEntry.model";
 
 export class TableComponent extends BasicComponent {
   headers: string;
@@ -17,7 +18,7 @@ export class TableComponent extends BasicComponent {
     }
   }
 
-  setServiceComponent(serviceComponent: ServiceComponentModel): TableComponent{
+  setServiceComponent(serviceComponent: IServiceEntry): TableComponent{
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
 

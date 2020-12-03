@@ -8,8 +8,8 @@ import { CompositeComponent } from 'src/app/models/internalRepresentation/Compos
 import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { PipelineCreateOperationAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
+import { Operation } from 'src/app/models/store/serviceEntry.model';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
-import { Operation } from 'src/app/models/wizard-task-dependency';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
 import { SelabWizardComponent } from '../selab-wizard.component';
@@ -60,11 +60,11 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
         let id = this.graphEditorService.getSelectedGraphID();
         this.store.dispatch(new IRInsertUIComponentAction(id,this.uiComponent));
         let serviceComponent = this.uiComponent.getServiceComponent();
-        if(serviceComponent.getServiceID().toString().length > 0) {
+        if(serviceComponent.serviceID.toString().length > 0) {
           let operation: Operation = new Operation()
-                                          .setClassName(serviceComponent.getClassName())
-                                          .setName(serviceComponent.getName())
-                                          .setServiceID(serviceComponent.getServiceID())
+                                          .setClassName(serviceComponent.className)
+                                          .setName(serviceComponent.name)
+                                          .setServiceID(serviceComponent.serviceID)
           this.store.dispatch(new PipelineCreateOperationAction(operation));
         }
         this.graphEditorService.bindComponent(this.uiComponent);

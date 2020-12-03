@@ -4,6 +4,7 @@ import { ServiceComponentModel } from "../serviceComponent/service-component.mod
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
+import { IServiceEntry } from "../store/serviceEntry.model";
 
 export class DropdownComponent extends BasicComponent {
   items: String;
@@ -33,7 +34,7 @@ export class DropdownComponent extends BasicComponent {
     return this.items.split(" ")[index];
   }
 
-  setServiceComponent(serviceComponent: ServiceComponentModel): DropdownComponent{
+  setServiceComponent(serviceComponent: IServiceEntry): DropdownComponent{
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
       .setServiceComponent(serviceComponent)

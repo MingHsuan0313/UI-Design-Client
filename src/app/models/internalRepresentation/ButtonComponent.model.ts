@@ -5,6 +5,7 @@ import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { TextComponent } from "./TextComponent.model";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
+import { IServiceEntry } from "../store/serviceEntry.model";
 
 export class ButtonComponent extends BasicComponent {
   text: String;
@@ -35,7 +36,7 @@ export class ButtonComponent extends BasicComponent {
             .buildButtonComponent();
   }
   
-  setServiceComponent(serviceComponent: ServiceComponentModel): ButtonComponent {
+  setServiceComponent(serviceComponent: IServiceEntry): ButtonComponent {
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
       .setServiceComponent(serviceComponent)

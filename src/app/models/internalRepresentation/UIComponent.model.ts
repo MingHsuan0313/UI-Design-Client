@@ -1,5 +1,6 @@
 import AbstractComponent from "src/app/shared/AbstractComponent.model";
 import { ServiceComponentModel } from "../serviceComponent/service-component.model";
+import { IServiceEntry } from "../store/serviceEntry.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 
 export class UIComponent {
@@ -10,7 +11,7 @@ export class UIComponent {
   protected readonly geometry: mxGeometry;
   protected readonly type: string;
   protected readonly name: string;
-  protected readonly serviceComponent: ServiceComponentModel;
+  protected serviceComponent: IServiceEntry;
   
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     this.name = uiComponentBuilder.name;
@@ -18,14 +19,14 @@ export class UIComponent {
     this.selector = uiComponentBuilder.selector;
     this.category = uiComponentBuilder.category;
     this.type = uiComponentBuilder.type; 
-    this.serviceComponent = new ServiceComponentModel();
+    this.serviceComponent = new IServiceEntry();
   }
 
   public getName():  string{
     return this.name;
   }
 
-  public getServiceComponent(): ServiceComponentModel {
+  public getServiceComponent(): IServiceEntry {
     return this.serviceComponent;
   }
 

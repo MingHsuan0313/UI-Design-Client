@@ -12,7 +12,11 @@ import { Store } from '@ngrx/store';
 import { ERClearGraphStorageActition, ERDeleteGraphStorageAction, ERInsertGraphStorageAction } from 'src/app/models/store/actions/externalRepresentation.action';
 import { SelabGraph } from 'src/app/models/store/selabGraph.model';
 import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRRenamePageAction } from 'src/app/models/store/actions/internalRepresentation.action';
-import { MatDialog, MatIconRegistry, MatSnackBar, MatTabGroup } from '@angular/material';
+import { MatDialog,
+  MatIconRegistry,
+  MatSnackBar,
+  MatTabGroup,
+  MatSnackBarVerticalPosition } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { pageUICDLSelector, uiComponentSelector } from 'src/app/models/store/reducers/InternalRepresentationSelector';
 import { TabNameDialogComponent } from './tab-name-dialog/tab-name-dialog.component';
@@ -28,7 +32,9 @@ import { SelabSettingComponent } from '../selab-setting/selab-setting.component'
 export class SelabGraphEditorComponent implements AfterViewInit {
   private zoomFactor = 1;
   public tabs: TabModel[] = [new TabModel("page0", "graphContainer-0")];
+  currentTabIndex: number;
   selected = new FormControl(0);
+  verticalPosition: MatSnackBarVerticalPosition = "top";
   @ViewChild("tabGroup") tabGroup: MatTabGroup;
   @Input() setting: SelabSettingComponent;
   //imageCount = 1;
@@ -38,21 +44,26 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
+    this.currentTabIndex = 0;
   }
 
   ngAfterViewInit() {
   }
 
   showExternalRepresentation() {
-    console.log(this.graphEditorService.getGraphModel());
+    console.log(this.graphEditorService.getGraph());
     this.openSnackBar("show GraphModel in console", "display");
+  }
+  
+  isModified(graphID: string) {
+    return this.graphEditorService.isModified(graphID);
   }
 
   changeTabName(index: number) {
     console.log("change tab name");
     this.openDialog(index);
   }
-
+  
   openDialog(index) {
     let currentTabName = this.tabs[index];
     let data = {
@@ -78,6 +89,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
+      verticalPosition: this.verticalPosition
     })
   }
 
@@ -158,9 +170,14 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   onTabChange(event) {
+    console.log("tab change")
+    console.log(event)
+    console.log(this.tabs)
+    this.currentTabIndex = event.index;
     let index = event.index;
     let graphID = this.tabs[index].graphID;
     this.graphEditorService.setSelectedEditor(graphID);
+    this.tabs[index].isModified = this.graphEditorService.isModified();
   }
 
   closePage(index) {
@@ -247,10 +264,12 @@ export class SelabGraphEditorComponent implements AfterViewInit {
 export class TabModel {
   name: string;
   graphID: string;
+  isModified: boolean;
 
   constructor(name: string, graphID: string) {
     this.name = name;
     this.graphID = graphID;
+    this.isModified = false;
   }
 }
 

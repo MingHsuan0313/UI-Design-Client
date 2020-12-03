@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CompositeComponent } from 'src/app/models/internalRepresentation/CompositeComponent.model';
 import { ServiceMappingType } from 'src/app/models/service-component-dependency';
+import { Operation } from 'src/app/models/store/serviceEntry.model';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 
@@ -27,13 +28,10 @@ export class BindServiceTabComponent implements OnInit {
     console.log(event);
     console.log(option);
     this.selectedService = option;
-    this.uiComponent
-      .getServiceComponent()
-      .setServiceType(ServiceMappingType["service"])
+    (this.uiComponent.getServiceComponent() as Operation)
       .setClassName(option["className"])
       .setName(option["name"])
       .setServiceID(option["serviceID"])
-
     this.queryArguments();
   }
   
@@ -45,15 +43,14 @@ export class BindServiceTabComponent implements OnInit {
     console.log("choose option");
     console.log(option);
     subComponent.getServiceComponent()
-      .setServiceType(ServiceMappingType["argument"])
       .setName(option)
   }
   
   queryArguments() {
     this.serviceComponentService
-      .queryArgumentsByServiceID(this.uiComponent.getServiceComponent().getServiceID())
+      .queryArgumentsByServiceID(this.uiComponent.getServiceComponent().serviceID)
       .subscribe((response) => {
-        console.log(this.uiComponent.getServiceComponent().getServiceID())
+        // console.log(this.uiComponent.getServiceComponent().getServiceID())
         console.log("get arguments");
         console.log(response["body"]);
         this.argumentOptions = JSON.parse(response["body"]);
@@ -85,9 +82,9 @@ export class BindServiceTabComponent implements OnInit {
 
   toggleIsArgument(event, subComponent: UIComponent) {
     if (event)
-      subComponent.getServiceComponent().setServiceType(ServiceMappingType["argument"]);
+      subComponent.getServiceComponent().setBind(true);
     else
-      subComponent.getServiceComponent().setServiceType(ServiceMappingType["none"]);
+      subComponent.getServiceComponent().setBind(false);
   }
 
   ngOnInit() {

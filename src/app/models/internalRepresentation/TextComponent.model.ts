@@ -3,6 +3,7 @@ import { ServiceComponentModel } from "../serviceComponent/service-component.mod
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
+import { IServiceEntry } from "../store/serviceEntry.model";
 export class TextComponent extends BasicComponent {
   text: string;
   href: string;
@@ -38,7 +39,7 @@ export class TextComponent extends BasicComponent {
     return this.text;
   }
 
-  setServiceComponent(serviceComponent: ServiceComponentModel): TextComponent{
+  setServiceComponent(serviceComponent: IServiceEntry): TextComponent{
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
       .setServiceComponent(serviceComponent)

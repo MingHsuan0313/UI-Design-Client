@@ -1,8 +1,8 @@
 import { UIComponent } from "./UIComponent.model";
-import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { CompositeComponent } from "./CompositeComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
+import { IServiceEntry } from "../store/serviceEntry.model";
 
 export class BreadcrumbComponent extends CompositeComponent {
 
@@ -11,7 +11,7 @@ export class BreadcrumbComponent extends CompositeComponent {
     this.componentList = uiComponentBuilder.componentList;
   }
 
-  setServiceComponent(serviceComponent: ServiceComponentModel): BreadcrumbComponent{
+  setServiceComponent(serviceComponent: IServiceEntry): BreadcrumbComponent{
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
       .setServiceComponent(serviceComponent)

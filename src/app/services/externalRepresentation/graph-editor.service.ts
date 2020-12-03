@@ -1,12 +1,9 @@
-import { Injectable, ElementRef } from "@angular/core";
-import { Storage } from "../../shared/storage"
+import { Injectable } from "@angular/core";
 import { GraphStorage } from "../../models/graph-dependency";
-import { PageUICDL } from "src/app/models/internalRepresentation/pageUICDL.model";
 import StyleEditorService from "./style-editor.service";
 import { StyleConverter } from "../../shared/styleTable";
 import { AppState } from "src/app/models/store/app.state";
 import { Action, Store } from "@ngrx/store";
-import { Configuration } from "./util/configuration";
 import { SelabEditor } from "src/app/models/externalRepresentation/selab-editor.model";
 import { UIComponent } from "src/app/models/ui-component-dependency";
 
@@ -29,6 +26,13 @@ export default class GraphEditorService {
     this.graphStorages = [];
     this.selectedUIComponent = undefined;
     this.editors = new Map();
+  }
+  
+  isModified(graphID:string) {
+    // return this.selectedEditor.getGraph().isModi
+    if(this.selectedEditor == undefined)
+      return false;
+    return this.editors.get(graphID).getEditor().modified.valueOf();
   }
   
   createEditor(element: HTMLElement) {
@@ -106,7 +110,6 @@ export default class GraphEditorService {
   addArrow() {
 
   }
-
 
   getMaxVertexID() {
     return this.getGraphStorage().getMaxID();

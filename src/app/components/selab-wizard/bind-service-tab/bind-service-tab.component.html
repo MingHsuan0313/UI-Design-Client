@@ -30,7 +30,7 @@
           &nbsp;&nbsp;
           <span>Is Argument</span>
           &nbsp;&nbsp;
-          <mat-form-field *ngIf="subComponent.serviceComponent.serviceType === 'Argument'" appearance="outline">
+          <mat-form-field *ngIf="subComponent.serviceComponent.bind === true" appearance="outline">
             <mat-label>Binding Argument</mat-label>
             <mat-select disableRipple>
               <mat-option *ngFor="let option of argumentOptions" value="{{option}}"
