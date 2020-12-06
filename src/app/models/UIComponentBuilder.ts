@@ -18,8 +18,8 @@ export class UIComponentBuilder {
     public selector: string;
     public category: string;
     public type: string;
-    public style: Map<string, string>;
-    public geometry: mxGeometry;
+    public style: object;
+    public geometry: object;
     public serviceComponent: IServiceEntry;
     public properties: Object; // specific component properties: eg dropdown item, card header...
     public componentList: UIComponent[];
@@ -30,6 +30,8 @@ export class UIComponentBuilder {
         this.selector = "";
         this.category = "";
         this.type = "";
+        this.geometry = {};
+        this.style = {};
         this.componentList = [];
     }
 
@@ -51,7 +53,7 @@ export class UIComponentBuilder {
         this.selector = selector;
         return this;
     }
-
+    
     setType(type: string) {
         this.type = type;
         return this;
@@ -62,8 +64,13 @@ export class UIComponentBuilder {
         return this;
     }
 
-    setGeometry(geometry: mxGeometry) {
+    setGeometry(geometry: object) {
         this.geometry = geometry;
+        return this;
+    }
+    
+    setStyle(style: object) {
+        this.style = style;
         return this;
     }
 

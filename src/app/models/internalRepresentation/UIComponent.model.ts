@@ -7,8 +7,8 @@ export class UIComponent {
   protected readonly id: string;
   protected readonly selector: string;
   protected readonly category: string;
-  protected readonly style: Map<string,string>;
-  protected readonly geometry: mxGeometry;
+  protected readonly style: {};
+  protected readonly geometry: {};
   protected readonly type: string;
   protected readonly name: string;
   protected serviceComponent: IServiceEntry;
@@ -19,6 +19,8 @@ export class UIComponent {
     this.selector = uiComponentBuilder.selector;
     this.category = uiComponentBuilder.category;
     this.type = uiComponentBuilder.type; 
+    this.style = uiComponentBuilder.style;
+    this.geometry = uiComponentBuilder.geometry;
     this.serviceComponent = new IServiceEntry();
   }
 
@@ -56,6 +58,18 @@ export class UIComponent {
   
   setName(name: string): UIComponent {
     return new UIComponent();
+  }
+  
+  setGeometry(geometry: mxGeometry): UIComponent {
+    return new UIComponent();
+  }
+  
+  setStyle(style: Object): UIComponent {
+    return new UIComponent();
+  }
+  
+  copy() {
+    
   }
   
   deleteBuilder() {

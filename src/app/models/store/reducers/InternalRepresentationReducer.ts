@@ -1,5 +1,6 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
+import { UIComponent } from "../../internalRepresentation/UIComponent.model";
 import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction, IRRenamePageAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 
@@ -19,19 +20,40 @@ class InternalRepresentationReducer {
         store.pageUICDLs = { ...store.pageUICDLs };
         store.pageUICDLs[action.id] = { ...store.pageUICDLs[action.id] };
         store.pageUICDLs[action.id].body = { ...store.pageUICDLs[action.id].body };
-        store.pageUICDLs[action.id].body.componentList = [ ...store.pageUICDLs[action.id].body.componentList];
+        store.pageUICDLs[action.id].body.componentList = [...store.pageUICDLs[action.id].body.componentList];
         let componentLength = store.pageUICDLs[action.id].body.componentList.length;
-        for (let j = 0;j < graphModel.length;j++) {
+
+        for (let j = 0; j < graphModel.length; j++) {
+            let flag = true;
             let cell = graphModel[j];
             for (let index = 0; index < componentLength; index++) {
                 let componentID = store.pageUICDLs[action.id].body.componentList[index].id
-                // console.log(`component id: ${componentID}`);
-                // console.log(store.pageUICDLs[action.id].body.componentList[index].getName());
+
+                // if (store.pageUICDLs[action.id].body.componentList[index].componentList != undefined) {
+                //     let subComponentLength = store.pageUICDLs[action.id].body.componentList[index].componentList.length;
+                //     for (let k = 0; k < subComponentLength; k++) {
+                //         let subComponentID = store.pageUICDLs[action.id].body.componentList[index].componentList[k].id;
+                //         if (cell["componentID"] == subComponentID && cell["isPrimary"] == true) {
+                //             console.log("hello subComponent Here");
+                //             store.pageUICDLs[action.id].body.componentList[index] = { ...store.pageUICDLs[action.id].body.componentList[index] };
+                //             store.pageUICDLs[action.id].body.componentList[index].componentList = [ ...store.pageUICDLs[action.id].body.componentList[index].componentList ];
+                //             store.pageUICDLs[action.id].body.componentList[index].componentList[k] = { ...store.pageUICDLs[action.id].body.componentList[index].componentList[k], "geometry": cell["geometry"] };
+                //             store.pageUICDLs[action.id].body.componentList[index].componentList[k] = { ...store.pageUICDLs[action.id].body.componentList[index].componentList[k], "style": cell["style"] };
+                //             flag = false;
+                //         }
+                //         break;
+                //     }
+                // }
+
                 if (cell["componentID"] == componentID && cell["isPrimary"] == true) {
-                    store.pageUICDLs[action.id].body.componentList[index] = {...store.pageUICDLs[action.id].body.componentList[index]};
-                    store.pageUICDLs[action.id].body.componentList[index] = {...store.pageUICDLs[action.id].body.componentList[index],"geometry":cell["geometry"]};
-                    store.pageUICDLs[action.id].body.componentList[index] = {...store.pageUICDLs[action.id].body.componentList[index],"style":cell["style"]};
+                    store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent).copy();
+                    store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent).setGeometry(cell["geometry"]);
+                    store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent).setStyle(cell["style"]);
+                    flag = false;
                 }
+
+                if (!flag)
+                    break;
             }
         }
 

@@ -25,6 +25,26 @@ export class FormComponent extends CompositeComponent {
             .setName(name)
             .buildFormComponent();
     }
+    
+    setStyle(style:Object): FormComponent {
+        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+        return uiComponentBuilder
+            .setStyle(style) 
+            .buildFormComponent();
+    }
+    
+    setGeometry(geometry: Object): FormComponent {
+        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+        return uiComponentBuilder
+            .setGeometry(geometry) 
+            .buildFormComponent();
+    }
+    
+    copy(): FormComponent {
+        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+        return uiComponentBuilder
+                .buildFormComponent();
+    }
 
     setProperties(properties: Object): FormComponent {
         let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);

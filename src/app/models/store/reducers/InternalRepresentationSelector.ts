@@ -13,8 +13,8 @@ export const uiComponentSelector = (pageID: string,componentID: string) => creat
     let componentList =internalRepresentation.pageUICDLs[pageID].body.componentList;
     for(let index = 0;index < componentList.length;index++) {
         let uiComponent = componentList[index];
-        console.log(uiComponent.getId())
-        if(uiComponent.getId() == componentID)
+        console.log(uiComponent.id)
+        if(uiComponent.id == componentID)
             return uiComponent;
     }
 })
