@@ -18,7 +18,7 @@ export class IRInsertUIComponentAction implements Action {
 
 export class IRSyncWithERAction implements Action {
     public type = IRActionTypes["SYNC_WITH_ER"];
-    constructor(public id: string, public graphModel: Map<string,mxCell>) {
+    constructor(public id: string, public graphModel: []) {
     }
 }
 

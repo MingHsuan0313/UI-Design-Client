@@ -10,8 +10,8 @@ export default class StyleEditorService {
   constructor() { }
 
   convertStyleDescriptionToJsobObject(styleDescription: String) {
-    console.log("style description here")
-    console.log(styleDescription);
+    // console.log("style description here")
+    // console.log(styleDescription);
     let styleProperties = styleDescription.split(";");
     let styleModel = {};
     for (let index = 0; index < styleProperties.length; index++) {

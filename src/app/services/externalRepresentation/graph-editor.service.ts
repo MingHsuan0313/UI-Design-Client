@@ -103,10 +103,40 @@ export default class GraphEditorService {
     // for(let editor in this.editors)
     this.editors.forEach((selabEditor, key) => {
       let model = selabEditor.getGraphModel().cells;
-      this.store.dispatch(new IRSyncWithERAction(key,model))
+      let cells = this.generateGraphModel(model);
+      this.store.dispatch(new IRSyncWithERAction(key,cells as any))
+      selabEditor.editor.modified = false;
     })
     // this.selectedGraphStorage.syncStyle(this.styleEditorService);
     // this.selectedGraphStorage.syncStorage();
+  }
+  
+  generateGraphModel(model) {
+    let cells = [];
+    console.log("start generating");
+    console.log(model)
+    for(let key in model) {
+      let cell = {
+        geometry: {},
+        style: model[key].style,
+        value: model[key].value,
+        componentID: model[key].componentID,
+        isPrimary: model[key].isPrimary,
+      }
+      if (model[key].geometry != undefined) {
+        cell["geometry"]["x"] = model[key].geometry.x;
+        cell["geometry"]["y"] = model[key].geometry.y;
+        cell["geometry"]["width"] = model[key].geometry.width;
+        cell["geometry"]["height"] = model[key].geometry.height;
+        let styleObj = this.styleEditorService.convertStyleDescriptionToJsobObject(model[key].style);
+        let styleConverter = new StyleConverter();
+        styleObj = styleConverter.convertObject(styleObj);
+        cell["style"] = styleObj;
+
+      }
+      cells.push(cell);
+    }
+    return cells;
   }
 
   syncMxCells() {

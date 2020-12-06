@@ -36,20 +36,15 @@ export class StyleEditorComponent implements OnInit {
     let graph = this.graphEditorService.getGraph();
 
     graph.addListener(mxEvent.CLICK, (sender, event) => {
-      console.log("style editor sync heree");
+      // console.log("style editor sync heree");
       this.selectedVertex = sender.selectionModel.cells[0];
-      console.log(this.selectedVertex);
+      // console.log(this.selectedVertex);
       if (this.selectedVertex != undefined) {
         let styleObj = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
-        console.log(styleObj);
+        // console.log(styleObj);
         this.syncEditorWithSelectedVertex(styleObj);
       }
-      // let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
-      // this.selectedStyleStorage = vertexStorage.getStyleStorage();
-      // let vertexStyleDescription = this.selectedVertex.style;
-      // this.syncEditorWithSelectedVertex(styleObj);
     })
-    // this.styleEditorService.convertStyleDescriptionToJsobObject("fillColor=#ffffff;fontSize=20;")
   }
 
   changeFontSize() {
@@ -67,7 +62,7 @@ export class StyleEditorComponent implements OnInit {
     this.selectedVertex.style = newStyleDescription;
     this.graphEditorService.getGraph().refresh();
   }
-  
+
   changeBorderColor() {
     let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
     oldStyle["strokeColor"] = this.borderColor;
@@ -121,24 +116,9 @@ export class StyleEditorComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.graphStorage = this.graphEditorService.getGraphStorage();
-    // this.graph = this.graphEditorService.getGraphStorage().getGraph();
-
-    // this.graph.addListener(mxEvent.CLICK, (sender, event) => {
-    //   this.selectedVertex = sender.selectionModel.cells[0];
-    //   let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
-    //   this.selectedStyleStorage = vertexStorage.getStyleStorage();
-    //   let vertexStyleDescription = this.selectedVertex.style;
-    //   let styleObj = this.styleEditorService.convertStyleDescriptionToJsobObject(vertexStyleDescription);
-    //   this.syncEditorWithSelectedVertex(styleObj);
-    // })
-    // this.styleEditorService.convertStyleDescriptionToJsobObject("fillColor=#ffffff;fontSize=20;")
   }
 
   ngAfterViewInit() {
-    // this.graph.getSelectionModel().addListener(mxEvent.CHANGE, function (sender, evt) {
-    //   let cells = evt.getProperty('removed');
-    // });
   }
 
   syncEditorWithSelectedVertex(styleObj) {
@@ -165,7 +145,7 @@ export class StyleEditorComponent implements OnInit {
     }
 
     if (styleObj["opacity"] != undefined) {
-        this.opacity = styleObj["opacity"];
+      this.opacity = styleObj["opacity"];
     }
     else
       this.opacity = "100";
@@ -177,8 +157,8 @@ export class StyleEditorComponent implements OnInit {
     if (styleObj["fontColor"] != undefined) {
       this.fontColor = styleObj["fontColor"];
     }
-    
-    if(styleObj["strokeColor"] != undefined) {
+
+    if (styleObj["strokeColor"] != undefined) {
       this.borderColor = styleObj["strokeColor"];
     }
   }
