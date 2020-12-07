@@ -2,7 +2,7 @@
   <h1 style="font-weight: bold;
     margin-bottom:20px;
     font-size:25px;
-    color:white; 
+    color:black; 
     " mat-dialog-title>View Service Component Source Code</h1>
   <!-- <mat-dialog-content> -->
 
@@ -21,6 +21,6 @@
     <!-- <div *ngIf="logMessage.length > 0"><span>{{logMessage}}</span></div> -->
   </mat-dialog-actions>
   <br>
-  <ngx-monaco-editor style="height: 80%" [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+  <ngx-monaco-editor style="height: 80%; font-size: large;" [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
   <app-x-terminal></app-x-terminal>
 </div>

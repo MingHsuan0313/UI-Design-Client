@@ -55,9 +55,8 @@ export default class ServiceComponentService {
   queryMatchedServices(uiComponent: UIComponent) {
     console.log("query Matched Services");
     console.log(this);
-    let uiType = uiComponent.type;
-    let uiName = uiComponent.name;
-    let uiCategory = uiComponent.category;
+    let uiType = uiComponent.getType();
+    let uiName = uiComponent.getName();
     let url = "";
     let body;
     if (uiType == "form" || uiType == "card") {
@@ -85,7 +84,6 @@ export default class ServiceComponentService {
 
     console.log(JSON.stringify(body))
     return this.httpClientService.httpPost("getMatchingServices", body,"matchMakingServer");
-
   }
 
   queryArgumentsByServiceID(serviceID: string) {

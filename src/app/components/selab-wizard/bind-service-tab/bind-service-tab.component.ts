@@ -25,7 +25,6 @@ export class BindServiceTabComponent implements OnInit {
 
   chooseService(event, option) {
     console.log("choose service");
-    console.log(event);
     console.log(option);
     this.selectedService = option;
     (this.uiComponent.getServiceComponent() as Operation)
@@ -66,12 +65,22 @@ export class BindServiceTabComponent implements OnInit {
     console.log("query service");
 
     this.serviceComponentService
-      .queryServices(this.uiComponent,2)
+      // .queryServices(this.uiComponent,2)
+      .queryMatchedServices(this.uiComponent)
       .subscribe(
         (response) => {
           console.log(response) ;
           console.log(JSON.parse(response["body"]));
           this.serviceOptions = JSON.parse(response["body"]);
+          for(let index = 0;index < this.serviceOptions.length;index++) {
+            this.serviceOptions[index]["wsdlName"] = this.serviceOptions[index]["name"];
+            this.serviceOptions[index]["name"] = this.serviceOptions[index]["name"]
+                                                  .split(".")[0]
+                                                  .split("-")[0]
+            this.serviceOptions[index]["argc"] = this.serviceOptions[index]["name"]
+                                                  .split(".")[0]
+                                                  .split("-").length - 1
+          }
           this.isQueryingService = false;
       },
         (err) => {

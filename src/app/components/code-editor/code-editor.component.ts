@@ -10,7 +10,9 @@ import XTerminalService from './x-terminal/x-terminal.service';
   styleUrls: ['./code-editor.component.css']
 })
 export class CodeEditorComponent implements OnInit {
-  editorOptions = { theme: 'vs-dark', language: 'java' };
+  editorOptions = { theme: 'vs-dark',
+   language: 'java',
+  fontSize: 18 };
   code: string =
     `
   "\npublic void itemHistorySplit(String iid, User user, Integer split) {\n    readAllEvent();\n    readAllReason();\n    ItemHistory itemHistory = new ItemHistory(null, user);\n    itemHistory.setAdjust(split);\n    DatabaseObject itemHistoryDatabaseObject = DatabaseObject.initMethod(\"ItemHistory\");\n    itemHistoryDatabaseObject.putString(\"iid\", iid);\n    itemHistoryDatabaseObject.putDate(\"date\", itemHistory.getDate());\n    itemHistoryDatabaseObject.putString(\"event\", eventMap.get(\"Item split\"));\n    itemHistoryDatabaseObject.putInteger(\"adjust\", itemHistory.getAdjust());\n    itemHistoryDatabaseObject.putString(\"reason\", \"\");\n    itemHistoryDatabaseObject.putString(\"uid\", user.getId().toString());\n    itemHistoryDatabaseObject.putString(\"comment\", \"\");\n    manager.DatabaseManager.save(itemHistoryDatabaseObject);\n}"

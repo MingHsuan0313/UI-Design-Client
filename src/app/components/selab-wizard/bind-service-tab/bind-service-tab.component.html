@@ -7,7 +7,7 @@
     <mat-label>Service Candidates</mat-label>
     <mat-select disableRipple>
       <mat-option *ngFor="let option of serviceOptions" value="option" (click)="chooseService($event,option)">
-        {{option.name}}
+       <span style="color: #F2AA4CFF;">{{option.similarity.toFixed(3)}}</span> &nbsp;&nbsp; <span style="color: #101820FF;"> {{option.name}} </span>
       </mat-option>
     </mat-select>
   </mat-form-field>

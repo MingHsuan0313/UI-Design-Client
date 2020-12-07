@@ -81,7 +81,7 @@ export class Argument extends IServiceEntry {
 }
 
 export class Operation extends IServiceEntry {
-    preference: number;
+    similarity: number;
     code: string;
     argc: number;
     wsdlName: string;
@@ -91,7 +91,7 @@ export class Operation extends IServiceEntry {
     returnData: Return;
     constructor() {
         super();
-        this.preference = 0;
+        this.similarity = 0;
         this.code = "";
         this.argc = 0;
         this.wsdlName = "";
@@ -101,8 +101,8 @@ export class Operation extends IServiceEntry {
         this.type = "Operation";
     }
 
-    setPreference(preference: number) {
-        this.preference = preference;
+    setSimilarity(preference: number) {
+        this.similarity = preference;
         return this;
     }
 

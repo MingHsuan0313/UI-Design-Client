@@ -25,6 +25,10 @@ import { TabNameDialogComponent } from './tab-name-dialog/tab-name-dialog.compon
 import { vertexSelector } from 'src/app/models/store/reducers/ExternalRepresentationSelector';
 import { SelabSettingComponent } from '../selab-setting/selab-setting.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../utils/confirm-dialog/confirm-dialog.component';
+import { HttpClientService } from 'src/app/services/http-client.service';
+import { HttpParams } from '@angular/common/http';
+import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
+import { CodeEditorComponent } from '../code-editor/code-editor.component';
 
 
 @Component({
@@ -43,7 +47,9 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     private exportService: ExportService,
     private store: Store<AppState>,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public codeEditor: MatDialog,
+    private serviceComponentService: ServiceComponentService
   ) {
   }
 
@@ -149,16 +155,12 @@ export class SelabGraphEditorComponent implements AfterViewInit {
       this.setting.clear();
       let selectedVertex = sender.selectionModel.cells[0];
       if (selectedVertex != undefined) {
-        // console.log(selectedVertex.id);
         let vertexObservable = this.store.select(vertexSelector(graphID, selectedVertex.id));
         vertexObservable.subscribe((data) => {
-          // console.log(data);
           if (data != undefined) {
             let componentObservable = this.store.select(uiComponentSelector(graphID, data.uiComponentID));
             componentObservable.subscribe((component) => {
               if (component != undefined) {
-                // console.log(component);
-                // console.log(component.getInfo());
                 this.setting.update(component);
               }
               else
@@ -167,6 +169,44 @@ export class SelabGraphEditorComponent implements AfterViewInit {
           }
         })
       }
+    })
+    
+    graph.addListener(mxEvent.DOUBLE_CLICK, (sender, event) => {
+      let selectedVertex = sender.selectionModel.cells[0];
+      if(selectedVertex == undefined)
+        return;
+      let componentID = selectedVertex["componentID"];
+      let pageID = this.graphEditorService.getSelectedGraphID();
+      console.log(`pageID = ${pageID}\ncomponentID = ${componentID}`);
+      let uiComponentObservable = this.store.select(uiComponentSelector(pageID,componentID));
+      uiComponentObservable.subscribe((data) => {
+        console.log("data here");
+        console.log(data);
+        let serviceID = data["serviceComponent"]["serviceID"];
+        let className = data["serviceComponent"]["className"];
+        console.log(`selected ServiceID = ${serviceID}`);
+        this.serviceComponentService.queryCodeByServiceID(serviceID)
+          .subscribe((response) => {
+            console.log(response);
+            let code = response["body"];
+            let codeEditorRef = this.codeEditor.open(CodeEditorComponent,{
+              width: '1250px',
+              height: '850px',
+              panelClass: 'code-editor-dialog',
+              data: {
+                code: code,
+                className: className
+              },
+              disableClose: true,
+              autoFocus: true
+            })
+            
+            codeEditorRef.afterClosed().subscribe(result => {
+              console.log("Code editor has been closed");
+              console.log(result);
+            })
+          })
+      })
     })
   }
 
