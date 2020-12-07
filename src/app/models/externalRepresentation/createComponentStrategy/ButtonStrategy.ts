@@ -51,16 +51,12 @@ export class ButtonStrategy implements ICreateComponentStrategy {
     buttonCell["componentPart"] = "box";
     buttonCell["dataBinding"] = dataBinding;
     buttonCell["isPrimary"] = true;
+    buttonCell["componentID"] = component.getId();
     return buttonCell;
   }
 
   createComponent(selabEditor: SelabEditor, component:ButtonComponent, parent:mxCell): mxCell{
     let buttonVertex = this.createButtonVertex(selabEditor, component, parent);
     return buttonVertex;
-    // component["x"] = buttonVertexStorage.getVertexX();
-    // component["y"] = buttonVertexStorage.getVertexY();
-    // component["width"] = buttonVertexStorage.getVertexWidth();
-    // component["height"] = buttonVertexStorage.getVertexHeight();
-    // component["style"] = buttonVertexStorage.getStyle();
   }
 }

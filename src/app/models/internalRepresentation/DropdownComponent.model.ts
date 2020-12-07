@@ -17,6 +17,26 @@ export class DropdownComponent extends BasicComponent {
     }
   }
 
+  setStyle(style: Object): DropdownComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setStyle(style)
+      .buildDropdownComponent()
+  }
+  
+  setGeometry(geometry: Object): DropdownComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setGeometry(geometry)
+      .buildDropdownComponent()
+  }
+
+  copy(): DropdownComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .buildDropdownComponent()
+  }
+
   getProperties() {
     return [
       {

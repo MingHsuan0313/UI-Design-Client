@@ -43,6 +43,26 @@ export class ButtonComponent extends BasicComponent {
       .buildButtonComponent();
   }
   
+  setStyle(style: Object): ButtonComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setStyle(style)
+      .buildButtonComponent()
+  }
+  
+  setGeometry(geometry: Object): ButtonComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setGeometry(geometry)
+      .buildButtonComponent()
+  }
+
+  copy(): ButtonComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .buildButtonComponent()
+  }
+  
   add(component: UIComponent): void {
   }
   

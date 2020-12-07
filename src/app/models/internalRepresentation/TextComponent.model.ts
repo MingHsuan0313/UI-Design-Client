@@ -39,6 +39,26 @@ export class TextComponent extends BasicComponent {
     return this.text;
   }
 
+  setStyle(style: Object): TextComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setStyle(style)
+      .buildTextComponent()
+  }
+  
+  setGeometry(geometry: Object): TextComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setGeometry(geometry)
+      .buildTextComponent()
+  }
+
+  copy(): TextComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .buildTextComponent()
+  }
+
   setServiceComponent(serviceComponent: IServiceEntry): TextComponent{
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder

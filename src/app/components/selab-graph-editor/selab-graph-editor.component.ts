@@ -205,8 +205,10 @@ export class SelabGraphEditorComponent implements AfterViewInit {
               console.log("Code editor has been closed");
               console.log(result);
             })
+          },(error) => {
+            console.log("This UIComponent doesn't bind to ServiceComponent")
           })
-      })
+      }) 
     })
   }
 

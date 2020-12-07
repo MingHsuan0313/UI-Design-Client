@@ -19,6 +19,27 @@ export class InputTextComponent extends BasicComponent {
     }
   }
 
+  setStyle(style: Object): InputTextComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setStyle(style)
+      .buildInputComponent()
+  }
+  
+  setGeometry(geometry: Object): InputTextComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setGeometry(geometry)
+      .buildInputComponent()
+  }
+
+  copy(): InputTextComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .buildInputComponent()
+  }
+
+
 
   getProperties(){
     return [

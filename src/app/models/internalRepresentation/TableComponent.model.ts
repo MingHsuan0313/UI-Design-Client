@@ -18,6 +18,27 @@ export class TableComponent extends BasicComponent {
     }
   }
 
+  setStyle(style: Object): TableComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setStyle(style)
+      .buildTableComponent()
+  }
+  
+  setGeometry(geometry: Object): TableComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setGeometry(geometry)
+      .buildTableComponent()
+  }
+
+  copy(): TableComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .buildTableComponent()
+  }
+
+
   setServiceComponent(serviceComponent: IServiceEntry): TableComponent{
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder

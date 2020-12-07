@@ -17,6 +17,26 @@ export class CardComponent extends CompositeComponent {
     this.componentList = uiComponentbuilder.componentList;
   }
 
+  setStyle(style: Object): CardComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setStyle(style)
+      .buildCardComponent()
+  }
+  
+  setGeometry(geometry: Object): CardComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setGeometry(geometry)
+      .buildCardComponent()
+  }
+
+  copy(): CardComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .buildCardComponent()
+  }
+
   setServiceComponent(serviceComponent: IServiceEntry): CardComponent{
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
