@@ -2,6 +2,10 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar,
 MatSnackBarVerticalPosition } from '@angular/material';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from 'src/app/models/store/app.state';
+import { operationPoolSelector, tasksSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
 import { Argument, Operation } from 'src/app/models/store/serviceEntry.model'; 
 import { HttpClientService } from 'src/app/services/http-client.service';
 
@@ -11,10 +15,13 @@ import { HttpClientService } from 'src/app/services/http-client.service';
   styleUrls: ['./endpoint-test.component.css']
 })
 export class EndpointTestComponent implements OnInit {
-  operations: Operation[];
+  servicePool;
   verticalPosition: MatSnackBarVerticalPosition = "top";
-  constructor(private httpClientService: HttpClientService,
+  constructor(
+    private store: Store<AppState>,
+    private httpClientService: HttpClientService,
     private snackBar: MatSnackBar) {
+      // this.servicePool = store.select(operationPoolSelector());
   }
 
   openSnackBar(message: string, action: string) {
@@ -27,9 +34,12 @@ export class EndpointTestComponent implements OnInit {
 
 
   ngOnInit() {
-    this.operations = [];
-    this.operations = this.generateFakeData();
-    console.log(this.operations)
+    // let servicePoolObservable = this.store.select(operationPoolSelector());
+    // servicePoolObservable.subscribe((servicePool) => {
+    //   console.log(servicePool)
+    // })
+    this.servicePool= this.generateFakeData();
+    console.log(this.servicePool)
   }
   
   test(operation:Operation) {

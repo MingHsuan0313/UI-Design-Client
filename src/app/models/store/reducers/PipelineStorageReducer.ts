@@ -22,7 +22,7 @@ class PipelineStorageReducer {
     public createOperation(store: PipelineStorage, action: PipelineCreateOperationAction): PipelineStorage {
         console.log("create operation [reducer]")
         store = { ...store };
-        store.operationPool = {...store.operationPool,[action.operation.serviceID]: action.operation};
+        store.serviceComponentPool = [...store.serviceComponentPool, action.operation];
         return store;
     }
 
@@ -36,7 +36,7 @@ class PipelineStorageReducer {
     @Action
     public deleteOperations(store: PipelineStorage, action: PipelineDeleteOperationPoolAction): PipelineStorage {
         store = {...store};
-        store.operationPool = [];
+        store.serviceComponentPool = [];
         return store;
     }
 }

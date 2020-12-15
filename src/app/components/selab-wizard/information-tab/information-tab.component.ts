@@ -59,14 +59,14 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
       if (dialogResult == true) {
         let id = this.graphEditorService.getSelectedGraphID();
         this.store.dispatch(new IRInsertUIComponentAction(id,this.uiComponent));
-        let serviceComponent = this.uiComponent.getServiceComponent();
-        if(serviceComponent.serviceID.toString().length > 0) {
-          let operation: Operation = new Operation()
-                                          .setClassName(serviceComponent.className)
-                                          .setName(serviceComponent.name)
-                                          .setServiceID(serviceComponent.serviceID)
-          this.store.dispatch(new PipelineCreateOperationAction(operation));
-        }
+        // let serviceComponent = this.uiComponent.getServiceComponent();
+        // if(serviceComponent.serviceID.toString().length > 0) {
+        //   let operation: Operation = new Operation()
+        //                                   .setClassName(serviceComponent.className)
+        //                                   .setName(serviceComponent.name)
+        //                                   .setServiceID(serviceComponent.serviceID)
+        //   this.store.dispatch(new PipelineCreateOperationAction(operation));
+        // }
         this.graphEditorService.bindComponent(this.uiComponent);
         this.wizard.close();
       }

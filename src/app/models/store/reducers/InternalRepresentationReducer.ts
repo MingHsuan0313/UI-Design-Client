@@ -56,6 +56,7 @@ class InternalRepresentationReducer {
                             console.log(cell["style"]);
                             console.log(store.pageUICDLs[action.id].body.componentList[index].componentList[k]);
                             console.log(store.pageUICDLs[action.id].body.componentList)
+
                             flag = false;
                         }
                         if(!flag)

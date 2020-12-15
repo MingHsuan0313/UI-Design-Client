@@ -13,7 +13,7 @@ import { PipelineDataMenuComponent } from './pipeline-data-menu/pipeline-data-me
 import { SelabHeaderComponent } from '../../selab-header/selab-header.component';
 import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
-import { Operation, Task } from 'src/app/models/wizard-task-dependency';
+import { Task } from 'src/app/models/wizard-task-dependency';
 import { PipelineCreateOperationAction, PipelineCreateTaskAction, PipelineDeleteTasksAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { tasksSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
 import { SelabWizardComponent } from '../selab-wizard.component';
@@ -75,21 +75,22 @@ export class PipelineTabComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
-        this.store.dispatch(new IRInsertUIComponentAction(this.uiComponent));
+        let id = this.graphEditorService.getSelectedGraphID();
+        this.store.dispatch(new IRInsertUIComponentAction(id,this.uiComponent));
         this.graphEditorService.bindComponent(this.uiComponent);
         let serviceComponent = this.uiComponent.getServiceComponent();
-        let operation = new Operation()
-          .setName(serviceComponent.getName())
-          .setClassName(serviceComponent.getClassName())
-          .setServiceID(serviceComponent.getServiceID())
-          .setReturnData(this.returnData);
-        this.store.dispatch(new PipelineCreateOperationAction(operation));
+        // let operation = new Operation()
+        //   .setName(serviceComponent.getName())
+        //   .setClassName(serviceComponent.getClassName())
+        //   .setServiceID(serviceComponent.getServiceID())
+        //   .setReturnData(this.returnData);
+        // this.store.dispatch(new PipelineCreateOperationAction(operation));
         for (let index = 0; index < this.selecteduiComponentTypes.length; index++) {
           let componentType = this.selecteduiComponentTypes[index];
 
           let task = new Task()
             .setComponentType(componentType)
-            .setOperation(operation);
+            // .setOperation(operation);
           this.store.dispatch(new PipelineCreateTaskAction(task));
         }
         this.wizard.close();

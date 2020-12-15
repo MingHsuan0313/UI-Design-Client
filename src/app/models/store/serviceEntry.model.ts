@@ -3,6 +3,7 @@ export class IServiceEntry {
     className: string;
     serviceID: string;
     projectID: string;
+    initUrl: string;
     type: string; // type: Operation, Return, Argument, None
     bind: boolean; // indicate whether uiComponent bind to serviceComponent
     constructor() {
@@ -21,6 +22,7 @@ export class IServiceEntry {
     
     setBind(bind: boolean) {
         this.bind = bind;
+        return this;
     }
 
     setClassName(className: string) {
@@ -67,9 +69,22 @@ export class Return extends IServiceEntry {
 }
 
 export class Argument extends IServiceEntry {
+    isComplexType = "false";
+    arguments = [];
+    setterUrl = "";
     constructor() {
         super();
         this.type = "Argument";
+    }
+    
+    addArgument(argument: Argument) {
+        this.arguments.push(argument);
+        return this;
+    }
+                            
+    setIsComplexType(isComplexType) {
+        this.isComplexType = isComplexType;
+        return this;
     }
 
     getInfo() {

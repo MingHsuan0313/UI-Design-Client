@@ -1,5 +1,5 @@
 <mat-accordion>
-  <mat-expansion-panel *ngFor="let operation of operations" (opened)="panelOpenState = true"
+  <mat-expansion-panel *ngFor="let operation of servicePool" (opened)="panelOpenState = true"
     (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -19,3 +19,10 @@
     </div>
   </mat-expansion-panel>
 </mat-accordion>
+<button
+  matTooltip="Test all service components using Jest"
+  mat-raised-button 
+  style="background-color: #333333;
+    margin-top: 20px;
+    left:200px;
+   color:white" >Test All</button>

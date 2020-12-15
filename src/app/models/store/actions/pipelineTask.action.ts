@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
-import { PipelineStorage,Task,Operation } from '../../wizard-task-dependency';
+import { PipelineStorage,Task } from '../../wizard-task-dependency';
+import { Operation } from '../serviceEntry.model';
 
 export enum PipelineActionTypes {
     CREATE_TASK_ACTION = "[Pipeline] Create Task",

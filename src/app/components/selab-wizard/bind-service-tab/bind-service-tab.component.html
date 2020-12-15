@@ -35,7 +35,7 @@
             <mat-select disableRipple>
               <mat-option *ngFor="let option of argumentOptions" value="{{option}}"
                 (click)="chooseArgument($event,option,subComponent)">
-                {{ option }}
+                {{ option.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
