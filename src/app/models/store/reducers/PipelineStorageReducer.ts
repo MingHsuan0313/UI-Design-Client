@@ -8,6 +8,7 @@ import {
     PipelineDeleteTaskAction,
     PipelineDeleteTasksAction,
 } from '../actions/pipelineTask.action';
+import { Stream } from 'stream';
 
 class PipelineStorageReducer {
     @Action
@@ -22,6 +23,12 @@ class PipelineStorageReducer {
     public createOperation(store: PipelineStorage, action: PipelineCreateOperationAction): PipelineStorage {
         console.log("create operation [reducer]")
         store = { ...store };
+        let serviceID = action.operation.serviceID;
+        for(let index = 0;index < store.serviceComponentPool.length;index++) {
+            if(store.serviceComponentPool[index].serviceID == serviceID) {
+                return store;
+            }
+        }
         store.serviceComponentPool = [...store.serviceComponentPool, action.operation];
         return store;
     }

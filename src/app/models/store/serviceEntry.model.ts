@@ -101,11 +101,13 @@ export class Operation extends IServiceEntry {
     argc: number;
     wsdlName: string;
     url: string; // request mapping url
-    method: string; // get, delete, patch, post
+    httpMethod: string; // get, delete, patch, post
     arguments: Argument[];
+    complexTypeUrl: {};
     returnData: Return;
     constructor() {
         super();
+        this.complexTypeUrl = {};
         this.similarity = 0;
         this.code = "";
         this.argc = 0;
@@ -118,6 +120,11 @@ export class Operation extends IServiceEntry {
 
     setSimilarity(preference: number) {
         this.similarity = preference;
+        return this;
+    }
+    
+    setComplexTypeUrl(complexTypeUrl) {
+        this.complexTypeUrl = complexTypeUrl;
         return this;
     }
 
@@ -133,6 +140,12 @@ export class Operation extends IServiceEntry {
 
     setWSDLName(wsdlName: string) {
         this.wsdlName = wsdlName;
+        return this;
+    }
+    
+    setHttpMethod(httpMethod: string) {
+        // convert _POST to post
+        this.httpMethod = httpMethod.split("_") [0].toLowerCase();
         return this;
     }
 
@@ -152,7 +165,7 @@ export class Operation extends IServiceEntry {
     }
     
     setMethod(method: string) {
-        this.method = method;
+        this.httpMethod = method;
         return this;
     }
 
