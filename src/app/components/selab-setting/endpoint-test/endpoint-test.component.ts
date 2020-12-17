@@ -36,12 +36,6 @@ export class EndpointTestComponent implements OnInit {
 
 
   ngOnInit() {
-    // let servicePoolObservable = this.store.select(operationPoolSelector());
-    // servicePoolObservable.subscribe((servicePool) => {
-    //   console.log(servicePool)
-    // })
-    // this.servicePool= this.generateFakeData();
-    // console.log(this.servicePool)
   }
 
   test(operation: Operation) {
@@ -60,16 +54,16 @@ export class EndpointTestComponent implements OnInit {
       params[argumentss[index].name] = value;
       requestBody[argumentss[index].name] = value;
     }
-    
+
 
     // first Register get sessionID
     // second Init Class
     // third Invoke Service
     let apiServerUrl = "http://140.112.90.144:7122"
-
-    axios.get(`${apiServerUrl}/registerID`, {
-    })
-      .then((response) => {
+    if (Object.keys(operation.complexTypeUrl).length == 0) {
+      console.log('dddddd hello')
+      axios.get(`${apiServerUrl}/registerID`, {
+      }).then((response) => {
         let sessionID = response["data"]["sessionID"];
         let projectName = "InventorySystemBackendMarksTonyModify";
         console.log(`register success, sessionID = ${sessionID}`);
@@ -79,43 +73,114 @@ export class EndpointTestComponent implements OnInit {
         let serviceUrl = `${apiServerUrl}/${projectName}/${operation.className.split(".").join("/")}/${operation.wsdlName.split(".")[0]}`; // from wsdlName
         console.log(`initUrl = ${initUrl}\nserviceUrl = ${serviceUrl}`);
 
+
         axios.get(initUrl, {
           headers: {
             sessionID: sessionID
-          } 
+          }
         }).then(async (response) => {
-            let instanceID = response["data"]["serviceResult"]["id"];
-            let self = `{"id": "${instanceID}"}`;
-            console.log(`login init success, instanceID = ${self}`);
-            let newParam = params;
-            newParam["self"] = self;
-            axios.get(serviceUrl, {
+          let instanceID = response["data"]["serviceResult"]["id"];
+          let self = `{"id": "${instanceID}"}`;
+          console.log(`login init success, instanceID = ${self}`);
+          let newParam = params;
+          newParam["self"] = self;
+          axios.get(serviceUrl, {
+            headers: {
+              sessionID: sessionID
+            },
+            params: newParam
+          }).then(async (response) => {
+            console.log("login success");
+            console.log(response["data"])
+            let resultID = response["data"]["serviceResult"]["id"];
+            self = `{"id": "${resultID}"}`;
+            axios.get("http://140.112.90.144:7122/gson/serialize", {
               headers: {
                 sessionID: sessionID
               },
-              params: newParam
-            }).then(async (response) => {
-              console.log("login success");
-              console.log(response["data"])
-              let resultID = response["data"]["serviceResult"]["id"];
-              self = `{"id": "${resultID}"}`;
-              axios.get("http://140.112.90.144:7122/gson/serialize", {
-                headers: {
-                  sessionID: sessionID
-                },
-                params: {
-                  self: self
-                }
-              }).then((response) => {
-                console.log("serialized data success");
-                console.log(response["data"]);
-              })
+              params: {
+                self: self
+              }
+            }).then((response) => {
+              console.log("serialized data success");
+              console.log(response["data"]);
             })
+          })
         })
       }, (error) => {
         console.log("error");
       })
-    console.log(params)
+    }
+    else {
+      console.log("hello here");
+      let key = Object.keys(operation.complexTypeUrl)[0];
+      let complextypeInitUrl = operation.complexTypeUrl[key].url;
+      axios.get(`${apiServerUrl}/registerID`, {
+      }).then((response) => {
+        let sessionID = response["data"]["sessionID"];
+
+        let projectName = "InventorySystemBackendMarksTonyModify";
+        let initUrl = `${apiServerUrl}/${projectName}/${operation.className.split(".").join("/")}/initMethod`; // from className
+        let serviceUrl = `${apiServerUrl}/${projectName}/${operation.className.split(".").join("/")}/${operation.wsdlName.split(".")[0]}`; // from wsdlName
+
+        axios.get(operation.initUrl, {
+          headers: {
+            sessionID: sessionID
+          }
+        }).then(async (response) => {
+          let serivceInstanceID = response["data"]["serviceResult"]["id"];
+          let self = `{"id": "${serivceInstanceID}"}`;
+          console.log(`HierarchyController init success, self = ${self}`);
+          let department = `{"id": "${333}"}`;
+          // init Department
+          await axios.get(complextypeInitUrl.url, {
+            headers: {
+              sessionID: sessionID
+            },
+          }).then(async (response) => {
+            console.log("department init success");
+            console.log(response["data"]);
+            let complexTypeID = response["data"]["serviceResult"]["id"];
+            department = `{"id": ${complexTypeID}}`;
+            console.log(department)
+            for (let j = 0; j < operation.complexTypeUrl[key].args.length; j++) {
+              let argName = operation.complexTypeUrl[key].args[j].name;
+              console.log(`argName = ${argName}`)
+              if (argName == "id")
+                continue;
+              await axios.get(operation.complexTypeUrl[key].args[j].url, {
+                headers: {
+                  sessionID: sessionID
+                },
+                params: {
+                  self: department,
+                  [argName]: params[argName]
+                }
+              }).then(async (response) => {
+                console.log(response["body"]);
+                console.log("setter success");
+              })
+            }
+          }, (error) => {
+            console.log(error);
+          })
+          let paramForComplexType = {};
+          await axios.get(serviceUrl,{
+            headers: {
+              sessionID: sessionID
+            },
+            param: {
+              self:serivceInstanceID,
+              [key]: department,
+              validataion: 3
+            }
+          }).then(async (response) => {
+            console.log(response["body"]);
+          })
+        })
+        console.log(params)
+      })
+    }
   }
 
   generateFakeData() {
