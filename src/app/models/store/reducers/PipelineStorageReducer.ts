@@ -21,7 +21,7 @@ class PipelineStorageReducer {
 
     @Action
     public createOperation(store: PipelineStorage, action: PipelineCreateOperationAction): PipelineStorage {
-        console.log("create operation [reducer]")
+        // console.log("create operation [reducer]")
         store = { ...store };
         let serviceID = action.operation.serviceID;
         for(let index = 0;index < store.serviceComponentPool.length;index++) {

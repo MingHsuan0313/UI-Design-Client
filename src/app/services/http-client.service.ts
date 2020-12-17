@@ -36,10 +36,10 @@ export class HttpClientService {
       urlPrefix = this.apiServerUrl;
 
     let uri = urlPrefix + endPointUrl;
-    console.log("get here")
-    console.log(params)
-    console.log("uri is " + uri);
-    console.log(uri.length)
+    // console.log("get here")
+    // console.log(params)
+    // console.log("uri is " + uri);
+    // console.log(uri.length)
     
     return this.httpClient.get(uri, {
       headers: new HttpHeaders()
