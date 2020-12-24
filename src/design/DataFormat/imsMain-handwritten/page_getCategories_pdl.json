@@ -1,0 +1,203 @@
+{
+  "name": "GetCategories",
+  "id": "5",
+  "selector": "page5",
+  "category": "page",
+  "layout": "Layout",
+  "isMain": false,
+  "style": {},
+  "serviceComponentList": [
+    {
+      "name": "viewCategoryList",
+      "preference": 1.0,
+      "serviceType": "ServiceComponent",
+      "code": "",
+      "serviceID": "105",
+      "projectName": "InventorySystemBackendMarksTonyModify",
+      "wsdlFilename": "viewCategoryList-java_lang_String-java_lang_String-java_lang_String.wsdl",
+      "className": "ntu.csie.selab.inventorysystem.controller.HierarchyController",
+      "arguments": {
+        "did": "page_parameter"
+      },
+      "argumentType": "None",
+      "argumentClass": {}
+    }
+  ],
+  "parameters": [
+    "did"
+  ],
+  "header": {
+    "id": "3",
+    "category": "layout",
+    "selector": "layout-header",
+    "componentList": [],
+    "style": {},
+    "type": "layout"
+  },
+  "sidebar": {
+    "id": "4",
+    "category": "layout",
+    "selector": "layout-sidebar",
+    "componentList": [],
+    "style": {},
+    "type": "layout"
+  },
+  "footer": {
+    "id": "5",
+    "category": "layout",
+    "selector": "layout-footer",
+    "componentList": [],
+    "style": {},
+    "type": "layout"
+  },
+  "body": {
+    "id": "6",
+    "category": "layout",
+    "selector": "layout-body",
+    "componentList": [
+      {
+        "name": "Response",
+        "id": "40",
+        "selector": "form40",
+        "type": "form",
+        "serviceComponent": {
+          "name": "",
+          "preference": 0,
+          "serviceType": "None",
+          "code": "",
+          "serviceID": "",
+          "className": "",
+          "arguments": {},
+          "argumentType": "",
+          "argumentClass": {}
+        },
+        "componentList": [
+          {
+            "name": "",
+            "text": "GetCategories Response",
+            "href": "",
+            "passingParameter": "",
+            "id": "41",
+            "selector": "text41",
+            "type": "text",
+            "serviceType": "None",
+            "serviceComponent": {
+              "name": "",
+              "preference": 0,
+              "serviceType": "None",
+              "code": "",
+              "serviceID": "",
+              "className": "",
+              "arguments": {},
+              "argumentType": "",
+              "argumentClass": {}
+            },
+            "category": "informative",
+            "x": 30,
+            "y": 20,
+            "width": 276,
+            "height": 50,
+            "style": {
+              "font-size": "16px",
+              "color": "black",
+              "opacity": 100
+            }
+          },
+          {
+            "name": "",
+            "text": "Display Data",
+            "href": "",
+            "passingParameter": "",
+            "id": "42",
+            "selector": "text42",
+            "type": "text",
+            "serviceType": "None",
+            "serviceComponent": {
+              "name": "",
+              "preference": 0,
+              "serviceType": "None",
+              "code": "",
+              "serviceID": "",
+              "className": "",
+              "arguments": {},
+              "argumentType": "",
+              "argumentClass": {}
+            },
+            "category": "informative",
+            "x": 30,
+            "y": 80,
+            "width": 280,
+            "height": 190,
+            "style": {
+              "font-size": "16px",
+              "color": "black",
+              "opacity": 100
+            }
+          }
+        ],
+        "category": "input",
+        "x": 620,
+        "y": 140,
+        "width": 340,
+        "height": 290,
+        "style": {
+          "background-color": "#ffffff",
+          "border-color": "#c8ced3",
+          "border-style": "solid"
+        }
+      },
+      {
+        "name": "",
+        "text": "Back to Department",
+        "href": "GetDepartments",
+        "passingParameter": "",
+        "id": "52",
+        "selector": "button52",
+        "type": "button",
+        "serviceType": "None",
+        "serviceComponent": {
+          "name": "",
+          "preference": 0,
+          "serviceType": "None",
+          "code": "",
+          "serviceID": "",
+          "className": "",
+          "arguments": {},
+          "argumentType": "",
+          "argumentClass": {}
+        },
+        "category": "navigation",
+        "x": 740,
+        "y": 500,
+        "width": 90,
+        "height": 60,
+        "style": {
+          "background-color": "#5bc0de",
+          "font-size": "16px",
+          "color": "#000000",
+          "border-color": "#269abc",
+          "border-style": "solid",
+          "border-radius": "5px"
+        }
+      }
+    ],
+    "style": {
+      "background-color": "#ffffff",
+      "border-color": "#c8ced3",
+      "border-style": "solid"
+    },
+    "type": "layout",
+    "x": 167.14285714285714,
+    "y": 51,
+    "width": 835.7142857142857,
+    "height": 663
+  },
+  "asidebar": {
+    "id": "7",
+    "category": "layout",
+    "selector": "layout-asidebar",
+    "componentList": [],
+    "style": {},
+    "type": "layout"
+  }
+}

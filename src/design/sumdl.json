@@ -1,7 +1,0 @@
-{
-    "ServiceUIMappingObject": {
-        "operation": "getDepartment",
-        "name": "return_category_name",
-        "selector": "form1-test1"
-    }
-}

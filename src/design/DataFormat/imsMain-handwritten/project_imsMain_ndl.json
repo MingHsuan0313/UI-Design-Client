@@ -1,0 +1,62 @@
+{
+  "selector": "DefaultLayout",
+  "component":"DefaultLayoutComponent",
+  "path": "",
+  "category": "Layout",
+  "children": [
+    {
+      "selector": "page2",
+      "component":"imsMain",
+      "path": "imsMain",
+      "category": "page",
+      "isMain": true,
+      "destination":[
+        "GetDepartments"
+      ],
+      "parameters": [],
+      "children": []
+    },
+    {
+      "selector": "page3",
+      "component":"GetDepartments",
+      "path": "GetDepartments",
+      "category": "page",
+      "isMain": false,
+      "destination":[
+        "imsMain",
+        "AddDepartment",
+        "GetCategories"
+      ],
+      "parameters": [],
+      "children": []
+    },
+    {
+      "selector": "page4",
+      "component":"AddDepartment",
+      "path": "AddDepartment",
+      "category": "page",
+      "isMain": false,
+      "destination":[
+        "GetDepartments",
+        "imsMain"
+      ],
+      "parameters": [],
+      "children": []
+    },
+    {
+      "selector": "page5",
+      "component":"GetCategories",
+      "path": "GetCategories",
+      "category": "page",
+      "isMain": false,
+      "destination":[
+        "GetDepartments",
+        "imsMain"
+      ],
+      "parameters": [
+        "did"
+      ],
+      "children": []
+    }
+  ]
+}

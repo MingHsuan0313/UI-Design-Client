@@ -1,0 +1,352 @@
+{
+  "name": "imsMain",
+  "id": "2",
+  "selector": "page2",
+  "category": "page",
+  "layout": "Layout",
+  "isMain": true,
+  "style": {},
+  "serviceComponentList": [],
+  "parameters": [],
+  "header": {
+    "id": "3",
+    "category": "layout",
+    "selector": "layout-header",
+    "componentList": [],
+    "style": {},
+    "type": "layout"
+  },
+  "sidebar": {
+    "id": "4",
+    "category": "layout",
+    "selector": "layout-sidebar",
+    "componentList": [],
+    "style": {},
+    "type": "layout"
+  },
+  "footer": {
+    "id": "5",
+    "category": "layout",
+    "selector": "layout-footer",
+    "componentList": [],
+    "style": {},
+    "type": "layout"
+  },
+  "body": {
+    "id": "6",
+    "category": "layout",
+    "selector": "layout-body",
+    "componentList": [
+      {
+        "name": "imsMain Login",
+        "id": "8",
+        "selector": "form8",
+        "type": "form",
+        "serviceComponent": {
+          "name": "login",
+          "preference": 1.0,
+          "serviceType": "ServiceComponent",
+          "code": "",
+          "serviceID": "122",
+          "projectName": "InventorySystemBackendMarksTonyModify",
+          "wsdlFilename": "login-java_lang_String-java_lang_String-javax_servlet_http_HttpServletResponse.wsdl",
+          "className": "ntu.csie.selab.inventorysystem.controller.AuthController",
+          "arguments": {
+            "username": "input10",
+            "password": "input11"
+          },
+          "argumentType": "None",
+          "argumentClass": {}
+        },
+        "componentList": [
+          {
+            "name": "",
+            "text": "Login Form",
+            "href": "",
+            "passingParameter": "",
+            "id": "9",
+            "selector": "text9",
+            "type": "text",
+            "serviceType": "None",
+            "serviceComponent": {
+              "name": "",
+              "preference": 0,
+              "serviceType": "None",
+              "code": "",
+              "serviceID": "",
+              "className": "",
+              "arguments": {},
+              "argumentType": "None",
+              "argumentClass": {}
+            },
+            "category": "informative",
+            "x": 40,
+            "y": 20,
+            "width": 228,
+            "height": 50,
+            "style": {
+              "font-size": "16px",
+              "color": "black",
+              "opacity": 100
+            }
+          },
+          {
+            "name": "username",
+            "description": "USER NAME",
+            "typeInfo": "text",
+            "id": "10",
+            "selector": "input10",
+            "type": "input",
+            "serviceType": "None",
+            "serviceComponent": {
+              "name": "username",
+              "preference": 0,
+              "serviceType": "Argument",
+              "code": "",
+              "serviceID": "",
+              "className": "",
+              "arguments": {},
+              "argumentType": "string",
+              "argumentClass": {
+              }
+            },
+            "category": "input",
+            "x": 30,
+            "y": 80,
+            "width": 250,
+            "height": 35,
+            "style": {
+              "background-color": "#ffffff",
+              "font-size": "16px",
+              "color": "#676767",
+              "border-color": "#ced4da",
+              "border-style": "solid",
+              "border-radius": "5px"
+            }
+          },
+          {
+            "name": "password",
+            "description": "PASSWORD",
+            "typeInfo": "",
+            "id": "11",
+            "selector": "input11",
+            "type": "input",
+            "serviceType": "None",
+            "serviceComponent": {
+              "name": "password",
+              "preference": 0,
+              "serviceType": "Argument",
+              "code": "",
+              "serviceID": "",
+              "className": "",
+              "arguments": {},
+              "argumentType": "string",
+              "argumentClass":  {
+              }
+            },
+            "category": "input",
+            "x": 30,
+            "y": 120,
+            "width": 250,
+            "height": 35,
+            "style": {
+              "background-color": "#ffffff",
+              "font-size": "16px",
+              "color": "#676767",
+              "border-color": "#ced4da",
+              "border-style": "solid",
+              "border-radius": "5px"
+            }
+          },
+          {
+            "name": "",
+            "text": "Submit",
+            "href": "",
+            "passingParameter": "",
+            "id": "17",
+            "selector": "button17",
+            "type": "button",
+            "serviceType": "None",
+            "serviceComponent": {
+              "name": "",
+              "preference": 0,
+              "serviceType": "Trigger",
+              "code": "",
+              "serviceID": "",
+              "className": "",
+              "arguments": {},
+              "argumentType": "",
+              "argumentClass": {}
+            },
+            "category": "navigation",
+            "x": 90,
+            "y": 370,
+            "width": 90,
+            "height": 40,
+            "style": {
+              "background-color": "#5bc0de",
+              "font-size": "16px",
+              "color": "#000000",
+              "border-color": "#269abc",
+              "border-style": "solid",
+              "border-radius": "5px"
+            }
+          }
+        ],
+        "category": "input",
+        "x": 250,
+        "y": 140,
+        "width": 310,
+        "height": 440,
+        "style": {
+          "background-color": "#ffffff",
+          "border-color": "#c8ced3",
+          "border-style": "solid"
+        }
+      },
+      {
+        "name": "Response",
+        "id": "21",
+        "selector": "form21",
+        "type": "form",
+        "serviceComponent": {
+          "name": "",
+          "preference": 0,
+          "serviceType": "None",
+          "code": "",
+          "serviceID": "",
+          "className": "",
+          "arguments": {},
+          "argumentType": "",
+          "argumentClass": {}
+        },
+        "componentList": [
+          {
+            "name": "",
+            "text": "Login Response",
+            "href": "",
+            "passingParameter": "",
+            "id": "22",
+            "selector": "text22",
+            "type": "text",
+            "serviceType": "None",
+            "serviceComponent": {
+              "name": "",
+              "preference": 0,
+              "serviceType": "None",
+              "code": "",
+              "serviceID": "",
+              "className": "",
+              "arguments": {},
+              "argumentType": "",
+              "argumentClass": {}
+            },
+            "category": "informative",
+            "x": 30,
+            "y": 20,
+            "width": 276,
+            "height": 50,
+            "style": {
+              "font-size": "16px",
+              "color": "black",
+              "opacity": 100
+            }
+          },
+          {
+            "name": "",
+            "text": "Display Data",
+            "href": "",
+            "passingParameter": "",
+            "id": "23",
+            "selector": "text23",
+            "type": "text",
+            "serviceType": "None",
+            "serviceComponent": {
+              "name": "",
+              "preference": 0,
+              "serviceType": "None",
+              "code": "",
+              "serviceID": "",
+              "className": "",
+              "arguments": {},
+              "argumentType": "",
+              "argumentClass": {}
+            },
+            "category": "informative",
+            "x": 30,
+            "y": 80,
+            "width": 280,
+            "height": 190,
+            "style": {
+              "font-size": "16px",
+              "color": "black",
+              "opacity": 100
+            }
+          }
+        ],
+        "category": "input",
+        "x": 620,
+        "y": 140,
+        "width": 340,
+        "height": 290,
+        "style": {
+          "background-color": "#ffffff",
+          "border-color": "#c8ced3",
+          "border-style": "solid"
+        }
+      },
+      {
+        "name": "",
+        "text": "Next page",
+        "href": "GetDepartments",
+        "passingParameter": "",
+        "id": "51",
+        "selector": "button51",
+        "type": "button",
+        "serviceType": "None",
+        "serviceComponent": {
+          "name": "",
+          "preference": 0,
+          "serviceType": "None",
+          "code": "",
+          "serviceID": "",
+          "className": "",
+          "arguments": {},
+          "argumentType": "",
+          "argumentClass": {}
+        },
+        "category": "navigation",
+        "x": 740,
+        "y": 500,
+        "width": 90,
+        "height": 60,
+        "style": {
+          "background-color": "#5bc0de",
+          "font-size": "16px",
+          "color": "#000000",
+          "border-color": "#269abc",
+          "border-style": "solid",
+          "border-radius": "5px"
+        }
+      }
+    ],
+    "style": {
+      "background-color": "#ffffff",
+      "border-color": "#c8ced3",
+      "border-style": "solid"
+    },
+    "type": "layout",
+    "x": 167.14285714285714,
+    "y": 51,
+    "width": 835.7142857142857,
+    "height": 663
+  },
+  "asidebar": {
+    "id": "7",
+    "category": "layout",
+    "selector": "layout-asidebar",
+    "componentList": [],
+    "style": {},
+    "type": "layout"
+  }
+}
