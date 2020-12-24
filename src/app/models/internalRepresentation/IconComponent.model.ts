@@ -11,6 +11,7 @@ export class IconComponent extends BasicComponent {
     if (properties != undefined) {
       this.text = properties["text"];
     }
+
   }
 
   setStyle(style: Object): IconComponent {

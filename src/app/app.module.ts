@@ -13,7 +13,6 @@ import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { DefaultLayoutComponent } from "./containers";
 import { AppComponent } from "./app.component";
 import { SelabGraphEditorComponent } from "./components/selab-graph-editor/selab-graph-editor.component";
-import { WizardComponent } from "./containers/default-layout/wizard/wizard.component";
 import { StyleEditorComponent } from './components/style-editor/style-editor.component';
 import { NavEditorComponent } from './components/nav-editor/nav-editor.component';
 import { PageEditorComponent } from './components/page-editor/page-editor.component';
@@ -79,7 +78,6 @@ export function reducerFactory() {
     SelabFooterComponent,
     SelabHeaderComponent,
     SelabSettingComponent,
-    WizardComponent,
     DefaultLayoutComponent,
     StyleEditorComponent,
     NavEditorComponent,
