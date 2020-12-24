@@ -1,4 +1,4 @@
-import { PipelineStorage, Operation, Task } from '../../wizard-task-dependency';
+import { PipelineStorage, Task } from '../../wizard-task-dependency';
 import { createReducer, Action } from 'typed-reducer';
 import {
     PipelineActionTypes,
@@ -7,6 +7,7 @@ import {
     PipelineDeleteOperationPoolAction,
     PipelineDeleteTaskAction,
     PipelineDeleteTasksAction,
+    PipelineSetOperationLogAction,
 } from '../actions/pipelineTask.action';
 import { Stream } from 'stream';
 
@@ -21,15 +22,20 @@ class PipelineStorageReducer {
 
     @Action
     public createOperation(store: PipelineStorage, action: PipelineCreateOperationAction): PipelineStorage {
-        // console.log("create operation [reducer]")
         store = { ...store };
         let serviceID = action.operation.serviceID;
-        for(let index = 0;index < store.serviceComponentPool.length;index++) {
-            if(store.serviceComponentPool[index].serviceID == serviceID) {
-                return store;
-            }
-        }
-        store.serviceComponentPool = [...store.serviceComponentPool, action.operation];
+        store.serviceComponentPool = {...store.serviceComponentPool, [serviceID]:action.operation};
+        return store;
+    }
+    
+    @Action
+    // get log response from API Server
+    public setOperationLog(store: PipelineStorage, action:PipelineSetOperationLogAction): PipelineStorage {
+        store = {...store};
+        let serviceID = action.serviceID;
+        let log = action.log;
+        store.serviceComponentPool = {...store.serviceComponentPool};
+        store.serviceComponentPool[serviceID] = {...store.serviceComponentPool[serviceID],"log":log};
         return store;
     }
 

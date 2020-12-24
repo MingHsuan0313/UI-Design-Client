@@ -1,9 +1,9 @@
-import { Operation } from "../store/serviceEntry.model";
+import { ServiceComponent } from "../store/serviceEntry.model";
 
 export class Task {
     public componentType: string;
 
-    public operation: Operation;
+    public operation: ServiceComponent;
 
     public getComponentType(): string {
         return this.componentType;
@@ -14,11 +14,11 @@ export class Task {
         return this;
     }
 
-    public getOperation(): Operation {
+    public getOperation(): ServiceComponent {
         return this.operation;
     }
 
-    public setOperation(operation: Operation) {
+    public setOperation(operation: ServiceComponent) {
         this.operation = operation;
         return this;
     }

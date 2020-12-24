@@ -4,7 +4,7 @@ import { CompositeComponent } from 'src/app/models/internalRepresentation/Compos
 import { ServiceMappingType } from 'src/app/models/service-component-dependency';
 import { PipelineCreateOperationAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
-import { Argument, IServiceEntry, Operation } from 'src/app/models/store/serviceEntry.model';
+import { Argument, ServiceComponent } from 'src/app/models/store/serviceEntry.model';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 
@@ -17,7 +17,7 @@ export class BindServiceTabComponent implements OnInit {
   @Input() uiComponent: UIComponent;
   serviceOptions: any[];
   argumentOptions: any[];
-  serviceComponentPool: Map<String,Boolean>; // check is serviceComponent has in pool
+  serviceComponentPool: Map<String, Boolean>; // check is serviceComponent has in pool
   selectedService;
 
   isQueryingService: boolean;
@@ -31,20 +31,24 @@ export class BindServiceTabComponent implements OnInit {
     this.serviceComponentPool = new Map();
   }
 
-  chooseService(event, option) {
+  async chooseService(event, option) {
     console.log("choose service");
-    console.log(option);
     this.selectedService = option;
-    (this.uiComponent.getServiceComponent() as Operation)
+    if((this.uiComponent.getServiceComponent() as ServiceComponent).serviceID != undefined) {
+      this.uiComponent = this.uiComponent.setServiceComponent(new ServiceComponent());
+    }
+    console.log(this.uiComponent);
+
+    (this.uiComponent.getServiceComponent() as ServiceComponent)
       .setClassName(option["className"])
       .setName(option["name"])
       .setServiceID(option["serviceID"])
       .setHttpMethod(option["httpMethod"])
-      .setWSDLName(option["WSDLName"]);
-    if(option["name"] == "addDepartment" || option["name"] == "editDepartment") {
-      (this.uiComponent.getServiceComponent() as Operation)
-         .setComplexTypeUrl(this.fakeData());
-        
+      .setWSDLName(option["WSDLName"])
+      .setUrl();
+    if (option["name"] == "addDepartment" || option["name"] == "editDepartment") {
+      (this.uiComponent.getServiceComponent() as ServiceComponent)
+        .setComplexTypeUrl(this.fakeData());
     }
     this.queryArguments();
   }
@@ -56,14 +60,15 @@ export class BindServiceTabComponent implements OnInit {
   chooseArgument(event, option, subComponent: UIComponent) {
     console.log("choose option");
     console.log(option);
-    subComponent.getServiceComponent()
+    (subComponent.getServiceComponent() as Argument)
       .setName(option)
   }
 
   queryArguments() {
+    console.log("query arguments")
     this.serviceComponentService
-      .queryArgumentsByServiceID(this.uiComponent.getServiceComponent().serviceID)
-      .subscribe((response) => {
+      .queryArgumentsByServiceID((this.uiComponent.getServiceComponent() as ServiceComponent).serviceID)
+      .subscribe(async (response) => {
         let argumentOption;
         this.argumentOptions = [];
         let serviceArguments = JSON.parse(response["body"]);
@@ -88,26 +93,18 @@ export class BindServiceTabComponent implements OnInit {
             }
           }
         }
-        let serviceComponent = this.uiComponent.getServiceComponent();
-        if(!this.serviceComponentPool.has(serviceComponent.name)) {
-          this.serviceComponentPool.set(serviceComponent.name,true);
-        }
-        // serviceComponent has been in pool
-        else {
-          return;
-        }
 
-        let operation: IServiceEntry;
-        if(serviceComponent.serviceID.toString().length > 0) {
-          operation = this.uiComponent.getServiceComponent()
+        let operation: ServiceComponent;
+        if ((this.uiComponent.getServiceComponent() as ServiceComponent).serviceID.toString().length > 0) {
+          operation = (this.uiComponent.getServiceComponent() as ServiceComponent);
         }
-        for(let index = 0;index < this.argumentOptions.length;index++)
-          (operation as Operation).addArgument(this.argumentOptions[index]);
-        this.store.dispatch(new PipelineCreateOperationAction(operation as Operation));
+        for (let index = 0; index < this.argumentOptions.length; index++)
+          (operation as ServiceComponent).addArgument(this.argumentOptions[index]);
+        this.store.dispatch(new PipelineCreateOperationAction(this.uiComponent.getServiceComponent() as ServiceComponent));
       },
         (err) => {
           console.log(err);
-        })
+      })
   }
 
   queryService() {
@@ -117,6 +114,8 @@ export class BindServiceTabComponent implements OnInit {
       .queryMatchedServices(this.uiComponent)
       .subscribe(
         (response) => {
+          console.log("queryService result")
+          console.log(response["body"])
           this.serviceOptions = JSON.parse(response["body"]);
           for (let index = 0; index < this.serviceOptions.length; index++) {
             this.serviceOptions[index]["argc"] = this.serviceOptions[index]["WSDLName"]
@@ -137,38 +136,33 @@ export class BindServiceTabComponent implements OnInit {
     else
       subComponent.getServiceComponent().setBind(false);
   }
-  
+
   fakeData() {
     return {
       "department": {
-        url: "http://140.112.90.144:7122/InventorySystemBackendMarksTonyModify/ntu/csie/selab/inventorysystem/model/Department/initMethod",
+        initUrl: "ntu/csie/selab/inventorysystem/model/Department/initMethod",
         args: [
-             {
-                  name: "id",
-                  type: "int",
-                  url: "http://140.112.90.144:7122/InventorySystemBackendMarksTonyModify/ntu/csie/selab/inventorysystem/model/Department/setId-java_lang_Integer"
-             },
-             {
-                  name: "description",
-                  type: "String",
-                  url: "http://140.112.90.144:7122/InventorySystemBackendMarksTonyModify/ntu/csie/selab/inventorysystem/model/Department/setDescription-java_lang_String"
-             },
-             {
-                  name: "code",
-                  type: "String",
-                  url: "http://140.112.90.144:7122/InventorySystemBackendMarksTonyModify/ntu/csie/selab/inventorysystem/model/Department/setCode-java_lang_String"
-             },
-             {
-                  name: "name",
-                  type: "String",
-                  url: "http://140.112.90.144:7122/InventorySystemBackendMarksTonyModify/ntu/csie/selab/inventorysystem/model/Department/setName-java_lang_String"
-             },
-             {
-                  name: "tag",
-                  type: "String",
-                  url: "http://140.112.90.144:7122/InventorySystemBackendMarksTonyModify/ntu/csie/selab/inventorysystem/model/Department/setTag-java_lang_String"
-             }
-            ]
+          {
+            name: "description",
+            type: "string",
+            setterUrl: "ntu/csie/selab/inventorysystem/model/Department/setDescription-java_lang_String"
+          },
+          {
+            name: "code",
+            type: "string",
+            setterUrl: "ntu/csie/selab/inventorysystem/model/Department/setCode-java_lang_String"
+          },
+          {
+            name: "name",
+            type: "string",
+            setterUrl: "ntu/csie/selab/inventorysystem/model/Department/setName-java_lang_String"
+          },
+          {
+            name: "tag",
+            type: "string",
+            setterUrl: "ntu/csie/selab/inventorysystem/model/Department/setTag-java_lang_String"
+          }
+        ]
       }
     }
   }

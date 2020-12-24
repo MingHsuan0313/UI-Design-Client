@@ -48,7 +48,8 @@ import { internalRepresentationReducer } from "./models/store/reducers/InternalR
 import { ConfirmDialogComponent } from './components/utils/confirm-dialog/confirm-dialog.component';
 import { TabNameDialogComponent } from './components/selab-graph-editor/tab-name-dialog/tab-name-dialog.component';
 import { ComponentInfoComponent } from './components/selab-setting/component-info/component-info.component';
-import { EndpointTestComponent } from './components/selab-setting/endpoint-test/endpoint-test.component'; 
+import { EndpointTestComponent } from './components/selab-setting/endpoint-test/endpoint-test.component';
+import { TestingLogWindowComponent } from './components/selab-setting/endpoint-test/testing-log-window/testing-log-window.component'; 
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -103,7 +104,8 @@ export function reducerFactory() {
     ConfirmDialogComponent,
     TabNameDialogComponent,
     ComponentInfoComponent,
-    EndpointTestComponent
+    EndpointTestComponent,
+    TestingLogWindowComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -123,7 +125,8 @@ export function reducerFactory() {
     CodeEditorDialogComponent,
     SelabWizardComponent,
     ConfirmDialogComponent,
-    TabNameDialogComponent
+    TabNameDialogComponent,
+    TestingLogWindowComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,60 +1,75 @@
+// ServiceComponent, Argument, Return, ComplexType, ComplexTypeArg
+
 export class IServiceEntry {
+    bind: boolean;
+    
+    setBind(bind: boolean) {
+        this.bind = bind;
+    }
+}
+export class ComplexType {
+   initUrl: string; // for constructor service
+   args: ComplexTypeArg[];
+   
+   constructor() {
+       this.initUrl = "";
+       this.args = [];
+   }
+   
+   addArg(arg: ComplexTypeArg) {
+       this.args.push(arg);
+       return this;
+   }
+   
+   setUrl(url: string) {
+       this.initUrl = url;
+       return this;
+   }
+}
+
+export class ComplexTypeArg {
     name: string;
-    className: string;
-    serviceID: string;
-    projectID: string;
-    initUrl: string;
-    type: string; // type: Operation, Return, Argument, None
-    bind: boolean; // indicate whether uiComponent bind to serviceComponent
+    setterUrl: string;
+    type: string;
+    
     constructor() {
         this.name = "";
-        this.className = "";
-        this.serviceID = "";
-        this.projectID = "";
-        this.type = "None";
-        this.bind = false;
+        this.setterUrl = "" ;
+        this.type = "";
     }
-
+    
     setName(name: string) {
         this.name = name;
         return this;
     }
     
-    setBind(bind: boolean) {
-        this.bind = bind;
+    setType(type: string) {
+        this.type = type;
         return this;
     }
-
-    setClassName(className: string) {
-        this.className = className;
+    
+    setSetterUrl(url: string) {
+        this.setterUrl = url;
         return this;
-    }
-
-    setServiceID(serviceID: string) {
-        this.serviceID = serviceID;
-        return this;
-    }
-
-    setProjectID(projectID: string) {
-        this.projectID = projectID;
-        return this;
-    }
-
-    getInfo() {
-        return {
-            name: this.name
-        }
     }
 }
 
-export class Return extends IServiceEntry {
+export class Return {
     data: Object;
+    type: string;
+    name: string;
+
     constructor() {
-        super();
         this.data = {};
         this.type = "Return";
+        this.name = "";
     }
-
+    
+    setName(name: string) {
+        this.name = name;
+        return this;
+    }
+    
     setData(data: Object) {
         this.data = data;
         return this;
@@ -69,12 +84,22 @@ export class Return extends IServiceEntry {
 }
 
 export class Argument extends IServiceEntry {
-    isComplexType = "false";
-    arguments = [];
-    setterUrl = "";
+    name: string;
+    isComplexType: Boolean;
+    type: string;
+    arguments: Argument[];
+    setterUrl: string;
     constructor() {
         super();
+        this.arguments = [];
+        this.isComplexType = false;
         this.type = "Argument";
+        this.setterUrl = "";
+    }
+    
+    setName(name: string) {
+        this.name = name;
+        return this;
     }
     
     addArgument(argument: Argument) {
@@ -95,27 +120,66 @@ export class Argument extends IServiceEntry {
     }
 }
 
-export class Operation extends IServiceEntry {
-    similarity: number;
-    code: string;
-    argc: number;
+export class ServiceComponent extends IServiceEntry {
+    serviceID: string;
+    projectID: string;
     wsdlName: string;
-    url: string; // request mapping url
-    httpMethod: string; // get, delete, patch, post
+    className: string;
+    name: string;
+    similarity: number;
     arguments: Argument[];
-    complexTypeUrl: {};
     returnData: Return;
+    type: string;
+    initServiceUrl: string; // request mapping url
+    invokeServiceUrl: string;
+    httpMethod: string; // get, delete, patch, post
+    argComplexTypeUrl: Map<String,ComplexType>; // table for constructer and setter service
+    log: string; // result respond from API Server
+
     constructor() {
         super();
-        this.complexTypeUrl = {};
+        this.argComplexTypeUrl = new Map<String,ComplexType>();
         this.similarity = 0;
-        this.code = "";
-        this.argc = 0;
         this.wsdlName = "";
-        this.url = "";
+        this.initServiceUrl = "";
         this.arguments = [];
         this.returnData = new Return();
         this.type = "Operation";
+        this.log = "";
+    }
+    
+    setName(name: string) {
+        this.name = name;
+        return this;
+    }
+    
+    setArgComplexTypeUrl(argComplexTypeUrl:Map<String,ComplexType>) {
+        this.argComplexTypeUrl = argComplexTypeUrl;
+        return this;
+    }
+    
+    setUrl() {
+        this.initServiceUrl = `${this.className.split(".").join("/")}/initMethod`;
+        this.invokeServiceUrl = `${this.className.split(".").join("/")}/${this.wsdlName.split(".")[0]}`;
+        return this;
+    }
+
+    getInitServiceUrl() {
+        return `${this.className.split(".").join("/")}/initMethod`;
+    }
+    
+    getInvokeServiceUrl() {
+        return `${this.className.split(".").join("/")}/${this.wsdlName.split(".")[0]}`;
+    }
+
+    setServiceID(serviceID: string) {
+        this.serviceID = serviceID;
+        return this;
+    }
+    
+    setClassName(className: string) {
+        this.className = className;
+        return this;
     }
 
     setSimilarity(preference: number) {
@@ -124,17 +188,7 @@ export class Operation extends IServiceEntry {
     }
     
     setComplexTypeUrl(complexTypeUrl) {
-        this.complexTypeUrl = complexTypeUrl;
-        return this;
-    }
-
-    setCode(code: string) {
-        this.code = code;
-        return this;
-    }
-
-    setArgc(argc: number) {
-        this.argc = argc;
+        this.argComplexTypeUrl = complexTypeUrl;
         return this;
     }
 
@@ -146,11 +200,6 @@ export class Operation extends IServiceEntry {
     setHttpMethod(httpMethod: string) {
         // convert _POST to post
         this.httpMethod = httpMethod.split("_") [0].toLowerCase();
-        return this;
-    }
-
-    setUrl(url: string) {
-        this.url = url;
         return this;
     }
 

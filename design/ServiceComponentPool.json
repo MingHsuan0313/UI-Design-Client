@@ -1,0 +1,133 @@
+[
+    {
+        "argComplexTypeUrl": {},
+        "similarity": 0,
+        "wsdlName": "login-java_lang_String-java_lang_String-javax_servlet_http_HttpServletResponse.wsdl",
+        "initServiceUrl": "ntu/csie/selab/inventorysystem/controller/AuthController/initMethod",
+        "arguments": [
+            {
+                "arguments": [],
+                "isComplexType": false,
+                "type": "Argument",
+                "setterUrl": "",
+                "name": "username"
+            },
+            {
+                "arguments": [],
+                "isComplexType": false,
+                "type": "Argument",
+                "setterUrl": "",
+                "name": "password"
+            }
+        ],
+        "returnData": {
+            "data": {},
+            "type": "Return",
+            "name": ""
+        },
+        "type": "Operation",
+        "className": "ntu.csie.selab.inventorysystem.controller.AuthController",
+        "name": "login",
+        "serviceID": "43",
+        "httpMethod": "get",
+        "invokeServiceUrl": "ntu/csie/selab/inventorysystem/controller/AuthController/login-java_lang_String-java_lang_String-javax_servlet_http_HttpServletResponse"
+    },
+    {
+        "argComplexTypeUrl": {},
+        "similarity": 0,
+        "wsdlName": "viewDepartmentList-java_lang_String-java_lang_String.wsdl",
+        "initServiceUrl": "ntu/csie/selab/inventorysystem/controller/HierarchyController/initMethod",
+        "arguments": [],
+        "returnData": {
+            "data": {},
+            "type": "Return",
+            "name": ""
+        },
+        "type": "Operation",
+        "className": "ntu.csie.selab.inventorysystem.controller.HierarchyController",
+        "name": "viewDepartmentList",
+        "serviceID": "203",
+        "httpMethod": "get",
+        "invokeServiceUrl": "ntu/csie/selab/inventorysystem/controller/HierarchyController/viewDepartmentList-java_lang_String-java_lang_String"
+    },
+    {
+        "argComplexTypeUrl": {
+            "department": {
+                "initUrl": "http://140.112.90.144:7122/InventorySystemBackendMarksTonyMo…y/ntu/csie/selab/inventorysystem/model/Department/initMethod",
+                "args": [
+                    {
+                        "name": "description",
+                        "type": "string",
+                        "setterUrl": "http://140.112.90.144:7122/InventorySystemBackendMarksTonyMo…ntorysystem/model/Department/setDescription-java_lang_String"
+                    },
+                    {
+                        "name": "code",
+                        "type": "string",
+                        "setterUrl": "http://140.112.90.144:7122/InventorySystemBackendMarksTonyMo…ab/inventorysystem/model/Department/setCode-java_lang_String"
+                    },
+                    {
+                        "name": "name",
+                        "type": "string",
+                        "setterUrl": "http://140.112.90.144:7122/InventorySystemBackendMarksTonyMo…ab/inventorysystem/model/Department/setName-java_lang_String"
+                    },
+                    {
+                        "name": "tag",
+                        "type": "string",
+                        "setterUrl": "http://140.112.90.144:7122/InventorySystemBackendMarksTonyMo…lab/inventorysystem/model/Department/setTag-java_lang_String"
+                    }
+                ]
+            }
+        },
+        "similarity": 0,
+        "wsdlName": "addDepartment-java_lang_String-java_lang_String-ntu_csie_selab_inventorysystem_model_Department-org_springframework_validation_BindingResult.wsdl",
+        "initServiceUrl": "ntu/csie/selab/inventorysystem/controller/HierarchyController/initMethod",
+        "arguments": [
+            {
+                "arguments": [],
+                "isComplexType": false,
+                "type": "Argument",
+                "setterUrl": "",
+                "name": "department-id"
+            },
+            {
+                "arguments": [],
+                "isComplexType": false,
+                "type": "Argument",
+                "setterUrl": "",
+                "name": "department-description"
+            },
+            {
+                "arguments": [],
+                "isComplexType": false,
+                "type": "Argument",
+                "setterUrl": "",
+                "name": "department-code"
+            },
+            {
+                "arguments": [],
+                "isComplexType": false,
+                "type": "Argument",
+                "setterUrl": "",
+                "name": "department-tag"
+            },
+            {
+                "arguments": [],
+                "isComplexType": false,
+                "type": "Argument",
+                "setterUrl": "",
+                "name": "department-name"
+            }
+        ],
+        "returnData": {
+            "data": {},
+            "type": "Return",
+            "name": ""
+        },
+        "type": "Operation",
+        "className": "ntu.csie.selab.inventorysystem.controller.HierarchyController",
+        "name": "addDepartment",
+        "serviceID": "217",
+        "httpMethod": "post",
+        "invokeServiceUrl": "ntu/csie/selab/inventorysystem/controller/HierarchyController/addDepartment-java_lang_String-java_lang_String-ntu_csie_selab_inventorysystem_model_Department-org_springframework_validation_BindingResult"
+    }
+]

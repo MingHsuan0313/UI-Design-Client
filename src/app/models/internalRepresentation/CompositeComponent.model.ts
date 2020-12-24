@@ -1,5 +1,5 @@
 import { ServiceComponentModel } from "../service-component-dependency";
-import { Operation } from "../store/serviceEntry.model";
+import { ServiceComponent } from "../store/serviceEntry.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponent } from "./UIComponent.model";
 
@@ -12,7 +12,7 @@ export class CompositeComponent extends UIComponent {
    }
    constructor(uiComponentBuilder: UIComponentBuilder) {
       super(uiComponentBuilder);
-      this.serviceComponent = new Operation();
+      this.serviceComponent = new ServiceComponent();
    }
 
    expandChildren() {

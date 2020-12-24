@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Operation } from '../models/store/serviceEntry.model';
+import { Store } from '@ngrx/store';
+import { PipelineSetOperationLogAction } from '../models/store/actions/pipelineTask.action';
+import { AppState } from '../models/store/app.state';
+import { ServiceComponent } from '../models/store/serviceEntry.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,9 @@ export class EndpointTestingService {
   axios: any;
   sessionID: string;
 
-  constructor() {
+  constructor(
+    private store: Store<AppState>
+  ) {
     this.apiServerUrl = "http://140.112.90.144:7122";
     this.projectName = "InventorySystemBackendMarksTonyModify";
     this.axios = require("axios");
@@ -19,21 +24,19 @@ export class EndpointTestingService {
     this.sessionID = "";
   }
 
-  async test(operation: Operation, requestParam: Object) {
+  async test(operation: ServiceComponent, requestParam: Object) {
     console.log(`test operation ${operation.name}`);
-    console.log(operation);
-    console.log(requestParam);
-    console.log("******************************************************")
     // get sessionID
     await this.axios.get(`${this.apiServerUrl}/registerID`)
       .then((response) => {
         this.sessionID = response["data"]["sessionID"];
+        console.log(`sessionID = ${this.sessionID}`);
       }, (error) => {
         console.log("register failed");
         console.log(error);
       })
 
-    if (Object.keys(operation.complexTypeUrl).length == 0)
+    if (Object.keys(operation.argComplexTypeUrl).length == 0)
       await this.testServiceWithPrimitiveTypeArg(operation, requestParam);
     else
       await this.testServiceWithComplexTypeArg(operation, requestParam);
@@ -45,68 +48,69 @@ export class EndpointTestingService {
   // 3: for loop call complexType Arg's setter
   // 4: invoke service
   // 5: serialize result
-  async testServiceWithComplexTypeArg(operation: Operation, requestParam: Object) {
+  async testServiceWithComplexTypeArg(operation: ServiceComponent, requestParam: Object) {
+    let serviceID = operation.serviceID;
     let serviceInitUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/initMethod`; // from className
     let serviceInvokeUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/${operation.wsdlName.split(".")[0]}`; // from wsdlName
     console.log(`service Init Url = ${serviceInitUrl}\nservice Invoke Url = ${serviceInvokeUrl}`);
-    let complexArgTable = operation.complexTypeUrl;
+    let complexArgTable = operation.argComplexTypeUrl;
     let serviceParams = {};
 
     // this is random value for inventory system validation parameter
     serviceParams["validation"] = 4;
-    for(const name in requestParam) {
+    for (const name in requestParam) {
       let value = requestParam[name];
       // complexType arg
-      if(name.split("-").length > 1) 
-        continue 
+      if (name.split("-").length > 1)
+        continue
       else {
         serviceParams[name] = value;
       }
     }
 
     // init all complexType arg
-    for(const complexArgName in complexArgTable) {
-        let complexVarInitUrl = complexArgTable[complexArgName].url;
-        let complexVarInstanceSelf = "";
-        
-        // init
-        console.log("init Department url: " + complexVarInitUrl)
-        await this.axios(complexVarInitUrl,{
+    for (const complexArgName in complexArgTable) {
+      let complexVarInitUrl = `${this.apiServerUrl}/${this.projectName}/${complexArgTable[complexArgName].initUrl}`;
+      let complexVarInstanceSelf = "";
+
+      // init
+      console.log("init Department url: " + complexVarInitUrl)
+      await this.axios(complexVarInitUrl, {
+        headers: {
+          sessionID: this.sessionID
+        }
+      }).then((response) => {
+        let instanceID = response["data"]["serviceResult"]["id"];
+        complexVarInstanceSelf = `{"id": "${instanceID}"}`;
+        console.log(`init complexType var ${complexArgName} success self = ${complexVarInstanceSelf}`);
+      })
+
+      // setter all property
+      for (let index = 0; index < complexArgTable[complexArgName].args.length; index++) {
+        let argSetterUrl = `${this.apiServerUrl}/${this.projectName}/${complexArgTable[complexArgName].args[index].setterUrl}`;
+        let argName = complexArgTable[complexArgName].args[index].name;
+        if (argName == "id")
+          continue;
+        let paramkey = `${complexArgName}-${argName}`;
+        let argValue = requestParam[paramkey];
+        await this.axios.get(argSetterUrl, {
           headers: {
             sessionID: this.sessionID
+          },
+          params: {
+            self: complexVarInstanceSelf,
+            [argName]: argValue
           }
-        }).then((response) => {
-          let instanceID = response["data"]["serviceResult"]["id"];
-          complexVarInstanceSelf = `{"id": "${instanceID}"}`;
-          console.log(`init complexType var ${complexArgName} success self = ${complexVarInstanceSelf}`);
+        }).then(async (response) => {
+          console.log(`setter ${argName} success`);
+          console.log(response["data"]);
         })
-
-        // setter all property
-        for(let index = 0;index < complexArgTable[complexArgName].args.length;index++) {
-          let argSetterUrl = complexArgTable[complexArgName].args[index].url;         
-          let argName = complexArgTable[complexArgName].args[index].name;
-          if(argName == "id")
-            continue;
-          let paramkey = `${complexArgName}-${argName}`;
-          let argValue = requestParam[paramkey];
-          await this.axios.get(argSetterUrl,{
-            headers: {
-              sessionID: this.sessionID
-            },
-            params: {
-              self: complexVarInstanceSelf,
-              [argName]: argValue
-            }
-          }).then(async (response) => {
-            console.log(`setter ${argName} success`);
-            console.log(response["data"]);
-          })
-        }
-        serviceParams[complexArgName] = complexVarInstanceSelf;
-        console.log(`sessionID = ${this.sessionID}`);
+      }
+      serviceParams[complexArgName] = complexVarInstanceSelf;
+      console.log(`sessionID = ${this.sessionID}`);
     }
 
-    await this.axios.get(serviceInitUrl,{
+    await this.axios.get(serviceInitUrl, {
       headers: {
         sessionID: this.sessionID
       },
@@ -142,11 +146,13 @@ export class EndpointTestingService {
           }).then((response) => {
             console.log(`serialized ${operation.name} return success`);
             console.log(response["data"]);
+            this.store.dispatch(new PipelineSetOperationLogAction(serviceID, JSON.stringify(response["data"])));
           })
         }
         else {
           console.log(`status code = ${statusCode}`);
           console.log(response["data"]);
+          this.store.dispatch(new PipelineSetOperationLogAction(serviceID, JSON.stringify(response["data"])));
         }
       })
     })
@@ -156,7 +162,9 @@ export class EndpointTestingService {
   // 1: init service instance
   // 2: invoke service
   // 3: serialize result
-  async testServiceWithPrimitiveTypeArg(operation: Operation, requestParam: Object) {
+  async testServiceWithPrimitiveTypeArg(operation: ServiceComponent, requestParam: Object) {
+    let serviceID = operation.serviceID;
+    console.log("test primitive type");
     let serviceInitUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/initMethod`; // from className
     let serviceInvokeUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/${operation.wsdlName.split(".")[0]}`; // from wsdlName
     // console.log(`ServiceInit url = ${serviceInitUrl}\n`)
@@ -166,6 +174,7 @@ export class EndpointTestingService {
         sessionID: this.sessionID
       }
     }).then((response) => {
+      console.log(response["data"]);
       let serviceInstanceID = response["data"]["serviceResult"]["id"];
       let serviceSelf = `{"id": "${serviceInstanceID}"}`;
       console.log(`${operation.name} init success, instanceID = ${serviceSelf}`);
@@ -179,9 +188,12 @@ export class EndpointTestingService {
         },
         params: serviceParams
       }).then((response) => {
+        console.log(response["data"]);
         let statusCode = response["data"]["status_code"];
         if (statusCode == 200) {
           console.log(`Invoke ${operation.name} success status = ${response["data"]["status_code"]}`);
+          if (response["data"]["serviceResult"] == undefined)
+            return;
           let resultID = response["data"]["serviceResult"]["id"];
           let resultSelf = `{"id": "${resultID}"}`;
 
@@ -196,11 +208,13 @@ export class EndpointTestingService {
           }).then((response) => {
             console.log(`serialized ${operation.name} return success`);
             console.log(response["data"]);
+            this.store.dispatch(new PipelineSetOperationLogAction(serviceID, JSON.stringify(response["data"])));
           })
         }
         else {
           console.log(`status code = ${statusCode}`);
           console.log(response["data"]);
+          this.store.dispatch(new PipelineSetOperationLogAction(serviceID, JSON.stringify(response["data"])));
         }
       })
     })

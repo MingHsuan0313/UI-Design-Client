@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { PipelineCreateOperationAction, PipelineCreateTaskAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
 import { operationPoolSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
+import { ServiceComponent } from 'src/app/models/store/serviceEntry.model';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { Task } from 'src/app/models/wizard-task-dependency';
 import { SelabHeaderComponent } from '../selab-header/selab-header.component';
@@ -32,7 +33,7 @@ export class SelabWizardComponent implements OnInit {
   lastTab: string;
 
   // it has return data if in pipeline mode
-  operation: Operation;
+  operation: ServiceComponent;
   @ViewChild("selabtabs") tabGroup: MatTabGroup;
   @ViewChild("build") buildTab: BuildTabComponent;
   @ViewChild("compose") composeTab: ComposeTabComponent;

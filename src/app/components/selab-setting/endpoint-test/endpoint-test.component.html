@@ -1,21 +1,22 @@
 <mat-accordion>
-  <mat-expansion-panel *ngFor="let operation of servicePool | async" (opened)="panelOpenState = true"
+  <mat-expansion-panel *ngFor="let serviceComponent of servicePool" (opened)="panelOpenState = true"
     (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{operation.name}}
+        {{serviceComponent.name}}
       </mat-panel-title>
       <mat-panel-description>
-        ServiceID: {{operation.serviceID}}
+        ServiceID: {{serviceComponent.serviceID}}
       </mat-panel-description>
     </mat-expansion-panel-header>
     <div>
-      <mat-form-field *ngFor="let argument of operation.arguments" appearance="outline">
+      <mat-form-field *ngFor="let argument of serviceComponent.arguments" appearance="outline">
         <mat-label>{{argument.name}}</mat-label>
-        <input id="{{operation.name}}-{{argument.name}}" matInput>
+        <input id="{{serviceComponent.name}}-{{argument.name}}" matInput>
       </mat-form-field>
-      <button (click)="test(operation)" mat-raised-button color="primary">Test</button>
-      <span style="color:rgba(0,0,0,.54);padding-left:45px">Result: {{operation.returnData.data['result']}}</span>
+      <button (click)="showLog(serviceComponent)" style="background-color: #333333;" mat-raised-button color="primary">Show Log</button>
+      &nbsp;&nbsp;
+      <button (click)="test(serviceComponent)" mat-raised-button color="primary">Test</button>
     </div>
   </mat-expansion-panel>
 </mat-accordion>
@@ -23,6 +24,7 @@
 <button
   matTooltip="Test all service components using Jest"
   mat-raised-button 
+  (click)="testAll()"
   style="background-color: #333333;
     margin-top: 20px;
    color:white" >Test All</button>
