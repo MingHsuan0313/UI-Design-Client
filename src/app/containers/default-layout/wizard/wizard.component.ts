@@ -4,7 +4,7 @@ import {NgForm} from '@angular/forms';
 import GraphEditorService from '../../../services/externalRepresentation/graph-editor.service';
 import ServiceComponentService from '../../../services/serviceComponent/service-component.service';
 import {PropertyGenerator} from '../../../shared/property-generator';
-import { ServiceComponentModel, ServiceMappingType } from '../../../models/service-component-dependency';
+import { ServiceComponent, ServiceMappingType } from '../../../models/service-component-dependency';
 import {
   BreadcrumbComponent,
   ButtonComponent,
@@ -54,7 +54,7 @@ export class WizardComponent implements OnInit {
     properties['selector'] = PropertyGenerator.getSelector(this.componentName);
     properties['type'] = this.componentName;
     // properties['serviceType'] = ServiceMappingType['none'];
-    properties['serviceComponent'] = new ServiceComponentModel(); 
+    properties['serviceComponent'] = new ServiceComponent(); 
 
     switch (this.componentName) {
       case 'icon':

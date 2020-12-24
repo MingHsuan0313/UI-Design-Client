@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { Operation } from 'src/app/models/wizard-task-dependency';
 import { NavigationItem } from './navigationItem';
 

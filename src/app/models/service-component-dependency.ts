@@ -1,2 +1,2 @@
-export * from "./serviceComponent/service-component.model";
-export * from "./serviceComponent/service-mapping-type.enum";
+export * from "./store/serviceEntry.model";
+export * from "./store/service-mapping-type.enum";

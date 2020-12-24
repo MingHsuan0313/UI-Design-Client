@@ -148,6 +148,18 @@ export class ServiceComponent extends IServiceEntry {
         this.log = "";
     }
     
+    getServiceID() {
+        return this.serviceID;
+    }
+    
+    getName() {
+        return this.name;
+    }
+    
+    getClassName() {
+        return this.className;
+    }
+    
     setName(name: string) {
         this.name = name;
         return this;

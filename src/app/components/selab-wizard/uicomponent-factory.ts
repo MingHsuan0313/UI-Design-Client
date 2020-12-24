@@ -87,15 +87,27 @@ export class UIComponentFactory {
                 .setCategory("input")
                 .setType("input")
                 .setID(`${this.nextID}`)
-                .setSelector(`${type}-${this.nextID}`)
+                .setSelector(`${type}-${this.nextID}`);
             uiComponent = uiComponentBuilder.buildInputComponent();
             this.uiComponentBuilders.set(uiComponent.getId(), uiComponentBuilder);
         }
         else if (type == "inputgroup") {
-            uiComponent = new InputGroupComponent();
+            uiComponentBuilder = new UIComponentBuilder()
+                .setCategory("input")
+                .setType("inputgroup")
+                .setID(`${this.nextID}`)
+                .setSelector(`${type}-${this.nextID}`);
+            uiComponent = uiComponentBuilder.buildInputGroupComponent();
+            this.uiComponentBuilders.set(uiComponent.getId(),uiComponentBuilder);
         }
         else if (type == "icon") {
-            uiComponent = new IconComponent();
+            uiComponentBuilder = new UIComponentBuilder()
+                .setCategory("informative")
+                .setType("icon")
+                .setID(`${this.nextID}`)
+                .setSelector(`${type}-${this.nextID}`);
+            uiComponent = uiComponentBuilder.buildIconComponent();
+            this.uiComponentBuilders.set(uiComponent.getId(),uiComponentBuilder);
         }
         else if (type == "form") {
             uiComponentBuilder = new UIComponentBuilder()

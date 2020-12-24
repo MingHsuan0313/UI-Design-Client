@@ -13,6 +13,7 @@ export class CodeEditorDialogComponent implements OnInit {
   constructor(public dialog: MatDialog,
     private serviceComponentService: ServiceComponentService) { }
 
+
   openDialog() {
     let selectedServiceComponent = this.serviceComponentService.getSelectedServiceComponent();
     let selectedServiceID = selectedServiceComponent.serviceID;

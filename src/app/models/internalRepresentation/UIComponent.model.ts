@@ -1,17 +1,16 @@
 import AbstractComponent from "src/app/shared/AbstractComponent.model";
-import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { IServiceEntry, ServiceComponent } from "../store/serviceEntry.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 
 export class UIComponent {
-  protected readonly id: string;
-  protected readonly selector: string;
-  protected readonly category: string;
-  protected readonly style: {};
-  protected readonly geometry: {};
-  protected readonly type: string;
-  protected readonly name: string;
-  protected serviceComponent: IServiceEntry;
+  public id: string;
+  public selector: string;
+  public category: string;
+  public  style: {};
+  public geometry: {};
+  public type: string;
+  public name: string;
+  public serviceComponent: IServiceEntry;
   
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     this.name = uiComponentBuilder.name;

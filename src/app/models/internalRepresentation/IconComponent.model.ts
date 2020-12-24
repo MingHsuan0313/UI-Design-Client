@@ -1,23 +1,36 @@
 import { UIComponent } from "./UIComponent.model";
-import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { BasicComponent } from "./BasicComponent.model";
+import { UIComponentBuilder } from "../UIComponentBuilder";
+import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 export class IconComponent extends BasicComponent {
-  text: String;
+  text: string;
 
-  constructor(properties?) {
-    super();
+  constructor(uiComponentBuilder: UIComponentBuilder) {
+    super(uiComponentBuilder);
+    let properties = uiComponentBuilder.getProperties();
     if (properties != undefined) {
-      this.name = properties["name"];
       this.text = properties["text"];
     }
-    this.type = "icon";
-    this.category = "informative";
-    this.serviceComponent = new ServiceComponentModel();
   }
 
-  setUIComponent(properties) {
-    this.text = properties["text"];
-    this.name = properties["name"];
+  setStyle(style: Object): IconComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setStyle(style)
+      .buildIconComponent();
+  }
+  
+  setGeometry(geometry: Object): IconComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setGeometry(geometry)
+      .buildIconComponent();
+  }
+
+  copy(): IconComponent{
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .buildIconComponent();
   }
 
   getProperties() {
@@ -32,7 +45,6 @@ export class IconComponent extends BasicComponent {
       }
     ]
   }
-
 
   add(component: UIComponent): void {
   }

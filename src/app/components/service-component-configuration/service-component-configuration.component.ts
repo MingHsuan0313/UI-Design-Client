@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UIComponent, FormComponent } from 'src/app/models/ui-component-dependency';
-import { ServiceComponentModel, ServiceMappingType } from "../../models/service-component-dependency";
+import { ServiceComponent, ServiceMappingType } from "../../models/service-component-dependency";
 import { Library } from "../../shared/library";
 import { GraphStorage, VertexStorage, StyleStorage } from "../../models/graph-dependency";
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
@@ -19,7 +19,7 @@ export class ServiceComponentConfigurationComponent implements OnInit {
   selectedVertexStorage: VertexStorage;
 
   // for angular material option
-  selectedServiceComponent: ServiceComponentModel;
+  selectedServiceComponent: ServiceComponent;
   selectedArgumentName: string;
   selectedArgumentType: string;
 
@@ -94,7 +94,7 @@ export class ServiceComponentConfigurationComponent implements OnInit {
         this.serviceComponentOptions = []
 
         for (let index = 0; index < serviceComponentList.length; index++) {
-          let serviceComponentModel = new ServiceComponentModel();
+          let serviceComponentModel = new ServiceComponent();
           serviceComponentModel.setName(serviceComponentList[index]["name"]);
           serviceComponentModel.setClassName(serviceComponentList[index]["className"]);
           serviceComponentModel.setServiceID(serviceComponentList[index]["serviceID"]);

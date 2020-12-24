@@ -6,9 +6,9 @@ import { CompositeComponent } from "./internalRepresentation/CompositeComponent.
 import { DropdownComponent } from "./internalRepresentation/DropdownComponent.model";
 import { FormComponent } from "./internalRepresentation/FormComponent.model";
 import { IconComponent } from "./internalRepresentation/IconComponent.model";
+import { InputGroupComponent } from "./internalRepresentation/InputGroupComponent.model";
 import { LayoutComponent } from "./internalRepresentation/LayoutComponent.model";
 import { TableComponent } from "./internalRepresentation/TableComponent.model";
-import { ServiceComponentModel } from "./serviceComponent/service-component.model";
 import { IServiceEntry } from "./store/serviceEntry.model";
 import { TextComponent, InputTextComponent, UIComponent } from "./ui-component-dependency";
 
@@ -117,6 +117,16 @@ export class UIComponentBuilder {
     buildCardComponent(): CardComponent {
         let cardComponent: CardComponent = new CardComponent(this);
         return cardComponent;
+    }
+    
+    buildInputGroupComponent(): InputGroupComponent {
+        let inputGroupComponent: InputGroupComponent = new InputGroupComponent(this);
+        return inputGroupComponent;
+    }
+    
+    buildIconComponent(): IconComponent {
+        let iconComponent: IconComponent = new IconComponent(this);
+        return iconComponent;
     }
     
     buildBreadcrumbComponent(): BreadcrumbComponent {

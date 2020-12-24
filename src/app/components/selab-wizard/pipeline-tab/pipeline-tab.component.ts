@@ -7,7 +7,6 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete, MatDi
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { UIComponentFactory } from '../uicomponent-factory';
-import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 import { PipelineDataMenuComponent } from './pipeline-data-menu/pipeline-data-menu.component';
 import { SelabHeaderComponent } from '../../selab-header/selab-header.component';
@@ -21,6 +20,7 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-
 import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { departmentReturn } from '../../fakeReturnData';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
+import { ServiceComponent } from 'src/app/models/store/serviceEntry.model';
 
 @Component({
   selector: 'pipeline-tab',
@@ -149,11 +149,11 @@ export class PipelineTabComponent implements OnInit {
       .queryReturnByServiceID("2")
       .subscribe((response) => {
         this.returnData = departmentOperationReturn;
-        let operation = new Operation()
-          .setServiceID(this.uiComponent.getServiceComponent().getServiceID())
-          .setName(this.uiComponent.getServiceComponent().getName())
-          .setReturnData(this.returnData)
-          .setClassName(this.uiComponent.getServiceComponent().getClassName())
+        let operation = new ServiceComponent()
+          .setServiceID((this.uiComponent.getServiceComponent() as ServiceComponent).getServiceID())
+          .setName((this.uiComponent.getServiceComponent() as ServiceComponent).getName())
+          .setClassName((this.uiComponent.getServiceComponent() as ServiceComponent).getClassName())
+          // .setReturnData(this.returnData)
 
         // this.returnData = JSON.parse(response["body"]);
         this.dataMenu.update(operation);

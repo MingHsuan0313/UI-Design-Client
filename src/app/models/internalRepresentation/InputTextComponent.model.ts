@@ -1,5 +1,4 @@
 import { UIComponent } from "./UIComponent.model";
-import { ServiceComponentModel } from "../serviceComponent/service-component.model";
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { Input } from "@angular/core";
@@ -38,8 +37,6 @@ export class InputTextComponent extends BasicComponent {
     return uiComponentBuilder
       .buildInputComponent()
   }
-
-
 
   getProperties(){
     return [
