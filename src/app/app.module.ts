@@ -48,7 +48,9 @@ import { ConfirmDialogComponent } from './components/utils/confirm-dialog/confir
 import { TabNameDialogComponent } from './components/selab-graph-editor/tab-name-dialog/tab-name-dialog.component';
 import { ComponentInfoComponent } from './components/selab-setting/component-info/component-info.component';
 import { EndpointTestComponent } from './components/selab-setting/endpoint-test/endpoint-test.component';
-import { TestingLogWindowComponent } from './components/selab-setting/endpoint-test/testing-log-window/testing-log-window.component'; 
+import { TestingLogWindowComponent } from './components/selab-setting/endpoint-test/testing-log-window/testing-log-window.component';
+import { JestTestingLogWindowComponent } from './components/selab-setting/endpoint-test/jest-testing-log-window/jest-testing-log-window.component';
+import { JestTestingTerminalComponent } from './components/selab-setting/endpoint-test/jest-testing-log-window/jest-testing-terminal/jest-testing-terminal.component'; 
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -103,7 +105,9 @@ export function reducerFactory() {
     TabNameDialogComponent,
     ComponentInfoComponent,
     EndpointTestComponent,
-    TestingLogWindowComponent
+    TestingLogWindowComponent,
+    JestTestingLogWindowComponent,
+    JestTestingTerminalComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -124,7 +128,8 @@ export function reducerFactory() {
     SelabWizardComponent,
     ConfirmDialogComponent,
     TabNameDialogComponent,
-    TestingLogWindowComponent
+    TestingLogWindowComponent,
+    JestTestingLogWindowComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

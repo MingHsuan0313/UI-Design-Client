@@ -14,17 +14,16 @@
         <mat-label>{{argument.name}}</mat-label>
         <input id="{{serviceComponent.name}}-{{argument.name}}" matInput>
       </mat-form-field>
-      <button (click)="showLog(serviceComponent)" style="background-color: #333333;" mat-raised-button color="primary">Show Log</button>
+      <button (click)="showLog(serviceComponent)" style="background-color: #333333;" mat-raised-button
+        color="primary">Show Log</button>
       &nbsp;&nbsp;
       <button (click)="test(serviceComponent)" mat-raised-button color="primary">Test</button>
     </div>
   </mat-expansion-panel>
 </mat-accordion>
 
-<button
-  matTooltip="Test all service components using Jest"
-  mat-raised-button 
-  (click)="testAll()"
-  style="background-color: #333333;
+<button matTooltip="Test all service components using Jest" mat-raised-button (click)="testAll()" style="background-color: #333333;
     margin-top: 20px;
-   color:white" >Test All</button>
+   color:white">Test All</button>
+&nbsp;&nbsp;
+<mat-spinner [diameter]="30" style="display: inline; position: relative;" *ngIf="isWaitingTesting"></mat-spinner>

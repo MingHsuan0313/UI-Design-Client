@@ -12,6 +12,7 @@ import { operationPoolSelector, tasksSelector } from 'src/app/models/store/reduc
 import { Argument, ServiceComponent } from 'src/app/models/store/serviceEntry.model';
 import { EndpointTestingService } from 'src/app/services/endpoint-testing.service';
 import { HttpClientService } from 'src/app/services/http-client.service';
+import { JestTestingLogWindowComponent } from './jest-testing-log-window/jest-testing-log-window.component';
 import { TestingLogWindowComponent } from './testing-log-window/testing-log-window.component';
 
 @Component({
@@ -22,12 +23,15 @@ import { TestingLogWindowComponent } from './testing-log-window/testing-log-wind
 export class EndpointTestComponent implements OnInit {
   servicePool: ServiceComponent[];
   verticalPosition: MatSnackBarVerticalPosition = "top";
+  isWaitingTesting: boolean = false;
   constructor(
     private store: Store<AppState>,
     private httpClientService: HttpClientService,
     private snackBar: MatSnackBar,
     private endpointTestingService: EndpointTestingService,
-    public logWindow: MatDialog) {
+    public logWindow: MatDialog, // return from invoke individual service component
+    // return from Jest Server
+    public jestLogWindow: MatDialog) {
     this.servicePool = [];
     store.select(operationPoolSelector())
       .subscribe((serviceComponentPool) => {
@@ -50,12 +54,12 @@ export class EndpointTestComponent implements OnInit {
   }
 
   launchLogWindow(log: string) {
-    this.logWindow.open(TestingLogWindowComponent,{
+    this.logWindow.open(TestingLogWindowComponent, {
       data: {
-        log:log
+        log: log
       },
-      disableClose:true,
-      autoFocus:true
+      disableClose: true,
+      autoFocus: true
     })
   }
 
@@ -81,63 +85,37 @@ export class EndpointTestComponent implements OnInit {
     }
     let log = this.endpointTestingService.test(operation, params);
   }
-  
+
   showLog(operation: ServiceComponent) {
     console.log("show log");
     console.log(operation);
     this.launchLogWindow(operation.log);
   }
-  
+
   testAll() {
-    console.log(JSON.stringify(this.servicePool));
+    // console.log(JSON.stringify(this.servicePool));
+    let axios = require('axios');
+    this.isWaitingTesting = true;
+    axios.post('http://localhost:8081/selab/testing/testingServiceComponentPool', {
+      header: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify(this.servicePool)
+    }).then((response) => {
+      this.isWaitingTesting = false;
+      // console.log(response["data"]);
+      let log: string = response["data"];
+      this.jestLogWindow.open(JestTestingLogWindowComponent, {
+        data: {
+          log: log
+        },
+        disableClose: true,
+        autoFocus: true
+      })
+    }, (error) => {
+      this.isWaitingTesting = false;
+    })
   }
-
-  // generateFakeData() {
-
-  //   let operations = [];
-  //   let argument1 = new Argument()
-  //     .setName("account")
-  //   let argument2 = new Argument()
-  //     .setName("password")
-  //   let operation1 = new ServiceComponent()
-  //     .setName("login")
-  //     .setServiceID("1")
-  //     .addArgument(argument1)
-  //     .addArgument(argument2)
-  //     .setMethod("get")
-  //     .setUrl("/login")
-
-  //   let argument3 = new Argument()
-  //     .setName("number1")
-  //   let argument4 = new Argument()
-  //     .setName("number2")
-  //   let operation2 = new ServiceComponent()
-  //     .setName("add")
-  //     .setServiceID("2")
-  //     .addArgument(argument3)
-  //     .addArgument(argument4)
-  //     .setMethod("get")
-  //     .setUrl("/add")
-
-  //   let argument5 = new Argument()
-  //     .setName("number1")
-  //   let argument6 = new Argument()
-  //     .setName("number2")
-  //   let operation3 = new ServiceComponent()
-  //     .setName("sub")
-  //     .setServiceID("3")
-  //     .addArgument(argument5)
-  //     .addArgument(argument6)
-  //     .setMethod("get")
-  //     .setUrl("/sub");
-
-
-  //   operations.push(operation2);
-  //   operations.push(operation1);
-  //   operations.push(operation3);
-  //   return operations;
-  // }
-
 
   getkeys(map) {
     return Object.keys(map);
