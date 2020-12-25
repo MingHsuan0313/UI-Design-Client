@@ -11,7 +11,6 @@ export class CompositeComponent extends UIComponent {
    }
    constructor(uiComponentBuilder: UIComponentBuilder) {
       super(uiComponentBuilder);
-      this.serviceComponent = new ServiceComponent();
    }
 
    expandChildren() {

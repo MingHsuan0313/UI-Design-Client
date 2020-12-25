@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
+import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
 import { Library } from '../../../shared/library';
+import { UIComponentFactory } from '../uicomponent-factory';
 
 @Component({
   selector: 'build-tab',
@@ -10,7 +12,7 @@ import { Library } from '../../../shared/library';
 })
 export class BuildTabComponent implements OnInit {
   @Input() isPipeline: boolean;
-  @Input() uiComponent: UIComponent;
+  @Input() uiComponentBuilder: UIComponentBuilder;
   @Input() isComposite: boolean;
   buildFormProperties: any;
   inputValue: string;
@@ -36,10 +38,12 @@ export class BuildTabComponent implements OnInit {
     this.formData[propertyName] = event;
   }
 
-  createComponent() {
-    this.uiComponent = this.uiComponent
-                          .setProperties(this.formData)
-                          .setName(this.formData["name"]);
+  setComponent() {
+    this.uiComponentBuilder.setProperties(this.formData)
+      .setName(this.formData["name"]);
+    // this.uiComponent = this.uiComponent
+    //                       .setProperties(this.formData)
+    //                       .setName(this.formData["name"]);
     if (!this.checkIsFormFill()) {
       alert("You need to fill all input");
       return;
@@ -70,10 +74,6 @@ export class BuildTabComponent implements OnInit {
     return isCorrect;
   }
   
-  update(uiComponent: UIComponent) {
-    this.uiComponent = uiComponent;
-  }
-
   navigateToComposeTab() {
     let tabLinkElements = document.getElementsByClassName("mat-tab-label-content");
     for (let index = 0; index < tabLinkElements.length; index++) {
@@ -92,7 +92,7 @@ export class BuildTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.buildFormProperties = this.uiComponent.getProperties();
+    this.buildFormProperties = UIComponentFactory.getProperties(this.uiComponentBuilder.type);
     this.buildForm();
   }
 }

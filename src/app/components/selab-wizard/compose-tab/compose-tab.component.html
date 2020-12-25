@@ -1,5 +1,5 @@
 <br>
-<h3> Composite Component: {{uiComponent.type}} </h3>
+<h3> Composite Component: {{uiComponentBuilder.type}} </h3>
 <div>
   <div style="display: inline;">
     &nbsp;&nbsp;&nbsp;
@@ -14,7 +14,7 @@
     <br>
   </div>
 
-  <div *ngIf="subComponent !== undefined && isClean === true">
+  <div *ngIf="subComponentBuilder !== undefined && isClean === true">
     <div *ngFor="let property of subComponentProperties">
       <div *ngIf="property.type == 'String'">
         <mat-form-field appearance="outline">

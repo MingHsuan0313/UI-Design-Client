@@ -6,6 +6,10 @@ export class IServiceEntry {
     setBind(bind: boolean) {
         this.bind = bind;
     }
+    
+    getInfo() {
+        
+    }
 }
 export class ComplexType {
    initUrl: string; // for constructor service

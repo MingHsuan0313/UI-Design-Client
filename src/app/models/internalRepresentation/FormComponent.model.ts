@@ -2,7 +2,7 @@ import { UIComponent } from "./UIComponent.model";
 import { CompositeComponent } from "./CompositeComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
-import { IServiceEntry } from "../store/serviceEntry.model";
+import { IServiceEntry, ServiceComponent } from "../store/serviceEntry.model";
 
 export class FormComponent extends CompositeComponent {
 
@@ -11,7 +11,7 @@ export class FormComponent extends CompositeComponent {
         this.componentList = uiComponentBuilder.componentList;
     }
 
-    setServiceComponent(serviceComponent: IServiceEntry): FormComponent {
+    setServiceComponent(serviceComponent: ServiceComponent): FormComponent {
         let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
         return uiComponentBuilder
             .setServiceComponent(serviceComponent)
@@ -75,7 +75,7 @@ export class FormComponent extends CompositeComponent {
     getInfo() {
         return {
             name: this.name,
-            service: this.serviceComponent.getInfo(),
+            service: (this.serviceComponent as ServiceComponent).getInfo(),
             children: this.expandChildren()
         };
     }

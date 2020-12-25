@@ -10,9 +10,11 @@ import { PipelineCreateOperationAction } from 'src/app/models/store/actions/pipe
 import { AppState } from 'src/app/models/store/app.state';
 import { ServiceComponent } from 'src/app/models/store/serviceEntry.model';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
+import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
 import { SelabWizardComponent } from '../selab-wizard.component';
+import { UIComponentFactory } from '../uicomponent-factory';
 
 @Component({
   selector: 'information-tab',
@@ -21,7 +23,7 @@ import { SelabWizardComponent } from '../selab-wizard.component';
 })
 export class InformationTabComponent implements OnInit, AfterViewInit {
   @Input() isPipeline: boolean;
-  @Input() uiComponent: UIComponent;
+  @Input() uiComponentBuilder: UIComponentBuilder;
   @Input() isComposite: boolean;
   treeControl: FlatTreeControl<FileFlatNode>;
   treeFlattener: MatTreeFlattener<InformationNode, FileFlatNode>;
@@ -58,7 +60,10 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
         let id = this.graphEditorService.getSelectedGraphID();
-        this.store.dispatch(new IRInsertUIComponentAction(id,this.uiComponent));
+        console.log("start creating");
+        console.log(this.uiComponentBuilder);
+        let uiComponent = this.uiComponentBuilder.build();
+        this.store.dispatch(new IRInsertUIComponentAction(id,uiComponent));
         // let serviceComponent = this.uiComponent.getServiceComponent();
         // if(serviceComponent.serviceID.toString().length > 0) {
         //   let operation: Operation = new Operation()
@@ -67,7 +72,7 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
         //                                   .setServiceID(serviceComponent.serviceID)
         //   this.store.dispatch(new PipelineCreateOperationAction(operation));
         // }
-        this.graphEditorService.bindComponent(this.uiComponent);
+        this.graphEditorService.bindComponent(uiComponent);
         this.wizard.close();
       }
     })
@@ -86,12 +91,12 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     console.log("Build Tab:" + this.isPipeline)
   }
-  
-  update(uiComponent: UIComponent) {
-    this.uiComponent = uiComponent;
-    this.database = new InformationDatabase(JSON.stringify(this.uiComponent.getInfo()));
+
+  update() {
+    // uiComponent;
+    this.database = new InformationDatabase(JSON.stringify(UIComponentFactory.getInfo(this.uiComponentBuilder)));
     this.database.dataChange.subscribe(data => this.dataSource.data = data);
-  }
+  }  
 
   ngAfterViewInit() {
     // console.log("information tab active")

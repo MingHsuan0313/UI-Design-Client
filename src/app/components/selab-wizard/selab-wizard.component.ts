@@ -7,6 +7,7 @@ import { AppState } from 'src/app/models/store/app.state';
 import { operationPoolSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
 import { ServiceComponent } from 'src/app/models/store/serviceEntry.model';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
+import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
 import { Task } from 'src/app/models/wizard-task-dependency';
 import { SelabHeaderComponent } from '../selab-header/selab-header.component';
 import { BindServiceTabComponent } from './bind-service-tab/bind-service-tab.component';
@@ -30,6 +31,7 @@ export class SelabWizardComponent implements OnInit {
   type: string = ""; // form, dropdown...
   category: string = ""; // informative, input control...
   uiComponent: UIComponent; // uiComponent being create
+  uiComponentBuilder: UIComponentBuilder;
   lastTab: string;
 
   // it has return data if in pipeline mode
@@ -39,7 +41,7 @@ export class SelabWizardComponent implements OnInit {
   @ViewChild("compose") composeTab: ComposeTabComponent;
   @ViewChild("status") infoTab: InformationTabComponent;
   @ViewChild("pipeline") pipelineTab: PipelineTabComponent;
-  @ViewChild("service") serviceTab: BindServiceTabComponent;
+  @ViewChild("service") serviceTab: BindServiceTabComponent
 
   constructor(
     public dialogRef: MatDialogRef<SelabHeaderComponent>,
@@ -59,47 +61,25 @@ export class SelabWizardComponent implements OnInit {
     if (this.isPipeline) {
       this.operation = this.data.operation;
     }
-
-    this.uiComponent = UIComponentFactory.create(this.type);
+    this.uiComponentBuilder = UIComponentFactory.create(this.type);
+    // this.uiComponent = UIComponentFactory.create(this.type);
   }
 
   // this function if for update componet tree structure for information tab
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
-    if(this.lastTab == "Build Component")
-      this.uiComponent = this.buildTab.uiComponent;
-    else if(this.lastTab == "Compose Component")
-      this.uiComponent = this.composeTab.uiComponent;
-    else if(this.lastTab == "Check Status")
-      this.uiComponent = this.infoTab.uiComponent;
-    else if(this.lastTab == "Bind Service")
-      this.uiComponent = this.serviceTab.uiComponent;
-    else if(this.lastTab == "Generate Pipeline")
-      this.uiComponent = this.pipelineTab.uiComponent;
-
-
-    if(tabChangeEvent.tab.textLabel == "Build Component")
-      this.buildTab.update(this.uiComponent);
-    else if(tabChangeEvent.tab.textLabel == "Compose Component")
-      this.composeTab.update(this.uiComponent);
-    else if(tabChangeEvent.tab.textLabel == "Check Status")
-      this.infoTab.update(this.uiComponent);
-    else if(tabChangeEvent.tab.textLabel == "Bind Service")
-      this.serviceTab.update(this.uiComponent);
-    else if(tabChangeEvent.tab.textLabel == "Generate Pipeline")
-      this.pipelineTab.update(this.uiComponent);
-
+    if(tabChangeEvent.tab.textLabel == "Check Status")
+      this.infoTab.update();
     this.lastTab = tabChangeEvent.tab.textLabel;
   }
 
   checkWizardStatus() {
-    let openCorrect = true;
     let description = "";
 
     if (this.genere == "Genre" || this.genere == "")
       description += "You need to choose Genre\n";
     if (this.category == "Category" || this.category == "")
       description += "You need to choose Category\n";
-    if (this.uiComponent == undefined)
+    if (this.uiComponentBuilder == undefined)
       description += "You need to choose UI Component\n";
 
     if (description.length > 0) {
@@ -115,6 +95,8 @@ export class SelabWizardComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("initilize")
+    console.log(this.data);
     this.initialization();
     if (!this.checkWizardStatus())
       return;

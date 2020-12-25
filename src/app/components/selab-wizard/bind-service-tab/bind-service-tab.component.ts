@@ -6,6 +6,7 @@ import { PipelineCreateOperationAction } from 'src/app/models/store/actions/pipe
 import { AppState } from 'src/app/models/store/app.state';
 import { Argument, ServiceComponent } from 'src/app/models/store/serviceEntry.model';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
+import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 
 @Component({
@@ -14,7 +15,7 @@ import ServiceComponentService from 'src/app/services/serviceComponent/service-c
   styleUrls: ['./bind-service-tab.component.css']
 })
 export class BindServiceTabComponent implements OnInit {
-  @Input() uiComponent: UIComponent;
+  @Input() uiComponentBuilder: UIComponentBuilder;
   serviceOptions: any[];
   argumentOptions: any[];
   serviceComponentPool: Map<String, Boolean>; // check is serviceComponent has in pool
@@ -34,40 +35,38 @@ export class BindServiceTabComponent implements OnInit {
   async chooseService(event, option) {
     console.log("choose service");
     this.selectedService = option;
-    if((this.uiComponent.getServiceComponent() as ServiceComponent).serviceID != undefined) {
-      this.uiComponent = this.uiComponent.setServiceComponent(new ServiceComponent());
-    }
-    console.log(this.uiComponent);
-
-    (this.uiComponent.getServiceComponent() as ServiceComponent)
-      .setClassName(option["className"])
+    // if((this.uiComponentBuilder.serviceComponent as ServiceComponent).serviceID != undefined) {
+    //   this.uiComponentBuilder.setServiceComponent(new ServiceComponent());
+    //   this.uiComponent = this.uiComponent.setServiceComponent(new ServiceComponent());
+    // }
+    // console.log(this.uiComponent);
+    let serviceComponent = new ServiceComponent();
+    serviceComponent.setClassName(option["className"])
       .setName(option["name"])
       .setServiceID(option["serviceID"])
       .setHttpMethod(option["httpMethod"])
       .setWSDLName(option["WSDLName"])
       .setUrl();
+    this.uiComponentBuilder.setServiceComponent(serviceComponent);
     if (option["name"] == "addDepartment" || option["name"] == "editDepartment") {
-      (this.uiComponent.getServiceComponent() as ServiceComponent)
-        .setComplexTypeUrl(this.fakeData());
+        (this.uiComponentBuilder
+          .getServiceComponent() as ServiceComponent)
+          .setComplexTypeUrl(this.fakeData());
     }
     this.queryArguments();
-  }
-
-  update(uiComponent: UIComponent) {
-    this.uiComponent = uiComponent;
   }
 
   chooseArgument(event, option, subComponent: UIComponent) {
     console.log("choose option");
     console.log(option);
-    (subComponent.getServiceComponent() as Argument)
-      .setName(option)
+    (subComponent.serviceComponent as Argument)
+      .setName(option["name"])
   }
 
   queryArguments() {
     console.log("query arguments")
     this.serviceComponentService
-      .queryArgumentsByServiceID((this.uiComponent.getServiceComponent() as ServiceComponent).serviceID)
+      .queryArgumentsByServiceID((this.uiComponentBuilder.getServiceComponent() as ServiceComponent).serviceID)
       .subscribe(async (response) => {
         let argumentOption;
         this.argumentOptions = [];
@@ -95,12 +94,12 @@ export class BindServiceTabComponent implements OnInit {
         }
 
         let operation: ServiceComponent;
-        if ((this.uiComponent.getServiceComponent() as ServiceComponent).serviceID.toString().length > 0) {
-          operation = (this.uiComponent.getServiceComponent() as ServiceComponent);
+        if ((this.uiComponentBuilder.getServiceComponent() as ServiceComponent).serviceID.toString().length > 0) {
+          operation = (this.uiComponentBuilder.getServiceComponent() as ServiceComponent);
         }
         for (let index = 0; index < this.argumentOptions.length; index++)
           (operation as ServiceComponent).addArgument(this.argumentOptions[index]);
-        this.store.dispatch(new PipelineCreateOperationAction(this.uiComponent.getServiceComponent() as ServiceComponent));
+        this.store.dispatch(new PipelineCreateOperationAction(this.uiComponentBuilder.getServiceComponent() as ServiceComponent));
       },
         (err) => {
           console.log(err);
@@ -111,7 +110,7 @@ export class BindServiceTabComponent implements OnInit {
     this.isQueryingService = true;
     this.serviceComponentService
       // .queryServices(this.uiComponent,2)
-      .queryMatchedServices(this.uiComponent)
+      .queryMatchedServices(this.uiComponentBuilder)
       .subscribe(
         (response) => {
           console.log("queryService result")

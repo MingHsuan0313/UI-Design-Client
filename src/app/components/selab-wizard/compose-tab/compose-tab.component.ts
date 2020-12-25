@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CompositeComponent } from 'src/app/models/internalRepresentation/CompositeComponent.model';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
+import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
 import { UIComponentFactory } from '../uicomponent-factory';
 
 @Component({
@@ -10,14 +11,14 @@ import { UIComponentFactory } from '../uicomponent-factory';
 })
 export class ComposeTabComponent implements OnInit {
   @Input() isPipeline: boolean;
-  @Input() uiComponent: CompositeComponent;
+  @Input() uiComponentBuilder: UIComponentBuilder;
   
   isClean: boolean;
 
   childrenOptions: string[];
   composeTarget: string;
 
-  subComponent: UIComponent;
+  subComponentBuilder: UIComponentBuilder;
   subComponentProperties: any;
 
   inputValue: string;
@@ -26,8 +27,8 @@ export class ComposeTabComponent implements OnInit {
   chooseChild(event, option) {
     this.isClean = true;
     this.composeTarget = option;
-    this.subComponent = UIComponentFactory.create(this.composeTarget);
-    this.subComponentProperties = this.subComponent.getProperties();
+    this.subComponentBuilder = UIComponentFactory.create(this.composeTarget);
+    this.subComponentProperties = UIComponentFactory.getProperties(this.subComponentBuilder.type);
     this.buildForm();
   }
 
@@ -35,10 +36,6 @@ export class ComposeTabComponent implements OnInit {
     this.formData[value] = event;
   }
   
-  update(uiComponent:UIComponent) {
-    this.uiComponent = (uiComponent as CompositeComponent);
-  }
-
   constructor() {
     this.isClean = false;
     this.formData = {};
@@ -50,18 +47,18 @@ export class ComposeTabComponent implements OnInit {
       alert("You need to fill all input");
       return;
     }
-    this.subComponent = this.subComponent
-                              .setProperties(this.formData)
-                              .setName(this.formData["name"])
+    this.subComponentBuilder.setProperties(this.formData)
+      .setName(this.formData["name"]);
+    let subComponent = this.subComponentBuilder.build();
     // this.uiComponent.addSubComponent(this.deepCopySubComponent());
-    this.uiComponent = this.uiComponent.addSubComponent(this.subComponent);
+    this.uiComponentBuilder.addSubComponent(subComponent);
     this.formData = {};
   }
   
   deepCopySubComponent(): UIComponent {
     let copySubComponent;
-    copySubComponent = JSON.parse(JSON.stringify(this.subComponent));
-    delete this.subComponent;
+    // copySubComponent = JSON.parse(JSON.stringify(this.subComponent));
+    // delete this.subComponent;
     return copySubComponent;
   }
 
@@ -80,7 +77,7 @@ export class ComposeTabComponent implements OnInit {
 
   ngOnInit() {
     this.composeTarget = "";
-    this.childrenOptions = this.uiComponent.getChildrenOptions();
+    this.childrenOptions = UIComponentFactory.getChildrenOptions(this.uiComponentBuilder.type);
   }
   
   buildForm() {
@@ -93,5 +90,7 @@ export class ComposeTabComponent implements OnInit {
         this.formData[this.subComponentProperties[index]["value"]] = "";
       }
     } 
+    console.log("build form...")
+    console.log(this.formData);
   }
 }

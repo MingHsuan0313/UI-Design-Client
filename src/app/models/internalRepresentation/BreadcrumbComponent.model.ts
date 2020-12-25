@@ -2,7 +2,7 @@ import { UIComponent } from "./UIComponent.model";
 import { CompositeComponent } from "./CompositeComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
-import { IServiceEntry } from "../store/serviceEntry.model";
+import { IServiceEntry, ServiceComponent } from "../store/serviceEntry.model";
 
 export class BreadcrumbComponent extends CompositeComponent {
 
@@ -52,7 +52,7 @@ export class BreadcrumbComponent extends CompositeComponent {
   getInfo() {
     return {
       name: this.name,
-      service: this.serviceComponent.getInfo(),
+      service: (this.serviceComponent as ServiceComponent).getInfo(),
       children: this.expandChildren()
     }
 

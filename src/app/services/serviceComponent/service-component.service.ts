@@ -5,6 +5,7 @@ import { ServiceComponent } from "../../models/service-component-dependency";
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { HttpClientService } from '../http-client.service';
 import { HttpParamsOptions } from '@angular/common/http/src/params';
+import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +53,7 @@ export default class ServiceComponentService {
     return this.httpClientService.httpGet(url, params, "uiDesignServer");
   }
 
-  queryMatchedServices(uiComponent: UIComponent) {
+  queryMatchedServices(uiComponent: UIComponentBuilder) {
     console.log("query Matched Services");
     console.log(this);
     let uiType = uiComponent.getType();

@@ -1,5 +1,5 @@
 <br>
-<h3 style="display: inline;"> Composite Component: {{uiComponent.type}} </h3>
+<h3 style="display: inline;"> Composite Component: {{uiComponentBuilder.type}} </h3>
 
 <div style="display: inline;">
   &nbsp;&nbsp;&nbsp;
@@ -19,7 +19,7 @@
 </div>
 
 <div>
-  <div *ngFor="let subComponent of uiComponent.componentList">
+  <div *ngFor="let subComponent of uiComponentBuilder.componentList">
     <div class="argument-block" *ngIf="subComponent.type === 'input'">
       <span>Input Text</span>
       <ul>

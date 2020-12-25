@@ -21,6 +21,7 @@ import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internal
 import { departmentReturn } from '../../fakeReturnData';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { ServiceComponent } from 'src/app/models/store/serviceEntry.model';
+import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
 
 @Component({
   selector: 'pipeline-tab',
@@ -29,7 +30,7 @@ import { ServiceComponent } from 'src/app/models/store/serviceEntry.model';
 })
 export class PipelineTabComponent implements OnInit {
 
-  @Input() uiComponent: UIComponent;
+  @Input() uiComponentBuilder: UIComponentBuilder;
   returnData: {};
 
   visible = true;
@@ -76,9 +77,10 @@ export class PipelineTabComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
         let id = this.graphEditorService.getSelectedGraphID();
-        this.store.dispatch(new IRInsertUIComponentAction(id,this.uiComponent));
-        this.graphEditorService.bindComponent(this.uiComponent);
-        let serviceComponent = this.uiComponent.getServiceComponent();
+        let uiComponent = this.uiComponentBuilder.build();
+        this.store.dispatch(new IRInsertUIComponentAction(id,uiComponent));
+        this.graphEditorService.bindComponent(uiComponent);
+        let serviceComponent = uiComponent.getServiceComponent();
         // let operation = new Operation()
         //   .setName(serviceComponent.getName())
         //   .setClassName(serviceComponent.getClassName())
@@ -141,26 +143,26 @@ export class PipelineTabComponent implements OnInit {
   }
 
   update(uiComponent:UIComponent) {
-    this.uiComponent = uiComponent;
-    console.log("pipeline tab update");
-    let departmentOperationReturn = departmentReturn;
+    // this.uiComponent = uiComponent;
+    // console.log("pipeline tab update");
+    // let departmentOperationReturn = departmentReturn;
 
-    this.serviceComponentService
-      .queryReturnByServiceID("2")
-      .subscribe((response) => {
-        this.returnData = departmentOperationReturn;
-        let operation = new ServiceComponent()
-          .setServiceID((this.uiComponent.getServiceComponent() as ServiceComponent).getServiceID())
-          .setName((this.uiComponent.getServiceComponent() as ServiceComponent).getName())
-          .setClassName((this.uiComponent.getServiceComponent() as ServiceComponent).getClassName())
-          // .setReturnData(this.returnData)
+    // this.serviceComponentService
+    //   .queryReturnByServiceID("2")
+    //   .subscribe((response) => {
+    //     this.returnData = departmentOperationReturn;
+    //     let operation = new ServiceComponent()
+    //       .setServiceID((this.uiComponent.getServiceComponent() as ServiceComponent).getServiceID())
+    //       .setName((this.uiComponent.getServiceComponent() as ServiceComponent).getName())
+    //       .setClassName((this.uiComponent.getServiceComponent() as ServiceComponent).getClassName())
+    //       // .setReturnData(this.returnData)
 
-        // this.returnData = JSON.parse(response["body"]);
-        this.dataMenu.update(operation);
-      }, (err) => {
-        console.log("error")
-        console.log(err);
-      })
+    //     // this.returnData = JSON.parse(response["body"]);
+    //     this.dataMenu.update(operation);
+    //   }, (err) => {
+    //     console.log("error")
+    //     console.log(err);
+    //   })
   }
 
   add(event: MatChipInputEvent): void {

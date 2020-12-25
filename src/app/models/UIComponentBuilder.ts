@@ -1,4 +1,3 @@
-import { Geometry } from "ngx-perfect-scrollbar";
 import { BreadcrumbComponent } from "./internalRepresentation/BreadcrumbComponent.model";
 import { ButtonComponent } from "./internalRepresentation/ButtonComponent.model";
 import { CardComponent } from "./internalRepresentation/CardComponent.model";
@@ -9,7 +8,7 @@ import { IconComponent } from "./internalRepresentation/IconComponent.model";
 import { InputGroupComponent } from "./internalRepresentation/InputGroupComponent.model";
 import { LayoutComponent } from "./internalRepresentation/LayoutComponent.model";
 import { TableComponent } from "./internalRepresentation/TableComponent.model";
-import { IServiceEntry } from "./store/serviceEntry.model";
+import { Argument, IServiceEntry, ServiceComponent } from "./store/serviceEntry.model";
 import { TextComponent, InputTextComponent, UIComponent } from "./ui-component-dependency";
 
 export class UIComponentBuilder {
@@ -21,6 +20,7 @@ export class UIComponentBuilder {
     public style: object;
     public geometry: object;
     public serviceComponent: IServiceEntry;
+    public argument: Argument;
     public properties: Object; // specific component properties: eg dropdown item, card header...
     public componentList: UIComponent[];
 
@@ -41,6 +41,21 @@ export class UIComponentBuilder {
 
     setID(id: string) {
         this.id = id;
+        return this;
+    }
+    
+    setServiceComponent(serviceComponent: IServiceEntry) {
+        this.serviceComponent = serviceComponent;
+        return this;
+    }
+    
+    setArgument(argument: Argument) {
+        this.argument = argument;
+        return this;
+    }
+    
+    addSubComponent(uiComponent:UIComponent) {
+        this.componentList.push(uiComponent);
         return this;
     }
 
@@ -79,9 +94,29 @@ export class UIComponentBuilder {
         return this;
     }
 
-    setServiceComponent(serviceComponent: IServiceEntry) {
-        this.serviceComponent = serviceComponent;
-        return this;
+    build(): UIComponent {
+        if(this.type == "text") 
+            return this.buildTextComponent();
+        else if(this.type == "button")
+            return this.buildButtonComponent();
+        else if(this.type == "table")
+            return this.buildTableComponent();
+        else if(this.type == "card")
+            return this.buildCardComponent();
+        else if(this.type == "dropdown")
+            return this.buildDropdownComponent();
+        else if(this.type == "input")
+            return this.buildInputComponent();
+        else if(this.type == "inputgroup")
+            return this.buildInputGroupComponent();
+        else if(this.type == "icon")
+            return this.buildIconComponent();
+        else if(this.type == "breadcrumb")
+            return this.buildBreadcrumbComponent();
+        else if(this.type == "layout")
+            return this.buildLayoutComponent();
+        else if(this.type == "form")
+            return this.buildFormComponent();
     }
     
     buildLayoutComponent(): LayoutComponent {
@@ -145,28 +180,16 @@ export class UIComponentBuilder {
            return this;
        }
     }
-
-    // buildDropdownComponent(properties: Object): DropdownComponent {
-
-    // }
-
-    // buildFormComponent(properties: Object): FormComponent {
-
-    // }
-
-    // buildButtonComponent(properties: Object): ButtonComponent {
-
-    // }
-
-    // buildTableComponent(properties: Object): TableComponent {
-
-    // }
-
-    // buildIconComponent(properties: Object): IconComponent{
-
-    // }
-
-    // buildBreadcrumbComponent(properties: Object): BreadcrumbComponent {
-
-    // }
+    
+    getServiceComponent() {
+        return this.serviceComponent;
+    }
+    
+    getName() {
+        return this.name;
+    }
+    
+    getType() {
+        return this.type;
+    }
 }

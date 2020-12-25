@@ -1,5 +1,5 @@
 <br>
-<h3>Ready To Build: {{uiComponent.type}}</h3>
+<h3>Ready To Build: {{uiComponentBuilder.type}}</h3>
 <div>
     <div *ngFor="let property of buildFormProperties">
         <div *ngIf="property.type == 'String'">
@@ -18,7 +18,7 @@
 
     <hr>
     <mat-dialog-actions>
-        <button type="button" (click)="createComponent()" mat-raised-button color="primary">Create</button>
+        <button type="button" (click)="setComponent()" mat-raised-button color="primary">Create</button>
         <button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
     </mat-dialog-actions>
 </div>

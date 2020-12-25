@@ -20,7 +20,7 @@ export class UIComponent {
     this.type = uiComponentBuilder.type; 
     this.style = uiComponentBuilder.style;
     this.geometry = uiComponentBuilder.geometry;
-    this.serviceComponent = new IServiceEntry();
+    this.serviceComponent = uiComponentBuilder.serviceComponent;
   }
 
   public getName():  string{
