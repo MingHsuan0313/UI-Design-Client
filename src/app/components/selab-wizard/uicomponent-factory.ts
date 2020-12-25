@@ -372,6 +372,7 @@ export class UIComponentFactory {
                  [uiComponentBuilder.selector]: {
                     name: uiComponentBuilder.name,
                     header: uiComponentBuilder.properties["header"],
+                    children: this.expandChildren(uiComponentBuilder.componentList),
                     service: info
                 }
             }

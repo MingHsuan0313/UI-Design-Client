@@ -1,7 +1,10 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
-import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
+import { GraphStorage, VertexStorage, StyleStorage } from "../../graph-dependency";
+import { SelabVertex } from "../../store/selabVertex.model";
+import { SelabEditor } from "../selab-editor.model";
+import { CardComponent } from "../../ui-component-dependency";
 
 
 export class CardStrategy implements ICreateComponentStrategy {
@@ -22,7 +25,7 @@ export class CardStrategy implements ICreateComponentStrategy {
   }
 
   // part: Box , Header
-  createDataBinding(part: String, index?){
+  createDataBinding(part: String, index?) {
     if (part == "header") {
 
       const dataBindingName = "header";
@@ -35,70 +38,77 @@ export class CardStrategy implements ICreateComponentStrategy {
       );
       return dataBinding;
     }
-    else if(part == "box") {
+    else if (part == "box") {
       return new DataBinding(false, part, -1);
     }
-    else 
+    else
       return new DataBinding(false, part, -1);
   }
 
-  createCardBoxVertex(graphStorage, component, parent) {
-    const styleName = "cardBoxStyle" + component.id;
+  createCardBoxVertex(selabEditor: SelabEditor, component: CardComponent, parent: mxCell) {
     const cardBoxStyle = StyleLibrary[0]["card"]["cardBox"];
-    const styleStorage = new StyleStorage(styleName, cardBoxStyle);
     const cardVertexGeometry = new mxGeometry(this.basex, this.basey, 250, 300);
-    const cardVertexStorage = graphStorage.insertVertex(parent, component.id, "", cardVertexGeometry, styleStorage, component);
-    cardVertexStorage.setIsPrimary(true);
+    let id = (parseInt(component.getId())).toString();
+    let selabVertex = new SelabVertex()
+      .setID(component.getSelector() + "-" + id)
+      .setParentID(parent.id)
+      .setIsPrimary(true)
+      .setUIComponentID(component.getId())
+    let cardBoxCell = selabEditor.insertVertex(selabVertex, component, cardVertexGeometry, cardBoxStyle);
 
-    cardVertexStorage.vertex["componentPart"] = "box";
-    cardVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
-    cardVertexStorage.vertex["isPrimary"] = true;
-    return cardVertexStorage;
+
+    cardBoxCell["componentPart"] = "box";
+    cardBoxCell["dataBinding"] = this.createDataBinding("box");
+    cardBoxCell["isPrimary"] = true;
+    cardBoxCell["componentID"] = component.getId();
+    return cardBoxCell;
   }
 
-  createCardHeaderVertex(graphStorage, component, parent) {
+  createCardHeaderVertex(selabEditor: SelabEditor, component: CardComponent, parent: mxCell) {
     const dataBinding = this.createDataBinding("header");
-    const styleName = "cardHeaderStyle" + component.id;
     const cardHeaderStyle = StyleLibrary[0]["card"]["cardHeader"];
-    const styleStorage = new StyleStorage(styleName, cardHeaderStyle);
-    const cardHeaderGeometry = new mxGeometry(0, 0, 250, 50);
-    const cardHeaderVertexStorage = graphStorage.insertVertex(parent.getVertex(), component.id, component["header"], cardHeaderGeometry, styleStorage, component, dataBinding);
-    parent.addChild(cardHeaderVertexStorage.id, cardHeaderVertexStorage.getVertex(), "header");
-    cardHeaderVertexStorage.vertex["componentPart"] = "header";
-    cardHeaderVertexStorage.vertex["dataBinding"] = this.createDataBinding("header");
-    cardHeaderVertexStorage.vertex["isPrimary"] = false;
-    return cardHeaderVertexStorage;
+    let cardHeaderGeometry = new mxGeometry(0, 0, 250, 50);
+    let id = (parseInt(component.getId())).toString();
+    let selabVertex = new SelabVertex()
+      .setID(component.getSelector() + "-" + id)
+      .setParentID(parent.id)
+      .setIsPrimary(true)
+      .setUIComponentID(component.getId())
+      .setDataBinding(dataBinding)
+      .setValue(component.header.toString());
+    let cardHeaderCell = selabEditor.insertVertex(selabVertex, component, cardHeaderGeometry, cardHeaderStyle);
+
+    cardHeaderCell["componentPart"] = "header";
+    cardHeaderCell["componentID"] = component.getId();
+    cardHeaderCell["dataBinding"] = this.createDataBinding("header");
+    cardHeaderCell["isPrimary"] = false;
+    return cardHeaderCell;
   }
 
-  createComponent(graphStorage: GraphStorage, component, parent) {
-    const cardBoxVertexStorage = this.createCardBoxVertex(graphStorage, component, parent);
-    const cardHeaderVertexStorage = this.createCardHeaderVertex(graphStorage, component, cardBoxVertexStorage);
-    // insert dropdown box
-
+  createComponent(selabEditor: SelabEditor, component: CardComponent, parent:mxCell) {
+    let cardBoxVertex = this.createCardBoxVertex(selabEditor, component, parent);
+    let cardHeaderVertex = this.createCardHeaderVertex(selabEditor, component, cardBoxVertex);
 
     let p1 = 50;
     let p2 = 50;
     let maxWidth = 250;
     for (const subUIComponent of component["componentList"]) {
-      const vertexStorage = graphStorage.createComponent(subUIComponent, cardBoxVertexStorage.getVertex(), p1, p2);
-      if (vertexStorage.getVertexWidth() > maxWidth) {
-        maxWidth = vertexStorage.getVertexWidth();
+      let vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, p1, p2);
+      if (vertex["geometry"].width > maxWidth) {
+        maxWidth = vertex["geometry"].width;
       }
-      p2 = p2 + vertexStorage.getVertexHeight() + 10;
-
-      cardBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
+      p2 = p2 + vertex["geometry"].height + 10;
+      // cardBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
     }
 
-    const newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth, p2);
-    cardBoxVertexStorage.getVertex().setGeometry(newmxGeometry);
-    graphStorage.getGraph().refresh();
-
+    let newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth, p2);
+    cardBoxVertex.setGeometry(newmxGeometry);
+    selabEditor.getGraph().refresh();
     // component["x"] = cardBoxVertexStorage.getVertexX();
     // component["y"] = cardBoxVertexStorage.getVertexX();
     // component["width"] = cardBoxVertexStorage.getVertexWidth();
     // component["height"] = cardBoxVertexStorage.getVertexHeight();
     // component["style"] = cardBoxVertexStorage.getStyle();
-
-    return cardBoxVertexStorage;
+    return cardBoxVertex;
   }
 }

@@ -1,7 +1,7 @@
 {
   "imsMain": {
     "login": {
-      "return": [
+      "return": [ 
         {
           "hierarchy": "form21-text23",
           "bindingPart": "text",
