@@ -57,7 +57,8 @@ export class SelabEditor {
 
     applyLayout(layout: string) {
         console.log("apply Layout")
-        this.setStrategy(new LayoutStrategy(0, 0));
+        let graphID = this.graphEditorService.getSelectedGraphID();
+        this.setStrategy(new LayoutStrategy(0, 0,graphID));
         let pageUICDLs = this.store.select(pageUICDLSelector());
         pageUICDLs.subscribe((data) => {
             let id = this.graphEditorService.getSelectedGraphID();
@@ -79,8 +80,8 @@ export class SelabEditor {
                 .insertVertex(parent, id, value,
                     geometry.x, geometry.y, geometry.width, geometry.height,
                     styleDescription, "")
-            vertex["selector"] = component.getSelector();
-            vertex["type"] = component.getType();
+            vertex["selector"] = component.selector;
+            vertex["type"] = component.type;
             let graphID = this.graphEditorService.getSelectedGraphID();
             this.store.dispatch(new ERInsertVertexAction(graphID, selabVertex));
         } finally {

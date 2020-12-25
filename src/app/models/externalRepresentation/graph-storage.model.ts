@@ -202,7 +202,8 @@ export class GraphStorage {
   
   applyLayout(layout:String) {
     console.log("apply layout");
-    Storage.pageUICDL.setLayout(layout);
+    Storage.pageUICDL.setLayout(layout.toString());
+    let currentGraphID
     this.setStrategy(new LayoutStrategy(0,0));
     console.log("set layout strategy: " + layout);
     this.strategy.createComponent(this);
