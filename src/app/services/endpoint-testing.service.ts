@@ -51,7 +51,7 @@ export class EndpointTestingService {
   async testServiceWithComplexTypeArg(operation: ServiceComponent, requestParam: Object) {
     let serviceID = operation.serviceID;
     let serviceInitUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/initMethod`; // from className
-    let serviceInvokeUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/${operation.wsdlName.split(".")[0]}`; // from wsdlName
+    let serviceInvokeUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/${operation.wsdlFilename.split(".")[0]}`; // from wsdlName
     console.log(`service Init Url = ${serviceInitUrl}\nservice Invoke Url = ${serviceInvokeUrl}`);
     let complexArgTable = operation.argComplexTypeUrl;
     let serviceParams = {};
@@ -166,7 +166,7 @@ export class EndpointTestingService {
     let serviceID = operation.serviceID;
     console.log("test primitive type");
     let serviceInitUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/initMethod`; // from className
-    let serviceInvokeUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/${operation.wsdlName.split(".")[0]}`; // from wsdlName
+    let serviceInvokeUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/${operation.wsdlFilename.split(".")[0]}`; // from wsdlName
     // console.log(`ServiceInit url = ${serviceInitUrl}\n`)
     // 1: init service
     await this.axios.get(serviceInitUrl, {

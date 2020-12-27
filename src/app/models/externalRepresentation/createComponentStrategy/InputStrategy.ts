@@ -32,7 +32,10 @@ export class InputStrategy implements ICreateComponentStrategy {
     let selabVertex = new SelabVertex(component.getId(),component.getId(),parent.id);
     selabVertex = selabVertex
                     .setIsPrimary(true)
-                    .setValue(component.label)
+                    .setValue(component.description)
+                    
+    console.log("description heree " + component.description)
+    console.log(component);
 
     let inputTextCell = selabEditor.insertVertex(selabVertex,component,textGeometry,style);
     inputTextCell["componentPart"] = "box";

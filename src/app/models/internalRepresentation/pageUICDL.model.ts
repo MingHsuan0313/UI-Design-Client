@@ -1,4 +1,5 @@
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
+import { SelabGlobalStorage } from "../store/globalStorage";
 import { LayoutComponent } from "./LayoutComponent.model";
 import { UIComponent } from "./UIComponent.model";
 
@@ -6,6 +7,10 @@ export class PageUICDL {
     public id: string;
     public selector: string;
     public name: string; // unique
+    public projectName: string;
+    public isMain: boolean;
+    public parameters: []; // page parameters
+    public serviceComponentList: [];
     public category: string;
     public layout: string;
 
@@ -23,11 +28,15 @@ export class PageUICDL {
         this.category = "page";
         this.layout = "";
         this.style = {};
-        this.header = (UIComponentFactory.create("layout") as LayoutComponent);
-        this.sidebar = (UIComponentFactory.create("layout") as LayoutComponent);
-        this.footer = (UIComponentFactory.create("layout") as LayoutComponent);
-        this.body = (UIComponentFactory.create("layout") as LayoutComponent);
-        this.asidebar = (UIComponentFactory.create("layout") as LayoutComponent);
+        this.projectName = SelabGlobalStorage.projectName;
+        this.parameters = [];
+        this.serviceComponentList = [];
+
+        this.header = (UIComponentFactory.createLayout() as LayoutComponent);
+        this.sidebar = (UIComponentFactory.createLayout() as LayoutComponent);
+        this.footer = (UIComponentFactory.createLayout() as LayoutComponent);
+        this.body = (UIComponentFactory.createLayout() as LayoutComponent);
+        this.asidebar = (UIComponentFactory.createLayout() as LayoutComponent);
     }
     
     getInfo() {

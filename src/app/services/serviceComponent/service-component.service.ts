@@ -88,22 +88,22 @@ export default class ServiceComponentService {
   }
 
   queryArgumentsByServiceID(serviceID: string) {
-    let url = `${this.baseUrl}/getArguments`;
+    let url = `getArguments`;
     let params: HttpParams;
     params = new HttpParams().set("serviceID", serviceID);
     console.log("arguement url " + url)
 
-    return this.httpClientService.httpGet(url, params, "uiDesignServer");
+    return this.httpClientService.httpGet(url, params, "matchMakingServer");
   }
 
   queryCodeByServiceID(serviceID) {
-    let url = `${this.baseUrl}/getCode`;
+    let url = `getCode`;
     // let url = `${this.baseUrl}/getCode?serviceID=${serviceID}`;
     let params: HttpParams;
     params = new HttpParams().set("serviceID", serviceID);
 
     params.append("serviceID", serviceID);
-    return this.httpClientService.httpGet(url, params, "uiDesignServer");
+    return this.httpClientService.httpGet(url, params, "matchMakingServer");
   }
   
   queryReturnByServiceID(serviceID) {

@@ -7,14 +7,14 @@ import { IServiceEntry } from "../store/serviceEntry.model";
 
 export class InputTextComponent extends BasicComponent {
   public typeInfo: string;  // e.g. input-text, input-password
-  public label: string;
+  public description: string;
 
   constructor(uiComponentBuilder: UIComponentBuilder) {
     super(uiComponentBuilder);
     let properties = uiComponentBuilder.getProperties();
     if (properties != undefined) {
       this.typeInfo = properties["typeInfo"];
-      this.label = properties["name"];
+      this.description = properties["name"];
     }
   }
 
@@ -75,7 +75,7 @@ export class InputTextComponent extends BasicComponent {
     return {
       [this.getSelector().toString()]: {
         name: this.name,
-        label: this.label,
+        label: this.description,
         service: this.serviceComponent.getInfo()
       }
     }

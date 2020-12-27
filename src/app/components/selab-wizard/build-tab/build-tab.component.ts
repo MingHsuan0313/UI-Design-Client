@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
 import { Library } from '../../../shared/library';
+import { UIComponentConfig } from '../uicomponent-config';
 import { UIComponentFactory } from '../uicomponent-factory';
 
 @Component({
@@ -92,7 +93,7 @@ export class BuildTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.buildFormProperties = UIComponentFactory.getProperties(this.uiComponentBuilder.type);
+    this.buildFormProperties = UIComponentConfig.getProperties(this.uiComponentBuilder.type);
     this.buildForm();
   }
 }

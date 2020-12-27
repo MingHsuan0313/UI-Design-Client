@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Hi Welcome To UI-Design-Client</h1>
+<div mat-dialog-content>
+  <p>What's your Project Name</p>
+  <mat-form-field>
+    <mat-label>Project Name</mat-label>
+    <input matInput [(ngModel)]="projectName">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="projectName" cdkFocusInitial>Ok</button>
+</div>

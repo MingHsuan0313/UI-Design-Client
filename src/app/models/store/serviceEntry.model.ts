@@ -60,12 +60,12 @@ export class ComplexTypeArg {
 
 export class Return {
     data: Object;
-    type: string;
+    serviceType: string;
     name: string;
 
     constructor() {
         this.data = {};
-        this.type = "Return";
+        this.serviceType = "Return";
         this.name = "";
     }
     
@@ -90,14 +90,14 @@ export class Return {
 export class Argument extends IServiceEntry {
     name: string;
     isComplexType: Boolean;
-    type: string;
+    serviceType: string;
     arguments: Argument[];
     setterUrl: string;
     constructor() {
         super();
         this.arguments = [];
         this.isComplexType = false;
-        this.type = "Argument";
+        this.serviceType = "Argument";
         this.setterUrl = "";
     }
     
@@ -127,13 +127,14 @@ export class Argument extends IServiceEntry {
 export class ServiceComponent extends IServiceEntry {
     serviceID: string;
     projectID: string;
-    wsdlName: string;
+    projectName: string;
+    wsdlFilename: string;
     className: string;
     name: string;
     similarity: number;
     arguments: Argument[];
     returnData: Return;
-    type: string;
+    serviceType: string;
     initServiceUrl: string; // request mapping url
     invokeServiceUrl: string;
     httpMethod: string; // get, delete, patch, post
@@ -144,12 +145,21 @@ export class ServiceComponent extends IServiceEntry {
         super();
         this.argComplexTypeUrl = new Map<String,ComplexType>();
         this.similarity = 0;
-        this.wsdlName = "";
+        this.wsdlFilename = "";
+        this.projectName = "";
         this.initServiceUrl = "";
         this.arguments = [];
         this.returnData = new Return();
-        this.type = "Operation";
+        this.serviceType = "ServiceComponent";
         this.log = "";
+    }
+    
+    getProjectName() {
+        return this.projectName;
+    }
+    
+    setProjectName(projectName: string) {
+        this.projectName = projectName; 
     }
     
     getServiceID() {
@@ -176,7 +186,7 @@ export class ServiceComponent extends IServiceEntry {
     
     setUrl() {
         this.initServiceUrl = `${this.className.split(".").join("/")}/initMethod`;
-        this.invokeServiceUrl = `${this.className.split(".").join("/")}/${this.wsdlName.split(".")[0]}`;
+        this.invokeServiceUrl = `${this.className.split(".").join("/")}/${this.wsdlFilename.split(".")[0]}`;
         return this;
     }
 
@@ -185,7 +195,7 @@ export class ServiceComponent extends IServiceEntry {
     }
     
     getInvokeServiceUrl() {
-        return `${this.className.split(".").join("/")}/${this.wsdlName.split(".")[0]}`;
+        return `${this.className.split(".").join("/")}/${this.wsdlFilename.split(".")[0]}`;
     }
 
     setServiceID(serviceID: string) {
@@ -209,7 +219,7 @@ export class ServiceComponent extends IServiceEntry {
     }
 
     setWSDLName(wsdlName: string) {
-        this.wsdlName = wsdlName;
+        this.wsdlFilename = wsdlName;
         return this;
     }
     

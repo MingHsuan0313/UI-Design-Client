@@ -22,6 +22,7 @@ import { departmentReturn } from '../../fakeReturnData';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { ServiceComponent } from 'src/app/models/store/serviceEntry.model';
 import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
+import { UIComponentConfig } from '../uicomponent-config';
 
 @Component({
   selector: 'pipeline-tab',
@@ -53,7 +54,7 @@ export class PipelineTabComponent implements OnInit {
     private graphEditorService: GraphEditorService
   ) {
     this.returnData = {};
-    this.alluiComponentTypes = UIComponentFactory.getAllComponentTypes();
+    this.alluiComponentTypes = UIComponentConfig.getAllComponentTypes();
     this.filtereduiComponentTypes = this.uiComponentCtrl.valueChanges.pipe(
       startWith(null),
       map((componentType: string | null) => componentType ? this._filter(componentType) : this.alluiComponentTypes.slice()));

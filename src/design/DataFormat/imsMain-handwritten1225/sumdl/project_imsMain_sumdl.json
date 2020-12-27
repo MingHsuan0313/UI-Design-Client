@@ -1,7 +1,7 @@
 {
   "imsMain": {
     "login": {
-      "return": [ 
+      "return": [
         {
           "hierarchy": "form21-text23",
           "bindingPart": "text",
@@ -14,7 +14,6 @@
       ]
     }
   },
-
   "GetDepartments": {
     "viewDepartmentList": {
       "return": [
@@ -47,21 +46,21 @@
       ]
     }
   },
-    "AddDepartment": {
-        "addDepartment": {
-            "return": [
-                {
-                    "hierarchy": "form37-text39",
-                    "bindingPart": "text",
-                    "usage": "show",
-                    "returnClass": {
-                        "class": "String",
-                        "propertyName": "name"
-                    }
-                }
-            ]
+  "AddDepartment": {
+    "addDepartment": {
+      "return": [
+        {
+          "hierarchy": "form37-text39",
+          "bindingPart": "text",
+          "usage": "show",
+          "returnClass": {
+            "class": "String",
+            "propertyName": "name"
+          }
         }
-    },
+      ]
+    }
+  },
   "GetCategories": {
     "viewCategoryList": {
       "return": [
@@ -73,8 +72,8 @@
             "class": "List",
             "propertyName": "l1",
             "child": {
-                "class": "String",
-                "propertyName": "name"
+              "class": "String",
+              "propertyName": "name"
             }
           }
         }

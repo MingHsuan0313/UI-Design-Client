@@ -29,6 +29,7 @@ import { HttpClientService } from 'src/app/services/http-client.service';
 import { HttpParams } from '@angular/common/http';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 import { CodeEditorComponent } from '../code-editor/code-editor.component';
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 
 
 @Component({
@@ -38,7 +39,7 @@ import { CodeEditorComponent } from '../code-editor/code-editor.component';
 })
 export class SelabGraphEditorComponent implements AfterViewInit {
   private zoomFactor = 1;
-  public tabs: TabModel[] = [new TabModel("page0", "graphContainer-0")];
+  public tabs: TabModel[] = [new TabModel("imsMain", "graphContainer-0")];
   selected = new FormControl(0);
   verticalPosition: MatSnackBarVerticalPosition = "top";
   @ViewChild("tabGroup") tabGroup: MatTabGroup;
@@ -71,6 +72,8 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   openDialog(index) {
+    if(this.tabs[index].name == "imsMain")
+      return;
     let currentTabName = this.tabs[index];
     let data = {
       tabName: currentTabName
@@ -105,8 +108,15 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     pageUICDLs.subscribe((data) => {
       let id = this.graphEditorService.getSelectedGraphID();
       console.log(data[id]);
+      console.log(JSON.stringify(data[id]));
     })
     this.openSnackBar("show selected PageUICDL in console", "display");
+  }
+  
+  showGlobalStorage() {
+    console.log("show Global Storage");
+    console.log(SelabGlobalStorage.getInfo());
+    this.openSnackBar("show global storage in console", "display");
   }
 
   findUniquePageID() {
@@ -130,15 +140,16 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     this.selected.setValue(this.tabs.length - 1);
 
     setTimeout(() => {
-      this.createGraph(graphID);
+      this.createGraph(graphID,false);
       this.graphEditorService.setSelectedEditor(graphID);
     }
       , 500);
   }
 
-  createGraph(elementId) {
+  createGraph(elementId,isMain:boolean) {
     let element = document.getElementById(elementId);
     let newPageUICDL = new PageUICDL(elementId);
+    newPageUICDL.isMain = isMain;
     Storage.setPageUICDL(newPageUICDL);
     // this.graphEditorService.createGraph(element);
     this.store.dispatch(new IRInsertPageUICDLAction(newPageUICDL));
@@ -222,6 +233,8 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     if (this.tabs.length == 1)
       return;
     if (index == this.tabGroup.selectedIndex) {
+      if(this.tabs[index].name == "imsMain")
+        return;
       let deletedGraphID = this.tabs[index].graphID;
       this.store.dispatch(new ERDeleteGraphStorageAction(deletedGraphID));
       this.store.dispatch(new IRDeletePageUICDLAction(deletedGraphID));
@@ -245,7 +258,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
 
   ngOnInit() {
     setTimeout(() =>
-      this.createGraph("graphContainer-0"), 500);
+      this.createGraph("graphContainer-0",true), 500);
   }
 
   saveAs(uri, filename) {

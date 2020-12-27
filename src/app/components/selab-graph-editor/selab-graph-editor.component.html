@@ -23,6 +23,7 @@
 <mat-menu #utilMenu="matMenu" [overlapTrigger]="false">
     <button mat-menu-item (click)="showInternalRepresentation()" matTooltip="Show Internal Representation(pageUICDL) in console">Show IR</button>
     <button mat-menu-item (click)="showExternalRepresentation()" matTooltip="Show External Representation(graphStorage) in console">Show ER</button>
+    <button mat-menu-item (click)="showGlobalStorage()" matTooltip="Show Global Storage(ndl,sumdl) in console">Show Global Storage</button>
 </mat-menu>
 
 <mat-tab-group #tabGroup [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)"

@@ -44,7 +44,8 @@ export class BindServiceTabComponent implements OnInit {
     serviceComponent.setClassName(option["className"])
       .setName(option["name"])
       .setServiceID(option["serviceID"])
-      .setHttpMethod(option["httpMethod"])
+      // .setHttpMethod(option["httpMethod"])
+      .setHttpMethod("get")
       .setWSDLName(option["WSDLName"])
       .setUrl();
     this.uiComponentBuilder.setServiceComponent(serviceComponent);

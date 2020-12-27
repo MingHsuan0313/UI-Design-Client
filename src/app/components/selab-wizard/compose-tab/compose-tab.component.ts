@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CompositeComponent } from 'src/app/models/internalRepresentation/CompositeComponent.model';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
+import { UIComponentConfig } from '../uicomponent-config';
 import { UIComponentFactory } from '../uicomponent-factory';
 
 @Component({
@@ -28,7 +29,7 @@ export class ComposeTabComponent implements OnInit {
     this.isClean = true;
     this.composeTarget = option;
     this.subComponentBuilder = UIComponentFactory.create(this.composeTarget);
-    this.subComponentProperties = UIComponentFactory.getProperties(this.subComponentBuilder.type);
+    this.subComponentProperties = UIComponentConfig.getProperties(this.subComponentBuilder.type);
     this.buildForm();
   }
 
@@ -77,7 +78,7 @@ export class ComposeTabComponent implements OnInit {
 
   ngOnInit() {
     this.composeTarget = "";
-    this.childrenOptions = UIComponentFactory.getChildrenOptions(this.uiComponentBuilder.type);
+    this.childrenOptions = UIComponentConfig.getChildrenOptions(this.uiComponentBuilder.type);
   }
   
   buildForm() {
