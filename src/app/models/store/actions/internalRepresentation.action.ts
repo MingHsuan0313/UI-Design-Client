@@ -8,7 +8,8 @@ export enum IRActionTypes {
     DELETE_PAGE_UICDL = "[InternalRepresentation] Delete PageUICDL",
     CLEAR_PAGE_UICDL = "[InternalRepresentation] Clear PageUICDL",
     RENAME_PAGE = "[InternalRepresentation] Rename Page",
-    SYNC_WITH_ER = "[InternalRepresentation] Sync With External Representation"
+    SYNC_WITH_ER = "[InternalRepresentation] Sync With External Representation",
+    SET_PROJECT_NAME  = "[InternalRepresentation] Set Project Name"
 }
     
 export class IRInsertUIComponentAction implements Action {
@@ -20,6 +21,11 @@ export class IRSyncWithERAction implements Action {
     public type = IRActionTypes["SYNC_WITH_ER"];
     constructor(public id: string, public graphModel: []) {
     }
+}
+
+export class IRSetProjectNameAction implements Action {
+    public type = IRActionTypes["SET_PROJECT_NAME"];
+    constructor(public projectName: string) {}
 }
 
 export class IRRenamePageAction implements Action {

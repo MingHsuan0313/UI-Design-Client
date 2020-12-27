@@ -1,7 +1,7 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction, IRRenamePageAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction, IRRenamePageAction, IRSetProjectNameAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 
 class InternalRepresentationReducer {
@@ -9,6 +9,15 @@ class InternalRepresentationReducer {
     public insertPageUICDL(store: InternalRepresentation, action: IRInsertPageUICDLAction): InternalRepresentation {
         store = { ...store };
         store.pageUICDLs = { ...store.pageUICDLs, [action.pageUICDL.id]: action.pageUICDL };
+        return store;
+    }
+    
+    @Action
+    public setProjectName(store: InternalRepresentation, action: IRSetProjectNameAction): InternalRepresentation {
+        store = {...store};
+        let firstPageGraphID = "graphContainer-0";
+        store.pageUICDLs = {...store.pageUICDLs};
+        store.pageUICDLs[firstPageGraphID] = {...store.pageUICDLs[firstPageGraphID],"projectName":action.projectName}
         return store;
     }
 

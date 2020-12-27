@@ -8,6 +8,9 @@ import ExportService from '../../services/internalRepresentation/export.service'
 import { MatDialog } from '@angular/material';
 import { ProjectNameDialogComponent } from './project-name-dialog/project-name-dialog.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/models/store/app.state';
+import { IRSetProjectNameAction } from 'src/app/models/store/actions/internalRepresentation.action';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +19,10 @@ import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 })
 export class DefaultLayoutComponent implements OnInit {
 
-  constructor(public projectNameDialog: MatDialog) {
+  constructor(public projectNameDialog: MatDialog,
+    private store: Store<AppState>
+    ) {
+
     const dialogRef = this.projectNameDialog.open(ProjectNameDialogComponent,{
       autoFocus: true,
       disableClose: true
@@ -25,6 +31,7 @@ export class DefaultLayoutComponent implements OnInit {
     dialogRef.afterClosed().subscribe(projectName => {
       console.log(`project name you choose is ${projectName}`);
       SelabGlobalStorage.setProjectName(projectName);
+      this.store.dispatch(new IRSetProjectNameAction(projectName));
     })
   }
 
