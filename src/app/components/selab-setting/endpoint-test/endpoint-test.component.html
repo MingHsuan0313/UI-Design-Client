@@ -16,8 +16,12 @@
       </mat-form-field>
       <button (click)="showLog(serviceComponent)" style="background-color: #333333;" mat-raised-button
         color="primary">Show Log</button>
-      &nbsp;&nbsp;
+      &nbsp;
       <button (click)="test(serviceComponent)" mat-raised-button color="primary">Test</button>
+      &nbsp;
+      <button (click)="showCode(serviceComponent)" mat-button style="min-width: 10px;" matTooltip="show source code">
+        <mat-icon style="margin-bottom:10px;" svgIcon="code"></mat-icon>
+      </button>
     </div>
   </mat-expansion-panel>
 </mat-accordion>

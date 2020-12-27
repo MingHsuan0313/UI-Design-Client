@@ -12,6 +12,9 @@ import { operationPoolSelector, tasksSelector } from 'src/app/models/store/reduc
 import { Argument, ServiceComponent } from 'src/app/models/store/serviceEntry.model';
 import { EndpointTestingService } from 'src/app/services/endpoint-testing.service';
 import { HttpClientService } from 'src/app/services/http-client.service';
+import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
+import { CodeEditorDialogComponent } from '../../code-editor-dialog/code-editor-dialog.component';
+import { CodeEditorComponent } from '../../code-editor/code-editor.component';
 import { JestTestingLogWindowComponent } from './jest-testing-log-window/jest-testing-log-window.component';
 import { TestingLogWindowComponent } from './testing-log-window/testing-log-window.component';
 
@@ -30,6 +33,8 @@ export class EndpointTestComponent implements OnInit {
     private snackBar: MatSnackBar,
     private endpointTestingService: EndpointTestingService,
     public logWindow: MatDialog, // return from invoke individual service component
+    private serivceComponentService: ServiceComponentService,
+    public codeEditor: MatDialog,
     // return from Jest Server
     public jestLogWindow: MatDialog) {
     this.servicePool = [];
@@ -51,6 +56,25 @@ export class EndpointTestComponent implements OnInit {
       verticalPosition: this.verticalPosition,
       duration: 2000,
     })
+  }
+
+  showCode(serviceComponent) {
+    this.serivceComponentService.setSelectedServiceComponent(serviceComponent);
+    let serviceID = serviceComponent.serviceID;
+    let dialogRef;
+    this.serivceComponentService.queryCodeByServiceID(serviceID)
+      .subscribe((response) => {
+        let code = response["body"];
+        dialogRef = this.codeEditor.open(CodeEditorComponent, {
+          width: '850px',
+          height: '550px',
+          panelClass: 'code-editor-dialog',
+          data: {
+            code: code,
+            className: serviceComponent.className,
+          }
+        })
+      });
   }
 
   launchLogWindow(log: string) {
