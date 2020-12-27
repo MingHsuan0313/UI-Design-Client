@@ -67,7 +67,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   changeTabName(index: number) {
-    console.log("change tab name");
+    // console.log("change tab name");
     this.openDialog(index);
   }
 
@@ -123,8 +123,6 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     for (let index = 0; index < this.tabs.length + 1; index++) {
       let id = "graphContainer-" + index.toString();
       const result = this.tabs.filter(tab => tab.graphID == id);
-      console.log("heree")
-      console.log(result)
       // id is unique
       if (result.length == 0) {
         return id;
@@ -153,6 +151,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     Storage.setPageUICDL(newPageUICDL);
     // this.graphEditorService.createGraph(element);
     this.store.dispatch(new IRInsertPageUICDLAction(newPageUICDL));
+    this.store.dispatch(new IRRenamePageAction(elementId,this.tabs[this.tabs.length - 1].name));
     this.graphEditorService.createEditor(element);
     this.configure();
     this.store.dispatch(new ERInsertGraphStorageAction(new SelabGraph(elementId)))
@@ -191,14 +190,12 @@ export class SelabGraphEditorComponent implements AfterViewInit {
       console.log(`pageID = ${pageID}\ncomponentID = ${componentID}`);
       let uiComponentObservable = this.store.select(uiComponentSelector(pageID,componentID));
       uiComponentObservable.subscribe((data) => {
-        console.log("data here");
-        console.log(data);
         let serviceID = data["serviceComponent"]["serviceID"];
         let className = data["serviceComponent"]["className"];
-        console.log(`selected ServiceID = ${serviceID}`);
+        // console.log(`selected ServiceID = ${serviceID}`);
         this.serviceComponentService.queryCodeByServiceID(serviceID)
           .subscribe((response) => {
-            console.log(response);
+            // console.log(response);
             let code = response["body"];
             let codeEditorRef = this.codeEditor.open(CodeEditorComponent,{
               width: '1250px',
@@ -257,8 +254,10 @@ export class SelabGraphEditorComponent implements AfterViewInit {
 
 
   ngOnInit() {
-    setTimeout(() =>
-      this.createGraph("graphContainer-0",true), 500);
+    setTimeout(() => {
+      this.createGraph("graphContainer-0",true);
+      this.store.dispatch(new IRRenamePageAction("graphContainer-0","imsMain"))
+    },500)
   }
 
   saveAs(uri, filename) {

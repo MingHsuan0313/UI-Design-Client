@@ -7,5 +7,6 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="projectName" cdkFocusInitial>Ok</button>
+  <!-- <button mat-button [mat-dialog-close]="projectName" cdkFocusInitial>Ok</button> -->
+  <button mat-button (click)="close()" cdkFocusInitial>Ok</button>
 </div>

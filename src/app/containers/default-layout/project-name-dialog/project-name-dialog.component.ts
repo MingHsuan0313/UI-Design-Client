@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
+import { DefaultLayoutComponent } from '../default-layout.component';
 
 @Component({
   selector: 'app-project-name-dialog',
@@ -8,7 +10,15 @@ import { Component, OnInit } from '@angular/core';
 export class ProjectNameDialogComponent implements OnInit {
   projectName: string;
 
-  constructor() { }
+  constructor(
+    public dialogRef: MatDialogRef<DefaultLayoutComponent>,
+  ) { }
+  
+  close() {
+    console.log("close")
+    if(this.projectName.length > 0) 
+      this.dialogRef.close(this.projectName);
+  }
 
   ngOnInit() {
   }
