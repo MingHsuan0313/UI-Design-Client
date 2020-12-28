@@ -1,0 +1,47 @@
+let loginReturn = {
+    "name": "privilege",
+    "type": "class",
+    "isComplexType": false
+}
+
+let viewDepartmentListReturn = {
+    "name": "departmentList",
+    "type": "List<department>",
+    "isComplexType": true,
+    "department": [
+        {
+            'name': "id",
+            'type': "string"
+        },
+        {
+            'name': "name",
+            'type': "string"
+        },
+        {
+            'name': "description",
+            'type': "string"
+        },
+        {
+            'name': "code",
+            'type': "string"
+        }
+    ]
+}
+
+let addDepartmentReturn = {
+    "name": "name",
+    "type": "string",
+    "isComplexType": false,
+}
+
+let getCategoriesReturn = {
+    "name": "categoryList",
+    "type": "List<category>",
+    "isComplexType": true,
+    "category": [
+        {
+            "name": "name",
+            "type": "string"
+        }
+    ]
+}
