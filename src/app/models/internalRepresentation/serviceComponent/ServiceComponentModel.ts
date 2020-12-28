@@ -128,7 +128,7 @@ export class ServiceComponentModel extends IServiceEntry {
     getInfo() {
         return {
             name: this.name,
-            type: "Operation"
+            type: "ServiceComponent"
         }
     }
 }

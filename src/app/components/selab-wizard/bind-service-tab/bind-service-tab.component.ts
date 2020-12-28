@@ -80,6 +80,7 @@ export class BindServiceTabComponent implements OnInit {
               let complexTypeArgument = argument["arguments"][j];
               argumentOption = new ArgumentModel()
                 .setName(complexTypeArgument["name"])
+                .setConstraint(complexTypeArgument["constraint"])
                 .setIsComplexType(complexTypeArgument["isComplexType"]);
               this.argumentOptions.push(argumentOption);
             }
@@ -88,7 +89,8 @@ export class BindServiceTabComponent implements OnInit {
             if (argument["annotationType"].split(".").pop() != "CookieValue") {
               argumentOption = new ArgumentModel()
                 .setName(argument["name"])
-                .setIsComplexType(argument["isComplexType"])
+                .setConstraint(argument["constraint"])
+                .setIsComplexType(argument["isComplexType"]);
               this.argumentOptions.push(argumentOption);
             }
           }

@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
       .addSvgIcon('note',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/notes-24px.svg'))
       .addSvgIcon('navigation',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/navigation-24px.svg'))
       .addSvgIcon('code',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/code-24px.svg'))
+      .addSvgIcon('visibility',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/visibility-24px.svg'));
   }
   ngOnInit() {
 

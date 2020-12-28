@@ -10,13 +10,24 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <div>
-      <mat-form-field *ngFor="let argument of serviceComponent.arguments" appearance="outline">
+      <mat-form-field class="selab-endpoint-form" *ngFor="let argument of serviceComponent.arguments"
+        appearance="outline">
         <mat-label>{{argument.name}}</mat-label>
         <input id="{{serviceComponent.name}}-{{argument.name}}" matInput>
+        &nbsp;&nbsp;
+        <button 
+        style="position:relative; bottom:20px; height:10px; color:#333333" 
+        *ngIf="argument.constraint.length > 0" 
+        disabled
+        mat-button matTooltip="{{argument.constraint}}"
+        matTooltipPosition="left" 
+          >
+          <mat-icon svgIcon="visibility"></mat-icon>
+        </button>
       </mat-form-field>
       <button (click)="showLog(serviceComponent)" style="background-color: #333333;" mat-raised-button
         color="primary">Show Log</button>
-      &nbsp;
+      &nbsp;&nbsp;
       <button (click)="test(serviceComponent)" mat-raised-button color="primary">Test</button>
       &nbsp;
       <button (click)="showCode(serviceComponent)" mat-button style="min-width: 10px;" matTooltip="show source code">

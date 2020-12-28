@@ -24,6 +24,7 @@ export class ArgumentModel extends IServiceEntry {
     
     setConstraint(constraint: string) {
         this.constraint = constraint;
+        return this;
     }
     
     getConstraint(): string {
