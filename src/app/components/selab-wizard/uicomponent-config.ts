@@ -5,9 +5,8 @@ export class UIComponentConfig {
             "button",
             "card",
             "dropdown",
-            "icon",
             "input",
-            "form"
+            "form",
         ]
     }
 
@@ -16,7 +15,7 @@ export class UIComponentConfig {
             return ["text", "button", "input", "dropdown"];
         }
         else if (type == "card") {
-            return ["text", "dropdown", "button", "table"]
+            return ["text", "dropdown", "button", "table","input"]
         }
         else if (type == "inputgroup") {
             return ["text", "button", "icon", "dropdown"];

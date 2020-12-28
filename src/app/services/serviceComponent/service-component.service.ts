@@ -5,7 +5,7 @@ import { ServiceComponentModel } from "../../models/service-component-dependency
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { HttpClientService } from '../http-client.service';
 import { HttpParamsOptions } from '@angular/common/http/src/params';
-import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
+import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 
 @Injectable({
   providedIn: 'root'

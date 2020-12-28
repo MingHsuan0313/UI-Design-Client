@@ -1,5 +1,5 @@
 import { ServiceComponentModel } from "../service-component-dependency";
-import { UIComponentBuilder } from "../UIComponentBuilder";
+import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBuilder";
 import { UIComponent } from "./UIComponent.model";
 
 export class CompositeComponent extends UIComponent {

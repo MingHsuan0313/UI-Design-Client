@@ -141,7 +141,7 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     let headerComponent = pageUICDL.header;
     let sidebarComponent = pageUICDL.sidebar;
     let footerComponent = pageUICDL.footer;
-    let asidebarComponent = pageUICDL.asidebar);
+    let asidebarComponent = pageUICDL.asidebar;
 
     this.createLayout(selabEditor,bodyComponent);
     this.createHeader(selabEditor,headerComponent);

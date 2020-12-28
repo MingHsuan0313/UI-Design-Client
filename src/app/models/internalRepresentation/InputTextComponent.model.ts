@@ -1,6 +1,6 @@
 import { UIComponent } from "./UIComponent.model";
 import { BasicComponent } from "./BasicComponent.model";
-import { UIComponentBuilder } from "../UIComponentBuilder";
+import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBuilder";
 import { Input } from "@angular/core";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 import { IServiceEntry } from "../service-component-dependency";

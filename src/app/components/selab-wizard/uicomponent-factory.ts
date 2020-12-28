@@ -1,5 +1,5 @@
 import { UIComponent, } from "src/app/models/ui-component-dependency";
-import { UIComponentBuilder } from "src/app/models/UIComponentBuilder";
+import { UIComponentBuilder } from "src/app/components/selab-wizard/UIComponentBuilder";
 
 export class UIComponentFactory {
     static nextID: number = 0;

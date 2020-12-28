@@ -1,6 +1,6 @@
 import AbstractComponent from "src/app/shared/AbstractComponent.model";
 import { IServiceEntry, ServiceComponentModel } from "../service-component-dependency";
-import { UIComponentBuilder } from "../UIComponentBuilder";
+import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBuilder";
 
 export class UIComponent {
   public id: string;

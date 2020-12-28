@@ -6,7 +6,7 @@ import { PipelineCreateOperationAction } from 'src/app/models/store/actions/pipe
 import { AppState } from 'src/app/models/store/app.state';
 import { ArgumentModel, ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
-import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
+import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 
 @Component({

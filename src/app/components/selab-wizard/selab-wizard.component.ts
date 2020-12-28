@@ -7,7 +7,7 @@ import { AppState } from 'src/app/models/store/app.state';
 import { operationPoolSelector } from 'src/app/models/store/selectors/PipelineStorageSelector';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
-import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
+import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import { Task } from 'src/app/models/wizard-task-dependency';
 import { SelabHeaderComponent } from '../selab-header/selab-header.component';
 import { BindServiceTabComponent } from './bind-service-tab/bind-service-tab.component';
@@ -23,7 +23,6 @@ import { UIComponentFactory } from './uicomponent-factory';
   styleUrls: ['./selab-wizard.component.scss']
 })
 export class SelabWizardComponent implements OnInit {
-
   tabs = [];
   isPipeline: boolean = false;
   isComposite: boolean = false;
@@ -103,7 +102,7 @@ export class SelabWizardComponent implements OnInit {
 
     // composite component
     if (this.data.isComposite) {
-      this.tabs = ["Build Component", "Compose Component", "Check Status", "Bind Service", "Generate Pipeline"];
+      this.tabs = ["Build Component", "Compose Component",  "Bind Service", "Check Status", "Generate Pipeline"];
     }
     // basic component
     else {

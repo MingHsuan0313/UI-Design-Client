@@ -10,7 +10,7 @@ import { PipelineCreateOperationAction } from 'src/app/models/store/actions/pipe
 import { AppState } from 'src/app/models/store/app.state';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
-import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
+import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
 import { SelabWizardComponent } from '../selab-wizard.component';

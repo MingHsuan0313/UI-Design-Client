@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
-import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
+import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import { Library } from '../../../shared/library';
 import { UIComponentConfig } from '../uicomponent-config';
 import { UIComponentFactory } from '../uicomponent-factory';

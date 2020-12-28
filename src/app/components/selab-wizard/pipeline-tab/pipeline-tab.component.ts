@@ -21,7 +21,7 @@ import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internal
 import { departmentReturn } from '../../fakeReturnData';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
-import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
+import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import { UIComponentConfig } from '../uicomponent-config';
 
 @Component({

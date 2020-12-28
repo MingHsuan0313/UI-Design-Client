@@ -25,13 +25,14 @@
       <compose-tab #compose [isPipeline]="isPipeline" [uiComponentBuilder]="uiComponentBuilder"></compose-tab>
     </div>
 
+    <div class="selab-tab-style" *ngIf="tab == 'Bind Service'">
+      <bind-service-tab #service [uiComponentBuilder]="uiComponentBuilder"></bind-service-tab>
+    </div>
+
     <div class="selab-tab-style" *ngIf="tab == 'Check Status'">
       <information-tab #status [isComposite]="isComposite" [isPipeline]="isPipeline" [uiComponentBuilder]="uiComponentBuilder"></information-tab>
     </div>
 
-    <div class="selab-tab-style" *ngIf="tab == 'Bind Service'">
-      <bind-service-tab #service [uiComponentBuilder]="uiComponentBuilder"></bind-service-tab>
-    </div>
 
     <div class="selab-tab-style" *ngIf="tab == 'Generate Pipeline'">
       <pipeline-tab #pipeline [uiComponentBuilder]="uiComponentBuilder"></pipeline-tab>
