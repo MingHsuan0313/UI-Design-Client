@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>Hi Welcome To UI-Design-Client</h1>
 <div mat-dialog-content>
-  <p>What's your Project Name</p>
+  <h3>What's your Project Name?</h3>
+  <br>
   <mat-form-field>
     <mat-label>Project Name</mat-label>
     <input matInput [(ngModel)]="projectName">
@@ -8,5 +9,8 @@
 </div>
 <div mat-dialog-actions>
   <!-- <button mat-button [mat-dialog-close]="projectName" cdkFocusInitial>Ok</button> -->
-  <button mat-button (click)="close()" cdkFocusInitial>Ok</button>
+  <button mat-raised-button style="color: white; background-color:#333333 ;" (click)="close()"
+    cdkFocusInitial>Ok</button>
+  &nbsp;&nbsp;
+  <span *ngIf="isProjectNameEmpty" style="color: red; margin-top:10px">Project Name can't be empty</span>
 </div>

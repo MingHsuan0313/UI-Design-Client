@@ -67,7 +67,7 @@ export class CardStrategy implements ICreateComponentStrategy {
   createCardHeaderVertex(selabEditor: SelabEditor, component: CardComponent, parent: mxCell) {
     const dataBinding = this.createDataBinding("header");
     const cardHeaderStyle = StyleLibrary[0]["card"]["cardHeader"];
-    let cardHeaderGeometry = new mxGeometry(0, 0, 250, 50);
+    let cardHeaderGeometry = new mxGeometry(0, 0, 300, 50);
     let id = (parseInt(component.getId())).toString();
     let selabVertex = new SelabVertex()
       .setID(component.getSelector() + "-" + id)
@@ -90,7 +90,7 @@ export class CardStrategy implements ICreateComponentStrategy {
     let cardHeaderVertex = this.createCardHeaderVertex(selabEditor, component, cardBoxVertex);
 
     let p1 = 50;
-    let p2 = 50;
+    let p2 = 70;
     let maxWidth = 250;
     for (const subUIComponent of component["componentList"]) {
       let vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, p1, p2);
@@ -101,7 +101,7 @@ export class CardStrategy implements ICreateComponentStrategy {
       // cardBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
     }
 
-    let newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth, p2);
+    let newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth + 50, p2);
     cardBoxVertex.setGeometry(newmxGeometry);
     selabEditor.getGraph().refresh();
     // component["x"] = cardBoxVertexStorage.getVertexX();

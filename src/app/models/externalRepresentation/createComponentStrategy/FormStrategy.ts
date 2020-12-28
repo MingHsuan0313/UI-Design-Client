@@ -60,7 +60,7 @@ export class FormStrategy implements ICreateComponentStrategy {
         let formBoxCell = this.createFormBoxVertex(selabEditor, component, parent);
         let p1 = 15;
         let p2 = 40;
-        let maxWidth =250;
+        let maxWidth = 250;
         for (let subUIComponent of component["componentList"]) {
             let vertex = selabEditor.createComponent(subUIComponent, formBoxCell, p1, p2)
             if (vertex["geometry"].width > maxWidth)

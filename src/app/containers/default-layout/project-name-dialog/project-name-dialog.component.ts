@@ -9,18 +9,23 @@ import { DefaultLayoutComponent } from '../default-layout.component';
 })
 export class ProjectNameDialogComponent implements OnInit {
   projectName: string;
+  isProjectNameEmpty: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<DefaultLayoutComponent>,
-  ) { }
+  ) {
+    this.isProjectNameEmpty = false;
+    this.projectName = "";
+
+   }
   
   close() {
-    console.log("close")
     if(this.projectName.length > 0) 
       this.dialogRef.close(this.projectName);
+    else 
+      this.isProjectNameEmpty = true;
   }
 
   ngOnInit() {
   }
-
 }
