@@ -1,16 +1,4 @@
-import { LayoutComponent } from "src/app/models/internalRepresentation/LayoutComponent.model";
-import {
-    TextComponent,
-    UIComponent,
-    ButtonComponent,
-    CardComponent,
-    DropdownComponent,
-    IconComponent,
-    InputGroupComponent,
-    InputTextComponent,
-    FormComponent,
-    BreadcrumbComponent
-} from "src/app/models/ui-component-dependency";
+import { UIComponent, } from "src/app/models/ui-component-dependency";
 import { UIComponentBuilder } from "src/app/models/UIComponentBuilder";
 
 export class UIComponentFactory {

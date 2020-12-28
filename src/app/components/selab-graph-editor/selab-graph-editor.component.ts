@@ -11,7 +11,7 @@ import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model
 import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
 import { ERClearGraphStorageActition, ERDeleteGraphStorageAction, ERInsertGraphStorageAction } from 'src/app/models/store/actions/externalRepresentation.action';
-import { SelabGraph } from 'src/app/models/store/selabGraph.model';
+import { SelabGraph } from 'src/app/models/externalRepresentation/selabGraph.model';
 import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRRenamePageAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import {
   MatDialog,
@@ -20,9 +20,9 @@ import {
   MatSnackBarVerticalPosition
 } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { pageUICDLSelector, uiComponentSelector } from 'src/app/models/store/reducers/InternalRepresentationSelector';
+import { pageUICDLSelector, uiComponentSelector } from 'src/app/models/store/selectors/InternalRepresentationSelector';
 import { TabNameDialogComponent } from './tab-name-dialog/tab-name-dialog.component';
-import { vertexSelector } from 'src/app/models/store/reducers/ExternalRepresentationSelector';
+import { vertexSelector } from 'src/app/models/store/selectors/ExternalRepresentationSelector';
 import { SelabSettingComponent } from '../selab-setting/selab-setting.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../utils/confirm-dialog/confirm-dialog.component';
 import { HttpClientService } from 'src/app/services/http-client.service';

@@ -2,7 +2,7 @@ import { UIComponent } from "./UIComponent.model";
 import { CompositeComponent } from "./CompositeComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
-import { IServiceEntry } from "../store/serviceEntry.model";
+import { IServiceEntry } from "../service-component-dependency";
 
 export class CardComponent extends CompositeComponent {
   header: String;
@@ -57,22 +57,6 @@ export class CardComponent extends CompositeComponent {
       .buildCardComponent();
   }
 
-  getProperties() {
-    return [
-      {
-        "type": "String",
-        "value": "name"
-      },
-      {
-        "type": "String",
-        "value": "header"
-      }
-    ]
-  }
-
-  getChildrenOptions() {
-    return ["text", "dropdown", "button", "table"]
-  }
 
   add(component: any): void {
     this.componentList.push(component);

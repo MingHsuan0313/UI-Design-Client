@@ -1,6 +1,6 @@
 import { UIComponent } from "./UIComponent.model";
 import { CompositeComponent } from "./CompositeComponent.model";
-import { IServiceEntry } from "../store/serviceEntry.model";
+import { IServiceEntry } from "../service-component-dependency";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 
@@ -53,19 +53,6 @@ export class InputGroupComponent extends CompositeComponent {
       .buildInputGroupComponent();
   }
 
-
-  getProperties() {
-    return [
-      {
-        "type": "String",
-        "value": "name"
-      }
-    ]
-  }
-  
-  getChildrenOptions() {
-    return ["text","button","icon","dropdown"];
-  }
 
   add(component: UIComponent): void {
     this.componentList.push(component);

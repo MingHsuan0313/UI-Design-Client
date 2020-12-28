@@ -14,13 +14,13 @@ import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
 import { Task } from 'src/app/models/wizard-task-dependency';
 import { PipelineCreateOperationAction, PipelineCreateTaskAction, PipelineDeleteTasksAction } from 'src/app/models/store/actions/pipelineTask.action';
-import { tasksSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
+import { tasksSelector } from 'src/app/models/store/selectors/PipelineStorageSelector';
 import { SelabWizardComponent } from '../selab-wizard.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
 import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { departmentReturn } from '../../fakeReturnData';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
-import { ServiceComponent } from 'src/app/models/store/serviceEntry.model';
+import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
 import { UIComponentConfig } from '../uicomponent-config';
 

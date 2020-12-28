@@ -33,10 +33,6 @@ export class UIComponentConfig {
                     "value": "name"
                 },
                 {
-                    'type': "String",
-                    "value": "text"
-                },
-                {
                     "type": "String",
                     "value": "href"
                 }
@@ -47,10 +43,6 @@ export class UIComponentConfig {
                 {
                     "type": "String",
                     "value": "name"
-                },
-                {
-                    "type": "String",
-                    "value": "text"
                 },
                 {
                     "type": "String",

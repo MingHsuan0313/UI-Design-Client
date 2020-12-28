@@ -1,130 +1,9 @@
-// ServiceComponent, Argument, Return, ComplexType, ComplexTypeArg
+import { ArgumentModel } from "./ArgumentModel";
+import { ComplexType } from "./ComplexTypeModel";
+import { IServiceEntry } from "./IServiceEntry";
+import { ReturnModel } from "./ReturnModel";
 
-export class IServiceEntry {
-    bind: boolean;
-    
-    setBind(bind: boolean) {
-        this.bind = bind;
-    }
-    
-    getInfo() {
-        
-    }
-}
-export class ComplexType {
-   initUrl: string; // for constructor service
-   args: ComplexTypeArg[];
-   
-   constructor() {
-       this.initUrl = "";
-       this.args = [];
-   }
-   
-   addArg(arg: ComplexTypeArg) {
-       this.args.push(arg);
-       return this;
-   }
-   
-   setUrl(url: string) {
-       this.initUrl = url;
-       return this;
-   }
-}
-
-export class ComplexTypeArg {
-    name: string;
-    setterUrl: string;
-    type: string;
-    
-    constructor() {
-        this.name = "";
-        this.setterUrl = "" ;
-        this.type = "";
-    }
-    
-    setName(name: string) {
-        this.name = name;
-        return this;
-    }
-    
-    setType(type: string) {
-        this.type = type;
-        return this;
-    }
-    
-    setSetterUrl(url: string) {
-        this.setterUrl = url;
-        return this;
-    }
-}
-
-export class Return {
-    data: Object;
-    serviceType: string;
-    name: string;
-
-    constructor() {
-        this.data = {};
-        this.serviceType = "Return";
-        this.name = "";
-    }
-    
-    setName(name: string) {
-        this.name = name;
-        return this;
-    }
-    
-    setData(data: Object) {
-        this.data = data;
-        return this;
-    }
-
-    getInfo() {
-        return {
-            name: this.name,
-            type: "Return"
-        }
-    }
-}
-
-export class Argument extends IServiceEntry {
-    name: string;
-    isComplexType: Boolean;
-    serviceType: string;
-    arguments: Argument[];
-    setterUrl: string;
-    constructor() {
-        super();
-        this.arguments = [];
-        this.isComplexType = false;
-        this.serviceType = "Argument";
-        this.setterUrl = "";
-    }
-    
-    setName(name: string) {
-        this.name = name;
-        return this;
-    }
-    
-    addArgument(argument: Argument) {
-        this.arguments.push(argument);
-        return this;
-    }
-                            
-    setIsComplexType(isComplexType) {
-        this.isComplexType = isComplexType;
-        return this;
-    }
-
-    getInfo() {
-        return {
-            name: this.name,
-            type: "Argument"
-        }
-    }
-}
-
-export class ServiceComponent extends IServiceEntry {
+export class ServiceComponentModel extends IServiceEntry {
     serviceID: string;
     projectID: string;
     projectName: string;
@@ -132,24 +11,26 @@ export class ServiceComponent extends IServiceEntry {
     className: string;
     name: string;
     similarity: number;
-    arguments: Argument[];
-    returnData: Return;
+    arguments: ArgumentModel[];
+    returnData: ReturnModel;
     serviceType: string;
     initServiceUrl: string; // request mapping url
     invokeServiceUrl: string;
     httpMethod: string; // get, delete, patch, post
     argComplexTypeUrl: Map<String,ComplexType>; // table for constructer and setter service
     log: string; // result respond from API Server
+    code: string;
 
     constructor() {
         super();
         this.argComplexTypeUrl = new Map<String,ComplexType>();
+        this.code = "";
         this.similarity = 0;
         this.wsdlFilename = "";
         this.projectName = "";
         this.initServiceUrl = "";
         this.arguments = [];
-        this.returnData = new Return();
+        this.returnData = new ReturnModel();
         this.serviceType = "ServiceComponent";
         this.log = "";
     }
@@ -229,12 +110,12 @@ export class ServiceComponent extends IServiceEntry {
         return this;
     }
 
-    addArgument(argument: Argument) {
+    addArgument(argument: ArgumentModel) {
         this.arguments.push(argument);
         return this;
     }
 
-    setReturn(returnData: Return) {
+    setReturn(returnData: ReturnModel) {
         this.returnData = returnData;
         return this;
     }

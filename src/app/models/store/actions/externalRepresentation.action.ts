@@ -1,8 +1,8 @@
 import { Action } from "@ngrx/store";
 import { GraphStorage } from "src/app/models/externalRepresentation/graph-storage.model";
 import { UIComponent } from "src/app/models/ui-component-dependency";
-import { SelabGraph } from "../selabGraph.model";
-import { SelabVertex } from "../selabVertex.model";
+import { SelabGraph } from "../../externalRepresentation/selabGraph.model";
+import { SelabVertex } from "../../externalRepresentation/selabVertex.model";
 
 export enum ERActionTypes {
     INSERT_GRAPHSTORAGE = "[ExternalRepresentation] Insert GraphStorage",

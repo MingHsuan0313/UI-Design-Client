@@ -5,7 +5,7 @@ import { GraphStorage, VertexStorage, StyleStorage } from "../../graph-dependenc
 import { SelabEditor } from "../selab-editor.model";
 import { UIComponent } from "../../ui-component-dependency";
 import { DropdownComponent } from "../../internalRepresentation/DropdownComponent.model";
-import { SelabVertex } from "../../store/selabVertex.model";
+import { SelabVertex } from "../selabVertex.model";
 
 export class DropdownStrategy implements ICreateComponentStrategy {
   basex: number;

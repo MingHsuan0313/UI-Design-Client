@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 // import { fakeServiceComponents } from "../../fakedata/fakeServiceComponents";
-import { ServiceComponent } from "../../models/service-component-dependency";
+import { ServiceComponentModel } from "../../models/service-component-dependency";
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { HttpClientService } from '../http-client.service';
 import { HttpParamsOptions } from '@angular/common/http/src/params';
@@ -15,10 +15,10 @@ export default class ServiceComponentService {
   baseUrl: String;
 
   // get from server
-  serviceComponents: ServiceComponent[];
+  serviceComponents: ServiceComponentModel[];
 
   // after select from dropdown
-  selectedServiceComponent: ServiceComponent;
+  selectedServiceComponent: ServiceComponentModel;
 
   // toggle checkbox
   isMatchMaking: Boolean;
@@ -28,7 +28,7 @@ export default class ServiceComponentService {
   ) {
     this.baseUrl = "services";
     this.serviceComponents = [];
-    this.selectedServiceComponent = new ServiceComponent();
+    this.selectedServiceComponent = new ServiceComponentModel();
   }
 
   getServiceComponents() {
@@ -137,7 +137,7 @@ export default class ServiceComponentService {
     return this.httpClientService.triggerJenkinsBuild(url, params);
   }
 
-  setSelectedServiceComponent(serviceComponent: ServiceComponent) {
+  setSelectedServiceComponent(serviceComponent: ServiceComponentModel) {
     this.selectedServiceComponent = serviceComponent;
   }
 

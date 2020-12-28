@@ -1,4 +1,4 @@
-import { DataBinding } from "../externalRepresentation/util/DataBinding";
+import { DataBinding } from "./util/DataBinding";
 
 export class SelabVertex {
     private id: string;

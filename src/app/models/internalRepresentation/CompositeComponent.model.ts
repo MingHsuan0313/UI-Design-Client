@@ -1,4 +1,4 @@
-import { ServiceComponent } from "../store/serviceEntry.model";
+import { ServiceComponentModel } from "../service-component-dependency";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponent } from "./UIComponent.model";
 

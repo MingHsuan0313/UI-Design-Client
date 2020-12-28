@@ -4,7 +4,7 @@ import { DataBinding } from "../util/DataBinding";
 import { GraphStorage, VertexStorage, StyleStorage } from "../../graph-dependency";
 import { SelabEditor } from "../selab-editor.model";
 import { FormComponent } from "../../ui-component-dependency";
-import { SelabVertex } from "../../store/selabVertex.model";
+import { SelabVertex } from "../selabVertex.model";
 
 // no need for data binidng
 export class FormStrategy implements ICreateComponentStrategy {

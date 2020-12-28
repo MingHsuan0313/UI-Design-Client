@@ -2,7 +2,7 @@ import { UIComponent } from "./UIComponent.model";
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
-import { IServiceEntry } from "../store/serviceEntry.model";
+import { IServiceEntry } from "../service-component-dependency";
 export class TextComponent extends BasicComponent {
   text: string;
   href: string;
@@ -12,26 +12,9 @@ export class TextComponent extends BasicComponent {
     let properties = uiComponentBuilder.getProperties();
     if (uiComponentBuilder.getProperties() != undefined) {
       console.log("this time i am heree")
-      this.text = properties["text"];
+      this.text = properties["name"];
       this.href = properties["href"];
     }
-  }
-
-  getProperties() {
-    return [
-      {
-        "type": "String",
-        "value": "name"
-      },
-      {
-        'type': "String",
-        "value": "text"
-      },
-      {
-        "type": "String",
-        "value": "href"
-      }
-    ]
   }
 
   getValue(): string {

@@ -4,7 +4,7 @@ import { DataBinding } from "../util/DataBinding";
 import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
 import { TextComponent } from "../../ui-component-dependency";
 import { SelabEditor } from "../selab-editor.model";
-import { SelabVertex } from "../../store/selabVertex.model";
+import { SelabVertex } from "../selabVertex.model";
 
 
 export class TextStrategy implements ICreateComponentStrategy {

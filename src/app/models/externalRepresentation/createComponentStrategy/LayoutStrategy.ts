@@ -4,7 +4,7 @@ import { DataBinding } from "../util/DataBinding";
 import { SelabEditor } from '../../externalRepresentation/selab-editor.model';
 import { Storage } from '../../../shared/storage';
 import { LayoutComponent } from "../../internalRepresentation/LayoutComponent.model";
-import { SelabVertex } from "../../store/selabVertex.model";
+import { SelabVertex } from "../selabVertex.model";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 
 export class LayoutStrategy implements ICreateComponentStrategy {
@@ -137,11 +137,11 @@ export class LayoutStrategy implements ICreateComponentStrategy {
   }
 
   createLayoutComponent(selabEditor: SelabEditor,pageUICDL: PageUICDL) {
-    let bodyComponent = pageUICDL.getBody();
-    let headerComponent = pageUICDL.getHeader();
-    let sidebarComponent = pageUICDL.getSidebar();
-    let footerComponent = pageUICDL.getFooter();
-    let asidebarComponent = pageUICDL.getAsidebar();
+    let bodyComponent = pageUICDL.body;
+    let headerComponent = pageUICDL.header;
+    let sidebarComponent = pageUICDL.sidebar;
+    let footerComponent = pageUICDL.footer;
+    let asidebarComponent = pageUICDL.asidebar);
 
     this.createLayout(selabEditor,bodyComponent);
     this.createHeader(selabEditor,headerComponent);

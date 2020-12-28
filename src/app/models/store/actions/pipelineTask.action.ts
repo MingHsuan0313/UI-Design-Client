@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { PipelineStorage,Task } from '../../wizard-task-dependency';
-import { ServiceComponent } from '../serviceEntry.model';
+import { ServiceComponentModel } from '../../service-component-dependency';
 
 export enum PipelineActionTypes {
     CREATE_TASK_ACTION = "[Pipeline] Create Task",
@@ -22,7 +22,7 @@ export class PipelineCreateTaskAction implements Action {
 
 export class PipelineCreateOperationAction {
     public type = PipelineActionTypes['CREATE_OPERATION_ACTION'];
-    constructor(public operation: ServiceComponent) {}
+    constructor(public operation: ServiceComponentModel) {}
 }
 
 export class PipelineDeleteTaskAction {

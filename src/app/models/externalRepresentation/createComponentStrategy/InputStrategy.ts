@@ -4,7 +4,7 @@ import {StyleLibrary} from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
 import { SelabEditor } from "../selab-editor.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
-import { SelabVertex } from "../../store/selabVertex.model";
+import { SelabVertex } from "../selabVertex.model";
 import { InputTextComponent } from "../../ui-component-dependency";
 // no need to databinding
 export class InputStrategy implements ICreateComponentStrategy {

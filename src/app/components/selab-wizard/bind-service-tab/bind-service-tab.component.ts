@@ -4,7 +4,7 @@ import { CompositeComponent } from 'src/app/models/internalRepresentation/Compos
 import { ServiceMappingType } from 'src/app/models/service-component-dependency';
 import { PipelineCreateOperationAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
-import { Argument, ServiceComponent } from 'src/app/models/store/serviceEntry.model';
+import { ArgumentModel, ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
@@ -40,7 +40,7 @@ export class BindServiceTabComponent implements OnInit {
     //   this.uiComponent = this.uiComponent.setServiceComponent(new ServiceComponent());
     // }
     // console.log(this.uiComponent);
-    let serviceComponent = new ServiceComponent();
+    let serviceComponent = new ServiceComponentModel();
     serviceComponent.setClassName(option["className"])
       .setName(option["name"])
       .setServiceID(option["serviceID"])
@@ -51,7 +51,7 @@ export class BindServiceTabComponent implements OnInit {
     this.uiComponentBuilder.setServiceComponent(serviceComponent);
     if (option["name"] == "addDepartment" || option["name"] == "editDepartment") {
         (this.uiComponentBuilder
-          .getServiceComponent() as ServiceComponent)
+          .getServiceComponent() as ServiceComponentModel)
           .setComplexTypeUrl(this.fakeData());
     }
     this.queryArguments();
@@ -60,14 +60,14 @@ export class BindServiceTabComponent implements OnInit {
   chooseArgument(event, option, subComponent: UIComponent) {
     console.log("choose option");
     console.log(option);
-    (subComponent.serviceComponent as Argument)
+    (subComponent.serviceComponent as ArgumentModel)
       .setName(option["name"])
   }
 
   queryArguments() {
     console.log("query arguments")
     this.serviceComponentService
-      .queryArgumentsByServiceID((this.uiComponentBuilder.getServiceComponent() as ServiceComponent).serviceID)
+      .queryArgumentsByServiceID((this.uiComponentBuilder.getServiceComponent() as ServiceComponentModel).serviceID)
       .subscribe(async (response) => {
         let argumentOption;
         this.argumentOptions = [];
@@ -78,7 +78,7 @@ export class BindServiceTabComponent implements OnInit {
           if (argument["isComplexType"] == true) {
             for (let j = 0; j < argument["arguments"].length; j++) {
               let complexTypeArgument = argument["arguments"][j];
-              argumentOption = new Argument()
+              argumentOption = new ArgumentModel()
                 .setName(complexTypeArgument["name"])
                 .setIsComplexType(complexTypeArgument["isComplexType"]);
               this.argumentOptions.push(argumentOption);
@@ -86,7 +86,7 @@ export class BindServiceTabComponent implements OnInit {
           }
           else {
             if (argument["annotationType"].split(".").pop() != "CookieValue") {
-              argumentOption = new Argument()
+              argumentOption = new ArgumentModel()
                 .setName(argument["name"])
                 .setIsComplexType(argument["isComplexType"])
               this.argumentOptions.push(argumentOption);
@@ -94,13 +94,13 @@ export class BindServiceTabComponent implements OnInit {
           }
         }
 
-        let operation: ServiceComponent;
-        if ((this.uiComponentBuilder.getServiceComponent() as ServiceComponent).serviceID.toString().length > 0) {
-          operation = (this.uiComponentBuilder.getServiceComponent() as ServiceComponent);
+        let operation: ServiceComponentModel;
+        if ((this.uiComponentBuilder.getServiceComponent() as ServiceComponentModel).serviceID.toString().length > 0) {
+          operation = (this.uiComponentBuilder.getServiceComponent() as ServiceComponentModel);
         }
         for (let index = 0; index < this.argumentOptions.length; index++)
-          (operation as ServiceComponent).addArgument(this.argumentOptions[index]);
-        this.store.dispatch(new PipelineCreateOperationAction(this.uiComponentBuilder.getServiceComponent() as ServiceComponent));
+          (operation as ServiceComponentModel).addArgument(this.argumentOptions[index]);
+        this.store.dispatch(new PipelineCreateOperationAction(this.uiComponentBuilder.getServiceComponent() as ServiceComponentModel));
       },
         (err) => {
           console.log(err);

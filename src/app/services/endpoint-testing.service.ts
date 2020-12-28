@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { PipelineSetOperationLogAction } from '../models/store/actions/pipelineTask.action';
 import { AppState } from '../models/store/app.state';
-import { ServiceComponent } from '../models/store/serviceEntry.model';
+import { ServiceComponentModel } from '../models/service-component-dependency';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class EndpointTestingService {
     this.sessionID = "";
   }
 
-  async test(operation: ServiceComponent, requestParam: Object) {
+  async test(operation: ServiceComponentModel, requestParam: Object) {
     console.log(`test operation ${operation.name}`);
     // get sessionID
     await this.axios.get(`${this.apiServerUrl}/registerID`)
@@ -48,7 +48,7 @@ export class EndpointTestingService {
   // 3: for loop call complexType Arg's setter
   // 4: invoke service
   // 5: serialize result
-  async testServiceWithComplexTypeArg(operation: ServiceComponent, requestParam: Object) {
+  async testServiceWithComplexTypeArg(operation: ServiceComponentModel, requestParam: Object) {
     let serviceID = operation.serviceID;
     let serviceInitUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/initMethod`; // from className
     let serviceInvokeUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/${operation.wsdlFilename.split(".")[0]}`; // from wsdlName
@@ -162,7 +162,7 @@ export class EndpointTestingService {
   // 1: init service instance
   // 2: invoke service
   // 3: serialize result
-  async testServiceWithPrimitiveTypeArg(operation: ServiceComponent, requestParam: Object) {
+  async testServiceWithPrimitiveTypeArg(operation: ServiceComponentModel, requestParam: Object) {
     let serviceID = operation.serviceID;
     console.log("test primitive type");
     let serviceInitUrl = `${this.apiServerUrl}/${this.projectName}/${operation.className.split(".").join("/")}/initMethod`; // from className

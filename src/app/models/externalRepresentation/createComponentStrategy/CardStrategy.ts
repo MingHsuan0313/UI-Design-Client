@@ -2,7 +2,7 @@ import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
 import { GraphStorage, VertexStorage, StyleStorage } from "../../graph-dependency";
-import { SelabVertex } from "../../store/selabVertex.model";
+import { SelabVertex } from "../selabVertex.model";
 import { SelabEditor } from "../selab-editor.model";
 import { CardComponent } from "../../ui-component-dependency";
 

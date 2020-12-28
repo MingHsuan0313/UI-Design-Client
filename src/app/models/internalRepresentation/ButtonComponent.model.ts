@@ -4,7 +4,7 @@ import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { TextComponent } from "./TextComponent.model";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
-import { IServiceEntry } from "../store/serviceEntry.model";
+import { IServiceEntry } from "../service-component-dependency";
 
 export class ButtonComponent extends BasicComponent {
   text: String;
@@ -15,7 +15,7 @@ export class ButtonComponent extends BasicComponent {
     super(uiComponentBuilder);
     let properties = uiComponentBuilder.getProperties();
     if (properties != undefined) {
-      this.text = properties["text"];
+      this.text = properties["name"];
       this.href = properties["href"];
       this.trigger = properties["trigger"];
     }
@@ -78,27 +78,6 @@ export class ButtonComponent extends BasicComponent {
         service: this.serviceComponent.getInfo()
     }}
  }
-
-  getProperties() {
-    return [
-      {
-        "type": "String",
-        "value": "name"
-      },
-      {
-        "type": "String",
-        "value": "text"
-      },
-      {
-        "type": "String",
-        "value": "href"
-      },
-      {
-        "type": "Boolean",
-        "value": "trigger"
-      },
-    ]
-  }
 
   remove(component: UIComponent): void {
   }

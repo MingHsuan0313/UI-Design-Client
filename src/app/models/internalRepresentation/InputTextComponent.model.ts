@@ -3,7 +3,7 @@ import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { Input } from "@angular/core";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
-import { IServiceEntry } from "../store/serviceEntry.model";
+import { IServiceEntry } from "../service-component-dependency";
 
 export class InputTextComponent extends BasicComponent {
   public typeInfo: string;  // e.g. input-text, input-password
@@ -38,15 +38,6 @@ export class InputTextComponent extends BasicComponent {
       .buildInputComponent()
   }
 
-  getProperties(){
-    return [
-      {
-        "type": "String",
-        "value": "name"
-      },
-    ]
-  }
-
   setProperties(properties:Object): InputTextComponent {
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
@@ -75,7 +66,7 @@ export class InputTextComponent extends BasicComponent {
     return {
       [this.getSelector().toString()]: {
         name: this.name,
-        label: this.description,
+        // description: this.description,
         service: this.serviceComponent.getInfo()
       }
     }

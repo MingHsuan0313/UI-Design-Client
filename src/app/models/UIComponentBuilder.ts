@@ -8,7 +8,7 @@ import { IconComponent } from "./internalRepresentation/IconComponent.model";
 import { InputGroupComponent } from "./internalRepresentation/InputGroupComponent.model";
 import { LayoutComponent } from "./internalRepresentation/LayoutComponent.model";
 import { TableComponent } from "./internalRepresentation/TableComponent.model";
-import { Argument, IServiceEntry, ServiceComponent } from "./store/serviceEntry.model";
+import { ArgumentModel, IServiceEntry, ServiceComponentModel } from "./service-component-dependency";
 import { TextComponent, InputTextComponent, UIComponent } from "./ui-component-dependency";
 
 export class UIComponentBuilder {
@@ -20,7 +20,7 @@ export class UIComponentBuilder {
     public style: object;
     public geometry: object;
     public serviceComponent: IServiceEntry;
-    public argument: Argument;
+    public argument: ArgumentModel;
     public properties: Object; // specific component properties: eg dropdown item, card header...
     public componentList: UIComponent[];
 
@@ -49,7 +49,7 @@ export class UIComponentBuilder {
         return this;
     }
     
-    setArgument(argument: Argument) {
+    setArgument(argument: ArgumentModel) {
         this.argument = argument;
         return this;
     }

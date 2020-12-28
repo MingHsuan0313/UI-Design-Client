@@ -2,7 +2,7 @@ import { UIComponent } from "./UIComponent.model";
 import { CompositeComponent } from "./CompositeComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
-import { IServiceEntry, ServiceComponent } from "../store/serviceEntry.model";
+import { IServiceEntry, ServiceComponentModel } from "../service-component-dependency";
 
 export class FormComponent extends CompositeComponent {
 
@@ -11,7 +11,7 @@ export class FormComponent extends CompositeComponent {
         this.componentList = uiComponentBuilder.componentList;
     }
 
-    setServiceComponent(serviceComponent: ServiceComponent): FormComponent {
+    setServiceComponent(serviceComponent: ServiceComponentModel): FormComponent {
         let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
         return uiComponentBuilder
             .setServiceComponent(serviceComponent)
@@ -52,19 +52,6 @@ export class FormComponent extends CompositeComponent {
             .buildFormComponent();
     }
 
-    getProperties() {
-        return [
-            {
-                "type": "String",
-                "value": "name"
-            }
-        ]
-    }
-
-    getChildrenOptions() {
-        return ["text", "button", "input", "dropdown"];
-    }
-
     addSubComponent(component: UIComponent): FormComponent {
         let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
         return uiComponentBuilder
@@ -75,7 +62,7 @@ export class FormComponent extends CompositeComponent {
     getInfo() {
         return {
             name: this.name,
-            service: (this.serviceComponent as ServiceComponent).getInfo(),
+            service: (this.serviceComponent as ServiceComponentModel).getInfo(),
             children: this.expandChildren()
         };
     }

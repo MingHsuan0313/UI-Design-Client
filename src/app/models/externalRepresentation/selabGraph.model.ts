@@ -1,4 +1,4 @@
-import { SelabEdge } from "./selabEdge.model";
+import { SelabEdge } from "../store/selabEdge.model";
 import { SelabVertex } from "./selabVertex.model";
 
 export class SelabGraph {

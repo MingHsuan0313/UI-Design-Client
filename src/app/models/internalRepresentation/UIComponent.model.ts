@@ -1,5 +1,5 @@
 import AbstractComponent from "src/app/shared/AbstractComponent.model";
-import { IServiceEntry, ServiceComponent } from "../store/serviceEntry.model";
+import { IServiceEntry, ServiceComponentModel } from "../service-component-dependency";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 
 export class UIComponent {
@@ -59,7 +59,7 @@ export class UIComponent {
     return new UIComponent();
   }
   
-  setServiceComponent(serviceEntry: ServiceComponent) {
+  setServiceComponent(serviceEntry: ServiceComponentModel) {
     return new UIComponent();
   }
   

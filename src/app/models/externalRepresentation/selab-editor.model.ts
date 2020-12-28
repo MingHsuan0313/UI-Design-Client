@@ -3,8 +3,8 @@ import GraphEditorService from "src/app/services/externalRepresentation/graph-ed
 import { Configuration } from "src/app/services/externalRepresentation/util/configuration";
 import { ERInsertVertexAction } from "../store/actions/externalRepresentation.action";
 import { AppState } from "../store/app.state";
-import { pageUICDLSelector } from "../store/reducers/InternalRepresentationSelector";
-import { SelabVertex } from "../store/selabVertex.model";
+import { pageUICDLSelector } from "../store/selectors/InternalRepresentationSelector";
+import { SelabVertex } from "./selabVertex.model";
 import { UIComponent } from "../ui-component-dependency";
 import { BreadcrumbStrategy, ButtonStrategy, CardStrategy, DropdownStrategy, FormStrategy, IconStrategy, InputStrategy, LayoutStrategy, TableStrategy, TextStrategy } from "./component-strategy-dependency";
 import { ICreateComponentStrategy } from "./createComponentStrategy/ICreateComponentStrategy";

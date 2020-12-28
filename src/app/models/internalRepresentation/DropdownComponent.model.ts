@@ -3,7 +3,7 @@ import { UIComponent } from "./UIComponent.model";
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
-import { IServiceEntry } from "../store/serviceEntry.model";
+import { IServiceEntry } from "../service-component-dependency";
 
 export class DropdownComponent extends BasicComponent {
   items: String;
@@ -36,19 +36,6 @@ export class DropdownComponent extends BasicComponent {
       .buildDropdownComponent()
   }
 
-  getProperties() {
-    return [
-      {
-        "type": "String",
-        "value": "name"
-      },
-      {
-        "type": "String",
-        "value": "items"
-      }
-    ]
-  }
-  
   getValue(index: number): string {
     return this.items.split(" ")[index];
   }

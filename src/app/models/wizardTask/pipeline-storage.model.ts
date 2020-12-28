@@ -1,4 +1,4 @@
-import { ServiceComponent } from "../store/serviceEntry.model";
+import { ServiceComponentModel } from "../service-component-dependency";
 import { Task } from "./task.model";
 
 export class PipelineStorage {

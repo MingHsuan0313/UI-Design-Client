@@ -34,19 +34,6 @@ export class IconComponent extends BasicComponent {
       .buildIconComponent();
   }
 
-  getProperties() {
-    return [
-      {
-        "type": "String",
-        "value": "name"
-      },
-      {
-        "type": "String",
-        "value": "text"
-      }
-    ]
-  }
-
   add(component: UIComponent): void {
   }
 

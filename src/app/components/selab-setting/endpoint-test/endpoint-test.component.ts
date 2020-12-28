@@ -8,8 +8,8 @@ import {
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/models/store/app.state';
-import { operationPoolSelector, tasksSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
-import { Argument, ServiceComponent } from 'src/app/models/store/serviceEntry.model';
+import { operationPoolSelector, tasksSelector } from 'src/app/models/store/selectors/PipelineStorageSelector';
+import { ArgumentModel, ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { EndpointTestingService } from 'src/app/services/endpoint-testing.service';
 import { HttpClientService } from 'src/app/services/http-client.service';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
@@ -24,7 +24,7 @@ import { TestingLogWindowComponent } from './testing-log-window/testing-log-wind
   styleUrls: ['./endpoint-test.component.css']
 })
 export class EndpointTestComponent implements OnInit {
-  servicePool: ServiceComponent[];
+  servicePool: ServiceComponentModel[];
   verticalPosition: MatSnackBarVerticalPosition = "top";
   isWaitingTesting: boolean = false;
   constructor(
@@ -95,7 +95,7 @@ export class EndpointTestComponent implements OnInit {
   ngOnInit() {
   }
 
-  test(operation: ServiceComponent) {
+  test(operation: ServiceComponentModel) {
     this.openSnackBar(`Test Service: ${operation.name}`, 'test');
     let argumentss = operation.arguments as any;
     let requestBody = {};
@@ -110,7 +110,7 @@ export class EndpointTestComponent implements OnInit {
     let log = this.endpointTestingService.test(operation, params);
   }
 
-  showLog(operation: ServiceComponent) {
+  showLog(operation: ServiceComponentModel) {
     console.log("show log");
     console.log(operation);
     this.launchLogWindow(operation.log);

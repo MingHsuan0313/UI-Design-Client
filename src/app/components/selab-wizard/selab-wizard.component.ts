@@ -4,8 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { PipelineCreateOperationAction, PipelineCreateTaskAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
-import { operationPoolSelector } from 'src/app/models/store/reducers/PipelineStorageSelector';
-import { ServiceComponent } from 'src/app/models/store/serviceEntry.model';
+import { operationPoolSelector } from 'src/app/models/store/selectors/PipelineStorageSelector';
+import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
 import { Task } from 'src/app/models/wizard-task-dependency';
@@ -35,7 +35,7 @@ export class SelabWizardComponent implements OnInit {
   lastTab: string;
 
   // it has return data if in pipeline mode
-  operation: ServiceComponent;
+  operation: ServiceComponentModel;
   @ViewChild("selabtabs") tabGroup: MatTabGroup;
   @ViewChild("build") buildTab: BuildTabComponent;
   @ViewChild("compose") composeTab: ComposeTabComponent;

@@ -8,7 +8,7 @@ import { CompositeComponent } from 'src/app/models/internalRepresentation/Compos
 import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { PipelineCreateOperationAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
-import { ServiceComponent } from 'src/app/models/store/serviceEntry.model';
+import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/models/UIComponentBuilder';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';

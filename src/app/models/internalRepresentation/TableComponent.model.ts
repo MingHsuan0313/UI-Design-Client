@@ -2,7 +2,7 @@ import { UIComponent } from "./UIComponent.model";
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
-import { IServiceEntry } from "../store/serviceEntry.model";
+import { IServiceEntry } from "../service-component-dependency";
 
 export class TableComponent extends BasicComponent {
   headers: string;
@@ -60,22 +60,6 @@ export class TableComponent extends BasicComponent {
       .buildTableComponent();
   }
 
-  getProperties() {
-    return [
-      {
-        "type": "String",
-        "value": "name"
-      },
-      {
-        "type": "String",
-        "value": "headers"
-      },
-      {
-        "type": "String",
-        "value": "rows"
-      }
-    ]
-  }
   
   getValue(part: string,index: number): string {
     if(part == "header") {
