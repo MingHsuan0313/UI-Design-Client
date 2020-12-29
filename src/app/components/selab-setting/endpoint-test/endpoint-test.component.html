@@ -15,15 +15,13 @@
         <mat-label>{{argument.name}}</mat-label>
         <input id="{{serviceComponent.name}}-{{argument.name}}" matInput>
         &nbsp;&nbsp;
-        <button 
-        style="position:relative; bottom:20px; height:10px; color:#333333" 
-        *ngIf="argument.constraint.length > 0" 
-        disabled
-        mat-button matTooltip="{{argument.constraint}}"
-        matTooltipPosition="left" 
-          >
-          <mat-icon svgIcon="visibility"></mat-icon>
-        </button>
+        <div *ngIf="argument.constraint != undefined">
+          <button style="position:relative; bottom:20px; height:10px; color:#333333"
+            *ngIf="argument.constraint.length > 0" disabled mat-button matTooltip="{{argument.constraint}}"
+            matTooltipPosition="left">
+            <mat-icon svgIcon="visibility"></mat-icon>
+          </button>
+        </div>
       </mat-form-field>
       <button (click)="showLog(serviceComponent)" style="background-color: #333333;" mat-raised-button
         color="primary">Show Log</button>
