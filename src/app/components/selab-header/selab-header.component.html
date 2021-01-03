@@ -2,10 +2,11 @@
 <header style="position: fixed;">
   <div class="container-fluid">
     <div class="row">
+      <!-- <mat-icon [inline]="true" style="" svgIcon="logo"></mat-icon> -->
       <button style="padding-top:2px; font-size:large;" mat-button [matMenuTriggerFor]="fileMenu">File</button>
       <button style="padding-top:2px; font-size:large;" mat-button [matMenuTriggerFor]="layoutMenu">Layout</button>
-      <button style=" padding-top:2px; font-size:large; width: 100%; inline-size: inherit;" mat-button [matMenuTriggerFor]="genereMenu"
-        matTooltip="Choose UI Component (launch wizard)">UI Component</button>
+      <button style=" padding-top:2px; font-size:large; width: 100%; inline-size: inherit;" mat-button
+        [matMenuTriggerFor]="genereMenu" matTooltip="Choose UI Component (launch wizard)">UI Component</button>
       <!-- <button style="width: 100%; inline-size: inherit;" mat-button>Launch Wizard</button> -->
     </div>
   </div>

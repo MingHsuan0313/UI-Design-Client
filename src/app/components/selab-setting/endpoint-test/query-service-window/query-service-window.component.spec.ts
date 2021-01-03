@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestingLogWindowComponent } from './testing-log-window.component';
+import { QueryServiceWindowComponent } from './query-service-window.component';
 
-describe('TestingLogWindowComponent', () => {
-  let component: TestingLogWindowComponent;
-  let fixture: ComponentFixture<TestingLogWindowComponent>;
+describe('QueryServiceWindowComponent', () => {
+  let component: QueryServiceWindowComponent;
+  let fixture: ComponentFixture<QueryServiceWindowComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TestingLogWindowComponent ]
+      declarations: [ QueryServiceWindowComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestingLogWindowComponent);
+    fixture = TestBed.createComponent(QueryServiceWindowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,6 +1,25 @@
-<p>
-  Jest Log
+<p style="font-size: 24px;font-weight: bold;">
+  Result of Jest Testing
 </p>
 <button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
 <br>
-<app-jest-testing-terminal></app-jest-testing-terminal>
+<br>
+<!-- <app-jest-testing-terminal></app-jest-testing-terminal> -->
+<div style="overflow:auto;background-color: #333333;height:600px;width:600px">
+  <div
+   *ngFor="let log of logs"
+    style="display: inherit;
+    font-size:20px
+    " 
+   >
+   <span style="color:#d3ffce;" *ngIf="log.status == 'success'">
+    {{log.data}}
+   </span>
+   <span style="color:#f7f7f7" *ngIf="log.status == 'info'">
+    {{log.data}}
+   </span>
+   <span style="color:#ff7373" *ngIf="log.status == 'failed'">
+    {{log.data}}
+   </span>
+  </div>
+</div>

@@ -16,7 +16,7 @@ import ServiceComponentService from 'src/app/services/serviceComponent/service-c
 import { CodeEditorDialogComponent } from '../../code-editor-dialog/code-editor-dialog.component';
 import { CodeEditorComponent } from '../../code-editor/code-editor.component';
 import { JestTestingLogWindowComponent } from './jest-testing-log-window/jest-testing-log-window.component';
-import { TestingLogWindowComponent } from './testing-log-window/testing-log-window.component';
+import { QueryServiceWindowComponent } from './query-service-window/query-service-window.component';
 
 @Component({
   selector: 'app-endpoint-test',
@@ -35,6 +35,7 @@ export class EndpointTestComponent implements OnInit {
     public logWindow: MatDialog, // return from invoke individual service component
     private serivceComponentService: ServiceComponentService,
     public codeEditor: MatDialog,
+    public queryServiceWindow: MatDialog,
     // return from Jest Server
     public jestLogWindow: MatDialog) {
     this.servicePool = [];
@@ -51,7 +52,6 @@ export class EndpointTestComponent implements OnInit {
   }
 
   openSnackBar(message: string, action: string) {
-
     this.snackBar.open(message, action, {
       verticalPosition: this.verticalPosition,
       duration: 2000,
@@ -78,12 +78,19 @@ export class EndpointTestComponent implements OnInit {
   }
 
   launchLogWindow(log: string) {
-    this.logWindow.open(TestingLogWindowComponent, {
+    this.logWindow.open(JestTestingLogWindowComponent, {
       data: {
         log: log
       },
       disableClose: true,
       autoFocus: true
+    })
+  }
+
+  launchQueryServiceWindow() {
+    this.queryServiceWindow.open(QueryServiceWindowComponent,{
+      disableClose: true,
+      autoFocus: true,
     })
   }
 
@@ -120,6 +127,14 @@ export class EndpointTestComponent implements OnInit {
     // console.log(JSON.stringify(this.servicePool));
     let axios = require('axios');
     this.isWaitingTesting = true;
+    // this.jestLogWindow.open(JestTestingLogWindowComponent,{
+    //   data: {
+    //     log: "hello world\nggood to"
+    //   },
+    //   disableClose: true,
+    //   autoFocus: true
+    // })
+    // this.jestTerminalSerivce.appendErrorMessage("fuck you");
     axios.post('http://localhost:8081/selab/testing/testingServiceComponentPool', {
       header: {
         "Content-Type": "application/json"
