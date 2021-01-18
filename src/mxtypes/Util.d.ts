@@ -157,7 +157,7 @@ declare class mxClipboard{
   static paste(graph);
 }
 declare class mxConnectionHandler {
-
+  connectImage;
 }
 
 /******************      Util end      **************/

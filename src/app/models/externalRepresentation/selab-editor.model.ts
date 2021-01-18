@@ -32,6 +32,15 @@ export class SelabEditor {
         editor.configure(config);
         Configuration.configureEditorKeyBinding(editor);
         Configuration.configureGraphListener(editor);
+
+        //mxConstants.DEFAULT_HOTSPOT = 0.7;
+        mxConstants.HIGHLIGHT_COLOR = null; 
+        console.log(mxConstants)
+        mxConnectionHandler.prototype.connectImage = new mxImage('assets/icon/dot.svg', 14, 14);
+        mxCellMarker.prototype.hotspotEnabled = true;
+        //mxCellMarker.prototype.setHotspot(1); 
+
+
         this.editor = editor;
     }
 

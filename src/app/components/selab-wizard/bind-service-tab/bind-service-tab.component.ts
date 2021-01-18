@@ -72,6 +72,7 @@ export class BindServiceTabComponent implements OnInit {
         let argumentOption;
         this.argumentOptions = [];
         let serviceArguments = JSON.parse(response["body"]);
+        console.log(serviceArguments);
         for (let index = 0; index < serviceArguments.length; index++) {
           let argument = serviceArguments[index];
 
@@ -117,7 +118,7 @@ export class BindServiceTabComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log("queryService result")
-          // console.log(response["body"])
+          console.log(response["body"])
           this.serviceOptions = JSON.parse(response["body"]);
           for (let index = 0; index < this.serviceOptions.length; index++) {
             this.serviceOptions[index]["argc"] = this.serviceOptions[index]["WSDLName"]

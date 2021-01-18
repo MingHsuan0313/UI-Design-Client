@@ -3,13 +3,13 @@
   width: 100%;
   ">
   <mat-tab-group>
-    <mat-tab>
+    <mat-tab style="height:42px ">
       <ng-template mat-tab-label>
         <button mat-button
-          style="min-width: 15px; margin-bottom:10px; padding-left: 0px; padding-right: 0px; height: 20px;"
+          style="min-width: 15px; margin-bottom:10px; padding-left: 0px; padding-right: 0px; height: 15px;"
           matTooltip="Setting">
           <span>
-            <mat-icon style="color: black;" svgIcon="note"></mat-icon>
+            <mat-icon style="color: black; position: relative; bottom:5px;" svgIcon="note"></mat-icon>
           </span></button>
       </ng-template>
 
@@ -21,10 +21,10 @@
     <mat-tab>
       <ng-template mat-tab-label>
         <button mat-button
-          style="min-width: 15px; margin-bottom:10px; padding-left: 0px; padding-right: 0px; height: 20px;"
+          style="min-width: 15px; margin-bottom:10px; padding-left: 0px; padding-right: 0px; height: 15px;"
           matTooltip="EndPoint Testing">
           <span>
-            <mat-icon style="color: black;" svgIcon="setting"></mat-icon>
+            <mat-icon style="color: black;  position: relative; bottom:5px;" svgIcon="setting"></mat-icon>
           </span></button>
       </ng-template>
       <app-endpoint-test></app-endpoint-test>
@@ -32,10 +32,10 @@
     <mat-tab>
       <ng-template mat-tab-label>
         <button mat-button
-          style="min-width: 15px; margin-bottom:10px; padding-left: 0px; padding-right: 0px; height: 20px;"
+          style="min-width: 15px; margin-bottom:10px; padding-left: 0px; padding-right: 0px; height: 15px;"
           matTooltip="navigation">
           <span>
-            <mat-icon style="color: black;" svgIcon="navigation"></mat-icon>
+            <mat-icon style="color: black;  position: relative; bottom:5px;" svgIcon="navigation"></mat-icon>
           </span></button>
       </ng-template>
       <app-nav-editor></app-nav-editor>

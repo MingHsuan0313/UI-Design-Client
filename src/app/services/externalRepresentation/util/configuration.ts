@@ -5,11 +5,19 @@ export class Configuration {
             editor.execute("cut");
         })
 
-        editor.addAction("mx-copy", (event) => {
+        editor.addAction("mx-copy", (editor, cell) => {
             editor.execute("copy");
+            // let graph = editor.graph;
+            // let cells = editor.graph.selectionModel.cells;
+            // mxClipboard.copy(graph, cells);
         })
 
-        editor.addAction("mx-paste", (event) => {
+        editor.addAction("mx-paste", (editor) => {
+            // let graph = editor.graph;
+            // let cells = editor.graph.selectionModel.cells;
+            // console.log(editor);
+            // console.log(graph);
+            // mxClipboard.paste(graph);
             editor.execute("paste");
         })
 

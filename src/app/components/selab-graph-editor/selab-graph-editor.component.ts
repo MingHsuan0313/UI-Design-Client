@@ -39,6 +39,7 @@ import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 })
 export class SelabGraphEditorComponent implements AfterViewInit {
   private zoomFactor = 1;
+  private isPrototypeMode = false;
   public tabs: TabModel[] = [new TabModel("imsMain", "graphContainer-0")];
   selected = new FormControl(0);
   verticalPosition: MatSnackBarVerticalPosition = "top";
@@ -304,6 +305,11 @@ export class SelabGraphEditorComponent implements AfterViewInit {
         this.store.dispatch(new IRClearPageUICDLAction(graphID));
       }
     })
+  }
+
+  togglePrototypeMode(){
+    this.isPrototypeMode = !this.isPrototypeMode;
+    console.log(this.isPrototypeMode);
   }
 
   newProject() {

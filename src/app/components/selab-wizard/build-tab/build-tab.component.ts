@@ -60,7 +60,7 @@ export class BuildTabComponent implements OnInit {
 
   concateString(str1, str2) {
     return str1 + str2;
-  }
+  } 
 
   checkIsFormFill(): boolean {
     if (Object.keys(this.formData).length == 0)
