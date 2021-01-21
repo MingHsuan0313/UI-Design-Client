@@ -1,0 +1,41 @@
+<h1 style="display:inline;white-space: nowrap;">
+  WebApp Dashboard
+</h1>
+
+<hr>
+
+<mat-dialog-content>
+  <div class="container">
+    <div class="row">
+      <h2 class="project-name">Project Name: {{getProjectName()}}</h2>
+    </div>
+  </div>
+  <mat-list *ngFor="let stage of stages">
+    <mat-list-item>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <h3>{{getStageName(stage)}}</h3>
+          </div>
+          <div class="col-1" *ngIf="isStageSuccess(stage)">
+            <mat-icon color="primary" class="icon-display">done</mat-icon>
+          </div>
+          <div class="col-1" *ngIf="isStageInProgress(stage)" >
+            <mat-spinner color="accent" [diameter]="30"></mat-spinner>
+          </div>
+          <div class="col-1" *ngIf="isStageFailed(stage)">
+            <mat-icon color="warn" class="icon-display">close</mat-icon>
+          </div>
+        </div>
+      </div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-list>
+  <a>Status: {{taskStatus}}</a>
+  <a *ngIf="deployedUrl" href={{deployedUrl}} class="primary" >Go to my Web Application!</a>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="generateWebApp()">Generate</button>
+  <button mat-raised-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

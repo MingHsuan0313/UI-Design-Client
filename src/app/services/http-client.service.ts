@@ -85,6 +85,4 @@ export class HttpClientService {
       params: params
     })
   }
-
-
 }
