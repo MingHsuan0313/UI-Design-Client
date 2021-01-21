@@ -17,6 +17,9 @@
           <div class="col">
             <h3>{{getStageName(stage)}}</h3>
           </div>
+          <div class="col-1">
+            <a>{{getStageDurationSeconds(stage).toFixed(1)}}s</a>
+          </div>
           <div class="col-1" *ngIf="isStageSuccess(stage)">
             <mat-icon color="primary" class="icon-display">done</mat-icon>
           </div>
@@ -31,11 +34,20 @@
     </mat-list-item>
     <mat-divider></mat-divider>
   </mat-list>
-  <a>Status: {{taskStatus}}</a>
-  <a *ngIf="deployedUrl" href={{deployedUrl}} class="primary" >Go to my Web Application!</a>
+  <div class="container">
+    <div class="row justify-content-center">
+      <h4 *ngIf="isTaskStatusSuccess()" style="color:#3f51b5">Status: {{taskStatus}}</h4>
+      <h4 *ngIf="isTaskStatusInProgress()" style="color:#ff4081">Status: {{taskStatus}}</h4>
+      <h4 *ngIf="isTaskStatusFailed()" style="color:#f44336">Status: {{taskStatus}}</h4>
+      <h4 *ngIf="isTaskStatusOther()">Status: {{taskStatus}}</h4>
+    </div>
+    <div *ngIf="deployedUrl" class="row justify-content-center">
+      <a mat-raised-button color="primary" href={{deployedUrl}}>Go to my Web Application!</a>
+    </div>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-raised-button color="primary" (click)="generateWebApp()">Generate</button>
-  <button mat-raised-button mat-dialog-close>Close</button>
+  <button [disabled]="isGenerating" mat-raised-button color="primary" (click)="confirmGenerate()">Generate</button>
+  <button [disabled]="isGenerating" mat-raised-button mat-dialog-close>Close</button>
 </mat-dialog-actions>

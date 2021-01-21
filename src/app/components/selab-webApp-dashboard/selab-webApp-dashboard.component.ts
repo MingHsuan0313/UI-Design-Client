@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { SelabGlobalStorage } from "../../models/store/globalStorage";
 import WebAppGeneratingService from "src/app/services/webAppGenerating/webApp-generating.service";
 import { timer } from "rxjs";
-import { takeUntil, takeWhile } from "rxjs/operators";
+import { ConfirmDialogComponent, ConfirmDialogModel } from "../utils/confirm-dialog/confirm-dialog.component";
+import { MatDialog } from "@angular/material";
 
 @Component({
     selector: 'selab-webApp-dashboard',
@@ -14,12 +15,36 @@ export class SelabWebAppDashboardComponent implements OnInit {
     stages: any[] = [];
     taskStatus: string;
     deployedUrl: string;
+    isGenerating: boolean = false;
 
-    constructor(private webAppGeneratingService: WebAppGeneratingService) {}
+    constructor(private webAppGeneratingService: WebAppGeneratingService,
+        private dialog: MatDialog) {}
 
     ngOnInit(): void {}
 
+    confirmGenerate() {
+        const message = `It will trigger WebApp generating DevOps.`;
+        const dialogData = new ConfirmDialogModel("Confirm to generate you Web Application?", message);
+
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          maxWidth: "500px",
+          data: dialogData
+
+        });
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+          if (dialogResult == true) {
+            this.generateWebApp();
+          }
+        });
+    }
+
     generateWebApp(): void {
+        this.stages = [];
+        this.taskStatus = undefined;
+        this.deployedUrl = undefined;
+        this.isGenerating = true;
+
         let projectName: string = SelabGlobalStorage.projectName;
         let instanceId: string;
         enum BUILD_FAILED_STATUS {
@@ -39,16 +64,19 @@ export class SelabWebAppDashboardComponent implements OnInit {
                                 let webAppGeneratingState = JSON.parse(response["body"]);   // JSON Object response body
                                 this.stages = JSON.parse(webAppGeneratingState["stages"]);
                                 this.taskStatus = webAppGeneratingState["taskStatus"];
-                                
+
                                 if (webAppGeneratingState["taskStatus"] in BUILD_FAILED_STATUS) {
+                                    this.isGenerating = false;
                                     getWebAppGeneratingStateSubscription.unsubscribe();
                                 }
                                 if (webAppGeneratingState["isTimeout"] == true) {
+                                    this.isGenerating = false;
                                     getWebAppGeneratingStateSubscription.unsubscribe();
                                 }
                                 if (webAppGeneratingState["deployedUrl"] != null) {
+                                    this.isGenerating = false;
                                     this.deployedUrl = webAppGeneratingState["deployedUrl"];
-                                    alert("Congradulation! You just generate the Web Application you have drawn.");
+                                    alert("Congradulation! You just generated the Web Application you have drawn.");
                                     getWebAppGeneratingStateSubscription.unsubscribe();
                                 }
                             }
@@ -67,6 +95,10 @@ export class SelabWebAppDashboardComponent implements OnInit {
         return stage["name"];
     }
 
+    getStageDurationSeconds(stage: any): number {
+        return stage["durationMillis"] / 1000;
+    }
+
     isStageSuccess(stage: any): boolean {
         return stage["status"] == "SUCCESS";
     }
@@ -77,5 +109,21 @@ export class SelabWebAppDashboardComponent implements OnInit {
 
     isStageFailed(stage: any): boolean {
         return stage["status"] == "FAILED";
+    }
+
+    isTaskStatusSuccess(): boolean {
+        return this.taskStatus == "SUCCESS";
+    }
+
+    isTaskStatusInProgress(): boolean {
+        return this.taskStatus == "IN_PROGRESS";
+    }
+
+    isTaskStatusFailed(): boolean {
+        return this.taskStatus == "FAILED" || this.taskStatus == "ABORTED";
+    }
+
+    isTaskStatusOther(): boolean {
+        return !this.isTaskStatusSuccess() && !this.isTaskStatusInProgress && !this.isTaskStatusFailed();
     }
 }
