@@ -52,6 +52,7 @@ import { TestingLogWindowComponent } from './components/selab-setting/endpoint-t
 import { JestTestingLogWindowComponent } from './components/selab-setting/endpoint-test/jest-testing-log-window/jest-testing-log-window.component';
 import { JestTestingTerminalComponent } from './components/selab-setting/endpoint-test/jest-testing-log-window/jest-testing-terminal/jest-testing-terminal.component';
 import { ProjectNameDialogComponent } from './containers/default-layout/project-name-dialog/project-name-dialog.component'; 
+import { SelabWebAppDashboardComponent } from "./components/selab-webApp-dashboard/selab-webApp-dashboard.component";
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -109,7 +110,8 @@ export function reducerFactory() {
     TestingLogWindowComponent,
     JestTestingLogWindowComponent,
     JestTestingTerminalComponent,
-    ProjectNameDialogComponent
+    ProjectNameDialogComponent,
+    SelabWebAppDashboardComponent,
   ],
   imports: [
     AngularMaterialModule,
@@ -132,7 +134,8 @@ export function reducerFactory() {
     TabNameDialogComponent,
     TestingLogWindowComponent,
     JestTestingLogWindowComponent,
-    ProjectNameDialogComponent
+    ProjectNameDialogComponent,
+    SelabWebAppDashboardComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

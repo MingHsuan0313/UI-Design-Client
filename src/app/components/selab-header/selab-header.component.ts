@@ -5,7 +5,7 @@ import { Storage } from '../../shared/storage';
 import { TextComponent } from '../../models/ui-component-dependency';
 import { PropertyGenerator } from '../../shared/property-generator';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import ImportService from '../../services/internalRepresentation/import.service';
 import ExportService from '../../services/internalRepresentation/export.service';
 import { MatDialog,
@@ -13,6 +13,8 @@ import { MatDialog,
   MatSnackBar,
   MatSnackBarVerticalPosition } from '@angular/material';
 import { SelabWizardComponent } from '../selab-wizard/selab-wizard.component';
+import { SelabWebAppDashboardComponent } from '../selab-webApp-dashboard/selab-webApp-dashboard.component';
+import { HttpClientService } from '../../services/http-client.service';
 
 @Component({
   selector: 'selab-header',
@@ -48,8 +50,10 @@ export class SelabHeaderComponent implements OnInit {
     private graphEditorService: GraphEditorService,
     private importService: ImportService,
     private exportService: ExportService,
+    private httpClientService: HttpClientService,
     private snackBar: MatSnackBar,
-    public wizard: MatDialog) {
+    public wizard: MatDialog,
+    public webAppDashboard: MatDialog) {
 
   }
 
@@ -185,6 +189,16 @@ export class SelabHeaderComponent implements OnInit {
         autoFocus: true
       });
     }
+  }
+
+  launchWebAppDashboard() {
+    this.webAppDashboard.open(SelabWebAppDashboardComponent, {
+      width: '70%',
+      height: '70%',
+      data: {},
+      disableClose: true,
+      autoFocus: true
+    })
   }
 
   // openWizard() {
