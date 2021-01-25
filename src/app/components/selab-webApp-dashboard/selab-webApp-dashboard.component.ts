@@ -16,6 +16,10 @@ export class SelabWebAppDashboardComponent implements OnInit {
     taskStatus: string;
     deployedUrl: string;
     isGenerating: boolean = false;
+    // roadmap-related
+    isRoadmapEditable: boolean = true;
+    isRoadmapFinished: boolean = false;
+    isRoadmapHidden: boolean = false;
 
     constructor(private webAppGeneratingService: WebAppGeneratingService,
         private dialog: MatDialog) {}
@@ -44,6 +48,7 @@ export class SelabWebAppDashboardComponent implements OnInit {
         this.taskStatus = undefined;
         this.deployedUrl = undefined;
         this.isGenerating = true;
+        this.setRoadmapHidden(true);
 
         let projectName: string = SelabGlobalStorage.projectName;
         let instanceId: string;
@@ -67,14 +72,17 @@ export class SelabWebAppDashboardComponent implements OnInit {
 
                                 if (webAppGeneratingState["taskStatus"] in BUILD_FAILED_STATUS) {
                                     this.isGenerating = false;
+                                    this.enableRoadmap();
                                     getWebAppGeneratingStateSubscription.unsubscribe();
                                 }
                                 if (webAppGeneratingState["isTimeout"] == true) {
                                     this.isGenerating = false;
+                                    this.enableRoadmap();
                                     getWebAppGeneratingStateSubscription.unsubscribe();
                                 }
                                 if (webAppGeneratingState["deployedUrl"] != null) {
                                     this.isGenerating = false;
+                                    this.enableRoadmap();
                                     this.deployedUrl = webAppGeneratingState["deployedUrl"];
                                     alert("Congradulation! You just generated the Web Application you have drawn.");
                                     getWebAppGeneratingStateSubscription.unsubscribe();
@@ -125,5 +133,23 @@ export class SelabWebAppDashboardComponent implements OnInit {
 
     isTaskStatusOther(): boolean {
         return !this.isTaskStatusSuccess() && !this.isTaskStatusInProgress && !this.isTaskStatusFailed();
+    }
+
+    isWebAppGeneratable(): boolean {
+        return !this.isGenerating && this.isRoadmapFinished;
+    }
+
+    finishRoadmap(): void {
+        this.isRoadmapFinished = true;
+        this.isRoadmapEditable = false;
+    }
+
+    enableRoadmap(): void {
+        this.isRoadmapFinished = false;
+        this.isRoadmapEditable = true;
+    }
+
+    setRoadmapHidden(flag: boolean): void {
+        this.isRoadmapHidden = flag;
     }
 }

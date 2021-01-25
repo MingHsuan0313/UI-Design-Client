@@ -1,15 +1,105 @@
-<h1 style="display:inline;white-space: nowrap;">
-  WebApp Dashboard
-</h1>
+<div class="row justify-content-between">
+  <h1 style="display:inline;white-space: nowrap;">
+    WebApp Dashboard
+  </h1>
+  <button mat-raised-button *ngIf="!isRoadmapHidden" (click)="setRoadmapHidden(true)">Hide Roadmap</button>
+  <button mat-raised-button *ngIf="isRoadmapHidden" (click)="setRoadmapHidden(false)">Show Roadmap</button>
+</div>
 
 <hr>
 
 <mat-dialog-content>
-  <div class="container">
-    <div class="row">
-      <h2 class="project-name">Project Name: {{getProjectName()}}</h2>
+  <div class="container" [hidden]="isRoadmapHidden">
+    <div class="row justify-content-center">
+      <h2>Roadmap</h2>
     </div>
+
+    <mat-horizontal-stepper linear #stepper>
+      <mat-step [editable]="isRoadmapEditable">
+        <ng-template matStepLabel>
+          <div matTooltip="Querying services (UI-driven / Service-driven)">Querying services</div>
+        </ng-template>
+        <div class="row justify-content-center">
+          <button [disabled]="isRoadmapFinished" color="warn" mat-stroked-button matStepperPrevious>
+            <span>Back</span>
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <button [disabled]="isRoadmapFinished" color="primary" mat-stroked-button matStepperNext>
+            <span>Finish</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </mat-step>
+      <mat-step [editable]="isRoadmapEditable">
+        <ng-template matStepLabel>
+          <div matTooltip="Testing endpoints and parsing return values">Testing endpoints</div>
+        </ng-template>
+        <div class="row justify-content-center">
+          <button [disabled]="isRoadmapFinished" color="warn" mat-stroked-button matStepperPrevious>
+            <span>Back</span>
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <button [disabled]="isRoadmapFinished" color="primary" mat-stroked-button matStepperNext>
+            <span>Finish</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </mat-step>
+      <mat-step [editable]="isRoadmapEditable">
+        <ng-template matStepLabel>
+          <div matTooltip="Binding services & creating UI components">Creating UI components</div>
+        </ng-template>
+        <div class="row justify-content-center">
+          <button [disabled]="isRoadmapFinished" color="warn" mat-stroked-button matStepperPrevious>
+            <span>Back</span>
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <button [disabled]="isRoadmapFinished" color="primary" mat-stroked-button matStepperNext>
+            <span>Finish</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </mat-step>
+      <mat-step [editable]="isRoadmapEditable">
+        <ng-template matStepLabel>
+          <div matTooltip="Configuring Navigation info (routing, passing parameters...etc)">Configuring Navigation info</div>
+        </ng-template>
+        <div class="row justify-content-center">
+          <button [disabled]="isRoadmapFinished" color="warn" mat-stroked-button matStepperPrevious>
+            <span>Back</span>
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <button [disabled]="isRoadmapFinished" color="primary" mat-stroked-button matStepperNext>
+            <span>Finish</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </mat-step>
+      <mat-step [editable]="isRoadmapEditable">
+        <ng-template matStepLabel>
+          <div matTooltip="Generating Your own Web Application">Generating WebApp</div>
+        </ng-template>
+        <div class="row justify-content-center">
+          <div class="col-2">
+            <button [disabled]="isRoadmapFinished" (click)="finishRoadmap()" color="primary" mat-stroked-button matStepperNext>
+              <span>Ready to generate my Web App!</span>
+            </button>
+            <button [disabled]="isRoadmapFinished" color="warn" mat-stroked-button matStepperPrevious>
+              <span>Back</span>
+              <mat-icon>arrow_back</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+
+    <hr>
   </div>
+
+  <div class="row">
+    <h2 class="project-name">Project Name: {{getProjectName()}}</h2>
+  </div>
+
   <mat-list *ngFor="let stage of stages">
     <mat-list-item>
       <div class="container">
@@ -34,6 +124,7 @@
     </mat-list-item>
     <mat-divider></mat-divider>
   </mat-list>
+
   <div class="container">
     <div class="row justify-content-center">
       <h4 *ngIf="isTaskStatusSuccess()" style="color:#3f51b5">Status: {{taskStatus}}</h4>
@@ -48,6 +139,8 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button [disabled]="isGenerating" mat-raised-button color="primary" (click)="confirmGenerate()">Generate</button>
+  <div matTooltip="Must finish Roadmap before generating the Web App." [matTooltipDisabled]="isWebAppGeneratable()">
+    <button [disabled]="!isWebAppGeneratable()" mat-raised-button color="primary" (click)="confirmGenerate()">Generate</button>
+  </div>
   <button [disabled]="isGenerating" mat-raised-button mat-dialog-close>Close</button>
 </mat-dialog-actions>
