@@ -51,6 +51,10 @@ export class SelabEditor {
         return this.editor.graph.view;
     }
 
+    setGraphModel(graphModel: mxGraphModel){
+        this.editor.graph.model = graphModel;
+    }
+
     setStrategy(strategy: ICreateComponentStrategy) {
         this.createComponentStrategy = strategy;
     }
@@ -58,7 +62,7 @@ export class SelabEditor {
     applyLayout(layout: string) {
         console.log("apply Layout")
         let graphID = this.graphEditorService.getSelectedGraphID();
-        this.setStrategy(new LayoutStrategy(0, 0,graphID));
+        this.setStrategy(new LayoutStrategy(graphID, new mxGeometry(0,0,0,0)));
         let pageUICDLs = this.store.select(pageUICDLSelector());
         pageUICDLs.subscribe((data) => {
             let id = this.graphEditorService.getSelectedGraphID();
@@ -91,20 +95,22 @@ export class SelabEditor {
         return vertex;
     }
 
-    createComponent(uiComponent: UIComponent, parent: mxCell, basex?, basey?) {
+    createComponent(uiComponent: UIComponent, parent: mxCell, geometry?, restore?) {
         let graphID = this.graphEditorService.getSelectedGraphID();
         console.log("create Component")
         console.log(graphID)
         const graphNode = document.getElementById(graphID);
         const defaultWidth = graphNode.offsetWidth;
         const defaultHeight = graphNode.offsetHeight;
+        const restoreMode = restore == undefined ? false : restore;
 
         if (uiComponent['type'].startsWith('layout')) {
-            basex = 0;
-            basey = 0;
-        } else if (basex == undefined || basey == undefined) {
-            basex = defaultWidth * 3 / 10;
-            basey = defaultHeight * 3 / 10;
+            geometry = { x:0, y:0 }
+        } else if (geometry == undefined) {
+            geometry = { 
+                x: defaultWidth * 3 / 10, 
+                y: defaultHeight * 3 / 10
+            }
         }
 
         // set parent [layout parts] to each components
@@ -113,27 +119,28 @@ export class SelabEditor {
 
         if (uiComponent['componentList'] == undefined) {
             if (uiComponent['type'] == 'button') {
-                this.setStrategy(new ButtonStrategy(basex, basey));
+                this.setStrategy(new ButtonStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'text') {
-                this.setStrategy(new TextStrategy(basex, basey));
+                this.setStrategy(new TextStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'dropdown') {
-                this.setStrategy(new DropdownStrategy(basex, basey));
+                this.setStrategy(new DropdownStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'table') {
-                this.setStrategy(new TableStrategy(basex, basey));
+                this.setStrategy(new TableStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'icon') {
-                this.setStrategy(new IconStrategy(basex, basey));
+                this.setStrategy(new IconStrategy(geometry, restoreMode));
             } else if (uiComponent['type'].startsWith('input')) {
-                this.setStrategy(new InputStrategy(basex, basey));
+                this.setStrategy(new InputStrategy(geometry, restoreMode));
             }
             return this.createComponentStrategy.createComponent(this, uiComponent, parent);
         } else {
             if (uiComponent['type'] == 'card') {
-                this.setStrategy(new CardStrategy(basex, basey));
+                this.setStrategy(new CardStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'breadcrumb') {
-                this.setStrategy(new BreadcrumbStrategy(basex, basey));
+                this.setStrategy(new BreadcrumbStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'form') {
-                this.setStrategy(new FormStrategy(basex, basey));
-            } const compositeVertexStorage = this.createComponentStrategy.createComponent(this, uiComponent, parent);
+                this.setStrategy(new FormStrategy(geometry, restoreMode));
+            } 
+            const compositeVertexStorage = this.createComponentStrategy.createComponent(this, uiComponent, parent);
             return compositeVertexStorage;
         }
     }

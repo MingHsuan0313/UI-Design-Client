@@ -7,20 +7,12 @@ import { UIComponent } from "../../ui-component-dependency";
 import { DropdownComponent } from "../../internalRepresentation/DropdownComponent.model";
 import { SelabVertex } from "../selabVertex.model";
 
-export class DropdownStrategy implements ICreateComponentStrategy {
-  basex: number;
-  basey: number;
+export class DropdownStrategy extends ICreateComponentStrategy {
 
-  constructor(basex?, basey?) {
-    // basic component
-    if (basex == undefined || basey == undefined) {
-      this.basex = 50;
-      this.basey = 50;
-    } else {
-      this.basex = basex;
-      this.basey = basey;
-    }
+  constructor(geometry?, restoreMode?) {
+    super(geometry, restoreMode);
   }
+
 
   // part: like Box,Header,ItemList,Item...etc
   createDataBinding(part: String, index?) {

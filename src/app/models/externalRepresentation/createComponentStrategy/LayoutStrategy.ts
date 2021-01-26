@@ -7,26 +7,20 @@ import { LayoutComponent } from "../../internalRepresentation/LayoutComponent.mo
 import { SelabVertex } from "../selabVertex.model";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 
-export class LayoutStrategy implements ICreateComponentStrategy {
-  basex: number;
-  basey: number;
+export class LayoutStrategy extends ICreateComponentStrategy {
+
   graphNode: HTMLElement;
   defaultWidth: number;
   defaultHeight: number;
 
-  constructor(basex, basey, graphID: string) {
+
+  constructor(graphID: string, geometry?, restoreMode?) {
+    super(geometry, restoreMode);
     this.graphNode = document.getElementById(graphID);
     this.defaultWidth = this.graphNode.offsetWidth - 25;
     this.defaultHeight = this.graphNode.offsetHeight - 15;
-    // basic component
-    if (basex == undefined || basey == undefined) {
-      this.basex = 0;
-      this.basey = 0;
-    } else {
-      this.basex = basex;
-      this.basey = basey;
-    }
   }
+
   
   createLayout(selabEditor: SelabEditor,bodyComponent: LayoutComponent) {
     console.log("create body");

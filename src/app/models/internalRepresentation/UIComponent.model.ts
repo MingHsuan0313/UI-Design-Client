@@ -6,12 +6,13 @@ export class UIComponent {
   public id: string;
   public selector: string;
   public category: string;
-  public  style: {};
+  public style: {};
   public geometry: {};
   public type: string;
   public name: string;
   public serviceComponent: IServiceEntry;
   
+
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     this.name = uiComponentBuilder.name;
     this.id = uiComponentBuilder.id;

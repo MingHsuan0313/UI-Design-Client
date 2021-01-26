@@ -2,17 +2,23 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Storage } from '../../shared/storage';
-import { TextComponent } from '../../models/ui-component-dependency';
+import { TextComponent, UIComponent } from '../../models/ui-component-dependency';
 import { PropertyGenerator } from '../../shared/property-generator';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import ImportService from '../../services/internalRepresentation/import.service';
 import ExportService from '../../services/internalRepresentation/export.service';
+import IRTransformer from '../../services/internalRepresentation/IRTransformer.service'
 import { MatDialog,
   MatDialogConfig,
   MatSnackBar,
   MatSnackBarVerticalPosition } from '@angular/material';
 import { SelabWizardComponent } from '../selab-wizard/selab-wizard.component';
+import { AppState } from 'src/app/models/store/app.state';
+import { Store } from '@ngrx/store';
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRRenamePageAction } from 'src/app/models/store/actions/internalRepresentation.action';
+import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model';
+import { pageUICDLSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
 
 @Component({
   selector: 'selab-header',
@@ -48,7 +54,9 @@ export class SelabHeaderComponent implements OnInit {
     private graphEditorService: GraphEditorService,
     private importService: ImportService,
     private exportService: ExportService,
+    private IRTransformerService: IRTransformer,
     private snackBar: MatSnackBar,
+    private store: Store<AppState>,
     public wizard: MatDialog) {
 
   }
@@ -184,6 +192,34 @@ export class SelabHeaderComponent implements OnInit {
         disableClose: true,
         autoFocus: true
       });
+    }
+  }
+
+  uploadPageUICDL($event){
+    let selectedFile = $event.target.files[0]
+    const fileReader = new FileReader();
+    fileReader.readAsText(selectedFile, "UTF-8");
+    fileReader.onload = () => {
+     let pageUICDLObject = JSON.parse(fileReader.result);
+     let graphID = this.graphEditorService.getSelectedGraphID();
+     let pageUICDL = new PageUICDL(parseInt(graphID));
+     Object.assign(pageUICDL, pageUICDLObject);
+     this.store.dispatch(new IRDeletePageUICDLAction(graphID));
+     console.log(pageUICDL)
+     console.log(this.store.select(pageUICDLSelector()))
+     pageUICDL.setId(graphID); 
+     this.store.dispatch(new IRInsertPageUICDLAction(pageUICDL));
+     let uiComponentList = this.IRTransformerService.transform(pageUICDL, this.graphEditorService.getGraph());
+     this.applyLayout("prime")
+     uiComponentList.forEach(
+       uiComponent => {
+         console.log(uiComponent)
+         this.graphEditorService.bindComponent(uiComponent, uiComponent.geometry);
+       }
+     )
+    }
+    fileReader.onerror = (error) => {
+      console.log(error);
     }
   }
 

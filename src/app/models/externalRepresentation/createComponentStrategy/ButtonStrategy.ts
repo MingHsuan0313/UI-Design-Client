@@ -6,20 +6,13 @@ import { SelabEditor } from "../selab-editor.model";
 import { ButtonComponent } from "../../ui-component-dependency";
 import { SelabVertex } from "../selabVertex.model";
 
-export class ButtonStrategy implements ICreateComponentStrategy {
-  basex: number;
-  basey: number;
+export class ButtonStrategy extends ICreateComponentStrategy {
 
-  constructor(basex?, basey?) {
-    // basic component
-    if (basex == undefined || basey == undefined) {
-      this.basex = 0;
-      this.basey = 0;
-    } else {
-      this.basex = basex;
-      this.basey = basey;
-    }
+
+  constructor(geometry?, restoreMode?) {
+    super(geometry, restoreMode);
   }
+
 
   createDataBinding(part: String, index?){
     let dataBindingName = "text";

@@ -64,6 +64,11 @@ export default class GraphEditorService {
     return this.selectedEditor.getGraphView();
   }
 
+  setGraphModel(graphModel: mxGraphModel){
+    this.selectedEditor.setGraphModel(graphModel);
+    this.selectedEditor.editor.graph.refresh();
+  }
+
   zoomTo(zoomFactor: any) {
     let graph = this.getGraph();
     graph.zoomTo(zoomFactor,graph.centerZoom);
@@ -76,17 +81,17 @@ export default class GraphEditorService {
     let pageID = "page" + this.selectedGraphID;
   }
 
-  bindComponent(component, x?, y?) {
-    if (x === undefined || y === undefined) {
+  bindComponent(component, geometry?) {
+    const parent = this.selectedEditor.getGraph().getDefaultParent();
+    if (geometry == undefined) {
       // const parent = this.selectedGraphStorage.getGraph().getDefaultParent();
       // this.selectedGraphStorage.createComponent(component, parent);
-      const parent = this.selectedEditor.getGraph().getDefaultParent();
-      this.selectedEditor.createComponent(component,parent);
-
-    } else {
-      const parent = this.selectedGraphStorage.getGraph().getDefaultParent();
-      this.selectedGraphStorage.createComponent(component, parent, x, y);
+        this.selectedEditor.createComponent(component,parent);
+    }else{
+        this.selectedEditor.createComponent(component, parent, geometry, true);
     }
+
+
   }
 
   applyLayout(layout: string) {

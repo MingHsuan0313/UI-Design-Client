@@ -14,10 +14,23 @@
 
 <mat-menu #fileMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item (click)="save()">Save All</button>
-  <button mat-menu-item>Import</button>
+  <button mat-menu-item [matMenuTriggerFor]="importMenu">Import</button>
   <button mat-menu-item [matMenuTriggerFor]="exportMenu">Export</button>
 </mat-menu>
 
+
+
+<mat-menu #importMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item (click)="uploader.click()" matTooltip="Upload a page description language File">Upload File</button>
+  <button mat-menu-item  matTooltip="Retrive data from database">Database</button>
+</mat-menu>
+
+<input 
+    hidden 
+    type="file" 
+    #uploader
+    (change)="uploadPageUICDL($event)"
+/>
 
 <mat-menu #exportMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item (click)="storePDL()" matTooltip="Page Description Language">PDL</button>

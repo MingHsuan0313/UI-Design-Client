@@ -30,6 +30,7 @@ import { HttpParams } from '@angular/common/http';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 import { CodeEditorComponent } from '../code-editor/code-editor.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
+import { GraphConfiguration } from './selab-graph-editor.config'
 
 
 @Component({
@@ -160,6 +161,8 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   configure() {
     let graph = this.graphEditorService.getGraph()
     let graphID = this.graphEditorService.getSelectedGraphID();
+    graph.extendParentsOnAdd = false;
+    graph.constrainChildren = false;
     this.setting.configureStyleEditor();
     graph.addListener(mxEvent.CLICK, (sender, event) => {
       this.setting.clear();
@@ -218,6 +221,9 @@ export class SelabGraphEditorComponent implements AfterViewInit {
           })
       }) 
     })
+
+    GraphConfiguration.configConnectToolTipListener(graph);
+  
   }
 
   onTabChange(event) {

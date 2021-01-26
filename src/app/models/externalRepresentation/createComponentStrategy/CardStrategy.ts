@@ -7,21 +7,11 @@ import { SelabEditor } from "../selab-editor.model";
 import { CardComponent } from "../../ui-component-dependency";
 
 
-export class CardStrategy implements ICreateComponentStrategy {
-  strategyName: string;
-  basex: number;
-  basey: number;
+export class CardStrategy extends ICreateComponentStrategy {
 
-  constructor(basex?, basey?) {
-    // basic component
-    if (basex == undefined || basey == undefined) {
-      this.basex = 0;
-      this.basey = 0;
-    } else {
-      this.basex = basex;
-      this.basey = basey;
-    }
-    this.strategyName = "Card Strategy";
+
+  constructor(geometry?, restoreMode?) {
+    super(geometry, restoreMode);
   }
 
   // part: Box , Header
@@ -88,22 +78,30 @@ export class CardStrategy implements ICreateComponentStrategy {
   createComponent(selabEditor: SelabEditor, component: CardComponent, parent:mxCell) {
     let cardBoxVertex = this.createCardBoxVertex(selabEditor, component, parent);
     let cardHeaderVertex = this.createCardHeaderVertex(selabEditor, component, cardBoxVertex);
-
-    let p1 = 50;
-    let p2 = 70;
+    let subComponentXOffset = 15;
+    let subComponentYOffset = 40;
     let maxWidth = 250;
+
     for (const subUIComponent of component["componentList"]) {
-      let vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, p1, p2);
-      if (vertex["geometry"].width > maxWidth) {
-        maxWidth = vertex["geometry"].width;
+      let vertex
+      if(subUIComponent.geometry.x == 0 && subUIComponent.geometry.y == 0){
+        vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, subComponentXOffset, subComponentYOffset);
+        if (vertex["geometry"].width > maxWidth) {
+          maxWidth = vertex["geometry"].width;
+        }
+        subComponentYOffset = subComponentYOffset + vertex["geometry"].height + 10;
+      }else{
+          vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, subUIComponent.x, subUIComponent.y, subUIComponent.width, subUIComponent.height)
       }
-      p2 = p2 + vertex["geometry"].height + 10;
       // cardBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
     }
+    if(!this.isGivenWidthHeight){
+      let newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth + 50, subComponentYOffset);
+      cardBoxVertex.setGeometry(newmxGeometry);
+      selabEditor.getGraph().refresh();
+    }
 
-    let newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth + 50, p2);
-    cardBoxVertex.setGeometry(newmxGeometry);
-    selabEditor.getGraph().refresh();
+
     // component["x"] = cardBoxVertexStorage.getVertexX();
     // component["y"] = cardBoxVertexStorage.getVertexX();
     // component["width"] = cardBoxVertexStorage.getVertexWidth();

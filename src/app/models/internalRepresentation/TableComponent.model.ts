@@ -8,12 +8,15 @@ export class TableComponent extends BasicComponent {
   headers: string;
   rows: string;
 
-  constructor(uiComponentBuilder: UIComponentBuilder) {
-    super(uiComponentBuilder);
-    let properties = uiComponentBuilder.getProperties();
-    if (properties != undefined) {
-      this.headers = properties["headers"];
-      this.rows = properties["rows"];
+  constructor();
+  constructor(uiComponentBuilder?: UIComponentBuilder) {
+    if(uiComponentBuilder){
+      super(uiComponentBuilder);
+      let properties = uiComponentBuilder.getProperties();
+      if (properties != undefined) {
+        this.headers = properties["headers"];
+        this.rows = properties["rows"];
+      }
     }
   }
 

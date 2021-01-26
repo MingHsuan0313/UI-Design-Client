@@ -7,19 +7,10 @@ import { SelabEditor } from "../selab-editor.model";
 import { SelabVertex } from "../selabVertex.model";
 
 
-export class TextStrategy implements ICreateComponentStrategy {
-  basex: number;
-  basey: number;
+export class TextStrategy extends ICreateComponentStrategy {
 
-  constructor(basex?, basey?) {
-    // basic component
-    if (basex == undefined || basey == undefined) {
-      this.basex = 0;
-      this.basey = 0;
-    } else {
-      this.basex = basex;
-      this.basey = basey;
-    }
+  constructor(geometry?, restoreMode?) {
+    super(geometry, restoreMode);
   }
 
   createDataBinding(part) {
@@ -43,9 +34,11 @@ export class TextStrategy implements ICreateComponentStrategy {
     } else {
       style = Object.assign(style, StyleLibrary[0]["text"]["text_black"]);
     }
-
-    let width = (component.text.length) * 12;
-    let textGeometry = new mxGeometry(this.basex, this.basey, width, 50);
+    if(!this.restoreMode){
+      this.width = (component.text.length) * 12;
+      this.height = 50;
+    }
+    let textGeometry = new mxGeometry(this.basex, this.basey, this.width, this.height);
     let selabVertex = new SelabVertex(component.getId(),component.getId(),parent.id)
     let id = (parseInt(component.getId())).toString();
     selabVertex = selabVertex 

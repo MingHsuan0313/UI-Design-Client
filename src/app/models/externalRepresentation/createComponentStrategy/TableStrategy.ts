@@ -6,21 +6,13 @@ import { SelabEditor } from "../selab-editor.model";
 import { TableComponent } from "../../internalRepresentation/TableComponent.model";
 import { SelabVertex } from "../selabVertex.model";
 
-export class TableStrategy implements ICreateComponentStrategy {
-  basex: number;
-  basey: number;
+export class TableStrategy extends ICreateComponentStrategy {
+
   gridWidth: number;
   gridHeight: number;
 
-  constructor(basex?, basey?) {
-    // basic component
-    if (basex == undefined || basey == undefined) {
-      this.basex = 0;
-      this.basey = 0;
-    } else {
-      this.basex = basex;
-      this.basey = basey;
-    }
+  constructor(geometry?, restoreMode?) {
+    super(geometry, restoreMode);
     this.gridWidth = 150;
     this.gridHeight = 40;
   }
