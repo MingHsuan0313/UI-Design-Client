@@ -16,7 +16,7 @@ export class LayoutStrategy extends ICreateComponentStrategy {
 
   constructor(graphID: string, geometry?, restoreMode?) {
     super(geometry, restoreMode);
-    this.graphNode = document.getElementById(graphID);
+    this.graphNode = document.getElementById('graph-container');
     this.defaultWidth = this.graphNode.offsetWidth - 25;
     this.defaultHeight = this.graphNode.offsetHeight - 15;
   }

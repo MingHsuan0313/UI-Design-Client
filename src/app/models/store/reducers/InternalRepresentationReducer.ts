@@ -15,9 +15,10 @@ class InternalRepresentationReducer {
     @Action
     public setProjectName(store: InternalRepresentation, action: IRSetProjectNameAction): InternalRepresentation {
         store = {...store};
-        let firstPageGraphID = "graphContainer-0";
-        store.pageUICDLs = {...store.pageUICDLs};
-        store.pageUICDLs[firstPageGraphID] = {...store.pageUICDLs[firstPageGraphID],"projectName":action.projectName}
+        store.projectName = action.projectName;
+        // let firstPageGraphID = "graphContainer-0";
+        // store.pageUICDLs = {...store.pageUICDLs};
+        // store.pageUICDLs[firstPageGraphID] = {...store.pageUICDLs[firstPageGraphID],"projectName":action.projectName}
         return store;
     }
 

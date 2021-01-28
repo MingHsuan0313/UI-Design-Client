@@ -260,10 +260,10 @@ export class SelabGraphEditorComponent implements AfterViewInit {
 
 
   ngOnInit() {
-    setTimeout(() => {
-      this.createGraph("graphContainer-0",true);
-      this.store.dispatch(new IRRenamePageAction("graphContainer-0","imsMain"))
-    },500)
+    // setTimeout(() => {
+    //   this.createGraph("graphContainer-0",true);
+    //   this.store.dispatch(new IRRenamePageAction("graphContainer-0","imsMain"))
+    // },500)
   }
 
   saveAs(uri, filename) {

@@ -22,9 +22,9 @@ export class PageUICDL {
     public footer: LayoutComponent;
     public asidebar: LayoutComponent;
 
-    constructor(id: number) {
-        this.id = id.toString();
-        this.selector = `page${id}`;
+    constructor(id: string) {
+        this.id = id;
+        this.selector = id;
         this.category = "page";
         this.layout = "";
         this.style = {};

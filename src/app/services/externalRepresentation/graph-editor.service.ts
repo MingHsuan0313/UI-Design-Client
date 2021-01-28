@@ -5,7 +5,12 @@ import { AppState } from "src/app/models/store/app.state";
 import { Action, Store } from "@ngrx/store";
 import { SelabEditor } from "src/app/models/externalRepresentation/selab-editor.model";
 import { UIComponent } from "src/app/models/ui-component-dependency";
-import { IRSyncWithERAction } from "src/app/models/store/actions/internalRepresentation.action";
+import { IRInsertPageUICDLAction, IRRenamePageAction, IRSyncWithERAction } from "src/app/models/store/actions/internalRepresentation.action";
+import { element } from "@angular/core/src/render3/instructions";
+import { PageUICDL } from "src/app/models/internalRepresentation/pageUICDL.model";
+import { SelabPageModel } from "./selab-page.model";
+import { ERInsertGraphStorageAction } from "src/app/models/store/actions/externalRepresentation.action";
+import { SelabGraph } from "src/app/models/externalRepresentation/selabGraph.model";
 
 @Injectable({
   providedIn: "root"
@@ -15,6 +20,8 @@ export default class GraphEditorService {
   // selectedEditor: SelabEditor;
   selectedUIComponent: UIComponent;
   editor: SelabEditor;
+  pageStorage: SelabPageModel[];
+  selectedPageId: string;
 
   constructor(private styleEditorService: StyleEditorService,
     private store: Store<AppState>
@@ -24,8 +31,11 @@ export default class GraphEditorService {
       // this.editors = new Map();
       let element = document.getElementById('graph-container');
       this.editor = new SelabEditor(element, this.store, this);
+      this.pageStorage = []
+      this.createPage();
     }, 500)
   }
+
 
   isModified(graphID: string) {
     // if (this.editors == undefined)
@@ -41,11 +51,22 @@ export default class GraphEditorService {
   }
 
   getSelectedGraphID(): string {
-    return this.editor.id;
+    return this.selectedPageId;
   }
 
   createPage() {
-
+    console.log('create page')
+    let uuid = require('uuid');
+    let pageId = `${this.editor.id}-${uuid.v1()}`;
+    let newPage = new PageUICDL(pageId);
+    if(this.pageStorage.length == 0)
+      newPage.isMain = true
+    else
+      newPage.isMain = false
+    this.store.dispatch(new IRInsertPageUICDLAction(newPage));
+    this.store.dispatch(new IRRenamePageAction(pageId, 'newpage'));
+    this.store.dispatch(new ERInsertGraphStorageAction(new SelabGraph(pageId)))
+    this.setSelectedPage(pageId);
   }
 
   deletePage(pageId: string) {
@@ -53,7 +74,7 @@ export default class GraphEditorService {
   }
 
   setSelectedPage(pageId: string) {
-
+    this.selectedPageId = pageId;
   }
 
   // setSelectedEditor(editorID: string) {

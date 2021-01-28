@@ -12,6 +12,7 @@ export interface AppState {
 // using graphID find PageUICDL
 export class InternalRepresentation {
     pageUICDLs: Map<string,PageUICDL>;
+    projectName: string;
     constructor() {
         this.pageUICDLs = new Map<string,PageUICDL>();
 

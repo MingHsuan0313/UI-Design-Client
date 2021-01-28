@@ -65,7 +65,10 @@ export class SelabEditor {
         this.setStrategy(new LayoutStrategy(graphID, new mxGeometry(0,0,0,0)));
         let pageUICDLs = this.store.select(pageUICDLSelector());
         pageUICDLs.subscribe((data) => {
-            let id = this.graphEditorService.getSelectedGraphID();
+            console.log('here');
+            console.log(data)
+            console.log(graphID)
+            let id = graphID;
             console.log(data[id]);
             (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this, data[id]);
         });
@@ -96,10 +99,10 @@ export class SelabEditor {
     }
 
     createComponent(uiComponent: UIComponent, parent: mxCell, geometry?, restore?) {
-        let graphID = this.graphEditorService.getSelectedGraphID();
+        // let graphID = this.graphEditorService.getSelectedGraphID();
         console.log("create Component")
-        console.log(graphID)
-        const graphNode = document.getElementById(graphID);
+        // console.log(graphID)
+        const graphNode = document.getElementById('graph-container');
         const defaultWidth = graphNode.offsetWidth;
         const defaultHeight = graphNode.offsetHeight;
         const restoreMode = restore == undefined ? false : restore;
