@@ -12,15 +12,13 @@ import { ICreateComponentStrategy } from "./createComponentStrategy/ICreateCompo
 export class SelabEditor {
     editor: mxEditor;
     id: string;
-    store: Store<AppState>
     createComponentStrategy: ICreateComponentStrategy;
 
     constructor(element: HTMLElement,
-        store: Store<AppState>,
+        private store: Store<AppState>,
         private graphEditorService: GraphEditorService) {
         this.initializeEditor(element, "assets/keyhandler.xml");
         this.id = element.id;
-        this.store = store;
     }
 
     initializeEditor(element: HTMLElement, configurePath: string): void {
@@ -60,17 +58,21 @@ export class SelabEditor {
     }
 
     applyLayout(layout: string) {
+        let active = true;
         console.log("apply Layout")
         let graphID = this.graphEditorService.getSelectedGraphID();
         this.setStrategy(new LayoutStrategy(graphID, new mxGeometry(0,0,0,0)));
         let pageUICDLs = this.store.select(pageUICDLSelector());
         pageUICDLs.subscribe((data) => {
+            if(active == false)
+                return;
             console.log('here');
             console.log(data)
             console.log(graphID)
             let id = graphID;
             console.log(data[id]);
             (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this, data[id]);
+            active = false;
         });
 
     }
@@ -84,7 +86,7 @@ export class SelabEditor {
         try {
             this.getGraph().getModel().beginUpdate();
             vertex = this.getGraph()
-                .insertVertex(parent, id, value,
+                .insertVertex(parent, 0, value,
                     geometry.x, geometry.y, geometry.width, geometry.height,
                     styleDescription, "")
             vertex["selector"] = component.selector;

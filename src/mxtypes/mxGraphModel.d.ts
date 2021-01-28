@@ -12,4 +12,5 @@ declare class mxGraphModel {
   clear();
   getDefaultParent();
   getChildCount(cell);
+  addCell(cell, parent, index, source?, target?);
 }

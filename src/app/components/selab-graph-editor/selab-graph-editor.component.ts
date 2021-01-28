@@ -39,6 +39,7 @@ import { GraphConfiguration } from './selab-graph-editor.config'
   styleUrls: ['./selab-graph-editor.component.scss']
 })
 export class SelabGraphEditorComponent implements AfterViewInit {
+  selectedPageId: string;
   private zoomFactor = 1;
   public tabs: TabModel[] = [new TabModel("imsMain", "graphContainer-0")];
   selected = new FormControl(0);
@@ -61,6 +62,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   showExternalRepresentation() {
     console.log(this.graphEditorService.getGraph());
     this.openSnackBar("show GraphModel in console", "display");
+    console.log(this.graphEditorService.pageStorage);
   }
 
   isModified(graphID: string) {
@@ -132,17 +134,28 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   addPage() {
-    let graphID = `${this.findUniquePageID()}`
+    this.graphEditorService.createPage();
+    // let graphID = `${this.findUniquePageID()}`
 
-    let pageID = parseInt(graphID.split('-')[1]);
-    this.tabs.push(new TabModel(`page-${pageID}`, graphID));
-    this.selected.setValue(this.tabs.length - 1);
+    // let pageID = parseInt(graphID.split('-')[1]);
+    // this.tabs.push(new TabModel(`page-${pageID}`, graphID));
+    // this.selected.setValue(this.tabs.length - 1);
 
-    setTimeout(() => {
-      this.createGraph(graphID,false);
-      this.graphEditorService.setSelectedEditor(graphID);
+    // setTimeout(() => {
+    //   this.createGraph(graphID,false);
+    //   this.graphEditorService.setSelectedEditor(graphID);
+    // }
+    //   , 500);
+  }
+
+  changePage(index) {
+    let currentPageId = this.graphEditorService.selectedPageId;
+    if(this.graphEditorService.pageStorage[index].pageId == currentPageId)
+      return
+    else {
+      let targetPageId = this.graphEditorService.pageStorage[index].pageId;
+      this.graphEditorService.changePage(currentPageId, targetPageId);
     }
-      , 500);
   }
 
   createGraph(elementId,isMain:boolean) {

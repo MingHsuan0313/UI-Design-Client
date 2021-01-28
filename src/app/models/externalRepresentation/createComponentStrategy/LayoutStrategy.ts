@@ -31,13 +31,11 @@ export class LayoutStrategy extends ICreateComponentStrategy {
     const layoutGeometry = new mxGeometry(0, 0, this.defaultWidth, this.defaultHeight);
     // this.layout = selabEditor.insertVertex(parent, null, "", layoutGeometry, styleStorage, bodyComponent);
     let id = (parseInt(bodyComponent.id)).toString();
-    console.log("dddd")
     let selabVertex = new SelabVertex()
       .setID(bodyComponent.selector + "-" + id)
       .setUIComponentID(bodyComponent.id)
       .setParentID(parent.id)
       .setIsPrimary(true);
-    console.log("eeee")
 
     let layoutBodyCell = selabEditor.insertVertex(selabVertex, bodyComponent, layoutGeometry, style);
     layoutBodyCell["componentPart"] = "box";

@@ -125,6 +125,7 @@ declare class mxGraph {
   collapseExpandResource;
   getTooltipForCell(cell);
   init(container);
+  cellsRemoved(mxCells);
   createHandlers(container);
   createSelectionModel();
   createStylesheet();

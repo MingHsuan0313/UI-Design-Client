@@ -1,11 +1,21 @@
 export class SelabPageModel {
-    cellStorage: Map<string, mxCell>;
+    cellStorage: {};
     pageId: string;
+    name: string;
 
-    savePage(mxCells) {
-        for(let key in mxCells) {
-            this.cellStorage.set(mxCells[key].id, mxCells[key]);
-        }
+    constructor(pageId: string) {
+        this.cellStorage = {};
+        this.pageId = pageId;
+        this.name = "newPage";
+    }
+
+    changePageName(newName: string) {
+        this.name = newName;
+    }
+
+    savePage(model: mxGraphModel) {
+        this.cellStorage = {};
+        this.cellStorage = model.cells;
     }
 
     loadPage() {
