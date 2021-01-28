@@ -35,18 +35,18 @@ export class ComponentInfoComponent implements OnInit {
   hasChild = (_: number, _nodeData: FileFlatNode) => _nodeData.expandable;
 
   ngOnInit() {
-    let editors = this.graphEditorServive.editors; 
-    editors.forEach((editor: SelabEditor,key: string)  => {
-      let grpah = editor.getGraph();
-      grpah.addListener(mxEvent.CLICK, (sender, event) => {
-        let selectedVertex = sender.selectionModel.cells[0];
+    // let editors = this.graphEditorServive.editors; 
+    // editors.forEach((editor: SelabEditor,key: string)  => {
+    //   let grpah = editor.getGraph();
+    //   grpah.addListener(mxEvent.CLICK, (sender, event) => {
+    //     let selectedVertex = sender.selectionModel.cells[0];
 
-        // console.log('grpah being click')
-        // console.log(this);
-        // console.log('vertex being click');
-        // console.log(selectedVertex);
-      })
-    })
+    //     // console.log('grpah being click')
+    //     // console.log(this);
+    //     // console.log('vertex being click');
+    //     // console.log(selectedVertex);
+    //   })
+    // })
   }
   
   test() {
