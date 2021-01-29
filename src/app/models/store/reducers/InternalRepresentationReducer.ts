@@ -24,15 +24,24 @@ class InternalRepresentationReducer {
 
     @Action
     public syncWithER(store: InternalRepresentation, action: IRSyncWithERAction): InternalRepresentation {
+        console.log("action hereeeee")
         store = { ...store };
         let graphModel = action.graphModel;
         console.log("syncWithER")
         console.log(graphModel);
         store = { ...store };
+        console.log('stage1')
         store.pageUICDLs = { ...store.pageUICDLs };
+        console.log('stage2')
         store.pageUICDLs[action.id] = { ...store.pageUICDLs[action.id] };
+        console.log('stage3')
         store.pageUICDLs[action.id].body = { ...store.pageUICDLs[action.id].body };
+        console.log('stage4')
+        console.log(store.pageUICDLs[action.id].body.componentList)
+        if(store.pageUICDLs[action.id].body.componentList == undefined)
+            return store;
         store.pageUICDLs[action.id].body.componentList = [...store.pageUICDLs[action.id].body.componentList];
+        console.log('stage5')
         let componentLength = store.pageUICDLs[action.id].body.componentList.length;
 
         console.log("cell size: " + graphModel.length);
@@ -41,7 +50,7 @@ class InternalRepresentationReducer {
             let cell = graphModel[j];
             console.log("cell below")
             console.log(cell);
-            if(cell["isPrimary"] == undefined) {
+            if(cell["isPrimary"] == undefined || cell["componentID"] == undefined) {
                 continue;
             }
             for (let index = 0; index < componentLength; index++) {

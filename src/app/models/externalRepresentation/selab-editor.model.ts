@@ -61,6 +61,7 @@ export class SelabEditor {
         let active = true;
         console.log("apply Layout")
         let graphID = this.graphEditorService.getSelectedGraphID();
+        // let graphID = "graph-container";
         this.setStrategy(new LayoutStrategy(graphID, new mxGeometry(0,0,0,0)));
         let pageUICDLs = this.store.select(pageUICDLSelector());
         pageUICDLs.subscribe((data) => {
@@ -71,6 +72,9 @@ export class SelabEditor {
             console.log(graphID)
             let id = graphID;
             console.log(data[id]);
+            console.log(active);
+            if(graphID == undefined)
+                return;
             (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this, data[id]);
             active = false;
         });
