@@ -199,7 +199,7 @@ declare class mxGraph {
   addCells(cells, parent, index, source, target);
   cellsAdded(cells, parent, index, source, target, absolute, constrain);
   autoSizeCell(cell, recurse);
-  removeCells(cells, includeEdges);
+  removeCells(cells, includeEdges?);
   cellsRemoved(cells);
   splitEdge(edge, cells, newEdge, dx, dy);
   toggleCells(show, cells, includeEdges);

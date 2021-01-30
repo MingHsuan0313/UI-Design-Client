@@ -18,6 +18,9 @@
         <button (click)="clearGraph()" mat-button style="min-width: 10px;" matTooltip="clear page">
             <mat-icon style="margin-bottom:10px ;" svgIcon="delete"></mat-icon>
         </button>
+        <button (click)="navigation()" mat-button style="min-width: 10px;" matTooltip="do navigation">
+            <mat-icon style="margin-bottom:10px ;" svgIcon="navigation"></mat-icon>
+        </button>
     </mat-toolbar-row>
 </mat-toolbar>
 
@@ -34,10 +37,11 @@
 <div style="background-color:rgb(241, 241, 241);height:790px; overflow:scroll; padding-left:10px" class="geEditor"
     id="graph-container">
 </div>
-<mat-tab-group>
-    <mat-tab *ngFor="let page of graphEditorService.pageStorage; let index = index" label="{{page.name}}">
+<mat-tab-group #tabGroup [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)" (selectedTabChange)="changePage($event)">
+    <mat-tab style="display:none"></mat-tab>
+    <mat-tab *ngFor="let page of pages; let index = index" label="{{page.name}}">
         <ng-template mat-tab-label>
-            <span (click)="changePage(index)" (dblclick)="changeTabName(index)" style="font-size: large; color:#188038 !important"> {{page.name}}
+            <span id="tab-{{index}}" (dblclick)="changeTabName(index)" style="font-size: large; color:#188038 !important"> {{page.name}}
             </span>
             <!-- <span *ngIf="isModified(tab.graphID) == true" style="margin-left:10px; font-weight:10px;">*</span> -->
             <button (click)="closePage(index)" mat-button style="min-width: 10px;" matTooltip="close">
