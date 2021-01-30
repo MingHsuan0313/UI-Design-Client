@@ -39,20 +39,20 @@ export class TextStrategy extends ICreateComponentStrategy {
       this.height = 50;
     }
     let textGeometry = new mxGeometry(this.basex, this.basey, this.width, this.height);
-    let selabVertex = new SelabVertex(component.getId(),component.getId(),parent.id)
-    let id = (parseInt(component.getId())).toString();
+    let selabVertex = new SelabVertex(component.id,component.id,parent.id)
+    let id = (parseInt(component.id)).toString();
     selabVertex = selabVertex 
                     .setID(id)
                     .setIsPrimary(true)
-                    .setValue(component.getValue())
+                    .setValue(component.text)
                     .setDataBinding(dataBinding);
 
     let textCell = selabEditor.insertVertex(selabVertex,component,textGeometry,style);
-    console.log(textCell)
+    // console.log(textCell)
     textCell["componentPart"] = "box";
     textCell["dataBinding"] = this.createDataBinding("box");
     textCell["isPrimary"] = true;
-    textCell["componentID"] = component.getId();
+    textCell["componentID"] = component.id;
     selabEditor.getGraph().refresh();
 
     return textCell;

@@ -22,19 +22,19 @@ export class InputStrategy extends ICreateComponentStrategy {
     const textGeometry = new mxGeometry(this.basex, this.basey, this.width, this.height);
 
 
-    let selabVertex = new SelabVertex(component.getId(),component.getId(),parent.id);
+    let selabVertex = new SelabVertex(component.id,component.id,parent.id);
     selabVertex = selabVertex
                     .setIsPrimary(true)
                     .setValue(component.description)
                     
-    console.log("description heree " + component.description)
-    console.log(component);
+    // console.log("description heree " + component.description)
+    // console.log(component);
 
     let inputTextCell = selabEditor.insertVertex(selabVertex,component,textGeometry,style);
     inputTextCell["componentPart"] = "box";
     inputTextCell["dataBinding"] = this.createDataBinding("box");
     inputTextCell["isPrimary"] = true;
-    inputTextCell["componentID"] = component.getId();
+    inputTextCell["componentID"] = component.id;
     return inputTextCell;
   }
 

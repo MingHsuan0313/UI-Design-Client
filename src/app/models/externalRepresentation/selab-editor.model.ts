@@ -63,9 +63,9 @@ export class SelabEditor {
         this.createComponentStrategy = strategy;
     }
 
-    applyLayout(layout: string) {
+    applyLayout(layout: string, xOffset?, yOffset?) {
         let active = true;
-        console.log("apply Layout")
+        // console.log("apply Layout")
         let graphID = this.graphEditorService.getSelectedGraphID();
         this.store.dispatch(new IRSetLayoutAction(graphID, layout));
         // let graphID = "graph-container";
@@ -80,7 +80,6 @@ export class SelabEditor {
             (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this, data[id]);
             active = false;
         });
-
     }
 
     insertVertex(selabVertex: SelabVertex, component: UIComponent, geometry: mxGeometry, style: object): mxCell {
@@ -106,9 +105,9 @@ export class SelabEditor {
         return vertex;
     }
 
-    createComponent(uiComponent: UIComponent, parent: mxCell, geometry?, restore?) {
+    createComponent(uiComponent: UIComponent, parent: mxCell, geometry?, restore?, xOffset?, yOffser?) {
         // let graphID = this.graphEditorService.getSelectedGraphID();
-        console.log("create Component")
+        // console.log("create Component")
         // console.log(graphID)
         const graphNode = document.getElementById('graph-container');
         const defaultWidth = graphNode.offsetWidth;

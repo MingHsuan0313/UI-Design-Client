@@ -13,6 +13,8 @@ import { ERInsertGraphStorageAction } from "src/app/models/store/actions/externa
 import { SelabGraph } from "src/app/models/externalRepresentation/selabGraph.model";
 import { pageUICDLSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
 import IRTransformer from "../internalRepresentation/IRTransformer.service";
+import { MatDialog } from "@angular/material";
+import { LayoutStrategy } from "src/app/models/externalRepresentation/component-strategy-dependency";
 
 @Injectable({
   providedIn: "root"
@@ -25,17 +27,20 @@ export default class GraphEditorService {
   selectedPageId: string;
   backgroundCells: {};
   pages: string[]; // store all page name
+  inNavigation: boolean;
 
 
   constructor(private styleEditorService: StyleEditorService,
     private store: Store<AppState>,
-    private IRTransformerService: IRTransformer
+    private IRTransformerService: IRTransformer,
+    private dialog: MatDialog
   ) {
+    this.inNavigation = false;
     setTimeout(() => {
       this.pages = [];
       this.selectedUIComponent = undefined;
       let element = document.getElementById('graph-container');
-      this.editor = new SelabEditor(element, this.store, this);
+      this.editor = new SelabEditor(element, this.store, this, this.dialog);
       this.backgroundCells = this.getGraphModel().cells;
       let pageId = this.createPage("ImsMain");
       this.selectedPageId = pageId;
@@ -70,12 +75,57 @@ export default class GraphEditorService {
   }
 
   navigation() {
+    console.log(this.inNavigation)
+    if(this.inNavigation == true)
+      return;
+    this.inNavigation = true;
     this.syncStorage();
     this.clearGraphModel();
     this.selectedPageId = "navigation";
+    let pageUICDLs = this.store.select(pageUICDLSelector());
+    pageUICDLs.subscribe((pages) => {
+      let keys = Object.keys(pages);
+
+      let xOffset = 0;
+      let yOffset = 0;
+      for (let index = 0; index < keys.length; index++) {
+        let key = keys[index];
+        let page = pages[key];
+        console.log(page);
+        if(page['layout'].length > 0) {
+          // this.applyLayout(page['layout'], xOffset, yOffset);
+          let layoutStrategy = new LayoutStrategy("graph-container", new mxGeometry(0,0,0,0)).setOffset(xOffset, yOffset);
+          layoutStrategy.createLayoutComponent(this.editor, page);
+        }
+        let uiComponentList = this.IRTransformerService.transform(page,this.editor.getGraph());
+        // this.applyLayout("prime")
+        uiComponentList.forEach(
+          uiComponent => {
+            let copyComponent = {};
+            copyComponent = JSON.parse(JSON.stringify(uiComponent));
+            copyComponent["geometry"]["x"] = copyComponent["geometry"]["x"] + xOffset;
+            this.bindComponent(copyComponent , copyComponent['geometry']);
+          }
+        )
+        let offset = document.getElementById('graph-container').offsetWidth;
+        xOffset = xOffset + offset;
+      }
+    })
+    this.getGraph().refresh();
+    this.getGraph().zoomOut();
+    this.getGraph().zoomOut();
+    this.getGraph().zoomOut();
   }
 
   changePage(sourcePageId: string, targetPageId: string) {
+    if(this.inNavigation == true) {
+      this.clearGraphModel();
+      this.inNavigation = false;
+      this.getGraph().zoomIn();
+      this.getGraph().zoomIn();
+      this.getGraph().zoomIn();
+    }
+
     let active = true;
     console.log('change page');
     this.syncStorage();
@@ -91,7 +141,7 @@ export default class GraphEditorService {
         this.applyLayout(data[targetPageId].layout)
       uiComponentList.forEach(
         uiComponent => {
-          console.log(uiComponent)
+          // console.log(uiComponent)
           this.bindComponent(uiComponent, uiComponent.geometry);
         }
       )
@@ -134,7 +184,7 @@ export default class GraphEditorService {
     // let pageID = "page" + this.selectedGraphID;
   }
 
-  bindComponent(component, geometry?) {
+  bindComponent(component, geometry?, xOffset?, yOffset?) {
     const parent = this.editor.getGraph().getDefaultParent();
     if (geometry == undefined) {
       // const parent = this.selectedGraphStorage.getGraph().getDefaultParent();
@@ -147,8 +197,11 @@ export default class GraphEditorService {
 
   }
 
-  applyLayout(layout: string) {
-    this.editor.applyLayout(layout);
+  applyLayout(layout: string, xOffset?, yOffset?) {
+    if(xOffset != undefined && yOffset != undefined)
+      this.editor.applyLayout(layout, xOffset, yOffset);
+    else
+      this.editor.applyLayout(layout);
   }
 
   syncStorage() {
@@ -161,7 +214,7 @@ export default class GraphEditorService {
   generateGraphModel(model) {
     let cells = [];
     console.log("start generating");
-    console.log(model)
+    // console.log(model)
     for (let key in model) {
       let cell = {
         geometry: {},

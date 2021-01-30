@@ -34,17 +34,17 @@ export class ButtonStrategy extends ICreateComponentStrategy {
     const height = 40;
     const buttonGeometry = new mxGeometry(this.basex, this.basey, width, height);
     let selabVertex = new SelabVertex()
-                            .setID(component.getId())
-                            .setUIComponentID(component.getId())
+                            .setID(component.id)
+                            .setUIComponentID(component.id)
                             .setParentID(parent.id)
                             .setIsPrimary(true)
-                            .setValue(component.getValue())
+                            .setValue(component.text.toString())
                             .setDataBinding(dataBinding)
     let buttonCell = selabEditor.insertVertex(selabVertex,component,buttonGeometry,style);
     buttonCell["componentPart"] = "box";
     buttonCell["dataBinding"] = dataBinding;
     buttonCell["isPrimary"] = true;
-    buttonCell["componentID"] = component.getId();
+    buttonCell["componentID"] = component.id;
     return buttonCell;
   }
 

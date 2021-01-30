@@ -63,7 +63,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
           // this.pages = [{"name":"", "isMain":"", "id": ""}];
           this.pages = [];
           let keys = Object.keys(pageUICDLs);
-          console.log(keys);
+          // console.log(keys);
           for (let index = 0; index < keys.length; index++) {
             let key = keys[index];
             let page = {
@@ -166,9 +166,14 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   changePage(event) {
-    console.log(`change page target_index = ${event['index']}`);
-    console.log(this.pages)
-    console.log(event)
+    // if(this.graphEditorService.inNavigation == true) {
+    //   this.graphEditorService.clearGraphModel();
+    //   this.graphEditorService.inNavigation = false;
+    //   this.graphEditorService.getGraph().zoomIn();
+    // }
+    // console.log(`change page target_index = ${event['index']}`);
+    // console.log(this.pages)
+    // console.log(event)
     let index = event['index'] - 1;
     let currentPageId = this.graphEditorService.selectedPageId;
     if(this.pages[index] == undefined) {

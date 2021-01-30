@@ -56,10 +56,10 @@ export class TableStrategy extends ICreateComponentStrategy {
     const width = this.gridWidth * colNumber;
     const height = this.gridHeight * 2;
 
-    let id = (parseInt(component.getId())).toString();
+    let id = (parseInt(component.id)).toString();
     let selabVertex = new SelabVertex()
-      .setID(component.getSelector() + "-" + id)
-      .setUIComponentID(component.getId())
+      .setID(component.selector + "-" + id)
+      .setUIComponentID(component.id)
       .setParentID(parent.id)
       .setIsPrimary(true);
 
@@ -69,7 +69,7 @@ export class TableStrategy extends ICreateComponentStrategy {
     tableBoxCell["componentPart"] = "box";
     tableBoxCell["dataBinding"] = this.createDataBinding("box");
     tableBoxCell["isPrimary"] = true;
-    tableBoxCell["componentID"] = component.getId();
+    tableBoxCell["componentID"] = component.id;
     return tableBoxCell;
   }
 
@@ -82,21 +82,21 @@ export class TableStrategy extends ICreateComponentStrategy {
       const tableHeaderStyle = StyleLibrary[0]["table"]["tableHeader"];
       tableHeaderStyle["overflow"] = true;
       const x = i * this.gridWidth;
-      let id = (parseInt(component.getId()) + 1 + i).toString();
+      let id = (parseInt(component.id) + 1 + i).toString();
       let selabVertex = new SelabVertex()
-        .setID(component.getSelector() + '-' + id)
-        .setUIComponentID(component.getId())
+        .setID(component.selector + '-' + id)
+        .setUIComponentID(component.id)
         .setIsPrimary(false)
         .setDataBinding(dataBinding)
         .setParentID(parent.id)
-        .setValue(component.getValue("header",i));
+        .setValue(component['headers'].split(" ")[i]);
 
       const tableHeaderVertexGeometry = new mxGeometry(x, 0, this.gridWidth, this.gridHeight);
       let tableHeaderCell = selabEditor.insertVertex(selabVertex, component, tableHeaderVertexGeometry, tableHeaderStyle);
       tableHeaderCell["componentPart"] = "header";
       tableHeaderCell["dataBinding"] = this.createDataBinding("header");
       tableHeaderCell["isPrimary"] = false;
-      tableHeaderCell["componentID"] = component.getId();
+      tableHeaderCell["componentID"] = component.id;
     }
   }
 
@@ -112,20 +112,20 @@ export class TableStrategy extends ICreateComponentStrategy {
       const x = i * this.gridWidth;
       const y = 1 * this.gridHeight;
       const tableDataVertexGeometry = new mxGeometry(x, y, this.gridWidth, this.gridHeight);
-      let id = (parseInt(component.getId()) + colNumber + 1 + i).toString();
+      let id = (parseInt(component.id) + colNumber + 1 + i).toString();
       let selabVertex = new SelabVertex()
-        .setID(component.getSelector() + "-" + id)
-        .setUIComponentID(component.getId())
+        .setID(component.selector + "-" + id)
+        .setUIComponentID(component.id)
         .setIsPrimary(false)
         .setParentID(parent.id)
         .setDataBinding(dataBinding)
-        .setValue(component.getValue("row",i))
+        .setValue(component['rows'].split(" ")[i])
 
       let tableDataCell = selabEditor.insertVertex(selabVertex, component, tableDataVertexGeometry, tableDataStyle);
       tableDataCell["componentPart"] = "rows";
       tableDataCell["dataBinding"] = this.createDataBinding("rows", i);
       tableDataCell["isPrimary"] = false;
-      tableDataCell["componentID"] = component.getId();
+      tableDataCell["componentID"] = component.id;
     }
   }
 

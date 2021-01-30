@@ -38,19 +38,19 @@ export class CardStrategy extends ICreateComponentStrategy {
   createCardBoxVertex(selabEditor: SelabEditor, component: CardComponent, parent: mxCell) {
     const cardBoxStyle = StyleLibrary[0]["card"]["cardBox"];
     const cardVertexGeometry = new mxGeometry(this.basex, this.basey, 250, 300);
-    let id = (parseInt(component.getId())).toString();
+    let id = (parseInt(component.id)).toString();
     let selabVertex = new SelabVertex()
-      .setID(component.getSelector() + "-" + id)
+      .setID(component.selector + "-" + id)
       .setParentID(parent.id)
       .setIsPrimary(true)
-      .setUIComponentID(component.getId())
+      .setUIComponentID(component.id)
     let cardBoxCell = selabEditor.insertVertex(selabVertex, component, cardVertexGeometry, cardBoxStyle);
 
 
     cardBoxCell["componentPart"] = "box";
     cardBoxCell["dataBinding"] = this.createDataBinding("box");
     cardBoxCell["isPrimary"] = true;
-    cardBoxCell["componentID"] = component.getId();
+    cardBoxCell["componentID"] = component.id;
     return cardBoxCell;
   }
 
@@ -58,18 +58,18 @@ export class CardStrategy extends ICreateComponentStrategy {
     const dataBinding = this.createDataBinding("header");
     const cardHeaderStyle = StyleLibrary[0]["card"]["cardHeader"];
     let cardHeaderGeometry = new mxGeometry(0, 0, 300, 50);
-    let id = (parseInt(component.getId())).toString();
+    let id = (parseInt(component.id)).toString();
     let selabVertex = new SelabVertex()
-      .setID(component.getSelector() + "-" + id)
+      .setID(component.selector + "-" + id)
       .setParentID(parent.id)
       .setIsPrimary(true)
-      .setUIComponentID(component.getId())
+      .setUIComponentID(component.id)
       .setDataBinding(dataBinding)
       .setValue(component.header.toString());
     let cardHeaderCell = selabEditor.insertVertex(selabVertex, component, cardHeaderGeometry, cardHeaderStyle);
 
     cardHeaderCell["componentPart"] = "header";
-    cardHeaderCell["componentID"] = component.getId();
+    cardHeaderCell["componentID"] = component.id;
     cardHeaderCell["dataBinding"] = this.createDataBinding("header");
     cardHeaderCell["isPrimary"] = false;
     return cardHeaderCell;
@@ -84,7 +84,7 @@ export class CardStrategy extends ICreateComponentStrategy {
 
     for (const subUIComponent of component["componentList"]) {
       let vertex
-      if(subUIComponent.geometry.x == 0 && subUIComponent.geometry.y == 0){
+      if(subUIComponent.geometry['x'] == 0 && subUIComponent.geometry['y'] == 0){
         vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, subComponentXOffset, subComponentYOffset);
         if (vertex["geometry"].width > maxWidth) {
           maxWidth = vertex["geometry"].width;

@@ -11,7 +11,7 @@ export default class IRTransformer {
     constructor(){}
 
     public transform(pageUICDL: Object, graph:mxGraph): UIComponentModel.UIComponent[]{
-        console.log(this.parsePageUICDL(pageUICDL))
+        // console.log(this.parsePageUICDL(pageUICDL))
 
         let graphModel = graph.model;
         
@@ -74,7 +74,7 @@ export default class IRTransformer {
                 break;   
             case "card":
                 uiComponent = uiComponentObject as CardComponent;
-                console.log(uiComponent)
+                // console.log(uiComponent)
                 break;         
             case "form":
                 uiComponent = new FormComponent();
@@ -85,7 +85,7 @@ export default class IRTransformer {
                 //         uiComponent.componentList.push(this.parseComponentObject(subComponent))
                 //     }
                 // )                
-                console.log(uiComponent)
+                // console.log(uiComponent)
                 break;    
 
         }

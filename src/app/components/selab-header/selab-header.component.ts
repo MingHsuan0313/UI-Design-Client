@@ -215,14 +215,6 @@ export class SelabHeaderComponent implements OnInit {
       this.store.dispatch(new IRInsertPageUICDLAction(pageUICDL));
       this.store.dispatch(new IRRenamePageAction(pageId, pageUICDL['name']));
       this.store.dispatch(new ERInsertGraphStorageAction(new SelabGraph(pageId)))
-
-      //  let graphID = this.graphEditorService.selectedPageId;
-
-      //  this.store.dispatch(new IRDeletePageUICDLAction(graphID));
-      //  console.log(pageUICDL)
-      //  console.log(this.store.select(pageUICDLSelector()))
-      //  pageUICDL.setId(graphID); 
-      //  this.store.dispatch(new IRInsertPageUICDLAction(pageUICDL));
       let originalId = this.graphEditorService.selectedPageId;
       this.graphEditorService.selectedPageId = pageId;
       let uiComponentList = this.IRTransformerService.transform(pageUICDL, this.graphEditorService.getGraph());

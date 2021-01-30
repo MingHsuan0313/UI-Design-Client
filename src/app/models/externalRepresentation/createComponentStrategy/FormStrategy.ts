@@ -33,12 +33,12 @@ export class FormStrategy extends ICreateComponentStrategy {
     createFormBoxVertex(selabEditor: SelabEditor, component: FormComponent, parent: mxCell): mxCell {
         const formBoxStyle = StyleLibrary[0]["form"]["formBox"];
         const formVertexGeometry = new mxGeometry(this.basex, this.basey, this.width, this.height);
-        let id = (parseInt(component.getId())).toString();
+        let id = (parseInt(component.id)).toString();
         let selabVertex = new SelabVertex()
-            .setID(component.getSelector() + "-" + id)
+            .setID(component.selector + "-" + id)
             .setParentID(parent.id)
             .setIsPrimary(true)
-            .setUIComponentID(component.getId())
+            .setUIComponentID(component.id)
         let formBoxCell = selabEditor.insertVertex(selabVertex, component, formVertexGeometry, formBoxStyle);
 
         // const formVertexStorage = selabEditor.insertVertex(parent, component.id, "", formVertexGeometry, styleStorage, component);
@@ -46,7 +46,7 @@ export class FormStrategy extends ICreateComponentStrategy {
         formBoxCell["componentPart"] = "box";
         formBoxCell["dataBinding"] = this.createDataBinding("box");
         formBoxCell["isPrimary"] = true;
-        formBoxCell["componentID"] = component.getId();
+        formBoxCell["componentID"] = component.id;
         return formBoxCell;
     }
 
@@ -57,8 +57,8 @@ export class FormStrategy extends ICreateComponentStrategy {
         let maxWidth = 250;
         for (let subUIComponent of component["componentList"]) {
             let vertex;
-            console.log(subUIComponent)
-            console.log(this.restoreMode)
+            // console.log(subUIComponent)
+            // console.log(this.restoreMode)
             if(!this.restoreMode){
                 vertex = selabEditor.createComponent(subUIComponent, formBoxCell, new mxGeometry(subComponentXOffset, subComponentYOffset,0,0))
                 if (vertex["geometry"].width > maxWidth)

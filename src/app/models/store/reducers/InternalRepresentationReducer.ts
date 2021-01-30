@@ -38,11 +38,11 @@ class InternalRepresentationReducer {
             return store;
         store = { ...store };
         let graphModel = action.graphModel;
-        console.log(graphModel);
+        // console.log(graphModel);
         store.pageUICDLs = { ...store.pageUICDLs };
         store.pageUICDLs[action.id] = { ...store.pageUICDLs[action.id] };
         store.pageUICDLs[action.id].body = { ...store.pageUICDLs[action.id].body };
-        console.log(store.pageUICDLs[action.id].body.componentList)
+        // console.log(store.pageUICDLs[action.id].body.componentList)
         if(store.pageUICDLs[action.id].body.componentList == undefined)
             return store;
         store.pageUICDLs[action.id].body.componentList = [...store.pageUICDLs[action.id].body.componentList];
@@ -102,7 +102,7 @@ class InternalRepresentationReducer {
             }
         }
 
-        console.log(store.pageUICDLs[action.id].body.componentList)
+        // console.log(store.pageUICDLs[action.id].body.componentList)
         return store;
     }
 
