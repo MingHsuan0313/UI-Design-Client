@@ -67,11 +67,13 @@ class InternalRepresentationReducer {
                         if (cell["componentID"] == subComponentID && cell["isPrimary"] == true) {
                             // console.log("hello subComponent Here");
                             // console.log(store.pageUICDLs[action.id].body.componentList[index].componentList[k])
-                            store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent).copy();
+                            store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent);
                             store.pageUICDLs[action.id].body.componentList[index].componentList = [ ...store.pageUICDLs[action.id].body.componentList[index].componentList ];
-                            store.pageUICDLs[action.id].body.componentList[index].componentList[k] = (store.pageUICDLs[action.id].body.componentList[index].componentList[k] as UIComponent).copy();
-                            store.pageUICDLs[action.id].body.componentList[index].componentList[k] = (store.pageUICDLs[action.id].body.componentList[index].componentList[k] as UIComponent).setGeometry(cell["geometry"]);
-                            store.pageUICDLs[action.id].body.componentList[index].componentList[k] = (store.pageUICDLs[action.id].body.componentList[index].componentList[k] as UIComponent).setStyle(cell["style"]);
+                            store.pageUICDLs[action.id].body.componentList[index].componentList[k] = {...store.pageUICDLs[action.id].body.componentList[index].componentList[k] as UIComponent, style:cell['style'], geometry: cell['geometry']};
+                            // store.pageUICDLs[action.id].body.componentList[index].componentList[k].geometry = { ...store.pageUICDLs[action.id].body.componentList[index].componentList[k].geometry};
+                            // store.pageUICDLs[action.id].body.componentList[index].componentList[k].geometry = cell['geometry'];
+                            // store.pageUICDLs[action.id].body.componentList[index].componentList[k].style = { ...store.pageUICDLs[action.id].body.componentList[index].componentList[k].style};
+                            // store.pageUICDLs[action.id].body.componentList[index].componentList[k].style = cell['style'] ;
                             // console.log("update");
                             // console.log(cell["geometry"])
                             // console.log(cell["style"]);
@@ -86,9 +88,12 @@ class InternalRepresentationReducer {
                 }
 
                 if (cell["componentID"] == componentID && cell["isPrimary"] == true) {
-                    store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent).copy();
-                    store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent).setGeometry(cell["geometry"]);
-                    store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent).setStyle(cell["style"]);
+                    // store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent);
+                    store.pageUICDLs[action.id].body.componentList[index] = {...store.pageUICDLs[action.id].body.componentList[index] as UIComponent, geometry: cell['geometry'], style: cell['style']};
+                    // store.pageUICDLs[action.id].body.componentList[index].geometry = { ...store.pageUICDLs[action.id].body.componentList[index].geometry};
+                    // store.pageUICDLs[action.id].body.componentList[index].geometry = cell["geometry"];
+                    // store.pageUICDLs[action.id].body.componentList[index].style = { ...store.pageUICDLs[action.id].body.componentList[index].style};
+                    // store.pageUICDLs[action.id].body.componentList[index].style = cell["style"];
                     flag = false;
                 }
 

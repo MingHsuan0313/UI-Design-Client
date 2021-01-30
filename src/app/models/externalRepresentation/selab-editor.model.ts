@@ -19,7 +19,6 @@ export class SelabEditor {
 
     constructor(element: HTMLElement,
         private store: Store<AppState>,
-        // private dialog: MatDialog,
         private graphEditorService: GraphEditorService,
         private dialog: MatDialog
         ) {

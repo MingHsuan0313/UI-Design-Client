@@ -9,16 +9,20 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import ImportService from '../../services/internalRepresentation/import.service';
 import ExportService from '../../services/internalRepresentation/export.service';
 import IRTransformer from '../../services/internalRepresentation/IRTransformer.service'
-import { MatDialog,
+import {
+  MatDialog,
   MatDialogConfig,
   MatSnackBar,
-  MatSnackBarVerticalPosition } from '@angular/material';
+  MatSnackBarVerticalPosition
+} from '@angular/material';
 import { SelabWizardComponent } from '../selab-wizard/selab-wizard.component';
 import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
 import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRRenamePageAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model';
 import { pageUICDLSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
+import { ERInsertGraphStorageAction } from 'src/app/models/store/actions/externalRepresentation.action';
+import { SelabGraph } from 'src/app/models/externalRepresentation/selabGraph.model';
 
 @Component({
   selector: 'selab-header',
@@ -108,7 +112,7 @@ export class SelabHeaderComponent implements OnInit {
   apply() {
     // this.graphEditorService.applyLayout(this.layout_selected);
   }
-  
+
   applyLayout(layout: string) {
     this.graphEditorService.applyLayout(layout);
   }
@@ -195,28 +199,42 @@ export class SelabHeaderComponent implements OnInit {
     }
   }
 
-  uploadPageUICDL($event){
+  uploadPageUICDL($event) {
     let selectedFile = $event.target.files[0]
     const fileReader = new FileReader();
     fileReader.readAsText(selectedFile, "UTF-8");
     fileReader.onload = () => {
-     let pageUICDLObject = JSON.parse(fileReader.result);
-     let graphID = this.graphEditorService.getSelectedGraphID();
-     let pageUICDL = new PageUICDL(parseInt(graphID));
-     Object.assign(pageUICDL, pageUICDLObject);
-     this.store.dispatch(new IRDeletePageUICDLAction(graphID));
-     console.log(pageUICDL)
-     console.log(this.store.select(pageUICDLSelector()))
-     pageUICDL.setId(graphID); 
-     this.store.dispatch(new IRInsertPageUICDLAction(pageUICDL));
-     let uiComponentList = this.IRTransformerService.transform(pageUICDL, this.graphEditorService.getGraph());
-     this.applyLayout("prime")
-     uiComponentList.forEach(
-       uiComponent => {
-         console.log(uiComponent)
-         this.graphEditorService.bindComponent(uiComponent, uiComponent.geometry);
-       }
-     )
+      let pageUICDLObject = JSON.parse(fileReader.result as any);
+      let uuid = require('uuid');
+      let pageId = `graph-container-${uuid.v1()}`;
+
+      let pageUICDL = new PageUICDL(pageId); // internalRepresentation
+
+      Object.assign(pageUICDL, pageUICDLObject);
+      pageUICDL['id'] = pageId;
+      this.store.dispatch(new IRInsertPageUICDLAction(pageUICDL));
+      this.store.dispatch(new IRRenamePageAction(pageId, pageUICDL['name']));
+      this.store.dispatch(new ERInsertGraphStorageAction(new SelabGraph(pageId)))
+
+      //  let graphID = this.graphEditorService.selectedPageId;
+
+      //  this.store.dispatch(new IRDeletePageUICDLAction(graphID));
+      //  console.log(pageUICDL)
+      //  console.log(this.store.select(pageUICDLSelector()))
+      //  pageUICDL.setId(graphID); 
+      //  this.store.dispatch(new IRInsertPageUICDLAction(pageUICDL));
+      let originalId = this.graphEditorService.selectedPageId;
+      this.graphEditorService.selectedPageId = pageId;
+      let uiComponentList = this.IRTransformerService.transform(pageUICDL, this.graphEditorService.getGraph());
+      this.applyLayout("prime")
+      uiComponentList.forEach(
+        uiComponent => {
+          console.log(uiComponent)
+          this.graphEditorService.bindComponent(uiComponent, uiComponent.geometry);
+        }
+      )
+      this.graphEditorService.clearGraphModel();
+      this.graphEditorService.selectedPageId = originalId;
     }
     fileReader.onerror = (error) => {
       console.log(error);
