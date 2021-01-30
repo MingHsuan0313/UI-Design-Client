@@ -87,3 +87,7 @@ selab-setting .mat-tab-label {
 .selab-endpoint-form .mat-form-field-infix {
     display:inherit;
 }
+
+selab-graph-editor .mat-tab-labels > .mat-tab-label:first-child {
+  display: none;
+}

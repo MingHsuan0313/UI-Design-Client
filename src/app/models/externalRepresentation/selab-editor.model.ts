@@ -8,6 +8,7 @@ import { SelabVertex } from "./selabVertex.model";
 import { UIComponent } from "../ui-component-dependency";
 import { BreadcrumbStrategy, ButtonStrategy, CardStrategy, DropdownStrategy, FormStrategy, IconStrategy, InputStrategy, LayoutStrategy, TableStrategy, TextStrategy } from "./component-strategy-dependency";
 import { ICreateComponentStrategy } from "./createComponentStrategy/ICreateComponentStrategy";
+import { IRSetLayoutAction } from "../store/actions/internalRepresentation.action";
 
 export class SelabEditor {
     editor: mxEditor;
@@ -61,18 +62,14 @@ export class SelabEditor {
         let active = true;
         console.log("apply Layout")
         let graphID = this.graphEditorService.getSelectedGraphID();
+        this.store.dispatch(new IRSetLayoutAction(graphID, layout));
         // let graphID = "graph-container";
         this.setStrategy(new LayoutStrategy(graphID, new mxGeometry(0,0,0,0)));
         let pageUICDLs = this.store.select(pageUICDLSelector());
         pageUICDLs.subscribe((data) => {
-            if(active == false)
+            if(active == false || active == undefined)
                 return;
-            console.log('here');
-            console.log(data)
-            console.log(graphID)
             let id = graphID;
-            console.log(data[id]);
-            console.log(active);
             if(graphID == undefined)
                 return;
             (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this, data[id]);

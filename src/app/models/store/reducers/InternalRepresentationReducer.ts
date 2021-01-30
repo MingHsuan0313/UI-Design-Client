@@ -1,7 +1,7 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction, IRRenamePageAction, IRSetProjectNameAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction, IRRenamePageAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 
 class InternalRepresentationReducer {
@@ -11,45 +11,45 @@ class InternalRepresentationReducer {
         store.pageUICDLs = { ...store.pageUICDLs, [action.pageUICDL.id]: action.pageUICDL };
         return store;
     }
+
+    @Action
+    public setLayout(store: InternalRepresentation, action: IRSetLayoutAction) {
+        store = {...store};
+        store.pageUICDLs = {...store.pageUICDLs};
+        store.pageUICDLs[action.id] = {...store.pageUICDLs[action.id]};
+        store.pageUICDLs[action.id].layout = action.layout;
+        return store;
+    }
     
     @Action
     public setProjectName(store: InternalRepresentation, action: IRSetProjectNameAction): InternalRepresentation {
         store = {...store};
         store.projectName = action.projectName;
-        // let firstPageGraphID = "graphContainer-0";
-        // store.pageUICDLs = {...store.pageUICDLs};
-        // store.pageUICDLs[firstPageGraphID] = {...store.pageUICDLs[firstPageGraphID],"projectName":action.projectName}
         return store;
     }
 
     @Action
     public syncWithER(store: InternalRepresentation, action: IRSyncWithERAction): InternalRepresentation {
-        console.log("action hereeeee")
+        if (action.id == undefined)
+            return store;
+        if (store.pageUICDLs[action.id] == undefined)
+            return store;
         store = { ...store };
         let graphModel = action.graphModel;
-        console.log("syncWithER")
         console.log(graphModel);
-        store = { ...store };
-        console.log('stage1')
         store.pageUICDLs = { ...store.pageUICDLs };
-        console.log('stage2')
         store.pageUICDLs[action.id] = { ...store.pageUICDLs[action.id] };
-        console.log('stage3')
         store.pageUICDLs[action.id].body = { ...store.pageUICDLs[action.id].body };
-        console.log('stage4')
         console.log(store.pageUICDLs[action.id].body.componentList)
         if(store.pageUICDLs[action.id].body.componentList == undefined)
             return store;
         store.pageUICDLs[action.id].body.componentList = [...store.pageUICDLs[action.id].body.componentList];
-        console.log('stage5')
         let componentLength = store.pageUICDLs[action.id].body.componentList.length;
 
-        console.log("cell size: " + graphModel.length);
+        // console.log("cell size: " + graphModel.length);
         for (let j = 0; j < graphModel.length; j++) {
             let flag = true;
             let cell = graphModel[j];
-            console.log("cell below")
-            console.log(cell);
             if(cell["isPrimary"] == undefined || cell["componentID"] == undefined) {
                 continue;
             }
@@ -61,20 +61,20 @@ class InternalRepresentationReducer {
                     let subComponentLength = store.pageUICDLs[action.id].body.componentList[index].componentList.length;
                     for (let k = 0; k < subComponentLength; k++) {
                         let subComponentID = store.pageUICDLs[action.id].body.componentList[index].componentList[k].id;
-                        console.log(`hello componentID = ${componentID}\nsubComponentID = ${subComponentID}`);
+                        // console.log(`hello componentID = ${componentID}\nsubComponentID = ${subComponentID}`);
                         if (cell["componentID"] == subComponentID && cell["isPrimary"] == true) {
-                            console.log("hello subComponent Here");
+                            // console.log("hello subComponent Here");
                             // console.log(store.pageUICDLs[action.id].body.componentList[index].componentList[k])
                             store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent).copy();
                             store.pageUICDLs[action.id].body.componentList[index].componentList = [ ...store.pageUICDLs[action.id].body.componentList[index].componentList ];
                             store.pageUICDLs[action.id].body.componentList[index].componentList[k] = (store.pageUICDLs[action.id].body.componentList[index].componentList[k] as UIComponent).copy();
                             store.pageUICDLs[action.id].body.componentList[index].componentList[k] = (store.pageUICDLs[action.id].body.componentList[index].componentList[k] as UIComponent).setGeometry(cell["geometry"]);
                             store.pageUICDLs[action.id].body.componentList[index].componentList[k] = (store.pageUICDLs[action.id].body.componentList[index].componentList[k] as UIComponent).setStyle(cell["style"]);
-                            console.log("update");
-                            console.log(cell["geometry"])
-                            console.log(cell["style"]);
-                            console.log(store.pageUICDLs[action.id].body.componentList[index].componentList[k]);
-                            console.log(store.pageUICDLs[action.id].body.componentList)
+                            // console.log("update");
+                            // console.log(cell["geometry"])
+                            // console.log(cell["style"]);
+                            // console.log(store.pageUICDLs[action.id].body.componentList[index].componentList[k]);
+                            // console.log(store.pageUICDLs[action.id].body.componentList)
 
                             flag = false;
                         }

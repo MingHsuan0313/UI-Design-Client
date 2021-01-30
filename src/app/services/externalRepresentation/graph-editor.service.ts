@@ -22,21 +22,22 @@ export default class GraphEditorService {
   // selectedEditor: SelabEditor;
   selectedUIComponent: UIComponent;
   editor: SelabEditor;
-  pageStorage: SelabPageModel[];
   selectedPageId: string;
   backgroundCells: {};
+  pages: string[]; // store all page name
+
 
   constructor(private styleEditorService: StyleEditorService,
     private store: Store<AppState>,
     private IRTransformerService: IRTransformer
   ) {
     setTimeout(() => {
+      this.pages = [];
       this.selectedUIComponent = undefined;
       let element = document.getElementById('graph-container');
       this.editor = new SelabEditor(element, this.store, this);
       this.backgroundCells = this.getGraphModel().cells;
-      this.pageStorage = []
-      this.createPage();
+      this.createPage("ImsMain");
     }, 500)
   }
 
@@ -52,27 +53,24 @@ export default class GraphEditorService {
     return this.selectedPageId;
   }
 
-  createPage() {
+  createPage(pageName) {
     console.log('create page')
     let uuid = require('uuid');
     let pageId = `${this.editor.id}-${uuid.v1()}`;
     let newPage = new PageUICDL(pageId); // internalRepresentation
-    let selabPage = new SelabPageModel(pageId);
-    this.pageStorage.push(selabPage);
-    if (this.pageStorage.length == 0) {
-      newPage.isMain = true
-      this.selectedPageId = pageId;
-    }
-    else
-      newPage.isMain = false
     this.store.dispatch(new IRInsertPageUICDLAction(newPage));
-    this.store.dispatch(new IRRenamePageAction(pageId, 'newpage'));
+    this.store.dispatch(new IRRenamePageAction(pageId, pageName));
     this.store.dispatch(new ERInsertGraphStorageAction(new SelabGraph(pageId)))
-    // this.changePage(this.selectedPageId, pageId);
   }
 
   deletePage(pageId: string) {
 
+  }
+
+  navigation() {
+    this.syncStorage();
+    this.clearGraphModel();
+    this.selectedPageId = "navigation";
   }
 
   changePage(sourcePageId: string, targetPageId: string) {
@@ -87,7 +85,8 @@ export default class GraphEditorService {
         return;
       let targetPageUICDL = data[targetPageId];
       let uiComponentList = this.IRTransformerService.transform(targetPageUICDL, this.getGraph());
-      this.applyLayout("prime")
+      if (data[targetPageId].layout.length > 0)
+        this.applyLayout(data[targetPageId].layout)
       uiComponentList.forEach(
         uiComponent => {
           console.log(uiComponent)
@@ -105,22 +104,9 @@ export default class GraphEditorService {
     this.getGraph().refresh();
   }
 
-  searchPage(pageId: string) {
-    for (let index = 0; index < this.pageStorage.length; index++) {
-      if (this.pageStorage[index].pageId == pageId) {
-        return this.pageStorage[index];
-      }
-    }
-    return null;
-  }
-
   setSelectedPage(pageId: string) {
     this.selectedPageId = pageId;
   }
-
-  // setSelectedEditor(editorID: string) {
-  //   this.selectedEditor = this.editors.get(editorID);
-  // }
 
   getGraph(): mxGraph {
     return this.editor.getGraph();
@@ -161,25 +147,13 @@ export default class GraphEditorService {
 
   applyLayout(layout: string) {
     this.editor.applyLayout(layout);
-    // this.selectedGraphStorage.applyLayout(layout);
   }
 
   syncStorage() {
-
     console.log('sync storage');
     let model = this.getGraphModel().cells;
     let cells = this.generateGraphModel(model);
     this.store.dispatch(new IRSyncWithERAction(this.selectedPageId, cells as any))
-    
-    // for(let editor in this.editors)
-    // this.editors.forEach((selabEditor, key) => {
-    //   let model = selabEditor.getGraphModel().cells;
-    //   let cells = this.generateGraphModel(model);
-    //   this.store.dispatch(new IRSyncWithERAction(key, cells as any))
-    //   selabEditor.editor.modified = false;
-    // })
-    // this.selectedGraphStorage.syncStyle(this.styleEditorService);
-    // this.selectedGraphStorage.syncStorage();
   }
 
   generateGraphModel(model) {
@@ -203,7 +177,6 @@ export default class GraphEditorService {
         let styleConverter = new StyleConverter();
         styleObj = styleConverter.convertObject(styleObj);
         cell["style"] = styleObj;
-
       }
       cells.push(cell);
     }

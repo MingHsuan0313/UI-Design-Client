@@ -9,9 +9,17 @@ export enum IRActionTypes {
     CLEAR_PAGE_UICDL = "[InternalRepresentation] Clear PageUICDL",
     RENAME_PAGE = "[InternalRepresentation] Rename Page",
     SYNC_WITH_ER = "[InternalRepresentation] Sync With External Representation",
-    SET_PROJECT_NAME  = "[InternalRepresentation] Set Project Name"
+    SET_PROJECT_NAME  = "[InternalRepresentation] Set Project Name",
+    SET_LAYOUT = "[InternalRepresentation] Set Layout",
 }
     
+export class IRSetLayoutAction implements Action {
+    public type = IRActionTypes["SET_LAYOUT"];
+    constructor(public id: string, public layout: string) {
+
+    }
+}
+
 export class IRInsertUIComponentAction implements Action {
     public type = IRActionTypes["INSERT_UI_COMPONENT"];
     constructor(public id: string,public uiComponent: UIComponent) {}
