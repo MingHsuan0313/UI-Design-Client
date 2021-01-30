@@ -1,0 +1,12 @@
+<div mat-dialog-content>
+  <p style="font-size: large; font-weight: bold;">Edge information: </p>
+  <mat-form-field appearance="outline">
+    <!-- <mat-label>Page Name</mat-label> -->
+    <mat-label>Passing Parameter</mat-label>
+    <input matInput [(ngModel)]="passingParameter">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>No</button>
+  <button mat-button [mat-dialog-close]="passingParameter" cdkFocusInitial>Ok</button>
+</div>

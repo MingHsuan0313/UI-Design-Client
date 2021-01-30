@@ -96,10 +96,17 @@ declare class mxEvent {
   static DOUBLE_CLICK: any;
   static CLICK: any;
   static CHANGE: any;
+  static CONNECT: any;
   static RESIZE: any;
   static RESIZE_CELLS: any;
   static MOVE_CELLS: any;
+  static TAP_AND_HOLD: any;
   addListener(element,eventName,funct);
+  static consume(event);
+  static isMouseEvent(event);
+  static getClientX(event);
+  static getClientY(event);
+  static addGestureListeners()
 }
 
 declare class mxMouseEvent {
@@ -150,6 +157,7 @@ declare class mxUtils{
   static getXml(result: any);
   static makeDraggable(element, graphF, funct, dragElement);
   static parseXml(xml);
+  static convertPoint(container,x,y);
 }
 
 declare class mxClipboard{

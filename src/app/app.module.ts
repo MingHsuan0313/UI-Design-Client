@@ -46,6 +46,7 @@ import { externalRepresentationReducer } from "./models/store/reducers/ExternalR
 import { internalRepresentationReducer } from "./models/store/reducers/InternalRepresentationReducer";
 import { ConfirmDialogComponent } from './components/utils/confirm-dialog/confirm-dialog.component';
 import { TabNameDialogComponent } from './components/selab-graph-editor/tab-name-dialog/tab-name-dialog.component';
+import { EdgeInformationDialogComponent } from './components/selab-graph-editor/edge-information-dialog/egde-information-dialog.component';
 import { ComponentInfoComponent } from './components/selab-setting/component-info/component-info.component';
 import { EndpointTestComponent } from './components/selab-setting/endpoint-test/endpoint-test.component';
 import { TestingLogWindowComponent } from './components/selab-setting/endpoint-test/testing-log-window/testing-log-window.component';
@@ -104,6 +105,7 @@ export function reducerFactory() {
     MenuItemComponent,
     ConfirmDialogComponent,
     TabNameDialogComponent,
+    EdgeInformationDialogComponent,
     ComponentInfoComponent,
     EndpointTestComponent,
     TestingLogWindowComponent,
@@ -130,6 +132,7 @@ export function reducerFactory() {
     SelabWizardComponent,
     ConfirmDialogComponent,
     TabNameDialogComponent,
+    EdgeInformationDialogComponent,
     TestingLogWindowComponent,
     JestTestingLogWindowComponent,
     ProjectNameDialogComponent

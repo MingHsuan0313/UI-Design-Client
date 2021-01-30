@@ -22,6 +22,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { pageUICDLSelector, uiComponentSelector } from 'src/app/models/store/selectors/InternalRepresentationSelector';
 import { TabNameDialogComponent } from './tab-name-dialog/tab-name-dialog.component';
+import { EdgeInformationDialogComponent } from './edge-information-dialog/egde-information-dialog.component';
 import { vertexSelector } from 'src/app/models/store/selectors/ExternalRepresentationSelector';
 import { SelabSettingComponent } from '../selab-setting/selab-setting.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../utils/confirm-dialog/confirm-dialog.component';
@@ -222,7 +223,29 @@ export class SelabGraphEditorComponent implements AfterViewInit {
       }) 
     })
 
-    GraphConfiguration.configConnectToolTipListener(graph);
+    GraphConfiguration.configConnectionHadlerListener(graph, this.dialog);
+  //   graph.connectionHandler.addListener(mxEvent.CONNECT, function(sender, evt){
+  //     console.log(evt)
+  //     let sourceCell = evt.properties.cell.source.parent;
+  //     let targetCell = evt.properties.cell.target;
+  //     console.log(sourceCell)
+  //     console.log(targetCell)
+
+      
+  //     const dialogRef = this.dialog.open(EdgeInformationDialogComponent, {
+  //         // width:'20%' ,
+  //         // height: '25%',
+  //         autoFocus: true,
+  //       });
+    
+  //       dialogRef.afterClosed().subscribe(result => {
+
+  //         if ((result as string).length != 0) {
+  //             console.log(result);
+  //         }
+  //       });
+  // })
+
   
   }
 
@@ -250,11 +273,13 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
   zoomIn() {
     this.zoomFactor = this.zoomFactor * 1.11;
+    this.graphEditorService.getGraph().zoomFactor = this.zoomFactor;
     this.graphEditorService.zoomTo(this.zoomFactor);
   }
 
   zoomOut() {
     this.zoomFactor = this.zoomFactor * 0.9;
+    this.graphEditorService.getGraph().zoomFactor = this.zoomFactor;
     this.graphEditorService.zoomTo(this.zoomFactor);
   }
 
