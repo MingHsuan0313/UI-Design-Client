@@ -9,6 +9,8 @@ import { UIComponent } from "../ui-component-dependency";
 import { BreadcrumbStrategy, ButtonStrategy, CardStrategy, DropdownStrategy, FormStrategy, IconStrategy, InputStrategy, LayoutStrategy, TableStrategy, TextStrategy } from "./component-strategy-dependency";
 import { ICreateComponentStrategy } from "./createComponentStrategy/ICreateComponentStrategy";
 import { IRSetLayoutAction } from "../store/actions/internalRepresentation.action";
+import { MatDialog } from "@angular/material";
+import { GraphConfiguration } from "src/app/components/selab-graph-editor/selab-graph-editor.config";
 
 export class SelabEditor {
     editor: mxEditor;
@@ -17,7 +19,10 @@ export class SelabEditor {
 
     constructor(element: HTMLElement,
         private store: Store<AppState>,
-        private graphEditorService: GraphEditorService) {
+        // private dialog: MatDialog,
+        private graphEditorService: GraphEditorService,
+        private dialog: MatDialog
+        ) {
         this.initializeEditor(element, "assets/keyhandler.xml");
         this.id = element.id;
     }
@@ -31,6 +36,7 @@ export class SelabEditor {
         editor.configure(config);
         Configuration.configureEditorKeyBinding(editor);
         Configuration.configureGraphListener(editor);
+        GraphConfiguration.configConnectionHadlerListener(editor.graph, this.dialog);
         this.editor = editor;
     }
 
