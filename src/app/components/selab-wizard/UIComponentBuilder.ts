@@ -18,6 +18,7 @@ export class UIComponentBuilder {
     public category: string;
     public type: string;
     public style: object;
+    public pageId: string;
     public geometry: object;
     public serviceComponent: IServiceEntry;
     public argument: ArgumentModel;
@@ -27,6 +28,7 @@ export class UIComponentBuilder {
     constructor() {
         this.name = "";
         this.id = "";
+        this.pageId = "";
         this.selector = "";
         this.category = "";
         this.type = "";
@@ -41,6 +43,11 @@ export class UIComponentBuilder {
 
     setID(id: string) {
         this.id = id;
+        return this;
+    }
+
+    setPageId(pageId: string) {
+        this.pageId = pageId;
         return this;
     }
     

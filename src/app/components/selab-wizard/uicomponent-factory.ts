@@ -8,7 +8,7 @@ export class UIComponentFactory {
     constructor() {
     }
 
-    static create(type: string): UIComponentBuilder {
+    static create(type: string, pageId: string): UIComponentBuilder {
         let uiComponent: UIComponent;
         let uiComponentBuilder: UIComponentBuilder;
         if (type == "text") {
@@ -123,7 +123,7 @@ export class UIComponentFactory {
             return;
         }
         this.nextID += 1;
-
+        uiComponentBuilder.setPageId(pageId);
         return uiComponentBuilder;
     }
 

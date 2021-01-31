@@ -16,6 +16,7 @@ import { ComposeTabComponent } from './compose-tab/compose-tab.component';
 import { InformationTabComponent } from './information-tab/information-tab.component';
 import { PipelineTabComponent } from './pipeline-tab/pipeline-tab.component';
 import { UIComponentFactory } from './uicomponent-factory';
+import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 
 @Component({
   selector: 'selab-wizard',
@@ -43,6 +44,7 @@ export class SelabWizardComponent implements OnInit {
   @ViewChild("service") serviceTab: BindServiceTabComponent
 
   constructor(
+    private graphEditorService: GraphEditorService,
     public dialogRef: MatDialogRef<SelabHeaderComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     store: Store<AppState>
@@ -60,7 +62,8 @@ export class SelabWizardComponent implements OnInit {
     if (this.isPipeline) {
       this.operation = this.data.operation;
     }
-    this.uiComponentBuilder = UIComponentFactory.create(this.type);
+    let pageId = this.graphEditorService.selectedPageId;
+    this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
     // this.uiComponent = UIComponentFactory.create(this.type);
   }
 

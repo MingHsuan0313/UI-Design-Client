@@ -64,13 +64,15 @@ export class SelabGraphEditorComponent implements AfterViewInit {
           this.pages = [];
           let keys = Object.keys(pageUICDLs);
           // console.log(keys);
+          SelabGlobalStorage.initializeNDL();
           for (let index = 0; index < keys.length; index++) {
             let key = keys[index];
             let page = {
               "name": pageUICDLs[key].name,
-              "isMain": pageUICDLs[key].isMain,
+              "imsMain": pageUICDLs[key].imsMain,
               "id": pageUICDLs[key].id
             }
+            SelabGlobalStorage.addNDL(page);
             this.pages.push(page);
           }
         })
@@ -82,6 +84,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
 
   showExternalRepresentation() {
     console.log(this.graphEditorService.getGraph());
+    console.log(SelabGlobalStorage.ndl);
     this.openSnackBar("show GraphModel in console", "display");
   }
 
@@ -162,7 +165,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   addPage() {
-    this.graphEditorService.createPage(`page${this.pages.length}`);
+    this.graphEditorService.createPage(`page${this.pages.length}`, false);
   }
 
   changePage(event) {
@@ -193,7 +196,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     newPageUICDL.isMain = isMain;
     Storage.setPageUICDL(newPageUICDL);
     // this.graphEditorService.createGraph(element);
-    this.store.dispatch(new IRInsertPageUICDLAction(newPageUICDL));
+    this.store.dispatch(new IRInsertPageUICDLAction(newPageUICDL, isMain));
     this.store.dispatch(new IRRenamePageAction(elementId, this.tabs[this.tabs.length - 1].name));
     this.graphEditorService.createEditor(element);
     this.configure();
