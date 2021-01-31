@@ -15,6 +15,7 @@ import { pageUICDLSelector } from "src/app/models/store/selectors/InternalRepres
 import IRTransformer from "../internalRepresentation/IRTransformer.service";
 import { MatDialog } from "@angular/material";
 import { LayoutStrategy } from "src/app/models/externalRepresentation/component-strategy-dependency";
+import { GraphConfiguration } from '../../components/selab-graph-editor/selab-graph-editor.config'
 
 @Injectable({
   providedIn: "root"
@@ -81,6 +82,7 @@ export default class GraphEditorService {
     if(this.inNavigation == true)
       return;
     this.inNavigation = true;
+    GraphConfiguration.configConnectionHadlerListener(this.getGraph(), this.dialog);
     this.syncStorage();
     this.clearGraphModel();
     this.selectedPageId = "navigation";
@@ -121,6 +123,7 @@ export default class GraphEditorService {
   changePage(sourcePageId: string, targetPageId: string) {
     if(this.inNavigation == true) {
       this.clearGraphModel();
+      GraphConfiguration.removeConnectionHandlerListener(this.getGraph());
       this.inNavigation = false;
       for(let index = 0;index < 5;index++)
         this.getGraph().zoomIn();

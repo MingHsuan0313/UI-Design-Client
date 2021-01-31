@@ -208,7 +208,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     let graphID = this.graphEditorService.getSelectedGraphID();
     graph.extendParentsOnAdd = false;
     graph.constrainChildren = false;
-    this.setting.configureStyleEditor();
+    this.setting.configureStyleEditor(); 
     graph.addListener(mxEvent.CLICK, (sender, event) => {
       this.setting.clear();
       let selectedVertex = sender.selectionModel.cells[0];

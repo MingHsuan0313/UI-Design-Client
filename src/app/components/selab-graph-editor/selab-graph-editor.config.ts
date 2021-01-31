@@ -7,7 +7,6 @@ export class GraphConfiguration{
 
     static configConnectionHadlerListener(graph, dialogService){
 
-
         function updateStyle(state, hover) {
             state.style[mxConstants.STYLE_STROKEWIDTH] = (hover) ? '4' : '1';
             state.style[mxConstants.STYLE_STROKECOLOR] = (hover) ? '#2b9cff' : '#000000';
@@ -48,6 +47,9 @@ export class GraphConfiguration{
               });
           }
 
+        graph.extendParentsOnAdd = false;
+        graph.constrainChildren = false;
+          
         graph.connectionHandler.marker.isEnabled = function()
         {
             return this.graph.connectionHandler.first != null;
@@ -56,7 +58,7 @@ export class GraphConfiguration{
 
 
         // Changes stroke color to blue on mouseover
-        graph.addMouseListener({
+        graph.addMouseListener( {
             currentState: null,
             previousStyle: null,
 
@@ -189,9 +191,9 @@ export class GraphConfiguration{
             mouseUp: function(sender, me) { },
 
         });
-
+        
         graph.connectionHandler.addListener(mxEvent.CONNECT, function(sender, evt){
-            console.log(evt)
+            Function.name = "edgePropertyEditor"
             let sourceCell = evt.properties.cell.source.parent;
             let targetCell = evt.properties.cell.target;
             console.log(sourceCell)
@@ -209,14 +211,36 @@ export class GraphConfiguration{
                     evt.properties.cell.value = result;
                 }
               });
-        })
+        })   
+        console.log(graph.connectionHandler)
 
-
-
-
-
-        
     }
+
+     static removeConnectionHandlerListener(graph){
+        let connectionHandlerListener
+        let connectionFunctionIndex
+        graph.mouseListeners.forEach(
+            funct => {
+                if(funct.hasOwnProperty("changeState")){
+                    connectionHandlerListener = funct;
+                }
+            }
+        ) 
+        graph.removeMouseListener(connectionHandlerListener)
+
+        graph.connectionHandler.eventListeners.forEach(
+            (object, index) => {
+                 if(object == "connect"){
+                    connectionFunctionIndex = index;
+                     console.log("connect here")
+                 }
+            }
+        ) 
+
+        graph.connectionHandler.removeListener(graph.connectionHandler.eventListeners[connectionFunctionIndex+1])
+        console.log(graph)
+        console.log(graph.connectionHandler)
+     }
 
 }
 
