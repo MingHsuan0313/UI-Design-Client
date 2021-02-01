@@ -1,3 +1,4 @@
+import { st } from '@angular/core/src/render3';
 import { EdgeInformationDialogComponent } from './edge-information-dialog/egde-information-dialog.component'
 
 export class GraphConfiguration{
@@ -7,44 +8,45 @@ export class GraphConfiguration{
 
     static configConnectionHadlerListener(graph, dialogService){
 
-        function updateStyle(state, hover) {
-            state.style[mxConstants.STYLE_STROKEWIDTH] = (hover) ? '4' : '1';
-            state.style[mxConstants.STYLE_STROKECOLOR] = (hover) ? '#2b9cff' : '#000000';
-            state.style[mxConstants.STYLE_FONTSTYLE] = (hover) ? mxConstants.FONT_BOLD : '0';
-          };
-        
-          function updateToolTipStyle(state, hover) {
-            state.style[mxConstants.STYLE_STROKEWIDTH] = (hover) ? '6' : '4';
-            state.style[mxConstants.STYLE_FONTSTYLE] = (hover) ? mxConstants.FONT_BOLD : '0';
-          };
-        
-          function updateStateStyle(lastState, currentState, updateLastStateFunction, updateCurrnetStateFunction) {
-              lastState.style = mxUtils.clone(lastState.style);
-              updateLastStateFunction(lastState, false);
-              lastState.shape.apply(lastState);
-              lastState.shape.reconfigure();
-        
-             // this.previousStyle = currentState.style;
-              currentState.style = mxUtils.clone(currentState.style);
-              updateCurrnetStateFunction(currentState, true);
-              currentState.shape.apply(currentState);
-              currentState.shape.reconfigure();
-          }
-
-          function openDialog(dialogService){
-
-            const dialogRef = dialogService.open(EdgeInformationDialogComponent, {
-                // width:'20%' ,
-                // height: '25%',
-                autoFocus: true,
-              });
-          
-              dialogRef.afterClosed().subscribe(result => {
-
-                if ((result as string).length != 0) {
-                    console.log(result);
+        function updateStyle(state, hover, previousStyle) {
+            if(previousStyle!=null){
+                state.style[mxConstants.STYLE_STROKECOLOR] = (hover) ? '#2b9cff' : previousStyle[mxConstants.STYLE_STROKECOLOR];
+                if(previousStyle[mxConstants.STYLE_STROKEWIDTH] != undefined){
+                    state.style[mxConstants.STYLE_STROKEWIDTH] = (hover) ? '6' : previousStyle[mxConstants.STYLE_STROKEWIDTH];
+                }else{
+                    state.style[mxConstants.STYLE_STROKEWIDTH] = (hover) ? '6' : '1';
                 }
-              });
+            }else{
+                state.style[mxConstants.STYLE_STROKECOLOR] = (hover) ? '#2b9cff' : '#000000';
+                state.style[mxConstants.STYLE_STROKEWIDTH] = (hover) ? '6' : '1';
+            }
+          };
+        
+          function updateToolTipStyle(state, hover, previousStyle) {
+            if(previousStyle!=null){
+                state.style[mxConstants.STYLE_STROKEWIDTH] = (hover) ? '8' : previousStyle[mxConstants.STYLE_STROKEWIDTH];
+                state.style[mxConstants.STYLE_FONTSTYLE] = (hover) ? mxConstants.FONT_BOLD : previousStyle[mxConstants.STYLE_FONTSTYLE];
+            }else{
+                state.style[mxConstants.STYLE_STROKEWIDTH] = (hover) ? '8' : '6';
+                state.style[mxConstants.STYLE_FONTSTYLE] = (hover) ? mxConstants.FONT_BOLD : '0';
+            }
+          };
+        
+          function updateStateStyle(lastState, currentState, previousStyle, updateLastStateFunction, updateCurrnetStateFunction) {
+              console.log(previousStyle)
+              //console.log(currentState.style)
+              if(lastState!=null){
+                lastState.style = mxUtils.clone(lastState.style);
+                updateLastStateFunction(lastState, false, previousStyle);
+                lastState.shape.apply(lastState);
+                lastState.shape.reconfigure();
+              }
+              if(currentState!=null){
+                currentState.style = mxUtils.clone(currentState.style);
+                updateCurrnetStateFunction(currentState, true, previousStyle);
+                currentState.shape.apply(currentState);
+                currentState.shape.reconfigure();
+              }
           }
 
         graph.extendParentsOnAdd = false;
@@ -78,7 +80,7 @@ export class GraphConfiguration{
                           mxEvent.getClientX(event.evt), mxEvent.getClientY(event.evt));
 
                   graph.connectionHandler.start(event.state, pt.x, pt.y);
-
+                  this.previousStyle = null;
                   graph.isMouseDown = true;
                   graph.isMouseTrigger = mxEvent.isMouseEvent(event.evt);
                   mxEvent.consume(event.evt);
@@ -86,19 +88,23 @@ export class GraphConfiguration{
                 }
             },
             mouseMove: function(sender, me){
+
                 if (this.currentState != null && me.getState() == this.currentState){
                     return;
                 }
                 var tmp = graph.view.getState(me.getCell());
 
                 // Ignores everything but vertices
-                if (graph.isMouseDown || (tmp != null && !
-                    graph.getModel().isVertex(tmp.cell))){
+                if (graph.isMouseDown || (tmp != null && ! graph.getModel().isVertex(tmp.cell) && ! graph.getModel().isEdge(tmp.cell))){
                     tmp = null;
                 }
                 if (tmp != this.currentState){
                     if(this.currentState != null && tmp!=null){
-                    this.changeState(me.getEvent(), this.currentState, tmp);
+                        this.changeState(me.getEvent(), this.currentState, tmp);
+                    }
+                    else if(tmp == null){
+                        updateStateStyle(this.currentState, tmp, this.previousStyle, updateStyle, updateStyle);
+                        this.previousStyle = null;
                     }
                     this.currentState = tmp;
                 }
@@ -108,7 +114,11 @@ export class GraphConfiguration{
                 if(currentState.cell.hasOwnProperty("selector") && currentState.cell["selector"].includes("layout")){
                     console.log("tool tip or vertex -> layout ")
 
-                    updateStateStyle(lastState, currentState, updateStyle, updateStyle)
+                    let temp = mxUtils.clone(currentState.style);
+                    console.log(this.previousStyle)
+                    updateStateStyle(lastState, currentState, this.previousStyle, updateStyle, updateStyle)
+                    this.previousStyle = temp;
+
                     if(lastState.cell.children!=null){
                         let toolTipVertex = lastState.cell.children.find(
                             childrenVertex => childrenVertex.hasOwnProperty("connectToolTip")
@@ -127,7 +137,12 @@ export class GraphConfiguration{
                 }
                 // last state is a vertex, current state is other vertex
                 else if(!lastState.cell.hasOwnProperty("connectToolTip") && !currentState.cell.hasOwnProperty("connectToolTip")){
-                    updateStateStyle(lastState, currentState, updateStyle, updateStyle)
+                    let temp = mxUtils.clone(currentState.style);
+
+                    console.log(temp)
+                    updateStateStyle(lastState, currentState, this.previousStyle, updateStyle, updateStyle)
+                    this.previousStyle = temp;
+                    
                     console.log("vertex -> vertex ")
                     if(lastState.cell.children!=null){
                         let toolTipVertex = lastState.cell.children.find(
@@ -152,11 +167,18 @@ export class GraphConfiguration{
                 }
                 else if(currentState.cell.hasOwnProperty("connectToolTip") && !lastState.cell.hasOwnProperty("connectToolTip") && currentState.cell.parent.id == lastState.cell.id){
                     console.log(" this vertex -> tool tip ")
-                    updateStateStyle(lastState, currentState, updateStyle, updateToolTipStyle)
+                    let temp = mxUtils.clone(currentState.style);
+                    //console.log(temp)
+                    updateStateStyle(lastState, currentState, this.previousStyle, updateStyle, updateToolTipStyle)
+                    this.previousStyle = temp;
                 }
                 else if(currentState.cell.hasOwnProperty("connectToolTip") && !lastState.cell.hasOwnProperty("connectToolTip") && currentState.cell.parent.id != lastState.cell.id){
                     console.log(" other vertex -> tool tip ")
-                    updateStateStyle(lastState, currentState, updateStyle, updateToolTipStyle)
+                    let temp = mxUtils.clone(currentState.style);
+                    //console.log(temp)
+                    updateStateStyle(lastState, currentState, this.previousStyle, updateStyle, updateToolTipStyle)
+
+                    this.previousStyle = temp;
                     if(lastState.cell.children!=null){
                         let toolTipVertex = lastState.cell.children.find(
                             childrenVertex => childrenVertex.hasOwnProperty("connectToolTip")
@@ -170,12 +192,17 @@ export class GraphConfiguration{
                 }
                 else if(lastState.cell.hasOwnProperty("connectToolTip") && !currentState.cell.hasOwnProperty("connectToolTip") && lastState.cell.parent.id == currentState.cell.id){
                     console.log("tool tip -> parent vertex ")
-                    updateStateStyle(lastState, currentState, updateToolTipStyle, updateStyle)
+                    let temp = mxUtils.clone(currentState.style);
+                    updateStateStyle(lastState, currentState, this.previousStyle, updateToolTipStyle, updateStyle)
+                    this.previousStyle = temp;
                 }
                 else if(lastState.cell.hasOwnProperty("connectToolTip") && !currentState.cell.hasOwnProperty("connectToolTip")  && lastState.cell.parent.id != currentState.cell.id){
                     console.log("tool tip -> other vertex ")
                     // leave last state  
-                    updateStateStyle(lastState, currentState, updateToolTipStyle, updateStyle)
+                    let temp = mxUtils.clone(currentState.style);
+                    updateStateStyle(lastState, currentState, this.previousStyle, updateToolTipStyle, updateStyle)
+
+                    this.previousStyle = temp;
                     if(!lastState.cell.hasOwnProperty("edges")){
                         graph.removeCells([lastState.cell], false);
                     }
@@ -193,11 +220,21 @@ export class GraphConfiguration{
         });
         
         graph.connectionHandler.addListener(mxEvent.CONNECT, function(sender, evt){
-
-            let sourceCell = evt.properties.cell.source.parent;
+            console.log(evt)
+            let edgeCell = evt.properties.cell
+            let sourceCell = evt.properties.cell.source
+            let parentCell = evt.properties.cell.source.parent;
             let targetCell = evt.properties.cell.target;
-            console.log(sourceCell)
+            graph.removeCells([edgeCell], false);
+            
+            let style = "strokeColor=#2b9cff;strokeWidth=6;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;"
+            let newEdgeCell = graph.insertEdge(parentCell, "", "", sourceCell, targetCell, style);
+
+            console.log(parentCell)
             console.log(targetCell)
+
+
+
             const dialogRef = dialogService.open(EdgeInformationDialogComponent, {
                 // width:'20%' ,
                 // height: '25%',
@@ -208,7 +245,7 @@ export class GraphConfiguration{
 
                 if ((result as string).length != 0) {
                     console.log(result);
-                    evt.properties.cell.value = result;
+                    newEdgeCell.value = result;
                 }
               });
         })   

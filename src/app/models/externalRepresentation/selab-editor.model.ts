@@ -35,6 +35,7 @@ export class SelabEditor {
         editor.configure(config);
         Configuration.configureEditorKeyBinding(editor);
         Configuration.configureGraphListener(editor);
+        Configuration.configEdgeStyle(editor);
        // GraphConfiguration.configConnectionHadlerListener(editor.graph, this.dialog);
         this.editor = editor;
     }

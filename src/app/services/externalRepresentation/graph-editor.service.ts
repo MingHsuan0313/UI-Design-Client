@@ -128,8 +128,8 @@ export default class GraphEditorService {
       this.clearGraphModel();
       GraphConfiguration.removeConnectionHandlerListener(this.getGraph());
       this.inNavigation = false;
-      for(let index = 0;index < 5;index++)
-        this.zoomIn();
+      this.zoomFactor = 1
+      this.zoomTo(this.zoomFactor);
     }
 
     let active = true;

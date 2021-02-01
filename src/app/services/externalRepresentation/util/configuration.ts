@@ -57,4 +57,12 @@ export class Configuration {
         );
     }
 
+    static configEdgeStyle(editor: mxEditor){
+        var style = editor.graph.stylesheet.getDefaultEdgeStyle();
+        //style[mxConstants.] = mxEdgeStyle.OrthConnector;
+        // style[mxConstants.STYLE_STROKECOLOR] = '#2b9cff';
+        // style[mxConstants.STYLE_STROKEWIDTH] = '6';
+        // style[mxConstants.STYLE_CURVED] = '1';
+    }
+
 }
