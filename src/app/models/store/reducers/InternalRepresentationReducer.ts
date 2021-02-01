@@ -8,7 +8,10 @@ class InternalRepresentationReducer {
     @Action
     public insertPageUICDL(store: InternalRepresentation, action: IRInsertPageUICDLAction): InternalRepresentation {
         store = { ...store };
+        // action.pageUICDL['imsMain'] = action.imsMain;
         store.pageUICDLs = { ...store.pageUICDLs, [action.pageUICDL.id]: action.pageUICDL };
+        store.pageUICDLs[action.pageUICDL.id] = {...store.pageUICDLs[action.pageUICDL.id]};
+        store.pageUICDLs[action.pageUICDL.id].imsMain = action.imsMain;
         return store;
     }
 

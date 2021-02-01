@@ -4,6 +4,7 @@ import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import { UIComponentConfig } from '../uicomponent-config';
 import { UIComponentFactory } from '../uicomponent-factory';
+import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 
 @Component({
   selector: 'compose-tab',
@@ -25,10 +26,17 @@ export class ComposeTabComponent implements OnInit {
   inputValue: string;
   formData: {};
 
+  constructor(private graphEditorService: GraphEditorService) {
+    this.isClean = false;
+    this.formData = {};
+
+  }
+
   chooseChild(event, option) {
     this.isClean = true;
     this.composeTarget = option;
-    this.subComponentBuilder = UIComponentFactory.create(this.composeTarget);
+    let pageId = this.graphEditorService.selectedPageId;
+    this.subComponentBuilder = UIComponentFactory.create(this.composeTarget, pageId);
     this.subComponentProperties = UIComponentConfig.getProperties(this.subComponentBuilder.type);
     this.buildForm();
   }
@@ -37,11 +45,6 @@ export class ComposeTabComponent implements OnInit {
     this.formData[value] = event;
   }
   
-  constructor() {
-    this.isClean = false;
-    this.formData = {};
-  }
-
   insertComponent() {
     this.isClean = false;
     if (!this.checkIsFormFill()) {

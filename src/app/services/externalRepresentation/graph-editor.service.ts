@@ -44,7 +44,7 @@ export default class GraphEditorService {
       let element = document.getElementById('graph-container');
       this.editor = new SelabEditor(element, this.store, this, this.dialog);
       this.backgroundCells = this.getGraphModel().cells;
-      let pageId = this.createPage("ImsMain");
+      let pageId = this.createPage("ImsMain", true);
       this.selectedPageId = pageId;
     }, 500)
   }
@@ -61,12 +61,12 @@ export default class GraphEditorService {
     return this.selectedPageId;
   }
 
-  createPage(pageName) {
+  createPage(pageName, isMain) {
     console.log('create page')
     let uuid = require('uuid');
     let pageId = `${this.editor.id}-${uuid.v1()}`;
     let newPage = new PageUICDL(pageId); // internalRepresentation
-    this.store.dispatch(new IRInsertPageUICDLAction(newPage));
+    this.store.dispatch(new IRInsertPageUICDLAction(newPage, isMain));
     this.store.dispatch(new IRRenamePageAction(pageId, pageName));
     this.store.dispatch(new ERInsertGraphStorageAction(new SelabGraph(pageId)))
     return pageId;
@@ -75,6 +75,8 @@ export default class GraphEditorService {
   deletePage(pageId: string) {
 
   }
+ 
+  
 
   navigation() {
     console.log("Hello Hello Hello")
@@ -117,9 +119,8 @@ export default class GraphEditorService {
     })
     subscribtion.unsubscribe();
     this.getGraph().refresh();
-    this.zoomOut();
-    this.zoomOut();
-    this.zoomOut();
+    for(let index = 0;index < 5;index++)
+      this.zoomOut();
   }
 
   changePage(sourcePageId: string, targetPageId: string) {
@@ -127,9 +128,8 @@ export default class GraphEditorService {
       this.clearGraphModel();
       GraphConfiguration.removeConnectionHandlerListener(this.getGraph());
       this.inNavigation = false;
-      this.zoomIn();
-      this.zoomIn();
-      this.zoomIn();
+      for(let index = 0;index < 5;index++)
+        this.zoomIn();
     }
 
     let active = true;

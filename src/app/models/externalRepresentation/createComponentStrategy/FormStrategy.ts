@@ -54,7 +54,7 @@ export class FormStrategy extends ICreateComponentStrategy {
         let formBoxCell = this.createFormBoxVertex(selabEditor, component, parent);
         let subComponentXOffset = 15;
         let subComponentYOffset = 40;
-        let maxWidth = 250;
+        let maxWidth = 200;
         for (let subUIComponent of component["componentList"]) {
             let vertex;
             // console.log(subUIComponent)

@@ -43,7 +43,7 @@ export class IRRenamePageAction implements Action {
 
 export class IRInsertPageUICDLAction implements Action {
     public type = IRActionTypes["INSERT_PAGE_UICDL"];
-    constructor(public pageUICDL: PageUICDL) {}
+    constructor(public pageUICDL: PageUICDL, public imsMain: boolean) {}
 }
 
 export class IRClearPageUICDLAction implements Action {

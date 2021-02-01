@@ -208,6 +208,7 @@ export class GraphConfiguration{
 
                 if ((result as string).length != 0) {
                     console.log(result);
+                    evt.properties.cell.value = result;
                 }
               });
         })   
