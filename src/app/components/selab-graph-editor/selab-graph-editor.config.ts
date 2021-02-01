@@ -193,7 +193,7 @@ export class GraphConfiguration{
         });
         
         graph.connectionHandler.addListener(mxEvent.CONNECT, function(sender, evt){
-            Function.name = "edgePropertyEditor"
+
             let sourceCell = evt.properties.cell.source.parent;
             let targetCell = evt.properties.cell.target;
             console.log(sourceCell)
@@ -226,19 +226,14 @@ export class GraphConfiguration{
             }
         ) 
         graph.removeMouseListener(connectionHandlerListener)
-
         graph.connectionHandler.eventListeners.forEach(
             (object, index) => {
                  if(object == "connect"){
                     connectionFunctionIndex = index;
-                     console.log("connect here")
                  }
             }
         ) 
-
         graph.connectionHandler.removeListener(graph.connectionHandler.eventListeners[connectionFunctionIndex+1])
-        console.log(graph)
-        console.log(graph.connectionHandler)
      }
 
 }

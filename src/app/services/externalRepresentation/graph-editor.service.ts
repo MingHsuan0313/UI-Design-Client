@@ -29,6 +29,7 @@ export default class GraphEditorService {
   backgroundCells: {};
   pages: string[]; // store all page name
   inNavigation: boolean;
+  zoomFactor = 1;
 
 
   constructor(private styleEditorService: StyleEditorService,
@@ -76,6 +77,7 @@ export default class GraphEditorService {
   }
 
   navigation() {
+    console.log("Hello Hello Hello")
     console.log(this.inNavigation)
     if(this.inNavigation == true)
       return;
@@ -85,9 +87,9 @@ export default class GraphEditorService {
     this.clearGraphModel();
     this.selectedPageId = "navigation";
     let pageUICDLs = this.store.select(pageUICDLSelector());
-    pageUICDLs.subscribe((pages) => {
+    let subscribtion = pageUICDLs.subscribe((pages) => {
       let keys = Object.keys(pages);
-
+      console.log("call navigation?")
       let xOffset = 0;
       let yOffset = 0;
       for (let index = 0; index < keys.length; index++) {
@@ -113,10 +115,11 @@ export default class GraphEditorService {
         xOffset = xOffset + offset;
       }
     })
+    subscribtion.unsubscribe();
     this.getGraph().refresh();
-    this.getGraph().zoomOut();
-    this.getGraph().zoomOut();
-    this.getGraph().zoomOut();
+    this.zoomOut();
+    this.zoomOut();
+    this.zoomOut();
   }
 
   changePage(sourcePageId: string, targetPageId: string) {
@@ -124,9 +127,9 @@ export default class GraphEditorService {
       this.clearGraphModel();
       GraphConfiguration.removeConnectionHandlerListener(this.getGraph());
       this.inNavigation = false;
-      this.getGraph().zoomIn();
-      this.getGraph().zoomIn();
-      this.getGraph().zoomIn();
+      this.zoomIn();
+      this.zoomIn();
+      this.zoomIn();
     }
 
     let active = true;
@@ -135,11 +138,12 @@ export default class GraphEditorService {
     this.selectedPageId = targetPageId;
     this.clearGraphModel();
     let pageUICDLs = this.store.select(pageUICDLSelector());
-    pageUICDLs.subscribe((data) => {
+    let subscribtion =  pageUICDLs.subscribe((data) => {
       if (active == false)
         return;
       let targetPageUICDL = data[targetPageId];
       let uiComponentList = this.IRTransformerService.transform(targetPageUICDL, this.getGraph());
+      console.log(uiComponentList)
       if (data[targetPageId].layout.length > 0)
         this.applyLayout(data[targetPageId].layout)
       uiComponentList.forEach(
@@ -150,6 +154,7 @@ export default class GraphEditorService {
       )
       active = false;
     })
+    subscribtion.unsubscribe();
   }
 
   clearGraphModel() {
@@ -251,5 +256,17 @@ export default class GraphEditorService {
 
   getMaxVertexID() {
     // return this.getGraphStorage().getMaxID();
+  }
+
+  zoomIn() {
+    this.zoomFactor = this.zoomFactor * 1.11;
+    this.getGraph().zoomFactor = this.zoomFactor;
+    this.zoomTo(this.zoomFactor);
+  }
+
+  zoomOut() {
+    this.zoomFactor = this.zoomFactor * 0.9;
+    this.getGraph().zoomFactor = this.zoomFactor;
+    this.zoomTo(this.zoomFactor);
   }
 }

@@ -318,15 +318,11 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     }
   }
   zoomIn() {
-    this.zoomFactor = this.zoomFactor * 1.11;
-    this.graphEditorService.getGraph().zoomFactor = this.zoomFactor;
-    this.graphEditorService.zoomTo(this.zoomFactor);
+    this.graphEditorService.zoomIn();
   }
 
   zoomOut() {
-    this.zoomFactor = this.zoomFactor * 0.9;
-    this.graphEditorService.getGraph().zoomFactor = this.zoomFactor;
-    this.graphEditorService.zoomTo(this.zoomFactor);
+    this.graphEditorService.zoomOut();
   }
 
 
