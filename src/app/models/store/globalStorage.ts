@@ -23,10 +23,18 @@ export class SelabGlobalStorage {
         }
     }
 
-    static addEdge(sourcePage, targetPage, parameter) {
+    static addEdge(source, target, parameter) {
         for(let index = 0;index < this.ndl['children'].length;index++) {
-            if(this.ndl['children'][index]['component'] == sourcePage['name']) {
-                this.ndl['children'][index]['destination'].push(targetPage['name'])
+            if(this.ndl['children'][index]['component'] == source['pageName']) {
+                this.ndl['children'][index]['destination'].push(target['pageName'])
+
+                this.ndl['children'][index]['edges'].push({
+                    "source": source['componentSelector'],
+                    "target": target["pageName"],
+                    "passingParameter": parameter
+                })
+
+
                 if(parameter != undefined && parameter.length > 0) {
                     this.ndl['children'][index]['parameters'].push(parameter);
                 }
@@ -44,8 +52,10 @@ export class SelabGlobalStorage {
             'isMain': page['imsMain'],
             'destination': [],
             'parameters': [],
-            'children': []
+            'children': [],
+            'edges': []
         }
+        console.log("Hello Hello Hello Hello Hello")
         this.ndl['children'].push(newPage);
     }
 

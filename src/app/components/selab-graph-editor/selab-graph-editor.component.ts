@@ -31,7 +31,6 @@ import { HttpParams } from '@angular/common/http';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 import { CodeEditorComponent } from '../code-editor/code-editor.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
-import { GraphConfiguration } from './selab-graph-editor.config'
 
 
 @Component({
@@ -64,15 +63,13 @@ export class SelabGraphEditorComponent implements AfterViewInit {
           this.pages = [];
           let keys = Object.keys(pageUICDLs);
           // console.log(keys);
-          SelabGlobalStorage.initializeNDL();
           for (let index = 0; index < keys.length; index++) {
             let key = keys[index];
             let page = {
               "name": pageUICDLs[key].name,
-              "imsMain": pageUICDLs[key].imsMain,
+              "isMain": pageUICDLs[key].isMain,
               "id": pageUICDLs[key].id
             }
-            SelabGlobalStorage.addNDL(page);
             this.pages.push(page);
           }
         })
@@ -84,7 +81,6 @@ export class SelabGraphEditorComponent implements AfterViewInit {
 
   showExternalRepresentation() {
     console.log(this.graphEditorService.getGraph());
-    console.log(SelabGlobalStorage.ndl);
     this.openSnackBar("show GraphModel in console", "display");
   }
 
@@ -165,7 +161,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   addPage() {
-    this.graphEditorService.createPage(`page${this.pages.length}`, false);
+    this.graphEditorService.createPage(`page${this.pages.length}`);
   }
 
   changePage(event) {
@@ -196,7 +192,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     newPageUICDL.isMain = isMain;
     Storage.setPageUICDL(newPageUICDL);
     // this.graphEditorService.createGraph(element);
-    this.store.dispatch(new IRInsertPageUICDLAction(newPageUICDL, isMain));
+    this.store.dispatch(new IRInsertPageUICDLAction(newPageUICDL));
     this.store.dispatch(new IRRenamePageAction(elementId, this.tabs[this.tabs.length - 1].name));
     this.graphEditorService.createEditor(element);
     this.configure();
@@ -266,29 +262,6 @@ export class SelabGraphEditorComponent implements AfterViewInit {
           })
       })
     })
-
-    GraphConfiguration.configConnectionHadlerListener(graph, this.dialog);
-  //   graph.connectionHandler.addListener(mxEvent.CONNECT, function(sender, evt){
-  //     console.log(evt)
-  //     let sourceCell = evt.properties.cell.source.parent;
-  //     let targetCell = evt.properties.cell.target;
-  //     console.log(sourceCell)
-  //     console.log(targetCell)
-
-      
-  //     const dialogRef = this.dialog.open(EdgeInformationDialogComponent, {
-  //         // width:'20%' ,
-  //         // height: '25%',
-  //         autoFocus: true,
-  //       });
-    
-  //       dialogRef.afterClosed().subscribe(result => {
-
-  //         if ((result as string).length != 0) {
-  //             console.log(result);
-  //         }
-  //       });
-  // })
 
   
   }

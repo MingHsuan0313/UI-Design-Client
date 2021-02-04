@@ -15,7 +15,8 @@ import { pageUICDLSelector } from "src/app/models/store/selectors/InternalRepres
 import IRTransformer from "../internalRepresentation/IRTransformer.service";
 import { MatDialog } from "@angular/material";
 import { LayoutStrategy } from "src/app/models/externalRepresentation/component-strategy-dependency";
-import { GraphConfiguration } from '../../components/selab-graph-editor/selab-graph-editor.config'
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage'
+import { Configuration } from "./util/configuration";
 
 @Injectable({
   providedIn: "root"
@@ -79,12 +80,11 @@ export default class GraphEditorService {
   
 
   navigation() {
-    console.log("Hello Hello Hello")
     console.log(this.inNavigation)
     if(this.inNavigation == true)
       return;
     this.inNavigation = true;
-    GraphConfiguration.configConnectionHadlerListener(this.getGraph(), this.dialog);
+    Configuration.configConnectionHadlerListener(this.getGraph(), this.dialog);
     this.syncStorage();
     this.clearGraphModel();
     this.selectedPageId = "navigation";
@@ -116,8 +116,51 @@ export default class GraphEditorService {
         let offset = document.getElementById('graph-container').offsetWidth;
         xOffset = xOffset + offset;
       }
+
+
+      let ndl = SelabGlobalStorage.ndl;
+      console.log(this.getGraphModel())
+      let cells = Object.values(this.getGraphModel().cells);
+      console.log(cells)
+      console.log(ndl)
+      if(ndl && ndl["children"]!=null){
+        
+        ndl["children"].forEach(
+          pageNdl => {
+           // console.log(pageNdl)
+            pageNdl["edges"].forEach(
+              edgeInfo => {
+
+                let source = edgeInfo["source"]
+                let targetPageId = ((Object.values(pages)).find(page => page["name"]==edgeInfo["target"]))["id"] 
+                let parameter = edgeInfo["passingParameter"]
+
+                let sourceCell = cells.find(cell => cell["selector"] == source)
+                let targetCell = cells.find(cell => 
+                  cell["pageId"] == targetPageId && cell["componentPart"] == "box" && cell["type"] == "layout"
+                )
+
+                console.log(sourceCell)
+                console.log(targetCell)
+                let size = 12/this.getGraph().zoomFactor;
+                let x = sourceCell.geometry.width-size/2;
+                let y = sourceCell.geometry.height/2-size/2;
+                let style = "shape=ellipse;rounded=0;strokeColor=#2b9cff;fillColor=#FFFFFF;strokeWidth=4"
+                let toolTipVertex = this.getGraph().insertVertex(sourceCell, "", "", x, y, size, size, style, false);
+                toolTipVertex["connectToolTip"] = true;
+                style = "strokeColor=#2b9cff;strokeWidth=6;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;"
+                let edge = this.getGraph().insertEdge(toolTipVertex,"","",toolTipVertex,targetCell,style)
+                edge.value = parameter;
+              }
+            )
+          }
+        )
+        
+      }
     })
     subscribtion.unsubscribe();
+
+
     this.getGraph().refresh();
     for(let index = 0;index < 5;index++)
       this.zoomOut();
@@ -126,7 +169,7 @@ export default class GraphEditorService {
   changePage(sourcePageId: string, targetPageId: string) {
     if(this.inNavigation == true) {
       this.clearGraphModel();
-      GraphConfiguration.removeConnectionHandlerListener(this.getGraph());
+      Configuration.removeConnectionHandlerListener(this.getGraph());
       this.inNavigation = false;
       this.zoomFactor = 1
       this.zoomTo(this.zoomFactor);

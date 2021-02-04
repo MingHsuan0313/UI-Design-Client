@@ -160,9 +160,10 @@ export class SelabHeaderComponent implements OnInit {
 
   storeNDL() {
     this.openSnackBar("save NDL to database", "save");
+    SelabGlobalStorage.initializeNDL();
     let pages = {};
     let cells = this.graphEditorService.getGraphModel().cells;
-    this.store.select(pageUICDLSelector())
+    let subscribtion = this.store.select(pageUICDLSelector())
       .subscribe((pageUICDLs) => {
         let keys = Object.keys(pageUICDLs);
         for(let index = 0;index < keys.length;index++) {
@@ -171,32 +172,41 @@ export class SelabHeaderComponent implements OnInit {
             'name': pageUICDLs[key].name,
             'id': pageUICDLs[key].id
           }
+          console.log("here")
+          SelabGlobalStorage.addNDL(pageUICDLs[key]);
           pages[pageUICDLs[key].id] = page;
         }
         keys = Object.keys(cells);
+        
         SelabGlobalStorage.cleanEdges();
         for(let index = 0;index < keys.length;index++) {
           let key = keys[index];
           if(cells[key]['edge'] == true) {
             console.log(cells[key]);
             let sourcePageId = cells[key]['source']['parent']['pageId'];
-            let sourcePage = {
-              'id': sourcePageId,
-              'name': pages[sourcePageId]['name']
+            console.log(cells[key])
+            console.log(pages)
+            let source = {
+              'pageId': sourcePageId,
+              'pageName': pages[sourcePageId]['name'],
+              'componentSelector': cells[key]['source']['parent']['selector'] 
             }
             let targetPageId = cells[key]['target']['pageId'];
-            let targetPage = {
-              'id': targetPageId,
-              'name': pages[targetPageId]['name']
+            let target = {
+              'pageId': targetPageId,
+              'pageName': pages[targetPageId]['name'], 
+              'componentSelector': cells[key]['target']['selector'] 
             }
 
-            console.log(sourcePage);
-            console.log(targetPage);
-            SelabGlobalStorage.addEdge(sourcePage, targetPage, cells[key].value);
+            console.log(source);
+            console.log(target);
+            SelabGlobalStorage.addEdge(source, target, cells[key].value);
           }
         }
       })
+    subscribtion.unsubscribe();
     console.log(cells);
+    console.log(SelabGlobalStorage.ndl)
     this.exportService.postNDL().subscribe(
       response => console.log(response['body'])
     );
@@ -243,13 +253,13 @@ export class SelabHeaderComponent implements OnInit {
     fileReader.readAsText(selectedFile, "UTF-8");
     fileReader.onload = () => {
       let pageUICDLObject = JSON.parse(fileReader.result as any);
-      let uuid = require('uuid');
-      let pageId = `graph-container-${uuid.v1()}`;
-
+      //let uuid = require('uuid');
+      //let pageId = `graph-container-${uuid.v1()}`;
+      let pageId = pageUICDLObject["id"]
       let pageUICDL = new PageUICDL(pageId); // internalRepresentation
 
       Object.assign(pageUICDL, pageUICDLObject);
-      pageUICDL['id'] = pageId;
+      //pageUICDL['id'] = pageId;
       this.store.dispatch(new IRInsertPageUICDLAction(pageUICDL, pageUICDL['isMain']));
       this.store.dispatch(new IRRenamePageAction(pageId, pageUICDL['name']));
       this.store.dispatch(new ERInsertGraphStorageAction(new SelabGraph(pageId)))
