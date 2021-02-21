@@ -8,18 +8,23 @@
                     Import BPEL
                 </label>
                 <label class="btn btn-info">
-                    <button class="btn btn-info" type="button" (click)="exportBPELDoc('graph.bpel')">Export BPEL</button>
+                    <button class="btn btn-info" type="button" (click)="exportBPELDoc('graph.bpel')">Export
+                        BPEL</button>
                 </label>
             </div>
             <div class="row" style="height:1300px; ">
                 <palette class="col" [userSettedTargetContainerActivity]="targetContainerActivity"></palette>
-                <selab-graph-editor class="col-8"></selab-graph-editor>
-                <property-editor class="col" (userSettedTargetContainerActivityEvent)="receiveTargetContainerActivity($event)"></property-editor>
+                <!-- <selab-graph-editor class="col-8"></selab-graph-editor> -->
+                <div style="background-color:rgb(241, 241, 241);height:790px; overflow:scroll; padding-left:10px"
+                    class="geEditor" id="bpel-graph-container">
+                </div>
+                <property-editor class="col"
+                    (userSettedTargetContainerActivityEvent)="receiveTargetContainerActivity($event)"></property-editor>
             </div>
         </div>
     </main>
 </div>
 
 <app-footer style=" background-color: #e4e5e6 ">
-<span><a href="#">SELab</a> &copy; 2020 </span>
+    <span><a href="#">SELab</a> &copy; 2020 </span>
 </app-footer>

@@ -1,13 +1,14 @@
-import { GraphStorage } from "src/app/models/graph-dependency";
 import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { BPELNode } from "../../models/components/BPELNode.model";
+import { GraphStorage } from "../../models/graph-storage.model";
+import { BpelDesignerEditorService } from "../bpel-designer-editor.service";
 
 export class IOBPELDocValidator {
     graphStorage: GraphStorage;
     curParentBPELNode: BPELNode;
     curBPELNode: BPELNode;
 
-    constructor(private graphEditorService : GraphEditorService) {
+    constructor(private graphEditorService : BpelDesignerEditorService) {
     }
 
     isImportBPELDocValid(xmlBPELDoc: XMLDocument): boolean {

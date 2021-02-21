@@ -1,5 +1,6 @@
-import { GraphStorage } from "src/app/models/graph-dependency";
 import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
+import { GraphStorage } from "../../models/graph-storage.model";
+import { BpelDesignerEditorService } from "../bpel-designer-editor.service";
 import IOBPELDocService from "./ioBPELDoc.service";
 
 const enum SORT_ORDER {
@@ -44,7 +45,7 @@ export class IOBPELDocParser {
     idCnt: number = 2;  // consistent with mxGraph Id
     componentIdMap: Map<Element, string> = new Map<Element, string>();
 
-    constructor(private ioBPELDocService: IOBPELDocService, private graphEditorService : GraphEditorService) {
+    constructor(private ioBPELDocService: IOBPELDocService, private graphEditorService : BpelDesignerEditorService) {
     }
 
     parseImportBPELDoc(xmlBPELDoc: XMLDocument): void {

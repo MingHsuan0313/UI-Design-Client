@@ -3,7 +3,7 @@ import ImportService from '../../services/internalRepresentation/import.service'
 import ExportService from '../../services/internalRepresentation/export.service';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { Storage } from '../../shared/storage';
-import { VertexStorage, StyleStorage , GraphStorage } from "../../models/graph-dependency";
+import { StyleStorage } from "../../models/graph-dependency";
 import { PropertyGenerator } from '../../shared/property-generator'
 import { DataBinding } from '../../models/externalRepresentation/util/DataBinding'
 import { ICreateComponentStrategy } from '../../models/externalRepresentation/createComponentStrategy/ICreateComponentStrategy';
@@ -21,6 +21,9 @@ import { from } from 'rxjs';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import StyleEditorService from 'src/app/services/externalRepresentation/style-editor.service';
 import { style } from '@angular/animations';
+import { BpelDesignerEditorService } from 'src/app/bpel-designer/services/bpel-designer-editor.service';
+import { GraphStorage } from 'src/app/bpel-designer/models/graph-storage.model';
+import VertexStorage from 'src/app/bpel-designer/models/vertext-storage.model';
 
 
 @Component({
@@ -36,7 +39,7 @@ export class NavEditorComponent implements OnInit {
 
   constructor(private importService: ImportService,
     private exportService: ExportService,
-    private graphEditorService: GraphEditorService,
+    private graphEditorService: BpelDesignerEditorService,
     private styleEditorService: StyleEditorService) {
     this.files = this.importService.pages;
     this.images = Storage.images;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BpelDesignerEditorService } from 'src/app/bpel-designer/services/bpel-designer-editor.service';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { Storage } from "../../shared/storage";
 
@@ -10,7 +11,7 @@ import { Storage } from "../../shared/storage";
 export class SelabHeaderNavigationFormComponent implements OnInit {
 
   private images:any[] = [];
-  constructor(private graphEditorService:GraphEditorService) { }
+  constructor(private graphEditorService: BpelDesignerEditorService) { }
 
   ngOnInit() {
   }
