@@ -4,13 +4,15 @@ import { UIComponent } from 'src/app/models/ui-component-dependency';
 
 export enum IRActionTypes {
     INSERT_PAGE_UICDL = "[InternalRepresentation] Insert PageUICDL",
-    INSERT_UI_COMPONENT = "[InternalRepresentation] Insert UI Component",    
+    INSERT_UI_COMPONENT = "[InternalRepresentation] Insert UI Component",  
+    INSERT_PAGE_IMAGE = "[InternalRepresentation] Insert Page Image",  
     DELETE_PAGE_UICDL = "[InternalRepresentation] Delete PageUICDL",
     CLEAR_PAGE_UICDL = "[InternalRepresentation] Clear PageUICDL",
     RENAME_PAGE = "[InternalRepresentation] Rename Page",
     SYNC_WITH_ER = "[InternalRepresentation] Sync With External Representation",
     SET_PROJECT_NAME  = "[InternalRepresentation] Set Project Name",
     SET_LAYOUT = "[InternalRepresentation] Set Layout",
+    
 }
     
 export class IRSetLayoutAction implements Action {
@@ -34,6 +36,11 @@ export class IRSyncWithERAction implements Action {
 export class IRSetProjectNameAction implements Action {
     public type = IRActionTypes["SET_PROJECT_NAME"];
     constructor(public projectName: string) {}
+}
+
+export class IRInsertPageImageAction implements Action {
+    public type = IRActionTypes["INSERT_PAGE_IMAGE"];
+    constructor(public id: string, public pageImage: string) {}
 }
 
 export class IRRenamePageAction implements Action {

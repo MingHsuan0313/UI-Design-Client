@@ -65,7 +65,9 @@ export class HttpClientService {
       requestBody,
       {
         headers: new HttpHeaders().set("Content-Type", "application/json"),
-        observe: "response", withCredentials: true, responseType: "text"
+        observe: "response",
+        //  withCredentials: true, 
+         responseType: "text"
       });
   }
 

@@ -13,6 +13,10 @@ export const pageNameSelector = (pageId: string) => createSelector(internalRepre
     return internalRepresentation.pageUICDLs[pageId].name;
 })
 
+export const pageImageSelector = (pageId: string) => createSelector(internalRepresentation,(internalRepresentation: InternalRepresentation) => {
+    return internalRepresentation.pageImages[pageId];
+})
+
 export const uiComponentSelector = (pageID: string,componentID: string) => createSelector(internalRepresentation,(internalRepresentation: InternalRepresentation) => {
     let componentList =internalRepresentation.pageUICDLs[pageID].body.componentList;
     for(let index = 0;index < componentList.length;index++) {

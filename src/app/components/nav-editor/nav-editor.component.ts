@@ -33,6 +33,7 @@ export class NavEditorComponent implements OnInit {
   private files: any[];
   private imageCount = 0;
   private imageObservable;
+  private imageString;
 
   constructor(private importService: ImportService,
     private exportService: ExportService,
@@ -44,34 +45,19 @@ export class NavEditorComponent implements OnInit {
 
   postXML() {
     let encoder = new mxCodec();
-
-    let result = encoder.encode(this.graphEditorService.getGraphStorage().getGraph().getModel());
+    let result = encoder.encode(this.graphEditorService.editor.getGraphModel());
     let xml = mxUtils.getXml(result);
     console.log(xml)
-    const pageUICDL = Storage.getPageUICDL();
-    console.log(JSON.parse(JSON.stringify(pageUICDL)));
-    pageUICDL["xml"] = xml;
+
     this.exportService.postImage(xml).subscribe(
       response => {
 
-        let pageID = pageUICDL["selector"];
-        let image = {};
-        image["page"] = pageID;
-        image["img"] = 'data:image/png;base64,' + response['body'];
-        let alreadyExistImageIndex = Storage.images.findIndex(image => {
-          return image["page"] == pageID
-        })
-        if (alreadyExistImageIndex == -1) {
-          Storage.images.push(image);
-        }
-        else {
-          this.images[alreadyExistImageIndex] = image;
-        }
+        
+        this.imageString = 'data:image/png;base64,' + response['body'];
+        console.log(JSON.stringify(this.imageString))
 
-        pageUICDL["image"] = JSON.stringify(image["img"]);
 
-        this.makeDragableOfDom(pageID, pageUICDL, this.graphEditorService.selectedGraphStorage);
-
+        //this.makeDragableOfDom(pageID, pageUICDL, this.graphEditorService.selectedGraphStorage);
       }
     )
   }

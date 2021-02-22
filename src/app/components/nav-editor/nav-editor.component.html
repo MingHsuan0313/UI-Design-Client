@@ -11,9 +11,8 @@
     <button class="btn btn-outline-primary" (click)="postXML()">Post XML</button>
   </div>  
   <hr>
-  <div *ngFor="let f of images">
-    <a>{{f["page"]}}</a>
-    <img id="{{f.page}}" [src]="f.img" alt="image" style="height: 100px;width: 200px">
+  <div>
+    <img [src]="imageString" alt="image" style="height: 100px;width: 200px">
     <hr>
   </div>
   <router-outlet></router-outlet>

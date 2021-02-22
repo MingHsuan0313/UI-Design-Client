@@ -37,11 +37,13 @@
 <div style="background-color:rgb(241, 241, 241);height:790px; overflow:scroll; padding-left:10px" class="geEditor"
     id="graph-container">
 </div>
+
+
 <mat-tab-group #tabGroup [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)" (selectedTabChange)="changePage($event)">
     <mat-tab style="display:none"></mat-tab>
-    <mat-tab *ngFor="let page of pages; let index = index" label="{{page.name}}">
-        <ng-template mat-tab-label>
-            <span id="tab-{{index}}" (dblclick)="changeTabName(index)" style="font-size: large; color:#188038 !important"> {{page.name}}
+    <mat-tab *ngFor="let page of pages; let index = index" label="{{page.name}}" >
+        <ng-template mat-tab-label >
+            <span (mouseenter)="openThumbNail(index,$event)" (mouseleave)="closeThumbNail()" id="tab-{{index}}" (dblclick)="changeTabName(index)" style="font-size: large; color:#188038 !important"> {{page.name}}
             </span>
             <!-- <span *ngIf="isModified(tab.graphID) == true" style="margin-left:10px; font-weight:10px;">*</span> -->
             <button (click)="closePage(index)" mat-button style="min-width: 10px;" matTooltip="close">
@@ -61,6 +63,7 @@
         </ng-template>
     </mat-tab>
 </mat-tab-group>
+
 
 <!-- <mat-tab-group #tabGroup [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)"
     (selectedTabChange)="onTabChange($event)" headerPosition="below">

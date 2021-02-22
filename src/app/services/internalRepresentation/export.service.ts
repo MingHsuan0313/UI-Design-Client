@@ -12,7 +12,7 @@ export default class ExportService {
   private baseUrl: string;
   constructor(private httpClient: HttpClient,
     private httpClientService: HttpClientService) {
-    this.baseUrl = "page";
+    this.baseUrl = "";
 
   }
 
@@ -52,9 +52,15 @@ export default class ExportService {
     // );
   }
 
-  postImage(xml) {
+  getImageFromModel(graphModel) {
     let url = `${this.baseUrl}/navigation/exportPicture`
-    return this.httpClientService.httpPost(url,xml,"uiDesignServer");
+    let encoder = new mxCodec();
+    let result = encoder.encode(graphModel);
+    let xml = mxUtils.getXml(result);
+    //console.log(xml)
+    let imageString
+    return this.httpClientService.httpPost(url,xml,"uiDesignServer")
+
     // return this.httpClient.post("http://localhost:8080/exportPicture", xml,
     //   {
     //     headers: new HttpHeaders().set("Content-Type", "application/json"),

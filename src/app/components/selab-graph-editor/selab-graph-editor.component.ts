@@ -20,7 +20,7 @@ import {
   MatSnackBarVerticalPosition
 } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { pageUICDLSelector, uiComponentSelector } from 'src/app/models/store/selectors/InternalRepresentationSelector';
+import { pageImageSelector, pageUICDLSelector, uiComponentSelector } from 'src/app/models/store/selectors/InternalRepresentationSelector';
 import { TabNameDialogComponent } from './tab-name-dialog/tab-name-dialog.component';
 import { EdgeInformationDialogComponent } from './edge-information-dialog/egde-information-dialog.component';
 import { vertexSelector } from 'src/app/models/store/selectors/ExternalRepresentationSelector';
@@ -31,6 +31,7 @@ import { HttpParams } from '@angular/common/http';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 import { CodeEditorComponent } from '../code-editor/code-editor.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
+import { ThumbnailDialog } from './thumbnail-dialog/thumbnail-dialog'
 
 
 @Component({
@@ -40,6 +41,7 @@ import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 })
 export class SelabGraphEditorComponent implements AfterViewInit {
   selectedPageId: string;
+  thumbnail: string;
   private zoomFactor = 1;
   public tabs: TabModel[] = [new TabModel("imsMain", "graphContainer-0")];
   selected = new FormControl(0);
@@ -332,6 +334,49 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     html2canvas(element).then(function (canvas) {
       originalThis.saveAs(canvas.toDataURL(), 'file-name.png');
     });
+  }
+
+  // selectToolTip(pageIndex){
+  //   let pageId = this.pages[pageIndex].id;
+  //   let image;
+  //   this.store.select(pageImageSelector(pageId))
+  //       .subscribe(pageImage => {
+  //         image = pageImage
+  //       })
+  //   console.log(image)
+  //   return image
+  // }
+
+  openThumbNail(pageIndex, event){
+    console.log(event)
+    let pageId = this.pages[pageIndex].id;
+    console.log(pageId)
+    let subscribtion = this.store.select(pageImageSelector(pageId))
+        .subscribe(
+        pageImage => {
+          this.thumbnail = pageImage
+          if(this.thumbnail){
+            const dialogRef = this.dialog.open(ThumbnailDialog, {
+            // width: '250px',
+              //height: '850px',
+              data: this.thumbnail,
+              autoFocus: false,
+              hasBackdrop: false,
+              position: {top: '45%', left: String(event.clientX)+'px'}
+            });
+        
+            dialogRef.afterClosed().subscribe(result => {
+
+            });
+          }
+        })
+    subscribtion.unsubscribe();
+
+  }
+
+  closeThumbNail(){
+    this.dialog.closeAll();
+
   }
 
   clearGraph() {

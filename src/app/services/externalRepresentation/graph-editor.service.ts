@@ -5,7 +5,7 @@ import { AppState } from "src/app/models/store/app.state";
 import { Action, Store } from "@ngrx/store";
 import { SelabEditor } from "src/app/models/externalRepresentation/selab-editor.model";
 import { UIComponent } from "src/app/models/ui-component-dependency";
-import { IRInsertPageUICDLAction, IRRenamePageAction, IRSyncWithERAction } from "src/app/models/store/actions/internalRepresentation.action";
+import { IRInsertPageImageAction,  IRInsertPageUICDLAction, IRRenamePageAction, IRSyncWithERAction } from "src/app/models/store/actions/internalRepresentation.action";
 import { element } from "@angular/core/src/render3/instructions";
 import { PageUICDL } from "src/app/models/internalRepresentation/pageUICDL.model";
 import { SelabPageModel } from "./selab-page.model";
@@ -17,6 +17,7 @@ import { MatDialog } from "@angular/material";
 import { LayoutStrategy } from "src/app/models/externalRepresentation/component-strategy-dependency";
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage'
 import { Configuration } from "./util/configuration";
+import ExportService from 'src/app/services/internalRepresentation/export.service'
 
 @Injectable({
   providedIn: "root"
@@ -36,6 +37,7 @@ export default class GraphEditorService {
   constructor(private styleEditorService: StyleEditorService,
     private store: Store<AppState>,
     private IRTransformerService: IRTransformer,
+    private exportService: ExportService,
     private dialog: MatDialog
   ) {
     this.inNavigation = false;
@@ -140,8 +142,6 @@ export default class GraphEditorService {
                   cell["pageId"] == targetPageId && cell["componentPart"] == "box" && cell["type"] == "layout"
                 )
 
-                console.log(sourceCell)
-                console.log(targetCell)
                 let size = 12/this.getGraph().zoomFactor;
                 let x = sourceCell.geometry.width-size/2;
                 let y = sourceCell.geometry.height/2-size/2;
@@ -177,6 +177,8 @@ export default class GraphEditorService {
 
     let active = true;
     console.log('change page');
+
+    
     this.syncStorage();
     this.selectedPageId = targetPageId;
     this.clearGraphModel();
@@ -260,6 +262,17 @@ export default class GraphEditorService {
     let model = this.getGraphModel().cells;
     let cells = this.generateGraphModel(model);
     this.store.dispatch(new IRSyncWithERAction(this.selectedPageId, cells as any))
+    let changedPageId = this.selectedPageId
+    this.exportService.getImageFromModel(this.editor.getGraphModel()).subscribe(
+      response => {
+        let image = 'data:image/png;base64,' + response['body'];
+        console.log(this.selectedPageId+ " " +changedPageId)
+
+        console.log("Ready to store page image, pageID:" + changedPageId)
+        console.log(image[50])
+        this.store.dispatch(new IRInsertPageImageAction(changedPageId, image))
+      }
+    );
   }
 
   generateGraphModel(model) {

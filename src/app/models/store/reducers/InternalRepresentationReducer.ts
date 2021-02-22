@@ -1,7 +1,7 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction, IRRenamePageAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRInsertPageImageAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction, IRRenamePageAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 
 class InternalRepresentationReducer {
@@ -12,6 +12,16 @@ class InternalRepresentationReducer {
         store.pageUICDLs = { ...store.pageUICDLs, [action.pageUICDL.id]: action.pageUICDL };
         store.pageUICDLs[action.pageUICDL.id] = {...store.pageUICDLs[action.pageUICDL.id]};
         store.pageUICDLs[action.pageUICDL.id].imsMain = action.imsMain;
+        return store;
+    }
+
+    @Action
+    public insertPageImage(store: InternalRepresentation, action: IRInsertPageImageAction): InternalRepresentation {
+        store = { ...store };
+        // action.pageUICDL['imsMain'] = action.imsMain;
+        store.pageImages = { ...store.pageImages, [action.id]: action.pageImage };
+        // store.pageUICDLs[action.pageUICDL.id] = {...store.pageUICDLs[action.pageUICDL.id]};
+        // store.pageUICDLs[action.pageUICDL.id].imsMain = action.imsMain;
         return store;
     }
 
