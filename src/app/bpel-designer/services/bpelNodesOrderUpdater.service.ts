@@ -1,11 +1,12 @@
-import { GraphStorage } from "src/app/models/graph-dependency";
 import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { BPELComponent } from "../models/components/BPELComponent.model";
+import { GraphStorage } from "../models/graph-storage.model";
+import { BpelDesignerEditorService } from "./bpel-designer-editor.service";
 
 export class BPELNodesOrderUpdater {
     graphStorage: GraphStorage;
 
-    constructor(private graphEditorService: GraphEditorService) {
+    constructor(private graphEditorService: BpelDesignerEditorService) {
     }
 
     updateOrder(targetActivity: BPELComponent): void {

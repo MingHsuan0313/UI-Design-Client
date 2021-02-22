@@ -33,7 +33,6 @@ export default class GraphEditorService {
   inNavigation: boolean;
   zoomFactor = 1;
 
-
   constructor(private styleEditorService: StyleEditorService,
     private store: Store<AppState>,
     private IRTransformerService: IRTransformer,
