@@ -1,4 +1,4 @@
-import { GraphStorage } from "../externalRepresentation/graph-storage.model";
+// import { GraphStorage } from "../externalRepresentation/graph-storage.model";
 import { PageUICDL } from "../internalRepresentation/pageUICDL.model";
 import { PipelineStorage } from "../wizard-task-dependency";
 import { SelabGraph } from "../externalRepresentation/selabGraph.model";
@@ -13,9 +13,10 @@ export interface AppState {
 export class InternalRepresentation {
     pageUICDLs: Map<string,PageUICDL>;
     projectName: string;
+    themes: any[];
     constructor() {
         this.pageUICDLs = new Map<string,PageUICDL>();
-
+        this.themes = [];
     }
 }
 

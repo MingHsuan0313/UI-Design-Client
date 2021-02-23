@@ -1,10 +1,42 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRInsertUIComponentAction, IRRenamePageAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 
 class InternalRepresentationReducer {
+    @Action
+    public insertTheme(store: InternalRepresentation, action:IRInsertThemeAction): InternalRepresentation {
+        store = { ... store };
+        let theme = {
+            name: action.name,
+            id: action.id,
+            pages: []
+        };
+        store.themes = [...store.themes, theme]
+        return store;
+    }
+
+    @Action
+    public deleteTheme(store: InternalRepresentation, action: IRDeleteThemeAction): InternalRepresentation {
+        store = {... store};
+        store.themes = [...store.themes];
+        if(action.index > -1)
+            store.themes.splice(action.index, 1);
+        return store;
+    }
+
+    @Action
+    public renameTheme(store: InternalRepresentation, action: IRRenameThemeAction): InternalRepresentation {
+        store = {...store};
+        store.themes = [...store.themes];
+        store.themes[action.index] = {
+            ...store.themes[action.index],
+            name: action.newName
+        }
+        return store;
+    }
+
     @Action
     public insertPageUICDL(store: InternalRepresentation, action: IRInsertPageUICDLAction): InternalRepresentation {
         store = { ...store };
@@ -12,11 +44,17 @@ class InternalRepresentationReducer {
         store.pageUICDLs = { ...store.pageUICDLs, [action.pageUICDL.id]: action.pageUICDL };
         store.pageUICDLs[action.pageUICDL.id] = {...store.pageUICDLs[action.pageUICDL.id]};
         store.pageUICDLs[action.pageUICDL.id].imsMain = action.imsMain;
+
+        // console.log(action.selectedTheme['index'])
+        console.log(action.selectedThemeIndex);
+        store.themes = [...store.themes];
+        store.themes[action.selectedThemeIndex] = { ... store.themes[action.selectedThemeIndex]};
+        store.themes[action.selectedThemeIndex].pages = [... store.themes[action.selectedThemeIndex].pages, {name: action.pageUICDL.name, id: action.pageUICDL.id}];
         return store;
     }
 
     @Action
-    public setLayout(store: InternalRepresentation, action: IRSetLayoutAction) {
+    public setLayout(store: InternalRepresentation, action: IRSetLayoutAction): InternalRepresentation {
         if(action.id == undefined)
             return;
         store = {...store};
@@ -41,17 +79,13 @@ class InternalRepresentationReducer {
             return store;
         store = { ...store };
         let graphModel = action.graphModel;
-        // console.log(graphModel);
         store.pageUICDLs = { ...store.pageUICDLs };
         store.pageUICDLs[action.id] = { ...store.pageUICDLs[action.id] };
         store.pageUICDLs[action.id].body = { ...store.pageUICDLs[action.id].body };
-        // console.log(store.pageUICDLs[action.id].body.componentList)
         if(store.pageUICDLs[action.id].body.componentList == undefined)
             return store;
         store.pageUICDLs[action.id].body.componentList = [...store.pageUICDLs[action.id].body.componentList];
         let componentLength = store.pageUICDLs[action.id].body.componentList.length;
-
-        // console.log("cell size: " + graphModel.length);
         for (let j = 0; j < graphModel.length; j++) {
             let flag = true;
             let cell = graphModel[j];
@@ -68,21 +102,9 @@ class InternalRepresentationReducer {
                         let subComponentID = store.pageUICDLs[action.id].body.componentList[index].componentList[k].id;
                         // console.log(`hello componentID = ${componentID}\nsubComponentID = ${subComponentID}`);
                         if (cell["componentID"] == subComponentID && cell["isPrimary"] == true) {
-                            // console.log("hello subComponent Here");
-                            // console.log(store.pageUICDLs[action.id].body.componentList[index].componentList[k])
                             store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent);
                             store.pageUICDLs[action.id].body.componentList[index].componentList = [ ...store.pageUICDLs[action.id].body.componentList[index].componentList ];
                             store.pageUICDLs[action.id].body.componentList[index].componentList[k] = {...store.pageUICDLs[action.id].body.componentList[index].componentList[k] as UIComponent, style:cell['style'], geometry: cell['geometry']};
-                            // store.pageUICDLs[action.id].body.componentList[index].componentList[k].geometry = { ...store.pageUICDLs[action.id].body.componentList[index].componentList[k].geometry};
-                            // store.pageUICDLs[action.id].body.componentList[index].componentList[k].geometry = cell['geometry'];
-                            // store.pageUICDLs[action.id].body.componentList[index].componentList[k].style = { ...store.pageUICDLs[action.id].body.componentList[index].componentList[k].style};
-                            // store.pageUICDLs[action.id].body.componentList[index].componentList[k].style = cell['style'] ;
-                            // console.log("update");
-                            // console.log(cell["geometry"])
-                            // console.log(cell["style"]);
-                            // console.log(store.pageUICDLs[action.id].body.componentList[index].componentList[k]);
-                            // console.log(store.pageUICDLs[action.id].body.componentList)
-
                             flag = false;
                         }
                         if(!flag)
@@ -91,12 +113,7 @@ class InternalRepresentationReducer {
                 }
 
                 if (cell["componentID"] == componentID && cell["isPrimary"] == true) {
-                    // store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent);
                     store.pageUICDLs[action.id].body.componentList[index] = {...store.pageUICDLs[action.id].body.componentList[index] as UIComponent, geometry: cell['geometry'], style: cell['style']};
-                    // store.pageUICDLs[action.id].body.componentList[index].geometry = { ...store.pageUICDLs[action.id].body.componentList[index].geometry};
-                    // store.pageUICDLs[action.id].body.componentList[index].geometry = cell["geometry"];
-                    // store.pageUICDLs[action.id].body.componentList[index].style = { ...store.pageUICDLs[action.id].body.componentList[index].style};
-                    // store.pageUICDLs[action.id].body.componentList[index].style = cell["style"];
                     flag = false;
                 }
 
@@ -104,8 +121,6 @@ class InternalRepresentationReducer {
                     break;
             }
         }
-
-        // console.log(store.pageUICDLs[action.id].body.componentList)
         return store;
     }
 
@@ -114,6 +129,11 @@ class InternalRepresentationReducer {
         store = { ...store };
         store.pageUICDLs = { ...store.pageUICDLs };
         delete store.pageUICDLs[action.id];
+
+        store.themes = [...store.themes];
+        store.themes[action.selectedThemeIndex] = {...store.themes[action.selectedThemeIndex]};
+        store.themes[action.selectedThemeIndex].pages = [...store.themes[action.selectedThemeIndex].pages];
+        store.themes[action.selectedThemeIndex].pages.splice(action.pageIndex, 1);
         return store;
     }
 
@@ -126,9 +146,14 @@ class InternalRepresentationReducer {
         if(action.pageName == 'imsMain') {
             store.pageUICDLs[action.id].imsMain = true;
         }
+
+        store.themes = [...store.themes];
+        store.themes[action.themeIndex] = {...store.themes[action.themeIndex]}
+        store.themes[action.themeIndex].pages = [...store.themes[action.themeIndex].pages];
+        store.themes[action.themeIndex].pages[action.pageIndex] = {...store.themes[action.themeIndex].pages[action.pageIndex]};
+        store.themes[action.themeIndex].pages[action.pageIndex].name = action.pageName; 
         return store;
     }
-
 
     @Action
     public clearPageUICDL(store: InternalRepresentation, action: IRClearPageUICDLAction): InternalRepresentation {

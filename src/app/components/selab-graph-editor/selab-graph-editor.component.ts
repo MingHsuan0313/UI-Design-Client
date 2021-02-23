@@ -161,7 +161,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   addPage() {
-    this.graphEditorService.createPage(`page${this.pages.length}`);
+    // this.graphEditorService.createPage(`page${this.pages.length}`);
   }
 
   changePage(event) {

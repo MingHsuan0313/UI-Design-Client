@@ -10,7 +10,8 @@ export class BpelDesignerEditorService {
     constructor() {
         setTimeout(() => {
             let element = document.getElementById('bpel-graph-container');
-            this.graphStorage = new GraphStorage(element, 'bpel-graph-container');
+            if(element != null)
+                this.graphStorage = new GraphStorage(element, 'bpel-graph-container');
         }, 100)
     }
 

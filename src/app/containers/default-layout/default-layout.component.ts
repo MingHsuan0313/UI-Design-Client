@@ -32,7 +32,7 @@ export class DefaultLayoutComponent implements OnInit {
       console.log(`project name you choose is ${projectName}`);
       SelabGlobalStorage.setProjectName(projectName);
       this.store.dispatch(new IRSetProjectNameAction(projectName));
-      document.getElementById('tab-0').click();
+      // document.getElementById('tab-0').click();
     })
   }
 

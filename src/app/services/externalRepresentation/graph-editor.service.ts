@@ -38,15 +38,17 @@ export default class GraphEditorService {
     private dialog: MatDialog
   ) {
     this.inNavigation = false;
-    setTimeout(() => {
-      this.pages = [];
-      this.selectedUIComponent = undefined;
-      let element = document.getElementById('graph-container');
-      this.editor = new SelabEditor(element, this.store, this, this.dialog);
-      this.backgroundCells = this.getGraphModel().cells;
-      let pageId = this.createPage("ImsMain", true);
-      this.selectedPageId = pageId;
-    }, 500)
+    // setTimeout(() => {
+    //   this.pages = [];
+    //   this.selectedUIComponent = undefined;
+    //   let element = document.getElementById('graph-container');
+    //   if(element != null) {
+    //     this.editor = new SelabEditor(element, this.store, this, this.dialog);
+    //     this.backgroundCells = this.getGraphModel().cells;
+    //     let pageId = this.createPage("ImsMain", true);
+    //     this.selectedPageId = pageId;
+    //   }
+    // }, 500)
   }
 
 

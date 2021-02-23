@@ -8,7 +8,10 @@ import { SelabGraphEditorComponent } from '../selab-graph-editor.component';
   styleUrls: ['./tab-name-dialog.component.css']
 })
 export class TabNameDialogComponent implements OnInit {
-  currentTabName: string;
+  currentPageName: string;
+  currentType: string;
+  currentThemeName: string;
+  originalName: string;
 
   constructor(
     public dialogRef: MatDialogRef<SelabGraphEditorComponent>,
@@ -16,12 +19,33 @@ export class TabNameDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.currentTabName = this.data.tabName.name;
-    console.log(this.currentTabName);
+    console.log(this.data);
+    this.currentType  = this.data.type;
+    if(this.currentType == "theme") {
+      this.currentThemeName = this.data.tabName;
+      this.originalName = this.currentThemeName;
+    }
+    else if(this.currentType == "page") {
+      this.currentPageName = this.data.tabName;
+      this.currentThemeName = this.data.themeName;
+      this.originalName = this.currentPageName;
+    }
+    // console.log(this.currentTabName);
   }
   
   closeDialog() {
-    this.dialogRef.close(this.currentTabName);
+    if(this.currentType == 'page') {
+      if(this.currentPageName.length != 0)
+        this.dialogRef.close(this.currentPageName);
+    }
+
+    else if(this.currentType == 'theme') {
+      if(this.currentThemeName.length != 0)
+        this.dialogRef.close(this.currentThemeName);
+    }
   }
 
+  noDialog() {
+    this.dialogRef.close(this.originalName);
+  }
 }

@@ -34,16 +34,18 @@
 </mat-menu>
 
 
-<div style="background-color:rgb(241, 241, 241);height:790px; overflow:scroll; padding-left:10px" class="geEditor"
+<div style="background-color:rgb(241, 241, 241);height:780px; overflow:scroll; padding-left:10px" class="geEditor"
     id="graph-container">
 </div>
-<mat-tab-group #tabGroup [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)" (selectedTabChange)="changePage($event)">
+<app-theme-tabs></app-theme-tabs>
+<!-- <mat-tab-group #tabGroup [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)"
+    (selectedTabChange)="changePage($event)">
     <mat-tab style="display:none"></mat-tab>
     <mat-tab *ngFor="let page of pages; let index = index" label="{{page.name}}">
         <ng-template mat-tab-label>
-            <span id="tab-{{index}}" (dblclick)="changeTabName(index)" style="font-size: large; color:#188038 !important"> {{page.name}}
+            <span id="tab-{{index}}" (dblclick)="changeTabName(index)"
+                style="font-size: large; color:#188038 !important"> {{page.name}}
             </span>
-            <!-- <span *ngIf="isModified(tab.graphID) == true" style="margin-left:10px; font-weight:10px;">*</span> -->
             <button (click)="closePage(index)" mat-button style="min-width: 10px;" matTooltip="close">
                 <mat-icon style="margin-bottom:15px;" svgIcon="close"></mat-icon>
             </button>
@@ -61,6 +63,33 @@
         </ng-template>
     </mat-tab>
 </mat-tab-group>
+
+<mat-tab-group>
+    <mat-tab label="test1">
+        <ng-template mat-tab-label>
+            <span> theme1 </span>
+            <button (click)="closePage(index)" mat-button style="min-width: 10px;" matTooltip="close">
+                <mat-icon style="margin-bottom:15px;" svgIcon="close"></mat-icon>
+            </button>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="test2">
+        <ng-template mat-tab-label>
+            <span> theme2 </span>
+            <button (click)="closePage(index)" mat-button style="min-width: 10px;" matTooltip="close">
+                <mat-icon style="margin-bottom:15px;" svgIcon="close"></mat-icon>
+            </button>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="test2">
+        <ng-template mat-tab-label>
+            <span> theme2 </span>
+            <button (click)="closePage(index)" mat-button style="min-width: 10px;" matTooltip="close">
+                <mat-icon style="margin-bottom:15px;" svgIcon="close"></mat-icon>
+            </button>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group> -->
 
 <!-- <mat-tab-group #tabGroup [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)"
     (selectedTabChange)="onTabChange($event)" headerPosition="below">

@@ -1,0 +1,64 @@
+<mat-tab-group #themeTabGroup
+  [selectedIndex]="selectedThemeIndex.value"
+  (selectedIndexChange)="selectedThemeIndex.setValue($event)"
+  (selectedTabChange)="changeTheme($event)"
+>
+  <mat-tab 
+    *ngFor="let theme of themes; let index = index"
+    label="{{theme.name}}"
+    >
+    <ng-template mat-tab-label>
+      <span id="theme-tab-{{index}}" (dblclick)="renameTheme(index)" style="color: #188038; font-size: large;"> {{theme.name}}
+      </span>
+      <button (click)="closeTheme(index)" mat-button style="min-width: 5px;" matTooltip="close">
+        <mat-icon style="margin-bottom:15px;" svgIcon="close"></mat-icon>
+      </button>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab
+    disabled 
+    tooltip="New Theme" 
+    label="New Theme"
+  >
+    <ng-template mat-tab-label>
+      <button (click)="addTheme()" mat-button
+        style="min-width: 15px; margin-top:5px; padding-left: 0px; padding-right: 0px; height: 20px;"
+        matTooltip="add new theme">
+        <span>
+          <mat-icon style="color: black;">add</mat-icon>
+        </span></button>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+
+<mat-tab-group #pageTabGroup
+    [selectedIndex]="selectedPageIndex.value"
+    (selectedIndexChange)="selectedPageIndex.setValue($event)"
+    (selectedTabChange)="changePage($event)"
+>
+  <mat-tab 
+    *ngFor="let page of selectedTheme.pages; let index = index" 
+    label="{{page.name}}"
+  >
+
+    <ng-template mat-tab-label>
+      <span id="page-tab-{{index}}" (dblclick)="renamePage(index)" style="color: #333333 !important"> {{page.name}}
+      </span>
+      <button (click)="closePage(index)" mat-button style="min-width: 5px;" matTooltip="close">
+        <mat-icon style="margin-bottom:15px;" svgIcon="close"></mat-icon>
+      </button>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab disabled tooltip="New Tab" label="New Tab">
+    <ng-template mat-tab-label>
+      <button (click)="addPage()" mat-button
+        style="min-width: 15px; margin-top:5px; padding-left: 0px; padding-right: 0px; height: 20px;"
+        matTooltip="add new page">
+        <span>
+          <mat-icon style="color: black;">add</mat-icon>
+        </span></button>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
