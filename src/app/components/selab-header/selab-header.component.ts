@@ -273,7 +273,7 @@ export class SelabHeaderComponent implements OnInit {
           this.graphEditorService.bindComponent(uiComponent, uiComponent.geometry);
         }
       )
-      this.graphEditorService.clearGraphModel();
+      this.graphEditorService.clearGraphEditor();
       this.graphEditorService.selectedPageId = originalId;
     }
     fileReader.onerror = (error) => {

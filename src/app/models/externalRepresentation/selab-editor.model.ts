@@ -10,7 +10,6 @@ import { BreadcrumbStrategy, ButtonStrategy, CardStrategy, DropdownStrategy, For
 import { ICreateComponentStrategy } from "./createComponentStrategy/ICreateComponentStrategy";
 import { IRSetLayoutAction } from "../store/actions/internalRepresentation.action";
 import { MatDialog } from "@angular/material";
-import { GraphConfiguration } from "src/app/components/selab-graph-editor/selab-graph-editor.config";
 
 export class SelabEditor {
     editor: mxEditor;
@@ -66,7 +65,7 @@ export class SelabEditor {
     applyLayout(layout: string, xOffset?, yOffset?) {
         let active = true;
         // console.log("apply Layout")
-        let graphID = this.graphEditorService.getSelectedGraphID();
+        let graphID = this.graphEditorService.getSelectedPageId();
         this.store.dispatch(new IRSetLayoutAction(graphID, layout));
         // let graphID = "graph-container";
         this.setStrategy(new LayoutStrategy(graphID, new mxGeometry(0, 0, 0, 0)));
@@ -98,8 +97,8 @@ export class SelabEditor {
             vertex['pageId'] = component.pageId;
             vertex["selector"] = component.selector;
             vertex["type"] = component.type;
-            let graphID = this.graphEditorService.getSelectedGraphID();
-            this.store.dispatch(new ERInsertVertexAction(graphID, selabVertex));
+            // let graphID = this.graphEditorService.getSelectedPageId();
+            // this.store.dispatch(new ERInsertVertexAction(graphID, selabVertex));
         } finally {
             this.getGraph().getModel().endUpdate();
         }

@@ -59,7 +59,7 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
-        let id = this.graphEditorService.getSelectedGraphID();
+        let id = this.graphEditorService.getSelectedPageId();
         console.log("start creating");
         console.log(this.uiComponentBuilder);
         let uiComponent = this.uiComponentBuilder.build();

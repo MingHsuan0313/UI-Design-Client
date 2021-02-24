@@ -41,11 +41,7 @@ import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 export class SelabGraphEditorComponent implements AfterViewInit {
   selectedPageId: string;
   private zoomFactor = 1;
-  public tabs: TabModel[] = [new TabModel("imsMain", "graphContainer-0")];
-  selected = new FormControl(0);
   verticalPosition: MatSnackBarVerticalPosition = "top";
-  pages: any[];
-  @ViewChild("tabGroup") tabGroup: MatTabGroup;
   @Input() setting: SelabSettingComponent;
   constructor(private graphEditorService: GraphEditorService,
     private exportService: ExportService,
@@ -55,25 +51,6 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     public codeEditor: MatDialog,
     private serviceComponentService: ServiceComponentService
   ) {
-    this.pages = [];
-    setTimeout(() => {
-      this.store.select(pageUICDLSelector())
-        .subscribe((pageUICDLs) => {
-          // this.pages = [{"name":"", "isMain":"", "id": ""}];
-          this.pages = [];
-          let keys = Object.keys(pageUICDLs);
-          // console.log(keys);
-          for (let index = 0; index < keys.length; index++) {
-            let key = keys[index];
-            let page = {
-              "name": pageUICDLs[key].name,
-              "isMain": pageUICDLs[key].isMain,
-              "id": pageUICDLs[key].id
-            }
-            this.pages.push(page);
-          }
-        })
-    }, 550)
   }
 
   ngAfterViewInit() {
@@ -84,39 +61,8 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     this.openSnackBar("show GraphModel in console", "display");
   }
 
-
-
   isModified(graphID: string) {
     return this.graphEditorService.isModified(graphID);
-  }
-
-  changeTabName(index: number) {
-    // console.log("change tab name");
-    this.openDialog(index);
-  }
-
-  openDialog(index) {
-    if (this.pages[index].name == "imsMain")
-      return;
-    let currentTabName = this.pages[index];
-    let data = {
-      tabName: currentTabName
-    };
-    const dialogRef = this.dialog.open(TabNameDialogComponent, {
-      // width:'20%' ,
-      // height: '25%',
-      data: data,
-      autoFocus: true,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      let id = this.graphEditorService.getSelectedGraphID();
-      console.log("new Tabname " + result);
-      if ((result as string).length != 0) {
-        this.pages[index].name = result;
-        this.store.dispatch(new IRRenamePageAction(id, result));
-      }
-    });
   }
 
   navigation() {
@@ -136,7 +82,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     console.log("show IR")
     let pageUICDLs = this.store.select(pageUICDLSelector());
     pageUICDLs.subscribe((data) => {
-      let id = this.graphEditorService.getSelectedGraphID();
+      let id = this.graphEditorService.getSelectedPageId();
       console.log(data[id]);
       console.log(JSON.stringify(data[id]));
     })
@@ -164,44 +110,23 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     // this.graphEditorService.createPage(`page${this.pages.length}`);
   }
 
-  changePage(event) {
-    // if(this.graphEditorService.inNavigation == true) {
-    //   this.graphEditorService.clearGraphModel();
-    //   this.graphEditorService.inNavigation = false;
-    //   this.graphEditorService.getGraph().zoomIn();
-    // }
-    // console.log(`change page target_index = ${event['index']}`);
-    // console.log(this.pages)
-    // console.log(event)
-    let index = event['index'] - 1;
-    let currentPageId = this.graphEditorService.selectedPageId;
-    if(this.pages[index] == undefined) {
-      return;
-    }
-    if (this.pages[index].id == currentPageId)
-      return
-    else {
-      let targetPageId = this.pages[index].id;
-      this.graphEditorService.changePage(currentPageId, targetPageId);
-    }
-  }
-
-  createGraph(elementId, isMain: boolean) {
-    let element = document.getElementById(elementId);
-    let newPageUICDL = new PageUICDL(elementId);
-    newPageUICDL.isMain = isMain;
-    Storage.setPageUICDL(newPageUICDL);
-    // this.graphEditorService.createGraph(element);
-    this.store.dispatch(new IRInsertPageUICDLAction(newPageUICDL));
-    this.store.dispatch(new IRRenamePageAction(elementId, this.tabs[this.tabs.length - 1].name));
-    this.graphEditorService.createEditor(element);
-    this.configure();
-    this.store.dispatch(new ERInsertGraphStorageAction(new SelabGraph(elementId)))
-  }
+  // changePage(event) {
+  //   let index = event['index'] - 1;
+  //   let currentPageId = this.graphEditorService.selectedPageId;
+  //   if(this.pages[index] == undefined) {
+  //     return;
+  //   }
+  //   if (this.pages[index].id == currentPageId)
+  //     return
+  //   else {
+  //     let targetPageId = this.pages[index].id;
+  //     this.graphEditorService.changePage(currentPageId, targetPageId);
+  //   }
+  // }
 
   configure() {
     let graph = this.graphEditorService.getGraph()
-    let graphID = this.graphEditorService.getSelectedGraphID();
+    let graphID = this.graphEditorService.getSelectedPageId();
     graph.extendParentsOnAdd = false;
     graph.constrainChildren = false;
     this.setting.configureStyleEditor(); 
@@ -230,7 +155,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
       if (selectedVertex == undefined)
         return;
       let componentID = selectedVertex["componentID"];
-      let pageID = this.graphEditorService.getSelectedGraphID();
+      let pageID = this.graphEditorService.getSelectedPageId();
       console.log(`pageID = ${pageID}\ncomponentID = ${componentID}`);
       let uiComponentObservable = this.store.select(uiComponentSelector(pageID, componentID));
       uiComponentObservable.subscribe((data) => {
@@ -266,33 +191,12 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   
   }
 
-  onTabChange(event) {
-    let index = event.index;
-    let graphID = this.tabs[index].graphID;
-    this.graphEditorService.setSelectedEditor(graphID);
-  }
+  // onTabChange(event) {
+  //   let index = event.index;
+  //   let graphID = this.tabs[index].graphID;
+  //   this.graphEditorService.setSelectedEditor(graphID);
+  // }
 
-  closePage(index) {
-    console.log(`close page index = ${index}`);
-    console.log(`current index = ${this.selected.value}`);
-    console.log(this.pages);
-    if (this.pages.length == 1)
-      return;
-    if (this.pages[index].name == "imsMain")
-      return;
-    let deletedGraphID = this.pages[index].id;
-    this.store.dispatch(new ERDeleteGraphStorageAction(deletedGraphID));
-    this.store.dispatch(new IRDeletePageUICDLAction(deletedGraphID));
-    // console.log(`current index = ${this.tabGroup.selectedIndex}`);
-
-    if (index == (this.selected.value - 1)) {
-      console.log('close current page');
-      // this.graphEditorService.setSelectedEditor(this.tabs[this.tabs.length - 1].graphID);
-      // this.selected.setValue(index - 1);
-      this.selected.setValue(index);
-      this.changePage(index);
-    }
-  }
   zoomIn() {
     this.graphEditorService.zoomIn();
   }
@@ -303,10 +207,6 @@ export class SelabGraphEditorComponent implements AfterViewInit {
 
 
   ngOnInit() {
-    // setTimeout(() => {
-    //   this.createGraph("graphContainer-0",true);
-    //   this.store.dispatch(new IRRenamePageAction("graphContainer-0","imsMain"))
-    // },500)
   }
 
   saveAs(uri, filename) {
@@ -326,8 +226,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   convertToCanvas() {
-    let elementID = this.graphEditorService.selectedGraphID;
-    let element = document.getElementById(elementID);
+    let element = document.getElementById("graph-container");
     let originalThis = this;
     html2canvas(element).then(function (canvas) {
       originalThis.saveAs(canvas.toDataURL(), 'file-name.png');
@@ -348,7 +247,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
         const graphModel = this.graphEditorService.getGraphModel();
         graphModel.clear();
         this.openSnackBar("clear both GraphStorage and PageUICDL", "clear");
-        let graphID = this.graphEditorService.getSelectedGraphID();
+        let graphID = this.graphEditorService.getSelectedPageId();
         this.store.dispatch(new ERClearGraphStorageActition(graphID));
         this.store.dispatch(new IRClearPageUICDLAction(graphID));
       }

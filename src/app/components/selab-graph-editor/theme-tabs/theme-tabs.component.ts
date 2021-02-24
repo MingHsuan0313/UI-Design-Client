@@ -172,5 +172,7 @@ export class ThemeTabsComponent implements OnInit {
   ngOnInit() {
     this.addTheme(true);
     this.selectedTheme = this.themes[0];
+    console.log(this.themes[0].pages[0]);
+    this.graphEditorService.setSelectedPageId(this.themes[0].pages[0].id);
   }
 }

@@ -77,7 +77,7 @@ export class PipelineTabComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
-        let id = this.graphEditorService.getSelectedGraphID();
+        let id = this.graphEditorService.getSelectedPageId();
         let uiComponent = this.uiComponentBuilder.build();
         this.store.dispatch(new IRInsertUIComponentAction(id,uiComponent));
         this.graphEditorService.bindComponent(uiComponent);

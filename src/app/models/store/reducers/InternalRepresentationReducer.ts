@@ -167,6 +167,7 @@ class InternalRepresentationReducer {
 
     @Action
     public insertUIComponent(store: InternalRepresentation, action: IRInsertUIComponentAction): InternalRepresentation {
+        console.log(action);
         store = { ...store };
         store.pageUICDLs = { ...store.pageUICDLs };
         let id = action.id;
