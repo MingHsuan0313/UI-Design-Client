@@ -51,18 +51,24 @@ export default class GraphEditorService {
   }
 
   renderPage(pageId: string) {
+    console.log('render page begin ...');
     let pagesObservable = this.store.select(pageUICDLSelector());
     let subscription = pagesObservable.subscribe((pageUICDLs) => {
+      console.log('hey hey');
+      console.log(pageUICDLs);
       let pageUICDL = pageUICDLs[pageId];
-      let uiComponentList = this.IRTransformerService.transform(pageUICDL, this.getGraph());
+      // let uiComponentList = this.IRTransformerService.transform(pageUICDL, this.getGraph());
+      let uiComponentList = pageUICDL['body']['componentList'];
       if (pageUICDL.layout.length > 0)
         this.applyLayout(pageUICDL.layout);
 
       uiComponentList.forEach((uiComponent) => {
+        console.log('TTT')
         this.bindComponent(uiComponent, uiComponent.geometry);
       })
     })
     subscription.unsubscribe();
+    console.log('render page end ...');
   }
 
   changePage2(sourcePageId: string, targetPageId: string) {
@@ -133,6 +139,10 @@ export default class GraphEditorService {
     } else {
       this.editor.createComponent(component, parent, geometry, true);
     }
+  }
+
+  setLayout(layout: string) {
+    this.editor.setLayout(layout);
   }
 
   applyLayout(layout: string, xOffset?, yOffset?) {

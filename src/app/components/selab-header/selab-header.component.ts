@@ -115,6 +115,7 @@ export class SelabHeaderComponent implements OnInit {
   }
 
   applyLayout(layout: string) {
+    this.graphEditorService.setLayout(layout);
     this.graphEditorService.applyLayout(layout);
   }
 

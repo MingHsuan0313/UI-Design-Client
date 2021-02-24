@@ -57,13 +57,14 @@ export class ThemeTabsComponent implements OnInit {
   changePage(targetIndex) {
     console.log(targetIndex);
     console.log(this.selectedPageIndex.value);
-    // console.log(`change page ${targetIndex}`);
-    // this.selectedPageIndex.setValue(targetIndex.index);
+    let currentPageId = this.selectedTheme['pages'][this.selectedPageIndex.value].id;
+    let targetPageId = this.selectedTheme['pages'][targetIndex.index].id;
     this.selectedPage = {
       name: this.selectedTheme['pages'][targetIndex.index].name,
       index: targetIndex,
       id: this.selectedTheme['pages'][targetIndex.index].id
     }
+    this.graphEditorService.changePage2(currentPageId, targetPageId);
   }
 
   addTheme(imsMain: boolean) {

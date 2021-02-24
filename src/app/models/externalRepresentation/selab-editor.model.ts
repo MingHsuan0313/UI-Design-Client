@@ -62,11 +62,16 @@ export class SelabEditor {
         this.createComponentStrategy = strategy;
     }
 
+    setLayout(layout: string) {
+        let graphID = this.graphEditorService.getSelectedPageId();
+        this.store.dispatch(new IRSetLayoutAction(graphID, layout));
+    }
+
     applyLayout(layout: string, xOffset?, yOffset?) {
         let active = true;
         // console.log("apply Layout")
         let graphID = this.graphEditorService.getSelectedPageId();
-        this.store.dispatch(new IRSetLayoutAction(graphID, layout));
+        // this.store.dispatch(new IRSetLayoutAction(graphID, layout));
         // let graphID = "graph-container";
         this.setStrategy(new LayoutStrategy(graphID, new mxGeometry(0, 0, 0, 0)));
         let pageUICDLs = this.store.select(pageUICDLSelector());
