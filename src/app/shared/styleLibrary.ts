@@ -10,14 +10,14 @@ export const StyleLibrary = [
     text: {
       text_black: {
         strokeColor: "#ffffff",
-        fillColor: "#ffffff",
+        fillColor: "#f7f7f7",
         //opacity: "0",
         fontSize: "16",
         fontColor: "black"
       },
       text_blue: {
         strokeColor: "#ffffff",
-        fillColor: "#ffffff",
+        fillColor: "#f7f7f7",
         //opacity: "0",
         fontSize: "16",
         fontColor: "#20a8d8"

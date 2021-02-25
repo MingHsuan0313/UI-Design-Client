@@ -51,6 +51,9 @@ export class ThemeTabsComponent implements OnInit {
     targetIndex = this.selectedThemeIndex.value;
     this.selectedTheme = this.themes[targetIndex];
     // change to the first page of theme
+    let currentPageId = this.selectedTheme['pages'][this.selectedPageIndex.value].id;
+    let targetPageId = this.selectedTheme['pages'][0].id;
+    this.graphEditorService.changePage2(currentPageId, targetPageId);
     this.selectedPageIndex.setValue(0);
   }
 
@@ -117,8 +120,10 @@ export class ThemeTabsComponent implements OnInit {
     this.store.dispatch(new IRDeletePageUICDLAction(this.selectedThemeIndex.value, index, page['id']));
     this.selectedTheme = this.themes[this.selectedThemeIndex.value];
 
-    if(index == this.selectedPageIndex.value)
+    if(index == this.selectedPageIndex.value) {
       this.selectedPageIndex.setValue(0);
+      this.graphEditorService.clearGraphEditor();
+    }
   }
 
   renamePage(targetIndex: number) {
