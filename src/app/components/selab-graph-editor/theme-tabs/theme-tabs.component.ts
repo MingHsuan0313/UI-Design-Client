@@ -173,9 +173,8 @@ export class ThemeTabsComponent implements OnInit {
   }
 
   openThumbNail(pageIndex, event) {
-    console.log(event)
-    let pageId = this.graphEditorService.getSelectedPageId();
-    console.log(pageId)
+    console.log('open thumbnail');
+    let pageId = this.selectedTheme['pages'][pageIndex].id;
     let subscribtion = this.store.select(pageImageSelector(pageId))
       .subscribe(
         pageImage => {
@@ -197,6 +196,7 @@ export class ThemeTabsComponent implements OnInit {
   }
 
   closeThumbNail() {
+    console.log('close thumbnail');
     this.dialog.closeAll();
   }
 

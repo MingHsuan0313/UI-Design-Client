@@ -135,13 +135,10 @@ export default class GraphEditorService {
   }
 
   savePageImg() {
-    let changedPageId = this.selectedPageId
+    let changedPageId = this.selectedPageId;
     this.exportService.getImageFromModel(this.editor.getGraphModel()).subscribe(
       response => {
         let image = 'data:image/png;base64,' + response['body'];
-        // console.log(this.selectedPageId + " " + changedPageId)
-        // console.log("Ready to store page image, pageID:" + changedPageId)
-        // console.log(image[50])
         this.store.dispatch(new IRInsertPageImageAction(changedPageId, image))
       }
     );
