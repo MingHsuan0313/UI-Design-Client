@@ -61,13 +61,8 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     this.openSnackBar("show GraphModel in console", "display");
   }
 
-  isModified(graphID: string) {
-    return this.graphEditorService.isModified(graphID);
-  }
-
   navigation() {
     console.log('do navigation');
-    this.selected.setValue(0);
     this.graphEditorService.navigation();
   }
 

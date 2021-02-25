@@ -42,24 +42,25 @@ export class ThemeTabsComponent implements OnInit {
             pages: themes[index].pages
           })
         }
-        console.log(this.themes)
     })
   }
 
   changeTheme(targetIndex) {
-    console.log(`change theme ${this.selectedThemeIndex.value}`)
+    // console.log('change theme');
+    // console.log(`page index = ${this.selectedPageIndex.value} theme index = ${this.selectedThemeIndex.value}`);
     targetIndex = this.selectedThemeIndex.value;
     this.selectedTheme = this.themes[targetIndex];
     // change to the first page of theme
-    let currentPageId = this.selectedTheme['pages'][this.selectedPageIndex.value].id;
+    let currentPageId = this.graphEditorService.getSelectedPageId();
     let targetPageId = this.selectedTheme['pages'][0].id;
-    this.graphEditorService.changePage2(currentPageId, targetPageId);
+    this.graphEditorService.setSelectedThemeIndex(targetIndex);
     this.selectedPageIndex.setValue(0);
+    this.graphEditorService.changePage(currentPageId, targetPageId);
   }
 
   changePage(targetIndex) {
-    console.log(targetIndex);
-    console.log(this.selectedPageIndex.value);
+    // console.log('change page');
+    // console.log(`page index = ${this.selectedPageIndex.value} theme index = ${this.selectedThemeIndex.value}`);
     let currentPageId = this.selectedTheme['pages'][this.selectedPageIndex.value].id;
     let targetPageId = this.selectedTheme['pages'][targetIndex.index].id;
     this.selectedPage = {
@@ -67,7 +68,7 @@ export class ThemeTabsComponent implements OnInit {
       index: targetIndex,
       id: this.selectedTheme['pages'][targetIndex.index].id
     }
-    this.graphEditorService.changePage2(currentPageId, targetPageId);
+    this.graphEditorService.changePage(currentPageId, targetPageId);
   }
 
   addTheme(imsMain: boolean) {
@@ -86,7 +87,6 @@ export class ThemeTabsComponent implements OnInit {
       index: this.themes.length - 1,
       pages: []
     }
-    console.log(theme)
     this.store.dispatch(new IRInsertPageUICDLAction(this.themes.length - 1, pageUICDL, imsMain));
   }
 
@@ -128,8 +128,6 @@ export class ThemeTabsComponent implements OnInit {
 
   renamePage(targetIndex: number) {
     let page = this.selectedTheme['pages'][targetIndex];
-    console.log("rename page")
-    console.log(page);
 
     let data = {
       tabName: page.name,
@@ -153,8 +151,6 @@ export class ThemeTabsComponent implements OnInit {
 
   renameTheme(targetIndex: number) {
     let theme = this.themes[targetIndex];
-    console.log("rename theme");
-    console.log(theme)
 
     let data = {
       tabName: theme.name,
@@ -169,7 +165,6 @@ export class ThemeTabsComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(result => {
-        // this.selectedTheme['pages'][targetIndex]['name'] = result;
         this.store.dispatch(new IRRenameThemeAction(targetIndex, result));
       })
 
@@ -178,7 +173,7 @@ export class ThemeTabsComponent implements OnInit {
   ngOnInit() {
     this.addTheme(true);
     this.selectedTheme = this.themes[0];
-    console.log(this.themes[0].pages[0]);
     this.graphEditorService.setSelectedPageId(this.themes[0].pages[0].id);
+    this.graphEditorService.setSelectedThemeIndex(0);
   }
 }

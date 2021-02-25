@@ -3,6 +3,7 @@
   (selectedIndexChange)="selectedThemeIndex.setValue($event)"
   (selectedTabChange)="changeTheme($event)"
 >
+  <!-- <mat-tab></mat-tab> -->
   <mat-tab 
     *ngFor="let theme of themes; let index = index"
     label="{{theme.name}}"
@@ -37,6 +38,7 @@
     (selectedIndexChange)="selectedPageIndex.setValue($event)"
     (selectedTabChange)="changePage($event)"
 >
+  <!-- <mat-tab></mat-tab> -->
   <mat-tab 
     *ngFor="let page of selectedTheme.pages; let index = index" 
     label="{{page.name}}"

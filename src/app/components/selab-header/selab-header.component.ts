@@ -249,61 +249,34 @@ export class SelabHeaderComponent implements OnInit {
   }
 
   uploadPageUICDL($event) {
+    console.log('upload file');
     let selectedFile = $event.target.files[0]
     const fileReader = new FileReader();
     fileReader.readAsText(selectedFile, "UTF-8");
     fileReader.onload = () => {
       let pageUICDLObject = JSON.parse(fileReader.result as any);
-      //let uuid = require('uuid');
-      //let pageId = `graph-container-${uuid.v1()}`;
       let pageId = pageUICDLObject["id"]
       let pageUICDL = new PageUICDL(pageId); // internalRepresentation
-
       Object.assign(pageUICDL, pageUICDLObject);
-      //pageUICDL['id'] = pageId;
-      this.store.dispatch(new IRInsertPageUICDLAction(pageUICDL, pageUICDL['isMain']));
-      this.store.dispatch(new IRRenamePageAction(pageId, pageUICDL['name']));
-      this.store.dispatch(new ERInsertGraphStorageAction(new SelabGraph(pageId)))
-      let originalId = this.graphEditorService.selectedPageId;
-      this.graphEditorService.selectedPageId = pageId;
-      let uiComponentList = this.IRTransformerService.transform(pageUICDL, this.graphEditorService.getGraph());
-      this.applyLayout("prime")
-      uiComponentList.forEach(
-        uiComponent => {
-          console.log(uiComponent)
-          this.graphEditorService.bindComponent(uiComponent, uiComponent.geometry);
-        }
-      )
-      this.graphEditorService.clearGraphEditor();
-      this.graphEditorService.selectedPageId = originalId;
+      this.graphEditorService.uploadPageUICDL(pageUICDL);
+      // this.store.dispatch(new IRInsertPageUICDLAction(pageUICDL, pageUICDL['isMain']));
+      // this.store.dispatch(new IRRenamePageAction(pageId, pageUICDL['name']));
+      // this.store.dispatch(new ERInsertGraphStorageAction(new SelabGraph(pageId)))
+      // let originalId = this.graphEditorService.selectedPageId;
+      // this.graphEditorService.selectedPageId = pageId;
+      // let uiComponentList = this.IRTransformerService.transform(pageUICDL, this.graphEditorService.getGraph());
+      // this.applyLayout("prime")
+      // uiComponentList.forEach(
+      //   uiComponent => {
+      //     console.log(uiComponent)
+      //     this.graphEditorService.bindComponent(uiComponent, uiComponent.geometry);
+      //   }
+      // )
+      // this.graphEditorService.clearGraphEditor();
+      // this.graphEditorService.selectedPageId = originalId;
     }
     fileReader.onerror = (error) => {
       console.log(error);
     }
   }
-
-  // openWizard() {
-  //   let compositeComponents = ["card", "breadcrumb", "inputgroup", "form"];
-  //   let isComposite = false;
-  //   if (compositeComponents.indexOf(this.component_selected) >= 0)
-  //     isComposite = true;
-
-  //   if (this) {
-  //     this.wizard.open(SelabWizardComponent, {
-  //       width: '55%',
-  //       height: '65%',
-  //       data: {
-  //         isPipeline: false,
-  //         isComposite: isComposite,
-  //         genere: this.genre_selected,
-  //         category: this.category_selected,
-
-  //         type: this.component_selected,
-  //         returnData: {}
-  //       },
-  //       disableClose: true,
-  //       autoFocus: true
-  //     });
-  //   }
-  // }
 }

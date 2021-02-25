@@ -2,23 +2,16 @@ export const StyleLibrary = [
   {
     genere: "coreUI",
     fontSize: 16,
-    // text: {
-    //   opacity: "0",
-    //   fontSize: "25",
-    //   fontColor: "black"
-    // },
     text: {
       text_black: {
         strokeColor: "#ffffff",
         fillColor: "#f7f7f7",
-        //opacity: "0",
         fontSize: "16",
         fontColor: "black"
       },
       text_blue: {
         strokeColor: "#ffffff",
         fillColor: "#f7f7f7",
-        //opacity: "0",
         fontSize: "16",
         fontColor: "#20a8d8"
       },
@@ -44,10 +37,7 @@ export const StyleLibrary = [
         fontColor: "#333333",
         rounded: "1",
         strokeColor: "#a6a6a6",
-        // strokeColor: "red",
         fillColor: "#ffffff",
-        // border: "red",
-
       },
 
       dropdownList: {
@@ -157,7 +147,6 @@ export const StyleLibrary = [
     },
 
     Layout1Footer: {
-      // border: "#000000",
       fillColor: "#f0f3f5",
       strokeColor: "#c8ced3"
     },
