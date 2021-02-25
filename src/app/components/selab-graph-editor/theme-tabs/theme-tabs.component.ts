@@ -5,9 +5,10 @@ import { Store } from '@ngrx/store';
 import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model';
 import { IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRRenamePageAction, IRRenameThemeAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { AppState } from 'src/app/models/store/app.state';
-import { themeSelector } from 'src/app/models/store/selectors/InternalRepresentationSelector';
+import { pageImageSelector, themeSelector } from 'src/app/models/store/selectors/InternalRepresentationSelector';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { TabNameDialogComponent } from '../tab-name-dialog/tab-name-dialog.component';
+import { ThumbnailDialog } from '../thumbnail-dialog/thumbnail-dialog.component';
 
 @Component({
   selector: 'app-theme-tabs',
@@ -16,7 +17,8 @@ import { TabNameDialogComponent } from '../tab-name-dialog/tab-name-dialog.compo
 })
 export class ThemeTabsComponent implements OnInit {
   themes: any[];
-  //
+  thumbnail: string;
+
   selectedPageIndex = new FormControl(0);
   selectedThemeIndex = new FormControl(0);
 
@@ -26,7 +28,7 @@ export class ThemeTabsComponent implements OnInit {
   @ViewChild("themeTabGroup") themeTabGroup: MatTabGroup;
   @ViewChild("pageTabGroup") pageTabGroup: MatTabGroup;
 
-  constructor(private store: Store <AppState>,
+  constructor(private store: Store<AppState>,
     private dialog: MatDialog,
     private graphEditorService: GraphEditorService
   ) {
@@ -35,14 +37,14 @@ export class ThemeTabsComponent implements OnInit {
     this.store.select(themeSelector())
       .subscribe((themes) => {
         this.themes = [];
-        for(let index = 0; index < themes.length; index++) {
+        for (let index = 0; index < themes.length; index++) {
           this.themes.push({
             name: themes[index].name,
             id: themes[index].id,
             pages: themes[index].pages
           })
         }
-    })
+      })
   }
 
   changeTheme(targetIndex) {
@@ -74,9 +76,9 @@ export class ThemeTabsComponent implements OnInit {
   addTheme(imsMain: boolean) {
     let uuid = require('uuid');
     let themeId = `selab-theme-${uuid.v1()}`;
-    let themeName = `theme-${uuid.v1().substr(2,5)}`;
+    let themeName = `theme-${uuid.v1().substr(2, 5)}`;
     let pageId = `selab-page-${uuid.v1()}`;
-    let pageName = `page-${uuid.v1().substr(2,5)}`;
+    let pageName = `page-${uuid.v1().substr(2, 5)}`;
     let pageUICDL = new PageUICDL(pageId); // internalRepresentation
     pageUICDL['name'] = pageName;
 
@@ -93,7 +95,7 @@ export class ThemeTabsComponent implements OnInit {
   addPage() {
     let uuid = require('uuid');
     let pageId = `selab-page-${uuid.v1()}`;
-    let pageName = `page-${uuid.v1().substr(2,5)}`;
+    let pageName = `page-${uuid.v1().substr(2, 5)}`;
     let pageUICDL = new PageUICDL(pageId);
     pageUICDL['name'] = pageName;
 
@@ -105,12 +107,12 @@ export class ThemeTabsComponent implements OnInit {
     // delete all pages under this specific theme first
     for (let index = 0; index < this.selectedTheme['pages'].lenght; index++) {
       let page = this.selectedTheme['pages'][index];
-      this.store.dispatch(new IRDeletePageUICDLAction(this.selectedThemeIndex.value,index, page['id']));
+      this.store.dispatch(new IRDeletePageUICDLAction(this.selectedThemeIndex.value, index, page['id']));
     }
 
     // delete this specific theme
     this.store.dispatch(new IRDeleteThemeAction(targetIndex));
-    if(targetIndex == this.selectedThemeIndex.value)
+    if (targetIndex == this.selectedThemeIndex.value)
       this.selectedThemeIndex.setValue(0);
   }
 
@@ -120,7 +122,7 @@ export class ThemeTabsComponent implements OnInit {
     this.store.dispatch(new IRDeletePageUICDLAction(this.selectedThemeIndex.value, index, page['id']));
     this.selectedTheme = this.themes[this.selectedThemeIndex.value];
 
-    if(index == this.selectedPageIndex.value) {
+    if (index == this.selectedPageIndex.value) {
       this.selectedPageIndex.setValue(0);
       this.graphEditorService.clearGraphEditor();
     }
@@ -168,6 +170,34 @@ export class ThemeTabsComponent implements OnInit {
         this.store.dispatch(new IRRenameThemeAction(targetIndex, result));
       })
 
+  }
+
+  openThumbNail(pageIndex, event) {
+    console.log(event)
+    let pageId = this.graphEditorService.getSelectedPageId();
+    console.log(pageId)
+    let subscribtion = this.store.select(pageImageSelector(pageId))
+      .subscribe(
+        pageImage => {
+          this.thumbnail = pageImage
+          if (this.thumbnail) {
+            const dialogRef = this.dialog.open(ThumbnailDialog, {
+              data: this.thumbnail,
+              autoFocus: false,
+              hasBackdrop: false,
+              position: { top: '45%', left: String(event.clientX) + 'px' }
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+
+            });
+          }
+        })
+    subscribtion.unsubscribe();
+  }
+
+  closeThumbNail() {
+    this.dialog.closeAll();
   }
 
   ngOnInit() {

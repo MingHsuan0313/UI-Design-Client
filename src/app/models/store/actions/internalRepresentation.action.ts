@@ -4,6 +4,7 @@ import { UIComponent } from 'src/app/models/ui-component-dependency';
 
 export enum IRActionTypes {
     INSERT_PAGE_UICDL = "[InternalRepresentation] Insert PageUICDL",
+    INSERT_PAGE_IMAGE = "[InternalRepresentation] Insert Page Image",
     INSERT_UI_COMPONENT = "[InternalRepresentation] Insert UI Component",    
     DELETE_PAGE_UICDL = "[InternalRepresentation] Delete PageUICDL",
     CLEAR_PAGE_UICDL = "[InternalRepresentation] Clear PageUICDL",
@@ -16,6 +17,10 @@ export enum IRActionTypes {
     RENAME_THEME = "[InternalRepresentation] Rename Theme"
 }
 
+export class IRInsertPageImageAction implements Action {
+    public type = IRActionTypes['INSERT_PAGE_IMAGE'];
+    constructor(public id: string, public pageImage: string) {}
+}
 export class IRInsertThemeAction implements Action {
     public type = IRActionTypes["INSERT_THEME"];
     constructor(public id: string, public name: string) { }

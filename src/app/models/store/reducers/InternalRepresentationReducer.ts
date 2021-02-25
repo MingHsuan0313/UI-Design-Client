@@ -1,7 +1,7 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 
 class InternalRepresentationReducer {
@@ -14,6 +14,14 @@ class InternalRepresentationReducer {
             pages: []
         };
         store.themes = [...store.themes, theme]
+        return store;
+    }
+
+    
+    @Action
+    public insertPageImage(store: InternalRepresentation, action: IRInsertPageImageAction): InternalRepresentation {
+        store = { ...store };
+        store.pageImages = { ...store.pageImages, [action.id]: action.pageImage };
         return store;
     }
 

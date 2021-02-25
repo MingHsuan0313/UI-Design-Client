@@ -9,6 +9,10 @@ export const pageUICDLSelector = () => createSelector(internalRepresentation,(in
     return internalRepresentation.pageUICDLs;
 })
 
+export const pageImageSelector = (pageId: string) => createSelector(internalRepresentation,(internalRepresentation: InternalRepresentation) => {
+    return internalRepresentation.pageImages[pageId];
+})
+
 export const themeSelector = () => createSelector(internalRepresentation, (internalRepresentation: InternalRepresentation) => {
     return internalRepresentation.themes;
 })

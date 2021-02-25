@@ -11,7 +11,8 @@ import { MatDialog } from "@angular/material";
 import { LayoutStrategy } from "src/app/models/externalRepresentation/component-strategy-dependency";
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage'
 import { Configuration } from "./util/configuration";
-import { IRInsertPageUICDLAction, IRSyncWithERAction } from "src/app/models/store/actions/internalRepresentation.action";
+import { IRInsertPageImageAction, IRInsertPageUICDLAction, IRSyncWithERAction } from "src/app/models/store/actions/internalRepresentation.action";
+import ExportService from "../internalRepresentation/export.service";
 
 @Injectable({
   providedIn: "root"
@@ -30,7 +31,8 @@ export default class GraphEditorService {
   constructor(private styleEditorService: StyleEditorService,
     private store: Store<AppState>,
     private IRTransformerService: IRTransformer,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private exportService: ExportService
   ) {
     this.inNavigation = false;
     setTimeout(() => {
@@ -71,7 +73,7 @@ export default class GraphEditorService {
   }
 
   changePage(sourcePageId: string, targetPageId: string) {
-    if(this.inNavigation == true) {
+    if (this.inNavigation == true) {
       this.clearGraphEditor();
       Configuration.removeConnectionHandlerListener(this.getGraph());
       this.inNavigation = false;
@@ -129,6 +131,20 @@ export default class GraphEditorService {
     let model = this.getGraphModel().cells;
     let cells = this.generateGraphModel(model);
     this.store.dispatch(new IRSyncWithERAction(this.selectedPageId, cells as any))
+    this.savePageImg();
+  }
+
+  savePageImg() {
+    let changedPageId = this.selectedPageId
+    this.exportService.getImageFromModel(this.editor.getGraphModel()).subscribe(
+      response => {
+        let image = 'data:image/png;base64,' + response['body'];
+        // console.log(this.selectedPageId + " " + changedPageId)
+        // console.log("Ready to store page image, pageID:" + changedPageId)
+        // console.log(image[50])
+        this.store.dispatch(new IRInsertPageImageAction(changedPageId, image))
+      }
+    );
   }
 
   zoomTo(zoomFactor: any) {
@@ -166,7 +182,6 @@ export default class GraphEditorService {
         let key = keys[index];
         let page = pages[key];
         if (page['layout'].length > 0) {
-          // this.applyLayout(page['layout'], xOffset, yOffset);
           let layoutStrategy = new LayoutStrategy("graph-container", new mxGeometry(0, 0, 0, 0)).setOffset(xOffset, yOffset);
           layoutStrategy.createLayoutComponent(this.editor, page);
         }

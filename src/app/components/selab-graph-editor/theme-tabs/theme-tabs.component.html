@@ -43,9 +43,12 @@
     *ngFor="let page of selectedTheme.pages; let index = index" 
     label="{{page.name}}"
   >
-
     <ng-template mat-tab-label>
-      <span id="page-tab-{{index}}" (dblclick)="renamePage(index)" style="color: #333333 !important"> {{page.name}}
+      <span id="page-tab-{{index}}"
+        (mouseenter)="openThumbNail(index, $event)"
+        (mouseleave)="closeThumbNail()" 
+        (dblclick)="renamePage(index)" 
+      style="color: #333333 !important"> {{page.name}}
       </span>
       <button (click)="closePage(index)" mat-button style="min-width: 5px;" matTooltip="close">
         <mat-icon style="margin-bottom:15px;" svgIcon="close"></mat-icon>
