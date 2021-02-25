@@ -87,7 +87,9 @@ export class LayoutStrategy extends ICreateComponentStrategy {
     layoutBodyCell["isPrimary"] = true; 
   }
   
-  createSideBar(selabEditor: SelabEditor, sidebarComponent: LayoutComponent) {
+  createSideBar(selabEditor: SelabEditor, sidebarComponent: LayoutComponent, themes) {
+    console.log('create sidebar');
+    console.log(themes);
     let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Sidebar'];
     const layoutSidebarGeometry = new mxGeometry(this.xOffset, this.yOffset + (this.defaultHeight / 15), this.defaultWidth / 7, this.defaultHeight * 14 / 15);
@@ -102,6 +104,31 @@ export class LayoutStrategy extends ICreateComponentStrategy {
     layoutSiderbarCell["componentPart"] = "siderbar";
     layoutSiderbarCell["dataBinding"] = this.createDataBinding("siderbar");
     layoutSiderbarCell["isPrimary"] = true; 
+    let yOffset = this.yOffset + (this.defaultHeight / 15) + 10;
+
+    for(let index = 0; index < themes.length;index++) {
+      let themeName = themes[index].name;
+      let themeVertex = new SelabVertex()
+        .setID(`theme-${index}`)
+        .setParentID(selabVertex.getID())
+        .setValue(themeName);
+      let themeWidth = themeName.length * 12;
+      let height = 50;
+      let themeGeometry = new mxGeometry(this.xOffset, yOffset, themeWidth, height);
+      yOffset += 50;
+      selabEditor.insertVertex(themeVertex, sidebarComponent, themeGeometry, StyleLibrary[0]['text']['sidebar_theme_link']);
+      for(let j = 0;j < themes[index].pages.length;j++) {
+        let pageName = themes[index].pages[j].name;
+        let pageVertex = new SelabVertex()
+        .setID(`page-${j}`)
+        .setParentID(themeVertex.getID())
+        .setValue(pageName);
+        let pageWidth = pageName.length * 12;
+        let pageGeometry = new mxGeometry(this.xOffset + 100, yOffset, pageWidth, height);
+        yOffset += 50;
+        selabEditor.insertVertex(pageVertex, sidebarComponent, pageGeometry, StyleLibrary[0]['text']['sidebar_page_link']);
+      }
+    }
   }
   
   createAsideBar(selabEditor: SelabEditor, asidebarComponent: LayoutComponent) {
@@ -138,19 +165,19 @@ export class LayoutStrategy extends ICreateComponentStrategy {
     layoutFooterCell["isPrimary"] = true
   }
 
-  createLayoutComponent(selabEditor: SelabEditor,pageUICDL: PageUICDL) {
+  createLayoutComponent(selabEditor: SelabEditor,pageUICDL: PageUICDL, themes) {
     let bodyComponent = pageUICDL.body;
     let headerComponent = pageUICDL.header;
     let sidebarComponent = pageUICDL.sidebar;
     let footerComponent = pageUICDL.footer;
     let asidebarComponent = pageUICDL.asidebar;
 
-    this.createLayout(selabEditor,bodyComponent);
-    this.createHeader(selabEditor,headerComponent);
-    this.createFooter(selabEditor,footerComponent);
-    this.createSideBar(selabEditor,sidebarComponent);
-    this.createBody(selabEditor,bodyComponent);
-    this.createAsideBar(selabEditor,asidebarComponent);
+    this.createLayout(selabEditor, bodyComponent);
+    this.createHeader(selabEditor, headerComponent);
+    this.createFooter(selabEditor, footerComponent);
+    this.createSideBar(selabEditor, sidebarComponent, themes);
+    this.createBody(selabEditor, bodyComponent);
+    this.createAsideBar(selabEditor, asidebarComponent);
   }
   
   createComponent(selabEditor) {

@@ -184,7 +184,7 @@ export class ThemeTabsComponent implements OnInit {
               data: this.thumbnail,
               autoFocus: false,
               hasBackdrop: false,
-              position: { top: '45%', left: String(event.clientX) + 'px' }
+              position: { top: String(event.clientY - 360) + 'px', left: String(event.clientX) + 'px' }
             });
 
             dialogRef.afterClosed().subscribe(result => {

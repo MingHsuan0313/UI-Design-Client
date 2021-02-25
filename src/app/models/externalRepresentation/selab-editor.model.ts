@@ -67,7 +67,7 @@ export class SelabEditor {
         this.store.dispatch(new IRSetLayoutAction(graphID, layout));
     }
 
-    applyLayout(layout: string, xOffset?, yOffset?) {
+    applyLayout(layout: string,themes, xOffset?, yOffset?) {
         let active = true;
         // console.log("apply Layout")
         let graphID = this.graphEditorService.getSelectedPageId();
@@ -81,7 +81,7 @@ export class SelabEditor {
             let id = graphID;
             if (graphID == undefined)
                 return;
-            (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this, data[id]);
+            (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this, data[id], themes);
             active = false;
         });
     }

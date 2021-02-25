@@ -5,7 +5,7 @@ import { AppState } from "src/app/models/store/app.state";
 import { Store } from "@ngrx/store";
 import { SelabEditor } from "src/app/models/externalRepresentation/selab-editor.model";
 import { UIComponent } from "src/app/models/ui-component-dependency";
-import { pageUICDLSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
+import { pageUICDLSelector, themeSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
 import IRTransformer from "../internalRepresentation/IRTransformer.service";
 import { MatDialog } from "@angular/material";
 import { LayoutStrategy } from "src/app/models/externalRepresentation/component-strategy-dependency";
@@ -121,10 +121,14 @@ export default class GraphEditorService {
   }
 
   applyLayout(layout: string, xOffset?, yOffset?) {
-    if (xOffset != undefined && yOffset != undefined)
-      this.editor.applyLayout(layout, xOffset, yOffset);
-    else
-      this.editor.applyLayout(layout);
+    let subscription = this.store.select(themeSelector())
+      .subscribe((themes) => {
+        if (xOffset != undefined && yOffset != undefined)
+          this.editor.applyLayout(layout, themes, xOffset, yOffset);
+        else
+          this.editor.applyLayout(layout, themes);
+      })
+    subscription.unsubscribe();
   }
 
   syncStorage() {
