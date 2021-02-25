@@ -105,7 +105,9 @@ export class LayoutStrategy extends ICreateComponentStrategy {
     layoutSiderbarCell["dataBinding"] = this.createDataBinding("siderbar");
     layoutSiderbarCell["isPrimary"] = true; 
     let yOffset = this.yOffset + (this.defaultHeight / 15) + 10;
-
+    // navigation mode
+    if(themes == undefined)
+      return
     for(let index = 0; index < themes.length;index++) {
       let themeName = themes[index].name;
       let themeVertex = new SelabVertex()
