@@ -19,19 +19,19 @@ export class ThemeTabsComponent implements OnInit {
   themes: any[];
   thumbnail: string;
 
+  renameDialogOpen: boolean;
   selectedPageIndex = new FormControl(0);
   selectedThemeIndex = new FormControl(0);
-
-  selectedTheme: {}; // { index: number, name: string, id: string }
-  selectedPage: {}; // { index: number, name: string, id: string }
 
   @ViewChild("themeTabGroup") themeTabGroup: MatTabGroup;
   @ViewChild("pageTabGroup") pageTabGroup: MatTabGroup;
 
   constructor(private store: Store<AppState>,
     private dialog: MatDialog,
+    private thumbnailDialog: MatDialog,
     private graphEditorService: GraphEditorService
   ) {
+    this.renameDialogOpen = false;
     this.themes = [];
 
     this.store.select(themeSelector())
@@ -47,14 +47,21 @@ export class ThemeTabsComponent implements OnInit {
       })
   }
 
+  getSelectedTheme() {
+    return this.themes[this.selectedThemeIndex.value];
+  }
+
+  getSelectedPage() {
+    return this.getSelectedTheme().pages[this.selectedPageIndex.value];
+  }
+
   changeTheme(targetIndex) {
     // console.log('change theme');
     // console.log(`page index = ${this.selectedPageIndex.value} theme index = ${this.selectedThemeIndex.value}`);
     targetIndex = this.selectedThemeIndex.value;
-    this.selectedTheme = this.themes[targetIndex];
     // change to the first page of theme
     let currentPageId = this.graphEditorService.getSelectedPageId();
-    let targetPageId = this.selectedTheme['pages'][0].id;
+    let targetPageId = this.getSelectedTheme()['pages'][0].id;
     this.graphEditorService.setSelectedThemeIndex(targetIndex);
     this.selectedPageIndex.setValue(0);
     this.graphEditorService.changePage(currentPageId, targetPageId);
@@ -63,13 +70,8 @@ export class ThemeTabsComponent implements OnInit {
   changePage(targetIndex) {
     // console.log('change page');
     // console.log(`page index = ${this.selectedPageIndex.value} theme index = ${this.selectedThemeIndex.value}`);
-    let currentPageId = this.selectedTheme['pages'][this.selectedPageIndex.value].id;
-    let targetPageId = this.selectedTheme['pages'][targetIndex.index].id;
-    this.selectedPage = {
-      name: this.selectedTheme['pages'][targetIndex.index].name,
-      index: targetIndex,
-      id: this.selectedTheme['pages'][targetIndex.index].id
-    }
+    let currentPageId = this.themes[this.selectedThemeIndex.value]['pages'][this.selectedPageIndex.value].id;
+    let targetPageId = this.themes[this.selectedThemeIndex.value]['pages'][targetIndex.index].id;
     this.graphEditorService.changePage(currentPageId, targetPageId);
   }
 
@@ -100,13 +102,13 @@ export class ThemeTabsComponent implements OnInit {
     pageUICDL['name'] = pageName;
 
     this.store.dispatch(new IRInsertPageUICDLAction(this.selectedThemeIndex.value, pageUICDL, false));
-    this.selectedTheme['pages'] = this.themes[this.selectedThemeIndex.value].pages;
+    this.getSelectedTheme()['pages'] = this.themes[this.selectedThemeIndex.value].pages;
   }
 
   closeTheme(targetIndex: number) {
     // delete all pages under this specific theme first
-    for (let index = 0; index < this.selectedTheme['pages'].lenght; index++) {
-      let page = this.selectedTheme['pages'][index];
+    for (let index = 0; index < this.getSelectedTheme()['pages'].lenght; index++) {
+      let page = this.getSelectedTheme()['pages'][index];
       this.store.dispatch(new IRDeletePageUICDLAction(this.selectedThemeIndex.value, index, page['id']));
     }
 
@@ -118,9 +120,8 @@ export class ThemeTabsComponent implements OnInit {
 
   closePage(index: number) {
     // delete page
-    let page = this.selectedTheme['pages'][index];
+    let page = this.getSelectedTheme()['pages'][index];
     this.store.dispatch(new IRDeletePageUICDLAction(this.selectedThemeIndex.value, index, page['id']));
-    this.selectedTheme = this.themes[this.selectedThemeIndex.value];
 
     if (index == this.selectedPageIndex.value) {
       this.selectedPageIndex.setValue(0);
@@ -129,14 +130,15 @@ export class ThemeTabsComponent implements OnInit {
   }
 
   renamePage(targetIndex: number) {
-    let page = this.selectedTheme['pages'][targetIndex];
+    let page = this.getSelectedTheme()['pages'][targetIndex];
 
     let data = {
       tabName: page.name,
-      themeName: this.selectedTheme['name'],
+      themeName: this.getSelectedTheme()['name'],
       type: 'page'
     }
 
+    this.renameDialogOpen = true;
     const dialogRef = this.dialog.open(TabNameDialogComponent, {
       data: data,
       autoFocus: true,
@@ -145,9 +147,10 @@ export class ThemeTabsComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(result => {
+        console.log('close rename ta');
+        this.renameDialogOpen = false;
         // this.selectedTheme['pages'][targetIndex]['name'] = result;
         this.store.dispatch(new IRRenamePageAction(page['id'], result, this.selectedThemeIndex.value, targetIndex));
-        this.selectedTheme = this.themes[this.selectedThemeIndex.value];
       })
   }
 
@@ -159,6 +162,7 @@ export class ThemeTabsComponent implements OnInit {
       type: 'theme'
     }
 
+    this.renameDialogOpen = true;
     const dialogRef = this.dialog.open(TabNameDialogComponent, {
       data: data,
       autoFocus: true,
@@ -167,6 +171,8 @@ export class ThemeTabsComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(result => {
+        console.log('hello');
+        this.renameDialogOpen = false;
         this.store.dispatch(new IRRenameThemeAction(targetIndex, result));
       })
 
@@ -174,13 +180,13 @@ export class ThemeTabsComponent implements OnInit {
 
   openThumbNail(pageIndex, event) {
     console.log('open thumbnail');
-    let pageId = this.selectedTheme['pages'][pageIndex].id;
+    let pageId = this.getSelectedTheme()['pages'][pageIndex].id;
     let subscribtion = this.store.select(pageImageSelector(pageId))
       .subscribe(
         pageImage => {
           this.thumbnail = pageImage
           if (this.thumbnail) {
-            const dialogRef = this.dialog.open(ThumbnailDialog, {
+            const dialogRef = this.thumbnailDialog.open(ThumbnailDialog, {
               data: this.thumbnail,
               autoFocus: false,
               hasBackdrop: false,
@@ -188,7 +194,7 @@ export class ThemeTabsComponent implements OnInit {
             });
 
             dialogRef.afterClosed().subscribe(result => {
-
+              console.log('helol');
             });
           }
         })
@@ -196,13 +202,15 @@ export class ThemeTabsComponent implements OnInit {
   }
 
   closeThumbNail() {
-    console.log('close thumbnail');
-    this.dialog.closeAll();
+    console.log(`close ... ${this.renameDialogOpen}`);
+    if(!this.renameDialogOpen) {
+      console.log('close thumbnail');
+      this.thumbnailDialog.closeAll();
+    }
   }
 
   ngOnInit() {
     this.addTheme(true);
-    this.selectedTheme = this.themes[0];
     this.graphEditorService.setSelectedPageId(this.themes[0].pages[0].id);
     this.graphEditorService.setSelectedThemeIndex(0);
   }

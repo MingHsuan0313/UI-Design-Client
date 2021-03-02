@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SelabGraphEditorComponent } from '../selab-graph-editor.component';
 
 @Component({
@@ -14,7 +14,7 @@ export class TabNameDialogComponent implements OnInit {
   originalName: string;
 
   constructor(
-    public dialogRef: MatDialogRef<SelabGraphEditorComponent>,
+    public dialogRef: MatDialogRef<TabNameDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 

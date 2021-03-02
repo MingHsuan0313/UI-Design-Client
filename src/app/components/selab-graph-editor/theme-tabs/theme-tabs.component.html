@@ -45,9 +45,9 @@
   >
     <ng-template mat-tab-label>
       <span id="page-tab-{{index}}"
-        (mouseenter)="openThumbNail(index, $event)"
-        (mouseleave)="closeThumbNail()" 
         (dblclick)="renamePage(index)" 
+        (mouseenter)="openThumbNail(index, $event)"
+        (mouseleave)="closeThumbNail()"
       style="color: #333333 !important"> {{page.name}}
       </span>
       <button (click)="closePage(index)" mat-button style="min-width: 5px;" matTooltip="close">
