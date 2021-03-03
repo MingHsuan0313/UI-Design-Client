@@ -45,6 +45,7 @@
   >
     <ng-template mat-tab-label>
       <span id="page-tab-{{index}}"
+        (click)="selectPage(index)"
         (dblclick)="renamePage(index)" 
         (mouseenter)="openThumbNail(index, $event)"
         (mouseleave)="closeThumbNail()"

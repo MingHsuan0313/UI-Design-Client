@@ -64,7 +64,6 @@ export default class GraphEditorService {
       let uiComponentList = this.IRTransformerService.transform(pageUICDL, this.getGraph());
       if (pageUICDL.layout.length > 0)
         this.applyLayout(pageUICDL.layout);
-
       uiComponentList.forEach((uiComponent) => {
         this.bindComponent(uiComponent, uiComponent.geometry);
       })
@@ -77,7 +76,7 @@ export default class GraphEditorService {
       this.clearGraphEditor();
       Configuration.removeConnectionHandlerListener(this.getGraph());
       this.inNavigation = false;
-      this.zoomFactor = 1
+      this.zoomFactor = 1;
       this.zoomTo(this.zoomFactor);
     }
 
@@ -93,7 +92,6 @@ export default class GraphEditorService {
     this.getGraphModel().endUpdate();
     this.getGraph().refresh();
   }
-
 
   getGraph(): mxGraph {
     return this.editor.getGraph();
@@ -148,6 +146,24 @@ export default class GraphEditorService {
     );
   }
 
+  navigation() {
+    this.selectedPageId = "navigation";
+    if (this.inNavigation == true)
+      return;
+    this.inNavigation = true;
+    Configuration.configConnectionHadlerListener(this.getGraph(), this.dialog);
+    this.syncStorage();
+    this.clearGraphEditor();
+    this.renderAllPages();
+    this.recoverNavigationEdges();
+    this.getGraph().refresh();
+    this.zoomTo(0.4);
+  }
+
+  uploadPageUICDL(pageUICDL) {
+    this.store.dispatch(new IRInsertPageUICDLAction(this.selectedThemeIndex, pageUICDL, false));
+  }
+
   zoomTo(zoomFactor: any) {
     let graph = this.getGraph();
     graph.zoomTo(zoomFactor, graph.centerZoom);
@@ -165,15 +181,7 @@ export default class GraphEditorService {
     this.zoomTo(this.zoomFactor);
   }
 
-  navigation() {
-    console.log(this.inNavigation)
-    if (this.inNavigation == true)
-      return;
-    this.inNavigation = true;
-    Configuration.configConnectionHadlerListener(this.getGraph(), this.dialog);
-    this.syncStorage();
-    this.clearGraphEditor();
-    this.selectedPageId = "navigation";
+  renderAllPages() {
     let pageUICDLs = this.store.select(pageUICDLSelector());
     let subscribtion = pageUICDLs.subscribe((pages) => {
       let keys = Object.keys(pages);
@@ -198,53 +206,45 @@ export default class GraphEditorService {
         let offset = document.getElementById('graph-container').offsetWidth;
         xOffset = xOffset + offset;
       }
-
-
-      let ndl = SelabGlobalStorage.ndl;
-      let cells = Object.values(this.getGraphModel().cells);
-      if (ndl && ndl["children"] != null) {
-
-        ndl["children"].forEach(
-          pageNdl => {
-            // console.log(pageNdl)
-            pageNdl["edges"].forEach(
-              edgeInfo => {
-
-                let source = edgeInfo["source"]
-                let targetPageId = ((Object.values(pages)).find(page => page["name"] == edgeInfo["target"]))["id"]
-                let parameter = edgeInfo["passingParameter"]
-
-                let sourceCell = cells.find(cell => cell["selector"] == source)
-                let targetCell = cells.find(cell =>
-                  cell["pageId"] == targetPageId && cell["componentPart"] == "box" && cell["type"] == "layout"
-                )
-
-                let size = 12 / this.getGraph().zoomFactor;
-                let x = sourceCell['geometry'].width - size / 2;
-                let y = sourceCell['geometry'].height / 2 - size / 2;
-                let style = "shape=ellipse;rounded=0;strokeColor=#2b9cff;fillColor=#FFFFFF;strokeWidth=4"
-                let toolTipVertex = this.getGraph().insertVertex(sourceCell, "", "", x, y, size, size, style, false);
-                toolTipVertex["connectToolTip"] = true;
-                style = "strokeColor=#2b9cff;strokeWidth=6;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;"
-                let edge = this.getGraph().insertEdge(toolTipVertex, "", "", toolTipVertex, targetCell, style)
-                edge.value = parameter;
-              }
-            )
-          }
-        )
-
-      }
     })
     subscribtion.unsubscribe();
+  }
 
-    this.getGraph().refresh();
-    for (let index = 0; index < 5; index++)
-      this.zoomOut();
+  recoverNavigationEdges() {
+    let ndl = SelabGlobalStorage.ndl;
+    let cells = Object.values(this.getGraphModel().cells);
+    if (ndl && ndl["children"] != null) {
+      ndl["children"].forEach(
+        pageNdl => {
+          pageNdl["edges"].forEach(
+            edgeInfo => {
+              let source = edgeInfo["source"]
+              let targetPageId = ((Object.values(pages)).find(page => page["name"] == edgeInfo["target"]))["id"]
+              let parameter = edgeInfo["passingParameter"]
+
+              let sourceCell = cells.find(cell => cell["selector"] == source)
+              let targetCell = cells.find(cell =>
+                cell["pageId"] == targetPageId && cell["componentPart"] == "box" && cell["type"] == "layout"
+              )
+
+              let size = 12 / this.getGraph().zoomFactor;
+              let x = sourceCell['geometry'].width - size / 2;
+              let y = sourceCell['geometry'].height / 2 - size / 2;
+              let style = "shape=ellipse;rounded=0;strokeColor=#2b9cff;fillColor=#FFFFFF;strokeWidth=4"
+              let toolTipVertex = this.getGraph().insertVertex(sourceCell, "", "", x, y, size, size, style, false);
+              toolTipVertex["connectToolTip"] = true;
+              style = "strokeColor=#2b9cff;strokeWidth=6;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;"
+              let edge = this.getGraph().insertEdge(toolTipVertex, "", "", toolTipVertex, targetCell, style)
+              edge.value = parameter;
+            }
+          )
+        }
+      )
+    }
   }
 
   generateGraphModel(model) {
     let cells = [];
-
     for (let key in model) {
       let cell = {
         geometry: {},
@@ -267,9 +267,5 @@ export default class GraphEditorService {
       cells.push(cell);
     }
     return cells;
-  }
-
-  uploadPageUICDL(pageUICDL) {
-    this.store.dispatch(new IRInsertPageUICDLAction(this.selectedThemeIndex, pageUICDL, false));
   }
 }
