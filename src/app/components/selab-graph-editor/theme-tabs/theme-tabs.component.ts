@@ -56,8 +56,6 @@ export class ThemeTabsComponent implements OnInit {
   }
 
   changeTheme(targetIndex) {
-    // console.log('change theme');
-    // console.log(`page index = ${this.selectedPageIndex.value} theme index = ${this.selectedThemeIndex.value}`);
     targetIndex = this.selectedThemeIndex.value;
     // change to the first page of theme
     let currentPageId = this.graphEditorService.getSelectedPageId();
@@ -70,7 +68,7 @@ export class ThemeTabsComponent implements OnInit {
   changePage(targetIndex) {
     let currentPageId = this.themes[this.selectedThemeIndex.value]['pages'][this.selectedPageIndex.value].id;
     let targetPageId = this.themes[this.selectedThemeIndex.value]['pages'][targetIndex.index].id;
-    console.log(`change page\ncurrent page = ${currentPageId} target page = ${targetPageId}`);
+    // console.log(`change page\ncurrent page = ${currentPageId} target page = ${targetPageId}`);
     this.graphEditorService.changePage(currentPageId, targetPageId);
   }
 
@@ -152,9 +150,7 @@ export class ThemeTabsComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(result => {
-        console.log('close rename ta');
         this.renameDialogOpen = false;
-        // this.selectedTheme['pages'][targetIndex]['name'] = result;
         this.store.dispatch(new IRRenamePageAction(page['id'], result, this.selectedThemeIndex.value, targetIndex));
       })
   }
@@ -176,7 +172,6 @@ export class ThemeTabsComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(result => {
-        console.log('hello');
         this.renameDialogOpen = false;
         this.store.dispatch(new IRRenameThemeAction(targetIndex, result));
       })
@@ -184,7 +179,6 @@ export class ThemeTabsComponent implements OnInit {
   }
 
   openThumbNail(pageIndex, event) {
-    console.log('open thumbnail');
     let pageId = this.getSelectedTheme()['pages'][pageIndex].id;
     let subscribtion = this.store.select(pageImageSelector(pageId))
       .subscribe(
@@ -199,7 +193,6 @@ export class ThemeTabsComponent implements OnInit {
             });
 
             dialogRef.afterClosed().subscribe(result => {
-              console.log('helol');
             });
           }
         })
@@ -207,9 +200,7 @@ export class ThemeTabsComponent implements OnInit {
   }
 
   closeThumbNail() {
-    console.log(`close ... ${this.renameDialogOpen}`);
     if(!this.renameDialogOpen) {
-      console.log('close thumbnail');
       this.thumbnailDialog.closeAll();
     }
   }

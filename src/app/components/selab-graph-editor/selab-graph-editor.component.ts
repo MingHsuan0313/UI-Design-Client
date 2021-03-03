@@ -43,6 +43,9 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     private serviceComponentService: ServiceComponentService
   ) {
   }
+  ngAfterViewInit(): void {
+    throw new Error('Method not implemented.');
+  }
 
   showExternalRepresentation() {
     console.log(this.graphEditorService.getGraph());
@@ -76,17 +79,6 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     console.log("show Global Storage");
     console.log(SelabGlobalStorage.getInfo());
     this.openSnackBar("show global storage in console", "display");
-  }
-
-  findUniquePageID() {
-    for (let index = 0; index < this.tabs.length + 1; index++) {
-      let id = "graphContainer-" + index.toString();
-      const result = this.tabs.filter(tab => tab.graphID == id);
-      // id is unique
-      if (result.length == 0) {
-        return id;
-      }
-    }
   }
 
   configure() {

@@ -75,8 +75,6 @@ export class SelabEditor {
             let id = graphID;
             if (graphID == undefined)
                 return;
-            console.log(data);
-            console.log(id);
             (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this, data[id], themes);
         });
         subscription.unsubscribe();

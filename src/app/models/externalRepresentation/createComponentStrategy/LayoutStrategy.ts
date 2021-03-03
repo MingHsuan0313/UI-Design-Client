@@ -33,8 +33,6 @@ export class LayoutStrategy extends ICreateComponentStrategy {
 
   
   createLayout(selabEditor: SelabEditor,bodyComponent: LayoutComponent) {
-    // console.log("create body");
-    // console.log(bodyComponent);
     let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1'];
 
@@ -54,7 +52,6 @@ export class LayoutStrategy extends ICreateComponentStrategy {
   }
   
   createHeader(selabEditor: SelabEditor, headerComponent: LayoutComponent) {
-    // console.log("create header");
     let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Header'];
     const layoutHeaderGeometry = new mxGeometry(this.xOffset, this.yOffset, this.defaultWidth, this.defaultHeight / 15);
@@ -88,8 +85,6 @@ export class LayoutStrategy extends ICreateComponentStrategy {
   }
   
   createSideBar(selabEditor: SelabEditor, sidebarComponent: LayoutComponent, themes) {
-    console.log('create sidebar');
-    console.log(themes);
     let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Sidebar'];
     const layoutSidebarGeometry = new mxGeometry(this.xOffset, this.yOffset + (this.defaultHeight / 15), this.defaultWidth / 7, this.defaultHeight * 14 / 15);
