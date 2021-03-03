@@ -154,8 +154,8 @@ export default class GraphEditorService {
     Configuration.configConnectionHadlerListener(this.getGraph(), this.dialog);
     this.syncStorage();
     this.clearGraphEditor();
-    this.renderAllPages();
-    this.recoverNavigationEdges();
+    let pages = this.renderAllPages();
+    this.recoverNavigationEdges(pages);
     this.getGraph().refresh();
     this.zoomTo(0.4);
   }
@@ -182,8 +182,10 @@ export default class GraphEditorService {
   }
 
   renderAllPages() {
+    let returnPages;
     let pageUICDLs = this.store.select(pageUICDLSelector());
     let subscribtion = pageUICDLs.subscribe((pages) => {
+      returnPages = pages
       let keys = Object.keys(pages);
       let xOffset = 0;
       let yOffset = 0;
@@ -208,9 +210,10 @@ export default class GraphEditorService {
       }
     })
     subscribtion.unsubscribe();
+    return returnPages;
   }
 
-  recoverNavigationEdges() {
+  recoverNavigationEdges(pages) {
     let ndl = SelabGlobalStorage.ndl;
     let cells = Object.values(this.getGraphModel().cells);
     if (ndl && ndl["children"] != null) {
@@ -218,6 +221,7 @@ export default class GraphEditorService {
         pageNdl => {
           pageNdl["edges"].forEach(
             edgeInfo => {
+              console.log(edgeInfo)
               let source = edgeInfo["source"]
               let targetPageId = ((Object.values(pages)).find(page => page["name"] == edgeInfo["target"]))["id"]
               let parameter = edgeInfo["passingParameter"]

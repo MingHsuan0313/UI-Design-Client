@@ -127,12 +127,13 @@ export class UIComponentFactory {
         return uiComponentBuilder;
     }
 
-    static createLayout() {
+    static createLayout(pageId) {
         let uiComponentBuilder = new UIComponentBuilder()
             .setCategory("layout")
             .setType("layout")
             .setSelector(`layout-${this.nextID}`)
-            .setID(`${this.nextID}`);
+            .setID(`${this.nextID}`)
+            .setPageId(pageId)
         let uiComponent = uiComponentBuilder.buildLayoutComponent();
         return uiComponent;
     }
