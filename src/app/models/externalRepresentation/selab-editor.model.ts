@@ -68,22 +68,18 @@ export class SelabEditor {
     }
 
     applyLayout(layout: string,themes, xOffset?, yOffset?) {
-        let active = true;
-        // console.log("apply Layout")
         let graphID = this.graphEditorService.getSelectedPageId();
-        // this.store.dispatch(new IRSetLayoutAction(graphID, layout));
-        // let graphID = "graph-container";
         this.setStrategy(new LayoutStrategy(graphID, new mxGeometry(0, 0, 0, 0)));
         let pageUICDLs = this.store.select(pageUICDLSelector());
-        pageUICDLs.subscribe((data) => {
-            if (active == false || active == undefined)
-                return;
+        let subscription = pageUICDLs.subscribe((data) => {
             let id = graphID;
             if (graphID == undefined)
                 return;
+            console.log(data);
+            console.log(id);
             (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this, data[id], themes);
-            active = false;
         });
+        subscription.unsubscribe();
     }
 
     insertVertex(selabVertex: SelabVertex, component: UIComponent, geometry: mxGeometry, style: object): mxCell {

@@ -83,8 +83,8 @@ export default class GraphEditorService {
 
     this.syncStorage();
     this.clearGraphEditor();
-    this.renderPage(targetPageId);
     this.setSelectedPageId(targetPageId);
+    this.renderPage(targetPageId);
   }
 
   clearGraphEditor() {
@@ -184,7 +184,7 @@ export default class GraphEditorService {
         let page = pages[key];
         if (page['layout'].length > 0) {
           let layoutStrategy = new LayoutStrategy("graph-container", new mxGeometry(0, 0, 0, 0)).setOffset(xOffset, yOffset);
-          layoutStrategy.createLayoutComponent(this.editor, page);
+          layoutStrategy.createLayoutComponent(this.editor, page, []);
         }
         let uiComponentList = this.IRTransformerService.transform(page, this.editor.getGraph());
         uiComponentList.forEach(
@@ -272,5 +272,4 @@ export default class GraphEditorService {
   uploadPageUICDL(pageUICDL) {
     this.store.dispatch(new IRInsertPageUICDLAction(this.selectedThemeIndex, pageUICDL, false));
   }
-
 }
