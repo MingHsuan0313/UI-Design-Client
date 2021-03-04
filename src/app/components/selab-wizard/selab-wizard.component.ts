@@ -4,11 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { PipelineCreateOperationAction, PipelineCreateTaskAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
-import { operationPoolSelector } from 'src/app/models/store/selectors/PipelineStorageSelector';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
-import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
-import { Task } from 'src/app/models/wizard-task-dependency';
 import { SelabHeaderComponent } from '../selab-header/selab-header.component';
 import { BindServiceTabComponent } from './bind-service-tab/bind-service-tab.component';
 import { BuildTabComponent } from './build-tab/build-tab.component';
@@ -30,7 +27,6 @@ export class SelabWizardComponent implements OnInit {
   genere: string = ""; // CoreUI, Material...
   type: string = ""; // form, dropdown...
   category: string = ""; // informative, input control...
-  uiComponent: UIComponent; // uiComponent being create
   uiComponentBuilder: UIComponentBuilder;
   lastTab: string;
 
@@ -64,7 +60,6 @@ export class SelabWizardComponent implements OnInit {
     }
     let pageId = this.graphEditorService.selectedPageId;
     this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
-    // this.uiComponent = UIComponentFactory.create(this.type);
   }
 
   // this function if for update componet tree structure for information tab
@@ -93,7 +88,6 @@ export class SelabWizardComponent implements OnInit {
   }
 
   checkUIComponent() {
-    console.log(this.uiComponent);
   }
 
   ngOnInit() {

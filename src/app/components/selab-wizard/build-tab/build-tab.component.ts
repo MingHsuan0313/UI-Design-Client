@@ -1,10 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
-import { Library } from '../../../shared/library';
 import { UIComponentConfig } from '../uicomponent-config';
-import { UIComponentFactory } from '../uicomponent-factory';
 
 @Component({
   selector: 'build-tab',
@@ -24,6 +20,24 @@ export class BuildTabComponent implements OnInit {
     this.formData = {};
   }
 
+  setComponentProperties() {
+    this.uiComponentBuilder
+      .setProperties(this.formData)
+      .setName(this.formData["name"]);
+    if (!this.checkIsFormFill()) {
+      alert("You need to fill all input");
+      return;
+    }
+
+    if (this.isComposite)
+      this.navigateToComposeTab();
+    else
+      this.navigateToStatusTab();
+
+    this.formData = {};
+  }
+
+
   buildForm() {
     for (let index = 0; index < this.buildFormProperties.length; index++) {
       if (this.buildFormProperties[index]["type"] == "Boolean") {
@@ -39,24 +53,6 @@ export class BuildTabComponent implements OnInit {
     this.formData[propertyName] = event;
   }
 
-  setComponent() {
-    this.uiComponentBuilder.setProperties(this.formData)
-      .setName(this.formData["name"]);
-    // this.uiComponent = this.uiComponent
-    //                       .setProperties(this.formData)
-    //                       .setName(this.formData["name"]);
-    if (!this.checkIsFormFill()) {
-      alert("You need to fill all input");
-      return;
-    }
-
-    if (this.isComposite)
-      this.navigateToComposeTab();
-    else
-      this.navigateToStatusTab();
-
-    this.formData = {};
-  }
 
   concateString(str1, str2) {
     return str1 + str2;

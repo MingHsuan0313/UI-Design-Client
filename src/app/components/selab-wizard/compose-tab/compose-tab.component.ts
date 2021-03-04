@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CompositeComponent } from 'src/app/models/internalRepresentation/CompositeComponent.model';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import { UIComponentConfig } from '../uicomponent-config';
@@ -29,7 +28,6 @@ export class ComposeTabComponent implements OnInit {
   constructor(private graphEditorService: GraphEditorService) {
     this.isClean = false;
     this.formData = {};
-
   }
 
   chooseChild(event, option) {
@@ -41,11 +39,7 @@ export class ComposeTabComponent implements OnInit {
     this.buildForm();
   }
 
-  valueChange(event, value) {
-    this.formData[value] = event;
-  }
-  
-  insertComponent() {
+  insertSubComponent() {
     this.isClean = false;
     if (!this.checkIsFormFill()) {
       alert("You need to fill all input");
@@ -54,15 +48,16 @@ export class ComposeTabComponent implements OnInit {
     this.subComponentBuilder.setProperties(this.formData)
       .setName(this.formData["name"]);
     let subComponent = this.subComponentBuilder.build();
-    // this.uiComponent.addSubComponent(this.deepCopySubComponent());
     this.uiComponentBuilder.addSubComponent(subComponent);
     this.formData = {};
   }
   
+  valueChange(event, value) {
+    this.formData[value] = event;
+  }
+  
   deepCopySubComponent(): UIComponent {
     let copySubComponent;
-    // copySubComponent = JSON.parse(JSON.stringify(this.subComponent));
-    // delete this.subComponent;
     return copySubComponent;
   }
 
