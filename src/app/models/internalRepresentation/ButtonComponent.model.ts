@@ -66,9 +66,6 @@ export class ButtonComponent extends BasicComponent {
       .buildButtonComponent()
   }
   
-  add(component: UIComponent): void {
-  }
-  
   getValue(): string {
     return this.text.toString();
   }
@@ -82,7 +79,4 @@ export class ButtonComponent extends BasicComponent {
         service: this.serviceComponent.getInfo()
     }}
  }
-
-  remove(component: UIComponent): void {
-  }
 }

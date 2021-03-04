@@ -59,7 +59,6 @@ export class CardComponent extends CompositeComponent {
       .buildCardComponent();
   }
 
-
   add(component: any): void {
     this.componentList.push(component);
   }
@@ -72,8 +71,5 @@ export class CardComponent extends CompositeComponent {
         children: this.expandChildren()
       }
     }
-  }
-
-  remove(component: UIComponent): void {
   }
 }

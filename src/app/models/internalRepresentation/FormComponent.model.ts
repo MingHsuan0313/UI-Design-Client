@@ -68,6 +68,4 @@ export class FormComponent extends CompositeComponent {
             children: this.expandChildren()
         };
     }
-    remove(component: UIComponent): void {
-    }
 }

@@ -1,7 +1,6 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
-import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
 import { SelabEditor } from "../selab-editor.model";
 import { ButtonComponent } from "../../ui-component-dependency";
 import { SelabVertex } from "../selabVertex.model";

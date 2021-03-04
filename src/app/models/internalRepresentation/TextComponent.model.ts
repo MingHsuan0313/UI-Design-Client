@@ -66,9 +66,6 @@ export class TextComponent extends BasicComponent {
             .buildTextComponent();
   }
 
-  add(component: UIComponent): void {
-  }
-
   getInfo() {
     console.log("get info")
     return {
@@ -79,8 +76,5 @@ export class TextComponent extends BasicComponent {
         service: this.serviceComponent.getInfo()
       }
     };
-  }
-
-  remove(component: UIComponent): void {
   }
 }

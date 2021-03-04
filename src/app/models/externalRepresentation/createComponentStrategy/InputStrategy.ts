@@ -1,9 +1,7 @@
 import {ICreateComponentStrategy} from "./ICreateComponentStrategy";
-import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
 import {StyleLibrary} from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
 import { SelabEditor } from "../selab-editor.model";
-import { UIComponent } from "../../internalRepresentation/UIComponent.model";
 import { SelabVertex } from "../selabVertex.model";
 import { InputTextComponent } from "../../ui-component-dependency";
 // no need to databinding
@@ -26,9 +24,6 @@ export class InputStrategy extends ICreateComponentStrategy {
     selabVertex = selabVertex
                     .setIsPrimary(true)
                     .setValue(component.description)
-                    
-    // console.log("description heree " + component.description)
-    // console.log(component);
 
     let inputTextCell = selabEditor.insertVertex(selabVertex,component,textGeometry,style);
     inputTextCell["componentPart"] = "box";

@@ -46,7 +46,4 @@ export class BreadcrumbComponent extends CompositeComponent {
     }
 
   }
-
-  remove(component: UIComponent): void {
-  }
 }

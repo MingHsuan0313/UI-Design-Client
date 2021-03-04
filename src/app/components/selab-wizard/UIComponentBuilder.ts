@@ -1,14 +1,13 @@
 import { BreadcrumbComponent } from "../../models/internalRepresentation/BreadcrumbComponent.model";
 import { ButtonComponent } from "../../models/internalRepresentation/ButtonComponent.model";
 import { CardComponent } from "../../models/internalRepresentation/CardComponent.model";
-import { CompositeComponent } from "../../models/internalRepresentation/CompositeComponent.model";
 import { DropdownComponent } from "../../models/internalRepresentation/DropdownComponent.model";
 import { FormComponent } from "../../models/internalRepresentation/FormComponent.model";
 import { IconComponent } from "../../models/internalRepresentation/IconComponent.model";
 import { InputGroupComponent } from "../../models/internalRepresentation/InputGroupComponent.model";
 import { LayoutComponent } from "../../models/internalRepresentation/LayoutComponent.model";
 import { TableComponent } from "../../models/internalRepresentation/TableComponent.model";
-import { ArgumentModel, IServiceEntry, ServiceComponentModel } from "../../models/service-component-dependency";
+import { ArgumentModel, IServiceEntry } from "../../models/service-component-dependency";
 import { TextComponent, InputTextComponent, UIComponent } from "../../models/ui-component-dependency";
 
 export class UIComponentBuilder {

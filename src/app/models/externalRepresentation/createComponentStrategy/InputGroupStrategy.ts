@@ -1,15 +1,14 @@
+import { SelabEditor } from "../selab-editor.model";
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
-import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
 
 
 export class InputGroupStrategy extends ICreateComponentStrategy {
     strategyName: string;
-    createComponent(graphStorage: GraphStorage, component: any, parent: any) {
+    createComponent(selabEditor: SelabEditor, component: any, parent: any) {
         throw new Error("Method not implemented.");
     }
 
     createDataBinding(part: String, index?){
         return null;
     }
-
 }

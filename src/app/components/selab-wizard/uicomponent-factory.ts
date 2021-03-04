@@ -1,4 +1,3 @@
-import { UIComponent, } from "src/app/models/ui-component-dependency";
 import { UIComponentBuilder } from "src/app/components/selab-wizard/UIComponentBuilder";
 
 export class UIComponentFactory {
@@ -9,7 +8,6 @@ export class UIComponentFactory {
     }
 
     static create(type: string, pageId: string): UIComponentBuilder {
-        let uiComponent: UIComponent;
         let uiComponentBuilder: UIComponentBuilder;
         if (type == "text") {
             uiComponentBuilder = new UIComponentBuilder()

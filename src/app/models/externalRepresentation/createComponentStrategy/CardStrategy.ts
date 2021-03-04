@@ -1,14 +1,12 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
-import { GraphStorage, VertexStorage, StyleStorage } from "../../graph-dependency";
 import { SelabVertex } from "../selabVertex.model";
 import { SelabEditor } from "../selab-editor.model";
 import { CardComponent } from "../../ui-component-dependency";
 
 
 export class CardStrategy extends ICreateComponentStrategy {
-
 
   constructor(geometry?, restoreMode?) {
     super(geometry, restoreMode);
@@ -93,20 +91,7 @@ export class CardStrategy extends ICreateComponentStrategy {
       }else{
           vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, subUIComponent.x, subUIComponent.y, subUIComponent.width, subUIComponent.height)
       }
-      // cardBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
     }
-    if(!this.isGivenWidthHeight){
-      let newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth + 50, subComponentYOffset);
-      cardBoxVertex.setGeometry(newmxGeometry);
-      selabEditor.getGraph().refresh();
-    }
-
-
-    // component["x"] = cardBoxVertexStorage.getVertexX();
-    // component["y"] = cardBoxVertexStorage.getVertexX();
-    // component["width"] = cardBoxVertexStorage.getVertexWidth();
-    // component["height"] = cardBoxVertexStorage.getVertexHeight();
-    // component["style"] = cardBoxVertexStorage.getStyle();
     return cardBoxVertex;
   }
 }
