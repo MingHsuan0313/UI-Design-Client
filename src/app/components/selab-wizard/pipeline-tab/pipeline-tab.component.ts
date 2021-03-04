@@ -6,21 +6,17 @@ import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete, MatDialogRef, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { UIComponentFactory } from '../uicomponent-factory';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 import { PipelineDataMenuComponent } from './pipeline-data-menu/pipeline-data-menu.component';
-import { SelabHeaderComponent } from '../../selab-header/selab-header.component';
 import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
 import { Task } from 'src/app/models/wizard-task-dependency';
-import { PipelineCreateOperationAction, PipelineCreateTaskAction, PipelineDeleteTasksAction } from 'src/app/models/store/actions/pipelineTask.action';
+import { PipelineCreateTaskAction, PipelineDeleteTasksAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { tasksSelector } from 'src/app/models/store/selectors/PipelineStorageSelector';
 import { SelabWizardComponent } from '../selab-wizard.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
 import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
-import { departmentReturn } from '../../fakeReturnData';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
-import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import { UIComponentConfig } from '../uicomponent-config';
 
@@ -77,23 +73,16 @@ export class PipelineTabComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
-        let id = this.graphEditorService.getSelectedGraphID();
+        let id = this.graphEditorService.getSelectedPageId();
         let uiComponent = this.uiComponentBuilder.build();
         this.store.dispatch(new IRInsertUIComponentAction(id,uiComponent));
         this.graphEditorService.bindComponent(uiComponent);
         let serviceComponent = uiComponent.getServiceComponent();
-        // let operation = new Operation()
-        //   .setName(serviceComponent.getName())
-        //   .setClassName(serviceComponent.getClassName())
-        //   .setServiceID(serviceComponent.getServiceID())
-        //   .setReturnData(this.returnData);
-        // this.store.dispatch(new PipelineCreateOperationAction(operation));
         for (let index = 0; index < this.selecteduiComponentTypes.length; index++) {
           let componentType = this.selecteduiComponentTypes[index];
 
           let task = new Task()
             .setComponentType(componentType)
-            // .setOperation(operation);
           this.store.dispatch(new PipelineCreateTaskAction(task));
         }
         this.wizard.close();
@@ -144,26 +133,6 @@ export class PipelineTabComponent implements OnInit {
   }
 
   update(uiComponent:UIComponent) {
-    // this.uiComponent = uiComponent;
-    // console.log("pipeline tab update");
-    // let departmentOperationReturn = departmentReturn;
-
-    // this.serviceComponentService
-    //   .queryReturnByServiceID("2")
-    //   .subscribe((response) => {
-    //     this.returnData = departmentOperationReturn;
-    //     let operation = new ServiceComponent()
-    //       .setServiceID((this.uiComponent.getServiceComponent() as ServiceComponent).getServiceID())
-    //       .setName((this.uiComponent.getServiceComponent() as ServiceComponent).getName())
-    //       .setClassName((this.uiComponent.getServiceComponent() as ServiceComponent).getClassName())
-    //       // .setReturnData(this.returnData)
-
-    //     // this.returnData = JSON.parse(response["body"]);
-    //     this.dataMenu.update(operation);
-    //   }, (err) => {
-    //     console.log("error")
-    //     console.log(err);
-    //   })
   }
 
   add(event: MatChipInputEvent): void {

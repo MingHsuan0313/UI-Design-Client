@@ -7,22 +7,12 @@ import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-depende
 
 
 // no neet data bindind ,because it consists of text strategy
-export class BreadcrumbStrategy implements ICreateComponentStrategy {
-  strategyName: string;
-  basex: number;
-  basey: number;
+export class BreadcrumbStrategy extends ICreateComponentStrategy {
 
-  constructor(basex?, basey?) {
-    // basic component
-    if (basex == undefined || basey == undefined) {
-      this.basex = 0;
-      this.basey = 0;
-    } else {
-      this.basex = basex;
-      this.basey = basey;
-    }
-    this.strategyName = "Breadcrumb Strategy";
+  constructor(geometry?, restoreMode?) {
+    super(geometry, restoreMode);
   }
+
 
   createBreadcrumbBoxVertex(graphStorage, component, parent) {
     const graphNode = document.getElementById("graphContainer0");

@@ -6,9 +6,11 @@ import { IServiceEntry, ServiceComponentModel } from "../service-component-depen
 
 export class FormComponent extends CompositeComponent {
 
-    constructor(uiComponentBuilder: UIComponentBuilder) {
-        super(uiComponentBuilder);
-        this.componentList = uiComponentBuilder.componentList;
+    constructor(uiComponentBuilder?: UIComponentBuilder) {
+        if(uiComponentBuilder){
+            super(uiComponentBuilder);
+            this.componentList = uiComponentBuilder.componentList;
+        }
     }
 
     setServiceComponent(serviceComponent: ServiceComponentModel): FormComponent {

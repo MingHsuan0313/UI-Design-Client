@@ -7,43 +7,43 @@ import { LayoutComponent } from "../../internalRepresentation/LayoutComponent.mo
 import { SelabVertex } from "../selabVertex.model";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 
-export class LayoutStrategy implements ICreateComponentStrategy {
-  basex: number;
-  basey: number;
+export class LayoutStrategy extends ICreateComponentStrategy {
+
   graphNode: HTMLElement;
   defaultWidth: number;
   defaultHeight: number;
+  xOffset: number;
+  yOffset: number;
 
-  constructor(basex, basey, graphID: string) {
-    this.graphNode = document.getElementById(graphID);
+
+  constructor(graphID: string, geometry?, restoreMode?) {
+    super(geometry, restoreMode);
+    this.xOffset = 0;
+    this.yOffset = 0;
+    this.graphNode = document.getElementById('graph-container');
     this.defaultWidth = this.graphNode.offsetWidth - 25;
     this.defaultHeight = this.graphNode.offsetHeight - 15;
-    // basic component
-    if (basex == undefined || basey == undefined) {
-      this.basex = 0;
-      this.basey = 0;
-    } else {
-      this.basex = basex;
-      this.basey = basey;
-    }
   }
+
+  setOffset(xOffset, yOffset) {
+    this.xOffset = xOffset;
+    this.yOffset = yOffset;
+    return this;
+  }
+
   
   createLayout(selabEditor: SelabEditor,bodyComponent: LayoutComponent) {
-    console.log("create body");
-    console.log(bodyComponent);
     let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1'];
 
-    const layoutGeometry = new mxGeometry(0, 0, this.defaultWidth, this.defaultHeight);
+    const layoutGeometry = new mxGeometry(this.xOffset, this.yOffset, this.defaultWidth, this.defaultHeight);
     // this.layout = selabEditor.insertVertex(parent, null, "", layoutGeometry, styleStorage, bodyComponent);
     let id = (parseInt(bodyComponent.id)).toString();
-    console.log("dddd")
     let selabVertex = new SelabVertex()
       .setID(bodyComponent.selector + "-" + id)
       .setUIComponentID(bodyComponent.id)
       .setParentID(parent.id)
       .setIsPrimary(true);
-    console.log("eeee")
 
     let layoutBodyCell = selabEditor.insertVertex(selabVertex, bodyComponent, layoutGeometry, style);
     layoutBodyCell["componentPart"] = "box";
@@ -52,10 +52,9 @@ export class LayoutStrategy implements ICreateComponentStrategy {
   }
   
   createHeader(selabEditor: SelabEditor, headerComponent: LayoutComponent) {
-    console.log("create header");
     let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Header'];
-    const layoutHeaderGeometry = new mxGeometry(0, 0, this.defaultWidth, this.defaultHeight / 15);
+    const layoutHeaderGeometry = new mxGeometry(this.xOffset, this.yOffset, this.defaultWidth, this.defaultHeight / 15);
     let id = (parseInt(headerComponent.id)).toString();
     let selabVertex = new SelabVertex()
       .setID(headerComponent.selector + "-" + id)
@@ -72,7 +71,7 @@ export class LayoutStrategy implements ICreateComponentStrategy {
   createBody(selabEditor: SelabEditor, bodyComponent: LayoutComponent) {
     let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Body'];
-    const layoutBodyGeometry = new mxGeometry(this.defaultWidth / 7, this.defaultHeight / 15, this.defaultWidth * 5 / 7, this.defaultHeight * 13 / 15);
+    const layoutBodyGeometry = new mxGeometry(this.xOffset + this.defaultWidth / 7,this.yOffset + this.defaultHeight / 15, this.defaultWidth * 5 / 7, this.defaultHeight * 13 / 15);
     let id = (parseInt(bodyComponent.id)).toString();
     let selabVertex = new SelabVertex()
       .setID(bodyComponent.selector + "-" + id)
@@ -85,10 +84,10 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     layoutBodyCell["isPrimary"] = true; 
   }
   
-  createSideBar(selabEditor: SelabEditor, sidebarComponent: LayoutComponent) {
+  createSideBar(selabEditor: SelabEditor, sidebarComponent: LayoutComponent, themes) {
     let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Sidebar'];
-    const layoutSidebarGeometry = new mxGeometry(0, this.defaultHeight / 15, this.defaultWidth / 7, this.defaultHeight * 14 / 15);
+    const layoutSidebarGeometry = new mxGeometry(this.xOffset, this.yOffset + (this.defaultHeight / 15), this.defaultWidth / 7, this.defaultHeight * 14 / 15);
     let id = (parseInt(sidebarComponent.id)).toString();
     let selabVertex = new SelabVertex()
       .setID(sidebarComponent.selector + "-" + id)
@@ -100,12 +99,39 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     layoutSiderbarCell["componentPart"] = "siderbar";
     layoutSiderbarCell["dataBinding"] = this.createDataBinding("siderbar");
     layoutSiderbarCell["isPrimary"] = true; 
+    let yOffset = this.yOffset + (this.defaultHeight / 15) + 10;
+    // navigation mode
+    if(themes == undefined)
+      return
+    for(let index = 0; index < themes.length;index++) {
+      let themeName = themes[index].name;
+      let themeVertex = new SelabVertex()
+        .setID(`theme-${index}`)
+        .setParentID(selabVertex.getID())
+        .setValue(themeName);
+      let themeWidth = themeName.length * 12;
+      let height = 50;
+      let themeGeometry = new mxGeometry(this.xOffset, yOffset, themeWidth, height);
+      yOffset += 50;
+      selabEditor.insertVertex(themeVertex, sidebarComponent, themeGeometry, StyleLibrary[0]['text']['sidebar_theme_link']);
+      for(let j = 0;j < themes[index].pages.length;j++) {
+        let pageName = themes[index].pages[j].name;
+        let pageVertex = new SelabVertex()
+        .setID(`page-${j}`)
+        .setParentID(themeVertex.getID())
+        .setValue(pageName);
+        let pageWidth = pageName.length * 12;
+        let pageGeometry = new mxGeometry(this.xOffset + 100, yOffset, pageWidth, height);
+        yOffset += 50;
+        selabEditor.insertVertex(pageVertex, sidebarComponent, pageGeometry, StyleLibrary[0]['text']['sidebar_page_link']);
+      }
+    }
   }
   
   createAsideBar(selabEditor: SelabEditor, asidebarComponent: LayoutComponent) {
     let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Asidebar'];
-    const layoutAsidebarGeometry = new mxGeometry(this.defaultWidth * 6 / 7, this.defaultHeight / 15, this.defaultWidth / 7, this.defaultHeight * 14 / 15);
+    const layoutAsidebarGeometry = new mxGeometry(this.xOffset + (this.defaultWidth * 6 / 7),this.yOffset + this.defaultHeight / 15, this.defaultWidth / 7, this.defaultHeight * 14 / 15);
     let id = (parseInt(asidebarComponent.id)).toString();
     let selabVertex = new SelabVertex()
       .setID(asidebarComponent.selector + "-" + id)
@@ -122,7 +148,7 @@ export class LayoutStrategy implements ICreateComponentStrategy {
   createFooter(selabEditor: SelabEditor, footerComponent: LayoutComponent) {
     let parent = selabEditor.getGraph().getDefaultParent();
     let style = StyleLibrary[0]['Layout1Footer'];
-    const layoutFooterGeometry = new mxGeometry(this.defaultWidth / 7, this.defaultHeight * 14 / 15, this.defaultWidth * 5 / 7, this.defaultHeight * 1 / 15);
+    const layoutFooterGeometry = new mxGeometry(this.xOffset + this.defaultWidth / 7, this.yOffset + this.defaultHeight * 14 / 15, this.defaultWidth * 5 / 7, this.defaultHeight * 1 / 15);
     let id = (parseInt(footerComponent.id)).toString();
     let selabVertex = new SelabVertex()
       .setID(footerComponent.selector + "-" + id)
@@ -136,19 +162,19 @@ export class LayoutStrategy implements ICreateComponentStrategy {
     layoutFooterCell["isPrimary"] = true
   }
 
-  createLayoutComponent(selabEditor: SelabEditor,pageUICDL: PageUICDL) {
+  createLayoutComponent(selabEditor: SelabEditor,pageUICDL: PageUICDL, themes) {
     let bodyComponent = pageUICDL.body;
     let headerComponent = pageUICDL.header;
     let sidebarComponent = pageUICDL.sidebar;
     let footerComponent = pageUICDL.footer;
     let asidebarComponent = pageUICDL.asidebar;
 
-    this.createLayout(selabEditor,bodyComponent);
-    this.createHeader(selabEditor,headerComponent);
-    this.createFooter(selabEditor,footerComponent);
-    this.createSideBar(selabEditor,sidebarComponent);
-    this.createBody(selabEditor,bodyComponent);
-    this.createAsideBar(selabEditor,asidebarComponent);
+    this.createLayout(selabEditor, bodyComponent);
+    this.createHeader(selabEditor, headerComponent);
+    this.createFooter(selabEditor, footerComponent);
+    this.createSideBar(selabEditor, sidebarComponent, themes);
+    this.createBody(selabEditor, bodyComponent);
+    this.createAsideBar(selabEditor, asidebarComponent);
   }
   
   createComponent(selabEditor) {

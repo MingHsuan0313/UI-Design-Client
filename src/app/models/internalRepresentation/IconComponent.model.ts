@@ -5,11 +5,13 @@ import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-
 export class IconComponent extends BasicComponent {
   text: string;
 
-  constructor(uiComponentBuilder: UIComponentBuilder) {
-    super(uiComponentBuilder);
-    let properties = uiComponentBuilder.getProperties();
-    if (properties != undefined) {
-      this.text = properties["text"];
+  constructor(uiComponentBuilder?: UIComponentBuilder) {
+    if(uiComponentBuilder){
+      super(uiComponentBuilder);
+      let properties = uiComponentBuilder.getProperties();
+      if (properties != undefined) {
+        this.text = properties["text"];
+      }
     }
 
   }

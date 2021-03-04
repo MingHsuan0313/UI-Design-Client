@@ -22,9 +22,9 @@ export class PageUICDL {
     public footer: LayoutComponent;
     public asidebar: LayoutComponent;
 
-    constructor(id: number) {
-        this.id = id.toString();
-        this.selector = `page${id}`;
+    constructor(id: string) {
+        this.id = id;
+        this.selector = id;
         this.category = "page";
         this.layout = "";
         this.style = {};
@@ -32,11 +32,11 @@ export class PageUICDL {
         this.parameters = [];
         this.serviceComponentList = [];
 
-        this.header = (UIComponentFactory.createLayout() as LayoutComponent);
-        this.sidebar = (UIComponentFactory.createLayout() as LayoutComponent);
-        this.footer = (UIComponentFactory.createLayout() as LayoutComponent);
-        this.body = (UIComponentFactory.createLayout() as LayoutComponent);
-        this.asidebar = (UIComponentFactory.createLayout() as LayoutComponent);
+        this.header = (UIComponentFactory.createLayout(id) as LayoutComponent);
+        this.sidebar = (UIComponentFactory.createLayout(id) as LayoutComponent);
+        this.footer = (UIComponentFactory.createLayout(id) as LayoutComponent);
+        this.body = (UIComponentFactory.createLayout(id) as LayoutComponent);
+        this.asidebar = (UIComponentFactory.createLayout(id) as LayoutComponent);
     }
     
     getInfo() {

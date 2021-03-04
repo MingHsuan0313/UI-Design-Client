@@ -8,11 +8,13 @@ import { IServiceEntry } from "../service-component-dependency";
 export class DropdownComponent extends BasicComponent {
   items: String;
 
-  constructor(uiComponentBuilder: UIComponentBuilder) {
-    super(uiComponentBuilder);
-    let properties = uiComponentBuilder.getProperties();
-    if (properties != undefined) {
-      this.items = properties["items"];
+  constructor(uiComponentBuilder?: UIComponentBuilder) {
+    if(uiComponentBuilder){
+      super(uiComponentBuilder);
+      let properties = uiComponentBuilder.getProperties();
+      if (properties != undefined) {
+        this.items = properties["items"];
+      }
     }
   }
 

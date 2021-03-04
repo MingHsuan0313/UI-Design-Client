@@ -30,6 +30,9 @@ class ExternalRepresentationReducer {
 
     @Action
     public insertVertex(store: ExternalRepresentation, action: ERInsertVertexAction) {
+        if(action.id == "navigation")
+            return store;
+        // console.log(action);
         store = { ...store };
         store.graphStorages = {...store.graphStorages};
         let id = action.id;

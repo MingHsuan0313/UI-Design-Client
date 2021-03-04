@@ -3,24 +3,26 @@ import GraphEditorService from "src/app/services/externalRepresentation/graph-ed
 import { Configuration } from "src/app/services/externalRepresentation/util/configuration";
 import { ERInsertVertexAction } from "../store/actions/externalRepresentation.action";
 import { AppState } from "../store/app.state";
-import { pageUICDLSelector } from "../store/selectors/InternalRepresentationSelector";
+import { pageNameSelector, pageUICDLSelector } from "../store/selectors/InternalRepresentationSelector";
 import { SelabVertex } from "./selabVertex.model";
 import { UIComponent } from "../ui-component-dependency";
 import { BreadcrumbStrategy, ButtonStrategy, CardStrategy, DropdownStrategy, FormStrategy, IconStrategy, InputStrategy, LayoutStrategy, TableStrategy, TextStrategy } from "./component-strategy-dependency";
 import { ICreateComponentStrategy } from "./createComponentStrategy/ICreateComponentStrategy";
+import { IRSetLayoutAction } from "../store/actions/internalRepresentation.action";
+import { MatDialog } from "@angular/material";
 
 export class SelabEditor {
     editor: mxEditor;
     id: string;
-    store: Store<AppState>
     createComponentStrategy: ICreateComponentStrategy;
 
     constructor(element: HTMLElement,
-        store: Store<AppState>,
-        private graphEditorService: GraphEditorService) {
+        private store: Store<AppState>,
+        private graphEditorService: GraphEditorService,
+        private dialog: MatDialog
+    ) {
         this.initializeEditor(element, "assets/keyhandler.xml");
         this.id = element.id;
-        this.store = store;
     }
 
     initializeEditor(element: HTMLElement, configurePath: string): void {
@@ -32,6 +34,7 @@ export class SelabEditor {
         editor.configure(config);
         Configuration.configureEditorKeyBinding(editor);
         Configuration.configureGraphListener(editor);
+
         this.editor = editor;
     }
 
@@ -51,21 +54,30 @@ export class SelabEditor {
         return this.editor.graph.view;
     }
 
+    setGraphModel(graphModel: mxGraphModel) {
+        this.editor.graph.model = graphModel;
+    }
+
     setStrategy(strategy: ICreateComponentStrategy) {
         this.createComponentStrategy = strategy;
     }
 
-    applyLayout(layout: string) {
-        console.log("apply Layout")
-        let graphID = this.graphEditorService.getSelectedGraphID();
-        this.setStrategy(new LayoutStrategy(0, 0,graphID));
-        let pageUICDLs = this.store.select(pageUICDLSelector());
-        pageUICDLs.subscribe((data) => {
-            let id = this.graphEditorService.getSelectedGraphID();
-            console.log(data[id]);
-            (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this, data[id]);
-        });
+    setLayout(layout: string) {
+        let graphID = this.graphEditorService.getSelectedPageId();
+        this.store.dispatch(new IRSetLayoutAction(graphID, layout));
+    }
 
+    applyLayout(layout: string,themes, xOffset?, yOffset?) {
+        let graphID = this.graphEditorService.getSelectedPageId();
+        this.setStrategy(new LayoutStrategy(graphID, new mxGeometry(0, 0, 0, 0)));
+        let pageUICDLs = this.store.select(pageUICDLSelector());
+        let subscription = pageUICDLs.subscribe((data) => {
+            let id = graphID;
+            if (graphID == undefined)
+                return;
+            (this.createComponentStrategy as LayoutStrategy).createLayoutComponent(this, data[id], themes);
+        });
+        subscription.unsubscribe();
     }
 
     insertVertex(selabVertex: SelabVertex, component: UIComponent, geometry: mxGeometry, style: object): mxCell {
@@ -77,13 +89,15 @@ export class SelabEditor {
         try {
             this.getGraph().getModel().beginUpdate();
             vertex = this.getGraph()
-                .insertVertex(parent, id, value,
+                .insertVertex(parent, 0, value,
                     geometry.x, geometry.y, geometry.width, geometry.height,
                     styleDescription, "")
+
+            vertex['pageId'] = component.pageId;
             vertex["selector"] = component.selector;
             vertex["type"] = component.type;
-            let graphID = this.graphEditorService.getSelectedGraphID();
-            this.store.dispatch(new ERInsertVertexAction(graphID, selabVertex));
+            // let graphID = this.graphEditorService.getSelectedPageId();
+            // this.store.dispatch(new ERInsertVertexAction(graphID, selabVertex));
         } finally {
             this.getGraph().getModel().endUpdate();
         }
@@ -91,20 +105,19 @@ export class SelabEditor {
         return vertex;
     }
 
-    createComponent(uiComponent: UIComponent, parent: mxCell, basex?, basey?) {
-        let graphID = this.graphEditorService.getSelectedGraphID();
-        console.log("create Component")
-        console.log(graphID)
-        const graphNode = document.getElementById(graphID);
+    createComponent(uiComponent: UIComponent, parent: mxCell, geometry?, restore?, xOffset?, yOffser?) {
+        const graphNode = document.getElementById('graph-container');
         const defaultWidth = graphNode.offsetWidth;
         const defaultHeight = graphNode.offsetHeight;
+        const restoreMode = restore == undefined ? false : restore;
 
         if (uiComponent['type'].startsWith('layout')) {
-            basex = 0;
-            basey = 0;
-        } else if (basex == undefined || basey == undefined) {
-            basex = defaultWidth * 3 / 10;
-            basey = defaultHeight * 3 / 10;
+            geometry = { x: 0, y: 0 }
+        } else if (geometry == undefined) {
+            geometry = {
+                x: defaultWidth * 3 / 10,
+                y: defaultHeight * 3 / 10
+            }
         }
 
         // set parent [layout parts] to each components
@@ -113,27 +126,28 @@ export class SelabEditor {
 
         if (uiComponent['componentList'] == undefined) {
             if (uiComponent['type'] == 'button') {
-                this.setStrategy(new ButtonStrategy(basex, basey));
+                this.setStrategy(new ButtonStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'text') {
-                this.setStrategy(new TextStrategy(basex, basey));
+                this.setStrategy(new TextStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'dropdown') {
-                this.setStrategy(new DropdownStrategy(basex, basey));
+                this.setStrategy(new DropdownStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'table') {
-                this.setStrategy(new TableStrategy(basex, basey));
+                this.setStrategy(new TableStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'icon') {
-                this.setStrategy(new IconStrategy(basex, basey));
+                this.setStrategy(new IconStrategy(geometry, restoreMode));
             } else if (uiComponent['type'].startsWith('input')) {
-                this.setStrategy(new InputStrategy(basex, basey));
+                this.setStrategy(new InputStrategy(geometry, restoreMode));
             }
             return this.createComponentStrategy.createComponent(this, uiComponent, parent);
         } else {
             if (uiComponent['type'] == 'card') {
-                this.setStrategy(new CardStrategy(basex, basey));
+                this.setStrategy(new CardStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'breadcrumb') {
-                this.setStrategy(new BreadcrumbStrategy(basex, basey));
+                this.setStrategy(new BreadcrumbStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'form') {
-                this.setStrategy(new FormStrategy(basex, basey));
-            } const compositeVertexStorage = this.createComponentStrategy.createComponent(this, uiComponent, parent);
+                this.setStrategy(new FormStrategy(geometry, restoreMode));
+            }
+            const compositeVertexStorage = this.createComponentStrategy.createComponent(this, uiComponent, parent);
             return compositeVertexStorage;
         }
     }

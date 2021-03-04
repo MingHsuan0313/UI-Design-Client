@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, Input } from "@angular/core";
-import { GraphStorage } from "src/app/models/graph-dependency";
 import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { PropertyGenerator } from "src/app/shared/property-generator";
 import { ICreateBPELComponentStrategy } from "../../models/createBPELComponentStrategy/ICreateBPELComponentStrategy";
@@ -54,9 +53,11 @@ import { CompensateStrategy } from "../../models/createBPELComponentStrategy/Com
 import { CompensateScope } from "../../models/components/others/compensateScope/compensateScope.model";
 import { CompensateScopeStrategy } from "../../models/createBPELComponentStrategy/CompensateScopeStrategy";
 import UpdateBPELDocService from "../../services/updateBPELDoc.service";
-import { VertexStorage } from "src/app/models/graph-dependency";
 import { BPELComponent } from "../../models/components/BPELComponent.model";
 import IOBPELDocService from "../../services/ioBPELDoc/ioBPELDoc.service";
+import { BpelDesignerEditorService } from "../../services/bpel-designer-editor.service";
+import { GraphStorage } from "../../models/graph-storage.model";
+import VertexStorage from "../../models/vertext-storage.model";
 
 @Component({
     selector: 'palette',
@@ -74,7 +75,7 @@ export class PaletteComponent implements AfterViewInit {
 
     @Input() userSettedTargetContainerActivity: BPELComponent;
 
-    constructor(private updateBPELDocService: UpdateBPELDocService, private graphEditorService: GraphEditorService, private ioBPELDocService: IOBPELDocService) {
+    constructor(private updateBPELDocService: UpdateBPELDocService, private graphEditorService: BpelDesignerEditorService, private ioBPELDocService: IOBPELDocService) {
         // Scenario: import a BPEL doc
         ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent: [string[], string, Map<string, string>, string]) => {
             let componentNameWithIdStack = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent[0];
@@ -120,18 +121,23 @@ export class PaletteComponent implements AfterViewInit {
 
     onClick(event: any) {
         const componentName = event.target.innerText;
+        console.log(componentName)
         if (this.isGraphVertexStorageEmpty()) {
+            console.log('heree1');
             if (componentName == "process") {
                 this.draw(componentName);
             } else {
                 alert("[ERROR] Must create a <process> vertex first");
             }
         } else {
+            console.log('heree2');
             this.draw(componentName);
         }
     }
 
     getGraphFirstVertexStorage(): VertexStorage {
+        if (this.graphStorage == undefined)
+            this.graphStorage = this.graphEditorService.getGraphStorage();
         return this.graphStorage.findVertexStorageByID(2);
     }
 

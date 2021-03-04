@@ -9,12 +9,14 @@ export class InputTextComponent extends BasicComponent {
   public typeInfo: string;  // e.g. input-text, input-password
   public description: string;
 
-  constructor(uiComponentBuilder: UIComponentBuilder) {
-    super(uiComponentBuilder);
-    let properties = uiComponentBuilder.getProperties();
-    if (properties != undefined) {
-      this.typeInfo = properties["typeInfo"];
-      this.description = properties["name"];
+  constructor(uiComponentBuilder?: UIComponentBuilder) {
+    if(uiComponentBuilder){
+      super(uiComponentBuilder);
+      let properties = uiComponentBuilder.getProperties();
+      if (properties != undefined) {
+        this.typeInfo = properties["typeInfo"];
+        this.description = properties["name"];
+      }
     }
   }
 

@@ -6,20 +6,13 @@ import { SelabEditor } from "../selab-editor.model";
 import { ButtonComponent } from "../../ui-component-dependency";
 import { SelabVertex } from "../selabVertex.model";
 
-export class ButtonStrategy implements ICreateComponentStrategy {
-  basex: number;
-  basey: number;
+export class ButtonStrategy extends ICreateComponentStrategy {
 
-  constructor(basex?, basey?) {
-    // basic component
-    if (basex == undefined || basey == undefined) {
-      this.basex = 0;
-      this.basey = 0;
-    } else {
-      this.basex = basex;
-      this.basey = basey;
-    }
+
+  constructor(geometry?, restoreMode?) {
+    super(geometry, restoreMode);
   }
+
 
   createDataBinding(part: String, index?){
     let dataBindingName = "text";
@@ -41,17 +34,17 @@ export class ButtonStrategy implements ICreateComponentStrategy {
     const height = 40;
     const buttonGeometry = new mxGeometry(this.basex, this.basey, width, height);
     let selabVertex = new SelabVertex()
-                            .setID(component.getId())
-                            .setUIComponentID(component.getId())
+                            .setID(component.id)
+                            .setUIComponentID(component.id)
                             .setParentID(parent.id)
                             .setIsPrimary(true)
-                            .setValue(component.getValue())
+                            .setValue(component.text.toString())
                             .setDataBinding(dataBinding)
     let buttonCell = selabEditor.insertVertex(selabVertex,component,buttonGeometry,style);
     buttonCell["componentPart"] = "box";
     buttonCell["dataBinding"] = dataBinding;
     buttonCell["isPrimary"] = true;
-    buttonCell["componentID"] = component.getId();
+    buttonCell["componentID"] = component.id;
     return buttonCell;
   }
 

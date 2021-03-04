@@ -59,19 +59,11 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
-        let id = this.graphEditorService.getSelectedGraphID();
+        let id = this.graphEditorService.getSelectedPageId();
         console.log("start creating");
         console.log(this.uiComponentBuilder);
         let uiComponent = this.uiComponentBuilder.build();
         this.store.dispatch(new IRInsertUIComponentAction(id,uiComponent));
-        // let serviceComponent = this.uiComponent.getServiceComponent();
-        // if(serviceComponent.serviceID.toString().length > 0) {
-        //   let operation: Operation = new Operation()
-        //                                   .setClassName(serviceComponent.className)
-        //                                   .setName(serviceComponent.name)
-        //                                   .setServiceID(serviceComponent.serviceID)
-        //   this.store.dispatch(new PipelineCreateOperationAction(operation));
-        // }
         this.graphEditorService.bindComponent(uiComponent);
         this.wizard.close();
       }
@@ -99,7 +91,6 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
   }  
 
   ngAfterViewInit() {
-    // console.log("information tab active")
   }
 }
 

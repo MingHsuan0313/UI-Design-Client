@@ -46,13 +46,17 @@ import { externalRepresentationReducer } from "./models/store/reducers/ExternalR
 import { internalRepresentationReducer } from "./models/store/reducers/InternalRepresentationReducer";
 import { ConfirmDialogComponent } from './components/utils/confirm-dialog/confirm-dialog.component';
 import { TabNameDialogComponent } from './components/selab-graph-editor/tab-name-dialog/tab-name-dialog.component';
+import { EdgeInformationDialogComponent } from './components/selab-graph-editor/edge-information-dialog/egde-information-dialog.component';
 import { ComponentInfoComponent } from './components/selab-setting/component-info/component-info.component';
 import { EndpointTestComponent } from './components/selab-setting/endpoint-test/endpoint-test.component';
 import { TestingLogWindowComponent } from './components/selab-setting/endpoint-test/testing-log-window/testing-log-window.component';
 import { JestTestingLogWindowComponent } from './components/selab-setting/endpoint-test/jest-testing-log-window/jest-testing-log-window.component';
 import { JestTestingTerminalComponent } from './components/selab-setting/endpoint-test/jest-testing-log-window/jest-testing-terminal/jest-testing-terminal.component';
-import { ProjectNameDialogComponent } from './containers/default-layout/project-name-dialog/project-name-dialog.component'; 
 import { SelabWebAppDashboardComponent } from "./components/selab-webApp-dashboard/selab-webApp-dashboard.component";
+import { ProjectNameDialogComponent } from './containers/default-layout/project-name-dialog/project-name-dialog.component';
+import { ThemeTabsComponent } from './components/selab-graph-editor/theme-tabs/theme-tabs.component';
+import { PageTabsComponent } from './components/selab-graph-editor/theme-tabs/page-tabs/page-tabs.component';
+import { ThumbnailDialog } from './components/selab-graph-editor/thumbnail-dialog/thumbnail-dialog.component'; 
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -105,6 +109,7 @@ export function reducerFactory() {
     MenuItemComponent,
     ConfirmDialogComponent,
     TabNameDialogComponent,
+    EdgeInformationDialogComponent,
     ComponentInfoComponent,
     EndpointTestComponent,
     TestingLogWindowComponent,
@@ -112,6 +117,9 @@ export function reducerFactory() {
     JestTestingTerminalComponent,
     ProjectNameDialogComponent,
     SelabWebAppDashboardComponent,
+    ThemeTabsComponent,
+    PageTabsComponent,
+    ThumbnailDialog
   ],
   imports: [
     AngularMaterialModule,
@@ -132,10 +140,12 @@ export function reducerFactory() {
     SelabWizardComponent,
     ConfirmDialogComponent,
     TabNameDialogComponent,
+    EdgeInformationDialogComponent,
     TestingLogWindowComponent,
     JestTestingLogWindowComponent,
     ProjectNameDialogComponent,
-    SelabWebAppDashboardComponent
+    SelabWebAppDashboardComponent,
+    ThumbnailDialog
   ],
   providers: [],
   bootstrap: [AppComponent]

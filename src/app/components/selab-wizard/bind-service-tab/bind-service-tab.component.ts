@@ -35,19 +35,14 @@ export class BindServiceTabComponent implements OnInit {
   async chooseService(event, option) {
     console.log("choose service");
     this.selectedService = option;
-    // if((this.uiComponentBuilder.serviceComponent as ServiceComponent).serviceID != undefined) {
-    //   this.uiComponentBuilder.setServiceComponent(new ServiceComponent());
-    //   this.uiComponent = this.uiComponent.setServiceComponent(new ServiceComponent());
-    // }
-    // console.log(this.uiComponent);
     let serviceComponent = new ServiceComponentModel();
     serviceComponent.setClassName(option["className"])
       .setName(option["name"])
       .setServiceID(option["serviceID"])
-      // .setHttpMethod(option["httpMethod"])
       .setHttpMethod("get")
       .setWSDLName(option["WSDLName"])
       .setUrl();
+
     this.uiComponentBuilder.setServiceComponent(serviceComponent);
     if (option["name"] == "addDepartment" || option["name"] == "editDepartment") {
         (this.uiComponentBuilder
@@ -112,12 +107,10 @@ export class BindServiceTabComponent implements OnInit {
   queryService() {
     this.isQueryingService = true;
     this.serviceComponentService
-      // .queryServices(this.uiComponent,2)
       .queryMatchedServices(this.uiComponentBuilder)
       .subscribe(
         (response) => {
           console.log("queryService result")
-          // console.log(response["body"])
           this.serviceOptions = JSON.parse(response["body"]);
           for (let index = 0; index < this.serviceOptions.length; index++) {
             this.serviceOptions[index]["argc"] = this.serviceOptions[index]["WSDLName"]

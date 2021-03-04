@@ -7,9 +7,11 @@ import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-
 export class InputGroupComponent extends CompositeComponent {
   componentList: any[] = [];
 
-  constructor(uiComponentBuilder: UIComponentBuilder) {
-    super(uiComponentBuilder);
-    this.componentList = uiComponentBuilder.componentList;
+  constructor(uiComponentBuilder?: UIComponentBuilder) {
+    if(uiComponentBuilder){
+      super(uiComponentBuilder);
+      this.componentList = uiComponentBuilder.componentList;
+    }
   }
 
   setStyle(style: Object): InputGroupComponent {

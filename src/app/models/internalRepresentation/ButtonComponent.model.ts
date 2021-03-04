@@ -11,15 +11,19 @@ export class ButtonComponent extends BasicComponent {
   href: String;
   trigger: Boolean;
 
-  constructor(uiComponentBuilder: UIComponentBuilder) {
-    super(uiComponentBuilder);
-    let properties = uiComponentBuilder.getProperties();
-    if (properties != undefined) {
-      this.text = properties["name"];
-      this.href = properties["href"];
-      this.trigger = properties["trigger"];
+  constructor(uiComponentBuilder?: UIComponentBuilder) {
+    if(uiComponentBuilder){
+      super(uiComponentBuilder);
+      let properties = uiComponentBuilder.getProperties();
+      if (properties != undefined) {
+        this.text = properties["name"];
+        this.href = properties["href"];
+        this.trigger = properties["trigger"];
+      }
     }
   }
+
+
 
   setProperties(properties: object): ButtonComponent {
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);

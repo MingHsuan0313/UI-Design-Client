@@ -7,13 +7,15 @@ import { IServiceEntry } from "../service-component-dependency";
 export class CardComponent extends CompositeComponent {
   header: String;
 
-  constructor(uiComponentbuilder: UIComponentBuilder) {
-    super(uiComponentbuilder);
-    let properties = uiComponentbuilder.getProperties();
-    if (properties != undefined) {
-      this.header = properties["header"];
+  constructor(uiComponentBuilder?: UIComponentBuilder) {
+    if(uiComponentBuilder){
+      super(uiComponentBuilder);
+      let properties = uiComponentBuilder.getProperties();
+      if (properties != undefined) {
+        this.header = properties["header"];
+      }
+      this.componentList = uiComponentBuilder.componentList;
     }
-    this.componentList = uiComponentbuilder.componentList;
   }
 
   setStyle(style: Object): CardComponent{

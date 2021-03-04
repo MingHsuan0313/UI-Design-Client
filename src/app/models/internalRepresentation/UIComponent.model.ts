@@ -6,12 +6,14 @@ export class UIComponent {
   public id: string;
   public selector: string;
   public category: string;
-  public  style: {};
+  public pageId: string;
+  public style: {};
   public geometry: {};
   public type: string;
   public name: string;
   public serviceComponent: IServiceEntry;
   
+
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     this.name = uiComponentBuilder.name;
     this.id = uiComponentBuilder.id;
@@ -21,6 +23,7 @@ export class UIComponent {
     this.style = uiComponentBuilder.style;
     this.geometry = uiComponentBuilder.geometry;
     this.serviceComponent = uiComponentBuilder.serviceComponent;
+    this.pageId = uiComponentBuilder.pageId;
   }
 
   public getName():  string{

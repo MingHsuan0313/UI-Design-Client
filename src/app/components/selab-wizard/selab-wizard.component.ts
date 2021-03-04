@@ -4,11 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { PipelineCreateOperationAction, PipelineCreateTaskAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
-import { operationPoolSelector } from 'src/app/models/store/selectors/PipelineStorageSelector';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
-import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
-import { Task } from 'src/app/models/wizard-task-dependency';
 import { SelabHeaderComponent } from '../selab-header/selab-header.component';
 import { BindServiceTabComponent } from './bind-service-tab/bind-service-tab.component';
 import { BuildTabComponent } from './build-tab/build-tab.component';
@@ -16,6 +13,7 @@ import { ComposeTabComponent } from './compose-tab/compose-tab.component';
 import { InformationTabComponent } from './information-tab/information-tab.component';
 import { PipelineTabComponent } from './pipeline-tab/pipeline-tab.component';
 import { UIComponentFactory } from './uicomponent-factory';
+import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 
 @Component({
   selector: 'selab-wizard',
@@ -29,7 +27,6 @@ export class SelabWizardComponent implements OnInit {
   genere: string = ""; // CoreUI, Material...
   type: string = ""; // form, dropdown...
   category: string = ""; // informative, input control...
-  uiComponent: UIComponent; // uiComponent being create
   uiComponentBuilder: UIComponentBuilder;
   lastTab: string;
 
@@ -43,6 +40,7 @@ export class SelabWizardComponent implements OnInit {
   @ViewChild("service") serviceTab: BindServiceTabComponent
 
   constructor(
+    private graphEditorService: GraphEditorService,
     public dialogRef: MatDialogRef<SelabHeaderComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     store: Store<AppState>
@@ -60,8 +58,8 @@ export class SelabWizardComponent implements OnInit {
     if (this.isPipeline) {
       this.operation = this.data.operation;
     }
-    this.uiComponentBuilder = UIComponentFactory.create(this.type);
-    // this.uiComponent = UIComponentFactory.create(this.type);
+    let pageId = this.graphEditorService.selectedPageId;
+    this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
   }
 
   // this function if for update componet tree structure for information tab
@@ -90,7 +88,6 @@ export class SelabWizardComponent implements OnInit {
   }
 
   checkUIComponent() {
-    console.log(this.uiComponent);
   }
 
   ngOnInit() {

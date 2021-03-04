@@ -1,7 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { GraphStorage } from "src/app/models/graph-dependency";
 import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { BPELComponent } from "../../models/components/BPELComponent.model";
+import { GraphStorage } from "../../models/graph-storage.model";
+import { BpelDesignerEditorService } from "../../services/bpel-designer-editor.service";
 import IOBPELDocService from "../../services/ioBPELDoc/ioBPELDoc.service";
 
 
@@ -27,7 +28,7 @@ export class PropertyEditorComponent implements OnInit {
     userSettedTargetContainerActivity: BPELComponent;
     @Output() userSettedTargetContainerActivityEvent: EventEmitter<BPELComponent> = new EventEmitter<BPELComponent>();
 
-    constructor(private graphEditorService: GraphEditorService, private ioBPELDocService: IOBPELDocService) {
+    constructor(private graphEditorService: BpelDesignerEditorService, private ioBPELDocService: IOBPELDocService) {
         this.initBPELComponentDict();
 
         ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent: [string[], string, Map<string, string>, string]) => {
@@ -125,10 +126,10 @@ export class PropertyEditorComponent implements OnInit {
                             // abstractProcessesList
                             if (key.startsWith("xmlns")) {
                                 abstractProcessesList += (key + "=" + "\"" + value + "\" ");
-                                let newEventTargetValue = {"target": {"value": abstractProcessesList}};
+                                let newEventTargetValue = { "target": { "value": abstractProcessesList } };
                                 this.syncSelectedAttribute("abstractProcessesList", newEventTargetValue);
                             } else {
-                                let newEventTargetValue = {"target": {"value": value}};
+                                let newEventTargetValue = { "target": { "value": value } };
                                 this.syncSelectedAttribute(key, newEventTargetValue);
                             }
                         });
@@ -141,46 +142,49 @@ export class PropertyEditorComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.graphStorage = this.graphEditorService.getGraphStorage();
-        this.graph = this.graphEditorService.getGraphStorage().getGraph();
+        setTimeout(() => {
+            this.graphStorage = this.graphEditorService.getGraphStorage();
+            this.graph = this.graphEditorService.getGraphStorage().getGraph();
 
-        this.graph.addListener(mxEvent.CLICK, (sender) => {
-          if (sender.selectionModel.cells[0] == undefined) {
-            this.selectedVertex = null;
-            this.selectedAttribute = null;
-            this.attributeKVPairsStack = null;
-          } else {
-            this.selectedVertex = sender.selectionModel.cells[0];
-            let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
-            let selectedComponent = vertexStorage.getComponent();
-            this.selectedAttribute = selectedComponent.getAttribute();
-            this.selectedElement = selectedComponent.getElement();
-            console.log("Select Vertex");
-            console.log(vertexStorage);
+            this.graph.addListener(mxEvent.CLICK, (sender) => {
+                if (sender.selectionModel.cells[0] == undefined) {
+                    this.selectedVertex = null;
+                    this.selectedAttribute = null;
+                    this.attributeKVPairsStack = null;
+                } else {
+                    this.selectedVertex = sender.selectionModel.cells[0];
+                    let vertexStorage = this.graphStorage.findVertexStorageByID(this.selectedVertex["id"]);
+                    let selectedComponent = vertexStorage.getComponent();
+                    this.selectedAttribute = selectedComponent.getAttribute();
+                    this.selectedElement = selectedComponent.getElement();
+                    console.log("Select Vertex");
+                    console.log(vertexStorage);
 
-            this.objectStack = [];
-            this.objectStack.push(selectedComponent);
-            this.isObjectStackEmpty = false;
-            console.log("[INFO] Push selected object to objectStack");
-            console.log(this.objectStack);
-            this.attributeKVPairsStack = [];
-            this.elementKVPairsStack = [];
-            if (this.selectedAttribute == undefined) {
-                this.attributeKVPairsStack.push(this.nullAttributeKVPairs);
-            } else {
-                this.attributeKVPairsStack.push(Object.entries(this.selectedAttribute));
-                console.log("1. Parse selected attribute k, v pairs to PropertyEditor")
-                console.log(this.attributeKVPairsStack)
-            }
-            if (this.selectedElement == undefined) {
-                this.elementKVPairsStack.push(this.nullElementKVPairs);
-            } else {
-                this.elementKVPairsStack.push(Object.entries(this.selectedElement));
-                console.log("2. Parse selected element k, v pairs to PropertyEditor");
-                console.log(this.elementKVPairsStack);
-            }
-          }
-        })
+                    this.objectStack = [];
+                    this.objectStack.push(selectedComponent);
+                    this.isObjectStackEmpty = false;
+                    console.log("[INFO] Push selected object to objectStack");
+                    console.log(this.objectStack);
+                    this.attributeKVPairsStack = [];
+                    this.elementKVPairsStack = [];
+                    if (this.selectedAttribute == undefined) {
+                        this.attributeKVPairsStack.push(this.nullAttributeKVPairs);
+                    } else {
+                        this.attributeKVPairsStack.push(Object.entries(this.selectedAttribute));
+                        console.log("1. Parse selected attribute k, v pairs to PropertyEditor")
+                        console.log(this.attributeKVPairsStack)
+                    }
+                    if (this.selectedElement == undefined) {
+                        this.elementKVPairsStack.push(this.nullElementKVPairs);
+                    } else {
+                        this.elementKVPairsStack.push(Object.entries(this.selectedElement));
+                        console.log("2. Parse selected element k, v pairs to PropertyEditor");
+                        console.log(this.elementKVPairsStack);
+                    }
+                }
+            })
+
+        }, 300);
     }
 
     getKey(kv) {

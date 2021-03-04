@@ -3,20 +3,16 @@ import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
 import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
 
-export class IconStrategy implements ICreateComponentStrategy {
-  basex: number;
-  basey: number;
+export class IconStrategy extends ICreateComponentStrategy {
 
-  constructor(basex?, basey?) {
-    // basic component
-    if (basex == undefined || basey == undefined) {
-      this.basex = 0;
-      this.basey = 0;
-    } else {
-      this.basex = basex;
-      this.basey = basey;
+  constructor(geometry?, restoreMode?) {
+    super(geometry, restoreMode);
+    if(!this.restoreMode){
+      this.width = 30;
+      this.height = 30;
     }
   }
+
 
   createDataBinding(part, index?) {
     const hasDataBinding = true;
@@ -36,7 +32,7 @@ export class IconStrategy implements ICreateComponentStrategy {
     const style = StyleLibrary[0]["icon"];
     const styleName = "style" + component.id;
     const styleStorage = new StyleStorage(styleName, style);
-    const textGeometry = new mxGeometry(this.basex, this.basey, 30, 30);
+    const textGeometry = new mxGeometry(this.basex, this.basey, this.width, this.height);
 
     // Initialized
     let iconVertexStorage = graphStorage.insertVertex(parent, component.id, component.text, textGeometry, styleStorage, component);

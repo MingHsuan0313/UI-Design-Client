@@ -2,19 +2,27 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Storage } from '../../shared/storage';
-import { TextComponent } from '../../models/ui-component-dependency';
+import { TextComponent, UIComponent } from '../../models/ui-component-dependency';
 import { PropertyGenerator } from '../../shared/property-generator';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import ImportService from '../../services/internalRepresentation/import.service';
 import ExportService from '../../services/internalRepresentation/export.service';
-import { MatDialog,
+import IRTransformer from '../../services/internalRepresentation/IRTransformer.service'
+import {
+  MatDialog,
   MatDialogConfig,
   MatSnackBar,
-  MatSnackBarVerticalPosition } from '@angular/material';
+  MatSnackBarVerticalPosition
+} from '@angular/material';
 import { SelabWizardComponent } from '../selab-wizard/selab-wizard.component';
 import { SelabWebAppDashboardComponent } from '../selab-webApp-dashboard/selab-webApp-dashboard.component';
 import { HttpClientService } from '../../services/http-client.service';
+import { AppState } from 'src/app/models/store/app.state';
+import { Store } from '@ngrx/store';
+import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model';
+import { pageUICDLSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 
 @Component({
   selector: 'selab-header',
@@ -53,6 +61,8 @@ export class SelabHeaderComponent implements OnInit {
     private httpClientService: HttpClientService,
     private snackBar: MatSnackBar,
     public wizard: MatDialog,
+    private IRTransformerService: IRTransformer,
+    private store: Store<AppState>,
     public webAppDashboard: MatDialog) {
 
   }
@@ -101,11 +111,8 @@ export class SelabHeaderComponent implements OnInit {
     );
   }
 
-  apply() {
-    // this.graphEditorService.applyLayout(this.layout_selected);
-  }
-  
   applyLayout(layout: string) {
+    this.graphEditorService.setLayout(layout);
     this.graphEditorService.applyLayout(layout);
   }
 
@@ -145,12 +152,58 @@ export class SelabHeaderComponent implements OnInit {
 
   save() {
     this.openSnackBar("synchronize vertex with ui component", "sync");
-    // this.graphEditorService.syncMxCells();
     this.graphEditorService.syncStorage();
   }
 
   storeNDL() {
     this.openSnackBar("save NDL to database", "save");
+    SelabGlobalStorage.initializeNDL();
+    let pages = {};
+    let cells = this.graphEditorService.getGraphModel().cells;
+    let subscribtion = this.store.select(pageUICDLSelector())
+      .subscribe((pageUICDLs) => {
+        let keys = Object.keys(pageUICDLs);
+        for(let index = 0;index < keys.length;index++) {
+          let key = keys[index];
+          let page = {
+            'name': pageUICDLs[key].name,
+            'id': pageUICDLs[key].id
+          }
+          console.log("here")
+          SelabGlobalStorage.addNDL(pageUICDLs[key]);
+          pages[pageUICDLs[key].id] = page;
+        }
+        keys = Object.keys(cells);
+        
+        SelabGlobalStorage.cleanEdges();
+        for(let index = 0;index < keys.length;index++) {
+          let key = keys[index];
+          if(cells[key]['edge'] == true) {
+            console.log(cells[key]);
+            let sourcePageId = cells[key]['source']['parent']['pageId'];
+            console.log(cells[key])
+            console.log(pages)
+            let source = {
+              'pageId': sourcePageId,
+              'pageName': pages[sourcePageId]['name'],
+              'componentSelector': cells[key]['source']['parent']['selector'] 
+            }
+            let targetPageId = cells[key]['target']['pageId'];
+            let target = {
+              'pageId': targetPageId,
+              'pageName': pages[targetPageId]['name'], 
+              'componentSelector': cells[key]['target']['selector'] 
+            }
+
+            console.log(source);
+            console.log(target);
+            SelabGlobalStorage.addEdge(source, target, cells[key].value);
+          }
+        }
+      })
+    subscribtion.unsubscribe();
+    console.log(cells);
+    console.log(SelabGlobalStorage.ndl)
     this.exportService.postNDL().subscribe(
       response => console.log(response['body'])
     );
@@ -201,28 +254,20 @@ export class SelabHeaderComponent implements OnInit {
     })
   }
 
-  // openWizard() {
-  //   let compositeComponents = ["card", "breadcrumb", "inputgroup", "form"];
-  //   let isComposite = false;
-  //   if (compositeComponents.indexOf(this.component_selected) >= 0)
-  //     isComposite = true;
-
-  //   if (this) {
-  //     this.wizard.open(SelabWizardComponent, {
-  //       width: '55%',
-  //       height: '65%',
-  //       data: {
-  //         isPipeline: false,
-  //         isComposite: isComposite,
-  //         genere: this.genre_selected,
-  //         category: this.category_selected,
-
-  //         type: this.component_selected,
-  //         returnData: {}
-  //       },
-  //       disableClose: true,
-  //       autoFocus: true
-  //     });
-  //   }
-  // }
+  uploadPageUICDL($event) {
+    console.log('upload file');
+    let selectedFile = $event.target.files[0]
+    const fileReader = new FileReader();
+    fileReader.readAsText(selectedFile, "UTF-8");
+    fileReader.onload = () => {
+      let pageUICDLObject = JSON.parse(fileReader.result as any);
+      let pageId = pageUICDLObject["id"]
+      let pageUICDL = new PageUICDL(pageId); // internalRepresentation
+      Object.assign(pageUICDL, pageUICDLObject);
+      this.graphEditorService.uploadPageUICDL(pageUICDL);
+    }
+    fileReader.onerror = (error) => {
+      console.log(error);
+    }
+  }
 }

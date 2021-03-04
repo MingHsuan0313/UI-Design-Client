@@ -12,56 +12,35 @@ export default class ExportService {
   private baseUrl: string;
   constructor(private httpClient: HttpClient,
     private httpClientService: HttpClientService) {
-    this.baseUrl = "page";
-
+    this.baseUrl = "";
   }
-
 
   postPageUICDL(PDL) {
     console.log(PDL);
     let url = this.baseUrl;
-    return this.httpClientService.httpPost(url,PDL,"uiDesignServer");
-    // return this.httpClient.post("http://localhost:8080", PDL,
-    //   {
-    //     headers: new HttpHeaders().set("Content-Type", "application/json"),
-    //     observe: "response", withCredentials: true, responseType: "text"
-    //   }
-    // );
+    return this.httpClientService.httpPost(url, PDL, "uiDesignServer");
   }
 
   newProject() {
     let url = `${this.baseUrl}/trunc`
     let params = new HttpParams();
-    return this.httpClientService.httpGet(url,params,"uiDesignServer");
-    // return this.httpClient.get("http://localhost:8080/trunc",
-    //   {
-    //     headers: new HttpHeaders().set("Content-Type", "application/json"),
-    //     observe: "response", withCredentials: true, responseType: "text"
-    //   }
-    // );
+    return this.httpClientService.httpGet(url, params, "uiDesignServer");
   }
 
-  postNDL(){
+  postNDL() {
     let url = `${this.baseUrl}/navigation`
-    return this.httpClientService.httpPost(url,Storage.navigationFlow,"uiDesignServer");
-    // return this.httpClient.post("http://localhost:8080/navigate", Storage.navigationFlow,
-    //   {
-    //     headers: new HttpHeaders().set("Content-Type", "application/json"),
-    //     observe: "response", withCredentials: true, responseType: "text"
-    //   }
-    // );
+    return this.httpClientService.httpPost(url, Storage.navigationFlow, "uiDesignServer");
   }
 
-  postImage(xml) {
+  getImageFromModel(graphModel) {
     let url = `${this.baseUrl}/navigation/exportPicture`
-    return this.httpClientService.httpPost(url,xml,"uiDesignServer");
-    // return this.httpClient.post("http://localhost:8080/exportPicture", xml,
-    //   {
-    //     headers: new HttpHeaders().set("Content-Type", "application/json"),
-    //     observe: "response", withCredentials: true, responseType: "text"
-    //   }
-    // );
+    let encoder = new mxCodec();
+    let result = encoder.encode(graphModel);
+    let xml = mxUtils.getXml(result);
+    let imageString
+    return this.httpClientService.httpPost(url, xml, "uiDesignServer")
   }
+
 }
 
 
