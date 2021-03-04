@@ -45,10 +45,12 @@ export class SelabGlobalStorage {
     }
 
     static addEdge(source, target, parameter) {
+        console.log(this.ndl)
         for(let index = 0;index < this.ndl['children'].length;index++) {
+            console.log(source['pageName'])
             if(this.ndl['children'][index]['component'] == source['pageName']) {
                 this.ndl['children'][index]['destination'].push(target['pageName'])
-
+                console.log("add edge to ndl")
                 this.ndl['children'][index]['edges'].push({
                     "source": source['componentSelector'],
                     "target": target["pageName"],
