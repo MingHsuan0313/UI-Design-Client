@@ -62,7 +62,7 @@ export class UIComponentFactory {
                 .setCategory("input")
                 .setType("input")
                 .setID(`${this.nextID}`)
-                .setSelector(`${type}-${this.nextID}`);
+                .setSelector(`${type}-${this.nextID}`)
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "inputgroup") {
