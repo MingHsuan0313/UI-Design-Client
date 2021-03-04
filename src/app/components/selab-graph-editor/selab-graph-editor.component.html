@@ -18,7 +18,10 @@
         <button (click)="clearGraph()" mat-button style="min-width: 10px;" matTooltip="clear page">
             <mat-icon style="margin-bottom:10px ;" svgIcon="delete"></mat-icon>
         </button>
-        <button (click)="navigation()" mat-button style="min-width: 10px;" matTooltip="do navigation">
+        <button (click)="navigation('theme')" mat-button style="min-width: 10px;" matTooltip="do navigation">
+            <mat-icon style="margin-bottom:10px ;" svgIcon="navigation"></mat-icon>
+        </button>
+        <button (click)="navigation('themes')" mat-button style="min-width: 10px;" matTooltip="do navigation between themes">
             <mat-icon style="margin-bottom:10px ;" svgIcon="navigation"></mat-icon>
         </button>
     </mat-toolbar-row>
@@ -29,8 +32,6 @@
         matTooltip="Show Internal Representation(pageUICDL) in console">Show IR</button>
     <button mat-menu-item (click)="showExternalRepresentation()"
         matTooltip="Show External Representation(graphStorage) in console">Show ER</button>
-    <button mat-menu-item (click)="showNDL()"
-        matTooltip="Show Navigation Description Language in console">Show NDL</button>
     <button mat-menu-item (click)="showGlobalStorage()" matTooltip="Show Global Storage(ndl,sumdl) in console">Show
         Global Storage</button>
 </mat-menu>
