@@ -52,9 +52,10 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     this.openSnackBar("show GraphModel in console", "display");
   }
 
-  navigation() {
+  navigation(flag: string) {
     console.log('do navigation');
-    this.graphEditorService.navigation();
+
+    this.graphEditorService.navigation(flag);
   }
 
   openSnackBar(message: string, action: string) {
@@ -73,6 +74,10 @@ export class SelabGraphEditorComponent implements AfterViewInit {
       console.log(JSON.stringify(data[id]));
     })
     this.openSnackBar("show selected PageUICDL in console", "display");
+  }
+
+  showNDL(){
+
   }
 
   showGlobalStorage() {

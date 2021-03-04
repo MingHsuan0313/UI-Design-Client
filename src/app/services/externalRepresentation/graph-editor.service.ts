@@ -20,7 +20,7 @@ import ExportService from "../internalRepresentation/export.service";
 export default class GraphEditorService {
   selectedUIComponent: UIComponent;
   editor: SelabEditor;
-  inNavigation: boolean;
+  inNavigation: string;  // None, theme, themes
   zoomFactor = 1;
 
   selectedPageId: string;
@@ -34,7 +34,7 @@ export default class GraphEditorService {
     private dialog: MatDialog,
     private exportService: ExportService
   ) {
-    this.inNavigation = false;
+    this.inNavigation = "None";
     setTimeout(() => {
       let element = document.getElementById('graph-container');
       this.editor = new SelabEditor(element, store, this, dialog);
@@ -72,10 +72,10 @@ export default class GraphEditorService {
   }
 
   changePage(sourcePageId: string, targetPageId: string) {
-    if (this.inNavigation == true) {
+    if (this.inNavigation != "None") {
       this.clearGraphEditor();
       Configuration.removeConnectionHandlerListener(this.getGraph());
-      this.inNavigation = false;
+      this.inNavigation = "None";
       this.zoomFactor = 1;
       this.zoomTo(this.zoomFactor);
     }
@@ -146,15 +146,17 @@ export default class GraphEditorService {
     );
   }
 
-  navigation() {
+  navigation(flag) {
     this.selectedPageId = "navigation";
-    if (this.inNavigation == true)
+    if (this.inNavigation == flag)
       return;
-    this.inNavigation = true;
-    Configuration.configConnectionHadlerListener(this.getGraph(), this.dialog);
+    if(this.inNavigation == "None"){
+      Configuration.configConnectionHadlerListener(this.getGraph(), this.dialog);
+    }
+    this.inNavigation = flag;
     this.syncStorage();
     this.clearGraphEditor();
-    let pages = this.renderAllPages();
+    let pages = this.renderAllPages(flag);
     this.recoverNavigationEdges(pages);
     this.getGraph().refresh();
     this.zoomTo(0.4);
@@ -181,32 +183,47 @@ export default class GraphEditorService {
     this.zoomTo(this.zoomFactor);
   }
 
-  renderAllPages() {
+  renderAllPages(flag) {
     let returnPages;
+    let subscribtion;
+    let pagesInTheme = [];
+    if(flag == "theme"){
+      subscribtion = this.store.select(themeSelector()).subscribe((themes) => {
+        themes[this.selectedThemeIndex].pages.forEach(
+          page => {
+            pagesInTheme.push(page.id)
+        })
+      })
+      subscribtion.unsubscribe();
+    }
+
     let pageUICDLs = this.store.select(pageUICDLSelector());
-    let subscribtion = pageUICDLs.subscribe((pages) => {
+    subscribtion = pageUICDLs.subscribe((pages) => {
       returnPages = pages
       let keys = Object.keys(pages);
       let xOffset = 0;
       let yOffset = 0;
       for (let index = 0; index < keys.length; index++) {
-        let key = keys[index];
-        let page = pages[key];
-        if (page['layout'].length > 0) {
-          let layoutStrategy = new LayoutStrategy("graph-container", new mxGeometry(0, 0, 0, 0)).setOffset(xOffset, yOffset);
-          layoutStrategy.createLayoutComponent(this.editor, page, []);
-        }
-        let uiComponentList = this.IRTransformerService.transform(page, this.editor.getGraph());
-        uiComponentList.forEach(
-          uiComponent => {
-            let copyComponent = {};
-            copyComponent = JSON.parse(JSON.stringify(uiComponent));
-            copyComponent["geometry"]["x"] = copyComponent["geometry"]["x"] + xOffset;
-            this.bindComponent(copyComponent, copyComponent['geometry']);
+          let key = keys[index];
+          let page = pages[key];
+
+          if(flag == "themes" || flag=="theme" && pagesInTheme.includes(key)){
+            if (page['layout'].length > 0) {
+              let layoutStrategy = new LayoutStrategy("graph-container", new mxGeometry(0, 0, 0, 0)).setOffset(xOffset, yOffset);
+              layoutStrategy.createLayoutComponent(this.editor, page, []);
+            }
+            let uiComponentList = this.IRTransformerService.transform(page, this.editor.getGraph());
+            uiComponentList.forEach(
+              uiComponent => {
+                let copyComponent = {};
+                copyComponent = JSON.parse(JSON.stringify(uiComponent));
+                copyComponent["geometry"]["x"] = copyComponent["geometry"]["x"] + xOffset;
+                this.bindComponent(copyComponent, copyComponent['geometry']);
+              }
+            )
+            let offset = document.getElementById('graph-container').offsetWidth;
+            xOffset = xOffset + offset;
           }
-        )
-        let offset = document.getElementById('graph-container').offsetWidth;
-        xOffset = xOffset + offset;
       }
     })
     subscribtion.unsubscribe();
