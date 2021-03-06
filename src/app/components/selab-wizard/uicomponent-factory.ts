@@ -207,5 +207,14 @@ export class UIComponentFactory {
                 }
             }
         }
+        else if (type == "breadcrumb") {
+            return {
+                [uiComponentBuilder.selector]: {
+                    name: uiComponentBuilder.name,
+                    children: this.expandChildren(uiComponentBuilder.componentList),
+                    service: info
+                }
+            }
+        }
     }
 }
