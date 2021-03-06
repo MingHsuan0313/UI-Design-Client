@@ -56,7 +56,8 @@ import { SelabWebAppDashboardComponent } from "./components/selab-webApp-dashboa
 import { ProjectNameDialogComponent } from './containers/default-layout/project-name-dialog/project-name-dialog.component';
 import { ThemeTabsComponent } from './components/selab-graph-editor/theme-tabs/theme-tabs.component';
 import { PageTabsComponent } from './components/selab-graph-editor/theme-tabs/page-tabs/page-tabs.component';
-import { ThumbnailDialog } from './components/selab-graph-editor/thumbnail-dialog/thumbnail-dialog.component'; 
+import { ThumbnailDialog } from './components/selab-graph-editor/thumbnail-dialog/thumbnail-dialog.component';
+import { ReturnDataMenuComponent } from './components/selab-wizard/return-data-menu/return-data-menu.component'; 
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -119,7 +120,8 @@ export function reducerFactory() {
     SelabWebAppDashboardComponent,
     ThemeTabsComponent,
     PageTabsComponent,
-    ThumbnailDialog
+    ThumbnailDialog,
+    ReturnDataMenuComponent
   ],
   imports: [
     AngularMaterialModule,

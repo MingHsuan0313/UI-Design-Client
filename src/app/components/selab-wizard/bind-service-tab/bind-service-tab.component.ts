@@ -43,7 +43,9 @@ export class BindServiceTabComponent implements OnInit {
       .setWSDLName(option["WSDLName"])
       .setUrl();
 
-    this.uiComponentBuilder.setServiceComponent(serviceComponent);
+    this.uiComponentBuilder
+      .setServiceComponent(serviceComponent)
+      .setServiceId(serviceComponent.getServiceID());
     if (option["name"] == "addDepartment" || option["name"] == "editDepartment") {
         (this.uiComponentBuilder
           .getServiceComponent() as ServiceComponentModel)

@@ -189,7 +189,6 @@ export class SelabHeaderComponent implements OnInit {
           genere: genere,
           category: category,
           type: type,
-          returnData: {}
         },
         disableClose: true,
         autoFocus: true

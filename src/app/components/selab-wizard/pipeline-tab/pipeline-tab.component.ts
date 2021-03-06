@@ -19,6 +19,8 @@ import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internal
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import { UIComponentConfig } from '../uicomponent-config';
+import { timeStamp } from 'console';
+import { ReturnDataMenuComponent } from '../return-data-menu/return-data-menu.component';
 
 @Component({
   selector: 'pipeline-tab',
@@ -42,7 +44,8 @@ export class PipelineTabComponent implements OnInit {
 
   @ViewChild('componentTypeInput') fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
-  @ViewChild('returnDataMenu') dataMenu: PipelineDataMenuComponent;
+  // @ViewChild('returnDataMenu') dataMenu: PipelineDataMenuComponent;
+  @ViewChild('returnDataMenu') returnDataMenu: ReturnDataMenuComponent;
   constructor(private serviceComponentService: ServiceComponentService,
     public wizard: MatDialogRef<SelabWizardComponent>,
     public dialog: MatDialog,
@@ -59,7 +62,6 @@ export class PipelineTabComponent implements OnInit {
   nextPipe() {
     console.log("next pipe");
     console.log(this.selecteduiComponentTypes);
-
   }
 
   confirmDialog() {
@@ -132,7 +134,22 @@ export class PipelineTabComponent implements OnInit {
   ngOnInit() {
   }
 
-  update(uiComponent:UIComponent) {
+  update() {
+    console.log(this.uiComponentBuilder.serviceID);
+    console.log("pipeline tab update");
+    if(this.uiComponentBuilder.serviceID != undefined) {
+      this.returnDataMenu.render([
+        {
+          name: "t1"
+        },
+        {
+          name: "t2"
+        },
+        {
+          name: "t3"
+        }
+      ])
+    }
   }
 
   add(event: MatChipInputEvent): void {
