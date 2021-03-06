@@ -2,7 +2,9 @@ import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { BreadcrumbComponent } from "../../ui-component-dependency";
 import { DataBinding } from "../util/DataBinding";
 import { StyleLibrary } from "../../../shared/styleLibrary";
-import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
+import { SelabEditor } from "../selab-editor.model";
+import { SelabVertex } from "../selabVertex.model";
+import { TextComponent } from "../../internalRepresentation/TextComponent.model";
 
 
 
@@ -13,67 +15,70 @@ export class BreadcrumbStrategy extends ICreateComponentStrategy {
     super(geometry, restoreMode);
   }
 
-
-  createBreadcrumbBoxVertex(graphStorage, component, parent) {
-    const graphNode = document.getElementById("graphContainer0");
+  createBreadcrumbBoxVertex(selabEditor: SelabEditor, component: BreadcrumbComponent, parent: mxCell) {
+    const graphNode = document.getElementById("graph-container");
     const defaultWidth = graphNode.offsetWidth;
     const defaultHeight = graphNode.offsetHeight;
-
-    let styleName = "breadCrumbBoxStyle" + component.id;
     const breadcrumbBoxStyle = StyleLibrary[0]["breadcrumb"]["breadcrumbBox"];
-    let styleStorage = new StyleStorage(styleName, breadcrumbBoxStyle);
     const breadcrumbVertexGeometry = new mxGeometry(this.basex, this.basey, 50, defaultHeight / 30);
-    const breadcrumbVertexStorage = graphStorage.insertVertex(parent, component.id, "", breadcrumbVertexGeometry, styleStorage, component);
-    breadcrumbVertexStorage.setIsPrimary(true);
-    // add Info to mxcell
-    breadcrumbVertexStorage.vertex["componentPart"] = "box";
-    breadcrumbVertexStorage.vertex["isPrimary"] = true;
-    breadcrumbVertexStorage.vertex["dataBinding"] = this.createDataBinding("box");
 
-    return breadcrumbVertexStorage;
+    let id = (parseInt(component.id)).toString();
+    let selabVertex = new SelabVertex()
+      .setID(component.selector + "-" + id)
+      .setParentID(parent.id)
+      .setIsPrimary(true)
+      .setUIComponentID(component.id)
+
+    let breadcrumbBoxCell = selabEditor.insertVertex(selabVertex, component, breadcrumbVertexGeometry, breadcrumbBoxStyle);
+    breadcrumbBoxCell["componentPart"] = "box";
+    breadcrumbBoxCell["isPrimary"] = true;
+    breadcrumbBoxCell["dataBinding"] = this.createDataBinding("box");
+    return breadcrumbBoxCell;
   }
 
-  createBreadcrumbIndicatorVertex(graphStorage:GraphStorage, component, parent, x, y, index) {
-    let styleName = "breadCrumbIndicatorStyle";
+  createBreadcrumbIndicatorVertex(selabEditor: SelabEditor, component, parent, x, y, index) {
     const breadcrumbIndicatorStyle = StyleLibrary[0]["breadcrumb"]["breadcrumbIndicator"];
-    let styleStorage = new StyleStorage(styleName, breadcrumbIndicatorStyle);
     const breadcrumbVertexGeometry = new mxGeometry(x, y + 10, 20, 20);
-    const breadcrumbVertexIndicatorStorage = graphStorage.insertVertex(parent.getVertex(), component.id, "", breadcrumbVertexGeometry, styleStorage, component);
-    parent.addChild(breadcrumbVertexIndicatorStorage.id, breadcrumbVertexIndicatorStorage.getVertex(), "indicator");
-    
-    breadcrumbVertexIndicatorStorage.vertex["componentPart"] = "indicator";
-    breadcrumbVertexIndicatorStorage.vertex["isPrimary"] = false;
-    breadcrumbVertexIndicatorStorage.setIsPrimary(true);
-    breadcrumbVertexIndicatorStorage.vertex["dataBinding"] = this.createDataBinding("indicator");
-    
-    return breadcrumbVertexIndicatorStorage;
+    let id = (parseInt(component.id)).toString();
+
+    let selabVertex = new SelabVertex()
+      .setID(component.selector + "-" + id)
+      .setParentID(parent.id)
+      .setIsPrimary(false)
+      .setUIComponentID(component.id)
+      .setValue(component.text);
+
+    const breadcrumbIndicatorCell = selabEditor.insertVertex(selabVertex, component.id, breadcrumbVertexGeometry, breadcrumbIndicatorStyle);
+    breadcrumbIndicatorCell["componentPart"] = "indicator";
+    breadcrumbIndicatorCell["isPrimary"] = false;
+    breadcrumbIndicatorCell["dataBinding"] = this.createDataBinding("indicator");
+    return breadcrumbIndicatorCell;
   }
 
-  createComponent(graphStorage: GraphStorage, component: any, parent: any) {
-    let breadcrumbBoxVertexStorage = this.createBreadcrumbBoxVertex(graphStorage, component, parent);
+  createComponent(selabEditor: SelabEditor, component: BreadcrumbComponent, parent: mxCell) {
+    console.log('bread crumb strategy here');
+    console.log(component);
+    let breadcrumbBoxVertex = this.createBreadcrumbBoxVertex(selabEditor, component, parent);
 
     let p1 = 15;
     let p2 = 15;
-    var i = 0;
-    for (let subUIComponent of component["componentList"]) {
+    let i = 0;
 
-      let vertexStorage = graphStorage.createComponent(subUIComponent, breadcrumbBoxVertexStorage.getVertex(), p1, p2)
-      //console.log(vertexStorage)
-      breadcrumbBoxVertexStorage.addChild(vertexStorage.id, vertexStorage.getVertex(), "componentList", subUIComponent);
-      p1 = vertexStorage.getVertexX() + vertexStorage.getVertexWidth() + 15;
+    for (let subUIComponent of component["componentList"]) {
+      let vertexStorage = selabEditor.createComponent(subUIComponent, breadcrumbBoxVertex, p1, p2)
+      p1 = vertexStorage+getVertexX()  vertexStorage.getVertexWidth() + 15;
 
       if (i != component["componentList"].length - 1) {
-        let indicatorStorage = this.createBreadcrumbIndicatorVertex(graphStorage, component, breadcrumbBoxVertexStorage, p1, p2, i);
-        p1 = indicatorStorage.getVertexX() + indicatorStorage.getVertexWidth() + 15;
+        let indicatorStorage = this.createBreadcrumbIndicatorVertex(selabEditor, component, breadcrumbBoxVertex, p1, p2, i);
+        p1 = indicatorStorage.geometry.x + indicatorStorage.geometry.width + 15;
       }
       i += 1;
-
     }
 
     let newmxGeometry = new mxGeometry(this.basex, this.basey, p1 + 30, 50);
-    breadcrumbBoxVertexStorage.getVertex().setGeometry(newmxGeometry);
-    graphStorage.getGraph().refresh();
-    return breadcrumbBoxVertexStorage;
+    breadcrumbBoxVertex.setGeometry(newmxGeometry);
+    selabEditor.getGraph().refresh();
+    return breadcrumbBoxVertex;
   }
 
   createDataBinding(part: String, index?){
