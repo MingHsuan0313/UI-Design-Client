@@ -15,10 +15,12 @@ export class InternalRepresentation {
     pageImages: Map<string, string>;
     projectName: string;
     themes: any[];
+    navigationDL: {};
     constructor() {
         this.pageUICDLs = new Map<string,PageUICDL>();
         this.themes = [];
         this.pageImages = new Map<string, string>();
+        this.navigationDL = {};
     }
 }
 
