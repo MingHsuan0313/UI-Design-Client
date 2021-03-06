@@ -24,6 +24,7 @@ import { pageUICDLSelector } from "src/app/models/store/selectors/InternalRepres
 import { ERInsertGraphStorageAction } from 'src/app/models/store/actions/externalRepresentation.action';
 import { SelabGraph } from 'src/app/models/externalRepresentation/selabGraph.model';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
+import NavigationService from '../../services/navigation/navigation.service';
 
 @Component({
   selector: 'selab-header',
@@ -62,7 +63,8 @@ export class SelabHeaderComponent implements OnInit {
     private IRTransformerService: IRTransformer,
     private snackBar: MatSnackBar,
     private store: Store<AppState>,
-    public wizard: MatDialog) {
+    public wizard: MatDialog,
+    public navigationService: NavigationService ) {
 
   }
 
@@ -161,56 +163,7 @@ export class SelabHeaderComponent implements OnInit {
 
   storeNDL() {
     this.openSnackBar("save NDL to database", "save");
-    SelabGlobalStorage.initializeNDL();
-    let pages = {};
-    let cells = this.graphEditorService.getGraphModel().cells;
-    let subscribtion = this.store.select(pageUICDLSelector())
-      .subscribe((pageUICDLs) => {
-        let keys = Object.keys(pageUICDLs);
-        for(let index = 0;index < keys.length;index++) {
-          let key = keys[index];
-          let page = {
-            'name': pageUICDLs[key].name,
-            'id': pageUICDLs[key].id
-          }
-          console.log("here")
-          SelabGlobalStorage.addNDL(pageUICDLs[key]);
-          pages[pageUICDLs[key].id] = page;
-        }
-        keys = Object.keys(cells);
-        
-        SelabGlobalStorage.cleanEdges();
-        for(let index = 0;index < keys.length;index++) {
-          let key = keys[index];
-          if(cells[key]['edge'] == true) {
-            console.log(cells[key]);
-            let sourcePageId = cells[key]['source']['parent']['pageId'];
-            console.log(cells[key])
-            console.log(pages)
-            let source = {
-              'pageId': sourcePageId,
-              'pageName': pages[sourcePageId]['name'],
-              'componentSelector': cells[key]['source']['parent']['selector'] 
-            }
-            let targetPageId = cells[key]['target']['pageId'];
-            let target = {
-              'pageId': targetPageId,
-              'pageName': pages[targetPageId]['name'], 
-              'componentSelector': cells[key]['target']['selector'] 
-            }
-
-            console.log(source);
-            console.log(target);
-            SelabGlobalStorage.addEdge(source, target, cells[key].value);
-          }
-        }
-      })
-    subscribtion.unsubscribe();
-    console.log(cells);
-    console.log(SelabGlobalStorage.ndl)
-    this.exportService.postNDL().subscribe(
-      response => console.log(response['body'])
-    );
+    this.navigationService.storeNDL();
   }
 
   showImage() {

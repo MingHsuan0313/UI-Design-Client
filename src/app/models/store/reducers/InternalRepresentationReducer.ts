@@ -1,7 +1,7 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInitialNDLAction, IRInsertNDLPageAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 
 class InternalRepresentationReducer {
@@ -51,7 +51,7 @@ class InternalRepresentationReducer {
         // action.pageUICDL['imsMain'] = action.imsMain;
         store.pageUICDLs = { ...store.pageUICDLs, [action.pageUICDL.id]: action.pageUICDL };
         store.pageUICDLs[action.pageUICDL.id] = {...store.pageUICDLs[action.pageUICDL.id]};
-        store.pageUICDLs[action.pageUICDL.id].imsMain = action.imsMain;
+        store.pageUICDLs[action.pageUICDL.id].isMain = action.isMain;
 
         // console.log(action.selectedTheme['index'])
         console.log(action.selectedThemeIndex);
@@ -147,19 +147,42 @@ class InternalRepresentationReducer {
 
     @Action
     public renamePage(store: InternalRepresentation, action: IRRenamePageAction): InternalRepresentation {
+
         store = { ...store };
         store.pageUICDLs = { ...store.pageUICDLs };
         store.pageUICDLs[action.id] = { ...store.pageUICDLs[action.id] };
+        let oldName = store.pageUICDLs[action.id].name
+        store.pageUICDLs[action.id].name = { ...store.pageUICDLs[action.id].name };
+
         store.pageUICDLs[action.id].name = action.pageName;
+
         if(action.pageName == 'imsMain') {
-            store.pageUICDLs[action.id].imsMain = true;
+            store.pageUICDLs[action.id].isMain = true;
         }
 
         store.themes = [...store.themes];
         store.themes[action.themeIndex] = {...store.themes[action.themeIndex]}
         store.themes[action.themeIndex].pages = [...store.themes[action.themeIndex].pages];
         store.themes[action.themeIndex].pages[action.pageIndex] = {...store.themes[action.themeIndex].pages[action.pageIndex]};
+        store.themes[action.themeIndex].pages[action.pageIndex].name = {...store.themes[action.themeIndex].pages[action.pageIndex].name}; 
         store.themes[action.themeIndex].pages[action.pageIndex].name = action.pageName; 
+
+        store.navigationDL = {...store.navigationDL};
+        store.navigationDL["children"] = [...store.navigationDL["children"]];
+
+        for(let i=0; i< store.navigationDL["children"].length; i++){
+
+            if(store.navigationDL["children"][i]["component"] == oldName){
+                store.navigationDL["children"][i] = {...store.navigationDL["children"][i]}
+                store.navigationDL["children"][i]["component"] = {...store.navigationDL["children"][i]["component"]}
+                store.navigationDL["children"][i]["path"] = {...store.navigationDL["children"][i]["path"]}
+                store.navigationDL["children"][i]["component"] = action.pageName
+                store.navigationDL["children"][i]["path"] = action.pageName
+                
+                
+            }
+        }
+
         return store;
     }
 
@@ -182,6 +205,118 @@ class InternalRepresentationReducer {
         store.pageUICDLs[id] = ({ ...store.pageUICDLs[id] } as any)
         store.pageUICDLs[id].body = ({ ...store.pageUICDLs[id].body } as any)
         store.pageUICDLs[id].body.componentList = ([...store.pageUICDLs[id].body.componentList, action.uiComponent] as any)
+        return store;
+    }
+
+    @Action
+    public AddNDLEdge(store: InternalRepresentation, action: IRAddNDLEdgeAction): InternalRepresentation{
+        store = {...store}
+        store.navigationDL = { ...store.navigationDL };
+        store.navigationDL['children'] = [... store.navigationDL['children']]
+
+        console.log("1")
+        let source = action.edgeInfo["source"];
+        let target = action.edgeInfo["target"];
+        let parameter = action.edgeInfo["parameter"]
+        let sourceComponentSelector = source['componentSelector']
+        console.log("2")
+        for(let index = 0;index < store.navigationDL['children'].length;index++) {
+            console.log(store.navigationDL['children'][index]['component'])
+            if(store.navigationDL['children'][index]['component'] == source['pageName']) {
+                store.navigationDL['children'][index] = {... store.navigationDL['children'][index]}
+
+                let pageNDL = store.navigationDL['children'][index]
+                console.log("3")
+                console.log(pageNDL['destination'])
+                console.log(typeof(pageNDL['destination']))
+                console.log("3.5")
+                if(!pageNDL['destination'].includes(target['pageName'])){
+                    console.log("3.5")
+                    store.navigationDL['children'][index]['destination'] = [...store.navigationDL['children'][index]['destination'], target['pageName']]
+                }
+                store.navigationDL['children'][index]["edges"] = {...store.navigationDL['children'][index]["edges"]}
+                console.log("4")
+                console.log(pageNDL['edges'][sourceComponentSelector])
+                console.log("4.5")
+                pageNDL['edges'][sourceComponentSelector] = {...pageNDL['edges'][sourceComponentSelector]}
+                // if(pageNDL['edges'][sourceComponentSelector]){
+                //     pageNDL['edges'][sourceComponentSelector] = {...pageNDL['edges'][sourceComponentSelector]}
+                // }
+                console.log("5")
+                pageNDL['edges'][sourceComponentSelector] = {
+                    "target" : target["pageName"],
+                    "parameter": []
+                }
+                console.log("6")
+                if(parameter != undefined && parameter.length > 0) {
+                    pageNDL['edges'][sourceComponentSelector]['parameter'] = {...pageNDL['edges'][sourceComponentSelector]['parameter']}
+                    console.log("7")
+                    pageNDL['edges'][sourceComponentSelector]['parameter'] = parameter;
+                }
+            }
+            if(parameter != undefined && parameter.length > 0 
+                && store.navigationDL['children'][index]['component'] == target['pageName'] 
+                && !store.navigationDL['children'][index]['component']["parameters"].includes(parameter))
+                {
+                    store.navigationDL['children'][index]['component']["parameters"] = [store.navigationDL['children'][index]['component']["parameters"], parameter]
+                }
+        }
+        return store
+    }
+
+    @Action 
+    public addNDLPage(store: InternalRepresentation, action: IRInsertNDLPageAction): InternalRepresentation{
+        store = {...store}
+        store.navigationDL = { ...store.navigationDL };
+        console.log(store.navigationDL)
+        store.navigationDL["children"] = [ ...store.navigationDL["children"]];
+        console.log(typeof(store.navigationDL["children"]))
+
+        console.log(store.navigationDL["children"])
+        store.navigationDL["children"].push({
+            'selector': action.pageUICDL['id'],
+            'component': action.pageUICDL['name'],
+            'path': action.pageUICDL['name'],
+            'category': 'page',
+            'isMain': action.pageUICDL['isMain'],
+            'destination': [],
+            'parameters': [],
+            'children': [],
+            'edges': []
+        })
+        return store
+    }
+
+    @Action 
+    public deleteNDLPage(store: InternalRepresentation, action: IRDeleteNDLPageAction): InternalRepresentation{
+        store = {...store}
+        store.navigationDL = { ...store.navigationDL };
+        store.navigationDL["children"] = [ ...store.navigationDL["children"]];
+        let pages = store.navigationDL["children"];
+        let findIndex = -1
+        for(let index=0; index < pages.length; index++){
+            if(pages[index]["component"]==action.pageName){
+                findIndex = index;
+            }
+        }
+        if(findIndex>=0 && findIndex<pages.length){
+            store.navigationDL["children"].splice(findIndex, 1)
+        }
+        return store;
+    }
+
+    @Action 
+    public initialNDL(store: InternalRepresentation, action: IRInitialNDLAction): InternalRepresentation{
+        store = {...store}
+        store.navigationDL = { ...store.navigationDL };
+        store.navigationDL = {
+            "selector": "DefaultLayout",
+            "component":"DefaultLayoutComponent",
+            "path": "",
+            "category": "Layout",
+            "children": []
+        }
+        console.log( store.navigationDL["children"])
         return store;
     }
 }

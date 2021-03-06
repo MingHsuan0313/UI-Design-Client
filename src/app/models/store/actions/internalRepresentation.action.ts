@@ -14,7 +14,12 @@ export enum IRActionTypes {
     SET_LAYOUT = "[InternalRepresentation] Set Layout",
     INSERT_THEME = "[InternalRepresentation] Insert Theme",
     DELETE_THEME = "[InternalRepresentation] Delete Theme",
-    RENAME_THEME = "[InternalRepresentation] Rename Theme"
+    RENAME_THEME = "[InternalRepresentation] Rename Theme",
+    ADD_NDL_EDGE = "[InternalRepresentation] Add NDL Page Edge",
+    CLEAR_NDL_EDGE = "[InternalRepresentation] Clear NDL Page Edge",
+    INITIAL_NDL = "[InternalRepresentation] Initial NDL",
+    INSERT_NDL_PAGE = "[InternalRepresentation] Insert NDL Page",
+    DELETE_NDL_PAGE = "[InternalRepresentation] Delete NDL Page"
 }
 
 export class IRInsertPageImageAction implements Action {
@@ -66,7 +71,7 @@ export class IRRenamePageAction implements Action {
 
 export class IRInsertPageUICDLAction implements Action {
     public type = IRActionTypes["INSERT_PAGE_UICDL"];
-    constructor(public selectedThemeIndex: number,public pageUICDL: PageUICDL, public imsMain: boolean) {}
+    constructor(public selectedThemeIndex: number,public pageUICDL: PageUICDL, public isMain: boolean) {}
 }
 
 export class IRClearPageUICDLAction implements Action {
@@ -77,4 +82,28 @@ export class IRClearPageUICDLAction implements Action {
 export class IRDeletePageUICDLAction implements Action {
     public type = IRActionTypes["DELETE_PAGE_UICDL"];
     constructor(public selectedThemeIndex: number, public pageIndex: number, public id: string) {}
+}
+export class IRAddNDLEdgeAction implements Action {
+    public type = IRActionTypes["ADD_NDL_EDGE"];
+    constructor(public pageName: string, public edgeInfo: {}) {}
+}
+
+export class IRClearNDLPageEdgeAction implements Action {
+    public type = IRActionTypes["CLEAR_NDL_EDGE"];
+    constructor(public pageName: string) {}
+}
+
+export class IRInsertNDLPageAction implements Action {
+    public type = IRActionTypes["INSERT_NDL_PAGE"];
+    constructor(public pageUICDL: PageUICDL) {}
+}
+
+export class IRDeleteNDLPageAction implements Action {
+    public type = IRActionTypes["DELETE_NDL_PAGE"];
+    constructor(public pageName: string) {}
+}
+
+export class IRInitialNDLAction implements Action {
+    public type = IRActionTypes["INITIAL_NDL"];
+    constructor() {}
 }

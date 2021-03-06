@@ -5,13 +5,13 @@ import { AppState } from "src/app/models/store/app.state";
 import { Store } from "@ngrx/store";
 import { SelabEditor } from "src/app/models/externalRepresentation/selab-editor.model";
 import { UIComponent } from "src/app/models/ui-component-dependency";
-import { pageUICDLSelector, themeSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
+import { pageUICDLSelector, themeSelector, NDLSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
 import IRTransformer from "../internalRepresentation/IRTransformer.service";
 import { MatDialog } from "@angular/material";
 import { LayoutStrategy } from "src/app/models/externalRepresentation/component-strategy-dependency";
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage'
 import { Configuration } from "./util/configuration";
-import { IRInsertPageImageAction, IRInsertPageUICDLAction, IRSyncWithERAction } from "src/app/models/store/actions/internalRepresentation.action";
+import { IRInsertPageImageAction, IRInsertPageUICDLAction, IRSyncWithERAction, IRInsertNDLPageAction } from "src/app/models/store/actions/internalRepresentation.action";
 import ExportService from "../internalRepresentation/export.service";
 
 @Injectable({
@@ -147,6 +147,7 @@ export default class GraphEditorService {
   }
 
   navigation(flag) {
+    console.log(this.inNavigation)
     this.selectedPageId = "navigation";
     if (this.inNavigation == flag)
       return;
@@ -164,6 +165,7 @@ export default class GraphEditorService {
 
   uploadPageUICDL(pageUICDL) {
     this.store.dispatch(new IRInsertPageUICDLAction(this.selectedThemeIndex, pageUICDL, false));
+    this.store.dispatch(new IRInsertNDLPageAction(pageUICDL))
   }
 
   zoomTo(zoomFactor: any) {
@@ -231,34 +233,39 @@ export default class GraphEditorService {
   }
 
   recoverNavigationEdges(pages) {
-    let ndl = SelabGlobalStorage.ndl;
+    let ndl;
+    let subscribtion = this.store.select(NDLSelector()).subscribe(
+      navigationDL => ndl = navigationDL
+    )
+    subscribtion.unsubscribe();
     let cells = Object.values(this.getGraphModel().cells);
     if (ndl && ndl["children"] != null) {
       ndl["children"].forEach(
         pageNdl => {
-          pageNdl["edges"].forEach(
-            edgeInfo => {
-              console.log(edgeInfo)
-              let source = edgeInfo["source"]
-              let targetPageId = ((Object.values(pages)).find(page => page["name"] == edgeInfo["target"]))["id"]
-              let parameter = edgeInfo["passingParameter"]
+          for(let componentSelector in pageNdl["edges"]){
+            let targetInfo = pageNdl["edges"][componentSelector]
+            console.log(componentSelector)
+            console.log(targetInfo)
+            //let source = edgeInfo["source"]
+            let targetPageId = ((Object.values(pages)).find(page => page["name"] == targetInfo["target"]))["id"]
+            let parameter = targetInfo["passingParameter"]
 
-              let sourceCell = cells.find(cell => cell["selector"] == source)
-              let targetCell = cells.find(cell =>
-                cell["pageId"] == targetPageId && cell["componentPart"] == "box" && cell["type"] == "layout"
-              )
+            let sourceCell = cells.find(cell => cell["selector"] == componentSelector)
+            let targetCell = cells.find(cell =>
+              cell["pageId"] == targetPageId && cell["componentPart"] == "box" && cell["type"] == "layout"
+            )
 
-              let size = 12 / this.getGraph().zoomFactor;
-              let x = sourceCell['geometry'].width - size / 2;
-              let y = sourceCell['geometry'].height / 2 - size / 2;
-              let style = "shape=ellipse;rounded=0;strokeColor=#2b9cff;fillColor=#FFFFFF;strokeWidth=4"
-              let toolTipVertex = this.getGraph().insertVertex(sourceCell, "", "", x, y, size, size, style, false);
-              toolTipVertex["connectToolTip"] = true;
-              style = "strokeColor=#2b9cff;strokeWidth=6;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;"
-              let edge = this.getGraph().insertEdge(toolTipVertex, "", "", toolTipVertex, targetCell, style)
-              edge.value = parameter;
-            }
-          )
+            let size = 12 / this.getGraph().zoomFactor;
+            let x = sourceCell['geometry'].width - size / 2;
+            let y = sourceCell['geometry'].height / 2 - size / 2;
+            let style = "shape=ellipse;rounded=0;strokeColor=#2b9cff;fillColor=#FFFFFF;strokeWidth=4"
+            let toolTipVertex = this.getGraph().insertVertex(sourceCell, "", "", x, y, size, size, style, false);
+            toolTipVertex["connectToolTip"] = true;
+            style = "strokeColor=#2b9cff;strokeWidth=6;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;"
+            let edge = this.getGraph().insertEdge(toolTipVertex, "", "", toolTipVertex, targetCell, style)
+            edge.value = parameter;
+          }
+
         }
       )
     }
