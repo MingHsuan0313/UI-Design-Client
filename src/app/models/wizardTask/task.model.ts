@@ -22,5 +22,4 @@ export class Task {
         this.operation = operation;
         return this;
     }
-
 }

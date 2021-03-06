@@ -23,6 +23,8 @@ export class UIComponentBuilder {
     public argument: ArgumentModel;
     public properties: Object; // specific component properties: eg dropdown item, card header...
     public componentList: UIComponent[];
+    public serviceID: string;
+    public returnData: any[];
 
     constructor() {
         this.name = "";
@@ -42,6 +44,16 @@ export class UIComponentBuilder {
 
     setID(id: string) {
         this.id = id;
+        return this;
+    }
+
+    setReturnData(datas: any[]) {
+        this.returnData = datas;
+        return this;
+    }
+
+    setServiceId(serviceId: string) {
+        this.serviceID = serviceId;
         return this;
     }
 

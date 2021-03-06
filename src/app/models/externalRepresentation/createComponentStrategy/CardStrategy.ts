@@ -73,24 +73,28 @@ export class CardStrategy extends ICreateComponentStrategy {
     return cardHeaderCell;
   }
 
-  createComponent(selabEditor: SelabEditor, component: CardComponent, parent:mxCell) {
+  createComponent(selabEditor: SelabEditor, component: CardComponent, parent: mxCell) {
     let cardBoxVertex = this.createCardBoxVertex(selabEditor, component, parent);
     let cardHeaderVertex = this.createCardHeaderVertex(selabEditor, component, cardBoxVertex);
-    let subComponentXOffset = 15;
-    let subComponentYOffset = 40;
+    let subComponentXOffset = 30;
+    let subComponentYOffset = 60;
     let maxWidth = 250;
 
-    for (const subUIComponent of component["componentList"]) {
-      let vertex
-      if(subUIComponent.geometry['x'] == 0 && subUIComponent.geometry['y'] == 0){
-        vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, subComponentXOffset, subComponentYOffset);
-        if (vertex["geometry"].width > maxWidth) {
+    for (let subUIComponent of component["componentList"]) {
+      let vertex;
+      if (!this.restoreMode) {
+        vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, new mxGeometry(subComponentXOffset, subComponentYOffset, 0, 0))
+        if (vertex["geometry"].width > maxWidth)
           maxWidth = vertex["geometry"].width;
-        }
         subComponentYOffset = subComponentYOffset + vertex["geometry"].height + 10;
-      }else{
-          vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, subUIComponent.x, subUIComponent.y, subUIComponent.width, subUIComponent.height)
+      } else {
+        vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, subUIComponent.geometry, true)
       }
+    }
+    if (!this.restoreMode) {
+      let newmxGeometry = new mxGeometry(this.basex, this.basey, maxWidth + 50, subComponentYOffset);
+      cardBoxVertex.setGeometry(newmxGeometry);
+      selabEditor.getGraph().refresh();
     }
     return cardBoxVertex;
   }

@@ -14,6 +14,7 @@ import { InformationTabComponent } from './information-tab/information-tab.compo
 import { PipelineTabComponent } from './pipeline-tab/pipeline-tab.component';
 import { UIComponentFactory } from './uicomponent-factory';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
+import { ReturnDataMenuComponent } from './return-data-menu/return-data-menu.component';
 
 @Component({
   selector: 'selab-wizard',
@@ -32,6 +33,7 @@ export class SelabWizardComponent implements OnInit {
 
   // it has return data if in pipeline mode
   operation: ServiceComponentModel;
+  @ViewChild("returnDataMenu") returnDataMenu: ReturnDataMenuComponent;
   @ViewChild("selabtabs") tabGroup: MatTabGroup;
   @ViewChild("build") buildTab: BuildTabComponent;
   @ViewChild("compose") composeTab: ComposeTabComponent;
@@ -56,7 +58,7 @@ export class SelabWizardComponent implements OnInit {
     this.category = this.data.category;
 
     if (this.isPipeline) {
-      this.operation = this.data.operation;
+      this.uiComponentBuilder.setReturnData(this.data.retutnData);
     }
     let pageId = this.graphEditorService.selectedPageId;
     this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
@@ -66,6 +68,8 @@ export class SelabWizardComponent implements OnInit {
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
     if(tabChangeEvent.tab.textLabel == "Check Status")
       this.infoTab.update();
+    if(tabChangeEvent.tab.textLabel == "Generate Pipeline")
+      this.pipelineTab.update();
     this.lastTab = tabChangeEvent.tab.textLabel;
   }
 
@@ -107,5 +111,19 @@ export class SelabWizardComponent implements OnInit {
     }
 
     this.lastTab = this.tabs[0];
+    this.returnDataMenu.render([
+      {
+        name:"code"
+      },
+      {
+        name: "tag"
+      },
+      {
+        name: "description"
+      },
+      {
+        name: "id"
+      }
+    ])
   }
 }
