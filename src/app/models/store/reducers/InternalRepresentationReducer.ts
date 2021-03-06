@@ -254,11 +254,20 @@ class InternalRepresentationReducer {
                     pageNDL['edges'][sourceComponentSelector]['parameter'] = parameter;
                 }
             }
+            console.log("8")
+            console.log(parameter)
+            console.log(store.navigationDL['children'][index]["parameters"])
+            console.log(store.navigationDL['children'][index]["parameters"].includes(parameter))
             if(parameter != undefined && parameter.length > 0 
                 && store.navigationDL['children'][index]['component'] == target['pageName'] 
-                && !store.navigationDL['children'][index]['component']["parameters"].includes(parameter))
+                && !store.navigationDL['children'][index]["parameters"].includes(parameter))
                 {
-                    store.navigationDL['children'][index]['component']["parameters"] = [store.navigationDL['children'][index]['component']["parameters"], parameter]
+                    console.log("9")
+                    console.log(parameter)
+                    store.navigationDL['children'][index]["parameters"] = [...store.navigationDL['children'][index]["parameters"]]
+                    console.log("9.5")
+                    store.navigationDL['children'][index]["parameters"] = [...store.navigationDL['children'][index]["parameters"], parameter]
+                    console.log("10")
                 }
         }
         return store
