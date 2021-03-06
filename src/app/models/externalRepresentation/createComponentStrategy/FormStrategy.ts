@@ -1,7 +1,6 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
-import { GraphStorage, VertexStorage, StyleStorage } from "../../graph-dependency";
 import { SelabEditor } from "../selab-editor.model";
 import { FormComponent } from "../../ui-component-dependency";
 import { SelabVertex } from "../selabVertex.model";
@@ -16,7 +15,6 @@ export class FormStrategy extends ICreateComponentStrategy {
             this.height = 300;
           }
     }
-
 
     createDataBinding(part: string, index?: number) {
         let dataBindingName = "header";
@@ -42,7 +40,6 @@ export class FormStrategy extends ICreateComponentStrategy {
         let formBoxCell = selabEditor.insertVertex(selabVertex, component, formVertexGeometry, formBoxStyle);
 
         // const formVertexStorage = selabEditor.insertVertex(parent, component.id, "", formVertexGeometry, styleStorage, component);
-        // formVertexStorage.setIsPrimary(true);
         formBoxCell["componentPart"] = "box";
         formBoxCell["dataBinding"] = this.createDataBinding("box");
         formBoxCell["isPrimary"] = true;
@@ -57,8 +54,6 @@ export class FormStrategy extends ICreateComponentStrategy {
         let maxWidth = 200;
         for (let subUIComponent of component["componentList"]) {
             let vertex;
-            // console.log(subUIComponent)
-            // console.log(this.restoreMode)
             if(!this.restoreMode){
                 vertex = selabEditor.createComponent(subUIComponent, formBoxCell, new mxGeometry(subComponentXOffset, subComponentYOffset,0,0))
                 if (vertex["geometry"].width > maxWidth)

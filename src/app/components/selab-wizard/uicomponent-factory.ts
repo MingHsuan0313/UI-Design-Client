@@ -1,4 +1,3 @@
-import { UIComponent, } from "src/app/models/ui-component-dependency";
 import { UIComponentBuilder } from "src/app/components/selab-wizard/UIComponentBuilder";
 
 export class UIComponentFactory {
@@ -9,7 +8,6 @@ export class UIComponentFactory {
     }
 
     static create(type: string, pageId: string): UIComponentBuilder {
-        let uiComponent: UIComponent;
         let uiComponentBuilder: UIComponentBuilder;
         if (type == "text") {
             uiComponentBuilder = new UIComponentBuilder()
@@ -17,7 +15,6 @@ export class UIComponentFactory {
                 .setType(type)
                 .setCategory("informative")
                 .setSelector(`${type}-${this.nextID}`)
-            // uiComponent = uiComponentBuilder.buildTextComponent();
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "button") {
@@ -26,7 +23,6 @@ export class UIComponentFactory {
                 .setType("button")
                 .setID(`${this.nextID}`)
                 .setSelector(`${type}-${this.nextID}`);
-            // uiComponent = uiComponentBuilder.buildButtonComponent();
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "table") {
@@ -35,7 +31,6 @@ export class UIComponentFactory {
                 .setID(`${this.nextID}`)
                 .setSelector(`${type}-${this.nextID}`)
                 .setType("table")
-            // uiComponent = uiComponentBuilder.buildTableComponent();
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "card") {
@@ -44,7 +39,6 @@ export class UIComponentFactory {
                 .setID(`${this.nextID}`)
                 .setSelector(`${type}-${this.nextID}`)
                 .setType("card")
-            // uiComponent = uiComponentBuilder.buildCardComponent();
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "dropdown") {
@@ -53,8 +47,6 @@ export class UIComponentFactory {
                 .setID(`${this.nextID}`)
                 .setSelector(`${type}-${this.nextID}`)
                 .setType("dropdown")
-            // uiComponent = uiComponentBuilder.buildDropdownComponent()
-            // this.uiComponentBuilders.set(uiComponent.getId(), uiComponentBuilder);
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "icon") {
@@ -71,7 +63,6 @@ export class UIComponentFactory {
                 .setType("input")
                 .setID(`${this.nextID}`)
                 .setSelector(`${type}-${this.nextID}`);
-            // uiComponent = uiComponentBuilder.buildInputComponent();
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "inputgroup") {
@@ -80,7 +71,6 @@ export class UIComponentFactory {
                 .setType("inputgroup")
                 .setID(`${this.nextID}`)
                 .setSelector(`${type}-${this.nextID}`);
-            // uiComponent = uiComponentBuilder.buildInputGroupComponent();
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "icon") {
@@ -89,7 +79,6 @@ export class UIComponentFactory {
                 .setType("icon")
                 .setID(`${this.nextID}`)
                 .setSelector(`${type}-${this.nextID}`);
-            // uiComponent = uiComponentBuilder.buildIconComponent();
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "form") {
@@ -98,7 +87,6 @@ export class UIComponentFactory {
                 .setType("form")
                 .setSelector(`${type}-${this.nextID}`)
                 .setID(`${this.nextID}`);
-            // uiComponent = uiComponentBuilder.buildFormComponent();
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "breadcrumb") {
@@ -107,7 +95,6 @@ export class UIComponentFactory {
                 .setType("breadcrumb")
                 .setSelector(`${type}-${this.nextID}`)
                 .setID(`${this.nextID}`);
-            // uiComponent = uiComponentBuilder.buildBreadcrumbComponent();
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "layout") {
@@ -116,7 +103,6 @@ export class UIComponentFactory {
                 .setType("layout")
                 .setSelector(`${type}-${this.nextID}`)
                 .setID(`${this.nextID}`);
-            // uiComponent = uiComponentBuilder.buildLayoutComponent();
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else {
@@ -221,7 +207,5 @@ export class UIComponentFactory {
                 }
             }
         }
-
     }
-
 }

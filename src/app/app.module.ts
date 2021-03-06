@@ -52,6 +52,7 @@ import { EndpointTestComponent } from './components/selab-setting/endpoint-test/
 import { TestingLogWindowComponent } from './components/selab-setting/endpoint-test/testing-log-window/testing-log-window.component';
 import { JestTestingLogWindowComponent } from './components/selab-setting/endpoint-test/jest-testing-log-window/jest-testing-log-window.component';
 import { JestTestingTerminalComponent } from './components/selab-setting/endpoint-test/jest-testing-log-window/jest-testing-terminal/jest-testing-terminal.component';
+import { SelabWebAppDashboardComponent } from "./components/selab-webApp-dashboard/selab-webApp-dashboard.component";
 import { ProjectNameDialogComponent } from './containers/default-layout/project-name-dialog/project-name-dialog.component';
 import { ThemeTabsComponent } from './components/selab-graph-editor/theme-tabs/theme-tabs.component';
 import { PageTabsComponent } from './components/selab-graph-editor/theme-tabs/page-tabs/page-tabs.component';
@@ -115,6 +116,7 @@ export function reducerFactory() {
     JestTestingLogWindowComponent,
     JestTestingTerminalComponent,
     ProjectNameDialogComponent,
+    SelabWebAppDashboardComponent,
     ThemeTabsComponent,
     PageTabsComponent,
     ThumbnailDialog
@@ -142,6 +144,7 @@ export function reducerFactory() {
     TestingLogWindowComponent,
     JestTestingLogWindowComponent,
     ProjectNameDialogComponent,
+    SelabWebAppDashboardComponent,
     ThumbnailDialog
   ],
   providers: [],

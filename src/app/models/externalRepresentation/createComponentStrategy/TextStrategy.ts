@@ -1,11 +1,9 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
-import { GraphStorage , VertexStorage , StyleStorage } from "../../graph-dependency";
 import { TextComponent } from "../../ui-component-dependency";
 import { SelabEditor } from "../selab-editor.model";
 import { SelabVertex } from "../selabVertex.model";
-
 
 export class TextStrategy extends ICreateComponentStrategy {
 
@@ -48,7 +46,6 @@ export class TextStrategy extends ICreateComponentStrategy {
                     .setDataBinding(dataBinding);
 
     let textCell = selabEditor.insertVertex(selabVertex,component,textGeometry,style);
-    // console.log(textCell)
     textCell["componentPart"] = "box";
     textCell["dataBinding"] = this.createDataBinding("box");
     textCell["isPrimary"] = true;

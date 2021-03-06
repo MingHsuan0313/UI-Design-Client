@@ -73,9 +73,6 @@ export class TableComponent extends BasicComponent {
     }
   }
 
-  add(component: UIComponent): void {
-  }
-
   getInfo() {
     return {
       [this.getSelector().toString()]: {
@@ -84,8 +81,5 @@ export class TableComponent extends BasicComponent {
         service: this.serviceComponent.getInfo()
       }
     };
-  }
-
-  remove(component: UIComponent): void {
   }
 }

@@ -73,16 +73,8 @@ export class BreadcrumbStrategy extends ICreateComponentStrategy {
     let newmxGeometry = new mxGeometry(this.basex, this.basey, p1 + 30, 50);
     breadcrumbBoxVertexStorage.getVertex().setGeometry(newmxGeometry);
     graphStorage.getGraph().refresh();
-
-    // component["style"] = breadcrumbBoxVertexStorage.getStyle();
-    // component["x"] = breadcrumbBoxVertexStorage.getVertexX();
-    // component["y"] = breadcrumbBoxVertexStorage.getVertexY();
-    // component["width"] = breadcrumbBoxVertexStorage.getVertexWidth();
-    // component["height"] = breadcrumbBoxVertexStorage.getVertexHeightk();
     return breadcrumbBoxVertexStorage;
   }
-
-
 
   createDataBinding(part: String, index?){
     return new DataBinding(false, "", -1);

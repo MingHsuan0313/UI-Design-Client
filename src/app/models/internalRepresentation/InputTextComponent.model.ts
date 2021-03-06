@@ -1,7 +1,6 @@
 import { UIComponent } from "./UIComponent.model";
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBuilder";
-import { Input } from "@angular/core";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 import { IServiceEntry } from "../service-component-dependency";
 
@@ -61,9 +60,6 @@ export class InputTextComponent extends BasicComponent {
             .buildInputComponent();
   }
 
-  add(component: UIComponent): void {
-  }
-
   getInfo(): any {
     return {
       [this.getSelector().toString()]: {
@@ -72,8 +68,5 @@ export class InputTextComponent extends BasicComponent {
         service: this.serviceComponent.getInfo()
       }
     }
-  }
-
-  remove(component: UIComponent): void {
   }
 }

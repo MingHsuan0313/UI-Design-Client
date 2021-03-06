@@ -9,7 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'; 
 import { MatSelectModule } from '@angular/material/select'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatFormFieldModule, MatIconModule, MatInputModule, MatListModule } from "@angular/material";
+import { MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatStepperModule } from "@angular/material";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTreeModule } from '@angular/material/tree'; 
@@ -44,7 +44,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatChipsModule,
     MatMenuModule,
     MatTooltipModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatStepperModule
   ],
   declarations: [],
   exports:[
@@ -68,7 +69,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatChipsModule,
     MatMenuModule,
     MatTooltipModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatStepperModule
   ]
 })
 export class AngularMaterialModule { }

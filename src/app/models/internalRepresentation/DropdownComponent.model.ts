@@ -64,9 +64,6 @@ export class DropdownComponent extends BasicComponent {
             .buildDropdownComponent();
   }
 
-  add(component: UIComponent): void {
-  }
-
   getInfo(): any {
     return {
       [this.getSelector().toString()]: {
@@ -75,9 +72,6 @@ export class DropdownComponent extends BasicComponent {
         service:this.serviceComponent.getInfo()
       }
     }
-  }
-
-  remove(component: UIComponent): void {
   }
 
   setItems(items: string) {

@@ -2,7 +2,6 @@ import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
 import { SelabEditor } from '../../externalRepresentation/selab-editor.model';
-import { Storage } from '../../../shared/storage';
 import { LayoutComponent } from "../../internalRepresentation/LayoutComponent.model";
 import { SelabVertex } from "../selabVertex.model";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
@@ -37,7 +36,6 @@ export class LayoutStrategy extends ICreateComponentStrategy {
     let style = StyleLibrary[0]['Layout1'];
 
     const layoutGeometry = new mxGeometry(this.xOffset, this.yOffset, this.defaultWidth, this.defaultHeight);
-    // this.layout = selabEditor.insertVertex(parent, null, "", layoutGeometry, styleStorage, bodyComponent);
     let id = (parseInt(bodyComponent.id)).toString();
     let selabVertex = new SelabVertex()
       .setID(bodyComponent.selector + "-" + id)

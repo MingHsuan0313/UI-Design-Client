@@ -8,10 +8,8 @@ export class InputGroupComponent extends CompositeComponent {
   componentList: any[] = [];
 
   constructor(uiComponentBuilder?: UIComponentBuilder) {
-    if(uiComponentBuilder){
-      super(uiComponentBuilder);
-      this.componentList = uiComponentBuilder.componentList;
-    }
+    super(uiComponentBuilder);
+    this.componentList = uiComponentBuilder.componentList;
   }
 
   setStyle(style: Object): InputGroupComponent {
@@ -62,8 +60,5 @@ export class InputGroupComponent extends CompositeComponent {
 
   getInfo(): any {
     return this;
-  }
-
-  remove(component: UIComponent): void {
   }
 }

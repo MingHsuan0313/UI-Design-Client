@@ -1,9 +1,7 @@
 import { ICreateComponentStrategy } from "./ICreateComponentStrategy";
 import { StyleLibrary } from "../../../shared/styleLibrary";
 import { DataBinding } from "../util/DataBinding";
-import { GraphStorage, VertexStorage, StyleStorage } from "../../graph-dependency";
 import { SelabEditor } from "../selab-editor.model";
-import { UIComponent } from "../../ui-component-dependency";
 import { DropdownComponent } from "../../internalRepresentation/DropdownComponent.model";
 import { SelabVertex } from "../selabVertex.model";
 
@@ -12,7 +10,6 @@ export class DropdownStrategy extends ICreateComponentStrategy {
   constructor(geometry?, restoreMode?) {
     super(geometry, restoreMode);
   }
-
 
   // part: like Box,Header,ItemList,Item...etc
   createDataBinding(part: String, index?) {
@@ -38,7 +35,6 @@ export class DropdownStrategy extends ICreateComponentStrategy {
   }
 
   createDropdownBoxVertex(selabEditor: SelabEditor, component: DropdownComponent, parent: mxCell): mxCell {
-    // console.log("box start")
     const itemCount = component.items.split(" ").length;
     const dropdownWidth = 200;
     const dropdownHeight = 30 * (itemCount + 1);
@@ -60,8 +56,6 @@ export class DropdownStrategy extends ICreateComponentStrategy {
   }
 
   createDropdownHeaderVertex(selabEditor: SelabEditor, component: DropdownComponent, parent: mxCell): mxCell {
-    // console.log("header start")
-
     const dropdownHeaderStyle = StyleLibrary[0]["dropdown"]["dropdownHeader"];
     const dropdownHeaderGeometry = new mxGeometry(0, 20, 200, 30);
     let id = (parseInt(component.id) + 1).toString();
@@ -75,12 +69,10 @@ export class DropdownStrategy extends ICreateComponentStrategy {
     dropdownHeaderCell["dataBinding"] = this.createDataBinding("header");
     dropdownHeaderCell["isPrimary"] = false;
     dropdownHeaderCell["componentID"] = component.id;
-    // console.log("header end")
     return dropdownHeaderCell;
   }
 
   createDropdownItemListVertex(selabEditor: SelabEditor, component: DropdownComponent, parent: mxCell): mxCell {
-    // console.log("item list start");
     const dropdownListStyle = StyleLibrary[0]["dropdown"]["dropdownList"];
     const dropdownListGeometry = new mxGeometry(0, 0, 200, parseInt(parent.geometry.height) - 30);
     let id = (parseInt(component.id) + 2).toString();
@@ -131,4 +123,3 @@ export class DropdownStrategy extends ICreateComponentStrategy {
     return dropdownBoxVertexStorage;
   }
 }
-

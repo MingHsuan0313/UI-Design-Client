@@ -5,7 +5,7 @@ import { Storage } from '../../shared/storage';
 import { TextComponent, UIComponent } from '../../models/ui-component-dependency';
 import { PropertyGenerator } from '../../shared/property-generator';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import ImportService from '../../services/internalRepresentation/import.service';
 import ExportService from '../../services/internalRepresentation/export.service';
 import IRTransformer from '../../services/internalRepresentation/IRTransformer.service'
@@ -16,13 +16,12 @@ import {
   MatSnackBarVerticalPosition
 } from '@angular/material';
 import { SelabWizardComponent } from '../selab-wizard/selab-wizard.component';
+import { SelabWebAppDashboardComponent } from '../selab-webApp-dashboard/selab-webApp-dashboard.component';
+import { HttpClientService } from '../../services/http-client.service';
 import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRInsertPageUICDLAction, IRRenamePageAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model';
 import { pageUICDLSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
-import { ERInsertGraphStorageAction } from 'src/app/models/store/actions/externalRepresentation.action';
-import { SelabGraph } from 'src/app/models/externalRepresentation/selabGraph.model';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import NavigationService from '../../services/navigation/navigation.service';
 
@@ -60,11 +59,13 @@ export class SelabHeaderComponent implements OnInit {
     private graphEditorService: GraphEditorService,
     private importService: ImportService,
     private exportService: ExportService,
-    private IRTransformerService: IRTransformer,
+    private httpClientService: HttpClientService,
     private snackBar: MatSnackBar,
-    private store: Store<AppState>,
     public wizard: MatDialog,
-    public navigationService: NavigationService ) {
+    private IRTransformerService: IRTransformer,
+    private store: Store<AppState>,
+    public navigationService: NavigationService,
+    public webAppDashboard: MatDialog) {
 
   }
 
@@ -112,10 +113,6 @@ export class SelabHeaderComponent implements OnInit {
     );
   }
 
-  apply() {
-    // this.graphEditorService.applyLayout(this.layout_selected);
-  }
-
   applyLayout(layout: string) {
     this.graphEditorService.setLayout(layout);
     this.graphEditorService.applyLayout(layout);
@@ -157,7 +154,6 @@ export class SelabHeaderComponent implements OnInit {
 
   save() {
     this.openSnackBar("synchronize vertex with ui component", "sync");
-    // this.graphEditorService.syncMxCells();
     this.graphEditorService.syncStorage();
   }
 
@@ -201,6 +197,16 @@ export class SelabHeaderComponent implements OnInit {
     }
   }
 
+  launchWebAppDashboard() {
+    this.webAppDashboard.open(SelabWebAppDashboardComponent, {
+      width: '70%',
+      height: '70%',
+      data: {},
+      disableClose: true,
+      autoFocus: true
+    })
+  }
+
   uploadPageUICDL($event) {
     console.log('upload file');
     let selectedFile = $event.target.files[0]
@@ -212,21 +218,6 @@ export class SelabHeaderComponent implements OnInit {
       let pageUICDL = new PageUICDL(pageId); // internalRepresentation
       Object.assign(pageUICDL, pageUICDLObject);
       this.graphEditorService.uploadPageUICDL(pageUICDL);
-      // this.store.dispatch(new IRInsertPageUICDLAction(pageUICDL, pageUICDL['isMain']));
-      // this.store.dispatch(new IRRenamePageAction(pageId, pageUICDL['name']));
-      // this.store.dispatch(new ERInsertGraphStorageAction(new SelabGraph(pageId)))
-      // let originalId = this.graphEditorService.selectedPageId;
-      // this.graphEditorService.selectedPageId = pageId;
-      // let uiComponentList = this.IRTransformerService.transform(pageUICDL, this.graphEditorService.getGraph());
-      // this.applyLayout("prime")
-      // uiComponentList.forEach(
-      //   uiComponent => {
-      //     console.log(uiComponent)
-      //     this.graphEditorService.bindComponent(uiComponent, uiComponent.geometry);
-      //   }
-      // )
-      // this.graphEditorService.clearGraphEditor();
-      // this.graphEditorService.selectedPageId = originalId;
     }
     fileReader.onerror = (error) => {
       console.log(error);

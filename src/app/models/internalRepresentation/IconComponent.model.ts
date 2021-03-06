@@ -13,7 +13,6 @@ export class IconComponent extends BasicComponent {
         this.text = properties["text"];
       }
     }
-
   }
 
   setStyle(style: Object): IconComponent {
@@ -36,13 +35,7 @@ export class IconComponent extends BasicComponent {
       .buildIconComponent();
   }
 
-  add(component: UIComponent): void {
-  }
-
   getInfo(): any {
     return this;
-  }
-
-  remove(component: UIComponent): void {
   }
 }
