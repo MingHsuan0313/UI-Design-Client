@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Storage} from '../../shared/storage';
-import { IRAddNDLEdgeAction } from 'src/app/models/store/actions/internalRepresentation.action';
+import { IRAddNDLEdgeAction, IRClearNDLThemeEdgeAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { pageUICDLSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { Store } from '@ngrx/store';
@@ -21,7 +21,11 @@ export default class NavigationService {
 
   }
 
-  storeNDL(){
+  storeNDL(inNavigationMode){
+    console.log(inNavigationMode)
+    if(inNavigationMode=="theme"){
+      this.store.dispatch(new IRClearNDLThemeEdgeAction(this.graphEditorService.selectedThemeIndex))
+    }
     let pages = {};
     let cells = this.graphEditorService.getGraphModel().cells;
     let subscribtion = this.store.select(pageUICDLSelector())

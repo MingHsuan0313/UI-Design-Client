@@ -88,9 +88,9 @@ export class IRAddNDLEdgeAction implements Action {
     constructor(public pageName: string, public edgeInfo: {}) {}
 }
 
-export class IRClearNDLPageEdgeAction implements Action {
+export class IRClearNDLThemeEdgeAction implements Action {
     public type = IRActionTypes["CLEAR_NDL_EDGE"];
-    constructor(public pageName: string) {}
+    constructor(public themeIndex: number) {}
 }
 
 export class IRInsertNDLPageAction implements Action {

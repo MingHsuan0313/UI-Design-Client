@@ -1,7 +1,7 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInitialNDLAction, IRInsertNDLPageAction } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInitialNDLAction, IRInsertNDLPageAction, IRClearNDLThemeEdgeAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 
 class InternalRepresentationReducer {
@@ -178,8 +178,6 @@ class InternalRepresentationReducer {
                 store.navigationDL["children"][i]["path"] = {...store.navigationDL["children"][i]["path"]}
                 store.navigationDL["children"][i]["component"] = action.pageName
                 store.navigationDL["children"][i]["path"] = action.pageName
-                
-                
             }
         }
 
@@ -214,62 +212,40 @@ class InternalRepresentationReducer {
         store.navigationDL = { ...store.navigationDL };
         store.navigationDL['children'] = [... store.navigationDL['children']]
 
-        console.log("1")
         let source = action.edgeInfo["source"];
         let target = action.edgeInfo["target"];
         let parameter = action.edgeInfo["parameter"]
         let sourceComponentSelector = source['componentSelector']
-        console.log("2")
         for(let index = 0;index < store.navigationDL['children'].length;index++) {
-            console.log(store.navigationDL['children'][index]['component'])
             if(store.navigationDL['children'][index]['component'] == source['pageName']) {
                 store.navigationDL['children'][index] = {... store.navigationDL['children'][index]}
 
                 let pageNDL = store.navigationDL['children'][index]
-                console.log("3")
-                console.log(pageNDL['destination'])
-                console.log(typeof(pageNDL['destination']))
-                console.log("3.5")
                 if(!pageNDL['destination'].includes(target['pageName'])){
-                    console.log("3.5")
                     store.navigationDL['children'][index]['destination'] = [...store.navigationDL['children'][index]['destination'], target['pageName']]
                 }
                 store.navigationDL['children'][index]["edges"] = {...store.navigationDL['children'][index]["edges"]}
-                console.log("4")
-                console.log(pageNDL['edges'][sourceComponentSelector])
-                console.log("4.5")
                 pageNDL['edges'][sourceComponentSelector] = {...pageNDL['edges'][sourceComponentSelector]}
                 // if(pageNDL['edges'][sourceComponentSelector]){
                 //     pageNDL['edges'][sourceComponentSelector] = {...pageNDL['edges'][sourceComponentSelector]}
                 // }
-                console.log("5")
                 pageNDL['edges'][sourceComponentSelector] = {
                     "target" : target["pageName"],
                     "parameter": []
                 }
-                console.log("6")
                 if(parameter != undefined && parameter.length > 0) {
                     pageNDL['edges'][sourceComponentSelector]['parameter'] = {...pageNDL['edges'][sourceComponentSelector]['parameter']}
-                    console.log("7")
                     pageNDL['edges'][sourceComponentSelector]['parameter'] = parameter;
                 }
             }
-            console.log("8")
-            console.log(parameter)
-            console.log(store.navigationDL['children'][index]["parameters"])
-            console.log(store.navigationDL['children'][index]["parameters"].includes(parameter))
             
             if(parameter != undefined && parameter.length > 0 
                 && store.navigationDL['children'][index]['component'] == target['pageName'] 
                 && !store.navigationDL['children'][index]["parameters"].includes(parameter))
                 {
-                    console.log("9")
-                    console.log(parameter)
                     store.navigationDL['children'][index] = {... store.navigationDL['children'][index]}
                     store.navigationDL['children'][index]["parameters"] = [...store.navigationDL['children'][index]["parameters"]]
-                    console.log("9.5")
                     store.navigationDL['children'][index]["parameters"] = [...store.navigationDL['children'][index]["parameters"], parameter]
-                    console.log("10")
                 }
         }
         return store
@@ -293,7 +269,7 @@ class InternalRepresentationReducer {
             'destination': [],
             'parameters': [],
             'children': [],
-            'edges': []
+            'edges': {}
         })
         return store
     }
@@ -330,6 +306,56 @@ class InternalRepresentationReducer {
         console.log( store.navigationDL["children"])
         return store;
     }
+
+    @Action 
+    public clearEdgeByTheme(store: InternalRepresentation, action: IRClearNDLThemeEdgeAction): InternalRepresentation{
+        store = {...store}
+        store.navigationDL = { ...store.navigationDL };
+        store.navigationDL['children'] = [... store.navigationDL['children']]
+        for(let index = 0;index < store.navigationDL['children'].length;index++) {
+            let pageName = store.navigationDL['children'][index]["component"]
+            if(this.isPageInTheme(store, action.themeIndex, pageName)){
+                store.navigationDL['children'][index] = {...store.navigationDL['children'][index]}
+                let pageNDL = store.navigationDL['children'][index]
+
+                // destination
+                for(let j=0; index<pageNDL["destination"].length; index++){
+                    pageNDL["destination"] = [...pageNDL["destination"]]
+                    if(this.isPageInTheme(store, action.themeIndex, pageNDL["destination"][j])){
+                        pageNDL["destination"].splice(j, 1);
+                    }
+                }
+                // edge
+                pageNDL["edges"] = {...pageNDL["edges"]}
+                for(let sourceComponentSelector in pageNDL["edges"]){
+                    if( this.isPageInTheme(store, action.themeIndex, pageNDL["edges"][sourceComponentSelector]["target"]) ){
+                        pageNDL["edges"][sourceComponentSelector] = {...pageNDL["edges"][sourceComponentSelector]}
+                        console.log("debug 1")
+                        delete pageNDL["edges"][sourceComponentSelector]
+                        console.log("debug 2")
+                    }
+                }
+
+                // parameters
+
+            }
+        }
+        return store;
+
+    }
+
+    public isPageInTheme(store: InternalRepresentation, themeIndex: number, pageName: string){
+
+        for(let j=0; j<store.themes[themeIndex].pages.length; j++ ){
+            if(store.themes[themeIndex].pages[j].name == pageName){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    
 }
 
 export const internalRepresentationReducer = createReducer(InternalRepresentationReducer)

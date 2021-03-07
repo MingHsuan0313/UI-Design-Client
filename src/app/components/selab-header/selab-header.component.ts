@@ -159,7 +159,13 @@ export class SelabHeaderComponent implements OnInit {
 
   storeNDL() {
     this.openSnackBar("save NDL to database", "save");
-    this.navigationService.storeNDL();
+    if(this.graphEditorService.inNavigation=="theme"){
+      this.navigationService.storeNDL("theme");
+    }
+    else if(this.graphEditorService.inNavigation=="themes"){
+      this.navigationService.storeNDL("themes");
+    }
+    
   }
 
   showImage() {

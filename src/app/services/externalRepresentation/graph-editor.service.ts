@@ -248,7 +248,7 @@ export default class GraphEditorService {
             console.log(targetInfo)
             //let source = edgeInfo["source"]
             let targetPageId = ((Object.values(pages)).find(page => page["name"] == targetInfo["target"]))["id"]
-            let parameter = targetInfo["passingParameter"]
+            let parameter = targetInfo["parameter"]
 
             let sourceCell = cells.find(cell => cell["selector"] == componentSelector)
             let targetCell = cells.find(cell =>
