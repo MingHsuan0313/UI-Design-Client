@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import { TaskGraph } from 'src/app/models/wizardTask/TaskGraph.model';
+import { Edge, Node, ClusterNode, Layout } from '@swimlane/ngx-graph';
+import { nodes, clusters, links } from './data';
 
 @Component({
   selector: 'app-status-dialog',
@@ -9,6 +11,11 @@ import { TaskGraph } from 'src/app/models/wizardTask/TaskGraph.model';
 })
 export class StatusDialogComponent implements OnInit {
   taskGraph: TaskGraph;
+
+  layout: string = 'dagreCluster';
+  nodes: Node[] = nodes;
+  links: Edge[] = links;
+
   constructor() { }
 
   show() {
@@ -22,5 +29,7 @@ export class StatusDialogComponent implements OnInit {
   ngOnInit() {
     console.log("Task status initialization");
     this.taskGraph = SelabGlobalStorage.getTaskGraph();
+    console.log(links);
+    console.log(nodes);
   }
 }

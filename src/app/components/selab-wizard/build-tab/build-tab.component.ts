@@ -99,8 +99,8 @@ export class BuildTabComponent implements OnInit {
 
   showStatus() {
     this.statusDialog.open(StatusDialogComponent, {
-      width: '30%',
-      height: '30%',
+      width: '50%',
+      height: '70%',
       autoFocus: true
     })
   }

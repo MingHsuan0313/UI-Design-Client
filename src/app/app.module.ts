@@ -59,6 +59,7 @@ import { PageTabsComponent } from './components/selab-graph-editor/theme-tabs/pa
 import { ThumbnailDialog } from './components/selab-graph-editor/thumbnail-dialog/thumbnail-dialog.component';
 import { ReturnDataMenuComponent } from './components/selab-wizard/return-data-menu/return-data-menu.component';
 import { StatusDialogComponent } from './components/selab-wizard/pipeline-tab/status-dialog/status-dialog.component'; 
+import { NgxGraphModule } from "@swimlane/ngx-graph";
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -136,6 +137,7 @@ export function reducerFactory() {
     StoreModule.forRoot(undefined,{
       reducerFactory
     }),
+    NgxGraphModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   entryComponents: [
