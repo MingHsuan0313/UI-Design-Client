@@ -1,13 +1,12 @@
-<p>
-  status-dialog works!
-</p>
+<span style="font-size: 24px; font-weight: bold;"> Pipeline Tasks Overview </span>
+<div mat-dialog-actions align="end" style="display: inline; padding-left: 450px;">
+  <button mat-raised-button disabled style="background: #c0c0c0; color: #333333"> Undo </button>
+  <button mat-raised-button disabled style="background: #4ca3dd; color: #333333;"> Doing </button>
+  <button mat-raised-button disabled style="background: #dcedc1; color: #333333"> Finished </button>
+</div>
 <hr>
 <div class="page">
-  <ngx-graph
-    [links]='links' 
-    [nodes]='nodes' 
-    [layout]='layout'
-   >
+  <ngx-graph [links]='links' [nodes]='nodes' [layout]='layout'>
 
     <ng-template #nodeTemplate let-node>
       <svg:g class="node">

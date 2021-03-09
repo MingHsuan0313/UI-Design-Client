@@ -16,6 +16,10 @@ export class BuildTabComponent implements OnInit {
   buildFormProperties: any;
   inputValue: string;
 
+  undoColor: string = "#c0c0c0";
+  doingColor: string = "#4ca3dd"
+  finishedColor: string = "#dcedc1";
+
   formData: {};
 
   constructor(
