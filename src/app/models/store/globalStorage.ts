@@ -1,8 +1,19 @@
+import { TaskGraph, WizardTask } from "../wizardTask/TaskGraph.model";
+
 export class SelabGlobalStorage {
     static projectName: string;
     static ndl: {};
     static sumdl: {};
     static usedNameTable: {}; // save all existing page and theme name, for duplicate name checking
+    static taskGraph: TaskGraph;
+
+    static initializeTasks(task: WizardTask) {
+        this.taskGraph = new TaskGraph(task);
+    }
+
+    static getTaskGraph() {
+        return this.taskGraph;
+    }
 
     static addName(name: string) {
         if (this.usedNameTable == undefined)
@@ -100,7 +111,8 @@ export class SelabGlobalStorage {
         return {
             "projectName": this.projectName,
             "ndl": this.ndl,
-            "sumdl": this.sumdl
+            "sumdl": this.sumdl,
+            "wizardGraph": this.taskGraph
         }
     }
 }

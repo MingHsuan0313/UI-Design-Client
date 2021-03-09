@@ -15,6 +15,7 @@ import GraphEditorService from 'src/app/services/externalRepresentation/graph-ed
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
 import { SelabWizardComponent } from '../selab-wizard.component';
 import { UIComponentFactory } from '../uicomponent-factory';
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 
 @Component({
   selector: 'information-tab',
@@ -65,7 +66,8 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
         let uiComponent = this.uiComponentBuilder.build();
         this.store.dispatch(new IRInsertUIComponentAction(id,uiComponent));
         this.graphEditorService.bindComponent(uiComponent);
-        this.wizard.close();
+        let currentTask = SelabGlobalStorage.taskGraph.currentTask;
+        this.wizard.close(currentTask);
       }
     })
   }

@@ -66,7 +66,7 @@ export class BreadcrumbStrategy extends ICreateComponentStrategy {
 
     for (let subUIComponent of component["componentList"]) {
       let vertexStorage = selabEditor.createComponent(subUIComponent, breadcrumbBoxVertex, p1, p2)
-      p1 = vertexStorage+getVertexX()  vertexStorage.getVertexWidth() + 15;
+      p1 = vertexStorage.getVertexX() + vertexStorage.getVertexWidth() + 15;
 
       if (i != component["componentList"].length - 1) {
         let indicatorStorage = this.createBreadcrumbIndicatorVertex(selabEditor, component, breadcrumbBoxVertex, p1, p2, i);

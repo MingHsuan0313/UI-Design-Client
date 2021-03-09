@@ -15,6 +15,7 @@ import { PipelineTabComponent } from './pipeline-tab/pipeline-tab.component';
 import { UIComponentFactory } from './uicomponent-factory';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { ReturnDataMenuComponent } from './return-data-menu/return-data-menu.component';
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 
 @Component({
   selector: 'selab-wizard',
@@ -51,17 +52,17 @@ export class SelabWizardComponent implements OnInit {
 
   // receive data from dialog input
   initialization() {
+    console.log(SelabGlobalStorage.taskGraph);
     this.isPipeline = this.data.isPipeline;
     this.genere = this.data.genere;
     this.isComposite = this.data.isComposite;
     this.type = this.data.type;
     this.category = this.data.category;
-
+    this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
     if (this.isPipeline) {
       this.uiComponentBuilder.setReturnData(this.data.retutnData);
     }
     let pageId = this.graphEditorService.selectedPageId;
-    this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
   }
 
   // this function if for update componet tree structure for information tab
@@ -111,19 +112,19 @@ export class SelabWizardComponent implements OnInit {
     }
 
     this.lastTab = this.tabs[0];
-    this.returnDataMenu.render([
-      {
-        name:"code"
-      },
-      {
-        name: "tag"
-      },
-      {
-        name: "description"
-      },
-      {
-        name: "id"
-      }
-    ])
+    // this.returnDataMenu.render([
+    //   {
+    //     name:"code"
+    //   },
+    //   {
+    //     name: "tag"
+    //   },
+    //   {
+    //     name: "description"
+    //   },
+    //   {
+    //     name: "id"
+    //   }
+    // ])
   }
 }
