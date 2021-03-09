@@ -23,6 +23,7 @@ import { timeStamp } from 'console';
 import { ReturnDataMenuComponent } from '../return-data-menu/return-data-menu.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import { TaskState, WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
+import { StatusDialogComponent } from './status-dialog/status-dialog.component';
 
 @Component({
   selector: 'pipeline-tab',
@@ -51,6 +52,7 @@ export class PipelineTabComponent implements OnInit {
   constructor(private serviceComponentService: ServiceComponentService,
     public wizard: MatDialogRef<SelabWizardComponent>,
     public dialog: MatDialog,
+    private statusDialog: MatDialog,
     private store: Store<AppState>,
     private graphEditorService: GraphEditorService
   ) {
@@ -190,4 +192,5 @@ export class PipelineTabComponent implements OnInit {
 
     return this.alluiComponentTypes.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
+
 }

@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
+import { StatusDialogComponent } from '../pipeline-tab/status-dialog/status-dialog.component';
 import { UIComponentConfig } from '../uicomponent-config';
 
 @Component({
@@ -16,7 +18,9 @@ export class BuildTabComponent implements OnInit {
 
   formData: {};
 
-  constructor() {
+  constructor(
+    private statusDialog: MatDialog
+  ) {
     this.formData = {};
   }
 
@@ -91,5 +95,13 @@ export class BuildTabComponent implements OnInit {
   ngOnInit() {
     this.buildFormProperties = UIComponentConfig.getProperties(this.uiComponentBuilder.type);
     this.buildForm();
+  }
+
+  showStatus() {
+    this.statusDialog.open(StatusDialogComponent, {
+      width: '30%',
+      height: '30%',
+      autoFocus: true
+    })
   }
 }

@@ -57,7 +57,8 @@ import { ProjectNameDialogComponent } from './containers/default-layout/project-
 import { ThemeTabsComponent } from './components/selab-graph-editor/theme-tabs/theme-tabs.component';
 import { PageTabsComponent } from './components/selab-graph-editor/theme-tabs/page-tabs/page-tabs.component';
 import { ThumbnailDialog } from './components/selab-graph-editor/thumbnail-dialog/thumbnail-dialog.component';
-import { ReturnDataMenuComponent } from './components/selab-wizard/return-data-menu/return-data-menu.component'; 
+import { ReturnDataMenuComponent } from './components/selab-wizard/return-data-menu/return-data-menu.component';
+import { StatusDialogComponent } from './components/selab-wizard/pipeline-tab/status-dialog/status-dialog.component'; 
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -121,7 +122,8 @@ export function reducerFactory() {
     ThemeTabsComponent,
     PageTabsComponent,
     ThumbnailDialog,
-    ReturnDataMenuComponent
+    ReturnDataMenuComponent,
+    StatusDialogComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -147,7 +149,8 @@ export function reducerFactory() {
     JestTestingLogWindowComponent,
     ProjectNameDialogComponent,
     SelabWebAppDashboardComponent,
-    ThumbnailDialog
+    ThumbnailDialog,
+    StatusDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
