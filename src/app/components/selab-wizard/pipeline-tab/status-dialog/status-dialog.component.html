@@ -9,10 +9,37 @@
   <ngx-graph [links]='links' [nodes]='nodes' [layout]='layout'>
 
     <ng-template #nodeTemplate let-node>
-      <svg:g class="node">
-        <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height"
-          [attr.fill]="node.data.color" />
-        <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2">{{node.label}}
+      <svg:g *ngIf="node.data.status == 0" class="node">
+        <svg:rect 
+          [attr.width]="node.dimension.width" 
+          [attr.height]="node.dimension.height"
+          [attr.fill]="'#c0c0c0'" />
+        <svg:text 
+          alignment-baseline="central" 
+          [attr.x]="10" 
+          [attr.y]="node.dimension.height / 2">{{node.label}}
+        </svg:text>
+      </svg:g>
+      <svg:g *ngIf="node.data.status == 1" class="node">
+        <svg:rect 
+          [attr.width]="node.dimension.width" 
+          [attr.height]="node.dimension.height"
+          [attr.fill]="'#4ca3dd'" />
+        <svg:text 
+          alignment-baseline="central" 
+          [attr.x]="10" 
+          [attr.y]="node.dimension.height / 2">{{node.label}}
+        </svg:text>
+      </svg:g>
+      <svg:g *ngIf="node.data.status == 2" class="node">
+        <svg:rect 
+          [attr.width]="node.dimension.width" 
+          [attr.height]="node.dimension.height"
+          [attr.fill]="'#dcedc1'" />
+        <svg:text 
+          alignment-baseline="central" 
+          [attr.x]="10" 
+          [attr.y]="node.dimension.height / 2">{{node.label}}
         </svg:text>
       </svg:g>
     </ng-template>

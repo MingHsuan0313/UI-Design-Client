@@ -24,12 +24,14 @@ export class StatusDialogComponent implements OnInit {
 
   showTaskGraph() {
     console.log(this.taskGraph);
+    console.log(this.taskGraph.convertToNgxGraph());
   }
 
   ngOnInit() {
     console.log("Task status initialization");
     this.taskGraph = SelabGlobalStorage.getTaskGraph();
-    console.log(links);
-    console.log(nodes);
+    let storage = this.taskGraph.convertToNgxGraph();
+    this.nodes = storage.nodes;
+    this.links = storage.edges;
   }
 }

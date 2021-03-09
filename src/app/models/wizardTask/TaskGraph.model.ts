@@ -1,4 +1,6 @@
+import { Edge, Node } from "@swimlane/ngx-graph";
 import { ServiceComponentModel } from "../internalRepresentation/serviceComponent/ServiceComponentModel";
+import { tasksSelector } from "../store/selectors/PipelineStorageSelector";
 
 export class TaskGraph {
     beginTask: WizardTask;
@@ -51,8 +53,31 @@ export class TaskGraph {
         }
     }
 
-    convertToNgxGraph() {
+    establishStorage(task: WizardTask, storage: PipelineStatusStorage) {
+        let newNode = {
+            id: `task${storage.nodes.length}`,
+            label: `Task${storage.nodes.length} (${task.componentType})`,
+            data: {
+                status: `${task.state}`
+            }
+        }
+        storage.addNode(newNode);
+        for(let index = 0; index < task.tasks.length; index++) {
+            let newEdge = {
+                id: `edge-${storage.edges.length}`,
+                label: `serviceReturn`,
+                source: `${newNode.id}`,
+                target: `task${storage.nodes.length}`,
+            } 
+            storage.addEdge(newEdge);
+            this.establishStorage(task.tasks[index], storage);
+        }
+    }
 
+    convertToNgxGraph(): PipelineStatusStorage {
+        let storage = new PipelineStatusStorage();
+        this.establishStorage(this.beginTask, storage);
+        return storage;
     }
 }
 
@@ -114,4 +139,20 @@ export enum TaskState {
     undo = 0,
     doing = 1,
     finished = 2,
+}
+
+export class PipelineStatusStorage {
+    nodes: Node[] = [];
+    edges: Edge[] = [];
+    constructor() {
+
+    }
+
+    addNode(node: Node) {
+        this.nodes.push(node);
+    }
+
+    addEdge(edge: Edge) {
+        this.edges.push(edge);
+    }
 }
