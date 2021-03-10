@@ -131,7 +131,7 @@ export class UIComponentConfig {
                 {
                     "type": "String",
                     "value": "name"
-                }
+                },
             ]
 
         }

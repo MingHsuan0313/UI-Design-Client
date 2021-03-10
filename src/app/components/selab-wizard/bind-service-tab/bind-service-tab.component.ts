@@ -8,6 +8,9 @@ import { ArgumentModel, ServiceComponentModel } from 'src/app/models/service-com
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
+import { MatDialogRef } from '@angular/material';
+import { SelabWizardComponent } from '../selab-wizard.component';
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 
 @Component({
   selector: 'bind-service-tab',
@@ -26,10 +29,16 @@ export class BindServiceTabComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
+    public wizard: MatDialogRef<SelabWizardComponent>,
     private serviceComponentService: ServiceComponentService) {
     this.isQueryingService = false;
     this.argumentOptions = [];
     this.serviceComponentPool = new Map();
+  }
+
+  closeWizard() {
+    let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+    this.wizard.close(currentTask);
   }
 
   async chooseService(event, option) {

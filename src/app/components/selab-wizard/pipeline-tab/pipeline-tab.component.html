@@ -25,5 +25,5 @@
 <hr>
 <mat-dialog-actions>
   <button type="button" (click)="nextPipe()" mat-raised-button color="primary">Next Pipe</button>
-  <button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
+  <button mat-raised-button (click)="closeWizard()" color="disabled" [mat-dialog-close]="true">Close</button>
 </mat-dialog-actions>

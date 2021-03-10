@@ -19,7 +19,10 @@
     <hr>
     <mat-dialog-actions>
         <button type="button" (click)="setComponentProperties()" mat-raised-button color="primary">Set</button>
-        <button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
-        <button mat-raised-button (click)="showStatus()" color="warning">Show Status</button>
+        <button mat-raised-button (click)="closeWizard()" color="disabled">Close</button>
+        <button (click)="showStatus()" mat-button style="min-width: 10px;" matTooltip="Show Pipeline Status">
+            <mat-icon style="margin-bottom:10px ;" svgIcon="barChart"></mat-icon>
+        </button>
+
     </mat-dialog-actions>
 </div>

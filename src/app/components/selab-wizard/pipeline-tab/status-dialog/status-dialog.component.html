@@ -1,7 +1,7 @@
 <span style="font-size: 24px; font-weight: bold;"> Pipeline Tasks Overview </span>
 <div mat-dialog-actions align="end" style="display: inline; padding-left: 450px;">
   <button mat-raised-button disabled style="background: #c0c0c0; color: #333333"> Undo </button>
-  <button mat-raised-button disabled style="background: #4ca3dd; color: #333333;"> Doing </button>
+  <button mat-raised-button disabled style="background: #f6546a; color: #333333;"> Doing </button>
   <button mat-raised-button disabled style="background: #dcedc1; color: #333333"> Finished </button>
 </div>
 <hr>
@@ -22,13 +22,15 @@
       </svg:g>
       <svg:g *ngIf="node.data.status == 1" class="node">
         <svg:rect 
-          [attr.width]="node.dimension.width" 
-          [attr.height]="node.dimension.height"
-          [attr.fill]="'#4ca3dd'" />
+          [attr.width]="node.dimension.width * 1.1" 
+          [attr.height]="node.dimension.height * 1.1"
+          [attr.fill]="'#f6546a'" />
+<!-- #4ca3dd -->
         <svg:text 
+          style="font-size:16px; font-weight: bold;"
           alignment-baseline="central" 
-          [attr.x]="10" 
-          [attr.y]="node.dimension.height / 2">{{node.label}}
+          [attr.x]="10 * 1.1" 
+          [attr.y]="(node.dimension.height * 1.1) / 2">{{node.label}}
         </svg:text>
       </svg:g>
       <svg:g *ngIf="node.data.status == 2" class="node">

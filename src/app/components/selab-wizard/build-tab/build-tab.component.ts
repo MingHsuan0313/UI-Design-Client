@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import { StatusDialogComponent } from '../pipeline-tab/status-dialog/status-dialog.component';
+import { SelabWizardComponent } from '../selab-wizard.component';
 import { UIComponentConfig } from '../uicomponent-config';
 
 @Component({
@@ -23,9 +25,15 @@ export class BuildTabComponent implements OnInit {
   formData: {};
 
   constructor(
-    private statusDialog: MatDialog
+    private statusDialog: MatDialog,
+    public wizard: MatDialogRef<SelabWizardComponent>,
   ) {
     this.formData = {};
+  }
+
+  closeWizard() {
+    let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+    this.wizard.close(currentTask);
   }
 
   setComponentProperties() {
@@ -104,7 +112,7 @@ export class BuildTabComponent implements OnInit {
   showStatus() {
     this.statusDialog.open(StatusDialogComponent, {
       width: '50%',
-      height: '70%',
+      height: '60%',
       autoFocus: true
     })
   }

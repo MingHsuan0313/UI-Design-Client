@@ -24,6 +24,7 @@ import { ReturnDataMenuComponent } from '../return-data-menu/return-data-menu.co
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import { TaskState, WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
 import { StatusDialogComponent } from './status-dialog/status-dialog.component';
+import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 
 @Component({
   selector: 'pipeline-tab',
@@ -63,6 +64,11 @@ export class PipelineTabComponent implements OnInit {
       map((componentType: string | null) => componentType ? this._filter(componentType) : this.alluiComponentTypes.slice()));
   }
 
+  closeWizard() {
+    let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+    this.wizard.close(currentTask);
+  }
+
   nextPipe() {
     console.log("next pipe");
     console.log(this.selecteduiComponentTypes);
@@ -89,6 +95,7 @@ export class PipelineTabComponent implements OnInit {
         for (let index = 0; index < this.selecteduiComponentTypes.length; index++) {
           let componentType = this.selecteduiComponentTypes[index];
           let task = new WizardTask()
+            .setService(this.uiComponentBuilder.getServiceComponent() as ServiceComponentModel)
             .setComponentType(componentType)
             .setState(TaskState['undo'])
             .setIsRoot(false);
@@ -103,7 +110,7 @@ export class PipelineTabComponent implements OnInit {
   startPipeline(currentTask: WizardTask) {
     let compositeComponents = ["card", "breadcrumb", "inputgroup", "form"];
     let taskGraph = SelabGlobalStorage.getTaskGraph();
-    for (let index = currentTask.tasks.length-1; index >= 0; index--) {
+    for (let index = currentTask.tasks.length - 1; index >= 0; index--) {
       let task = currentTask.tasks[index];
       taskGraph.taskStack.push(task);
       let isComposite = false;
@@ -192,5 +199,4 @@ export class PipelineTabComponent implements OnInit {
 
     return this.alluiComponentTypes.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
-
 }

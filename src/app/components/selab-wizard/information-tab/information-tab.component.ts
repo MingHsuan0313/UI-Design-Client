@@ -35,13 +35,18 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
   constructor(private store: Store<AppState>,
     public dialog: MatDialog,
     public wizard: MatDialogRef<SelabWizardComponent>,
-    private graphEditorService: GraphEditorService
+    private graphEditorService: GraphEditorService,
   ) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
       this._isExpandable, this._getChildren);
     this.treeControl = new FlatTreeControl<FileFlatNode>(this._getLevel, this._isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
+  }
+
+  closeWizard() {
+    let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+    this.wizard.close(currentTask);
   }
 
   finish() {

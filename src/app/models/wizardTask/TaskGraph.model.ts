@@ -63,9 +63,10 @@ export class TaskGraph {
         }
         storage.addNode(newNode);
         for(let index = 0; index < task.tasks.length; index++) {
+            let service: ServiceComponentModel = task.tasks[index].service;
             let newEdge = {
                 id: `edge-${storage.edges.length}`,
-                label: `serviceReturn`,
+                label: `${service.getName()} (${service.getServiceID()})`,
                 source: `${newNode.id}`,
                 target: `task${storage.nodes.length}`,
             } 
