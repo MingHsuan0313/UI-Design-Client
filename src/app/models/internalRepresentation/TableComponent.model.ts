@@ -8,7 +8,6 @@ export class TableComponent extends BasicComponent {
   headers: string;
   rows: string;
 
-  constructor();
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     if(uiComponentBuilder){
       super(uiComponentBuilder);

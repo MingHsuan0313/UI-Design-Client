@@ -51,16 +51,22 @@ export class BindServiceTabComponent implements OnInit {
       .setHttpMethod("get")
       .setWSDLName(option["WSDLName"])
       .setUrl();
-
-    this.uiComponentBuilder
-      .setServiceComponent(serviceComponent)
-      .setServiceId(serviceComponent.getServiceID());
-    if (option["name"] == "addDepartment" || option["name"] == "editDepartment") {
-        (this.uiComponentBuilder
-          .getServiceComponent() as ServiceComponentModel)
-          .setComplexTypeUrl(this.fakeData());
-    }
-    this.queryArguments();
+    this.serviceComponentService
+      .queryReturnByServiceID(option['serviceID'])
+      .subscribe((response) => {
+        console.log('return');
+        console.log(response['body']);
+        serviceComponent['returnData'].data = JSON.parse(response['body']);
+        this.uiComponentBuilder
+          .setServiceComponent(serviceComponent)
+          .setServiceId(serviceComponent.getServiceID())
+        if (option["name"] == "addDepartment" || option["name"] == "editDepartment") {
+            (this.uiComponentBuilder
+              .getServiceComponent() as ServiceComponentModel)
+              .setComplexTypeUrl(this.fakeData());
+        }
+        this.queryArguments();
+      })
   }
 
   chooseArgument(event, option, subComponent: UIComponent) {

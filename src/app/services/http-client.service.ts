@@ -17,6 +17,9 @@ export class HttpClientService {
   // API Server url
   apiServerUrl: string;
 
+  // Return Service url
+  returnServiceUrl: string;
+
 
   constructor(private httpClient: HttpClient) {
     this.jenkinsServerUrl = `http://localhost:8080/`
@@ -24,6 +27,7 @@ export class HttpClientService {
     // this.matchMakingServerUrl = `http://localhost:8082/`;
     this.matchMakingServerUrl = `http://140.112.90.144:8082/`;
     this.apiServerUrl = `http://140.112.90.144:7122/`;
+    this.returnServiceUrl = `http://140.112.90.144:3001/`;
   }
 
   httpGet(endPointUrl: string, params: HttpParams,serverType: string) {
@@ -34,11 +38,13 @@ export class HttpClientService {
       urlPrefix = this.uiDesignServerUrl;
     else if(serverType == "apiServer")
       urlPrefix = this.apiServerUrl;
+    else if(serverType == "returnServer")
+      urlPrefix = this.returnServiceUrl;
 
     let uri = urlPrefix + endPointUrl;
     // console.log("get here")
     // console.log(params)
-    // console.log("uri is " + uri);
+    console.log("uri is " + uri);
     // console.log(uri.length)
     
     return this.httpClient.get(uri, {
