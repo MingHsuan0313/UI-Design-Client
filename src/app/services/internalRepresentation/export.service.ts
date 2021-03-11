@@ -15,25 +15,69 @@ export default class ExportService {
     this.baseUrl = "";
   }
 
-  postPageUICDL(PDL) {
-    console.log(PDL);
-    let url = this.baseUrl;
-    return this.httpClientService.httpPost(url, PDL, "uiDesignServer");
+  postTheme(projectName, theme){
+    let url = `theme`
+    let header = { "projectName": projectName }
+    return this.httpClientService.httpPost(url, theme, "uiDesignServer", header)
+  }
+
+/*
+  this.httpClientService.httpDelete(url, "uiDesignServer", header).subscribe(
+    response => {
+      let url = `theme`
+      for(let index=0; index<themes.length; index++){
+        let theme = themes[index]
+        this.httpClientService.httpPost(url, theme, "uiDesignServer", header).subscribe(
+          response => {
+            console.log(response["body"])
+        })
+      }
+  })
+  */
+
+  deleteTheme(projectName){
+    let url = `theme`
+    let header = { "projectName": projectName }
+    return this.httpClientService.httpDelete(url, "uiDesignServer", header);
+  }
+
+  postPageUICDL(projectName, themeId, PDL) {
+    let url = "page";
+    let header = { "projectName": projectName, "themeId": themeId }
+    
+    return this.httpClientService.httpPost(url, PDL, "uiDesignServer", header)
+  }
+
+  deletePageUICDL(projectName){
+    let url = "page";
+    let header = { "projectName": projectName}
+    
+    return this.httpClientService.httpDelete(url, "uiDesignServer", header);
   }
 
   newProject() {
-    let url = `${this.baseUrl}/trunc`
+    let url = `trunc`
     let params = new HttpParams();
     return this.httpClientService.httpGet(url, params, "uiDesignServer");
   }
 
-  postNDL() {
-    let url = `${this.baseUrl}/navigation`
-    return this.httpClientService.httpPost(url, Storage.navigationFlow, "uiDesignServer");
+  postNDL(projectName, ndl) {
+    // delete previous ndl
+    let url = `navigation`
+    let header = { "projectName": projectName }
+
+    this.httpClientService.httpDelete(url, "uiDesignServer", header).subscribe(
+      response => {
+        this.httpClientService.httpPost(url, ndl, "uiDesignServer", header).subscribe(
+          response => {
+            console.log(response["body"])
+        })
+    })
+    return
   }
 
   getImageFromModel(graphModel) {
-    let url = `${this.baseUrl}/navigation/exportPicture`
+    let url = `navigation/exportPicture`
     let encoder = new mxCodec();
     let result = encoder.encode(graphModel);
     let xml = mxUtils.getXml(result);

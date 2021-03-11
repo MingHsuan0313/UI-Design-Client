@@ -94,6 +94,7 @@ export class ThemeTabsComponent implements OnInit {
       index: this.themes.length - 1,
       pages: []
     }
+    pageUICDL["themeId"] = themeId;
     this.store.dispatch(new IRInsertPageUICDLAction(this.themes.length - 1, pageUICDL, imsMain));
     this.store.dispatch(new IRInsertNDLPageAction(pageUICDL))
   }
@@ -104,7 +105,9 @@ export class ThemeTabsComponent implements OnInit {
     let pageName = `page-${uuid.v1().substr(2, 5)}`;
     let pageUICDL = new PageUICDL(pageId);
     pageUICDL['name'] = pageName;
-
+    let themeId = this.themes[this.selectedThemeIndex.value].id;
+    
+    pageUICDL["themeId"] = themeId;
     this.store.dispatch(new IRInsertPageUICDLAction(this.selectedThemeIndex.value, pageUICDL, false));
     this.store.dispatch(new IRInsertNDLPageAction(pageUICDL))
     this.getSelectedTheme()['pages'] = this.themes[this.selectedThemeIndex.value].pages;

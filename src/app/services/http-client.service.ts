@@ -20,7 +20,7 @@ export class HttpClientService {
 
   constructor(private httpClient: HttpClient) {
     this.jenkinsServerUrl = `http://localhost:8080/`
-    this.uiDesignServerUrl = `http://localhost:8081/selab/`;
+    this.uiDesignServerUrl = `http://140.112.90.144:8081/selab/`;
     // this.matchMakingServerUrl = `http://localhost:8082/`;
     this.matchMakingServerUrl = `http://140.112.90.144:8082/`;
     this.apiServerUrl = `http://140.112.90.144:7122/`;
@@ -51,7 +51,7 @@ export class HttpClientService {
     })
   }
 
-  httpPost(endPointUrl: string, requestBody: Object,serverType: string) {
+  httpPost(endPointUrl: string, requestBody: Object,serverType: string, requestHeader?: Object) {
     let urlPrefix = "";
     if(serverType == "matchMakingServer")
       urlPrefix = this.matchMakingServerUrl;
@@ -59,15 +59,54 @@ export class HttpClientService {
       urlPrefix = this.uiDesignServerUrl;
     else if(serverType == "apiServer")
       urlPrefix = this.uiDesignServerUrl;
-
     let uri = urlPrefix + endPointUrl;
+    let header = new HttpHeaders().set("Content-Type", "application/json")
+    if(requestHeader){
+      
+      let requestHeaderKeys = Object.keys(requestHeader)
+      for(let index=0; index<requestHeaderKeys.length; index++){
+        let requestHeaderKey = requestHeaderKeys[index]
+
+        header = header.set(requestHeaderKey, requestHeader[requestHeaderKey])
+      }
+    }
     return this.httpClient.post(uri,
       requestBody,
       {
-        headers: new HttpHeaders().set("Content-Type", "application/json"),
+        headers: header,
         observe: "response", withCredentials: true, responseType: "text"
       });
   }
+
+  httpDelete(endPointUrl: string, serverType: string, requestHeader?: Object) {
+    let urlPrefix = "";
+    if(serverType == "matchMakingServer")
+      urlPrefix = this.matchMakingServerUrl;
+    else if(serverType == "uiDesignServer")
+      urlPrefix = this.uiDesignServerUrl;
+    else if(serverType == "apiServer")
+      urlPrefix = this.uiDesignServerUrl;
+    let uri = urlPrefix + endPointUrl;
+    let header = new HttpHeaders()
+
+    if(requestHeader){
+      let requestHeaderKeys = Object.keys(requestHeader)
+
+      for(let index=0; index<requestHeaderKeys.length; index++){
+
+        let requestHeaderKey = requestHeaderKeys[index]
+        header = header.set(requestHeaderKey, requestHeader[requestHeaderKey])
+      }
+    }
+    return this.httpClient.delete(uri,
+      {
+        headers: header,
+        observe: "response", withCredentials: true, responseType: "text"
+      }
+      );
+  }
+
+  
 
   triggerJenkinsBuild(endPointUrl: string, params: HttpParams) {
     // Jenkins Server

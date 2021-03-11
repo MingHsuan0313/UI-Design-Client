@@ -226,12 +226,10 @@ class InternalRepresentationReducer {
                 }
                 store.navigationDL['children'][index]["edges"] = {...store.navigationDL['children'][index]["edges"]}
                 pageNDL['edges'][sourceComponentSelector] = {...pageNDL['edges'][sourceComponentSelector]}
-                // if(pageNDL['edges'][sourceComponentSelector]){
-                //     pageNDL['edges'][sourceComponentSelector] = {...pageNDL['edges'][sourceComponentSelector]}
-                // }
+
                 pageNDL['edges'][sourceComponentSelector] = {
                     "target" : target["pageName"],
-                    "parameter": []
+                    "parameter": ""
                 }
                 if(parameter != undefined && parameter.length > 0) {
                     pageNDL['edges'][sourceComponentSelector]['parameter'] = {...pageNDL['edges'][sourceComponentSelector]['parameter']}

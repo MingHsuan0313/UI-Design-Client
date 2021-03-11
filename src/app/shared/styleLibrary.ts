@@ -16,16 +16,18 @@ export const StyleLibrary = [
         fontColor: "#20a8d8"
       },
       sidebar_theme_link: {
-        fonrSize: "24",
+        align: "left",
+        fontSize: "20",
         strokeColor: "#2f353a",
         fillColor: "#2f353a",
-        fontColor: "#20a8d8"
+        fontColor: "#ffffff"
       },
       sidebar_page_link: {
-        fonrSize: "20",
+        align: "left",
+        fontSize: "20",
         strokeColor: "#2f353a",
         fillColor: "#2f353a",
-        fontColor: "#20a8d8"
+        fontColor: "#ffffff"
       }
     },
 

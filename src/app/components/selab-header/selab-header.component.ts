@@ -21,9 +21,10 @@ import { HttpClientService } from '../../services/http-client.service';
 import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
 import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model';
-import { pageUICDLSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
+import { pageNameSelector, pageUICDLSelector, projectNameSelector, themeSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import NavigationService from '../../services/navigation/navigation.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'selab-header',
@@ -106,11 +107,59 @@ export class SelabHeaderComponent implements OnInit {
   }
 
   storePDL() {
-    const pageUICDL = Storage.getPageUICDL();
+    let exportProjectName;
+    let exportThemeId;
+    let exportThemes;
+    let exportPageUICDLs;
+    
     this.openSnackBar("save PDL to database", "save");
-    this.exportService.postPageUICDL(Storage.pageUICDL).subscribe(
-      response => console.log(response['body'])
-    );
+    let subscribtion = this.store.select(themeSelector()).subscribe(themes => {
+      exportThemeId = themes[this.graphEditorService.selectedThemeIndex].id
+    })
+    subscribtion.unsubscribe();
+    subscribtion = this.store.select(projectNameSelector()).subscribe(projectName => exportProjectName = projectName)
+    subscribtion.unsubscribe();
+    subscribtion = this.store.select(themeSelector()).subscribe(themes => exportThemes = themes)
+    subscribtion.unsubscribe();
+    subscribtion = this.store.select(pageUICDLSelector()).subscribe(pageUICDLs => exportPageUICDLs = pageUICDLs)
+    subscribtion.unsubscribe();
+
+    this.exportService.deletePageUICDL(exportProjectName).subscribe(
+      response => {
+        this.exportService.deleteTheme(exportProjectName).subscribe(
+          response => {
+            let postTask = []
+            for(let index=0; index<exportThemes.length; index++){
+              let theme = {
+                "id": exportThemes[index].id,
+                "name": exportThemes[index].name
+              }
+              postTask.push(this.exportService.postTheme(exportProjectName, theme))
+            }
+            forkJoin(postTask).subscribe(
+              response => {
+                console.log("post theme complete")
+                let postTask = []
+                let pageIds = Object.keys(exportPageUICDLs)
+                for(let index=0; index<pageIds.length; index++){
+                  let themeId = exportPageUICDLs[pageIds[index]].themeId;
+                  postTask.push(this.exportService.postPageUICDL(exportProjectName, themeId, exportPageUICDLs[pageIds[index]]))
+                }
+                console.log(postTask)
+                forkJoin(postTask).subscribe(
+                  response => {
+                    this.openSnackBar("Post themes and PDL complete","save");
+                })
+            })
+        })
+      }
+    )
+
+
+    subscribtion.unsubscribe();
+
+    
+
   }
 
   applyLayout(layout: string) {
@@ -223,6 +272,7 @@ export class SelabHeaderComponent implements OnInit {
       let pageId = pageUICDLObject["id"]
       let pageUICDL = new PageUICDL(pageId); // internalRepresentation
       Object.assign(pageUICDL, pageUICDLObject);
+
       this.graphEditorService.uploadPageUICDL(pageUICDL);
     }
     fileReader.onerror = (error) => {

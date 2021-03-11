@@ -109,7 +109,7 @@ export class LayoutStrategy extends ICreateComponentStrategy {
         .setValue(themeName);
       let themeWidth = themeName.length * 12;
       let height = 50;
-      let themeGeometry = new mxGeometry(this.xOffset, yOffset, themeWidth, height);
+      let themeGeometry = new mxGeometry(this.xOffset+20, yOffset, themeWidth, height);
       yOffset += 50;
       selabEditor.insertVertex(themeVertex, sidebarComponent, themeGeometry, StyleLibrary[0]['text']['sidebar_theme_link']);
       for(let j = 0;j < themes[index].pages.length;j++) {
@@ -119,8 +119,9 @@ export class LayoutStrategy extends ICreateComponentStrategy {
         .setParentID(themeVertex.getID())
         .setValue(pageName);
         let pageWidth = pageName.length * 12;
-        let pageGeometry = new mxGeometry(this.xOffset + 100, yOffset, pageWidth, height);
+        let pageGeometry = new mxGeometry(this.xOffset + 50, yOffset, pageWidth, height);
         yOffset += 50;
+        console.log(StyleLibrary[0]['text']['sidebar_page_link'])
         selabEditor.insertVertex(pageVertex, sidebarComponent, pageGeometry, StyleLibrary[0]['text']['sidebar_page_link']);
       }
     }

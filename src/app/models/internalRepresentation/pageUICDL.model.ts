@@ -13,13 +13,13 @@ export class PageUICDL {
     public serviceComponentList: [];
     public category: string;
     public layout: string;
-
+    public themeId: string;
     public style: Object;
 
     public body: LayoutComponent;
     public header: LayoutComponent;
     public sidebar: LayoutComponent;
-    public footer: LayoutComponent;
+public footer: LayoutComponent;
     public asidebar: LayoutComponent;
 
     constructor(id: string) {
@@ -31,6 +31,7 @@ export class PageUICDL {
         this.projectName = SelabGlobalStorage.projectName;
         this.parameters = [];
         this.serviceComponentList = [];
+        this.themeId = "";
 
         this.header = (UIComponentFactory.createLayout(id) as LayoutComponent);
         this.sidebar = (UIComponentFactory.createLayout(id) as LayoutComponent);

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Storage} from '../../shared/storage';
 import { IRAddNDLEdgeAction, IRClearNDLThemeEdgeAction } from 'src/app/models/store/actions/internalRepresentation.action';
-import { pageUICDLSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
+import { NDLSelector, pageUICDLSelector, projectNameSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/models/store/app.state';
@@ -76,10 +76,14 @@ export default class NavigationService {
       })
     subscribtion.unsubscribe();
     console.log(cells);
-
-    this.exportService.postNDL().subscribe(
-      response => console.log(response['body'])
-    );
+    let exportNDL;
+    let exportProjectName;
+    this.store.select(NDLSelector()).subscribe(
+      ndl => exportNDL = ndl )
+    this.store.select(projectNameSelector()).subscribe(
+      projectName => exportProjectName = projectName
+    )
+    this.exportService.postNDL(exportProjectName, exportNDL);
   }
 
   storePartialNDL(){
