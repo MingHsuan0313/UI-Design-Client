@@ -145,17 +145,7 @@ export class PipelineTabComponent implements OnInit {
     console.log(this.uiComponentBuilder.serviceID);
     console.log("pipeline tab update");
     if (this.uiComponentBuilder.serviceID != undefined) {
-      this.returnDataMenu.render([
-        {
-          name: "t1"
-        },
-        {
-          name: "t2"
-        },
-        {
-          name: "t3"
-        }
-      ])
+      this.returnDataMenu.render(this.uiComponentBuilder.serviceComponent as ServiceComponentModel)
     }
   }
 

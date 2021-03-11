@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 
 @Component({
   selector: 'app-return-data-menu',
@@ -7,12 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReturnDataMenuComponent implements OnInit {
   datas: any[];
+  serviceID: string;
+  serviceName: string;
+
   constructor() {
     this.datas = []
+    this.serviceID = "0";
+    this.serviceName = "";
   }
 
-  render(datas: any[]) {
-    this.datas = datas;
+  render(serviceComponent: ServiceComponentModel) {
+    this.datas = serviceComponent.returnData.datas;
+    this.serviceID = serviceComponent.serviceID;
+    this.serviceName = serviceComponent.name;
   }
 
   ngOnInit() {

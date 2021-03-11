@@ -3,9 +3,9 @@
   mat-raised-button 
   [matMenuTriggerFor]="menu"> Service Return Data </button>
 <mat-menu #menu="matMenu">
-  <button *ngFor = "let data of datas" mat-menu-item>{{data.name}}</button>
+  <button *ngFor = "let data of datas" mat-menu-item>{{data}}</button>
 </mat-menu>
 
 <span style="color: #333333;">
-  serviceId: 115 (login)
+  serviceId: {{serviceID}} ({{serviceName}})
 </span>

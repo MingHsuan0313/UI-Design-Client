@@ -56,7 +56,7 @@ export class BindServiceTabComponent implements OnInit {
       .subscribe((response) => {
         console.log('return');
         console.log(response['body']);
-        serviceComponent['returnData'].data = JSON.parse(response['body']);
+        serviceComponent['returnData'].datas = JSON.parse(response['body']);
         this.uiComponentBuilder
           .setServiceComponent(serviceComponent)
           .setServiceId(serviceComponent.getServiceID())

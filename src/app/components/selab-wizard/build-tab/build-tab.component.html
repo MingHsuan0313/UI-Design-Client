@@ -9,6 +9,17 @@
                     placeholder="Placeholder">
                 &nbsp;
             </mat-form-field>
+            <div style="display: inline; padding-left: 5px;" *ngIf="isPipeline">
+                <mat-form-field appearance="outline">
+                    <mat-label>From Return</mat-label>
+                    <mat-select disableRipple>
+                        <mat-option *ngFor="let option of returnData" value="{{option}}"
+                            (click)="chooseReturn($event,option, property)">
+                            {{ option }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
         </div>
         <div *ngIf="property.type == 'Boolean'">
             <mat-slide-toggle [ngModel]="inputValue" (ngModelChange)="valueChange($event,property.value)" matInput>

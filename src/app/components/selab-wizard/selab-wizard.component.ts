@@ -67,9 +67,9 @@ export class SelabWizardComponent implements OnInit {
 
   // this function if for update componet tree structure for information tab
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
-    if(tabChangeEvent.tab.textLabel == "Check Status")
+    if (tabChangeEvent.tab.textLabel == "Check Status")
       this.infoTab.update();
-    if(tabChangeEvent.tab.textLabel == "Generate Pipeline")
+    if (tabChangeEvent.tab.textLabel == "Generate Pipeline")
       this.pipelineTab.update();
     this.lastTab = tabChangeEvent.tab.textLabel;
   }
@@ -104,27 +104,19 @@ export class SelabWizardComponent implements OnInit {
 
     // composite component
     if (this.data.isComposite) {
-      this.tabs = ["Build Component", "Compose Component",  "Bind Service", "Check Status", "Generate Pipeline"];
+      this.tabs = ["Build Component", "Compose Component", "Bind Service", "Check Status", "Generate Pipeline"];
     }
     // basic component
     else {
       this.tabs = ["Build Component", "Check Status"];
     }
-
     this.lastTab = this.tabs[0];
-    // this.returnDataMenu.render([
-    //   {
-    //     name:"code"
-    //   },
-    //   {
-    //     name: "tag"
-    //   },
-    //   {
-    //     name: "description"
-    //   },
-    //   {
-    //     name: "id"
-    //   }
-    // ])
+    setTimeout(() => {
+      if (this.isPipeline) {
+        this.returnDataMenu.render(this.data['service']);
+        this.buildTab.setReturn(this.data['service']);
+        this.composeTab.setReturn(this.data['service']);
+      }
+    }, 200)
   }
 }
