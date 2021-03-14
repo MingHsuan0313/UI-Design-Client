@@ -1,4 +1,3 @@
-import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { BPELNode } from "../../models/components/BPELNode.model";
 import { GraphStorage } from "../../models/graph-storage.model";
 import { BpelDesignerEditorService } from "../bpel-designer-editor.service";

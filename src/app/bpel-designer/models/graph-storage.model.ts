@@ -56,7 +56,7 @@ export class GraphStorage {
     const vertexStorage = new VertexStorage(vertex, styleStorage, BPELComponent, null, null);
     let vertexLength = Object.keys(this.vertexStorageList).length;
     this.vertexStorageList[vertexLength] = vertexStorage;
-    BPELComponent.setVertexStorage(vertexStorage);
+    // BPELComponent.setVertexStorage(vertexStorage);
     return vertexStorage;
   }
 

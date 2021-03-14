@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
-import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
+import { BpelDesignerEditorService } from "../bpel-designer-editor.service";
 import { IOBPELDocParser } from "./ioBPELDocParser.service";
 import { IOBPELDocValidator } from "./ioBPELDocValidator.service";
 
@@ -12,7 +12,7 @@ export default class IOBPELDocService {
     ioBPELDocParser: IOBPELDocParser;
     componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContentSource = new Subject<[string[], string, Map<string, string>, string]>();
 
-    constructor(private graphEditorService : GraphEditorService) {
+    constructor(private graphEditorService : BpelDesignerEditorService) {
         this.ioBPELDocValidator = new IOBPELDocValidator(graphEditorService);
         this.ioBPELDocParser = new IOBPELDocParser(this, graphEditorService);
     }

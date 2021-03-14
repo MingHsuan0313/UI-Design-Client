@@ -20,6 +20,7 @@ import { ReturnDataMenuComponent } from 'src/app/components/selab-wizard/return-
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/components/utils/confirm-dialog/confirm-dialog.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import { WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
+import { BpelDesignerEditorService } from 'src/app/bpel-designer/services/bpel-designer-editor.service';
 
 @Component({
   selector: 'pipeline-tab',
@@ -48,7 +49,7 @@ export class PipelineTabComponent implements OnInit {
     public wizard: MatDialogRef<SelabWizardComponent>,
     public dialog: MatDialog,
     private store: Store<AppState>,
-    private graphEditorService: GraphEditorService
+    private graphEditorService: BpelDesignerEditorService
   ) {
     this.returnData = {};
     this.alluiComponentTypes = UIComponentConfig.getAllComponentTypes();

@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, Input } from "@angular/core";
-import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { PropertyGenerator } from "src/app/shared/property-generator";
 import { ICreateBPELComponentStrategy } from "../../models/createBPELComponentStrategy/ICreateBPELComponentStrategy";
 import { Process } from "../../models/components/containers/process/process.model";
@@ -101,7 +100,7 @@ export class PaletteComponent implements AfterViewInit {
                         // check instanceof types in the following set:
                         // {BPELComponentElementWithActivity, BPELComponentElementWithActivityList, BPELComponentElementWithActivityAndActivityList, ElseIfBranch, ElseBranch}
                         if (bpelComponent instanceof Process || bpelComponent instanceof Scope ||
-                            bpelComponent instanceof Sequence ||bpelComponent instanceof Flow ||
+                            bpelComponent instanceof Sequence || bpelComponent instanceof Flow ||
                             bpelComponent instanceof If || bpelComponent instanceof ElseIfBranch || bpelComponent instanceof ElseBranch ||
                             bpelComponent instanceof While || bpelComponent instanceof RepeatUntil || bpelComponent instanceof ForEach ||
                             bpelComponent instanceof Pick || bpelComponent instanceof OnMessage ||
@@ -116,7 +115,11 @@ export class PaletteComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.graphStorage = this.graphEditorService.getGraphStorage();
+        setTimeout(() => {
+            console.log('hello world2');
+            this.graphStorage = this.graphEditorService.getGraphStorage();
+            console.log(this.graphStorage)
+        }, 200)
     }
 
     onClick(event: any) {
@@ -236,7 +239,7 @@ export class PaletteComponent implements AfterViewInit {
             case 'sequence':
                 bpelComponent = new Sequence(vertexId, this.updateBPELDocService);
                 this.setStrategy(new SequenceStrategy(this.basex, this.basey));
-                 break;
+                break;
             case 'flow':
                 bpelComponent = new Flow(vertexId, this.updateBPELDocService);
                 this.setStrategy(new FlowStrategy(this.basex, this.basey));
@@ -298,7 +301,7 @@ export class PaletteComponent implements AfterViewInit {
         // check instanceof types in the following set targetContainerActivity
         // {BPELComponentElementWithActivity, BPELComponentElementWithActivityList, BPELComponentElementWithActivityAndActivityList, ElseIfBranch, ElseBranch}
         if (bpelComponent instanceof Process || bpelComponent instanceof Scope ||
-            bpelComponent instanceof Sequence ||bpelComponent instanceof Flow ||
+            bpelComponent instanceof Sequence || bpelComponent instanceof Flow ||
             bpelComponent instanceof If || bpelComponent instanceof ElseIfBranch || bpelComponent instanceof ElseBranch ||
             bpelComponent instanceof While || bpelComponent instanceof RepeatUntil || bpelComponent instanceof ForEach ||
             bpelComponent instanceof Pick || bpelComponent instanceof OnMessage ||
@@ -327,8 +330,8 @@ export class PaletteComponent implements AfterViewInit {
             let lastVertexChildOfTargetContainerVertexChildren = null;
             for (let i = 0; i < targetContainerVertex.getChildCount(); i++) {
                 lastVertexChildOfTargetContainerVertexChildren = (lastVertexChildOfTargetContainerVertexChildren == null ||
-                                                                  parseInt(targetContainerVertex.getChildAt(i).getId()) > parseInt(lastVertexChildOfTargetContainerVertexChildren.getId()))?
-                                                                  targetContainerVertex.getChildAt(i): lastVertexChildOfTargetContainerVertexChildren;
+                    parseInt(targetContainerVertex.getChildAt(i).getId()) > parseInt(lastVertexChildOfTargetContainerVertexChildren.getId())) ?
+                    targetContainerVertex.getChildAt(i) : lastVertexChildOfTargetContainerVertexChildren;
             }
             if (lastVertexChildOfTargetContainerVertexChildren != null) {
                 let newCoordY = lastVertexChildOfTargetContainerVertexChildren.getGeometry().y + lastVertexChildOfTargetContainerVertexChildren.getGeometry().height;
