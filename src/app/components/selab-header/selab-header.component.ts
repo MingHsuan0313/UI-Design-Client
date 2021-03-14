@@ -24,12 +24,9 @@ import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model
 import { pageNameSelector, pageUICDLSelector, projectNameSelector, themeSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import NavigationService from '../../services/navigation/navigation.service';
-<<<<<<< HEAD
 import { forkJoin } from 'rxjs';
-=======
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskState, WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
->>>>>>> pipeline-mechanism
 
 @Component({
   selector: 'selab-header',
