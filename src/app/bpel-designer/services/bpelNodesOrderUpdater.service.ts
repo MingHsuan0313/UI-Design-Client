@@ -1,4 +1,3 @@
-import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { BPELComponent } from "../models/components/BPELComponent.model";
 import { GraphStorage } from "../models/graph-storage.model";
 import { BpelDesignerEditorService } from "./bpel-designer-editor.service";
@@ -11,6 +10,8 @@ export class BPELNodesOrderUpdater {
 
     updateOrder(targetActivity: BPELComponent): void {
         if (this.graphStorage == undefined) {
+            console.log('qweqe')
+            console.log(this.graphEditorService)
             this.graphStorage = this.graphEditorService.getGraphStorage();
         }
         let activityList = targetActivity.getElement().getActivityList();

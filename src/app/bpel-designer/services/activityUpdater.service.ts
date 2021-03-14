@@ -1,5 +1,3 @@
-import { GraphStorage } from "src/app/models/graph-dependency";
-import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { BPELComponent } from "../models/components/BPELComponent.model";
 import { BPELComponentElementWithActivity } from "../models/components/BPELComponentElementWithActivity.model";
 import { BPELComponentElementWithActivityAndActivityList } from "../models/components/BPELComponentElementWithActivityAndActivityList.model";
@@ -9,11 +7,13 @@ import { ElseBranch } from "../models/components/structured-activities/if/branch
 import { ElseIfBranchElement } from "../models/components/structured-activities/if/branch/elseif-branch-element.model";
 import { If } from "../models/components/structured-activities/if/if.model";
 import { OnMessageElement } from "../models/components/structured-activities/pick/onMessage-element.model";
+import { GraphStorage } from "../models/graph-storage.model";
+import { BpelDesignerEditorService } from "./bpel-designer-editor.service";
 
 export class ActivityUpdater {
     graphStorage: GraphStorage;
 
-    constructor(private graphEditorService: GraphEditorService) {
+    constructor(private graphEditorService: BpelDesignerEditorService) {
     }
 
     setActivity(sourceActivity: BPELComponent, targetActivity: BPELComponent): void {

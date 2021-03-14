@@ -8,7 +8,6 @@ export enum PipelineActionTypes {
     SET_OPERATION_LOG_ACTION = "[Pipeline] Set Operation Log",
     DELETE_TASKS_ACTION = "[Pipeline] Delete Tasks",
     DELETE_OPERATION_POOL_ACTION = "[Pipeline] Delete Operation Pool"
-
 }
 
 export class PipelineSetOperationLogAction implements Action {

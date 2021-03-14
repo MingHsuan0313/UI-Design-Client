@@ -15,6 +15,7 @@ import GraphEditorService from 'src/app/services/externalRepresentation/graph-ed
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
 import { SelabWizardComponent } from '../selab-wizard.component';
 import { UIComponentFactory } from '../uicomponent-factory';
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 
 @Component({
   selector: 'information-tab',
@@ -34,13 +35,18 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
   constructor(private store: Store<AppState>,
     public dialog: MatDialog,
     public wizard: MatDialogRef<SelabWizardComponent>,
-    private graphEditorService: GraphEditorService
+    private graphEditorService: GraphEditorService,
   ) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
       this._isExpandable, this._getChildren);
     this.treeControl = new FlatTreeControl<FileFlatNode>(this._getLevel, this._isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
+  }
+
+  closeWizard() {
+    let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+    this.wizard.close(currentTask);
   }
 
   finish() {
@@ -65,7 +71,8 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
         let uiComponent = this.uiComponentBuilder.build();
         this.store.dispatch(new IRInsertUIComponentAction(id,uiComponent));
         this.graphEditorService.bindComponent(uiComponent);
-        this.wizard.close();
+        let currentTask = SelabGlobalStorage.taskGraph.currentTask;
+        this.wizard.close(currentTask);
       }
     })
   }

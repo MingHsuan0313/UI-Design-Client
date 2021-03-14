@@ -4,6 +4,10 @@ import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentB
 import { UIComponentConfig } from '../uicomponent-config';
 import { UIComponentFactory } from '../uicomponent-factory';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
+import { MatDialogRef } from '@angular/material';
+import { SelabWizardComponent } from '../selab-wizard.component';
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
+import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 
 @Component({
   selector: 'compose-tab',
@@ -25,9 +29,29 @@ export class ComposeTabComponent implements OnInit {
   inputValue: string;
   formData: {};
 
-  constructor(private graphEditorService: GraphEditorService) {
+  returnData: any[] = []; // form pipeline return
+
+  constructor(private graphEditorService: GraphEditorService,
+    public wizard: MatDialogRef<SelabWizardComponent>,
+    ) {
     this.isClean = false;
     this.formData = {};
+  }
+
+  chooseReturn(event, option, property) {
+
+  }
+
+  setReturn(service: ServiceComponentModel) {
+    this.returnData = ["None"];
+    for(let index = 0;index < service['returnData'].datas.length;index++) {
+      this.returnData.push(service['returnData'].datas[index]);
+    }
+  }
+
+  closeWizard() {
+    let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+    this.wizard.close(currentTask);
   }
 
   chooseChild(event, option) {

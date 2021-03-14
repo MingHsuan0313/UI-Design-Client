@@ -44,7 +44,6 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   ) {
   }
   ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
   }
 
   showExternalRepresentation() {

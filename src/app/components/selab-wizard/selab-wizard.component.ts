@@ -14,6 +14,8 @@ import { InformationTabComponent } from './information-tab/information-tab.compo
 import { PipelineTabComponent } from './pipeline-tab/pipeline-tab.component';
 import { UIComponentFactory } from './uicomponent-factory';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
+import { ReturnDataMenuComponent } from './return-data-menu/return-data-menu.component';
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 
 @Component({
   selector: 'selab-wizard',
@@ -32,6 +34,7 @@ export class SelabWizardComponent implements OnInit {
 
   // it has return data if in pipeline mode
   operation: ServiceComponentModel;
+  @ViewChild("returnDataMenu") returnDataMenu: ReturnDataMenuComponent;
   @ViewChild("selabtabs") tabGroup: MatTabGroup;
   @ViewChild("build") buildTab: BuildTabComponent;
   @ViewChild("compose") composeTab: ComposeTabComponent;
@@ -49,23 +52,25 @@ export class SelabWizardComponent implements OnInit {
 
   // receive data from dialog input
   initialization() {
+    console.log(SelabGlobalStorage.taskGraph);
     this.isPipeline = this.data.isPipeline;
     this.genere = this.data.genere;
     this.isComposite = this.data.isComposite;
     this.type = this.data.type;
     this.category = this.data.category;
-
+    this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
     if (this.isPipeline) {
-      this.operation = this.data.operation;
+      this.uiComponentBuilder.setReturnData(this.data.retutnData);
     }
     let pageId = this.graphEditorService.selectedPageId;
-    this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
   }
 
   // this function if for update componet tree structure for information tab
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
-    if(tabChangeEvent.tab.textLabel == "Check Status")
+    if (tabChangeEvent.tab.textLabel == "Check Status")
       this.infoTab.update();
+    if (tabChangeEvent.tab.textLabel == "Generate Pipeline")
+      this.pipelineTab.update();
     this.lastTab = tabChangeEvent.tab.textLabel;
   }
 
@@ -99,13 +104,19 @@ export class SelabWizardComponent implements OnInit {
 
     // composite component
     if (this.data.isComposite) {
-      this.tabs = ["Build Component", "Compose Component",  "Bind Service", "Check Status", "Generate Pipeline"];
+      this.tabs = ["Build Component", "Compose Component", "Bind Service", "Check Status", "Generate Pipeline"];
     }
     // basic component
     else {
       this.tabs = ["Build Component", "Check Status"];
     }
-
     this.lastTab = this.tabs[0];
+    setTimeout(() => {
+      if (this.isPipeline) {
+        this.returnDataMenu.render(this.data['service']);
+        this.buildTab.setReturn(this.data['service']);
+        this.composeTab.setReturn(this.data['service']);
+      }
+    }, 200)
   }
 }

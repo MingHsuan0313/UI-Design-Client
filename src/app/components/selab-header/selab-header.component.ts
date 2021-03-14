@@ -24,7 +24,12 @@ import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model
 import { pageNameSelector, pageUICDLSelector, projectNameSelector, themeSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import NavigationService from '../../services/navigation/navigation.service';
+<<<<<<< HEAD
 import { forkJoin } from 'rxjs';
+=======
+import { ActivatedRoute, Router } from '@angular/router';
+import { TaskState, WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
+>>>>>>> pipeline-mechanism
 
 @Component({
   selector: 'selab-header',
@@ -66,6 +71,7 @@ export class SelabHeaderComponent implements OnInit {
     private IRTransformerService: IRTransformer,
     private store: Store<AppState>,
     public navigationService: NavigationService,
+    private route: Router,
     public webAppDashboard: MatDialog) {
 
   }
@@ -234,8 +240,9 @@ export class SelabHeaderComponent implements OnInit {
     if (compositeComponentTypes.indexOf(type) >= 0)
       isComposite = true;
 
+    SelabGlobalStorage.initializeTasks(new WizardTask().setIsRoot(true).setComponentType(type));
     if (this) {
-      this.wizard.open(SelabWizardComponent, {
+      let wizardRef = this.wizard.open(SelabWizardComponent, {
         width: '40%',
         height: '60%',
         data: {
@@ -244,11 +251,15 @@ export class SelabHeaderComponent implements OnInit {
           genere: genere,
           category: category,
           type: type,
-          returnData: {}
         },
         disableClose: true,
-        autoFocus: true
+        // autoFocus: true
       });
+      wizardRef.afterClosed()
+        .subscribe((task: WizardTask) => {
+          task.finish();
+          SelabGlobalStorage.taskGraph.next()
+        })
     }
   }
 

@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { BPELComponent } from "../models/components/BPELComponent.model";
 import { ElseBranch } from "../models/components/structured-activities/if/branch/else-branch.model";
 import { If } from "../models/components/structured-activities/if/if.model";
 import { ActivityUpdater } from "./activityUpdater.service";
+import { BpelDesignerEditorService } from "./bpel-designer-editor.service";
 import { BPELNodesOrderUpdater } from "./bpelNodesOrderUpdater.service";
 
 @Injectable({
@@ -13,7 +13,7 @@ export default class UpdateBPELDocService {
     activityUpdater: ActivityUpdater;
     bpelNodesOrderUpdater: BPELNodesOrderUpdater;
 
-    constructor(private graphEditorService: GraphEditorService) {
+    constructor(private graphEditorService: BpelDesignerEditorService) {
         this.activityUpdater = new ActivityUpdater(graphEditorService);
         this.bpelNodesOrderUpdater = new BPELNodesOrderUpdater(graphEditorService);
     }

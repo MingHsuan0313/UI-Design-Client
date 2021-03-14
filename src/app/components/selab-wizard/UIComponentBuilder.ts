@@ -7,7 +7,7 @@ import { IconComponent } from "../../models/internalRepresentation/IconComponent
 import { InputGroupComponent } from "../../models/internalRepresentation/InputGroupComponent.model";
 import { LayoutComponent } from "../../models/internalRepresentation/LayoutComponent.model";
 import { TableComponent } from "../../models/internalRepresentation/TableComponent.model";
-import { ArgumentModel, IServiceEntry } from "../../models/service-component-dependency";
+import { ArgumentModel, IServiceEntry, ReturnModel } from "../../models/service-component-dependency";
 import { TextComponent, InputTextComponent, UIComponent } from "../../models/ui-component-dependency";
 
 export class UIComponentBuilder {
@@ -23,6 +23,8 @@ export class UIComponentBuilder {
     public argument: ArgumentModel;
     public properties: Object; // specific component properties: eg dropdown item, card header...
     public componentList: UIComponent[];
+    public serviceID: string;
+    public returnData: ReturnModel;
 
     constructor() {
         this.name = "";
@@ -34,6 +36,7 @@ export class UIComponentBuilder {
         this.geometry = {};
         this.style = {};
         this.componentList = [];
+        this.returnData = new ReturnModel();
     }
 
     getProperties(): Object {
@@ -42,6 +45,16 @@ export class UIComponentBuilder {
 
     setID(id: string) {
         this.id = id;
+        return this;
+    }
+
+    setReturnData(datas: []) {
+        this.returnData.datas = datas;
+        return this;
+    }
+
+    setServiceId(serviceId: string) {
+        this.serviceID = serviceId;
         return this;
     }
 

@@ -8,6 +8,9 @@ import { ArgumentModel, ServiceComponentModel } from 'src/app/models/service-com
 import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
+import { MatDialogRef } from '@angular/material';
+import { SelabWizardComponent } from '../selab-wizard.component';
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 
 @Component({
   selector: 'bind-service-tab',
@@ -26,10 +29,16 @@ export class BindServiceTabComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
+    public wizard: MatDialogRef<SelabWizardComponent>,
     private serviceComponentService: ServiceComponentService) {
     this.isQueryingService = false;
     this.argumentOptions = [];
     this.serviceComponentPool = new Map();
+  }
+
+  closeWizard() {
+    let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+    this.wizard.close(currentTask);
   }
 
   async chooseService(event, option) {
@@ -42,14 +51,22 @@ export class BindServiceTabComponent implements OnInit {
       .setHttpMethod("get")
       .setWSDLName(option["WSDLName"])
       .setUrl();
-
-    this.uiComponentBuilder.setServiceComponent(serviceComponent);
-    if (option["name"] == "addDepartment" || option["name"] == "editDepartment") {
-        (this.uiComponentBuilder
-          .getServiceComponent() as ServiceComponentModel)
-          .setComplexTypeUrl(this.fakeData());
-    }
-    this.queryArguments();
+    this.serviceComponentService
+      .queryReturnByServiceID(option['serviceID'])
+      .subscribe((response) => {
+        console.log('return');
+        console.log(response['body']);
+        serviceComponent['returnData'].datas = JSON.parse(response['body']);
+        this.uiComponentBuilder
+          .setServiceComponent(serviceComponent)
+          .setServiceId(serviceComponent.getServiceID())
+        if (option["name"] == "addDepartment" || option["name"] == "editDepartment") {
+            (this.uiComponentBuilder
+              .getServiceComponent() as ServiceComponentModel)
+              .setComplexTypeUrl(this.fakeData());
+        }
+        this.queryArguments();
+      })
   }
 
   chooseArgument(event, option, subComponent: UIComponent) {

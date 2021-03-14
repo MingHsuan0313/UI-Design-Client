@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
+import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
+import { StatusDialogComponent } from '../pipeline-tab/status-dialog/status-dialog.component';
+import { SelabWizardComponent } from '../selab-wizard.component';
 import { UIComponentConfig } from '../uicomponent-config';
 
 @Component({
@@ -14,10 +19,33 @@ export class BuildTabComponent implements OnInit {
   buildFormProperties: any;
   inputValue: string;
 
+  returnData: any[] = []; // from pipeline return
+
   formData: {};
 
-  constructor() {
+  constructor(
+    private statusDialog: MatDialog,
+    public wizard: MatDialogRef<SelabWizardComponent>,
+  ) {
     this.formData = {};
+  }
+
+  setReturn(service: ServiceComponentModel) {
+    this.returnData = ["None"];
+    for(let index = 0;index < service['returnData'].datas.length;index++) {
+      this.returnData.push(service['returnData'].datas[index]);
+    }
+  }
+
+  chooseReturn(event, option, property) {
+    console.log('toggle is from return');
+    console.log(event);
+    console.log(property);
+  }
+
+  closeWizard() {
+    let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+    this.wizard.close(currentTask);
   }
 
   setComponentProperties() {
@@ -91,5 +119,13 @@ export class BuildTabComponent implements OnInit {
   ngOnInit() {
     this.buildFormProperties = UIComponentConfig.getProperties(this.uiComponentBuilder.type);
     this.buildForm();
+  }
+
+  showStatus() {
+    this.statusDialog.open(StatusDialogComponent, {
+      width: '50%',
+      height: '60%',
+      autoFocus: true
+    })
   }
 }

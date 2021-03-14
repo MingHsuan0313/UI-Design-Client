@@ -107,12 +107,12 @@ export default class ServiceComponentService {
   }
   
   queryReturnByServiceID(serviceID) {
-    let url = `${this.baseUrl}/getReturn`;
+    let url = `query/returnValue`;
     
     let params: HttpParams;
     params = new HttpParams()
               .set("serviceID",serviceID);
-    return this.httpClientService.httpGet(url,params,"uiDesignServer");
+    return this.httpClientService.httpGet(url,params,"returnServer");
   }
 
   postEditedServiceComponent(code: string, className: string) {

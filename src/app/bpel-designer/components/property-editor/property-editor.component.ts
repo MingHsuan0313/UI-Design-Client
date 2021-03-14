@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { BPELComponent } from "../../models/components/BPELComponent.model";
 import { GraphStorage } from "../../models/graph-storage.model";
 import { BpelDesignerEditorService } from "../../services/bpel-designer-editor.service";
@@ -144,6 +143,8 @@ export class PropertyEditorComponent implements OnInit {
     ngOnInit() {
         setTimeout(() => {
             this.graphStorage = this.graphEditorService.getGraphStorage();
+            console.log('hello world')
+            console.log(this.graphStorage)
             this.graph = this.graphEditorService.getGraphStorage().getGraph();
 
             this.graph.addListener(mxEvent.CLICK, (sender) => {

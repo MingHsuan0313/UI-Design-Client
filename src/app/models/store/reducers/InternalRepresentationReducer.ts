@@ -16,7 +16,6 @@ class InternalRepresentationReducer {
         store.themes = [...store.themes, theme]
         return store;
     }
-
     
     @Action
     public insertPageImage(store: InternalRepresentation, action: IRInsertPageImageAction): InternalRepresentation {

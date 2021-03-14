@@ -12,7 +12,6 @@ export class UIComponent {
   public type: string;
   public name: string;
   public serviceComponent: IServiceEntry;
-  
 
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     this.name = uiComponentBuilder.name;

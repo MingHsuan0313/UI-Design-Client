@@ -56,7 +56,10 @@ import { SelabWebAppDashboardComponent } from "./components/selab-webApp-dashboa
 import { ProjectNameDialogComponent } from './containers/default-layout/project-name-dialog/project-name-dialog.component';
 import { ThemeTabsComponent } from './components/selab-graph-editor/theme-tabs/theme-tabs.component';
 import { PageTabsComponent } from './components/selab-graph-editor/theme-tabs/page-tabs/page-tabs.component';
-import { ThumbnailDialog } from './components/selab-graph-editor/thumbnail-dialog/thumbnail-dialog.component'; 
+import { ThumbnailDialog } from './components/selab-graph-editor/thumbnail-dialog/thumbnail-dialog.component';
+import { ReturnDataMenuComponent } from './components/selab-wizard/return-data-menu/return-data-menu.component';
+import { StatusDialogComponent } from './components/selab-wizard/pipeline-tab/status-dialog/status-dialog.component'; 
+import { NgxGraphModule } from "@swimlane/ngx-graph";
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -119,7 +122,9 @@ export function reducerFactory() {
     SelabWebAppDashboardComponent,
     ThemeTabsComponent,
     PageTabsComponent,
-    ThumbnailDialog
+    ThumbnailDialog,
+    ReturnDataMenuComponent,
+    StatusDialogComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -132,6 +137,7 @@ export function reducerFactory() {
     StoreModule.forRoot(undefined,{
       reducerFactory
     }),
+    NgxGraphModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   entryComponents: [
@@ -145,7 +151,8 @@ export function reducerFactory() {
     JestTestingLogWindowComponent,
     ProjectNameDialogComponent,
     SelabWebAppDashboardComponent,
-    ThumbnailDialog
+    ThumbnailDialog,
+    StatusDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

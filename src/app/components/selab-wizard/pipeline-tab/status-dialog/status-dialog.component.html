@@ -1,0 +1,68 @@
+<span style="font-size: 24px; font-weight: bold;"> Pipeline Tasks Overview </span>
+<div mat-dialog-actions align="end" style="display: inline; padding-left: 450px;">
+  <button mat-raised-button disabled style="background: #c0c0c0; color: #333333"> Undo </button>
+  <button mat-raised-button disabled style="background: #f6546a; color: #333333;"> Doing </button>
+  <button mat-raised-button disabled style="background: #dcedc1; color: #333333"> Finished </button>
+</div>
+<hr>
+<div class="page">
+  <ngx-graph [links]='links' [nodes]='nodes' [layout]='layout'>
+
+    <ng-template #nodeTemplate let-node>
+      <svg:g *ngIf="node.data.status == 0" class="node">
+        <svg:rect 
+          [attr.width]="node.dimension.width" 
+          [attr.height]="node.dimension.height"
+          [attr.fill]="'#c0c0c0'" />
+        <svg:text 
+          alignment-baseline="central" 
+          [attr.x]="10" 
+          [attr.y]="node.dimension.height / 2">{{node.label}}
+        </svg:text>
+      </svg:g>
+      <svg:g *ngIf="node.data.status == 1" class="node">
+        <svg:rect 
+          [attr.width]="node.dimension.width * 1.1" 
+          [attr.height]="node.dimension.height * 1.1"
+          [attr.fill]="'#f6546a'" />
+<!-- #4ca3dd -->
+        <svg:text 
+          style="font-size:16px; font-weight: bold;"
+          alignment-baseline="central" 
+          [attr.x]="10 * 1.1" 
+          [attr.y]="(node.dimension.height * 1.1) / 2">{{node.label}}
+        </svg:text>
+      </svg:g>
+      <svg:g *ngIf="node.data.status == 2" class="node">
+        <svg:rect 
+          [attr.width]="node.dimension.width" 
+          [attr.height]="node.dimension.height"
+          [attr.fill]="'#dcedc1'" />
+        <svg:text 
+          alignment-baseline="central" 
+          [attr.x]="10" 
+          [attr.y]="node.dimension.height / 2">{{node.label}}
+        </svg:text>
+      </svg:g>
+    </ng-template>
+
+    <ng-template #linkTemplate let-link>
+      <svg:g class="edge">
+        <svg:path class="line" stroke-width="2" marker-end="url(#arrow)">
+        </svg:path>
+        <svg:text class="edge-label" text-anchor="middle">
+          <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline"
+            startOffset="50%">
+            {{link.label}}
+          </textPath>
+        </svg:text>
+      </svg:g>
+    </ng-template>
+
+  </ngx-graph>
+</div>
+<hr>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="show()">Traverse</button>
+  <button mat-raised-button (click)="showTaskGraph()">Show Task Graph</button>
+</mat-dialog-actions>

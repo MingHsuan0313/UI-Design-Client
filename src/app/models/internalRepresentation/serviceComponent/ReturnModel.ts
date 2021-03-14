@@ -1,10 +1,11 @@
 export class ReturnModel {
-    data: Object;
+    datas: [];
     serviceType: string;
     name: string;
+   
 
     constructor() {
-        this.data = {};
+        this.datas = [];
         this.serviceType = "Return";
         this.name = "";
     }
@@ -14,8 +15,8 @@ export class ReturnModel {
         return this;
     }
     
-    setData(data: Object) {
-        this.data = data;
+    setData(data: []) {
+        this.datas = data;
         return this;
     }
 
