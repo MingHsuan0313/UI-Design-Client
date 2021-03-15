@@ -21,7 +21,9 @@ export class AppComponent implements OnInit {
       .addSvgIcon('navigation',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/navigation-24px.svg'))
       .addSvgIcon('code',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/code-24px.svg'))
       .addSvgIcon('barChart', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/bar_chart-24px.svg'))
-      .addSvgIcon('visibility',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/visibility-24px.svg'));
+      .addSvgIcon('visibility',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/visibility-24px.svg'))
+      .addSvgIcon('add',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/add-24px.svg'))  
+      .addSvgIcon('remove',this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icon/remove-24px.svg'));  
   }
   ngOnInit() {
 

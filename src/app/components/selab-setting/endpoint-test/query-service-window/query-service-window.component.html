@@ -1,0 +1,61 @@
+<h1>Query Service Window</h1>
+
+<mat-form-field appearance="outline">
+  <mat-label>Service Candidates</mat-label>
+  <mat-select disableRipple>
+    <mat-option *ngFor="let option of serviceOptions" value="option" (click)="chooseService($event,option)">
+      <span style="color: #F2AA4CFF;">{{option.similarity.toFixed(3)}}</span> &nbsp;&nbsp; <span
+        style="color: #101820FF;"> {{option.name}} </span>
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-divider></mat-divider>
+<br style="display: block; margin-bottom: 15px;">
+<mat-form-field appearance="outline">
+  <mat-label>Operation Name</mat-label>
+  <input matInput [(ngModel)]="operationName" placeholder="operation">
+</mat-form-field>
+<button style="min-width: 20px;
+  position:relative;
+  bottom:5px;
+  left:5px; 
+  color:grey;
+  padding:0px;" (click)="addArgument()" mat-button matTooltip="add argument">
+  <mat-icon style="position: relative; bottom:5px;" svgIcon="add"></mat-icon>
+</button>
+&nbsp;
+
+<div *ngFor="let argument of arguments;let i = index" [attr.data-index]="i">
+  <mat-form-field appearance="outline">
+    <mat-label>Argument Name</mat-label>
+    <input matInput (change)="valueChange($event,i)" placeholder="argument name">
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline">
+    <mat-label>type</mat-label>
+    <mat-select (selectionChange)="typeChange($event,i)">
+      <mat-option value="String">String</mat-option>
+      <mat-option value="int">int</mat-option>
+      <mat-option value="float">float</mat-option>
+      <mat-option value="double">double</mat-option>
+      <mat-option value="boolean">boolean</mat-option>
+    </mat-select>
+    <!-- <input matInput placeholder="argument type"> -->
+  </mat-form-field>
+  <button style="min-width: 20px;
+    position: relative; 
+    bottom:5px;
+    left:5px;
+    padding:0px;
+    color:grey;
+    " mat-button (click)="removeArgument(i)" matTooltip="remove argument">
+    <mat-icon style="position: relative; bottom:5px;" svgIcon="remove"></mat-icon>
+  </button>
+</div>
+
+<br>
+<button mat-raised-button color="disabled" [mat-dialog-close]="true">Close</button>
+&nbsp;
+<button mat-raised-button (click)="queryService()" color="primary">Query Service</button>
+&nbsp;&nbsp;
+<mat-spinner [diameter]="30" style="display: inline; position: relative;" *ngIf="isQueryingService"></mat-spinner>

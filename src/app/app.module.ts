@@ -60,6 +60,7 @@ import { ThumbnailDialog } from './components/selab-graph-editor/thumbnail-dialo
 import { ReturnDataMenuComponent } from './components/selab-wizard/return-data-menu/return-data-menu.component';
 import { StatusDialogComponent } from './components/selab-wizard/pipeline-tab/status-dialog/status-dialog.component'; 
 import { NgxGraphModule } from "@swimlane/ngx-graph";
+import { QueryServiceWindowComponent } from './components/selab-setting/endpoint-test/query-service-window/query-service-window.component';
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -124,7 +125,8 @@ export function reducerFactory() {
     PageTabsComponent,
     ThumbnailDialog,
     ReturnDataMenuComponent,
-    StatusDialogComponent
+    StatusDialogComponent,
+    QueryServiceWindowComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -152,7 +154,8 @@ export function reducerFactory() {
     ProjectNameDialogComponent,
     SelabWebAppDashboardComponent,
     ThumbnailDialog,
-    StatusDialogComponent
+    StatusDialogComponent,
+    QueryServiceWindowComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

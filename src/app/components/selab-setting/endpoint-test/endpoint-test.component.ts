@@ -17,6 +17,7 @@ import { CodeEditorDialogComponent } from '../../code-editor-dialog/code-editor-
 import { CodeEditorComponent } from '../../code-editor/code-editor.component';
 import { JestTestingLogWindowComponent } from './jest-testing-log-window/jest-testing-log-window.component';
 import { TestingLogWindowComponent } from './testing-log-window/testing-log-window.component';
+import { QueryServiceWindowComponent } from './query-service-window/query-service-window.component';
 
 @Component({
   selector: 'app-endpoint-test',
@@ -35,6 +36,7 @@ export class EndpointTestComponent implements OnInit {
     public logWindow: MatDialog, // return from invoke individual service component
     private serivceComponentService: ServiceComponentService,
     public codeEditor: MatDialog,
+     public queryServiceWindow: MatDialog,
     // return from Jest Server
     public jestLogWindow: MatDialog) {
     this.servicePool = [];
@@ -143,5 +145,12 @@ export class EndpointTestComponent implements OnInit {
 
   getkeys(map) {
     return Object.keys(map);
+  }
+
+  launchQueryServiceWindow() {
+    this.queryServiceWindow.open(QueryServiceWindowComponent, {
+      disableClose: true,
+      autoFocus: true,
+    })
   }
 }

@@ -2,16 +2,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Storage } from '../../shared/storage';
-import { TextComponent, UIComponent } from '../../models/ui-component-dependency';
+import { TextComponent } from '../../models/ui-component-dependency';
 import { PropertyGenerator } from '../../shared/property-generator';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import ImportService from '../../services/internalRepresentation/import.service';
 import ExportService from '../../services/internalRepresentation/export.service';
 import IRTransformer from '../../services/internalRepresentation/IRTransformer.service'
 import {
   MatDialog,
-  MatDialogConfig,
   MatSnackBar,
   MatSnackBarVerticalPosition
 } from '@angular/material';
@@ -21,12 +20,12 @@ import { HttpClientService } from '../../services/http-client.service';
 import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
 import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model';
-import { pageNameSelector, pageUICDLSelector, projectNameSelector, themeSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
+import { pageUICDLSelector, projectNameSelector, themeSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import NavigationService from '../../services/navigation/navigation.service';
 import { forkJoin } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TaskState, WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
+import { Router } from '@angular/router';
+import { WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
 
 @Component({
   selector: 'selab-header',
@@ -58,17 +57,15 @@ export class SelabHeaderComponent implements OnInit {
   private images: any[] = [];
 
 
-  constructor(private httpClient: HttpClient,
+  constructor(
     private graphEditorService: GraphEditorService,
     private importService: ImportService,
     private exportService: ExportService,
-    private httpClientService: HttpClientService,
     private snackBar: MatSnackBar,
     public wizard: MatDialog,
     private IRTransformerService: IRTransformer,
     private store: Store<AppState>,
     public navigationService: NavigationService,
-    private route: Router,
     public webAppDashboard: MatDialog) {
 
   }
