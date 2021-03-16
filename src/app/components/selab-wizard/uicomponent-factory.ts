@@ -1,4 +1,6 @@
 import { UIComponentBuilder } from "src/app/components/selab-wizard/UIComponentBuilder";
+import { PageUICDL } from "src/app/models/internalRepresentation/pageUICDL.model";
+import { UIComponent } from "src/app/models/ui-component-dependency";
 
 export class UIComponentFactory {
     static nextID: number = 0;
@@ -6,6 +8,62 @@ export class UIComponentFactory {
 
     constructor() {
     }
+
+    static createFromPageUICDLFromJSONObject(pageUICDLObject: Object): PageUICDL {
+        return this.deepInstanceCreation(pageUICDLObject);
+    }
+
+    static deepInstanceCreation(pageUICDLObject: Object): PageUICDL {
+        let pageId = pageUICDLObject["id"];
+        let pageUICDL = new PageUICDL(pageId);
+        Object.assign(pageUICDL, pageUICDLObject);
+        let bodyComponent = UIComponentFactory.createLayout(pageId);
+        let footerComponent = UIComponentFactory.createLayout(pageId);
+        let headerComponent = UIComponentFactory.createLayout(pageId);
+        let sidebarComponent = UIComponentFactory.createLayout(pageId);
+        let asidebarComponent = UIComponentFactory.createLayout(pageId);
+        pageUICDL['footer'] = footerComponent;
+        pageUICDL['header'] = headerComponent;
+        pageUICDL['sidebar'] = sidebarComponent;
+        pageUICDL['asidebar'] = asidebarComponent;
+        for (let index = 0; index < pageUICDL.body.componentList.length; index++) {
+            let uiComponent = pageUICDL.body.componentList[index];
+            let uiComponentBuilder = UIComponentFactory.create(uiComponent.type, pageId);
+            uiComponentBuilder
+                .setName(uiComponent.name)
+                .setServiceComponent(uiComponent.serviceComponent)
+                .setProperties(uiComponent.properties)
+                .setGeometry(uiComponent.geometry);
+
+            if (this.isCompositeComponent(uiComponent))
+                this.createSubComponentInstances(uiComponent['componentList'], uiComponentBuilder);
+            bodyComponent.addSubComponent(uiComponentBuilder.build());
+        }
+        pageUICDL['body'] = bodyComponent;
+        return pageUICDL;
+    }
+
+    static isCompositeComponent(uiComponent: UIComponent) {
+        if (uiComponent['componentList'] != undefined)
+            return true;
+        else
+            return false;
+    }
+
+
+    static createSubComponentInstances(componentList: UIComponent[], uiComponentBuilder: UIComponentBuilder) {
+        for (let index = 0; index < componentList.length; index++) {
+            let subUIComponent = componentList[index];
+            let subUIComponentBuilder = UIComponentFactory.create(subUIComponent.type, uiComponentBuilder.pageId);
+            subUIComponentBuilder
+                .setName(subUIComponent.name)
+                .setServiceComponent(subUIComponent.serviceComponent)
+                .setProperties(subUIComponent.properties)
+                .setGeometry(subUIComponent.geometry);
+            uiComponentBuilder.addComponent(subUIComponentBuilder.build());
+        }
+    }
+
 
     static create(type: string, pageId: string): UIComponentBuilder {
         let uiComponentBuilder: UIComponentBuilder;
@@ -97,14 +155,6 @@ export class UIComponentFactory {
                 .setID(`${this.nextID}`);
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
-        else if (type == "layout") {
-            uiComponentBuilder = new UIComponentBuilder()
-                .setCategory("layout")
-                .setType("layout")
-                .setSelector(`${type}-${this.nextID}`)
-                .setID(`${this.nextID}`);
-            this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
-        }
         else {
             return;
         }
@@ -120,6 +170,8 @@ export class UIComponentFactory {
             .setSelector(`layout-${this.nextID}`)
             .setID(`${this.nextID}`)
             .setPageId(pageId)
+        this.nextID += 1;
+        this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         let uiComponent = uiComponentBuilder.buildLayoutComponent();
         return uiComponent;
     }

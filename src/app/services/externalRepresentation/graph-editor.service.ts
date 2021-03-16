@@ -165,10 +165,11 @@ export default class GraphEditorService {
 
   uploadPageUICDL(pageUICDL) {
     let themeId;
-    this.store.select(themeSelector()).subscribe(themes => themeId = themes[this.selectedThemeIndex].id)
+    let subscription = this.store.select(themeSelector()).subscribe(themes => themeId = themes[this.selectedThemeIndex].id)
     pageUICDL["themeId"] = themeId
     this.store.dispatch(new IRInsertPageUICDLAction(this.selectedThemeIndex, pageUICDL, false));
     this.store.dispatch(new IRInsertNDLPageAction(pageUICDL))
+    subscription.unsubscribe();
   }
 
   zoomTo(zoomFactor: any) {

@@ -12,6 +12,7 @@ export class UIComponent {
   public type: string;
   public name: string;
   public serviceComponent: IServiceEntry;
+  public properties: {};
 
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     this.name = uiComponentBuilder.name;
@@ -23,6 +24,7 @@ export class UIComponent {
     this.geometry = uiComponentBuilder.geometry;
     this.serviceComponent = uiComponentBuilder.serviceComponent;
     this.pageId = uiComponentBuilder.pageId;
+    this.properties = uiComponentBuilder.properties;
   }
 
   public getName():  string{

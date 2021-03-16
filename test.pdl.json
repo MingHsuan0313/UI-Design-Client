@@ -1,0 +1,115 @@
+{
+    "id": "selab-page-560f17f0-861f-11eb-b0c3-29532330e8c8",
+    "selector": "selab-page-560f17f0-861f-11eb-b0c3-29532330e8c8",
+    "category": "page",
+    "layout": "prime",
+    "style": {},
+    "parameters": [],
+    "serviceComponentList": [],
+    "themeId": "selab-theme-560ef0e0-861f-11eb-b0c3-29532330e8c8",
+    "header": {
+        "name": "",
+        "id": "0",
+        "selector": "layout-0",
+        "category": "layout",
+        "type": "layout",
+        "style": {},
+        "geometry": {},
+        "pageId": "selab-page-560f17f0-861f-11eb-b0c3-29532330e8c8",
+        "componentList": []
+    },
+    "sidebar": {
+        "name": "",
+        "id": "0",
+        "selector": "layout-0",
+        "category": "layout",
+        "type": "layout",
+        "style": {},
+        "geometry": {},
+        "pageId": "selab-page-560f17f0-861f-11eb-b0c3-29532330e8c8",
+        "componentList": []
+    },
+    "footer": {
+        "name": "",
+        "id": "0",
+        "selector": "layout-0",
+        "category": "layout",
+        "type": "layout",
+        "style": {},
+        "geometry": {},
+        "pageId": "selab-page-560f17f0-861f-11eb-b0c3-29532330e8c8",
+        "componentList": []
+    },
+    "body": {
+        "name": "",
+        "id": "0",
+        "selector": "layout-0",
+        "category": "layout",
+        "type": "layout",
+        "style": {},
+        "geometry": {},
+        "pageId": "selab-page-560f17f0-861f-11eb-b0c3-29532330e8c8",
+        "componentList": [
+            {
+                "name": "login",
+                "id": "0",
+                "selector": "form-0",
+                "category": "input",
+                "type": "form",
+                "style": {},
+                "geometry": {},
+                "componentList": [
+                    {
+                        "name": "account",
+                        "id": "1",
+                        "selector": "input-1",
+                        "category": "input",
+                        "type": "input",
+                        "style": {},
+                        "geometry": {},
+                        "serviceComponent": {
+                            "arguments": [],
+                            "isComplexType": false,
+                            "serviceType": "Argument",
+                            "setterUrl": "",
+                            "constraint": ""
+                        },
+                        "pageId": "selab-page-560f17f0-861f-11eb-b0c3-29532330e8c8",
+                        "description": "account"
+                    },
+                    {
+                        "name": "password",
+                        "id": "2",
+                        "selector": "input-2",
+                        "category": "input",
+                        "type": "input",
+                        "style": {},
+                        "geometry": {},
+                        "serviceComponent": {
+                            "arguments": [],
+                            "isComplexType": false,
+                            "serviceType": "Argument",
+                            "setterUrl": "",
+                            "constraint": ""
+                        },
+                        "pageId": "selab-page-560f17f0-861f-11eb-b0c3-29532330e8c8",
+                        "description": "password"
+                    }
+                ]
+            }
+        ]
+    },
+    "asidebar": {
+        "name": "",
+        "id": "0",
+        "selector": "layout-0",
+        "category": "layout",
+        "type": "layout",
+        "style": {},
+        "geometry": {},
+        "pageId": "selab-page-560f17f0-861f-11eb-b0c3-29532330e8c8",
+        "componentList": []
+    },
+    "name": "page-0f17f",
+    "isMain": true
+}

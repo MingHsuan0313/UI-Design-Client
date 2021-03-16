@@ -27,7 +27,7 @@ export class TextStrategy extends ICreateComponentStrategy {
     const dataBinding = this.createDataBinding("text");
     let style = {} ; 
 
-    if (component["href"].length>0) {
+    if (component["href"] != undefined && component["href"].length>0) {
       style = Object.assign(style, StyleLibrary[0]["text"]["text_blue"]);
     } else {
       style = Object.assign(style, StyleLibrary[0]["text"]["text_black"]);

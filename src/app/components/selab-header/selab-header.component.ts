@@ -2,7 +2,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Storage } from '../../shared/storage';
-import { TextComponent } from '../../models/ui-component-dependency';
+import { LayoutComponent, TextComponent, UIComponent } from '../../models/ui-component-dependency';
 import { PropertyGenerator } from '../../shared/property-generator';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { HttpClient } from '@angular/common/http';
@@ -26,6 +26,9 @@ import NavigationService from '../../services/navigation/navigation.service';
 import { forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
 import { WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
+import { UIComponentConfig } from '../selab-wizard/uicomponent-config';
+import { UIComponentFactory } from '../selab-wizard/uicomponent-factory';
+import { UIComponentBuilder } from '../selab-wizard/UIComponentBuilder';
 
 @Component({
   selector: 'selab-header',
@@ -274,11 +277,8 @@ export class SelabHeaderComponent implements OnInit {
     fileReader.readAsText(selectedFile, "UTF-8");
     fileReader.onload = () => {
       let pageUICDLObject = JSON.parse(fileReader.result as any);
-      let pageId = pageUICDLObject["id"]
-      let pageUICDL = new PageUICDL(pageId); // internalRepresentation
-      Object.assign(pageUICDL, pageUICDLObject);
-
-      this.graphEditorService.uploadPageUICDL(pageUICDL);
+      let pageUICDL = UIComponentFactory.createFromPageUICDLFromJSONObject(pageUICDLObject);
+     this.graphEditorService.uploadPageUICDL(pageUICDL);
     }
     fileReader.onerror = (error) => {
       console.log(error);
