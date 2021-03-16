@@ -3,7 +3,7 @@ import { PageUICDL } from "src/app/models/internalRepresentation/pageUICDL.model
 import { UIComponent } from "src/app/models/ui-component-dependency";
 
 // UIComponent Factory is Singleton
-export class UIComponentFactory {
+export abstract class UIComponentFactory {
     static nextID: number = 0;
     static uiComponentBuilders: Map<string, UIComponentBuilder> = new Map();
 

@@ -22,4 +22,38 @@ export class InputGroupComponent extends CompositeComponent {
   add(component: UIComponent): void {
     this.componentList.push(component);
   }
+
+  setServiceComponent(serviceComponent: IServiceEntry) {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setServiceComponent(serviceComponent)
+      .build();
+  }
+
+  setName(name: string): UIComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setName(name)
+      .build();
+  }
+
+  setStyle(style: object): UIComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setStyle(style)
+      .build();
+  }
+
+  setGeometry(geometry: object): UIComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setGeometry(geometry)
+      .build();
+  }
+
+  copy(): UIComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder.build();
+  }
+
 }

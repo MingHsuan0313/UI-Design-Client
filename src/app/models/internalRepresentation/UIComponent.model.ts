@@ -13,7 +13,7 @@ export class UIComponent {
   public readonly name: string;
   public readonly serviceComponent: IServiceEntry;
   public readonly properties: {};
-  public uiComponentBuilder: UIComponentBuilder;
+  // public uiComponentBuilder: UIComponentBuilder;
 
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     this.name = uiComponentBuilder.name;
@@ -26,7 +26,7 @@ export class UIComponent {
     this.serviceComponent = uiComponentBuilder.serviceComponent;
     this.pageId = uiComponentBuilder.pageId;
     this.properties = uiComponentBuilder.properties;
-    this.uiComponentBuilder = uiComponentBuilder;
+    // this.uiComponentBuilder = uiComponentBuilder;
   }
 
   public getName():  string{
@@ -57,35 +57,11 @@ export class UIComponent {
     return this.type;
   }
 
-  setServiceComponent(serviceComponent: IServiceEntry) {
-    console.log('hello world')
-    return this.uiComponentBuilder
-      .setServiceComponent(serviceComponent)
-      .build();
-  }
-
-  setName(name: string): UIComponent {
-    return this.uiComponentBuilder
-      .setName(name)
-      .build();
-  }
-
-  setStyle(style: object): UIComponent {
-    return this.uiComponentBuilder
-      .setStyle(style)
-      .build();
-  }
-
-  setGeometry(geometry: object): UIComponent {
-    return this.uiComponentBuilder
-      .setGeometry(geometry)
-      .build();
-  }
-
-  copy(): UIComponent {
-    return this.uiComponentBuilder.build();
-  }
-
+  setName(name: string) {}
+  setServiceComponent(serviceComponent: IServiceEntry) {}
+  setStyle(style: object) {}
+  setGeometry(geometry: object) {}
+  copy() {}
   setProperties(properties: Object) {}
   getInfo() {} // for Internal Representation (pageUICDL Output)
   getProperties(){} // form property

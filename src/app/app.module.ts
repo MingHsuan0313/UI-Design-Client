@@ -61,6 +61,8 @@ import { ReturnDataMenuComponent } from './components/selab-wizard/return-data-m
 import { StatusDialogComponent } from './components/selab-wizard/pipeline-tab/status-dialog/status-dialog.component'; 
 import { NgxGraphModule } from "@swimlane/ngx-graph";
 import { QueryServiceWindowComponent } from './components/selab-setting/endpoint-test/query-service-window/query-service-window.component';
+import { enableMapSet } from 'immer';
+enableMapSet();
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
