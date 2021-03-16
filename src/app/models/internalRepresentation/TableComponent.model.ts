@@ -1,15 +1,14 @@
-import { UIComponent } from "./UIComponent.model";
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 import { IServiceEntry } from "../service-component-dependency";
 
 export class TableComponent extends BasicComponent {
-  headers: string;
-  rows: string;
+  public readonly headers: string;
+  public readonly rows: string;
 
   constructor(uiComponentBuilder?: UIComponentBuilder) {
-    if(uiComponentBuilder){
+    if (uiComponentBuilder) {
       super(uiComponentBuilder);
       let properties = uiComponentBuilder.getProperties();
       if (properties != undefined) {
@@ -19,56 +18,12 @@ export class TableComponent extends BasicComponent {
     }
   }
 
-  setStyle(style: Object): TableComponent {
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setStyle(style)
-      .buildTableComponent()
-  }
-  
-  setGeometry(geometry: Object): TableComponent{
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setGeometry(geometry)
-      .buildTableComponent()
-  }
-
-  copy(): TableComponent {
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .buildTableComponent()
-  }
-
-
-  setServiceComponent(serviceComponent: IServiceEntry): TableComponent{
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-
-      .setServiceComponent(serviceComponent)
-      .buildTableComponent();
-  }
-
-  setName(name: string): TableComponent{
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setName(name)
-      .buildTableComponent();
-  }
-
-  setProperties(properties: Object): TableComponent{
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setProperties(properties)
-      .buildTableComponent();
-  }
-
-  
-  getValue(part: string,index: number): string {
-    if(part == "header") {
-      return this.headers.split(" ")[index]    
+  getValue(part: string, index: number): string {
+    if (part == "header") {
+      return this.headers.split(" ")[index]
     }
-    else if(part == "row") {
-      return this.rows.split(" ")[index]    
+    else if (part == "row") {
+      return this.rows.split(" ")[index]
     }
   }
 

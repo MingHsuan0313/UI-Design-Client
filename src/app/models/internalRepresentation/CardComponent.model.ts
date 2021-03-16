@@ -1,14 +1,13 @@
-import { UIComponent } from "./UIComponent.model";
 import { CompositeComponent } from "./CompositeComponent.model";
 import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 import { IServiceEntry } from "../service-component-dependency";
 
 export class CardComponent extends CompositeComponent {
-  header: String;
+  public readonly header: String;
 
   constructor(uiComponentBuilder?: UIComponentBuilder) {
-    if(uiComponentBuilder){
+    if (uiComponentBuilder) {
       super(uiComponentBuilder);
       let properties = uiComponentBuilder.getProperties();
       if (properties != undefined) {
@@ -18,41 +17,7 @@ export class CardComponent extends CompositeComponent {
     }
   }
 
-  setStyle(style: Object): CardComponent{
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setStyle(style)
-      .buildCardComponent()
-  }
-  
-  setGeometry(geometry: Object): CardComponent{
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setGeometry(geometry)
-      .buildCardComponent()
-  }
-
-  copy(): CardComponent{
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .buildCardComponent()
-  }
-
-  setServiceComponent(serviceComponent: IServiceEntry): CardComponent{
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setServiceComponent(serviceComponent)
-      .buildCardComponent();
-  }
-
-  setName(name: string): CardComponent{
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setName(name)
-      .buildCardComponent();
-  }
-
-  setProperties(properties: Object): CardComponent{
+  setProperties(properties: Object): CardComponent {
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
       .setProperties(properties)

@@ -2,12 +2,10 @@ import { UIComponentBuilder } from "src/app/components/selab-wizard/UIComponentB
 import { PageUICDL } from "src/app/models/internalRepresentation/pageUICDL.model";
 import { UIComponent } from "src/app/models/ui-component-dependency";
 
+// UIComponent Factory is Singleton
 export class UIComponentFactory {
     static nextID: number = 0;
     static uiComponentBuilders: Map<string, UIComponentBuilder> = new Map();
-
-    constructor() {
-    }
 
     static createFromPageUICDLFromJSONObject(pageUICDLObject: Object): PageUICDL {
         return this.deepInstanceCreation(pageUICDLObject);
@@ -34,7 +32,6 @@ export class UIComponentFactory {
                 .setServiceComponent(uiComponent.serviceComponent)
                 .setProperties(uiComponent.properties)
                 .setGeometry(uiComponent.geometry);
-
             if (this.isCompositeComponent(uiComponent))
                 this.createSubComponentInstances(uiComponent['componentList'], uiComponentBuilder);
             bodyComponent.addSubComponent(uiComponentBuilder.build());
@@ -50,7 +47,6 @@ export class UIComponentFactory {
             return false;
     }
 
-
     static createSubComponentInstances(componentList: UIComponent[], uiComponentBuilder: UIComponentBuilder) {
         for (let index = 0; index < componentList.length; index++) {
             let subUIComponent = componentList[index];
@@ -63,7 +59,6 @@ export class UIComponentFactory {
             uiComponentBuilder.addComponent(subUIComponentBuilder.build());
         }
     }
-
 
     static create(type: string, pageId: string): UIComponentBuilder {
         let uiComponentBuilder: UIComponentBuilder;

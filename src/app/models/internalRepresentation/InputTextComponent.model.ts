@@ -1,15 +1,13 @@
-import { UIComponent } from "./UIComponent.model";
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
-import { IServiceEntry } from "../service-component-dependency";
 
 export class InputTextComponent extends BasicComponent {
-  public typeInfo: string;  // e.g. input-text, input-password
-  public description: string;
+  public readonly typeInfo: string;  // e.g. input-text, input-password
+  public readonly description: string;
 
   constructor(uiComponentBuilder?: UIComponentBuilder) {
-    if(uiComponentBuilder){
+    if (uiComponentBuilder) {
       super(uiComponentBuilder);
       let properties = uiComponentBuilder.getProperties();
       if (properties != undefined) {
@@ -19,52 +17,10 @@ export class InputTextComponent extends BasicComponent {
     }
   }
 
-  setStyle(style: Object): InputTextComponent {
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setStyle(style)
-      .buildInputComponent()
-  }
-  
-  setGeometry(geometry: Object): InputTextComponent {
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setGeometry(geometry)
-      .buildInputComponent()
-  }
-
-  copy(): InputTextComponent {
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .buildInputComponent()
-  }
-
-  setProperties(properties:Object): InputTextComponent {
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-            .setProperties(properties)
-            .buildInputComponent();
-  }
-  
-  setName(name: string): InputTextComponent {
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-            .setName(name)
-            .buildInputComponent();
-  }
-  
-  setServiceComponent(serviceComponent: IServiceEntry): InputTextComponent {
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id)
-    return uiComponentBuilder
-            .setServiceComponent(serviceComponent)
-            .buildInputComponent();
-  }
-
   getInfo(): any {
     return {
       [this.getSelector().toString()]: {
         name: this.name,
-        // description: this.description,
         service: this.serviceComponent.getInfo()
       }
     }

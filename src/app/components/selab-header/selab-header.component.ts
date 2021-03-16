@@ -59,7 +59,6 @@ export class SelabHeaderComponent implements OnInit {
   public userName = 'undefined';
   private images: any[] = [];
 
-
   constructor(
     private graphEditorService: GraphEditorService,
     private importService: ImportService,
@@ -70,7 +69,6 @@ export class SelabHeaderComponent implements OnInit {
     private store: Store<AppState>,
     public navigationService: NavigationService,
     public webAppDashboard: MatDialog) {
-
   }
 
   ngOnInit(): void {
@@ -157,12 +155,7 @@ export class SelabHeaderComponent implements OnInit {
         })
       }
     )
-
-
     subscribtion.unsubscribe();
-
-    
-
   }
 
   applyLayout(layout: string) {
@@ -250,7 +243,7 @@ export class SelabHeaderComponent implements OnInit {
           type: type,
         },
         disableClose: true,
-        // autoFocus: true
+        autoFocus: true
       });
       wizardRef.afterClosed()
         .subscribe((task: WizardTask) => {
