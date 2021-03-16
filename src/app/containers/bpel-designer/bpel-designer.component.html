@@ -14,7 +14,22 @@
             <div class="row">
                 <palette class="col" [userSettedTargetContainerActivity]="targetContainerActivity" style="margin-left: -1%;"></palette>
                 <!-- <selab-graph-editor class="col-8"></selab-graph-editor> -->
-                <div class="col-7 geEditor" style="background-color:rgb(241, 241, 241); overflow:scroll; height: 700px;" id="bpel-graph-container">
+                <div class="col-7">
+                    <mat-toolbar style="height: 40px; min-height: 30px; background-color: #f7f7f7; color:black">
+                        <mat-toolbar-row>
+                            <button mat-button (click)="showInternalRepresentation()"
+                            matTooltip="show Internal Representation of root <process> component in console">Show IR</button>
+                            <button mat-button (click)="showExternalRepresentation()"
+                                matTooltip="Show External Representation(graphStorage) in console">Show ER</button>
+                            <button (click)="zoomIn()" mat-button style="min-width: 10px;" matTooltip="zoomIn">
+                                <mat-icon style="margin-bottom:20px;" svgIcon="zoomIn"></mat-icon>
+                            </button>
+                            <button (click)="zoomOut()" mat-button style="min-width: 10px;" matTooltip="zoomOut">
+                                <mat-icon style="margin-bottom:20px ;" svgIcon="zoomOut"></mat-icon>
+                            </button>
+                        </mat-toolbar-row>
+                    </mat-toolbar>
+                    <div class="geEditor" style="background-color:rgb(241, 241, 241); overflow:scroll; height: 500px;" id="bpel-graph-container"></div>
                 </div>
                 <property-editor class="col"
                     (userSettedTargetContainerActivityEvent)="receiveTargetContainerActivity($event)" style="margin-right: 10%;"></property-editor>

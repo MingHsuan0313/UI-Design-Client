@@ -6,6 +6,7 @@ import { GraphStorage } from '../models/graph-storage.model';
 })
 export class BpelDesignerEditorService {
     graphStorage: GraphStorage;
+    zoomFactor = 1;
 
     constructor() {
         setTimeout(() => {
@@ -21,5 +22,22 @@ export class BpelDesignerEditorService {
 
     getGraphStorage() {
         return this.graphStorage;
+    }
+
+    zoomTo(zoomFactor: any) {
+        let graph = this.getGraphStorage().getGraph();
+        graph.zoomTo(zoomFactor, graph.centerZoom);
+    }
+
+    zoomIn() {
+        this.zoomFactor = this.zoomFactor * 1.11;
+        this.getGraphStorage().getGraph().zoomFactor = this.zoomFactor;
+        this.zoomTo(this.zoomFactor);
+    }
+
+    zoomOut() {
+        this.zoomFactor = this.zoomFactor * 0.9;
+        this.getGraphStorage().getGraph().zoomFactor = this.zoomFactor;
+        this.zoomTo(this.zoomFactor);
     }
 }
