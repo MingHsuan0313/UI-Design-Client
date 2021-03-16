@@ -3,6 +3,8 @@
       <mat-tab label="Property-Editor">
         <div class="input-group">
           <div class='col'>
+            <span><b>Editing: {{getSelectedComponentNameWithVertexId()}}</b></span>
+            <br/>
             <!-- (via BPELDesigner) -->
             <button class="btn btn-success" (click)="sendUserSettedTargetContainerActivityEvent()">1. Send targetContainerActivity to Palette</button>
             <!-- (via BPELDesigner) -->

@@ -1,6 +1,8 @@
 <div class="palette-class">
     <mat-tab-group>
       <mat-tab label="Palette">
+          <span><b>Target Container: {{getTargetContainerComponentNameWithVertexId()}}</b></span>
+          <br/>
           <button class="btn btn-success" (click)="syncTargetContainerActivity()">2. Sync targetContainerActivity</button>
           <div class="col">
               <div class="container">

@@ -322,6 +322,12 @@ export class PaletteComponent implements AfterViewInit {
         console.log("[targetContainerActivity changed] = ", this.targetContainerActivity.getComponentName() + "(id = " + this.targetContainerActivity.getId() + ")");
     }
 
+    private getTargetContainerComponentNameWithVertexId(): string {
+        if (this.targetContainerActivity == undefined)  return "none";
+
+        return this.targetContainerActivity.getComponentName() + this.targetContainerActivity.getId();
+    }
+
     private calculateTargetBaseY(): number {
         if (this.targetContainerActivity != null) {
             let targetContainerVertex = this.graphStorage.findVertexByID(this.targetContainerActivity.getId());
