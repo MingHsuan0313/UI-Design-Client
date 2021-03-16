@@ -5,13 +5,13 @@ export const StyleLibrary = [
     text: {
       text_black: {
         strokeColor: "#ffffff",
-        fillColor: "#f7f7f7",
+        fillColor: "#ffffff",
         fontSize: "16",
         fontColor: "black"
       },
       text_blue: {
         strokeColor: "#ffffff",
-        fillColor: "#f7f7f7",
+        fillColor: "#ffffff",
         fontSize: "16",
         fontColor: "#20a8d8"
       },

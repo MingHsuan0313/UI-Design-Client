@@ -1,8 +1,8 @@
 declare class mxGeometry {
-    x: string;
-    y: string;
-    width: string;
-    height: string;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
     constructor(x,y,width,height)
 }
 

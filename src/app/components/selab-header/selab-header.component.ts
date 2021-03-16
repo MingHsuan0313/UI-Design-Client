@@ -229,7 +229,7 @@ export class SelabHeaderComponent implements OnInit {
   }
 
   launchWizard(genere: string, category: string, type: string) {
-    let compositeComponentTypes = ["card", "breadcrumb", "inputgroup", "form"];
+    let compositeComponentTypes = ["card", "inputgroup", "form"];
     let isComposite = false;
     if (compositeComponentTypes.indexOf(type) >= 0)
       isComposite = true;

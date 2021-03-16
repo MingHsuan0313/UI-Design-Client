@@ -20,9 +20,6 @@ export class UIComponentConfig {
         else if (type == "inputgroup") {
             return ["text", "button", "icon", "dropdown"];
         }
-        else if (type == "breadcrumb") {
-            return ["text"];
-        }
         else
             return [];
     }
@@ -140,6 +137,10 @@ export class UIComponentConfig {
                 {
                     "type": "String",
                     "value": "name"
+                },
+                {
+                    "type": "String",
+                    "value": "items"
                 }
             ]
         }

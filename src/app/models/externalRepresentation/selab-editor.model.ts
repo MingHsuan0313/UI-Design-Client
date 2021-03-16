@@ -1,9 +1,8 @@
 import { Store } from "@ngrx/store";
 import GraphEditorService from "src/app/services/externalRepresentation/graph-editor.service";
 import { Configuration } from "src/app/services/externalRepresentation/util/configuration";
-import { ERInsertVertexAction } from "../store/actions/externalRepresentation.action";
 import { AppState } from "../store/app.state";
-import { pageNameSelector, pageUICDLSelector } from "../store/selectors/InternalRepresentationSelector";
+import { pageUICDLSelector } from "../store/selectors/InternalRepresentationSelector";
 import { SelabVertex } from "./selabVertex.model";
 import { UIComponent } from "../ui-component-dependency";
 import { BreadcrumbStrategy, ButtonStrategy, CardStrategy, DropdownStrategy, FormStrategy, IconStrategy, InputStrategy, LayoutStrategy, TableStrategy, TextStrategy } from "./component-strategy-dependency";
@@ -34,7 +33,6 @@ export class SelabEditor {
         editor.configure(config);
         Configuration.configureEditorKeyBinding(editor);
         Configuration.configureGraphListener(editor);
-
         this.editor = editor;
     }
 
@@ -96,8 +94,6 @@ export class SelabEditor {
             vertex['pageId'] = component.pageId;
             vertex["selector"] = component.selector;
             vertex["type"] = component.type;
-            // let graphID = this.graphEditorService.getSelectedPageId();
-            // this.store.dispatch(new ERInsertVertexAction(graphID, selabVertex));
         } finally {
             this.getGraph().getModel().endUpdate();
         }
@@ -106,6 +102,8 @@ export class SelabEditor {
     }
 
     createComponent(uiComponent: UIComponent, parent: mxCell, geometry?, restore?, xOffset?, yOffser?) {
+        console.log('create component ...')
+        console.log(uiComponent);
         const graphNode = document.getElementById('graph-container');
         const defaultWidth = graphNode.offsetWidth;
         const defaultHeight = graphNode.offsetHeight;
@@ -124,7 +122,7 @@ export class SelabEditor {
         if (parent.id < 8) {
         }
 
-        if (uiComponent['componentList'] == undefined) {
+        if (!this.isCompositeComponent(uiComponent)) {
             if (uiComponent['type'] == 'button') {
                 this.setStrategy(new ButtonStrategy(geometry, restoreMode));
             } else if (uiComponent['type'] == 'text') {
@@ -138,18 +136,26 @@ export class SelabEditor {
             } else if (uiComponent['type'].startsWith('input')) {
                 this.setStrategy(new InputStrategy(geometry, restoreMode));
             }
+            else if (uiComponent['type'] == 'breadcrumb') {
+                this.setStrategy(new BreadcrumbStrategy(geometry, restoreMode));
+            }
             return this.createComponentStrategy.createComponent(this, uiComponent, parent);
         } else {
             if (uiComponent['type'] == 'card') {
                 this.setStrategy(new CardStrategy(geometry, restoreMode));
-            } else if (uiComponent['type'] == 'breadcrumb') {
-                this.setStrategy(new BreadcrumbStrategy(geometry, restoreMode));
-            } else if (uiComponent['type'] == 'form') {
+            }  else if (uiComponent['type'] == 'form') {
                 this.setStrategy(new FormStrategy(geometry, restoreMode));
             }
             const compositeVertexStorage = this.createComponentStrategy.createComponent(this, uiComponent, parent);
             return compositeVertexStorage;
         }
+    }
+
+    isCompositeComponent(uiComponent) {
+        if(uiComponent['componentList'] == undefined)
+            return false;
+        else
+            return true;
     }
 
     getVertexByID(id: string): mxCell {

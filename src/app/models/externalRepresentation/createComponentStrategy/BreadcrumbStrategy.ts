@@ -6,8 +6,6 @@ import { SelabEditor } from "../selab-editor.model";
 import { SelabVertex } from "../selabVertex.model";
 import { TextComponent } from "../../internalRepresentation/TextComponent.model";
 
-
-
 // no neet data bindind ,because it consists of text strategy
 export class BreadcrumbStrategy extends ICreateComponentStrategy {
 
@@ -56,32 +54,39 @@ export class BreadcrumbStrategy extends ICreateComponentStrategy {
   }
 
   createComponent(selabEditor: SelabEditor, component: BreadcrumbComponent, parent: mxCell) {
-    console.log('bread crumb strategy here');
-    console.log(component);
     let breadcrumbBoxVertex = this.createBreadcrumbBoxVertex(selabEditor, component, parent);
 
-    let p1 = 15;
-    let p2 = 15;
-    let i = 0;
+    let x_position = 15;
+    let y_position = 15;
+    let index = 0;
+    const itemList = component.items.split(" ");
 
-    for (let subUIComponent of component["componentList"]) {
-      let vertexStorage = selabEditor.createComponent(subUIComponent, breadcrumbBoxVertex, p1, p2)
-      p1 = vertexStorage.getVertexX() + vertexStorage.getVertexWidth() + 15;
+    for (const element of itemList) {
+      let id = (parseInt(component.id) + 3 + index).toString();
+      // insert text
+      let selabVertex = new SelabVertex()
+        .setID(component.selector + '-' + id)
+        .setUIComponentID(component.id)
+        .setParentID(breadcrumbBoxVertex.id)
+        .setIsPrimary(true)
+        .setValue(element);
+      let style = {}; 
+      style = Object.assign(style, StyleLibrary[0]["text"]["text_black"]);
+      let textGeometry = new mxGeometry(x_position, y_position + 5, element.length * 12, 50);
+      let textCell = selabEditor.insertVertex(selabVertex, component, textGeometry, style);
+      x_position = textCell.geometry.x + textCell.geometry.width + 15;
 
-      if (i != component["componentList"].length - 1) {
-        let indicatorStorage = this.createBreadcrumbIndicatorVertex(selabEditor, component, breadcrumbBoxVertex, p1, p2, i);
-        p1 = indicatorStorage.geometry.x + indicatorStorage.geometry.width + 15;
-      }
-      i += 1;
+      let indicatorStorage = this.createBreadcrumbIndicatorVertex(selabEditor, component, breadcrumbBoxVertex, x_position, y_position, index);
+      x_position = indicatorStorage.geometry.x + indicatorStorage.geometry.width + 15;
+      index += 1;
     }
-
-    let newmxGeometry = new mxGeometry(this.basex, this.basey, p1 + 30, 50);
+    let newmxGeometry = new mxGeometry(this.basex, this.basey, x_position + 30, 50);
     breadcrumbBoxVertex.setGeometry(newmxGeometry);
     selabEditor.getGraph().refresh();
     return breadcrumbBoxVertex;
   }
 
-  createDataBinding(part: String, index?){
+  createDataBinding(part: String, index?) {
     return new DataBinding(false, "", -1);
   }
 }

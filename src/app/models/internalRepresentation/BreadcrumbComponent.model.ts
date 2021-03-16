@@ -1,15 +1,19 @@
 import { UIComponent } from "./UIComponent.model";
-import { CompositeComponent } from "./CompositeComponent.model";
 import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 import { IServiceEntry, ServiceComponentModel } from "../service-component-dependency";
+import { BasicComponent } from "./BasicComponent.model";
 
-export class BreadcrumbComponent extends CompositeComponent {
+export class BreadcrumbComponent extends BasicComponent {
+  items: string;
 
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     if(uiComponentBuilder){
       super(uiComponentBuilder);
-      this.componentList = uiComponentBuilder.componentList;
+      let properties = uiComponentBuilder.getProperties();
+      if(properties != undefined) {
+        this.items = properties["items"];
+      }
     }
   }
 
@@ -32,18 +36,5 @@ export class BreadcrumbComponent extends CompositeComponent {
     return uiComponentBuilder
       .setProperties(properties)
       .buildBreadcrumbComponent();
-  }
-
-  add(component: UIComponent): void {
-    this.componentList.push(component);
-  }
-
-  getInfo() {
-    return {
-      name: this.name,
-      service: (this.serviceComponent as ServiceComponentModel).getInfo(),
-      children: this.expandChildren()
-    }
-
   }
 }

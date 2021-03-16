@@ -108,7 +108,7 @@ export class PipelineTabComponent implements OnInit {
   }
 
   startPipeline(currentTask: WizardTask) {
-    let compositeComponents = ["card", "breadcrumb", "inputgroup", "form"];
+    let compositeComponents = ["card", "inputgroup", "form"];
     let taskGraph = SelabGlobalStorage.getTaskGraph();
     for (let index = currentTask.tasks.length - 1; index >= 0; index--) {
       let task = currentTask.tasks[index];
