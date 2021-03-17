@@ -86,54 +86,82 @@ class InternalRepresentationReducer {
         })
     }
 
+    findCell(graphModel: any[], componentId: string) {
+        console.log('find cell');
+        console.log(graphModel)
+        console.log(componentId)
+        let cells = []
+        for (let index = 0; index < graphModel.length; index++) {
+            if (graphModel[index].componentID == componentId) {
+                cells.push(graphModel[index]);
+            }
+        }
+        return cells;
+    }
+
+    // binding style, geometry, value
     @Action
     public syncWithER(store: InternalRepresentation, action: IRSyncWithERAction): InternalRepresentation {
-        if (action.id == undefined)
-            return store;
-        if (store.pageUICDLs[action.id] == undefined)
-            return store;
-        store = { ...store };
         let graphModel = action.graphModel;
-        store.pageUICDLs = { ...store.pageUICDLs };
-        store.pageUICDLs[action.id] = { ...store.pageUICDLs[action.id] };
-        store.pageUICDLs[action.id].body = { ...store.pageUICDLs[action.id].body };
-        if (store.pageUICDLs[action.id].body.componentList == undefined)
+        if (store.pageUICDLs[action.id] == undefined || store.pageUICDLs[action.id].body.componentList == undefined)
             return store;
-        store.pageUICDLs[action.id].body.componentList = [...store.pageUICDLs[action.id].body.componentList];
-        let componentLength = store.pageUICDLs[action.id].body.componentList.length;
-        for (let j = 0; j < graphModel.length; j++) {
-            let flag = true;
-            let cell = graphModel[j];
-            if (cell["isPrimary"] == undefined || cell["componentID"] == undefined) {
-                continue;
-            }
-            for (let index = 0; index < componentLength; index++) {
-                let componentID = store.pageUICDLs[action.id].body.componentList[index].id
 
-                // for subComponent
-                if (store.pageUICDLs[action.id].body.componentList[index].componentList != undefined) {
-                    let subComponentLength = store.pageUICDLs[action.id].body.componentList[index].componentList.length;
-                    for (let k = 0; k < subComponentLength; k++) {
-                        let subComponentID = store.pageUICDLs[action.id].body.componentList[index].componentList[k].id;
-                        // console.log(`hello componentID = ${componentID}\nsubComponentID = ${subComponentID}`);
-                        if (cell["componentID"] == subComponentID && cell["isPrimary"] == true) {
-                            store.pageUICDLs[action.id].body.componentList[index] = (store.pageUICDLs[action.id].body.componentList[index] as UIComponent);
-                            store.pageUICDLs[action.id].body.componentList[index].componentList = [...store.pageUICDLs[action.id].body.componentList[index].componentList];
-                            store.pageUICDLs[action.id].body.componentList[index].componentList[k] = { ...store.pageUICDLs[action.id].body.componentList[index].componentList[k] as UIComponent, style: cell['style'], geometry: cell['geometry'] };
-                            flag = false;
-                        }
-                        if (!flag)
-                            break;
+        // shallow copy
+        store = {
+            ...store,
+            pageUICDLs: {
+                ...store.pageUICDLs,
+                [action.id]: {
+                    ...store.pageUICDLs[action.id],
+                    body: {
+                        ...store.pageUICDLs[action.id].body,
+                        componentList: [
+                            ...store.pageUICDLs[action.id].body.componentList
+                        ]
                     }
                 }
+            }
+        }
 
-                if (cell["componentID"] == componentID && cell["isPrimary"] == true) {
-                    store.pageUICDLs[action.id].body.componentList[index] = { ...store.pageUICDLs[action.id].body.componentList[index] as UIComponent, geometry: cell['geometry'], style: cell['style'] };
-                    flag = false;
+        let firstLevelComponentList = store.pageUICDLs[action.id].body.componentList;
+        for (let index = 0; index < firstLevelComponentList.length; index++) {
+            store.pageUICDLs[action.id].body.componentList = [...store.pageUICDLs[action.id].body.componentList];
+
+            let firstLevelCells = this.findCell(graphModel, firstLevelComponentList[index].id);
+            if (firstLevelCells.length > 0) {
+                // do data-binding hereee
+                for(let key in firstLevelCells) {
+                    let cell = firstLevelCells[key];
+                    // firstLevelComponentList = [ ...firstLevelComponentList];
+                    store.pageUICDLs[action.id].body.componentList[index] = {
+                        ...store.pageUICDLs[action.id].body.componentList[index],
+                        [firstLevelCells[key]['dataBinding']['dataBindingName']]: firstLevelCells[key]['value'],
+                        geometry: cell['geometry'],
+                        style: cell['style']
+                    }
+                    // firstLevelComponentList[index] = (firstLevelComponentList[index] as UIComponent).setGeometry(cell['geometry']);
+                    // firstLevelComponentList[index] = (firstLevelComponentList[index] as UIComponent).setStyle(cell['style']);
                 }
+            }
 
-                if (!flag)
-                    break;
+            if (firstLevelComponentList[index].componentList == undefined)
+                continue;
+            else {
+                store.pageUICDLs[action.id].body.componentList[index] = {
+                    ...store.pageUICDLs[action.id].body.componentList[index],
+                    componentList: [
+                        ...store.pageUICDLs[action.id].body.componentList[index].componentList
+                    ]
+                }
+                let secondLevelComponentList = firstLevelComponentList[index].componentList;
+                for (let j = 0; j < secondLevelComponentList.length; j++) {
+                    let secondLevelCells = this.findCell(graphModel, secondLevelComponentList[j].id);
+                    if (secondLevelCells.length > 0) {
+                        // do data-binding hereee
+                        console.log('second level');
+                        console.log(secondLevelCells);
+                    }
+                }
             }
         }
         return store;

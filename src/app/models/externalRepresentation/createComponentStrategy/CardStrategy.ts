@@ -15,7 +15,6 @@ export class CardStrategy extends ICreateComponentStrategy {
   // part: Box , Header
   createDataBinding(part: String, index?) {
     if (part == "header") {
-
       const dataBindingName = "header";
       const hasDataBining = true;
       const isList = -1;

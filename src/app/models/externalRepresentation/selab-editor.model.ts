@@ -102,8 +102,6 @@ export class SelabEditor {
     }
 
     createComponent(uiComponent: UIComponent, parent: mxCell, geometry?, restore?, xOffset?, yOffser?) {
-        console.log('create component ...')
-        console.log(uiComponent);
         const graphNode = document.getElementById('graph-container');
         const defaultWidth = graphNode.offsetWidth;
         const defaultHeight = graphNode.offsetHeight;

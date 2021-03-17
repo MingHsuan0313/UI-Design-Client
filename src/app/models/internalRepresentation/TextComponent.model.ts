@@ -12,7 +12,6 @@ export class TextComponent extends BasicComponent {
       super(uiComponentBuilder);
       let properties = uiComponentBuilder.getProperties();
       if (uiComponentBuilder.getProperties() != undefined) {
-        console.log("this time i am heree")
         this.text = properties["name"];
         this.href = properties["href"];
       }

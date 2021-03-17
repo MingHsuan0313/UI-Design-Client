@@ -27,9 +27,6 @@ export class TaskGraph {
                 break;
             }
         }
-        console.log(this.taskStack);
-        console.log('next!');
-        console.log(this.currentTask);
     }
 
     setCurrentTask(task: WizardTask) {
@@ -47,7 +44,6 @@ export class TaskGraph {
     }
 
     dfs(task: WizardTask) {
-        console.log(task.componentType);
         for(let index = 0;index < task.tasks.length; index++) {
             this.dfs(task.tasks[index]);
         }

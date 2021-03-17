@@ -49,7 +49,6 @@ export class Configuration {
 
         editor.graph.addListener(mxEvent.CLICK, (sender, event) => {
             let selectedCell = sender.selectionModel.cells[0];
-            console.log(editor.graph.getChildVertices(selectedCell));
         })
 
         editor.graph.addMouseListener(
