@@ -38,24 +38,24 @@ class InternalRepresentationReducer {
 
     @Action
     public renameTheme(store: InternalRepresentation, action: IRRenameThemeAction): InternalRepresentation {
-        return produce(store,draft => {
+        return produce(store, draft => {
             draft.themes[action.index].name = action.newName;
         })
     }
 
     @Action
     public insertPageUICDL(store: InternalRepresentation, action: IRInsertPageUICDLAction): InternalRepresentation {
+        store = {
+            ...store,
+            pageUICDLs: {
+                ...store.pageUICDLs,
+                [action.pageUICDL.id]: {
+                    ...action.pageUICDL,
+                    isMain: action.isMain
+                }
+            },
+        }
         return produce(store, draft => {
-            store = {
-                ...store,
-                pageUICDLs: {
-                    ...store.pageUICDLs,
-                    [action.pageUICDL.id]: {
-                        ...action.pageUICDL,
-                        isMain: action.isMain
-                    }
-                },
-            }
             draft.themes[action.selectedThemeIndex].pages.push({ name: action.pageUICDL.name, id: action.pageUICDL.id });
         })
     }
@@ -154,31 +154,21 @@ class InternalRepresentationReducer {
 
     @Action
     public renamePage(store: InternalRepresentation, action: IRRenamePageAction): InternalRepresentation {
-
-        store = { ...store };
-        store.pageUICDLs = { ...store.pageUICDLs };
-        store.pageUICDLs[action.id] = { ...store.pageUICDLs[action.id] };
-        let oldName = store.pageUICDLs[action.id].name
-        store.pageUICDLs[action.id].name = { ...store.pageUICDLs[action.id].name };
-
-        store.pageUICDLs[action.id].name = action.pageName;
-
-        if (action.pageName == 'imsMain') {
-            store.pageUICDLs[action.id].isMain = true;
+        let oldName = store.pageUICDLs[action.id].name;
+        store = {
+            ...store,
+            pageUICDLs: {
+                ...store.pageUICDLs,
+                [action.id]: {
+                    ...store.pageUICDLs[action.id],
+                    name: action.pageName
+                }
+            }
         }
-
-        store.themes = [...store.themes];
-        store.themes[action.themeIndex] = { ...store.themes[action.themeIndex] }
-        store.themes[action.themeIndex].pages = [...store.themes[action.themeIndex].pages];
-        store.themes[action.themeIndex].pages[action.pageIndex] = { ...store.themes[action.themeIndex].pages[action.pageIndex] };
-        store.themes[action.themeIndex].pages[action.pageIndex].name = { ...store.themes[action.themeIndex].pages[action.pageIndex].name };
-        store.themes[action.themeIndex].pages[action.pageIndex].name = action.pageName;
 
         store.navigationDL = { ...store.navigationDL };
         store.navigationDL["children"] = [...store.navigationDL["children"]];
-
         for (let i = 0; i < store.navigationDL["children"].length; i++) {
-
             if (store.navigationDL["children"][i]["component"] == oldName) {
                 store.navigationDL["children"][i] = { ...store.navigationDL["children"][i] }
                 store.navigationDL["children"][i]["component"] = { ...store.navigationDL["children"][i]["component"] }
@@ -188,7 +178,12 @@ class InternalRepresentationReducer {
             }
         }
 
-        return store;
+        return produce(store, draft => {
+            if (action.pageName == 'imsMain') {
+                store.pageUICDLs[action.id].isMain = true;
+            }
+            draft.themes[action.themeIndex].pages[action.pageIndex].name = action.pageName
+        })
     }
 
     @Action
