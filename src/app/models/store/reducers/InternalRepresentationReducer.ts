@@ -130,17 +130,23 @@ class InternalRepresentationReducer {
             let firstLevelCells = this.findCell(graphModel, firstLevelComponentList[index].id);
             if (firstLevelCells.length > 0) {
                 // do data-binding hereee
-                for(let key in firstLevelCells) {
+                for (let key in firstLevelCells) {
                     let cell = firstLevelCells[key];
-                    // firstLevelComponentList = [ ...firstLevelComponentList];
-                    store.pageUICDLs[action.id].body.componentList[index] = {
-                        ...store.pageUICDLs[action.id].body.componentList[index],
-                        [firstLevelCells[key]['dataBinding']['dataBindingName']]: firstLevelCells[key]['value'],
-                        geometry: cell['geometry'],
-                        style: cell['style']
+                    if (cell['dataBinding']['hasDataBinding']) {
+                        store.pageUICDLs[action.id].body.componentList[index] = {
+                            ...store.pageUICDLs[action.id].body.componentList[index],
+                            [cell['dataBinding']['dataBindingName']]: cell['value'],
+                            geometry: cell['geometry'],
+                            style: cell['style']
+                        }
                     }
-                    // firstLevelComponentList[index] = (firstLevelComponentList[index] as UIComponent).setGeometry(cell['geometry']);
-                    // firstLevelComponentList[index] = (firstLevelComponentList[index] as UIComponent).setStyle(cell['style']);
+                    else {
+                        store.pageUICDLs[action.id].body.componentList[index] = {
+                            ...store.pageUICDLs[action.id].body.componentList[index],
+                            geometry: cell['geometry'],
+                            style: cell['style']
+                        }
+                    }
                 }
             }
 
@@ -160,6 +166,24 @@ class InternalRepresentationReducer {
                         // do data-binding hereee
                         console.log('second level');
                         console.log(secondLevelCells);
+                        for (let key in secondLevelCells) {
+                            let cell = secondLevelCells[key];
+                            if (cell['dataBinding']['hasDataBinding']) {
+                                store.pageUICDLs[action.id].body.componentList[index].componentList[j] = {
+                                    ...store.pageUICDLs[action.id].body.componentList[index].componentList[j],
+                                    [cell['dataBinding']['dataBindingName']]: cell['value'],
+                                    geometry: cell['geometry'],
+                                    style: cell['style']
+                                }
+                            }
+                            else {
+                                store.pageUICDLs[action.id].body.componentList[index].componentList[j] = {
+                                    ...store.pageUICDLs[action.id].body.componentList[index].componentList[j],
+                                    geometry: cell['geometry'],
+                                    style: cell['style']
+                                }
+                            }
+                        }
                     }
                 }
             }

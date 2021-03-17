@@ -34,6 +34,15 @@ export class InputStrategy extends ICreateComponentStrategy {
   }
 
   createDataBinding(part: String, index?){
-    return new DataBinding(false, "", -1);
+    let dataBindingName = "description";
+    let hasDataBinding = true;
+    let isList = -1;
+    let dataBinding = new DataBinding(
+      hasDataBinding,
+      dataBindingName,
+      isList
+    )
+    return dataBinding;
+    // return new DataBinding(false, "", -1);
   }
 }

@@ -278,7 +278,7 @@ export default class GraphEditorService {
   generateGraphModel(model) {
     let cells = [];
     for (let key in model) {
-      if(model[key].componentID == undefined || !model[key].dataBinding.hasDataBinding) {
+      if(model[key].componentID == undefined) {
         continue;
       }
 
