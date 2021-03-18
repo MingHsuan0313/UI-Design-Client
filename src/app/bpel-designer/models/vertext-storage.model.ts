@@ -1,6 +1,6 @@
 import { DataBinding } from 'src/app/models/externalRepresentation/util/DataBinding';
 import { StyleStorage } from 'src/app/models/graph-dependency';
-import AbstractComponent from 'src/app/shared/AbstractComponent.model';
+import AbstractComponent from 'src/app/bpel-designer/models/AbstractComponent.model';
 
 /**
  * @description

@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Storage } from "../../shared/storage";
 import { HttpClientService } from "../http-client.service";
 
 
@@ -84,7 +83,6 @@ export default class ExportService {
     let imageString
     return this.httpClientService.httpPost(url, xml, "uiDesignServer")
   }
-
 }
 
 

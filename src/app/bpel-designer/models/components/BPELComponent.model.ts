@@ -1,4 +1,4 @@
-import AbstractComponent from 'src/app/shared/AbstractComponent.model';
+import AbstractComponent from 'src/app/bpel-designer/models/AbstractComponent.model';
 import UpdateBPELDocService from '../../services/updateBPELDoc.service';
 import { BPELComponentElementWithActivity } from './BPELComponentElementWithActivity.model';
 import { BPELComponentElementWithActivityList } from './BPELComponentElementWithActivityList.model';

@@ -67,7 +67,7 @@ export abstract class UIComponentFactory {
                 .setID(`${this.nextID}`)
                 .setType(type)
                 .setCategory("informative")
-                .setSelector(`${type}-${this.nextID}`)
+                .setSelector(`${type}${this.nextID}`)
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "button") {
@@ -75,14 +75,14 @@ export abstract class UIComponentFactory {
                 .setCategory("navigation")
                 .setType("button")
                 .setID(`${this.nextID}`)
-                .setSelector(`${type}-${this.nextID}`);
+                .setSelector(`${type}${this.nextID}`);
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "table") {
             uiComponentBuilder = new UIComponentBuilder()
                 .setCategory("informative")
                 .setID(`${this.nextID}`)
-                .setSelector(`${type}-${this.nextID}`)
+                .setSelector(`${type}${this.nextID}`)
                 .setType("table")
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
@@ -90,7 +90,7 @@ export abstract class UIComponentFactory {
             uiComponentBuilder = new UIComponentBuilder()
                 .setCategory("informative")
                 .setID(`${this.nextID}`)
-                .setSelector(`${type}-${this.nextID}`)
+                .setSelector(`${type}${this.nextID}`)
                 .setType("card")
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
@@ -98,7 +98,7 @@ export abstract class UIComponentFactory {
             uiComponentBuilder = new UIComponentBuilder()
                 .setCategory("informative")
                 .setID(`${this.nextID}`)
-                .setSelector(`${type}-${this.nextID}`)
+                .setSelector(`${type}${this.nextID}`)
                 .setType("dropdown")
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
@@ -107,7 +107,7 @@ export abstract class UIComponentFactory {
                 .setCategory("informative")
                 .setType("icon")
                 .setID(`${this.nextID}`)
-                .setSelector(`${type}-${this.nextID}`)
+                .setSelector(`${type}${this.nextID}`)
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "input") {
@@ -115,7 +115,7 @@ export abstract class UIComponentFactory {
                 .setCategory("input")
                 .setType("input")
                 .setID(`${this.nextID}`)
-                .setSelector(`${type}-${this.nextID}`)
+                .setSelector(`${type}${this.nextID}`)
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "inputgroup") {
@@ -123,7 +123,7 @@ export abstract class UIComponentFactory {
                 .setCategory("input")
                 .setType("inputgroup")
                 .setID(`${this.nextID}`)
-                .setSelector(`${type}-${this.nextID}`);
+                .setSelector(`${type}${this.nextID}`);
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "icon") {
@@ -131,14 +131,14 @@ export abstract class UIComponentFactory {
                 .setCategory("informative")
                 .setType("icon")
                 .setID(`${this.nextID}`)
-                .setSelector(`${type}-${this.nextID}`);
+                .setSelector(`${type}${this.nextID}`);
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
         else if (type == "form") {
             uiComponentBuilder = new UIComponentBuilder()
                 .setCategory("input")
                 .setType("form")
-                .setSelector(`${type}-${this.nextID}`)
+                .setSelector(`${type}${this.nextID}`)
                 .setID(`${this.nextID}`);
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
@@ -146,7 +146,7 @@ export abstract class UIComponentFactory {
             uiComponentBuilder = new UIComponentBuilder()
                 .setCategory("informative")
                 .setType("breadcrumb")
-                .setSelector(`${type}-${this.nextID}`)
+                .setSelector(`${type}${this.nextID}`)
                 .setID(`${this.nextID}`);
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
@@ -162,7 +162,7 @@ export abstract class UIComponentFactory {
         let uiComponentBuilder = new UIComponentBuilder()
             .setCategory("layout")
             .setType("layout")
-            .setSelector(`layout-${this.nextID}`)
+            .setSelector(`layout${this.nextID}`)
             .setID(`${this.nextID}`)
             .setPageId(pageId)
         this.nextID += 1;
