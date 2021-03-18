@@ -45,7 +45,6 @@ export class CardStrategy extends ICreateComponentStrategy {
       .setDataBinding(dataBinding)
     let cardBoxCell = selabEditor.insertVertex(selabVertex, component, cardVertexGeometry, cardBoxStyle);
 
-
     cardBoxCell["componentPart"] = "box";
     cardBoxCell["dataBinding"] = this.createDataBinding("box");
     cardBoxCell["isPrimary"] = true;

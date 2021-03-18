@@ -36,7 +36,7 @@ export class UIComponentBuilder {
         this.geometry = {};
         this.style = {};
         this.componentList = [];
-        this.returnData = new ReturnModel();
+        this.returnData = new ReturnModel({});
     }
 
     getProperties(): Object {

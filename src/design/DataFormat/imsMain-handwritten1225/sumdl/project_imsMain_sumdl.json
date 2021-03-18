@@ -19,8 +19,6 @@
       "return": [
         {
           "hierarchy": "form24-text26",
-          "bindingPart": "text",
-          "usage": "show",
           "returnClass": {
             "class": "List",
             "propertyName": "l1",
@@ -32,8 +30,6 @@
         },
         {
           "hierarchy": "form24-text26",
-          "bindingPart": "parameter",
-          "usage": "parameter",
           "returnClass": {
             "class": "List",
             "propertyName": "l1",
@@ -51,8 +47,6 @@
       "return": [
         {
           "hierarchy": "form37-text39",
-          "bindingPart": "text",
-          "usage": "show",
           "returnClass": {
             "class": "String",
             "propertyName": "name"

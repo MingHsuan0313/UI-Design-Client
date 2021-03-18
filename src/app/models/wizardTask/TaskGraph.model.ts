@@ -52,7 +52,7 @@ export class TaskGraph {
     establishStorage(task: WizardTask, storage: PipelineStatusStorage) {
         let newNode = {
             id: `task${storage.nodes.length}`,
-            label: `Task${storage.nodes.length} (${task.componentType})`,
+            label: `Task${storage.nodes.length} (${task.componentType}) *${task.tasks[0].service.name}`,
             data: {
                 status: `${task.state}`
             }
