@@ -25,16 +25,16 @@ export enum IRActionTypes {
     DELETE_SUMDL_RETURN = "[InternalReprsenttaiton] Delete SUMDL Return",
 }
 
-export class IRInsertSumdlService implements Action {
+export class IRInsertSumdlServiceAction implements Action {
     public type = IRActionTypes['INSERT_SUMDL_SERVICE'];
     constructor(public pageId: string, public serviceName: string) {};
 }
-export class IRInserSumdlServiceReturn implements Action {
+export class IRInsertSumdlServiceReturnAction implements Action {
     public type = IRActionTypes['INSERT_SUMDL_SERVICE_RETURN'];
     constructor(public pageId: string,public serviceName: string, public returnObject: {}) {}
 }
 
-export class  IRDeleteSumdlReturn implements Action {
+export class  IRDeleteSumdlReturnAction implements Action {
     public type = IRActionTypes['DELETE_SUMDL_RETURN'];
     constructor(public pageId: string) {}
 }

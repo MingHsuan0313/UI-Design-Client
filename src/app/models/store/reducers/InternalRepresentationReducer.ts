@@ -1,7 +1,7 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInitialNDLAction, IRInsertNDLPageAction, IRClearNDLThemeEdgeAction } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInitialNDLAction, IRInsertNDLPageAction, IRClearNDLThemeEdgeAction, IRInsertSumdlServiceAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 import produce from 'immer';
 // import { enableMapSet } from 'immer';
@@ -18,6 +18,27 @@ class InternalRepresentationReducer {
                 pages: []
             })
         })
+    }
+
+    @Action
+    public insertSumdlService(store: InternalRepresentation, action: IRInsertSumdlServiceAction): InternalRepresentation {
+        let pageName = store.pageUICDLs[action.pageId]['name'];
+        if(store.sumdl[pageName][action.serviceName] != undefined)
+            return store;
+
+        store = {
+            ...store,
+            sumdl: {
+                ...store.sumdl,
+                [pageName]: {
+                    ...store.sumdl[pageName],
+                    [action.serviceName]: {
+                        'return': []
+                    }
+                }
+            }
+        }
+        return store;
     }
 
     @Action
