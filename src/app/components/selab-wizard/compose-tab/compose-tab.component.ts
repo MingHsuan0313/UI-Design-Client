@@ -125,6 +125,8 @@ export class ComposeTabComponent implements OnInit {
   }
 
   checkIsFormFill(): boolean {
+    if(Object.keys(this.uiComponentBuilder.currentTaskStatus).length > 0)
+      return true;
     if (Object.keys(this.formData).length == 0)
       return false;
     let isCorrect = true;
