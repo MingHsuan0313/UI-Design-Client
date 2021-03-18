@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
+import { WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
 import { StatusDialogComponent } from '../pipeline-tab/status-dialog/status-dialog.component';
 import { SelabWizardComponent } from '../selab-wizard.component';
 import { UIComponentConfig } from '../uicomponent-config';
@@ -41,6 +42,42 @@ export class BuildTabComponent implements OnInit {
     console.log('toggle is from return');
     console.log(event);
     console.log(property);
+    let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+    let parentTask = currentTask.parentTask;
+    let hiearachy = `${parentTask.componentSelector}-${this.uiComponentBuilder.selector}`;
+    this.uiComponentBuilder.currentTaskStatus[hiearachy] = this.generateReturnClass(currentTask, option, property, hiearachy);
+    if(this.uiComponentBuilder.currentTaskStatus[hiearachy] == null)
+      delete this.uiComponentBuilder.currentTaskStatus[hiearachy];
+  }
+
+  generateReturnClass(parentTask: WizardTask, option, property, hiearachy) {
+    if(option == "None") {
+      return null;
+    }
+    let bindingPart = property;
+    let returnClass = {};
+    if(parentTask.service.returnData.isList()) {
+      returnClass = {
+        "class": "List",
+        "propertyName": "l1",
+        "child": {
+          "class": "String",
+          "propertyName": option
+        }
+      }
+    }
+    else {
+      returnClass = {
+        "class": "String",
+        "propertyName": option
+      }
+    }
+
+    return {
+      "hiearchy": hiearachy,
+      "bindingPart": bindingPart,
+      "returnClass": returnClass
+    };
   }
 
   closeWizard() {

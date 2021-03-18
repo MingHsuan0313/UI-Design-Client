@@ -25,6 +25,7 @@ export class UIComponentBuilder {
     public componentList: UIComponent[];
     public serviceID: string;
     public returnData: ReturnModel;
+    public currentTaskStatus: {};
 
     constructor() {
         this.name = "";
@@ -37,6 +38,7 @@ export class UIComponentBuilder {
         this.style = {};
         this.componentList = [];
         this.returnData = new ReturnModel({});
+        this.currentTaskStatus = {};
     }
 
     getProperties(): Object {

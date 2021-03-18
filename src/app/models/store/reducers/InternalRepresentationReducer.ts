@@ -1,7 +1,7 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInitialNDLAction, IRInsertNDLPageAction, IRClearNDLThemeEdgeAction, IRInsertSumdlServiceAction } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInitialNDLAction, IRInsertNDLPageAction, IRClearNDLThemeEdgeAction, IRInsertSumdlServiceAction, IRInsertSumdlServiceReturnAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 import produce from 'immer';
 // import { enableMapSet } from 'immer';
@@ -34,6 +34,32 @@ class InternalRepresentationReducer {
                     ...store.sumdl[pageName],
                     [action.serviceName]: {
                         'return': []
+                    }
+                }
+            }
+        }
+        return store;
+    }
+
+    @Action
+    public insertSumdlServiceReturn(store: InternalRepresentation, action: IRInsertSumdlServiceReturnAction): InternalRepresentation {
+        let pageName = store.pageUICDLs[action.pageId]['name'];
+        let serviceName = action.serviceName;
+        let returnObject = action.returnObject;
+        console.log(`pageName = ${pageName}\nserviceName = ${serviceName}`);
+        console.log(returnObject);
+        store = {
+            ...store,
+            sumdl: {
+                ...store.sumdl,
+                [pageName]: {
+                    ...store.sumdl[pageName],
+                    [serviceName]: {
+                        ...store.sumdl[pageName][serviceName],
+                        "return": [
+                            ...store.sumdl[pageName][serviceName]["return"],
+                            returnObject
+                        ]
                     }
                 }
             }

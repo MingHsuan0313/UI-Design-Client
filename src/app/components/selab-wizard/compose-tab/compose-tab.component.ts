@@ -8,6 +8,7 @@ import { MatDialogRef } from '@angular/material';
 import { SelabWizardComponent } from '../selab-wizard.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
+import { WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
 
 @Component({
   selector: 'compose-tab',
@@ -17,7 +18,7 @@ import { ServiceComponentModel } from 'src/app/models/service-component-dependen
 export class ComposeTabComponent implements OnInit {
   @Input() isPipeline: boolean;
   @Input() uiComponentBuilder: UIComponentBuilder;
-  
+
   isClean: boolean;
 
   childrenOptions: string[];
@@ -33,19 +34,57 @@ export class ComposeTabComponent implements OnInit {
 
   constructor(private graphEditorService: GraphEditorService,
     public wizard: MatDialogRef<SelabWizardComponent>,
-    ) {
+  ) {
     this.isClean = false;
     this.formData = {};
   }
 
   chooseReturn(event, option, property) {
+    console.log('toggle is from return');
+    console.log(event);
+    console.log(property);
+    let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+    let parentTask = currentTask.parentTask;
+    let hiearachy = `${parentTask.componentSelector}-${this.subComponentBuilder.selector}`;
+    this.uiComponentBuilder.currentTaskStatus[hiearachy] = this.generateReturnClass(currentTask , option, property, hiearachy);
+    if (this.uiComponentBuilder.currentTaskStatus[hiearachy] == null)
+      delete this.uiComponentBuilder.currentTaskStatus[hiearachy];
+  }
 
+  generateReturnClass(currentTask: WizardTask, option, property, hiearachy) {
+    if (option == "None") {
+      return null;
+    }
+    let bindingPart = property;
+    let returnClass = {};
+    if (currentTask.service.returnData.isList()) {
+      returnClass = {
+        "class": "List",
+        "propertyName": "l1",
+        "child": {
+          "class": "String",
+          "propertyName": option
+        }
+      }
+    }
+    else {
+      returnClass = {
+        "class": "String",
+        "propertyName": option
+      }
+    }
+
+    return {
+      "hiearchy": hiearachy,
+      "bindingPart": bindingPart,
+      "returnClass": returnClass
+    };
   }
 
   setReturn(service: ServiceComponentModel) {
     this.returnData = ["None"];
-    for(let index = 0;index < service['returnData'].datas.length;index++) {
-      this.returnData.push(service['returnData'].datas[index]);
+    for (let index = 0; index < service['returnData'].getReturnDatas()['datas'].length; index++) {
+      this.returnData.push(service['returnData'].getReturnDatas()['datas'][index]);
     }
   }
 
@@ -75,18 +114,18 @@ export class ComposeTabComponent implements OnInit {
     this.uiComponentBuilder.addSubComponent(subComponent);
     this.formData = {};
   }
-  
+
   valueChange(event, value) {
     this.formData[value] = event;
   }
-  
+
   deepCopySubComponent(): UIComponent {
     let copySubComponent;
     return copySubComponent;
   }
 
   checkIsFormFill(): boolean {
-    if(Object.keys(this.formData).length == 0)
+    if (Object.keys(this.formData).length == 0)
       return false;
     let isCorrect = true;
     for (let key in this.formData) {
@@ -102,7 +141,7 @@ export class ComposeTabComponent implements OnInit {
     this.composeTarget = "";
     this.childrenOptions = UIComponentConfig.getChildrenOptions(this.uiComponentBuilder.type);
   }
-  
+
   buildForm() {
     this.formData = {};
     for (let index = 0; index < this.subComponentProperties.length; index++) {
@@ -112,7 +151,7 @@ export class ComposeTabComponent implements OnInit {
       else if (this.subComponentProperties[index]["type"] == "String") {
         this.formData[this.subComponentProperties[index]["value"]] = "";
       }
-    } 
+    }
     console.log("build form...")
     console.log(this.formData);
   }

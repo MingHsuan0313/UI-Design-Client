@@ -86,6 +86,7 @@ export class PipelineTabComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+      currentTask.setComponentSelector(this.uiComponentBuilder.selector);
       if (dialogResult == true) {
         let id = this.graphEditorService.getSelectedPageId();
         let uiComponent = this.uiComponentBuilder.build();
