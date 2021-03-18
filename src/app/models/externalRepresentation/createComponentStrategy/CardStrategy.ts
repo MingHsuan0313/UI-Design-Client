@@ -36,11 +36,13 @@ export class CardStrategy extends ICreateComponentStrategy {
     const cardBoxStyle = StyleLibrary[0]["card"]["cardBox"];
     const cardVertexGeometry = new mxGeometry(this.basex, this.basey, 250, 300);
     let id = (parseInt(component.id)).toString();
+    let dataBinding = this.createDataBinding("box");
     let selabVertex = new SelabVertex()
       .setID(component.selector + "-" + id)
       .setParentID(parent.id)
       .setIsPrimary(true)
       .setUIComponentID(component.id)
+      .setDataBinding(dataBinding)
     let cardBoxCell = selabEditor.insertVertex(selabVertex, component, cardVertexGeometry, cardBoxStyle);
 
 
@@ -69,6 +71,8 @@ export class CardStrategy extends ICreateComponentStrategy {
     cardHeaderCell["componentID"] = component.id;
     cardHeaderCell["dataBinding"] = this.createDataBinding("header");
     cardHeaderCell["isPrimary"] = false;
+    console.log('cardHeader heree');
+    console.log(cardHeaderCell);
     return cardHeaderCell;
   }
 

@@ -54,7 +54,16 @@ class InternalRepresentationReducer {
                     isMain: action.isMain
                 }
             },
+            sumdl: {
+                ...store.sumdl,
+                [action.pageUICDL.name]: {
+                    "return": [
+
+                    ]
+                }
+            }
         }
+
         return produce(store, draft => {
             draft.themes[action.selectedThemeIndex].pages.push({ name: action.pageUICDL.name, id: action.pageUICDL.id });
         })
@@ -131,16 +140,16 @@ class InternalRepresentationReducer {
             if (firstLevelCells.length > 0) {
                 // do data-binding hereee
                 for (let key in firstLevelCells) {
+                    console.log('first level');
+                    console.log(firstLevelCells);
                     let cell = firstLevelCells[key];
                     if (cell['dataBinding']['hasDataBinding']) {
                         store.pageUICDLs[action.id].body.componentList[index] = {
                             ...store.pageUICDLs[action.id].body.componentList[index],
                             [cell['dataBinding']['dataBindingName']]: cell['value'],
-                            geometry: cell['geometry'],
-                            style: cell['style']
                         }
                     }
-                    else {
+                    if (cell['isPrimary']) {
                         store.pageUICDLs[action.id].body.componentList[index] = {
                             ...store.pageUICDLs[action.id].body.componentList[index],
                             geometry: cell['geometry'],
@@ -195,8 +204,9 @@ class InternalRepresentationReducer {
     public deletePageUICDL(store: InternalRepresentation, action: IRDeletePageUICDLAction): InternalRepresentation {
         store = { ...store };
         store.pageUICDLs = { ...store.pageUICDLs };
+        store.sumdl = { ...store.sumdl };
+        delete store.sumdl[store.pageUICDLs[action.id].name]
         delete store.pageUICDLs[action.id];
-
         store.themes = [...store.themes];
         store.themes[action.selectedThemeIndex] = { ...store.themes[action.selectedThemeIndex] };
         store.themes[action.selectedThemeIndex].pages = [...store.themes[action.selectedThemeIndex].pages];
@@ -215,8 +225,11 @@ class InternalRepresentationReducer {
                     ...store.pageUICDLs[action.id],
                     name: action.pageName
                 }
-            }
+            },
         }
+        store.sumdl = { ...store.sumdl };
+        store.sumdl[action.pageName] = store.sumdl[oldName];
+        delete store.sumdl[oldName];
 
         store.navigationDL = { ...store.navigationDL };
         store.navigationDL["children"] = [...store.navigationDL["children"]];

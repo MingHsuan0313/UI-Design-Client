@@ -5,9 +5,6 @@ import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-
 import { IServiceEntry } from "../service-component-dependency";
 import { UIComponent } from "./UIComponent.model";
 
-
-
-
 export class ButtonComponent extends BasicComponent {
   public readonly text: String;
   public readonly href: String;

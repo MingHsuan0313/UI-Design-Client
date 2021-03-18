@@ -2,6 +2,7 @@ import { CompositeComponent } from "./CompositeComponent.model";
 import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 import { IServiceEntry } from "../service-component-dependency";
+import { UIComponent } from "./UIComponent.model";
 
 export class CardComponent extends CompositeComponent {
   public readonly header: String;
