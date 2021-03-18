@@ -2,8 +2,8 @@
     <div class="container-fluid">
         <div class="row">
             <input class="col" id="bpelFile" type="file" (change)="importBPELDoc($event)" style="display:none;">
-            <button mat-menu-item onclick="bpelFile.click()">Import BPEL</button>
-            <button mat-menu-item (click)="exportBPELDoc('graph.bpel')">Export BPEL</button>
+            <button mat-raised-button onclick="bpelFile.click()">Import BPEL</button>
+            <button mat-raised-button (click)="exportBPELDoc('graph.bpel')">Export BPEL</button>
         </div>
     </div>
 </header>
