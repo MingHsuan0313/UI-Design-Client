@@ -52,7 +52,8 @@ export class SelabWizardComponent implements OnInit {
 
   // receive data from dialog input
   initialization() {
-    console.log(SelabGlobalStorage.taskGraph);
+    let pageId = this.graphEditorService.selectedPageId;
+    // console.log(JSON.stringify(SelabGlobalStorage.taskGraph));
     this.isPipeline = this.data.isPipeline;
     this.genere = this.data.genere;
     this.isComposite = this.data.isComposite;
@@ -60,9 +61,12 @@ export class SelabWizardComponent implements OnInit {
     this.category = this.data.category;
     this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
     if (this.isPipeline) {
-      this.uiComponentBuilder.setReturnData(this.data.retutnData);
+      setTimeout(() => {
+        let currentTask = SelabGlobalStorage.taskGraph.currentTask;
+        console.log(currentTask);
+        this.uiComponentBuilder.setReturnData(currentTask.service.returnData.getReturnDatas()['datas']);
+      }, 200);
     }
-    let pageId = this.graphEditorService.selectedPageId;
   }
 
   // this function if for update componet tree structure for information tab

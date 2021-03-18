@@ -32,8 +32,8 @@ export class BuildTabComponent implements OnInit {
 
   setReturn(service: ServiceComponentModel) {
     this.returnData = ["None"];
-    for(let index = 0;index < service['returnData'].datas.length;index++) {
-      this.returnData.push(service['returnData'].datas[index]);
+    for(let index = 0;index < service['returnData'].getReturnDatas()['datas'].length;index++) {
+      this.returnData.push(service['returnData'].getReturnDatas()['datas'][index]);
     }
   }
 

@@ -57,9 +57,6 @@ class InternalRepresentationReducer {
             sumdl: {
                 ...store.sumdl,
                 [action.pageUICDL.name]: {
-                    "return": [
-
-                    ]
                 }
             }
         }

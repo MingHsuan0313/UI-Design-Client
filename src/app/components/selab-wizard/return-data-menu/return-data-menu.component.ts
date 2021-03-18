@@ -18,7 +18,7 @@ export class ReturnDataMenuComponent implements OnInit {
   }
 
   render(serviceComponent: ServiceComponentModel) {
-    this.datas = serviceComponent.returnData.datas;
+    this.datas = serviceComponent.returnData.getReturnDatas()['datas'];
     this.serviceID = serviceComponent.serviceID;
     this.serviceName = serviceComponent.name;
   }

@@ -18,6 +18,7 @@ export class TaskGraph {
     }
 
     next() {
+        console.log("next task........");
         for(let index = this.taskStack.length - 1; index >= 0; index--) {
             if(this.taskStack[index].state == TaskState['finished'])
                 continue;
@@ -35,8 +36,8 @@ export class TaskGraph {
         this.currentTask.start();
     }
 
-    insertTask(componentType: string, service: ServiceComponentModel) {
-        this.currentTask.insertTask(componentType, service);
+    insertTask(componentType: string, componentSelector: string, service: ServiceComponentModel) {
+        this.currentTask.insertTask(componentType, componentSelector, service);
     }
 
     traverse() {
@@ -52,10 +53,13 @@ export class TaskGraph {
     establishStorage(task: WizardTask, storage: PipelineStatusStorage) {
         let newNode = {
             id: `task${storage.nodes.length}`,
-            label: `Task${storage.nodes.length} (${task.componentType}) *${task.tasks[0].service.name}`,
+            label: `Task${storage.nodes.length} (${task.componentType})`,
             data: {
                 status: `${task.state}`
             }
+        }
+        if(task.tasks.length > 0) {
+            newNode['label'] = `Task${storage.nodes.length} (${task.componentType}) *${task.tasks[0].service.name}`;
         }
         storage.addNode(newNode);
         for(let index = 0; index < task.tasks.length; index++) {
@@ -83,15 +87,19 @@ export class WizardTask {
     tasks: WizardTask[] = [];
     service: ServiceComponentModel;
     componentType: string;
+    componentSelector: string;
+    parentTask: WizardTask;
     state: TaskState;
     isRoot: boolean; // first task
+
 
     constructor() {
     }
 
-    insertTask(componentType: string, service: ServiceComponentModel) {
+    insertTask(componentType: string, componentSelector: string, service: ServiceComponentModel) {
         let task = new WizardTask();
         task.setComponentType(componentType)
+            .setComponentSelector(componentSelector)
             .setName('Task')
             .setService(service)
             .setState(TaskState['undo']);
@@ -118,6 +126,16 @@ export class WizardTask {
 
     setComponentType(componentType: string) {
         this.componentType = componentType;
+        return this;
+    }
+
+    setComponentSelector(componentSelector: string) {
+        this.componentSelector = componentSelector;
+        return this;
+    }
+
+    setParentTask(task: WizardTask) {
+        this.parentTask = task;
         return this;
     }
 

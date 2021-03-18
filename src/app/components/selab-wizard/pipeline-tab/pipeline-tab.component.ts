@@ -98,6 +98,7 @@ export class PipelineTabComponent implements OnInit {
             .setService(this.uiComponentBuilder.getServiceComponent() as ServiceComponentModel)
             .setComponentType(componentType)
             .setState(TaskState['undo'])
+            .setParentTask(currentTask)
             .setIsRoot(false);
           currentTask.tasks.push(task);
         }

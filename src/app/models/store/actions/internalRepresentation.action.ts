@@ -20,13 +20,18 @@ export enum IRActionTypes {
     INITIAL_NDL = "[InternalRepresentation] Initial NDL",
     INSERT_NDL_PAGE = "[InternalRepresentation] Insert NDL Page",
     DELETE_NDL_PAGE = "[InternalRepresentation] Delete NDL Page",
-    INSERT_SUMDL_RETURN = "[InternalRepresentation] Insert SUMDL Return",
+    INSERT_SUMDL_SERVICE = "[InternalRepresentation] Insert SUMDL Service",
+    INSERT_SUMDL_SERVICE_RETURN = "[InternalRepresentation] Insert SUMDL Service Return",
     DELETE_SUMDL_RETURN = "[InternalReprsenttaiton] Delete SUMDL Return",
 }
 
-export class IRInserSumdlReturn implements Action {
-    public type = IRActionTypes['INSERT_SUMDL_RETURN'];
-    constructor(public pageId: string, public returnObject: {}) {}
+export class IRInsertSumdlService implements Action {
+    public type = IRActionTypes['INSERT_SUMDL_SERVICE'];
+    constructor(public pageId: string, public serviceName: string) {};
+}
+export class IRInserSumdlServiceReturn implements Action {
+    public type = IRActionTypes['INSERT_SUMDL_SERVICE_RETURN'];
+    constructor(public pageId: string,public serviceName: string, public returnObject: {}) {}
 }
 
 export class  IRDeleteSumdlReturn implements Action {
