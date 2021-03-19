@@ -11,10 +11,10 @@ export abstract class UIComponentFactory {
         return this.deepInstanceCreation(pageUICDLObject);
     }
 
-    static deepInstanceCreation(pageUICDLObject: Object): PageUICDL {
-        let pageId = pageUICDLObject["id"];
+    static deepInstanceCreation(pageUICDLJSONObject: Object): PageUICDL {
+        let pageId = pageUICDLJSONObject["id"];
         let pageUICDL = new PageUICDL(pageId);
-        Object.assign(pageUICDL, pageUICDLObject);
+        Object.assign(pageUICDL, pageUICDLJSONObject);
         let bodyComponent = UIComponentFactory.createLayout(pageId);
         let footerComponent = UIComponentFactory.createLayout(pageId);
         let headerComponent = UIComponentFactory.createLayout(pageId);
@@ -24,16 +24,16 @@ export abstract class UIComponentFactory {
         pageUICDL['header'] = headerComponent;
         pageUICDL['sidebar'] = sidebarComponent;
         pageUICDL['asidebar'] = asidebarComponent;
-        for (let index = 0; index < pageUICDL.body.componentList.length; index++) {
-            let uiComponent = pageUICDL.body.componentList[index];
-            let uiComponentBuilder = UIComponentFactory.create(uiComponent.type, pageId);
+        for (let index = 0; index < pageUICDLJSONObject['body'].componentList.length; index++) {
+            let uiComponentJSONObject = pageUICDLJSONObject['body'].componentList[index];
+            let uiComponentBuilder = UIComponentFactory.create(uiComponentJSONObject.type, pageId);
             uiComponentBuilder
-                .setName(uiComponent.name)
-                .setServiceComponent(uiComponent.serviceComponent)
-                .setProperties(uiComponent.properties)
-                .setGeometry(uiComponent.geometry);
-            if (this.isCompositeComponent(uiComponent))
-                this.createSubComponentInstances(uiComponent['componentList'], uiComponentBuilder);
+                .setName(uiComponentJSONObject.name)
+                .setServiceComponent(uiComponentJSONObject.serviceComponent)
+                .setProperties(uiComponentJSONObject.properties)
+                .setGeometry(uiComponentJSONObject.geometry);
+            if (this.isCompositeComponent(uiComponentJSONObject))
+                this.createSubComponentInstances(uiComponentJSONObject['componentList'], uiComponentBuilder);
             bodyComponent.addSubComponent(uiComponentBuilder.build());
         }
         pageUICDL['body'] = bodyComponent;

@@ -13,14 +13,14 @@ export class TaskGraph {
         this.taskCount = 1;
         this.beginTask = task;
         this.currentTask = task;
-        this.beginTask.state = TaskState['doing'];
+        this.beginTask.state = TaskState['ongoing'];
         this.taskStack.push(task);
     }
 
     next() {
         console.log("next task........");
         for(let index = this.taskStack.length - 1; index >= 0; index--) {
-            if(this.taskStack[index].state == TaskState['finished'])
+            if(this.taskStack[index].state == TaskState['closed'])
                 continue;
             else if(this.taskStack[index].state == TaskState['undo']) {
                 this.currentTask = this.taskStack[index];
@@ -31,7 +31,7 @@ export class TaskGraph {
     }
 
     setCurrentTask(task: WizardTask) {
-        task.state = TaskState['doing'];
+        task.state = TaskState['ongoing'];
         this.currentTask = task;
         this.currentTask.start();
     }
@@ -107,11 +107,11 @@ export class WizardTask {
     }
 
     finish() {
-        this.state = TaskState['finished'];
+        this.state = TaskState['closed'];
     }
 
     start() {
-        this.state = TaskState['doing'];
+        this.state = TaskState['ongoing'];
     }
 
     setName(name: string) {
@@ -152,8 +152,8 @@ export class WizardTask {
 
 export enum TaskState {
     undo = 0,
-    doing = 1,
-    finished = 2,
+    ongoing = 1,
+    closed = 2,
 }
 
 export class PipelineStatusStorage {

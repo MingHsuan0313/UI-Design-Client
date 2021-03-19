@@ -15,7 +15,7 @@ import { PipelineCreateTaskAction, PipelineDeleteTasksAction } from 'src/app/mod
 import { tasksSelector } from 'src/app/models/store/selectors/PipelineStorageSelector';
 import { SelabWizardComponent } from '../selab-wizard.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
-import { IRInserSumdlServiceReturn, IRInsertSumdlServiceAction, IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
+import { IRInsertSumdlServiceAction, IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import { UIComponentConfig } from '../uicomponent-config';

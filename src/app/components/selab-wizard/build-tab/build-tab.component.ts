@@ -118,7 +118,6 @@ export class BuildTabComponent implements OnInit {
     this.formData[propertyName] = event;
   }
 
-
   concateString(str1, str2) {
     return str1 + str2;
   }
