@@ -110,6 +110,7 @@ export class UIComponentFactory {
         }
         this.nextID += 1;
         uiComponentBuilder.setPageId(pageId);
+        console.log(uiComponentBuilder)
         return uiComponentBuilder;
     }
 

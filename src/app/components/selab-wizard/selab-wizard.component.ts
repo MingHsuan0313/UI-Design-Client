@@ -58,11 +58,11 @@ export class SelabWizardComponent implements OnInit {
     this.isComposite = this.data.isComposite;
     this.type = this.data.type;
     this.category = this.data.category;
+    let pageId = this.graphEditorService.selectedPageId;
     this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
     if (this.isPipeline) {
       this.uiComponentBuilder.setReturnData(this.data.retutnData);
     }
-    let pageId = this.graphEditorService.selectedPageId;
   }
 
   // this function if for update componet tree structure for information tab

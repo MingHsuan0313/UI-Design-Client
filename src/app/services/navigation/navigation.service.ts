@@ -37,7 +37,6 @@ export default class NavigationService {
             'name': pageUICDLs[key].name,
             'id': pageUICDLs[key].id
           }
-          console.log("here")
           pages[pageUICDLs[key].id] = page;
         }
         keys = Object.keys(cells);
@@ -48,6 +47,7 @@ export default class NavigationService {
             console.log(cells[key]);
             let sourcePageId = cells[key]['source']['parent']['pageId'];
             console.log(cells[key])
+            console.log(sourcePageId)
             console.log(pages)
             let source = {
               'pageId': sourcePageId,

@@ -281,8 +281,9 @@ export class Configuration {
             
             let style = "strokeColor=#2b9cff;strokeWidth=6;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;"
             let newEdgeCell = graph.insertEdge(parentCell, "", "", sourceCell, targetCell, style);
-
+            newEdgeCell['parent'] = parentCell
             console.log(parentCell)
+            console.log(newEdgeCell)
             console.log(targetCell)
 
 

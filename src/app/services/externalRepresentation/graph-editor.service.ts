@@ -157,8 +157,8 @@ export default class GraphEditorService {
     this.inNavigation = flag;
     this.syncStorage();
     this.clearGraphEditor();
-    let pages = this.renderAllPages(flag);
-    this.recoverNavigationEdges(pages);
+    let pageInfo = this.renderAllPages(flag);
+    this.recoverNavigationEdges(flag, pageInfo);
     this.getGraph().refresh();
     this.zoomTo(0.4);
   }
@@ -189,53 +189,61 @@ export default class GraphEditorService {
   }
 
   renderAllPages(flag) {
-    let returnPages;
+
     let subscribtion;
-    let pagesInTheme = [];
+    let pagesIDInTheme = [];
+    let pagesNameinTheme = []
+    let pageUICDLs;
     if(flag == "theme"){
       subscribtion = this.store.select(themeSelector()).subscribe((themes) => {
         themes[this.selectedThemeIndex].pages.forEach(
           page => {
-            pagesInTheme.push(page.id)
+            pagesIDInTheme.push(page.id)
+            pagesNameinTheme.push(page.name)
         })
       })
       subscribtion.unsubscribe();
     }
 
-    let pageUICDLs = this.store.select(pageUICDLSelector());
-    subscribtion = pageUICDLs.subscribe((pages) => {
-      returnPages = pages
-      let keys = Object.keys(pages);
-      let xOffset = 0;
-      let yOffset = 0;
-      for (let index = 0; index < keys.length; index++) {
-          let key = keys[index];
-          let page = pages[key];
+    subscribtion = this.store.select(pageUICDLSelector()).subscribe(
+      (pages) => {
+        pageUICDLs = pages
+        let keys = Object.keys(pages);
+        let xOffset = 0;
+        let yOffset = 0;
+        for (let index = 0; index < keys.length; index++) {
+            let key = keys[index];
+            let page = pages[key];
 
-          if(flag == "themes" || flag=="theme" && pagesInTheme.includes(key)){
-            if (page['layout'].length > 0) {
-              let layoutStrategy = new LayoutStrategy("graph-container", new mxGeometry(0, 0, 0, 0)).setOffset(xOffset, yOffset);
-              layoutStrategy.createLayoutComponent(this.editor, page, []);
-            }
-            let uiComponentList = this.IRTransformerService.transform(page, this.editor.getGraph());
-            uiComponentList.forEach(
-              uiComponent => {
-                let copyComponent = {};
-                copyComponent = JSON.parse(JSON.stringify(uiComponent));
-                copyComponent["geometry"]["x"] = copyComponent["geometry"]["x"] + xOffset;
-                this.bindComponent(copyComponent, copyComponent['geometry']);
+            if(flag == "themes" || flag=="theme" && pagesIDInTheme.includes(key)){
+              if (page['layout'].length > 0) {
+                let layoutStrategy = new LayoutStrategy("graph-container", new mxGeometry(0, 0, 0, 0)).setOffset(xOffset, yOffset);
+                layoutStrategy.createLayoutComponent(this.editor, page, []);
               }
-            )
-            let offset = document.getElementById('graph-container').offsetWidth;
-            xOffset = xOffset + offset;
-          }
-      }
+              let uiComponentList = this.IRTransformerService.transform(page, this.editor.getGraph());
+              uiComponentList.forEach(
+                uiComponent => {
+                  let copyComponent = {};
+                  copyComponent = JSON.parse(JSON.stringify(uiComponent));
+                  copyComponent["geometry"]["x"] = copyComponent["geometry"]["x"] + xOffset;
+                  this.bindComponent(copyComponent, copyComponent['geometry']);
+                }
+              )
+              let offset = document.getElementById('graph-container').offsetWidth;
+              xOffset = xOffset + offset;
+            }
+        }
     })
     subscribtion.unsubscribe();
-    return returnPages;
+    return {
+      "pages": pageUICDLs,
+      "pagesNameInTheme" : pagesNameinTheme
+    }
   }
 
-  recoverNavigationEdges(pages) {
+  recoverNavigationEdges(flag, pageInfo) {
+    let pagesNameInTheme = pageInfo["pagesNameInTheme"]
+    let pages = pageInfo["pages"]
     let ndl;
     let subscribtion = this.store.select(NDLSelector()).subscribe(
       navigationDL => ndl = navigationDL
@@ -245,33 +253,34 @@ export default class GraphEditorService {
     if (ndl && ndl["children"] != null) {
       ndl["children"].forEach(
         pageNdl => {
-          for(let componentSelector in pageNdl["edges"]){
-            let targetInfo = pageNdl["edges"][componentSelector]
-            console.log(componentSelector)
-            console.log(targetInfo)
-            //let source = edgeInfo["source"]
-            let targetPageId = ((Object.values(pages)).find(page => page["name"] == targetInfo["target"]))["id"]
-            let parameter = targetInfo["parameter"]
-
-            let sourceCell = cells.find(cell => cell["selector"] == componentSelector)
-            let targetCell = cells.find(cell =>
-              cell["pageId"] == targetPageId && cell["componentPart"] == "box" && cell["type"] == "layout"
-            )
-
-            let size = 12 / this.getGraph().zoomFactor;
-            let x = sourceCell['geometry'].width - size / 2;
-            let y = sourceCell['geometry'].height / 2 - size / 2;
-            let style = "shape=ellipse;rounded=0;strokeColor=#2b9cff;fillColor=#FFFFFF;strokeWidth=4"
-            let toolTipVertex = this.getGraph().insertVertex(sourceCell, "", "", x, y, size, size, style, false);
-            toolTipVertex["connectToolTip"] = true;
-            style = "strokeColor=#2b9cff;strokeWidth=6;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;"
-            let edge = this.getGraph().insertEdge(toolTipVertex, "", "", toolTipVertex, targetCell, style)
-            edge.value = parameter;
+          let pageName = pageNdl["component"]
+          if(flag == "themes" || flag=="theme" && pagesNameInTheme.includes(pageName)){
+            for(let componentSelector in pageNdl["edges"]){
+              let targetInfo = pageNdl["edges"][componentSelector]
+              let parameter = targetInfo["parameter"]       
+              let targetPageId = ((Object.values(pages)).find(page => page["name"] == targetInfo["target"]))["id"]
+              let sourceCell = cells.find(cell => cell["selector"] == componentSelector)
+              let targetCell = cells.find(cell =>
+                cell["pageId"] == targetPageId && cell["componentPart"] == "box" && cell["type"] == "layout"
+              )
+              this.renderEdge(sourceCell, targetCell, parameter)
+            }
           }
-
         }
       )
     }
+  }
+
+  renderEdge(sourceCell, targetCell, parameter){
+    let size = 12 / this.getGraph().zoomFactor;
+    let x = sourceCell['geometry'].width - size / 2;
+    let y = sourceCell['geometry'].height / 2 - size / 2;
+    let style = "shape=ellipse;rounded=0;strokeColor=#2b9cff;fillColor=#FFFFFF;strokeWidth=4"
+    let toolTipVertex = this.getGraph().insertVertex(sourceCell, "", "", x, y, size, size, style, false);
+    toolTipVertex["connectToolTip"] = true;
+    style = "strokeColor=#2b9cff;strokeWidth=6;edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;"
+    let edge = this.getGraph().insertEdge(toolTipVertex, "", "", toolTipVertex, targetCell, style)
+    edge.value = parameter;
   }
 
   generateGraphModel(model) {
