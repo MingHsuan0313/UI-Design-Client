@@ -15,7 +15,7 @@ import { PipelineCreateTaskAction, PipelineDeleteTasksAction } from 'src/app/mod
 import { tasksSelector } from 'src/app/models/store/selectors/PipelineStorageSelector';
 import { SelabWizardComponent } from '../selab-wizard.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
-import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
+import { IRInsertSumdlServiceAction, IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import { UIComponentConfig } from '../uicomponent-config';
@@ -86,6 +86,7 @@ export class PipelineTabComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+      currentTask.setComponentSelector(this.uiComponentBuilder.selector);
       if (dialogResult == true) {
         let id = this.graphEditorService.getSelectedPageId();
         let uiComponent = this.uiComponentBuilder.build();
@@ -98,6 +99,7 @@ export class PipelineTabComponent implements OnInit {
             .setService(this.uiComponentBuilder.getServiceComponent() as ServiceComponentModel)
             .setComponentType(componentType)
             .setState(TaskState['undo'])
+            .setParentTask(currentTask)
             .setIsRoot(false);
           currentTask.tasks.push(task);
         }
@@ -108,6 +110,7 @@ export class PipelineTabComponent implements OnInit {
   }
 
   startPipeline(currentTask: WizardTask) {
+    this.store.dispatch(new IRInsertSumdlServiceAction(this.graphEditorService.selectedPageId, this.uiComponentBuilder.serviceComponent['name']));
     let compositeComponents = ["card", "inputgroup", "form"];
     let taskGraph = SelabGlobalStorage.getTaskGraph();
     for (let index = currentTask.tasks.length - 1; index >= 0; index--) {

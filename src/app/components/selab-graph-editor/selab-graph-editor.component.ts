@@ -22,6 +22,7 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from '../utils/confirm-dia
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 import { CodeEditorComponent } from '../code-editor/code-editor.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -40,9 +41,15 @@ export class SelabGraphEditorComponent implements AfterViewInit {
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     public codeEditor: MatDialog,
+    private router: Router,
     private serviceComponentService: ServiceComponentService
   ) {
   }
+
+  navigationToBPEL() {
+    this.router.navigate(['bpel']);
+  }
+
   ngAfterViewInit(): void {
   }
 
@@ -67,11 +74,12 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   showInternalRepresentation() {
     console.log("show IR")
     let pageUICDLs = this.store.select(pageUICDLSelector());
-    pageUICDLs.subscribe((data) => {
+    let subscription = pageUICDLs.subscribe((data) => {
       let id = this.graphEditorService.getSelectedPageId();
       console.log(data[id]);
       console.log(JSON.stringify(data[id]));
     })
+    subscription.unsubscribe();
     this.openSnackBar("show selected PageUICDL in console", "display");
   }
 

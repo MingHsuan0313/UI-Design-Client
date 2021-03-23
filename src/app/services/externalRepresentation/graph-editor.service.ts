@@ -165,10 +165,11 @@ export default class GraphEditorService {
 
   uploadPageUICDL(pageUICDL) {
     let themeId;
-    this.store.select(themeSelector()).subscribe(themes => themeId = themes[this.selectedThemeIndex].id)
+    let subscription = this.store.select(themeSelector()).subscribe(themes => themeId = themes[this.selectedThemeIndex].id)
     pageUICDL["themeId"] = themeId
     this.store.dispatch(new IRInsertPageUICDLAction(this.selectedThemeIndex, pageUICDL, false));
     this.store.dispatch(new IRInsertNDLPageAction(pageUICDL))
+    subscription.unsubscribe();
   }
 
   zoomTo(zoomFactor: any) {
@@ -286,12 +287,17 @@ export default class GraphEditorService {
   generateGraphModel(model) {
     let cells = [];
     for (let key in model) {
+      if(model[key].componentID == undefined) {
+        continue;
+      }
+
       let cell = {
         geometry: {},
         style: model[key].style,
         value: model[key].value,
         componentID: model[key].componentID,
         isPrimary: model[key].isPrimary,
+        dataBinding: model[key].dataBinding
       }
 
       if (model[key].geometry != undefined) {

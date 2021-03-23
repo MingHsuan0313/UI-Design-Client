@@ -5,45 +5,11 @@ import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBui
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 
 export class InputGroupComponent extends CompositeComponent {
-  componentList: any[] = [];
+  public readonly componentList: any[] = [];
 
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     super(uiComponentBuilder);
     this.componentList = uiComponentBuilder.componentList;
-  }
-
-  setStyle(style: Object): InputGroupComponent {
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setStyle(style)
-      .buildInputGroupComponent()
-  }
-  
-  setGeometry(geometry: Object): InputGroupComponent {
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setGeometry(geometry)
-      .buildInputGroupComponent()
-  }
-
-  copy(): InputGroupComponent {
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .buildInputGroupComponent()
-  }
-
-  setServiceComponent(serviceComponent: IServiceEntry): InputGroupComponent{
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setServiceComponent(serviceComponent)
-      .buildInputGroupComponent();
-  }
-
-  setName(name: string): InputGroupComponent{
-    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .setName(name)
-      .buildInputGroupComponent();
   }
 
   setProperties(properties: Object): InputGroupComponent{
@@ -53,12 +19,41 @@ export class InputGroupComponent extends CompositeComponent {
       .buildInputGroupComponent();
   }
 
-
   add(component: UIComponent): void {
     this.componentList.push(component);
   }
 
-  getInfo(): any {
-    return this;
+  setServiceComponent(serviceComponent: IServiceEntry) {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setServiceComponent(serviceComponent)
+      .build();
   }
+
+  setName(name: string): UIComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setName(name)
+      .build();
+  }
+
+  setStyle(style: object): UIComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setStyle(style)
+      .build();
+  }
+
+  setGeometry(geometry: object): UIComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setGeometry(geometry)
+      .build();
+  }
+
+  copy(): UIComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder.build();
+  }
+
 }

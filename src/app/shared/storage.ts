@@ -1,8 +1,5 @@
 import {Library} from './library';
-import {HttpHeaders} from '@angular/common/http';
-import {HttpClient} from '@angular/common/http';
-import {Layout, UIComponent} from '../models/ui-component-dependency';
-import {PropertyGenerator} from './property-generator';
+import {LayoutComponent, UIComponent} from '../models/ui-component-dependency';
 import {NavigationComponent} from '../models/navigation/navigation-component.model';
 import * as _ from 'lodash';
 import { PageUICDL } from '../models/internalRepresentation/pageUICDL.model';
@@ -10,7 +7,7 @@ import { PageUICDL } from '../models/internalRepresentation/pageUICDL.model';
 export class Storage {
   static newCompositeList: any[] = [];  // store reusable composite component
   static components: any[] = [];
-  static layoutComponent: Layout;
+  static layoutComponent: LayoutComponent;
   static pageUICDL: PageUICDL;
   static library: any = Library;
 
@@ -38,14 +35,6 @@ export class Storage {
       this.library['genre']['CoreUI']['category']['Containers'].push(component.selector);
     }
     this.pageUICDL.body.componentList.push(component);
-  }
-
-  static setLayoutComponent(component) {
-    // this.layoutComponent = _.cloneDeep(component);
-    // this.layoutComponent["componentList"] = this.components;
-    // console.log("layout component");
-    // console.log(this.layoutComponent);
-    // this.pageUICDL['componentList'] = (this.layoutComponent);
   }
 
   static getGenre(): any[] {
@@ -84,16 +73,6 @@ export class Storage {
   static getPageUICDL() {
      const clonedPageUICDL = _.cloneDeep(this.pageUICDL);
      return clonedPageUICDL;
-  }
-
-  static createPageUICDL(){
-    // if (this.isNewPage) {
-    //   this.pageUICDL['id'] = PropertyGenerator.getPageID();
-    //   this.pageUICDL['selector'] = 'page' + this.pageUICDL['id'];
-    //   this.pageUICDLList.push(this.pageUICDL);
-    //   this.isNewPage = false;
-    // }
-    // this.pageUICDL['componentList'] = [];
   }
 
   static clearTemp() { 

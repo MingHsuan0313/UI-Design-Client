@@ -17,8 +17,8 @@ export class FormStrategy extends ICreateComponentStrategy {
     }
 
     createDataBinding(part: string, index?: number) {
-        let dataBindingName = "header";
-        let hasDataBining = true;
+        let dataBindingName = part;
+        let hasDataBining = false;
         let isList = -1;
         let dataBinding = new DataBinding(
             hasDataBining,
@@ -39,7 +39,6 @@ export class FormStrategy extends ICreateComponentStrategy {
             .setUIComponentID(component.id)
         let formBoxCell = selabEditor.insertVertex(selabVertex, component, formVertexGeometry, formBoxStyle);
 
-        // const formVertexStorage = selabEditor.insertVertex(parent, component.id, "", formVertexGeometry, styleStorage, component);
         formBoxCell["componentPart"] = "box";
         formBoxCell["dataBinding"] = this.createDataBinding("box");
         formBoxCell["isPrimary"] = true;

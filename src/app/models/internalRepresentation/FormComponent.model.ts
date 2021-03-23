@@ -7,44 +7,10 @@ import { IServiceEntry, ServiceComponentModel } from "../service-component-depen
 export class FormComponent extends CompositeComponent {
 
     constructor(uiComponentBuilder?: UIComponentBuilder) {
-        if(uiComponentBuilder){
+        if (uiComponentBuilder) {
             super(uiComponentBuilder);
             this.componentList = uiComponentBuilder.componentList;
         }
-    }
-
-    setServiceComponent(serviceComponent: ServiceComponentModel): FormComponent {
-        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-        return uiComponentBuilder
-            .setServiceComponent(serviceComponent)
-            .buildFormComponent();
-    }
-
-    setName(name: string): FormComponent {
-        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-        return uiComponentBuilder
-            .setName(name)
-            .buildFormComponent();
-    }
-    
-    setStyle(style:Object): FormComponent {
-        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-        return uiComponentBuilder
-            .setStyle(style) 
-            .buildFormComponent();
-    }
-    
-    setGeometry(geometry: Object): FormComponent {
-        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-        return uiComponentBuilder
-            .setGeometry(geometry) 
-            .buildFormComponent();
-    }
-    
-    copy(): FormComponent {
-        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-        return uiComponentBuilder
-                .buildFormComponent();
     }
 
     setProperties(properties: Object): FormComponent {
@@ -57,7 +23,7 @@ export class FormComponent extends CompositeComponent {
     addSubComponent(component: UIComponent): FormComponent {
         let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
         return uiComponentBuilder
-            .addComponent(component, "form")
+            .addComponent(component)
             .buildFormComponent()
     }
 
@@ -67,5 +33,38 @@ export class FormComponent extends CompositeComponent {
             service: (this.serviceComponent as ServiceComponentModel).getInfo(),
             children: this.expandChildren()
         };
+    }
+
+    setServiceComponent(serviceComponent: IServiceEntry) {
+        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+        return uiComponentBuilder
+            .setServiceComponent(serviceComponent)
+            .build();
+    }
+
+    setName(name: string): UIComponent {
+        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+        return uiComponentBuilder
+            .setName(name)
+            .build();
+    }
+
+    setStyle(style: object): UIComponent {
+        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+        return uiComponentBuilder
+            .setStyle(style)
+            .build();
+    }
+
+    setGeometry(geometry: object): UIComponent {
+        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+        return uiComponentBuilder
+            .setGeometry(geometry)
+            .build();
+    }
+
+    copy(): UIComponent {
+        let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+        return uiComponentBuilder.build();
     }
 }

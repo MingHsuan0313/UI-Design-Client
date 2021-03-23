@@ -25,6 +25,7 @@ export class UIComponentBuilder {
     public componentList: UIComponent[];
     public serviceID: string;
     public returnData: ReturnModel;
+    public currentTaskStatus: {};
 
     constructor() {
         this.name = "";
@@ -36,7 +37,8 @@ export class UIComponentBuilder {
         this.geometry = {};
         this.style = {};
         this.componentList = [];
-        this.returnData = new ReturnModel();
+        this.returnData = new ReturnModel({});
+        this.currentTaskStatus = {};
     }
 
     getProperties(): Object {
@@ -62,18 +64,18 @@ export class UIComponentBuilder {
         this.pageId = pageId;
         return this;
     }
-    
+
     setServiceComponent(serviceComponent: IServiceEntry) {
         this.serviceComponent = serviceComponent;
         return this;
     }
-    
+
     setArgument(argument: ArgumentModel) {
         this.argument = argument;
         return this;
     }
-    
-    addSubComponent(uiComponent:UIComponent) {
+
+    addSubComponent(uiComponent: UIComponent) {
         this.componentList.push(uiComponent);
         return this;
     }
@@ -87,7 +89,7 @@ export class UIComponentBuilder {
         this.selector = selector;
         return this;
     }
-    
+
     setType(type: string) {
         this.type = type;
         return this;
@@ -102,7 +104,7 @@ export class UIComponentBuilder {
         this.geometry = geometry;
         return this;
     }
-    
+
     setStyle(style: object) {
         this.style = style;
         return this;
@@ -114,33 +116,33 @@ export class UIComponentBuilder {
     }
 
     build(): UIComponent {
-        if(this.type == "text") 
+        if (this.type == "text")
             return this.buildTextComponent();
-        else if(this.type == "button")
+        else if (this.type == "button")
             return this.buildButtonComponent();
-        else if(this.type == "table")
+        else if (this.type == "table")
             return this.buildTableComponent();
-        else if(this.type == "card")
+        else if (this.type == "card")
             return this.buildCardComponent();
-        else if(this.type == "dropdown")
+        else if (this.type == "dropdown")
             return this.buildDropdownComponent();
-        else if(this.type == "input")
+        else if (this.type == "input")
             return this.buildInputComponent();
-        else if(this.type == "inputgroup")
+        else if (this.type == "inputgroup")
             return this.buildInputGroupComponent();
-        else if(this.type == "icon")
+        else if (this.type == "icon")
             return this.buildIconComponent();
-        else if(this.type == "breadcrumb")
+        else if (this.type == "breadcrumb")
             return this.buildBreadcrumbComponent();
-        else if(this.type == "layout")
+        else if (this.type == "layout")
             return this.buildLayoutComponent();
-        else if(this.type == "form")
+        else if (this.type == "form")
             return this.buildFormComponent();
     }
-    
+
     buildLayoutComponent(): LayoutComponent {
-       let layoutComponent: LayoutComponent = new  LayoutComponent(this);
-       return layoutComponent;
+        let layoutComponent: LayoutComponent = new LayoutComponent(this);
+        return layoutComponent;
     }
 
     buildTextComponent(): TextComponent {
@@ -152,62 +154,60 @@ export class UIComponentBuilder {
         let inputTextComponent: InputTextComponent = new InputTextComponent(this);
         return inputTextComponent;
     }
-    
+
     buildButtonComponent(): ButtonComponent {
-       let buttonComponent: ButtonComponent = new ButtonComponent(this);
-       return buttonComponent;
+        let buttonComponent: ButtonComponent = new ButtonComponent(this);
+        return buttonComponent;
     }
-    
+
     buildDropdownComponent(): DropdownComponent {
         let dropdownComponent: DropdownComponent = new DropdownComponent(this);
         return dropdownComponent;
     }
-    
+
     buildFormComponent(): FormComponent {
         let formComponent: FormComponent = new FormComponent(this);
         return formComponent;
     }
-    
+
     buildCardComponent(): CardComponent {
         let cardComponent: CardComponent = new CardComponent(this);
         return cardComponent;
     }
-    
+
     buildInputGroupComponent(): InputGroupComponent {
         let inputGroupComponent: InputGroupComponent = new InputGroupComponent(this);
         return inputGroupComponent;
     }
-    
+
     buildIconComponent(): IconComponent {
         let iconComponent: IconComponent = new IconComponent(this);
         return iconComponent;
     }
-    
+
     buildBreadcrumbComponent(): BreadcrumbComponent {
         let breadCrumbComponent: BreadcrumbComponent = new BreadcrumbComponent(this);
         return breadCrumbComponent;
     }
-    
+
     buildTableComponent(): TableComponent {
-       let tableComponent: TableComponent = new TableComponent(this);
-       return tableComponent;
+        let tableComponent: TableComponent = new TableComponent(this);
+        return tableComponent;
     }
-    
-    addComponent(uiComponent: UIComponent,type: string):  UIComponentBuilder{
-       this.componentList.push(uiComponent);
-       if(type == "form") {
-           return this;
-       }
+
+    addComponent(uiComponent: UIComponent): UIComponentBuilder {
+        this.componentList.push(uiComponent);
+        return this;
     }
-    
+
     getServiceComponent() {
         return this.serviceComponent;
     }
-    
+
     getName() {
         return this.name;
     }
-    
+
     getType() {
         return this.type;
     }

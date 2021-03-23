@@ -19,7 +19,7 @@ export class PageUICDL {
     public body: LayoutComponent;
     public header: LayoutComponent;
     public sidebar: LayoutComponent;
-public footer: LayoutComponent;
+    public footer: LayoutComponent;
     public asidebar: LayoutComponent;
 
     constructor(id: string) {
@@ -39,7 +39,7 @@ public footer: LayoutComponent;
         this.body = (UIComponentFactory.createLayout(id) as LayoutComponent);
         this.asidebar = (UIComponentFactory.createLayout(id) as LayoutComponent);
     }
-    
+
     getInfo() {
         return {
             id: this.id,

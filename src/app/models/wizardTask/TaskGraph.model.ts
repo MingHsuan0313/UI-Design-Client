@@ -13,13 +13,14 @@ export class TaskGraph {
         this.taskCount = 1;
         this.beginTask = task;
         this.currentTask = task;
-        this.beginTask.state = TaskState['doing'];
+        this.beginTask.state = TaskState['ongoing'];
         this.taskStack.push(task);
     }
 
     next() {
+        console.log("next task........");
         for(let index = this.taskStack.length - 1; index >= 0; index--) {
-            if(this.taskStack[index].state == TaskState['finished'])
+            if(this.taskStack[index].state == TaskState['closed'])
                 continue;
             else if(this.taskStack[index].state == TaskState['undo']) {
                 this.currentTask = this.taskStack[index];
@@ -27,19 +28,16 @@ export class TaskGraph {
                 break;
             }
         }
-        console.log(this.taskStack);
-        console.log('next!');
-        console.log(this.currentTask);
     }
 
     setCurrentTask(task: WizardTask) {
-        task.state = TaskState['doing'];
+        task.state = TaskState['ongoing'];
         this.currentTask = task;
         this.currentTask.start();
     }
 
-    insertTask(componentType: string, service: ServiceComponentModel) {
-        this.currentTask.insertTask(componentType, service);
+    insertTask(componentType: string, componentSelector: string, service: ServiceComponentModel) {
+        this.currentTask.insertTask(componentType, componentSelector, service);
     }
 
     traverse() {
@@ -47,7 +45,6 @@ export class TaskGraph {
     }
 
     dfs(task: WizardTask) {
-        console.log(task.componentType);
         for(let index = 0;index < task.tasks.length; index++) {
             this.dfs(task.tasks[index]);
         }
@@ -60,6 +57,9 @@ export class TaskGraph {
             data: {
                 status: `${task.state}`
             }
+        }
+        if(task.tasks.length > 0) {
+            newNode['label'] = `Task${storage.nodes.length} (${task.componentType}) *${task.tasks[0].service.name}`;
         }
         storage.addNode(newNode);
         for(let index = 0; index < task.tasks.length; index++) {
@@ -87,15 +87,19 @@ export class WizardTask {
     tasks: WizardTask[] = [];
     service: ServiceComponentModel;
     componentType: string;
+    componentSelector: string;
+    parentTask: WizardTask;
     state: TaskState;
     isRoot: boolean; // first task
+
 
     constructor() {
     }
 
-    insertTask(componentType: string, service: ServiceComponentModel) {
+    insertTask(componentType: string, componentSelector: string, service: ServiceComponentModel) {
         let task = new WizardTask();
         task.setComponentType(componentType)
+            .setComponentSelector(componentSelector)
             .setName('Task')
             .setService(service)
             .setState(TaskState['undo']);
@@ -103,11 +107,11 @@ export class WizardTask {
     }
 
     finish() {
-        this.state = TaskState['finished'];
+        this.state = TaskState['closed'];
     }
 
     start() {
-        this.state = TaskState['doing'];
+        this.state = TaskState['ongoing'];
     }
 
     setName(name: string) {
@@ -125,6 +129,16 @@ export class WizardTask {
         return this;
     }
 
+    setComponentSelector(componentSelector: string) {
+        this.componentSelector = componentSelector;
+        return this;
+    }
+
+    setParentTask(task: WizardTask) {
+        this.parentTask = task;
+        return this;
+    }
+
     setState(state: TaskState) {
         this.state = state;
         return this;
@@ -138,8 +152,8 @@ export class WizardTask {
 
 export enum TaskState {
     undo = 0,
-    doing = 1,
-    finished = 2,
+    ongoing = 1,
+    closed = 2,
 }
 
 export class PipelineStatusStorage {

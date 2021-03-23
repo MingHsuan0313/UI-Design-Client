@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CompositeComponent } from 'src/app/models/internalRepresentation/CompositeComponent.model';
-import { ServiceMappingType } from 'src/app/models/service-component-dependency';
+import { ReturnModel, ServiceMappingType } from 'src/app/models/service-component-dependency';
 import { PipelineCreateOperationAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
 import { ArgumentModel, ServiceComponentModel } from 'src/app/models/service-component-dependency';
@@ -54,9 +54,8 @@ export class BindServiceTabComponent implements OnInit {
     this.serviceComponentService
       .queryReturnByServiceID(option['serviceID'])
       .subscribe((response) => {
-        console.log('return');
-        console.log(response['body']);
-        serviceComponent['returnData'].datas = JSON.parse(response['body']);
+        let returnModel = new ReturnModel(JSON.parse(response["body"]));
+        serviceComponent.setReturn(returnModel);
         this.uiComponentBuilder
           .setServiceComponent(serviceComponent)
           .setServiceId(serviceComponent.getServiceID())

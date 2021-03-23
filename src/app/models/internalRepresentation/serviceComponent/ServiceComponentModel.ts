@@ -30,8 +30,8 @@ export class ServiceComponentModel extends IServiceEntry {
         this.projectName = "";
         this.initServiceUrl = "";
         this.arguments = [];
-        this.returnData = new ReturnModel();
         this.serviceType = "ServiceComponent";
+        this.returnData = new ReturnModel({});
         this.log = "";
     }
     

@@ -1,17 +1,19 @@
-import AbstractComponent from "src/app/shared/AbstractComponent.model";
-import { IServiceEntry, ServiceComponentModel } from "../service-component-dependency";
+import { IServiceEntry } from "../service-component-dependency";
 import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBuilder";
+import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 
 export class UIComponent {
-  public id: string;
-  public selector: string;
-  public category: string;
-  public pageId: string;
-  public style: {};
-  public geometry: {};
-  public type: string;
-  public name: string;
-  public serviceComponent: IServiceEntry;
+  public readonly id: string;
+  public readonly selector: string;
+  public readonly category: string;
+  public readonly pageId: string;
+  public readonly style: {};
+  public readonly geometry: {};
+  public readonly type: string;
+  public readonly name: string;
+  public readonly serviceComponent: IServiceEntry;
+  public readonly properties: {};
+  // public uiComponentBuilder: UIComponentBuilder;
 
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     this.name = uiComponentBuilder.name;
@@ -23,6 +25,8 @@ export class UIComponent {
     this.geometry = uiComponentBuilder.geometry;
     this.serviceComponent = uiComponentBuilder.serviceComponent;
     this.pageId = uiComponentBuilder.pageId;
+    this.properties = uiComponentBuilder.properties;
+    // this.uiComponentBuilder = uiComponentBuilder;
   }
 
   public getName():  string{
@@ -52,37 +56,13 @@ export class UIComponent {
   public getType() {
     return this.type;
   }
-  
-  setProperties(properties: Object): UIComponent {
-    return new UIComponent();
-  }
-  
-  setName(name: string): UIComponent {
-    return new UIComponent();
-  }
-  
-  setServiceComponent(serviceEntry: ServiceComponentModel) {
-    return new UIComponent();
-  }
-  
-  setGeometry(geometry: mxGeometry): UIComponent {
-    return new UIComponent();
-  }
-  
-  setStyle(style: Object): UIComponent {
-    return new UIComponent();
-  }
-  
-  copy() {
-    
-  }
-  
-  deleteBuilder() {
 
-  }
-
-  getInfo(): any {
-
-  } // for Internal Representation (pageUICDL Output)
+  setName(name: string) {}
+  setServiceComponent(serviceComponent: IServiceEntry) {}
+  setStyle(style: object) {}
+  setGeometry(geometry: object) {}
+  copy() {}
+  setProperties(properties: Object) {}
+  getInfo() {} // for Internal Representation (pageUICDL Output)
   getProperties(){} // form property
 }

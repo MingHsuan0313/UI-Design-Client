@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Storage} from '../../shared/storage';
 import { IRAddNDLEdgeAction, IRClearNDLThemeEdgeAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { NDLSelector, pageUICDLSelector, projectNameSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';

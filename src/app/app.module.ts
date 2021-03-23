@@ -2,20 +2,15 @@ import { NgModule } from "@angular/core";
 import { AngularMaterialModule } from "./angular-material/angular-material.module";
 import { AngularOfficialModule } from "./angular-official/angular-official.module";
 import { AngularCoreUIModule } from "./angular-core-ui/angular-core-ui.module";
-
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { AppRoutingModule } from "./app.routing";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
-
-
-
 import { DefaultLayoutComponent } from "./containers";
 import { AppComponent } from "./app.component";
 import { SelabGraphEditorComponent } from "./components/selab-graph-editor/selab-graph-editor.component";
 import { StyleEditorComponent } from './components/style-editor/style-editor.component';
 import { NavEditorComponent } from './components/nav-editor/nav-editor.component';
-import { PageEditorComponent } from './components/page-editor/page-editor.component';
 import { CodeEditorComponent } from './components/code-editor/code-editor.component';
 import { CodeEditorDialogComponent } from './components/code-editor-dialog/code-editor-dialog.component';
 import { ServiceComponentConfigurationComponent } from './components/service-component-configuration/service-component-configuration.component';
@@ -61,6 +56,8 @@ import { ReturnDataMenuComponent } from './components/selab-wizard/return-data-m
 import { StatusDialogComponent } from './components/selab-wizard/pipeline-tab/status-dialog/status-dialog.component'; 
 import { NgxGraphModule } from "@swimlane/ngx-graph";
 import { QueryServiceWindowComponent } from './components/selab-setting/endpoint-test/query-service-window/query-service-window.component';
+import { enableMapSet } from 'immer';
+enableMapSet();
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
@@ -93,7 +90,6 @@ export function reducerFactory() {
     DefaultLayoutComponent,
     StyleEditorComponent,
     NavEditorComponent,
-    PageEditorComponent,
     CodeEditorComponent,
     CodeEditorDialogComponent,
     ServiceComponentConfigurationComponent,

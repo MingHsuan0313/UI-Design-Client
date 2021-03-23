@@ -2,7 +2,6 @@ import { TaskGraph, WizardTask } from "../wizardTask/TaskGraph.model";
 
 export class SelabGlobalStorage {
     static projectName: string;
-    static ndl: {};
     static sumdl: {};
     static usedNameTable: {}; // save all existing page and theme name, for duplicate name checking
     static taskGraph: TaskGraph;
@@ -31,86 +30,20 @@ export class SelabGlobalStorage {
 
         if (name in this.usedNameTable)
             return true;
-        else 
+        else
             return false;
     }
 
-    static initializeNDL() {
-        this.ndl = {
-            "selector": "DefaultLayout",
-            "component":"DefaultLayoutComponent",
-            "path": "",
-            "category": "Layout",
-            "children": []
-        }
-    }
-
-    static cleanNDLChildren() {
-        this.ndl['children'] = [];
-    }
-
-    static cleanEdges() {
-        for(let index = 0;index < this.ndl['children'].length;index++) {
-            this.ndl['children'][index]['destination'] = [];
-        }
-    }
-
-    static addEdge(source, target, parameter) {
-        console.log(this.ndl)
-        for(let index = 0;index < this.ndl['children'].length;index++) {
-            console.log(source['pageName'])
-            if(this.ndl['children'][index]['component'] == source['pageName']) {
-                this.ndl['children'][index]['destination'].push(target['pageName'])
-                console.log("add edge to ndl")
-                this.ndl['children'][index]['edges'].push({
-                    "source": source['componentSelector'],
-                    "target": target["pageName"],
-                    "passingParameter": parameter
-                })
-
-
-                if(parameter != undefined && parameter.length > 0) {
-                    this.ndl['children'][index]['parameters'].push(parameter);
-                }
-                return;
-            }
-        }
-    }
-
-    static addNDL(page) {
-        let newPage = {
-            'selector': page['id'],
-            'component': page['name'],
-            'path': page['name'],
-            'category': 'page',
-            'isMain': page['imsMain'],
-            'destination': [],
-            'parameters': [],
-            'children': [],
-            'edges': []
-        }
-        console.log("Hello Hello Hello Hello Hello")
-        this.ndl['children'].push(newPage);
-    }
-
-    
-
-    static deletePage(pageId: string) {
-
-    }
-
     static setProjectName(projectName: string) {
-        if(projectName.length == 0)
+        if (projectName.length == 0)
             this.projectName = "SelabProject";
         this.projectName = projectName;
-        this.ndl = {};
         this.sumdl = {};
     }
-    
+
     static getInfo() {
         return {
             "projectName": this.projectName,
-            "ndl": this.ndl,
             "sumdl": this.sumdl,
             "wizardGraph": this.taskGraph
         }

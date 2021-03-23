@@ -5,7 +5,7 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, observable, of as observableOf } from 'rxjs';
 import { CompositeComponent } from 'src/app/models/internalRepresentation/CompositeComponent.model';
-import { IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
+import { IRInsertSumdlServiceReturnAction, IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { PipelineCreateOperationAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
@@ -66,12 +66,15 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
         let id = this.graphEditorService.getSelectedPageId();
+        let currentTask = SelabGlobalStorage.taskGraph.currentTask;
         console.log("start creating");
         console.log(this.uiComponentBuilder);
+        for(let key in this.uiComponentBuilder.currentTaskStatus) {
+          this.store.dispatch(new IRInsertSumdlServiceReturnAction(id, currentTask.service.name, this.uiComponentBuilder.currentTaskStatus[key]));
+        }
         let uiComponent = this.uiComponentBuilder.build();
         this.store.dispatch(new IRInsertUIComponentAction(id,uiComponent));
         this.graphEditorService.bindComponent(uiComponent);
-        let currentTask = SelabGlobalStorage.taskGraph.currentTask;
         this.wizard.close(currentTask);
       }
     })

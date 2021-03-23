@@ -1,9 +1,9 @@
-import { UIComponent } from "./UIComponent.model";
 import { BasicComponent } from "./BasicComponent.model";
 import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBuilder";
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
+import { UIComponent } from "./UIComponent.model";
 export class IconComponent extends BasicComponent {
-  text: string;
+  public readonly text: string;
 
   constructor(uiComponentBuilder?: UIComponentBuilder) {
     if(uiComponentBuilder){
@@ -15,27 +15,37 @@ export class IconComponent extends BasicComponent {
     }
   }
 
-  setStyle(style: Object): IconComponent {
+  setServiceComponent(serviceComponent: IServiceEntry) {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setServiceComponent(serviceComponent)
+      .build();
+  }
+
+  setName(name: string): UIComponent {
+    let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
+    return uiComponentBuilder
+      .setName(name)
+      .build();
+  }
+
+  setStyle(style: object): UIComponent {
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
       .setStyle(style)
-      .buildIconComponent();
+      .build();
   }
-  
-  setGeometry(geometry: Object): IconComponent{
+
+  setGeometry(geometry: object): UIComponent {
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
     return uiComponentBuilder
       .setGeometry(geometry)
-      .buildIconComponent();
+      .build();
   }
 
-  copy(): IconComponent{
+  copy(): UIComponent {
     let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
-    return uiComponentBuilder
-      .buildIconComponent();
+    return uiComponentBuilder.build();
   }
 
-  getInfo(): any {
-    return this;
-  }
 }

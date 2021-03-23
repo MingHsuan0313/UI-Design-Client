@@ -3,7 +3,7 @@ import { UIComponentBuilder } from "../../components/selab-wizard/UIComponentBui
 import { UIComponent } from "./UIComponent.model";
 
 export class BasicComponent extends UIComponent {
-    serviceComponent: ArgumentModel;
+    public serviceComponent: ArgumentModel;
     constructor(uiComponentBuilder: UIComponentBuilder) {
         super(uiComponentBuilder);
         this.serviceComponent = new ArgumentModel();

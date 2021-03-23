@@ -19,7 +19,24 @@ export enum IRActionTypes {
     CLEAR_NDL_EDGE = "[InternalRepresentation] Clear NDL Page Edge",
     INITIAL_NDL = "[InternalRepresentation] Initial NDL",
     INSERT_NDL_PAGE = "[InternalRepresentation] Insert NDL Page",
-    DELETE_NDL_PAGE = "[InternalRepresentation] Delete NDL Page"
+    DELETE_NDL_PAGE = "[InternalRepresentation] Delete NDL Page",
+    INSERT_SUMDL_SERVICE = "[InternalRepresentation] Insert SUMDL Service",
+    INSERT_SUMDL_SERVICE_RETURN = "[InternalRepresentation] Insert SUMDL Service Return",
+    DELETE_SUMDL_RETURN = "[InternalReprsenttaiton] Delete SUMDL Return",
+}
+
+export class IRInsertSumdlServiceAction implements Action {
+    public type = IRActionTypes['INSERT_SUMDL_SERVICE'];
+    constructor(public pageId: string, public serviceName: string) {};
+}
+export class IRInsertSumdlServiceReturnAction implements Action {
+    public type = IRActionTypes['INSERT_SUMDL_SERVICE_RETURN'];
+    constructor(public pageId: string,public serviceName: string, public returnObject: {}) {}
+}
+
+export class  IRDeleteSumdlReturnAction implements Action {
+    public type = IRActionTypes['DELETE_SUMDL_RETURN'];
+    constructor(public pageId: string) {}
 }
 
 export class IRInsertPageImageAction implements Action {

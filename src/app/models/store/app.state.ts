@@ -16,11 +16,13 @@ export class InternalRepresentation {
     projectName: string;
     themes: any[];
     navigationDL: {};
+    sumdl: {};
     constructor() {
         this.pageUICDLs = new Map<string,PageUICDL>();
         this.themes = [];
         this.pageImages = new Map<string, string>();
         this.navigationDL = {};
+        this.sumdl = {};
     }
 }
 
