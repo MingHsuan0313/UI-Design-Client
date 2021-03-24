@@ -330,26 +330,25 @@ export class PaletteComponent implements AfterViewInit {
     }
 
     private calculateTargetBaseY(): number {
-        if (this.targetContainerActivity != null) {
-            let targetContainerVertex = this.graphStorage.findVertexByID(this.targetContainerActivity.getId());
-            // find lastVertexChildOfTargetContainerVertexChildren
-            let lastVertexChildOfTargetContainerVertexChildren = null;
-            for (let i = 0; i < targetContainerVertex.getChildCount(); i++) {
-                lastVertexChildOfTargetContainerVertexChildren = (lastVertexChildOfTargetContainerVertexChildren == null ||
-                    parseInt(targetContainerVertex.getChildAt(i).getId()) > parseInt(lastVertexChildOfTargetContainerVertexChildren.getId())) ?
-                    targetContainerVertex.getChildAt(i) : lastVertexChildOfTargetContainerVertexChildren;
-            }
+        if (this.targetContainerActivity == null)   return this.basey;
 
-            let retBasey;
-            if (lastVertexChildOfTargetContainerVertexChildren != null) {
-                retBasey = lastVertexChildOfTargetContainerVertexChildren.getGeometry().y
-                    + lastVertexChildOfTargetContainerVertexChildren.getGeometry().height
-                    + this.offsety;
-            } else {
-                retBasey = this.offsety;
-            }
-            return retBasey;
+        // find last child vertex in targetContainer vertex
+        let targetContainerVertex = this.graphStorage.findVertexByID(this.targetContainerActivity.getId());
+        let lastChildVertexOfTargetContainer = null;
+        for (let i = 0; i < targetContainerVertex.getChildCount(); i++) {
+            lastChildVertexOfTargetContainer = (lastChildVertexOfTargetContainer == null
+                || parseInt(targetContainerVertex.getChildAt(i).getId()) > parseInt(lastChildVertexOfTargetContainer.getId()))
+                ? targetContainerVertex.getChildAt(i) : lastChildVertexOfTargetContainer;
         }
-        return this.basey;
+
+        let retBasey;
+        if (lastChildVertexOfTargetContainer != null) {
+            retBasey = lastChildVertexOfTargetContainer.getGeometry().y
+                + lastChildVertexOfTargetContainer.getGeometry().height
+                + this.offsety;
+        } else {
+            retBasey = this.offsety;
+        }
+        return retBasey;
     }
 }
