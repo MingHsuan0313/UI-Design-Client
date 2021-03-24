@@ -67,8 +67,9 @@ export class PaletteComponent implements AfterViewInit {
     graphStorage: GraphStorage;
     strategy: ICreateBPELComponentStrategy;
     targetContainerActivity: BPELComponent = null;
-    basex: number = 100;
+    basex: number = 30;
     basey: number = 0;
+    offsety: number = 30;
     importingTargetContainerActivityNameWithIdStack: string[] = new Array<string>();
     importingComponentNameWithIdComponentMap: Map<string, BPELComponent> = new Map<string, BPELComponent>();
 
@@ -331,7 +332,6 @@ export class PaletteComponent implements AfterViewInit {
     private calculateTargetBaseY(): number {
         if (this.targetContainerActivity != null) {
             let targetContainerVertex = this.graphStorage.findVertexByID(this.targetContainerActivity.getId());
-            let retBasey = targetContainerVertex.getGeometry().y;
             // find lastVertexChildOfTargetContainerVertexChildren
             let lastVertexChildOfTargetContainerVertexChildren = null;
             for (let i = 0; i < targetContainerVertex.getChildCount(); i++) {
@@ -339,11 +339,14 @@ export class PaletteComponent implements AfterViewInit {
                     parseInt(targetContainerVertex.getChildAt(i).getId()) > parseInt(lastVertexChildOfTargetContainerVertexChildren.getId())) ?
                     targetContainerVertex.getChildAt(i) : lastVertexChildOfTargetContainerVertexChildren;
             }
+
+            let retBasey;
             if (lastVertexChildOfTargetContainerVertexChildren != null) {
-                let newCoordY = lastVertexChildOfTargetContainerVertexChildren.getGeometry().y + lastVertexChildOfTargetContainerVertexChildren.getGeometry().height;
-                retBasey = newCoordY;
-            } else if (parseInt(targetContainerVertex.getParent().getParent().getId()) >= 2) {
-                retBasey = 0;
+                retBasey = lastVertexChildOfTargetContainerVertexChildren.getGeometry().y
+                    + lastVertexChildOfTargetContainerVertexChildren.getGeometry().height
+                    + this.offsety;
+            } else {
+                retBasey = this.offsety;
             }
             return retBasey;
         }
