@@ -1,7 +1,11 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
+<<<<<<< HEAD
 import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInitialNDLAction, IRInsertNDLPageAction, IRClearNDLThemeEdgeAction, IRInsertSumdlServiceAction, IRInsertSumdlServiceReturnAction } from "../actions/internalRepresentation.action";
+=======
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInitialNDLAction, IRInsertNDLPageAction, IRClearNDLThemeEdgeAction, IRDeleteAllDLsAndThemes, IROpenNDLFromDBAction, IROpenSUMDLFromDBAction } from "../actions/internalRepresentation.action";
+>>>>>>> load pdl and ndl from db, no test
 import { InternalRepresentation } from "../app.state";
 import produce from 'immer';
 // import { enableMapSet } from 'immer';
@@ -419,13 +423,17 @@ class InternalRepresentationReducer {
     public clearEdgeByTheme(store: InternalRepresentation, action: IRClearNDLThemeEdgeAction): InternalRepresentation {
         store = { ...store }
         store.navigationDL = { ...store.navigationDL };
+<<<<<<< HEAD
         store.navigationDL['children'] = [...store.navigationDL['children']]
         for (let index = 0; index < store.navigationDL['children'].length; index++) {
+=======
+        store.navigationDL['children'] = [... store.navigationDL['children']]
+        for(let index = 0; index < store.navigationDL['children'].length;index++) {
+>>>>>>> load pdl and ndl from db, no test
             let pageName = store.navigationDL['children'][index]["component"]
             if (this.isPageInTheme(store, action.themeIndex, pageName)) {
                 store.navigationDL['children'][index] = { ...store.navigationDL['children'][index] }
                 let pageNDL = store.navigationDL['children'][index]
-
                 // destination
                 for (let j = 0; index < pageNDL["destination"].length; index++) {
                     pageNDL["destination"] = [...pageNDL["destination"]]
@@ -433,37 +441,83 @@ class InternalRepresentationReducer {
                         pageNDL["destination"].splice(j, 1);
                     }
                 }
+
                 // edge
+<<<<<<< HEAD
                 pageNDL["edges"] = { ...pageNDL["edges"] }
                 for (let sourceComponentSelector in pageNDL["edges"]) {
                     if (this.isPageInTheme(store, action.themeIndex, pageNDL["edges"][sourceComponentSelector]["target"])) {
                         pageNDL["edges"][sourceComponentSelector] = { ...pageNDL["edges"][sourceComponentSelector] }
                         console.log("debug 1")
+=======
+                pageNDL["edges"] = {...pageNDL["edges"]}
+                for(let sourceComponentSelector in pageNDL["edges"]){
+                    if( this.isPageInTheme(store, action.themeIndex, pageNDL["edges"][sourceComponentSelector]["target"]) ){
+                        pageNDL["edges"][sourceComponentSelector] = {...pageNDL["edges"][sourceComponentSelector]}
+>>>>>>> load pdl and ndl from db, no test
                         delete pageNDL["edges"][sourceComponentSelector]
-                        console.log("debug 2")
                     }
                 }
-
                 // parameters
 
             }
         }
         return store;
-
     }
 
+<<<<<<< HEAD
     public isPageInTheme(store: InternalRepresentation, themeIndex: number, pageName: string) {
 
         for (let j = 0; j < store.themes[themeIndex].pages.length; j++) {
             if (store.themes[themeIndex].pages[j].name == pageName) {
+=======
+    public isPageInTheme(store: InternalRepresentation, themeIndex: number, pageName: string){
+        for(let j=0; j<store.themes[themeIndex].pages.length; j++ ){
+            if(store.themes[themeIndex].pages[j].name == pageName){
+>>>>>>> load pdl and ndl from db, no test
                 return true;
             }
         }
         return false;
-
     }
 
+    @Action 
+    public deleteAllPageUICDL(store: InternalRepresentation, action: IRDeleteAllDLsAndThemes): InternalRepresentation{
+        store = {...store}
+        store.pageUICDLs = { ...store.pageUICDLs };
+        store.navigationDL = { ...store.navigationDL };
+        store.themes = [...store.themes]
+        store.pageImages = {...store.pageImages}
 
+        store.pageUICDLs = new Map<string,PageUICDL>();
+        store.themes = []
+        store.pageImages = new Map<string,string>();
+        store.navigationDL = {}
+        return store;
+    }
+
+    @Action 
+    public loadNDLFromDB(store: InternalRepresentation, action: IROpenNDLFromDBAction): InternalRepresentation{
+        store = {...store}
+        store.navigationDL = { ...store.navigationDL };
+        store.navigationDL = action.ndl;
+        return store;
+    }
+
+<<<<<<< HEAD
+
+=======
+    // @Action 
+    // public loadSUMDLFromDB(store: InternalRepresentation, action: IROpenSUMDLFromDBAction): InternalRepresentation{
+    //     store = {...store}
+    //     store.navigationDL = { ...store.navigationDL };
+    //     store.navigationDL = action.ndl;
+    //     return store;
+    //     return store;
+    // }
+
+    
+>>>>>>> load pdl and ndl from db, no test
 }
 
 export const internalRepresentationReducer = createReducer(InternalRepresentationReducer)

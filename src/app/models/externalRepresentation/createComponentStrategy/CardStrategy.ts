@@ -90,7 +90,11 @@ export class CardStrategy extends ICreateComponentStrategy {
           maxWidth = vertex["geometry"].width;
         subComponentYOffset = subComponentYOffset + vertex["geometry"].height + 10;
       }else{
+<<<<<<< HEAD
           vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, subUIComponent.geometry["x"], subUIComponent.geometry["y"], subUIComponent.geometry['width'], subUIComponent.geometry['height']);
+=======
+          vertex = selabEditor.createComponent(subUIComponent, cardBoxVertex, subUIComponent.geometry["x"], subUIComponent.geometry["y"], subUIComponent.width, subUIComponent.height)
+>>>>>>> load pdl and ndl from db, no test
       }
     }
     if (!this.restoreMode) {

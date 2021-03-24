@@ -24,6 +24,7 @@ import { pageUICDLSelector, projectNameSelector, themeSelector } from "src/app/m
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import NavigationService from '../../services/navigation/navigation.service';
 import { forkJoin } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
 import { UIComponentConfig } from '../selab-wizard/uicomponent-config';
@@ -112,50 +113,49 @@ export class SelabHeaderComponent implements OnInit {
     let exportThemeId;
     let exportThemes;
     let exportPageUICDLs;
-    
     this.openSnackBar("save PDL to database", "save");
     let subscribtion = this.store.select(themeSelector()).subscribe(themes => {
       exportThemeId = themes[this.graphEditorService.selectedThemeIndex].id
     })
-    subscribtion.unsubscribe();
     subscribtion = this.store.select(projectNameSelector()).subscribe(projectName => exportProjectName = projectName)
-    subscribtion.unsubscribe();
     subscribtion = this.store.select(themeSelector()).subscribe(themes => exportThemes = themes)
-    subscribtion.unsubscribe();
     subscribtion = this.store.select(pageUICDLSelector()).subscribe(pageUICDLs => exportPageUICDLs = pageUICDLs)
     subscribtion.unsubscribe();
 
-    this.exportService.deletePageUICDL(exportProjectName).subscribe(
-      response => {
-        this.exportService.deleteTheme(exportProjectName).subscribe(
-          response => {
-            let postTask = []
-            for(let index=0; index<exportThemes.length; index++){
-              let theme = {
-                "id": exportThemes[index].id,
-                "name": exportThemes[index].name
-              }
-              postTask.push(this.exportService.postTheme(exportProjectName, theme))
-            }
-            forkJoin(postTask).subscribe(
-              response => {
-                console.log("post theme complete")
-                let postTask = []
-                let pageIds = Object.keys(exportPageUICDLs)
-                for(let index=0; index<pageIds.length; index++){
-                  let themeId = exportPageUICDLs[pageIds[index]].themeId;
-                  postTask.push(this.exportService.postPageUICDL(exportProjectName, themeId, exportPageUICDLs[pageIds[index]]))
-                }
-                console.log(postTask)
-                forkJoin(postTask).subscribe(
-                  response => {
-                    this.openSnackBar("Post themes and PDL complete","save");
-                })
-            })
-        })
-      }
+    var responseObservable = this.exportService.deletePageUICDL(exportProjectName).pipe(
+      concatMap( () => {
+        return this.exportService.deleteTheme(exportProjectName)
+      }),
+      concatMap( () => {
+        let postTask = []
+        for(let index=0; index<exportThemes.length; index++){
+          let theme = {
+            "id": exportThemes[index].id,
+            "name": exportThemes[index].name
+          }
+          postTask.push(this.exportService.postTheme(exportProjectName, theme))
+          console.log(theme)
+        }
+        return forkJoin(postTask)
+      }),
+      concatMap(()=>{
+        console.log("post theme complete")
+        let postTask = []
+        let pageIds = Object.keys(exportPageUICDLs)
+        for(let index=0; index<pageIds.length; index++){
+          let themeId = exportPageUICDLs[pageIds[index]].themeId;
+          postTask.push(this.exportService.postPageUICDL(exportProjectName, themeId, exportPageUICDLs[pageIds[index]]))
+        }
+        return forkJoin(postTask)
+      }),
     )
+<<<<<<< HEAD
     subscribtion.unsubscribe();
+=======
+    responseObservable.subscribe(response => console.log(response));
+    subscribtion.unsubscribe();
+
+>>>>>>> load pdl and ndl from db, no test
   }
 
   applyLayout(layout: string) {
@@ -261,6 +261,10 @@ export class SelabHeaderComponent implements OnInit {
       disableClose: true,
       autoFocus: true
     })
+  }
+
+  uploadFromDB(){
+    this.importService
   }
 
   uploadPageUICDL($event) {

@@ -30,7 +30,7 @@ export class HttpClientService {
     this.returnServiceUrl = `http://140.112.90.144:3001/`;
   }
 
-  httpGet(endPointUrl: string, params: HttpParams,serverType: string) {
+  httpGet(endPointUrl: string, params: HttpParams,serverType: string, requestHeader?: Object) {
     let urlPrefix = "";
     if(serverType == "matchMakingServer")
       urlPrefix = this.matchMakingServerUrl;
@@ -46,11 +46,17 @@ export class HttpClientService {
     // console.log(params)
     console.log("uri is " + uri);
     // console.log(uri.length)
+    let header = new HttpHeaders().set("Content-Type", "application/json")
+    if(requestHeader){
+      let requestHeaderKeys = Object.keys(requestHeader)
+      for(let index=0; index<requestHeaderKeys.length; index++){
+        let requestHeaderKey = requestHeaderKeys[index]
+        header = header.set(requestHeaderKey, requestHeader[requestHeaderKey])
+      }
+    }
     
     return this.httpClient.get(uri, {
-      headers: new HttpHeaders()
-                  .set("Content-Type", "application/json"),
-                  // .set("Access-Control-Allow-Credentials","true"),
+      headers: header,
       observe: "response",
       responseType: "text",
       params: params
@@ -68,11 +74,9 @@ export class HttpClientService {
     let uri = urlPrefix + endPointUrl;
     let header = new HttpHeaders().set("Content-Type", "application/json")
     if(requestHeader){
-      
       let requestHeaderKeys = Object.keys(requestHeader)
       for(let index=0; index<requestHeaderKeys.length; index++){
         let requestHeaderKey = requestHeaderKeys[index]
-
         header = header.set(requestHeaderKey, requestHeader[requestHeaderKey])
       }
     }

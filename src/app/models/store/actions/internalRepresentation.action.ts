@@ -20,6 +20,7 @@ export enum IRActionTypes {
     INITIAL_NDL = "[InternalRepresentation] Initial NDL",
     INSERT_NDL_PAGE = "[InternalRepresentation] Insert NDL Page",
     DELETE_NDL_PAGE = "[InternalRepresentation] Delete NDL Page",
+<<<<<<< HEAD
     INSERT_SUMDL_SERVICE = "[InternalRepresentation] Insert SUMDL Service",
     INSERT_SUMDL_SERVICE_RETURN = "[InternalRepresentation] Insert SUMDL Service Return",
     DELETE_SUMDL_RETURN = "[InternalReprsenttaiton] Delete SUMDL Return",
@@ -37,6 +38,12 @@ export class IRInsertSumdlServiceReturnAction implements Action {
 export class  IRDeleteSumdlReturnAction implements Action {
     public type = IRActionTypes['DELETE_SUMDL_RETURN'];
     constructor(public pageId: string) {}
+=======
+    DELETE_ALL_DLs_THEMES = "[InternalRepresentation] Delete ALL Description Languages and Themes",
+    LOAD_NDL_FROM_DB = "InternalRepresentation] Load NDL Data From DB",
+    LOAD_SUMDL_FROM_DB = "InternalRepresentation] Load SUMDL Data From DB"
+
+>>>>>>> load pdl and ndl from db, no test
 }
 
 export class IRInsertPageImageAction implements Action {
@@ -123,4 +130,19 @@ export class IRDeleteNDLPageAction implements Action {
 export class IRInitialNDLAction implements Action {
     public type = IRActionTypes["INITIAL_NDL"];
     constructor() {}
+}
+
+export class IRDeleteAllDLsAndThemes implements Action {
+    public type = IRActionTypes["DELETE_ALL_DLs_THEMES"];
+    constructor() {}
+}
+
+export class IROpenNDLFromDBAction implements Action {
+    public type = IRActionTypes["LOAD_NDL_FROM_DB"];
+    constructor(public ndl: {}) {}
+}
+
+export class IROpenSUMDLFromDBAction implements Action {
+    public type = IRActionTypes["LOAD_SUMDL_FROM_DB"];
+    constructor(sumdl: {}) {}
 }

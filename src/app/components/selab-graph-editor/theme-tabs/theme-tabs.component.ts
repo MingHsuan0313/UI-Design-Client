@@ -44,6 +44,11 @@ export class ThemeTabsComponent implements OnInit {
             pages: themes[index].pages
           })
         }
+        if(this.themes.length==0){
+          console.log("Delete All")
+          this.selectedThemeIndex.setValue(0)
+          this.selectedPageIndex.setValue(0)
+        }
       })
   }
 

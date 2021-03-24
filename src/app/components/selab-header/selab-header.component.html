@@ -21,7 +21,7 @@
 
 <mat-menu #importMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item (click)="uploader.click()" matTooltip="Upload a page description language File">Upload File</button>
-  <button mat-menu-item  matTooltip="Retrive data from database">Database</button>
+  <button mat-menu-item (click)="import()" matTooltip="Retrive data from database">Database</button>
 </mat-menu>
 
 <input 
