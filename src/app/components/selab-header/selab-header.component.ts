@@ -149,13 +149,9 @@ export class SelabHeaderComponent implements OnInit {
         return forkJoin(postTask)
       }),
     )
-<<<<<<< HEAD
-    subscribtion.unsubscribe();
-=======
     responseObservable.subscribe(response => console.log(response));
     subscribtion.unsubscribe();
 
->>>>>>> load pdl and ndl from db, no test
   }
 
   applyLayout(layout: string) {

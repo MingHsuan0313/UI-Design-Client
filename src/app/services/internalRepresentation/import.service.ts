@@ -1,18 +1,14 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { HttpClientService } from "../http-client.service";
-<<<<<<< HEAD
-
-=======
 import GraphEditorService from "../externalRepresentation/graph-editor.service";
 import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
 import { PageUICDL } from 'src/app/models/internalRepresentation/pageUICDL.model';
 import { pageUICDLSelector, projectNameSelector, themeSelector } from "src/app/models/store/selectors/InternalRepresentationSelector";
-import { IRDeleteAllDLsAndThemes, IRDeleteNDLPageAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInitialNDLAction, IRInsertNDLPageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IROpenNDLFromDBAction } from 'src/app/models/store/actions/internalRepresentation.action'
+import { IRDeleteAllDLsAndThemes, IRDeleteNDLPageAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInitialNDLAction, IRInsertNDLPageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IROpenNDLFromDBAction, IROpenSUMDLFromDBAction } from 'src/app/models/store/actions/internalRepresentation.action'
 import { forkJoin } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
->>>>>>> load pdl and ndl from db, no test
 @Injectable({
   providedIn: "root"
 })
@@ -51,8 +47,12 @@ export default class ImportService {
       }),
       concatMap((response)=> {
         let pageUICDLs = JSON.parse(response['body'])
-        pageUICDLs.forEach(pageUICDL => {
-          console.log(pageUICDL)
+        console.log(pageUICDLs)
+        let firstPageID;
+        pageUICDLs.forEach( (pageUICDL, index) => {
+          if(index==0){
+            firstPageID = pageUICDL.id;
+          }
           themes.forEach( (theme, index) => {
             if(theme.id == pageUICDL.themeTable.id){
               let pageUICDLObject = JSON.parse(pageUICDL.pdl) as PageUICDL
@@ -61,18 +61,23 @@ export default class ImportService {
             }
           })
         })
-        //his.store.dispatch(new IRDeleteThemeAction(0));
+        this.graphEditorService.changePage(firstPageID, firstPageID);
         return this.getNDL(importProjectName)
       }),
-      map((response)=> {
+      concatMap((response)=> {
         let ndl = JSON.parse(JSON.parse(response['body']).ndl);
-        this.store.dispatch(new IROpenNDLFromDBAction(ndl));
-
+        if(ndl){
+          this.store.dispatch(new IROpenNDLFromDBAction(ndl));
+        }
         console.log(ndl)
-        //his.store.dispatch(new IRDeleteThemeAction(0));
-        //return this.getPageUICDL(importProjectName)
+        return this.getSUMDL(importProjectName)
       }),
-
+      map((response) => {
+        let sumdl = JSON.parse(JSON.parse(response['body']).sumdl);
+        if(sumdl){
+          this.store.dispatch(new IROpenSUMDLFromDBAction(sumdl));
+        }
+      })
     ).subscribe(response=>console.log(response))
 
     this.store.dispatch(new IRInsertThemeAction("temp","temp"))
