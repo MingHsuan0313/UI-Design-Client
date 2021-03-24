@@ -67,8 +67,9 @@ export class PaletteComponent implements AfterViewInit {
     graphStorage: GraphStorage;
     strategy: ICreateBPELComponentStrategy;
     targetContainerActivity: BPELComponent = null;
-    basex: number = 100;
+    basex: number = 30;
     basey: number = 0;
+    offsety: number = 30;
     importingTargetContainerActivityNameWithIdStack: string[] = new Array<string>();
     importingComponentNameWithIdComponentMap: Map<string, BPELComponent> = new Map<string, BPELComponent>();
 
@@ -322,25 +323,32 @@ export class PaletteComponent implements AfterViewInit {
         console.log("[targetContainerActivity changed] = ", this.targetContainerActivity.getComponentName() + "(id = " + this.targetContainerActivity.getId() + ")");
     }
 
+    private getTargetContainerComponentNameWithVertexId(): string {
+        if (this.targetContainerActivity == undefined)  return "none";
+
+        return this.targetContainerActivity.getComponentName() + this.targetContainerActivity.getId();
+    }
+
     private calculateTargetBaseY(): number {
-        if (this.targetContainerActivity != null) {
-            let targetContainerVertex = this.graphStorage.findVertexByID(this.targetContainerActivity.getId());
-            let retBasey = targetContainerVertex.getGeometry().y;
-            // find lastVertexChildOfTargetContainerVertexChildren
-            let lastVertexChildOfTargetContainerVertexChildren = null;
-            for (let i = 0; i < targetContainerVertex.getChildCount(); i++) {
-                lastVertexChildOfTargetContainerVertexChildren = (lastVertexChildOfTargetContainerVertexChildren == null ||
-                    parseInt(targetContainerVertex.getChildAt(i).getId()) > parseInt(lastVertexChildOfTargetContainerVertexChildren.getId())) ?
-                    targetContainerVertex.getChildAt(i) : lastVertexChildOfTargetContainerVertexChildren;
-            }
-            if (lastVertexChildOfTargetContainerVertexChildren != null) {
-                let newCoordY = lastVertexChildOfTargetContainerVertexChildren.getGeometry().y + lastVertexChildOfTargetContainerVertexChildren.getGeometry().height;
-                retBasey = newCoordY;
-            } else if (parseInt(targetContainerVertex.getParent().getParent().getId()) >= 2) {
-                retBasey = 0;
-            }
-            return retBasey;
+        if (this.targetContainerActivity == null)   return this.basey;
+
+        // find last child vertex in targetContainer vertex
+        let targetContainerVertex = this.graphStorage.findVertexByID(this.targetContainerActivity.getId());
+        let lastChildVertexOfTargetContainer = null;
+        for (let i = 0; i < targetContainerVertex.getChildCount(); i++) {
+            lastChildVertexOfTargetContainer = (lastChildVertexOfTargetContainer == null
+                || parseInt(targetContainerVertex.getChildAt(i).getId()) > parseInt(lastChildVertexOfTargetContainer.getId()))
+                ? targetContainerVertex.getChildAt(i) : lastChildVertexOfTargetContainer;
         }
-        return this.basey;
+
+        let retBasey;
+        if (lastChildVertexOfTargetContainer != null) {
+            retBasey = lastChildVertexOfTargetContainer.getGeometry().y
+                + lastChildVertexOfTargetContainer.getGeometry().height
+                + this.offsety;
+        } else {
+            retBasey = this.offsety;
+        }
+        return retBasey;
     }
 }

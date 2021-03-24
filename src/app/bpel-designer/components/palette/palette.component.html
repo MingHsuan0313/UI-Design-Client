@@ -1,7 +1,9 @@
-<div style="background-color: #eaeded;;height:100%; position: fixed;">
+<div class="palette-class">
     <mat-tab-group>
       <mat-tab label="Palette">
-          <button class="btn btn-success" (click)="syncTargetContainerActivity()">Sync targetContainerActivity</button>
+          <span><b>Target Container: {{getTargetContainerComponentNameWithVertexId()}}</b></span>
+          <br/>
+          <button mat-stroked-button color="primary" (click)="syncTargetContainerActivity()">2. Sync targetContainer</button>
           <div class="col">
               <div class="container">
                 <hr>

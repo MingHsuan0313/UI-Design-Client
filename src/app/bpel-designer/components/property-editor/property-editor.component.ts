@@ -371,4 +371,11 @@ export class PropertyEditorComponent implements OnInit {
             this.syncSelectedElement(null, newEventTargetValue);
         }
     }
+
+    private getSelectedComponentNameWithVertexId(): string {
+        if (this.selectedAttribute == undefined)    return "none";
+
+        let vertexId = this.selectedVertex.id;
+        return this.graphStorage.findVertexStorageByID(vertexId).getComponent().getComponentName() + vertexId;
+    }
 }

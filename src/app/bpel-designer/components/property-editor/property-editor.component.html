@@ -1,9 +1,14 @@
-<div style="background-color: #eaeded;height:100%; position: fixed;">
+<div class="property-editor-class">
     <mat-tab-group>
       <mat-tab label="Property-Editor">
         <div class="input-group">
-          <button class="btn btn-success" (click)="sendUserSettedTargetContainerActivityEvent()">Send targetContainerActivity to Palette(via BPELDesigner)</button>
           <div class='col'>
+            <span><b>Editing: {{getSelectedComponentNameWithVertexId()}}</b></span>
+            <br/>
+            <!-- (via BPELDesigner) -->
+            <button mat-stroked-button color="primary" (click)="sendUserSettedTargetContainerActivityEvent()">1. Send targetContainer to Palette</button>
+            <!-- (via BPELDesigner) -->
+            <br/>
             <span>attributes</span>
             <div class="input-group-prepend" *ngFor='let kvs of attributeKVPairsStack; let firstRecord = first'>
               <div class='col' *ngIf="firstRecord">
@@ -13,6 +18,7 @@
                 </div>
               </div>
             </div>
+            <br/>
             <span>elements</span>
             <div class="input-group-prepend" *ngFor='let kvs of elementKVPairsStack; let firstRecord = first'>
               <div class='col' *ngIf="firstRecord">
