@@ -40,4 +40,8 @@ export class BpelDesignerEditorService {
         this.getGraphStorage().getGraph().zoomFactor = this.zoomFactor;
         this.zoomTo(this.zoomFactor);
     }
+
+    deleteVertex(vertex: mxCell): void {
+        this.graphStorage.deleteVertex(vertex);
+    }
 }

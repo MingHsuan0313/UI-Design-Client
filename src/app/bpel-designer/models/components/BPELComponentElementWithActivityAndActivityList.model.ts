@@ -28,4 +28,21 @@ export class BPELComponentElementWithActivityAndActivityList extends BPELCompone
     getActivityList(): BPELComponent[] {
         return this.activityList;
     }
+
+    hasActivity(activity: BPELComponent) {
+        return this.activity == activity;
+    }
+
+    hasActivityInList(activity: BPELComponent) {
+        return this.activityList.findIndex((component) => component == activity) == -1 ? false : true;
+    }
+
+    hasElseBranchActivityForIf(activity: BPELComponent) {
+        return this.else == activity;
+    }
+
+    removeActivityInList(activity: BPELComponent): void {
+        let activityIdx = this.activityList.findIndex((component) => component.getId() == activity.getId());
+        this.activityList.splice(activityIdx, 1);
+    }
 }

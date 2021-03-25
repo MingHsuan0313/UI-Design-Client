@@ -73,6 +73,8 @@ export class PaletteComponent implements AfterViewInit {
     importingTargetContainerActivityNameWithIdStack: string[] = new Array<string>();
     importingComponentNameWithIdComponentMap: Map<string, BPELComponent> = new Map<string, BPELComponent>();
 
+    selectedVertex: mxCell = null;  // for delete functionality
+
     @Input() userSettedTargetContainerActivity: BPELComponent;
 
     constructor(private updateBPELDocService: UpdateBPELDocService, private graphEditorService: BpelDesignerEditorService, private ioBPELDocService: IOBPELDocService) {
@@ -120,6 +122,10 @@ export class PaletteComponent implements AfterViewInit {
             console.log('hello world2');
             this.graphStorage = this.graphEditorService.getGraphStorage();
             console.log(this.graphStorage)
+
+            this.graphStorage.getGraph().addListener(mxEvent.CLICK, (sender) => {
+                this.selectedVertex = sender.selectionModel.cells[0];
+            })
         }, 200)
     }
 
@@ -350,5 +356,11 @@ export class PaletteComponent implements AfterViewInit {
             retBasey = this.offsety;
         }
         return retBasey;
+    }
+
+    deleteSelectedVertex(): void {
+        if (this.selectedVertex == null)    return;
+
+        this.graphEditorService.deleteVertex(this.selectedVertex);
     }
 }
