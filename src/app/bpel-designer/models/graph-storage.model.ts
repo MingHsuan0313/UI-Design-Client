@@ -60,9 +60,7 @@ export class GraphStorage {
     Object.assign(cloneStyle, styleStorage.style);
     styleStorage.style = cloneStyle;
     const vertexStorage = new VertexStorage(vertex, styleStorage, BPELComponent, null, null);
-    let vertexLength = Object.keys(this.vertexStorageList).length;
-    this.vertexStorageList[vertexLength] = vertexStorage;
-    // BPELComponent.setVertexStorage(vertexStorage);
+    this.vertexStorageList[vertex.id] = vertexStorage;
     return vertexStorage;
   }
 
