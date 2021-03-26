@@ -57,6 +57,8 @@ import IOBPELDocService from "../../services/ioBPELDoc/ioBPELDoc.service";
 import { BpelDesignerEditorService } from "../../services/bpel-designer-editor.service";
 import { GraphStorage } from "../../models/graph-storage.model";
 import VertexStorage from "../../models/vertext-storage.model";
+import { MatDialog } from "@angular/material";
+import { ConfirmDialogComponent, ConfirmDialogModel } from "src/app/components/utils/confirm-dialog/confirm-dialog.component";
 
 @Component({
     selector: 'palette',
@@ -73,9 +75,12 @@ export class PaletteComponent implements AfterViewInit {
     importingTargetContainerActivityNameWithIdStack: string[] = new Array<string>();
     importingComponentNameWithIdComponentMap: Map<string, BPELComponent> = new Map<string, BPELComponent>();
 
+    selectedVertex: mxCell = null;  // for delete functionality
+
     @Input() userSettedTargetContainerActivity: BPELComponent;
 
-    constructor(private updateBPELDocService: UpdateBPELDocService, private graphEditorService: BpelDesignerEditorService, private ioBPELDocService: IOBPELDocService) {
+    constructor(private updateBPELDocService: UpdateBPELDocService, private graphEditorService: BpelDesignerEditorService,private ioBPELDocService: IOBPELDocService,
+        private dialog: MatDialog) {
         // Scenario: import a BPEL doc
         ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent: [string[], string, Map<string, string>, string]) => {
             let componentNameWithIdStack = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent[0];
@@ -120,6 +125,10 @@ export class PaletteComponent implements AfterViewInit {
             console.log('hello world2');
             this.graphStorage = this.graphEditorService.getGraphStorage();
             console.log(this.graphStorage)
+
+            this.graphStorage.getGraph().addListener(mxEvent.CLICK, (sender) => {
+                this.selectedVertex = sender.selectionModel.cells[0];
+            })
         }, 200)
     }
 
@@ -350,5 +359,28 @@ export class PaletteComponent implements AfterViewInit {
             retBasey = this.offsety;
         }
         return retBasey;
+    }
+
+    confirmDelete(): void {
+        const message = `It will delete both the vertex's IR and ER.`;
+        const dialogData = new ConfirmDialogModel(`Confirm to delete the selected BPEL component: ${this.selectedVertex.getValue()}${this.selectedVertex.getId()}?`, message);
+
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          maxWidth: "700px",
+          data: dialogData
+
+        });
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+          if (dialogResult == true) {
+            this.deleteSelectedVertex();
+          }
+        });
+    }
+
+    deleteSelectedVertex(): void {
+        if (this.selectedVertex == null)    return;
+
+        this.graphEditorService.deleteVertex(this.selectedVertex);
     }
 }

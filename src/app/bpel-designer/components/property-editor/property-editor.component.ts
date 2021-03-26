@@ -374,8 +374,10 @@ export class PropertyEditorComponent implements OnInit {
 
     private getSelectedComponentNameWithVertexId(): string {
         if (this.selectedAttribute == undefined)    return "none";
-
         let vertexId = this.selectedVertex.id;
-        return this.graphStorage.findVertexStorageByID(vertexId).getComponent().getComponentName() + vertexId;
+        let vertexStorage = this.graphStorage.findVertexStorageByID(vertexId);
+        if (vertexStorage == undefined) return "none";
+
+        return vertexStorage.getComponent().getComponentName() + vertexId;
     }
 }

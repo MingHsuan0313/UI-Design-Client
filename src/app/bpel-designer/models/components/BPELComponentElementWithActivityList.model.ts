@@ -15,4 +15,9 @@ export class BPELComponentElementWithActivityList extends BPELComponentElement {
     getActivityList(): BPELComponent[] {
         return this.activityList;
     }
+
+    removeActivityInList(activity: BPELComponent): void {
+        let activityIdx = this.activityList.findIndex((component) => component.getId() == activity.getId());
+        this.activityList.splice(activityIdx, 1);
+    }
 }
