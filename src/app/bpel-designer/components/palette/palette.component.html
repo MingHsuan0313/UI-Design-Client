@@ -1,9 +1,12 @@
 <div class="palette-class">
     <mat-tab-group>
-      <mat-tab label="Palette">
-          <button (click)="deleteSelectedVertex()" mat-button style="min-width: 10px;" matTooltip="delete selected BPEL component">
-            <mat-icon style="margin-bottom:20px ;" svgIcon="delete"></mat-icon>
-          </button>
+      <mat-tab>
+          <ng-template mat-tab-label>
+            Palette
+            <button (click)="deleteSelectedVertex()" mat-button style="min-width: 10px;" matTooltip="delete selected BPEL component">
+              <mat-icon style="margin-bottom:20px ;" svgIcon="delete"></mat-icon>
+            </button>
+          </ng-template>
           <span><b>Target Container: {{getTargetContainerComponentNameWithVertexId()}}</b></span>
           <br/>
           <button mat-stroked-button color="primary" (click)="syncTargetContainerActivity()">2. Sync targetContainer</button>
