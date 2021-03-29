@@ -23,7 +23,6 @@ export class DefaultLayoutComponent implements OnInit {
     })
     
     dialogRef.afterClosed().subscribe(projectName => {
-      console.log(`project name you choose is ${projectName}`);
       SelabGlobalStorage.setProjectName(projectName);
       this.store.dispatch(new IRSetProjectNameAction(projectName));
     })

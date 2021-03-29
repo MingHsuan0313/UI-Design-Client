@@ -15,9 +15,9 @@ export class ButtonComponent extends BasicComponent {
       super(uiComponentBuilder);
       let properties = uiComponentBuilder.getProperties();
       if (properties != undefined) {
-        this.text = properties["name"];
-        this.href = properties["href"];
-        this.trigger = properties["trigger"];
+        this.text = properties["name"].value;
+        this.href = properties["href"].value;
+        this.trigger = properties["trigger"].value;
       }
     }
   }

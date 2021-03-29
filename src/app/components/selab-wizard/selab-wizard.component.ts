@@ -2,7 +2,6 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { PipelineCreateOperationAction, PipelineCreateTaskAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
@@ -53,18 +52,15 @@ export class SelabWizardComponent implements OnInit {
   // receive data from dialog input
   initialization() {
     let pageId = this.graphEditorService.selectedPageId;
-    // console.log(JSON.stringify(SelabGlobalStorage.taskGraph));
     this.isPipeline = this.data.isPipeline;
     this.genere = this.data.genere;
     this.isComposite = this.data.isComposite;
     this.type = this.data.type;
     this.category = this.data.category;
-    let pageId = this.graphEditorService.selectedPageId;
     this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
     if (this.isPipeline) {
       setTimeout(() => {
         let currentTask = SelabGlobalStorage.taskGraph.currentTask;
-        console.log(currentTask);
         this.uiComponentBuilder.setReturnData(currentTask.service.returnData.getReturnDatas()['datas']);
       }, 200);
     }
@@ -101,8 +97,6 @@ export class SelabWizardComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("initilize")
-    console.log(this.data);
     this.initialization();
     if (!this.checkWizardStatus())
       return;

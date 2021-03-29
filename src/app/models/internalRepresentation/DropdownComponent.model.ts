@@ -12,7 +12,7 @@ export class DropdownComponent extends BasicComponent {
       super(uiComponentBuilder);
       let properties = uiComponentBuilder.getProperties();
       if (properties != undefined) {
-        this.items = properties["items"];
+        this.items = properties["items"].value;
       }
     }
   }

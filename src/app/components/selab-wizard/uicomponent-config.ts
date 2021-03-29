@@ -29,11 +29,11 @@ export class UIComponentConfig {
             return [
                 {
                     "type": "String",
-                    "value": "name"
+                    "name": "name"
                 },
                 {
                     "type": "String",
-                    "value": "href"
+                    "name": "href"
                 }
             ]
         }
@@ -41,15 +41,15 @@ export class UIComponentConfig {
             return [
                 {
                     "type": "String",
-                    "value": "name"
+                    "name": "name"
                 },
                 {
                     "type": "String",
-                    "value": "href"
+                    "name": "href"
                 },
                 {
                     "type": "Boolean",
-                    "value": "trigger"
+                    "name": "trigger"
                 },
             ]
         }
@@ -57,15 +57,15 @@ export class UIComponentConfig {
             return [
                 {
                     "type": "String",
-                    "value": "name"
+                    "name": "name"
                 },
                 {
                     "type": "String",
-                    "value": "headers"
+                    "name": "headers"
                 },
                 {
                     "type": "String",
-                    "value": "rows"
+                    "name": "rows"
                 }
             ]
         }
@@ -73,11 +73,11 @@ export class UIComponentConfig {
             return [
                 {
                     "type": "String",
-                    "value": "name"
+                    "name": "name"
                 },
                 {
                     "type": "String",
-                    "value": "header"
+                    "name": "header"
                 }
             ]
 
@@ -86,11 +86,11 @@ export class UIComponentConfig {
             return [
                 {
                     "type": "String",
-                    "value": "name"
+                    "name": "name"
                 },
                 {
                     "type": "String",
-                    "value": "items"
+                    "name": "items"
                 }
             ]
         }
@@ -98,11 +98,11 @@ export class UIComponentConfig {
             return [
                 {
                     "type": "String",
-                    "value": "name"
+                    "name": "name"
                 },
                 {
                     "type": "String",
-                    "value": "text"
+                    "name": "text"
                 }
             ]
 
@@ -111,7 +111,7 @@ export class UIComponentConfig {
             return [
                 {
                     "type": "String",
-                    "value": "name"
+                    "name": "name"
                 },
             ]
         }
@@ -119,7 +119,7 @@ export class UIComponentConfig {
             return [
                 {
                     "type": "String",
-                    "value": "name"
+                    "name": "name"
                 }
             ]
         }
@@ -127,7 +127,7 @@ export class UIComponentConfig {
             return [
                 {
                     "type": "String",
-                    "value": "name"
+                    "name": "name"
                 },
             ]
 
@@ -136,11 +136,11 @@ export class UIComponentConfig {
             return [
                 {
                     "type": "String",
-                    "value": "name"
+                    "name": "name"
                 },
                 {
                     "type": "String",
-                    "value": "items"
+                    "name": "items"
                 }
             ]
         }

@@ -1,7 +1,6 @@
 import { UIComponentFactory } from "src/app/components/selab-wizard/uicomponent-factory";
 import { SelabGlobalStorage } from "../store/globalStorage";
 import { LayoutComponent } from "./LayoutComponent.model";
-import { UIComponent } from "./UIComponent.model";
 
 export class PageUICDL {
     public id: string;

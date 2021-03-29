@@ -88,7 +88,7 @@ export class BuildTabComponent implements OnInit {
   setComponentProperties() {
     this.uiComponentBuilder
       .setProperties(this.formData)
-      .setName(this.formData["name"]);
+      .setName(this.formData["name"].value);
     if (!this.checkIsFormFill()) {
       alert("You need to fill all input");
       return;
@@ -102,20 +102,26 @@ export class BuildTabComponent implements OnInit {
     this.formData = {};
   }
 
-
   buildForm() {
     for (let index = 0; index < this.buildFormProperties.length; index++) {
-      if (this.buildFormProperties[index]["type"] == "Boolean") {
-        this.formData[this.buildFormProperties[index]["value"]] = "false";
+      let propertyName = this.buildFormProperties[index]["name"];
+      let propertyType = this.buildFormProperties[index]["type"];
+      if (this.formData[propertyName] == undefined) {
+        this.formData[propertyName] = {};
       }
-      else if (this.buildFormProperties[index]["type"] == "String") {
-        this.formData[this.buildFormProperties[index]["value"]] = "";
+
+      if (propertyType == "Boolean") {
+        this.formData[propertyName].value = false;
+      }
+      else if (propertyType == "String") {
+        this.formData[propertyName].value = "";
       }
     }
   }
 
-  valueChange(event, propertyName) {
-    this.formData[propertyName] = event;
+  valueChange(event, property) {
+    this.formData[property.name]["value"] = event;
+    this.formData[property.name]["type"] = property["type"];
   }
 
   concateString(str1, str2) {
@@ -123,6 +129,9 @@ export class BuildTabComponent implements OnInit {
   }
 
   checkIsFormFill(): boolean {
+    console.log('check is form filled ?')
+    console.log(this.formData);
+    console.log(this.uiComponentBuilder.currentTaskStatus);
     if(Object.keys(this.uiComponentBuilder.currentTaskStatus).length > 0)
       return true;
     if (Object.keys(this.formData).length == 0)

@@ -13,8 +13,8 @@ export class TableComponent extends BasicComponent {
       super(uiComponentBuilder);
       let properties = uiComponentBuilder.getProperties();
       if (properties != undefined) {
-        this.headers = properties["headers"];
-        this.rows = properties["rows"];
+        this.headers = properties["headers"].value;
+        this.rows = properties["rows"].value;
       }
     }
   }

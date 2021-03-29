@@ -45,7 +45,6 @@ export class ThemeTabsComponent implements OnInit {
           })
         }
         if(this.themes.length==0){
-          console.log("Delete All")
           this.selectedThemeIndex.setValue(0)
           this.selectedPageIndex.setValue(0)
         }
@@ -73,7 +72,6 @@ export class ThemeTabsComponent implements OnInit {
   changePage(targetIndex) {
     let currentPageId = this.themes[this.selectedThemeIndex.value]['pages'][this.selectedPageIndex.value].id;
     let targetPageId = this.themes[this.selectedThemeIndex.value]['pages'][targetIndex.index].id;
-    // console.log(`change page\ncurrent page = ${currentPageId} target page = ${targetPageId}`);
     this.graphEditorService.changePage(currentPageId, targetPageId);
   }
 
