@@ -98,8 +98,6 @@ export class BuildTabComponent implements OnInit {
       this.navigateToComposeTab();
     else
       this.navigateToStatusTab();
-
-    this.formData = {};
   }
 
   buildForm() {
@@ -120,6 +118,8 @@ export class BuildTabComponent implements OnInit {
   }
 
   valueChange(event, property) {
+    console.log('value changed !')
+    console.log(property);
     this.formData[property.name]["value"] = event;
     this.formData[property.name]["type"] = property["type"];
   }
@@ -129,18 +129,34 @@ export class BuildTabComponent implements OnInit {
   }
 
   checkIsFormFill(): boolean {
+    let isCorrect = true;
     console.log('check is form filled ?')
     console.log(this.formData);
     console.log(this.uiComponentBuilder.currentTaskStatus);
-    if(Object.keys(this.uiComponentBuilder.currentTaskStatus).length > 0)
-      return true;
-    if (Object.keys(this.formData).length == 0)
-      return false;
-    let isCorrect = true;
-    for (let key in this.formData) {
-      if (this.formData[key] == "") {
-        isCorrect = false;
-        break;
+    // check user input
+    for (let propertyName in this.formData) {
+      let propertyType = this.formData[propertyName].type;
+      let propertyValue = this.formData[propertyName].value;
+
+      if(propertyType == "String") {
+        if (propertyValue.length == 0)
+          isCorrect = false;
+      }
+
+      else if(propertyType == "Boolean") {
+        if (propertyValue == false || propertyValue == true)
+          continue;
+        else
+          isCorrect = false;
+      }
+
+      else if(propertyType == "Option") {
+        if (propertyValue.length == 0)
+          isCorrect = false;
+      }
+
+      else if(propertyType == "Integer") {
+        continue;
       }
     }
     return isCorrect;

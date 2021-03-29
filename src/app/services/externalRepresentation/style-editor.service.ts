@@ -9,9 +9,7 @@ export default class StyleEditorService {
 
   constructor() { }
 
-  convertStyleDescriptionToJsobObject(styleDescription: String) {
-    // console.log("style description here")
-    // console.log(styleDescription);
+  static convertStyleDescriptionToJsobObject(styleDescription: String) {
     let styleProperties = styleDescription.split(";");
     let styleModel = {};
     for (let index = 0; index < styleProperties.length; index++) {
@@ -23,8 +21,8 @@ export default class StyleEditorService {
     this.convertJsonObjectToStyleDescription(styleModel);
     return styleModel;
   }
-  //
-  convertJsonObjectToStyleDescription(styleObj: object):  string{
+
+  static convertJsonObjectToStyleDescription(styleObj: object):  string{
     let styleDescription = "";
     let styleKeys = Object.keys(styleObj);
     for (let index = 0; index < styleKeys.length; index++) {

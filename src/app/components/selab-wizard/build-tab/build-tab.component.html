@@ -22,6 +22,7 @@
                 </mat-form-field>
             </div>
         </div>
+
         <div *ngIf="property.type == 'Boolean'">
             <mat-slide-toggle [ngModel]="inputValue" (ngModelChange)="valueChange($event,property)" matInput>
                 {{property.name}}</mat-slide-toggle>
