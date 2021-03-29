@@ -193,6 +193,22 @@ export class BuildTabComponent implements OnInit {
     return str1 + str2;
   }
 
+  isExistedInServiceReturnBinidng(propertyName: string): boolean {
+    let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
+    let parentTask = currentTask.parentTask;
+    let hierarchy = `${parentTask.componentSelector}-${this.uiComponentBuilder.selector}`;
+    for(let index = 0; index < this.uiComponentBuilder.currentTaskStatus.length; index++) {
+      let serviceReturnBindingObject = this.uiComponentBuilder.currentTaskStatus[index];
+      if (serviceReturnBindingObject['hierarchy'] != hierarchy)
+        continue;
+      else {
+        if (serviceReturnBindingObject['bindingPart']['name'] == propertyName)
+          return true;
+      }
+    }
+    return false;
+  }
+
   checkIsFormFill(): boolean {
     let isCorrect = true;
     console.log('check is form filled ?')
@@ -202,6 +218,8 @@ export class BuildTabComponent implements OnInit {
     for (let propertyName in this.formData) {
       let propertyType = this.formData[propertyName].type;
       let propertyValue = this.formData[propertyName].value;
+      if(this.isPipeline && this.isExistedInServiceReturnBinidng(propertyName))
+        continue;
 
       if (propertyType == "String") {
         if (propertyValue.length == 0)
