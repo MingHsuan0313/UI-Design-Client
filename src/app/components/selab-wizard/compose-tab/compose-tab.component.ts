@@ -41,15 +41,69 @@ export class ComposeTabComponent implements OnInit {
 
   chooseReturn(event, option, property) {
     console.log('toggle is from return');
-    console.log(event);
     console.log(property);
     let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
     let parentTask = currentTask.parentTask;
-    let hiearachy = `${parentTask.componentSelector}-${this.subComponentBuilder.selector}`;
-    this.uiComponentBuilder.currentTaskStatus[hiearachy] = this.generateReturnClass(currentTask, option, property, hiearachy);
-    if (this.uiComponentBuilder.currentTaskStatus[hiearachy] == null)
-      delete this.uiComponentBuilder.currentTaskStatus[hiearachy];
+    let hierarchy = `${parentTask.componentSelector}-${this.subComponentBuilder.selector}`;
+    let serviceReturnBindingObject = this.generateReturnClass(currentTask, option, property, hierarchy);
+    if (option == "None") {
+      this.deleteServiceReturnBinding(property["name"], hierarchy, option);
+    }
+    else {
+      if (!this.checkIsReturnBindingExist(serviceReturnBindingObject["bindingPart"]["name"], serviceReturnBindingObject["hierarchy"], option)) {
+        console.log('not existed');
+        this.uiComponentBuilder.currentTaskStatus.push(serviceReturnBindingObject as any);
+      }
+      else
+        console.log('exist');
+    }
+    console.log(this.uiComponentBuilder.currentTaskStatus);
   }
+
+  deleteServiceReturnBinding(bindingPart: string, hierarchy: string, returnPropertyName: string) {
+    console.log(`delete service return\nbinding part = ${bindingPart}\nhierarchy = ${hierarchy}\nreturn property name ${returnPropertyName}`);
+    for (let index = 0; index < this.uiComponentBuilder.currentTaskStatus.length; index++) {
+      let serviceReturnBindingObject = this.uiComponentBuilder.currentTaskStatus[index];
+      if (serviceReturnBindingObject['hierarchy'] != hierarchy)
+        continue;
+      else {
+        if (serviceReturnBindingObject['bindingPart']["name"] != bindingPart)
+          continue
+        else {
+            console.log(`delete index ${index}`);
+            this.uiComponentBuilder.currentTaskStatus.splice(index, 1);
+        }
+      }
+    }
+  }
+
+  checkIsReturnBindingExist(bindingPart: string, hierarchy: string, returnPropertyName: string): boolean {
+    console.log(`binding part = ${bindingPart}\nhierarchy = ${hierarchy}\nreturn property name = ${returnPropertyName}`);
+    for (let index = 0; index < this.uiComponentBuilder.currentTaskStatus.length; index++) {
+      let serviceReturnBindingObject = this.uiComponentBuilder.currentTaskStatus[index];
+      if (serviceReturnBindingObject['hierarchy'] != hierarchy)
+        continue;
+      else {
+        if (serviceReturnBindingObject['bindingPart']["name"] != bindingPart)
+          continue
+        else {
+          let returnProperty = "";
+          if (serviceReturnBindingObject["returnClass"]["class"] == "List") {
+            returnProperty = serviceReturnBindingObject["returnClass"]["child"]["propertyName"];
+          }
+          else {
+            returnProperty = serviceReturnBindingObject["returnClass"]["propertyName"];
+          }
+          if (returnProperty != returnPropertyName)
+            continue
+          else
+            return true;
+        }
+      }
+    }
+    return false;
+  }
+
 
   generateReturnClass(currentTask: WizardTask, option, property, hiearachy) {
     if (option == "None") {

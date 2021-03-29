@@ -25,7 +25,7 @@ export class UIComponentBuilder {
     public componentList: UIComponent[];
     public serviceID: string;
     public returnData: ReturnModel;
-    public currentTaskStatus: {};
+    public currentTaskStatus: any[];
 
     constructor() {
         this.name = "";
@@ -38,7 +38,7 @@ export class UIComponentBuilder {
         this.style = {};
         this.componentList = [];
         this.returnData = new ReturnModel({});
-        this.currentTaskStatus = {};
+        this.currentTaskStatus = [];
     }
 
     getProperties(): Object {
@@ -51,7 +51,7 @@ export class UIComponentBuilder {
     }
 
     setReturnData(datas: []) {
-        this.returnData.datas = datas;
+        this.returnData['datas'] = datas;
         return this;
     }
 

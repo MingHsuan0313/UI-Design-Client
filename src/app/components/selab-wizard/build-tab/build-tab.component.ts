@@ -1,3 +1,4 @@
+import { templateJitUrl } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
@@ -33,30 +34,83 @@ export class BuildTabComponent implements OnInit {
 
   setReturn(service: ServiceComponentModel) {
     this.returnData = ["None"];
-    for(let index = 0;index < service['returnData'].getReturnDatas()['datas'].length;index++) {
+    for (let index = 0; index < service['returnData'].getReturnDatas()['datas'].length; index++) {
       this.returnData.push(service['returnData'].getReturnDatas()['datas'][index]);
     }
   }
 
   chooseReturn(event, option, property) {
     console.log('toggle is from return');
-    console.log(event);
     console.log(property);
     let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
     let parentTask = currentTask.parentTask;
-    let hiearachy = `${parentTask.componentSelector}-${this.uiComponentBuilder.selector}`;
-    this.uiComponentBuilder.currentTaskStatus[hiearachy] = this.generateReturnClass(currentTask, option, property, hiearachy);
-    if(this.uiComponentBuilder.currentTaskStatus[hiearachy] == null)
-      delete this.uiComponentBuilder.currentTaskStatus[hiearachy];
+    let hierarchy = `${parentTask.componentSelector}-${this.uiComponentBuilder.selector}`;
+    let serviceReturnBindingObject = this.generateReturnClass(currentTask, option, property, hierarchy);
+    if (option == "None") {
+      this.deleteServiceReturnBinding(property["name"], hierarchy, option);
+    }
+    else {
+      if (!this.checkIsReturnBindingExist(serviceReturnBindingObject["bindingPart"]["name"], serviceReturnBindingObject["hierarchy"], option)) {
+        console.log('not existed');
+        this.uiComponentBuilder.currentTaskStatus.push(serviceReturnBindingObject as any);
+      }
+      else
+        console.log('exist');
+    }
+    console.log(this.uiComponentBuilder.currentTaskStatus);
   }
 
-  generateReturnClass(parentTask: WizardTask, option, property, hiearachy) {
-    if(option == "None") {
+  deleteServiceReturnBinding(bindingPart: string, hierarchy: string, returnPropertyName: string) {
+    console.log(`delete service return\nbinding part = ${bindingPart}\nhierarchy = ${hierarchy}\nreturn property name ${returnPropertyName}`);
+    for (let index = 0; index < this.uiComponentBuilder.currentTaskStatus.length; index++) {
+      let serviceReturnBindingObject = this.uiComponentBuilder.currentTaskStatus[index];
+      if (serviceReturnBindingObject['hierarchy'] != hierarchy)
+        continue;
+      else {
+        if (serviceReturnBindingObject['bindingPart']["name"] != bindingPart)
+          continue
+        else {
+            console.log(`delete index ${index}`);
+            this.uiComponentBuilder.currentTaskStatus.splice(index, 1);
+        }
+      }
+    }
+  }
+
+  checkIsReturnBindingExist(bindingPart: string, hierarchy: string, returnPropertyName: string): boolean {
+    console.log(`binding part = ${bindingPart}\nhierarchy = ${hierarchy}\nreturn property name = ${returnPropertyName}`);
+    for (let index = 0; index < this.uiComponentBuilder.currentTaskStatus.length; index++) {
+      let serviceReturnBindingObject = this.uiComponentBuilder.currentTaskStatus[index];
+      if (serviceReturnBindingObject['hierarchy'] != hierarchy)
+        continue;
+      else {
+        if (serviceReturnBindingObject['bindingPart']["name"] != bindingPart)
+          continue
+        else {
+          let returnProperty = "";
+          if (serviceReturnBindingObject["returnClass"]["class"] == "List") {
+            returnProperty = serviceReturnBindingObject["returnClass"]["child"]["propertyName"];
+          }
+          else {
+            returnProperty = serviceReturnBindingObject["returnClass"]["propertyName"];
+          }
+          if (returnProperty != returnPropertyName)
+            continue
+          else
+            return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  generateReturnClass(parentTask: WizardTask, option, property, hierarchy) {
+    if (option == "None") {
       return null;
     }
     let bindingPart = property;
     let returnClass = {};
-    if(parentTask.service.returnData.isList()) {
+    if (parentTask.service.returnData.isList()) {
       returnClass = {
         "class": "List",
         "propertyName": "l1",
@@ -73,11 +127,13 @@ export class BuildTabComponent implements OnInit {
       }
     }
 
-    return {
-      "hiearchy": hiearachy,
+    let result = {
+      "hierarchy": hierarchy,
       "bindingPart": bindingPart,
       "returnClass": returnClass
     };
+
+    return result;
   }
 
   closeWizard() {
@@ -147,30 +203,30 @@ export class BuildTabComponent implements OnInit {
       let propertyType = this.formData[propertyName].type;
       let propertyValue = this.formData[propertyName].value;
 
-      if(propertyType == "String") {
+      if (propertyType == "String") {
         if (propertyValue.length == 0)
           isCorrect = false;
       }
 
-      else if(propertyType == "Boolean") {
+      else if (propertyType == "Boolean") {
         if (propertyValue == false || propertyValue == true)
           continue;
         else
           isCorrect = false;
       }
 
-      else if(propertyType == "Option") {
+      else if (propertyType == "Option") {
         if (propertyValue.length == 0)
           isCorrect = false;
       }
 
-      else if(propertyType == "Integer") {
+      else if (propertyType == "Integer") {
         continue;
       }
     }
     return isCorrect;
   }
-  
+
   navigateToComposeTab() {
     let tabLinkElements = document.getElementsByClassName("mat-tab-label-content");
     for (let index = 0; index < tabLinkElements.length; index++) {
