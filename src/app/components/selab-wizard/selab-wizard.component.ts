@@ -93,9 +93,6 @@ export class SelabWizardComponent implements OnInit {
     return true;
   }
 
-  checkUIComponent() {
-  }
-
   ngOnInit() {
     this.initialization();
     if (!this.checkWizardStatus())

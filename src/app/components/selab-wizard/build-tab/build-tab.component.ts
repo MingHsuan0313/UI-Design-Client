@@ -108,18 +108,27 @@ export class BuildTabComponent implements OnInit {
         this.formData[propertyName] = {};
       }
 
+      this.formData[propertyName].type = propertyType
+
       if (propertyType == "Boolean") {
         this.formData[propertyName].value = false;
       }
+
       else if (propertyType == "String") {
         this.formData[propertyName].value = "";
+      }
+
+      else if (propertyType == "Option") {
+
+      }
+
+      else if (propertyType == "Integer") {
+
       }
     }
   }
 
   valueChange(event, property) {
-    console.log('value changed !')
-    console.log(property);
     this.formData[property.name]["value"] = event;
     this.formData[property.name]["type"] = property["type"];
   }

@@ -46,7 +46,7 @@ export class ComposeTabComponent implements OnInit {
     let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
     let parentTask = currentTask.parentTask;
     let hiearachy = `${parentTask.componentSelector}-${this.subComponentBuilder.selector}`;
-    this.uiComponentBuilder.currentTaskStatus[hiearachy] = this.generateReturnClass(currentTask , option, property, hiearachy);
+    this.uiComponentBuilder.currentTaskStatus[hiearachy] = this.generateReturnClass(currentTask, option, property, hiearachy);
     if (this.uiComponentBuilder.currentTaskStatus[hiearachy] == null)
       delete this.uiComponentBuilder.currentTaskStatus[hiearachy];
   }
@@ -112,28 +112,42 @@ export class ComposeTabComponent implements OnInit {
       .setName(this.formData["name"]);
     let subComponent = this.subComponentBuilder.build();
     this.uiComponentBuilder.addSubComponent(subComponent);
-    this.formData = {};
   }
 
-  valueChange(event, value) {
-    this.formData[value] = event;
-  }
-
-  deepCopySubComponent(): UIComponent {
-    let copySubComponent;
-    return copySubComponent;
+  valueChange(event, property) {
+    this.formData[property.name]["value"] = event;
+    this.formData[property.name]["type"] = property["type"];
   }
 
   checkIsFormFill(): boolean {
-    if(Object.keys(this.uiComponentBuilder.currentTaskStatus).length > 0)
-      return true;
-    if (Object.keys(this.formData).length == 0)
-      return false;
     let isCorrect = true;
-    for (let key in this.formData) {
-      if (this.formData[key] == "") {
-        isCorrect = false;
-        break;
+    console.log('check is form filled ?')
+    console.log(this.formData);
+    console.log(this.uiComponentBuilder.currentTaskStatus);
+    // check user input
+    for (let propertyName in this.formData) {
+      let propertyType = this.formData[propertyName].type;
+      let propertyValue = this.formData[propertyName].value;
+
+      if (propertyType == "String") {
+        if (propertyValue.length == 0)
+          isCorrect = false;
+      }
+
+      else if (propertyType == "Boolean") {
+        if (propertyValue == false || propertyValue == true)
+          continue;
+        else
+          isCorrect = false;
+      }
+
+      else if (propertyType == "Option") {
+        if (propertyValue.length == 0)
+          isCorrect = false;
+      }
+
+      else if (propertyType == "Integer") {
+        continue;
       }
     }
     return isCorrect;
@@ -147,14 +161,29 @@ export class ComposeTabComponent implements OnInit {
   buildForm() {
     this.formData = {};
     for (let index = 0; index < this.subComponentProperties.length; index++) {
-      if (this.subComponentProperties[index]["type"] == "Boolean") {
-        this.formData[this.subComponentProperties[index]["value"]] = "false";
+      let propertyName = this.subComponentProperties[index]["name"];
+      let propertyType = this.subComponentProperties[index]["type"];
+      if (this.formData[propertyName] == undefined) {
+        this.formData[propertyName] = {};
       }
-      else if (this.subComponentProperties[index]["type"] == "String") {
-        this.formData[this.subComponentProperties[index]["value"]] = "";
+
+      this.formData[propertyName].type = propertyType
+
+      if (propertyType == "Boolean") {
+        this.formData[propertyName].value = false;
+      }
+
+      else if (propertyType == "String") {
+        this.formData[propertyName].value = "";
+      }
+
+      else if (propertyType == "Option") {
+
+      }
+
+      else if (propertyType == "Integer") {
+
       }
     }
-    console.log("build form...")
-    console.log(this.formData);
   }
 }
