@@ -36,9 +36,10 @@ import { environment } from '../environments/environment';
 import { pipelineStorageReducer } from "./models/store/reducers/PipelineStorageReducer";
 import { Action, StoreModule } from "@ngrx/store";
 import { PipelineStorage } from "./models/wizard-task-dependency";
-import { AppState, ExternalRepresentation, InternalRepresentation } from "./models/store/app.state";
+import { AppState, BPELRepresentation, ExternalRepresentation, InternalRepresentation } from "./models/store/app.state";
 import { externalRepresentationReducer } from "./models/store/reducers/ExternalRepresentationReducer";
 import { internalRepresentationReducer } from "./models/store/reducers/InternalRepresentationReducer";
+import { bpelRepresentationReducer } from "./models/store/reducers/BPELRepresentationReducer";
 import { ConfirmDialogComponent } from './components/utils/confirm-dialog/confirm-dialog.component';
 import { TabNameDialogComponent } from './components/selab-graph-editor/tab-name-dialog/tab-name-dialog.component';
 import { EdgeInformationDialogComponent } from './components/selab-graph-editor/edge-information-dialog/egde-information-dialog.component';
@@ -62,7 +63,9 @@ enableMapSet();
 const appState = {
   pipelineStorage: new PipelineStorage(),
   internalRepresentation: new InternalRepresentation(),
-  externalRepresentation: new ExternalRepresentation()
+  externalRepresentation: new ExternalRepresentation(),
+
+  bpelRepresentation: new BPELRepresentation()
 }
 
 export const rootReducer = (
@@ -73,6 +76,8 @@ export const rootReducer = (
     pipelineStorage: pipelineStorageReducer(state.pipelineStorage,action),
     externalRepresentation: externalRepresentationReducer(state.externalRepresentation,action),
     internalRepresentation: internalRepresentationReducer(state.internalRepresentation,action),
+
+    bpelRepresentation: bpelRepresentationReducer(state.bpelRepresentation,action)
   }; 
 }
 

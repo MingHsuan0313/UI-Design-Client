@@ -59,6 +59,9 @@ import { GraphStorage } from "../../models/graph-storage.model";
 import VertexStorage from "../../models/vertext-storage.model";
 import { MatDialog } from "@angular/material";
 import { ConfirmDialogComponent, ConfirmDialogModel } from "src/app/components/utils/confirm-dialog/confirm-dialog.component";
+import { Store } from "@ngrx/store";
+import { AppState } from "src/app/models/store/app.state";
+import { BPELRepresentationInsertBpelComponentAction } from "src/app/models/store/actions/bpelProcessRepresentation.action";
 
 @Component({
     selector: 'palette',
@@ -80,7 +83,8 @@ export class PaletteComponent implements AfterViewInit {
     @Input() userSettedTargetContainerActivity: BPELComponent;
 
     constructor(private updateBPELDocService: UpdateBPELDocService, private graphEditorService: BpelDesignerEditorService,private ioBPELDocService: IOBPELDocService,
-        private dialog: MatDialog) {
+        private dialog: MatDialog,
+        private store: Store<AppState>) {
         // Scenario: import a BPEL doc
         ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent: [string[], string, Map<string, string>, string]) => {
             let componentNameWithIdStack = componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent[0];
@@ -182,7 +186,7 @@ export class PaletteComponent implements AfterViewInit {
         let bpelComponent;
         switch (componentName) {
             case 'process':
-                bpelComponent = new Process(vertexId, this.updateBPELDocService);
+                bpelComponent = new Process(vertexId, null);
                 this.setStrategy(new ProcessStrategy(this.basex, this.basey));
                 break;
             case 'scope':
@@ -308,6 +312,9 @@ export class PaletteComponent implements AfterViewInit {
         } else {
             bpelComponentVertexStorage = this.strategy.createComponent(this.graphStorage, bpelComponent, null);
         }
+
+        this.store.dispatch(new BPELRepresentationInsertBpelComponentAction(this.graphStorage.vertexStorageList, this.graphStorage.edgeStorageList));
+
         // check instanceof types in the following set targetContainerActivity
         // {BPELComponentElementWithActivity, BPELComponentElementWithActivityList, BPELComponentElementWithActivityAndActivityList, ElseIfBranch, ElseBranch}
         if (bpelComponent instanceof Process || bpelComponent instanceof Scope ||

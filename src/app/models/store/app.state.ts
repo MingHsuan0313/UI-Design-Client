@@ -2,11 +2,15 @@
 import { PageUICDL } from "../internalRepresentation/pageUICDL.model";
 import { PipelineStorage } from "../wizard-task-dependency";
 import { SelabGraph } from "../externalRepresentation/selabGraph.model";
+import { Process } from "src/app/bpel-designer/models/components/containers/process/process.model";
+import EdgeStorage from "src/app/bpel-designer/models/edge-storage.model";
 
 export interface AppState {
     pipelineStorage: PipelineStorage;
     internalRepresentation: InternalRepresentation;
     externalRepresentation: ExternalRepresentation;
+
+    bpelRepresentation: BPELRepresentation;
 }
 
 // using graphID find PageUICDL
@@ -31,5 +35,16 @@ export class ExternalRepresentation{
     graphStorages: Map<string,SelabGraph>;
     constructor() {
         this.graphStorages = new Map<string,SelabGraph>(); 
+    }
+}
+
+export class BPELRepresentation{
+    vertexStorageList: {};
+    edgeStorageList: EdgeStorage[];
+    filename: string;
+
+    constructor() {
+        this.vertexStorageList = {};
+        this.edgeStorageList = [];
     }
 }

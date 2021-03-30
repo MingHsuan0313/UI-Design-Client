@@ -1,5 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { BPELRepresentationUpdateProcessAction } from "src/app/models/store/actions/bpelProcessRepresentation.action";
+import { AppState } from "src/app/models/store/app.state";
 import { BPELComponent } from "../../models/components/BPELComponent.model";
+import { Process } from "../../models/components/containers/process/process.model";
 import { GraphStorage } from "../../models/graph-storage.model";
 import { BpelDesignerEditorService } from "../../services/bpel-designer-editor.service";
 import IOBPELDocService from "../../services/ioBPELDoc/ioBPELDoc.service";
@@ -27,7 +31,8 @@ export class PropertyEditorComponent implements OnInit {
     userSettedTargetContainerActivity: BPELComponent;
     @Output() userSettedTargetContainerActivityEvent: EventEmitter<BPELComponent> = new EventEmitter<BPELComponent>();
 
-    constructor(private graphEditorService: BpelDesignerEditorService, private ioBPELDocService: IOBPELDocService) {
+    constructor(private graphEditorService: BpelDesignerEditorService, private ioBPELDocService: IOBPELDocService,
+        private store: Store<AppState>) {
         this.initBPELComponentDict();
 
         ioBPELDocService.subscribe((componentNameWithIdStack_curParentNodeNameWithId_curNodeAttributesMap_curNodeElementTextContent: [string[], string, Map<string, string>, string]) => {
@@ -198,21 +203,23 @@ export class PropertyEditorComponent implements OnInit {
 
     syncSelectedAttribute(attributeKey: any, event: any) {
         let toppestObject = this.objectStack[this.objectStack.length - 1];
-        console.log("[INFO] the toppest object = ");
-        console.log(toppestObject);
-        console.log("Editing attribute field = " + attributeKey);
-        toppestObject.getAttribute()[attributeKey] = event.target.value;
-        console.log("Editing attribute setting value = " + toppestObject.getAttribute()[attributeKey]);
+        // console.log("[INFO] the toppest object = ");
+        // console.log(toppestObject);
+        // console.log("Editing attribute field = " + attributeKey);
+        // toppestObject.getAttribute()[attributeKey] = event.target.value;
+        // console.log("Editing attribute setting value = " + toppestObject.getAttribute()[attributeKey]);
 
-        if (attributeKey == 'name') {
-            this.graph.getModel().beginUpdate();
-            try {
-                this.graph.getModel().setValue(this.selectedVertex, event.target.value);
-            }
-            finally {
-                this.graph.getModel().endUpdate();
-            }
-        }
+        // if (attributeKey == 'name') {
+        //     this.graph.getModel().beginUpdate();
+        //     try {
+        //         this.graph.getModel().setValue(this.selectedVertex, event.target.value);
+        //     }
+        //     finally {
+        //         this.graph.getModel().endUpdate();
+        //     }
+        // }
+
+        this.store.dispatch(new BPELRepresentationUpdateProcessAction(toppestObject.id, attributeKey, event.target.value));
     }
 
     syncSelectedElement(elementKey: any, event: any) {
