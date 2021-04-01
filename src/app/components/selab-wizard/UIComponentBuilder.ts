@@ -7,7 +7,7 @@ import { IconComponent } from "../../models/internalRepresentation/IconComponent
 import { InputGroupComponent } from "../../models/internalRepresentation/InputGroupComponent.model";
 import { LayoutComponent } from "../../models/internalRepresentation/LayoutComponent.model";
 import { TableComponent } from "../../models/internalRepresentation/TableComponent.model";
-import { ArgumentModel, IServiceEntry, ReturnModel } from "../../models/service-component-dependency";
+import { ArgumentModel, IServiceEntry, ReturnModel, ServiceComponentModel } from "../../models/service-component-dependency";
 import { TextComponent, InputTextComponent, UIComponent } from "../../models/ui-component-dependency";
 import { UIComponentConfig } from "./uicomponent-config";
 
@@ -41,6 +41,7 @@ export class UIComponentBuilder {
         this.subComponentBuilders = [];
         this.returnData = new ReturnModel({});
         this.currentTaskStatus = [];
+        this.serviceComponent = new ServiceComponentModel();
     }
 
     getProperties(): Object {
@@ -183,6 +184,8 @@ export class UIComponentBuilder {
 
     buildFormComponent(): FormComponent {
         let formComponent: FormComponent = new FormComponent(this);
+        console.log(`build form Component ${formComponent.name}`)
+        console.log(formComponent)
         for(let index = 0; index < this.subComponentBuilders.length; index++) {
             formComponent.componentList.push(this.subComponentBuilders[index].build());
         }

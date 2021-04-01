@@ -93,6 +93,8 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
   }
 
   update() {
+    console.log('update')
+    console.log(this.uiComponentBuilder);
     // uiComponent;
     this.database = new InformationDatabase(JSON.stringify(UIComponentFactory.getInfo(this.uiComponentBuilder)));
     this.database.dataChange.subscribe(data => this.dataSource.data = data);

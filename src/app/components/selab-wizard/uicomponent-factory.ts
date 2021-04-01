@@ -172,14 +172,14 @@ export abstract class UIComponentFactory {
         return uiComponent;
     }
 
-    static expandChildren(componentList) {
+    static expandChildren(componentBuilders: UIComponentBuilder[]) {
         let children = {};
-        for (let index = 0; index < componentList.length; index++) {
-            children[(componentList[index].getSelector()).toString()]
-                = componentList[index]
-                    .getInfo()[componentList[index]
-                        .getSelector().toString()];
+        for (let index = 0; index < componentBuilders.length; index++) {
+            children[(componentBuilders[index].selector]
+                = componentBuilders[index].build()
+                    .getInfo();
         }
+        console.log(children);
         return children;
     }
 
@@ -213,7 +213,7 @@ export abstract class UIComponentFactory {
             return {
                 [uiComponentBuilder.selector]: {
                     name: uiComponentBuilder.name,
-                    children: this.expandChildren(uiComponentBuilder.componentList),
+                    children: this.expandChildren(uiComponentBuilder.subComponentBuilders),
                     service: info
                 }
             }
@@ -250,7 +250,7 @@ export abstract class UIComponentFactory {
                 [uiComponentBuilder.selector]: {
                     name: uiComponentBuilder.name,
                     header: uiComponentBuilder.properties["header"],
-                    children: this.expandChildren(uiComponentBuilder.componentList),
+                    children: this.expandChildren(uiComponentBuilder.subComponentBuilders),
                     service: info
                 }
             }
@@ -259,7 +259,7 @@ export abstract class UIComponentFactory {
             return {
                 [uiComponentBuilder.selector]: {
                     name: uiComponentBuilder.name,
-                    children: this.expandChildren(uiComponentBuilder.componentList),
+                    children: this.expandChildren(uiComponentBuilder.subComponentBuilders),
                     service: info
                 }
             }

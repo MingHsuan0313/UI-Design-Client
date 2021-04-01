@@ -22,7 +22,6 @@ export class FormComponent extends CompositeComponent {
     addSubComponent(component: UIComponent): FormComponent {
         let uiComponentBuilder = UIComponentFactory.uiComponentBuilders.get(this.id);
         return uiComponentBuilder
-            .addComponent(component)
             .buildFormComponent()
     }
 
