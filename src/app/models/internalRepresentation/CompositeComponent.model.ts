@@ -8,7 +8,7 @@ export class CompositeComponent extends UIComponent {
 
    constructor(uiComponentBuilder: UIComponentBuilder) {
       super(uiComponentBuilder);
-      this.componentList = uiComponentBuilder.componentList;
+      this.componentList = [];
    }
 
    getChildrenOptions(): string[] { return [""] };

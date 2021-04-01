@@ -10,9 +10,16 @@ export class UIComponentConfig {
         ]
     }
 
+    static getAllCompositeComponentTypes() {
+        return [
+            "card",
+            "form"
+        ]
+    }
+
     static getChildrenOptions(type: string) {
         if (type == "form") {
-            return ["text", "button", "input", "dropdown"];
+            return ["text", "button", "input", "dropdown", "form"];
         }
         else if (type == "card") {
             return ["text", "dropdown", "button", "table","input"]

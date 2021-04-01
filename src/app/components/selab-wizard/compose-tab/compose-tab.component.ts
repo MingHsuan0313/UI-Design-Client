@@ -20,6 +20,8 @@ export class ComposeTabComponent implements OnInit {
   @Input() uiComponentBuilder: UIComponentBuilder;
   @Input() wizardStorage: WizardStorage;
 
+  selectedBuilder: UIComponentBuilder;
+
   isClean: boolean;
 
   childrenOptions: string[];
@@ -38,6 +40,14 @@ export class ComposeTabComponent implements OnInit {
   ) {
     this.isClean = false;
     this.formData = {};
+    this.selectedBuilder = this.uiComponentBuilder;
+  }
+
+  chooseBuilder(event, builder: UIComponentBuilder) {
+    console.log('choose builder');
+    console.log(builder)
+    this.selectedBuilder = builder;
+    this.childrenOptions = UIComponentConfig.getChildrenOptions(this.selectedBuilder.type);
   }
 
   chooseReturn(event, option, property) {
@@ -152,6 +162,7 @@ export class ComposeTabComponent implements OnInit {
     this.composeTarget = option;
     let pageId = this.graphEditorService.selectedPageId;
     this.subComponentBuilder = UIComponentFactory.create(this.composeTarget, pageId);
+    this.subComponentBuilder.setDescription(`${this.selectedBuilder.description} - ${this.subComponentBuilder.selector}`);
     this.subComponentProperties = UIComponentConfig.getProperties(this.subComponentBuilder.type);
     this.buildForm();
   }
@@ -163,9 +174,9 @@ export class ComposeTabComponent implements OnInit {
       return;
     }
     this.subComponentBuilder.setProperties(this.formData)
-      .setName(this.formData["name"]);
-    this.uiComponentBuilder.addSubComponentBuilder(this.subComponentBuilder);
-    this.wizardStorage.addUIComponentBuilder(this.uiComponentBuilder);
+      .setName(this.formData["name"]["value"]);
+    this.selectedBuilder.addSubComponentBuilder(this.subComponentBuilder);
+    this.wizardStorage.addUIComponentBuilder(this.subComponentBuilder);
   }
 
   valueChange(event, property) {
@@ -229,7 +240,6 @@ export class ComposeTabComponent implements OnInit {
 
   ngOnInit() {
     this.composeTarget = "";
-    this.childrenOptions = UIComponentConfig.getChildrenOptions(this.uiComponentBuilder.type);
   }
 
   buildForm() {

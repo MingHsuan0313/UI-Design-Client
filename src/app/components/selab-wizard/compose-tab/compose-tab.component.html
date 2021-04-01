@@ -10,7 +10,25 @@
           {{option}}
         </mat-option>
       </mat-select>
+
     </mat-form-field>
+
+    &nbsp; &nbsp;
+    <mat-form-field appearance="outline">
+      <mat-label>Select Builder</mat-label>
+      <mat-select disableRipple>
+        <mat-option *ngFor="let builder of wizardStorage.getCompositeComponentBuilders()" value="option"
+          (click)="chooseBuilder($event, builder)">
+          <span *ngIf="builder.isComposite()" style="font-weight: bolder; color: black;">
+            {{builder.description}} ({{builder.name}})
+          </span>
+          <span *ngIf="!builder.isComposite()" style="font-weight:lighter; color: #333333;">
+            {{builder.description}} ({{builder.name}})
+          </span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <br>
   </div>
 

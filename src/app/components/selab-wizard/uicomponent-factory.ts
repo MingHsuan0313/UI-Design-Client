@@ -56,7 +56,7 @@ export abstract class UIComponentFactory {
                 .setServiceComponent(subUIComponent.serviceComponent)
                 .setProperties(subUIComponent.properties)
                 .setGeometry(subUIComponent.geometry);
-            uiComponentBuilder.addComponent(subUIComponentBuilder.build());
+            uiComponentBuilder.subComponentBuilders.push((subUIComponentBuilder));
         }
     }
 

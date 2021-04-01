@@ -15,6 +15,7 @@ import { UIComponentFactory } from './uicomponent-factory';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { ReturnDataMenuComponent } from './return-data-menu/return-data-menu.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
+import { UIComponentConfig } from './uicomponent-config';
 
 @Component({
   selector: 'selab-wizard',
@@ -61,6 +62,8 @@ export class SelabWizardComponent implements OnInit {
 
     this.wizardStorage = new WizardStorage();
     this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
+    this.uiComponentBuilder.setDescription(this.uiComponentBuilder.selector);
+    this.wizardStorage.addUIComponentBuilder(this.uiComponentBuilder);
     if (this.isPipeline) {
       setTimeout(() => {
         let currentTask = SelabGlobalStorage.taskGraph.currentTask;
@@ -128,5 +131,26 @@ export class WizardStorage {
 
   addUIComponentBuilder(uiComponentBuilder: UIComponentBuilder) {
     this.uiComponentBuilderStorage.push(uiComponentBuilder);
+  }
+
+  isComposite(uiComponentBuilder: UIComponentBuilder) {
+    let compositeTypes = UIComponentConfig.getAllCompositeComponentTypes();
+
+    if(compositeTypes.includes(uiComponentBuilder.type)) 
+      return true;
+    else
+      return false;
+  }
+
+  getCompositeComponentBuilders() {
+    let builders = [];
+    for(let index = 0;index < this.uiComponentBuilderStorage.length; index++) {
+      let uiComponentBuilder = this.uiComponentBuilderStorage[index];
+      builders.push(uiComponentBuilder);
+      // if(this.isComposite(uiComponentBuilder)) {
+      //   builders.push(uiComponentBuilder);
+      // }
+    }
+    return builders;
   }
 }
