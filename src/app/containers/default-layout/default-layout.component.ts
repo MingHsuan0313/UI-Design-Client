@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/models/store/app.state';
 import { IRSetProjectNameAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { WelcomeDialogComponent } from 'src/app/components/welcome-dialog/welcome-dialog.component';
+import { ImportProjectComponent } from 'src/app/components/welcomeDialog/import-project/import-project.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,7 @@ export class DefaultLayoutComponent implements OnInit {
   constructor(
     public projectNameDialog: MatDialog,
     public welcomeDialog: MatDialog,
+    public importProjectDialog: MatDialog,
     private store: Store<AppState>
   ) {
 
@@ -41,7 +43,10 @@ export class DefaultLayoutComponent implements OnInit {
       }
 
       else if (result == "Open Existing Project") {
-
+        this.importProjectDialog.open(ImportProjectComponent, {
+          autoFocus: true,
+          disableClose: true
+        })
       }
     })
   }

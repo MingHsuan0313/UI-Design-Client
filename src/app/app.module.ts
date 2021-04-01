@@ -62,6 +62,7 @@ import { LoginComponent } from "./components/login/login.component";
 import { RegisterComponent } from "./components/register/register.component";
 import { HomeComponent } from './components/home/home.component';
 import { WelcomeDialogComponent } from './components/welcome-dialog/welcome-dialog.component';
+import { ImportProjectComponent } from './components/welcomeDialog/import-project/import-project.component';
 enableMapSet();
 
 const appState = {
@@ -132,7 +133,8 @@ export function reducerFactory() {
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    WelcomeDialogComponent
+    WelcomeDialogComponent,
+    ImportProjectComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -162,7 +164,8 @@ export function reducerFactory() {
     ThumbnailDialog,
     StatusDialogComponent,
     QueryServiceWindowComponent,
-    WelcomeDialogComponent
+    WelcomeDialogComponent,
+    ImportProjectComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
