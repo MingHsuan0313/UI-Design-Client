@@ -60,6 +60,8 @@ import { QueryServiceWindowComponent } from './components/selab-setting/endpoint
 import { enableMapSet } from 'immer';
 import { LoginComponent } from "./components/login/login.component";
 import { RegisterComponent } from "./components/register/register.component";
+import { HomeComponent } from './components/home/home.component';
+import { WelcomeDialogComponent } from './components/welcome-dialog/welcome-dialog.component';
 enableMapSet();
 
 const appState = {
@@ -128,7 +130,9 @@ export function reducerFactory() {
     StatusDialogComponent,
     QueryServiceWindowComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent,
+    WelcomeDialogComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -157,7 +161,8 @@ export function reducerFactory() {
     SelabWebAppDashboardComponent,
     ThumbnailDialog,
     StatusDialogComponent,
-    QueryServiceWindowComponent
+    QueryServiceWindowComponent,
+    WelcomeDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

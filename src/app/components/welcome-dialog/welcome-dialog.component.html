@@ -1,0 +1,17 @@
+<div class="container">
+  <h1 style="text-align: center; font-size: 24px;" mat-dialog-title>Welcome to our system</h1>
+  <mat-divider></mat-divider>
+  <br>
+
+  <div style="text-align: center;" mat-dialog-content>
+    <button (click)="createNewProject()" class="welcome-btn"> Create New Project </button>
+    <button (click)="openExistingProject()" class="welcome-btn"> Open Existing Project </button>
+  </div>
+
+  <br>
+  <mat-divider></mat-divider>
+
+  <div style="text-align: center;" mat-dialog-actions>
+    <button (click)="navigateToLoginPage()" routerLink="/login" type="button" class="btn mb-2 btn-link">Change User</button>
+  </div>
+</div>

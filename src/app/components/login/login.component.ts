@@ -22,6 +22,7 @@ export class LoginComponent {
   }
 
   async login() {
+    this.router.navigate(['index']);
     console.log(`username : ${this.username}\npassword: ${this.password}`);
     await axios.post('http://localhost:8000/auth/login', {
       username: this.username,
