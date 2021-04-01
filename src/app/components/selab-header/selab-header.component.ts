@@ -229,8 +229,8 @@ export class SelabHeaderComponent implements OnInit {
     SelabGlobalStorage.initializeTasks(new WizardTask().setIsRoot(true).setComponentType(type));
     if (this) {
       let wizardRef = this.wizard.open(SelabWizardComponent, {
-        width: '40%',
-        height: '60%',
+        width: '45%',
+        height: '55%',
         data: {
           isPipeline: false,
           isComposite: isComposite,

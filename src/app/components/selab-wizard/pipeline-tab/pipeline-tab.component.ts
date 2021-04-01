@@ -116,8 +116,8 @@ export class PipelineTabComponent implements OnInit {
         isComposite = true;
       console.log('hello');
       let wizardRef = this.dialog.open(SelabWizardComponent, {
-        width: '55%',
-        height: '65%',
+        width: '45%',
+        height: '55%',
         data: {
           isPipeline: true,
           isComposite: isComposite,

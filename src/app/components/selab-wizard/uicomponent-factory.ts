@@ -175,7 +175,7 @@ export abstract class UIComponentFactory {
     static expandChildren(componentBuilders: UIComponentBuilder[]) {
         let children = {};
         for (let index = 0; index < componentBuilders.length; index++) {
-            children[(componentBuilders[index].selector]
+            children[(componentBuilders[index].selector)]
                 = componentBuilders[index].build()
                     .getInfo();
         }
