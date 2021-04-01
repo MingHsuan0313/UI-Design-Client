@@ -23,6 +23,7 @@ export class UIComponentBuilder {
     public argument: ArgumentModel;
     public properties: Object; // specific component properties: eg dropdown item, card header...
     public componentList: UIComponent[];
+    public subComponentBuilders: UIComponentBuilder[];
     public serviceID: string;
     public returnData: ReturnModel;
     public currentTaskStatus: any[];

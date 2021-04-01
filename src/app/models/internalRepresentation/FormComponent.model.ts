@@ -9,7 +9,6 @@ export class FormComponent extends CompositeComponent {
     constructor(uiComponentBuilder?: UIComponentBuilder) {
         if (uiComponentBuilder) {
             super(uiComponentBuilder);
-            this.componentList = uiComponentBuilder.componentList;
         }
     }
 

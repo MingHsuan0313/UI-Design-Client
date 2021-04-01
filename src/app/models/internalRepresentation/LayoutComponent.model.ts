@@ -6,6 +6,5 @@ export class LayoutComponent extends CompositeComponent {
     public componentList: UIComponent[];
     constructor(uiComponentBuilder: UIComponentBuilder) {
        super(uiComponentBuilder);
-       this.componentList = uiComponentBuilder.componentList;
     }
 }
