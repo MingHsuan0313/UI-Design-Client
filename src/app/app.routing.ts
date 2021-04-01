@@ -4,6 +4,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {DefaultLayoutComponent} from './containers';
 import { BPELDesignerComponent } from './containers/bpel-designer/bpel-designer.component';
 import {NavigationComponent} from 'src/app/models/navigation-dependency';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 
 export const routes: Routes = [
@@ -22,6 +24,14 @@ export const routes: Routes = [
 
       }
     ]
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
   {
     path: 'bpel',

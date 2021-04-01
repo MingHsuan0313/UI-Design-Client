@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { AlertComponent, AlertModule } from 'ngx-bootstrap/alert';
 import { AngularMaterialModule } from "./angular-material/angular-material.module";
 import { AngularOfficialModule } from "./angular-official/angular-official.module";
 import { AngularCoreUIModule } from "./angular-core-ui/angular-core-ui.module";
@@ -57,6 +58,8 @@ import { StatusDialogComponent } from './components/selab-wizard/pipeline-tab/st
 import { NgxGraphModule } from "@swimlane/ngx-graph";
 import { QueryServiceWindowComponent } from './components/selab-setting/endpoint-test/query-service-window/query-service-window.component';
 import { enableMapSet } from 'immer';
+import { LoginComponent } from "./components/login/login.component";
+import { RegisterComponent } from "./components/register/register.component";
 enableMapSet();
 
 const appState = {
@@ -98,6 +101,7 @@ export function reducerFactory() {
     SelabHeaderNavigationFormComponent,
     SelabWizardComponent,
     BuildTabComponent,
+    AlertComponent,
     ComposeTabComponent,
     PipelineTabComponent,
     InformationTabComponent,
@@ -122,7 +126,9 @@ export function reducerFactory() {
     ThumbnailDialog,
     ReturnDataMenuComponent,
     StatusDialogComponent,
-    QueryServiceWindowComponent
+    QueryServiceWindowComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     AngularMaterialModule,
