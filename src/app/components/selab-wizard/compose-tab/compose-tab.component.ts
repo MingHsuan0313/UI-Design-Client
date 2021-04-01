@@ -5,7 +5,7 @@ import { UIComponentConfig } from '../uicomponent-config';
 import { UIComponentFactory } from '../uicomponent-factory';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { MatDialogRef } from '@angular/material';
-import { SelabWizardComponent } from '../selab-wizard.component';
+import { SelabWizardComponent, WizardStorage } from '../selab-wizard.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
@@ -18,6 +18,7 @@ import { WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
 export class ComposeTabComponent implements OnInit {
   @Input() isPipeline: boolean;
   @Input() uiComponentBuilder: UIComponentBuilder;
+  @Input() wizardStorage: WizardStorage;
 
   isClean: boolean;
 
@@ -104,7 +105,6 @@ export class ComposeTabComponent implements OnInit {
     return false;
   }
 
-
   generateReturnClass(currentTask: WizardTask, option, property, hiearachy) {
     if (option == "None") {
       return null;
@@ -164,8 +164,8 @@ export class ComposeTabComponent implements OnInit {
     }
     this.subComponentBuilder.setProperties(this.formData)
       .setName(this.formData["name"]);
-    let subComponent = this.subComponentBuilder.build();
-    this.uiComponentBuilder.addSubComponent(subComponent);
+    this.uiComponentBuilder.addSubComponentBuilder(this.subComponentBuilder);
+    this.wizardStorage.addUIComponentBuilder(this.uiComponentBuilder);
   }
 
   valueChange(event, property) {

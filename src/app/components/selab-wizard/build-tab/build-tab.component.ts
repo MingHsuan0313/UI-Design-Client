@@ -6,7 +6,7 @@ import { ServiceComponentModel } from 'src/app/models/service-component-dependen
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import { WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
 import { StatusDialogComponent } from '../pipeline-tab/status-dialog/status-dialog.component';
-import { SelabWizardComponent } from '../selab-wizard.component';
+import { SelabWizardComponent, WizardStorage } from '../selab-wizard.component';
 import { UIComponentConfig } from '../uicomponent-config';
 
 @Component({
@@ -17,6 +17,7 @@ import { UIComponentConfig } from '../uicomponent-config';
 export class BuildTabComponent implements OnInit {
   @Input() isPipeline: boolean;
   @Input() uiComponentBuilder: UIComponentBuilder;
+  @Input() wizardStorage: WizardStorage;
   @Input() isComposite: boolean;
   buildFormProperties: any;
   inputValue: string;

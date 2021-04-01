@@ -1,19 +1,15 @@
-import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
-import { AfterViewInit, Component, Injectable, Input, OnInit } from '@angular/core';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, observable, of as observableOf } from 'rxjs';
-import { CompositeComponent } from 'src/app/models/internalRepresentation/CompositeComponent.model';
 import { IRInsertSumdlServiceReturnAction, IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
-import { PipelineCreateOperationAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
-import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
-import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
-import { SelabWizardComponent } from '../selab-wizard.component';
+import { SelabWizardComponent, WizardStorage } from '../selab-wizard.component';
 import { UIComponentFactory } from '../uicomponent-factory';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 
@@ -26,6 +22,8 @@ export class InformationTabComponent implements OnInit, AfterViewInit {
   @Input() isPipeline: boolean;
   @Input() uiComponentBuilder: UIComponentBuilder;
   @Input() isComposite: boolean;
+  @Input() wizardStorage: WizardStorage;
+
   treeControl: FlatTreeControl<FileFlatNode>;
   treeFlattener: MatTreeFlattener<InformationNode, FileFlatNode>;
   dataSource: MatTreeFlatDataSource<InformationNode, FileFlatNode>;

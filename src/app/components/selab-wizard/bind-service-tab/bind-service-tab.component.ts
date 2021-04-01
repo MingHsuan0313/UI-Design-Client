@@ -9,7 +9,7 @@ import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 import { MatDialogRef } from '@angular/material';
-import { SelabWizardComponent } from '../selab-wizard.component';
+import { SelabWizardComponent, WizardStorage } from '../selab-wizard.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 
 @Component({
@@ -19,6 +19,8 @@ import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 })
 export class BindServiceTabComponent implements OnInit {
   @Input() uiComponentBuilder: UIComponentBuilder;
+  @Input() wizardStorage: WizardStorage;
+
   serviceOptions: any[];
   argumentOptions: any[];
   serviceComponentPool: Map<String, Boolean>; // check is serviceComponent has in pool

@@ -22,7 +22,6 @@ export class UIComponentBuilder {
     public serviceComponent: IServiceEntry;
     public argument: ArgumentModel;
     public properties: Object; // specific component properties: eg dropdown item, card header...
-    public componentList: UIComponent[];
     public subComponentBuilders: UIComponentBuilder[];
     public serviceID: string;
     public returnData: ReturnModel;
@@ -37,7 +36,7 @@ export class UIComponentBuilder {
         this.type = "";
         this.geometry = {};
         this.style = {};
-        this.componentList = [];
+        this.subComponentBuilders = [];
         this.returnData = new ReturnModel({});
         this.currentTaskStatus = [];
     }
@@ -76,8 +75,8 @@ export class UIComponentBuilder {
         return this;
     }
 
-    addSubComponent(uiComponent: UIComponent) {
-        this.componentList.push(uiComponent);
+    addSubComponentBuilder(uiComponentBuilder: UIComponentBuilder) {
+        this.subComponentBuilders.push(uiComponentBuilder);
         return this;
     }
 
@@ -168,11 +167,17 @@ export class UIComponentBuilder {
 
     buildFormComponent(): FormComponent {
         let formComponent: FormComponent = new FormComponent(this);
+        for(let index = 0; index < this.subComponentBuilders.length; index++) {
+            formComponent.componentList.push(this.subComponentBuilders[index].build());
+        }
         return formComponent;
     }
 
     buildCardComponent(): CardComponent {
         let cardComponent: CardComponent = new CardComponent(this);
+        for(let index = 0; index < this.subComponentBuilders.length; index++) {
+            cardComponent.componentList.push(this.subComponentBuilders[index].build());
+        }
         return cardComponent;
     }
 
@@ -194,11 +199,6 @@ export class UIComponentBuilder {
     buildTableComponent(): TableComponent {
         let tableComponent: TableComponent = new TableComponent(this);
         return tableComponent;
-    }
-
-    addComponent(uiComponent: UIComponent): UIComponentBuilder {
-        this.componentList.push(uiComponent);
-        return this;
     }
 
     getServiceComponent() {

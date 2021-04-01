@@ -29,6 +29,7 @@ export class SelabWizardComponent implements OnInit {
   type: string = ""; // form, dropdown...
   category: string = ""; // informative, input control...
   uiComponentBuilder: UIComponentBuilder;
+  wizardStorage: WizardStorage;
   lastTab: string;
 
   // it has return data if in pipeline mode
@@ -57,6 +58,8 @@ export class SelabWizardComponent implements OnInit {
     this.isComposite = this.data.isComposite;
     this.type = this.data.type;
     this.category = this.data.category;
+
+    this.wizardStorage = new WizardStorage();
     this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
     if (this.isPipeline) {
       setTimeout(() => {
@@ -114,5 +117,16 @@ export class SelabWizardComponent implements OnInit {
         this.composeTab.setReturn(this.data['service']);
       }
     }, 200)
+  }
+}
+
+export class WizardStorage {
+  uiComponentBuilderStorage: UIComponentBuilder[];
+  constructor() {
+    this.uiComponentBuilderStorage = [];
+  }
+
+  addUIComponentBuilder(uiComponentBuilder: UIComponentBuilder) {
+    this.uiComponentBuilderStorage.push(uiComponentBuilder);
   }
 }
