@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
 import { AlertConfig } from 'ngx-bootstrap/alert';
+import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import { getAlertConfig } from '../notifications/alerts.component';
 
 @Component({
@@ -22,29 +23,27 @@ export class LoginComponent {
   }
 
   async login() {
-    this.router.navigate(['index']);
-    console.log(`username : ${this.username}\npassword: ${this.password}`);
-    await axios.post('http://localhost:8000/auth/login', {
+    await axios.post('http://localhost:8083/selab/auth/login', {
       username: this.username,
       password: this.password,
-    }, {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      }
-      
     }).then((response) => {
       console.log(response)
       let status = response.status;
+      if (response['data'] == 'authentication failed') {
+        this.loginFailed = true;
+      }
+      else {
+        let userId = response['data'];
+        SelabGlobalStorage.startSession(this.username, userId);
+        this.router.navigate(['index']);
+      }
       // if (status == 200)
-        // this.router.navigate(['./dashboard'], {
-        //   state: {
-        //     username: this.username
-        //   }
-        // });
+      // this.router.navigate(['./dashboard'], {
+      //   state: {
+      //     username: this.username
+      //   }
+      // });
     }, (error) => {
-      console.log(error)
       this.loginFailed = true;
     })
   }
