@@ -111,6 +111,9 @@ export class BuildTabComponent implements OnInit {
       else if (this.buildFormProperties[index]["type"] == "String") {
         this.formData[this.buildFormProperties[index]["value"]] = "";
       }
+      else if (this.buildFormProperties[index]["type"] == "Number") {
+        this.formData[this.buildFormProperties[index]["value"]] = "";
+      }
     }
   }
 
