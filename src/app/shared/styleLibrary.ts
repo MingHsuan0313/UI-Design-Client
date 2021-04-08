@@ -31,13 +31,56 @@ export const StyleLibrary = [
       }
     },
 
+    tag: {
+      fontSize: "16",
+      rounded: "1",
+      fillColor: "#AAAAAA"
+    },
+    tagclicked: {
+      fontSize: "16",
+      fontColor: "#FFFFFF",
+      fillColor: "#0044BB",
+      rounded: "1",
+    },
+
+    page: {
+      align: "left",
+      fillColor: "#FFFFFF",
+      fontSize: "16"
+    },
+    pagebox: {
+      align: "left",
+      fillColor: "#FFFFFF",
+      fontSize: "16",
+      shape: "image",
+    },
+    
+    tree: {
+      align: "left",
+      fillColor: "#FFFFFF",
+      shape: "image",
+    },
+    treeIconDown: {
+      align: "left",
+      fillColor: "#FFFFFF",
+      shape: "image",
+      image: "assets/keyboard_arrow_down-24px.svg"
+    },
+    treeIconRight: {
+      align: "left",
+      fillColor: "#FFFFFF",
+      shape: "image",
+      image: "assets/keyboard_arrow_right-24px.svg"
+    },
+
+
     button: {
       fontSize: "16",
-      fontColor: "#000000",
-      fillColor: "#5bc0de",
+      fontColor: "#333333",
+      fillColor: "#ffffff",
       rounded: "1",
       shadow: "1",
-      strokeColor: "#269abc"
+      strokeColor: "#269abc",
     },
 
     dropdown: {
@@ -68,7 +111,151 @@ export const StyleLibrary = [
       },
     },
 
-    icon: {},
+    icon:{
+
+      fillColor: "#5bc0de",
+      rounded: "1",
+      strokeColor: "#269abc",
+      shape: "image",
+      image: "assets/icon/icon1.svg"
+
+    },
+    spinner:{
+
+    fillColor: "#5bc0de",
+    rounded: "1",
+    strokeColor: "#269abc",
+    shape: "image",
+    image: "assets/icon/spinner.svg"
+
+    },
+
+    progress: {
+      progressBox: {
+        opacity: "0",
+        strokeColor: "#000000",
+      },
+      progressBarBody: {
+        align: "left",
+        fontSize: "16",
+        fontColor: "#000000",
+        fillColor: "#99CCFF",
+        rounded: "1",
+        strokeColor: "#269abc"
+      },
+      progressBarSteps: {
+        fontSize: "20",
+        strokeColor: "#2f353a",
+        align: "left",
+        shape: "doubleEllipse",
+        fillColor: "#CACFD2",
+        fontColor: "#ffffff"
+      }
+    },
+    checkbox: {
+      checkboxBox: {
+        opacity: "0",
+        strokeColor: "#000000",
+      },
+
+      checkboxText: {
+        strokeColor: "#ffffff",
+        fillColor: "#f7f7f7",
+        fontSize: "16",
+        fontColor: "black"
+      },
+
+      checked: {
+        fillColor: "#5bc0de",
+        rounded: "1",
+        strokeColor: "#269abc",
+        shape: "image",
+        image: "assets/icon/checkbox-checked.svg"
+      },
+
+      unchecked: {
+        fillColor: "#5bc0de",
+        rounded: "1",
+        strokeColor: "#269abc",
+        shape: "image",
+        image: "assets/icon/checkbox-unchecked.svg"
+      },
+      
+      indeterminate: {
+        checked: {
+          fillColor: "#5bc0de",
+          rounded: "1",
+          strokeColor: "#269abc",
+          shape: "image",
+          image: "assets/icon/checkbox-indeterminate.svg"
+        }
+      }
+
+    },
+
+    radioButton: {
+      radioButtonBox: {
+        opacity: "0",
+        strokeColor: "#000000",
+      },
+
+      radioButtonText: {
+        strokeColor: "#ffffff",
+        fillColor: "#f7f7f7",
+        fontSize: "16",
+        fontColor: "gray"
+      },
+
+      checked: {
+        fillColor: "#5bc0de",
+        rounded: "1",
+        strokeColor: "#269abc",
+        shape: "image",
+        image: "assets/icon/radio-button.svg"
+      },
+
+      unchecked: {
+        fillColor: "#5bc0de",
+        rounded: "1",
+        strokeColor: "#269abc",
+        shape: "image",
+        image: "assets/icon/radio-button-2.svg"
+      },
+
+    },
+
+    listBox: {
+      listBoxBox: {
+        opacity: "0",
+        strokeColor: "#000000",
+      },
+
+      listBoxHeader: {
+        strokeColor: "#ffffff",
+        fillColor: "#f7f7f7",
+        fontSize: "16",
+        fontColor: "black"
+      },
+
+      listBoxArrow: {
+        fillColor: "#5bc0de",
+        strokeColor: "#269abc",
+        shape: "image",
+        image: "assets/icon/checkbox-unchecked.svg"
+      },
+
+      listBoxScroll: {
+        fillColor: "#c7c7c7"
+      },
+      
+      listBoxOption: {
+        strokeColor: "#ffffff",
+        fillColor: "#f7f7f7",
+        fontSize: "16",
+        fontColor: "black"
+      }
+
+    },
 
     table: {
       tableBox: {
@@ -122,6 +309,29 @@ export const StyleLibrary = [
         fillColor: "#ffffff",
         rounded: "0.5",
         shadow: "0",
+      }
+    },
+
+    dialog: {
+      formBox: {
+        strokeColor: "#000000",
+        fillColor: "#ffffff",
+        rounded: "0.5",
+        shadow: "0",
+      },
+    },
+
+    expansionPanel: {
+      formBox: {
+        //strokeColor: "#000000",
+        //fillColor: "#ffffff",
+        //rounded: "0.5",
+        shadow: "0",
+        fontSize: "16",
+        fontColor: "#333333",
+        rounded: "1",
+        strokeColor: "#a6a6a6",
+        fillColor: "#ffffff",
       }
     },
 

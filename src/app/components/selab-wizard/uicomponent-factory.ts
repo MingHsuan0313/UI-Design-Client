@@ -102,6 +102,14 @@ export abstract class UIComponentFactory {
                 .setType("dropdown")
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
+        else if (type == "tree") {
+            uiComponentBuilder = new UIComponentBuilder()
+                .setCategory("informative")
+                .setID(`${this.nextID}`)
+                .setSelector(`${type}${this.nextID}`)
+                .setType("tree")
+            this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
+        }
         else if (type == "icon") {
             uiComponentBuilder = new UIComponentBuilder()
                 .setCategory("informative")
@@ -218,11 +226,20 @@ export abstract class UIComponentFactory {
                 }
             }
         }
+        else if (type == "tree") {
+            return {
+                [uiComponentBuilder.selector]: {
+                    name: uiComponentBuilder.name,
+                    content: uiComponentBuilder.properties["content"],
+                    service: info
+                }
+            }
+        }
         else if (type == "dropdown") {
             return {
                 [uiComponentBuilder.selector]: {
                     name: uiComponentBuilder.name,
-                    items: uiComponentBuilder["items"],
+                    items: uiComponentBuilder.properties["items"],
                     service: info
                 }
             }

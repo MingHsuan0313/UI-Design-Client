@@ -10,6 +10,7 @@ import { ICreateComponentStrategy } from "./createComponentStrategy/ICreateCompo
 import { IRSetLayoutAction } from "../store/actions/internalRepresentation.action";
 import { MatDialog } from "@angular/material";
 import StyleEditorService from "src/app/services/externalRepresentation/style-editor.service";
+import { TreeStrategy } from "./createComponentStrategy/TreeStrategy";
 
 export class SelabEditor {
     editor: mxEditor;
@@ -134,6 +135,9 @@ export class SelabEditor {
                 this.setStrategy(new IconStrategy(geometry, restoreMode));
             } else if (uiComponent['type'].startsWith('input')) {
                 this.setStrategy(new InputStrategy(geometry, restoreMode));
+            }
+            else if (uiComponent['type'] == 'tree') {
+                this.setStrategy(new TreeStrategy(geometry, restoreMode));
             }
             else if (uiComponent['type'] == 'breadcrumb') {
                 this.setStrategy(new BreadcrumbStrategy(geometry, restoreMode));
