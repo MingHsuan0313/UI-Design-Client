@@ -11,13 +11,18 @@ import produce from 'immer';
 class InternalRepresentationReducer {
     @Action
     public insertTheme(store: InternalRepresentation, action: IRInsertThemeAction): InternalRepresentation {
-        return produce(store, draft => {
-            draft.themes.push({
-                name: action.name,
-                id: action.id,
-                pages: []
-            })
-        })
+        store = {
+            ...store,
+            themes: [
+                ...store.themes,
+                {
+                    name: action.name,
+                    id: action.id,
+                    pages: []
+                }
+            ]
+        }
+        return store;
     }
 
     @Action

@@ -5,6 +5,7 @@ export class SelabGlobalStorage {
     static sumdl: {};
     static usedNameTable: {}; // save all existing page and theme name, for duplicate name checking
     static taskGraph: TaskGraph;
+    static sessionInformation: {}; // user info, project info
 
     static initializeTasks(task: WizardTask) {
         this.taskGraph = new TaskGraph(task);
@@ -12,6 +13,26 @@ export class SelabGlobalStorage {
 
     static getTaskGraph() {
         return this.taskGraph;
+    }
+
+    static startSession(username: string, userID: string, groupID: string) {
+        this.sessionInformation = {};
+        this.sessionInformation["user"] = {
+            "username": username,
+            "userID": userID,
+            "groupname": username,
+            "groupID": groupID
+        }
+        this.sessionInformation["openedThemeList"] = []
+    }
+
+    static getUserName() {
+        return this.sessionInformation["user"]["username"];
+    }
+
+    static closeSession() {
+        // clean all information
+        this.sessionInformation = {};
     }
 
     static addName(name: string) {
