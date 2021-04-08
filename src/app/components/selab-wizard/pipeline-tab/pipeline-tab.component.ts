@@ -1,5 +1,4 @@
 import { Input, OnInit } from '@angular/core';
-import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -7,23 +6,17 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete, MatDi
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
-import { PipelineDataMenuComponent } from './pipeline-data-menu/pipeline-data-menu.component';
 import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
-import { Task } from 'src/app/models/wizard-task-dependency';
-import { PipelineCreateTaskAction, PipelineDeleteTasksAction } from 'src/app/models/store/actions/pipelineTask.action';
-import { tasksSelector } from 'src/app/models/store/selectors/PipelineStorageSelector';
-import { SelabWizardComponent } from '../selab-wizard.component';
+import { SelabWizardComponent, WizardStorage } from '../selab-wizard.component';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../../utils/confirm-dialog/confirm-dialog.component';
 import { IRInsertSumdlServiceAction, IRInsertUIComponentAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import { UIComponentConfig } from '../uicomponent-config';
-import { timeStamp } from 'console';
 import { ReturnDataMenuComponent } from '../return-data-menu/return-data-menu.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import { TaskState, WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
-import { StatusDialogComponent } from './status-dialog/status-dialog.component';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 
 @Component({
@@ -34,6 +27,8 @@ import { ServiceComponentModel } from 'src/app/models/service-component-dependen
 export class PipelineTabComponent implements OnInit {
 
   @Input() uiComponentBuilder: UIComponentBuilder;
+  @Input() wizardStorage: WizardStorage;
+
   returnData: {};
 
   visible = true;
@@ -121,8 +116,8 @@ export class PipelineTabComponent implements OnInit {
         isComposite = true;
       console.log('hello');
       let wizardRef = this.dialog.open(SelabWizardComponent, {
-        width: '55%',
-        height: '65%',
+        width: '45%',
+        height: '55%',
         data: {
           isPipeline: true,
           isComposite: isComposite,

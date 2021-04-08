@@ -10,7 +10,25 @@
           {{option}}
         </mat-option>
       </mat-select>
+
     </mat-form-field>
+
+    &nbsp; &nbsp;
+    <mat-form-field appearance="outline">
+      <mat-label>Select Builder</mat-label>
+      <mat-select disableRipple>
+        <mat-option *ngFor="let builder of wizardStorage.getCompositeComponentBuilders()" value="option"
+          (click)="chooseBuilder($event, builder)">
+          <span *ngIf="builder.isComposite()" style="font-weight: bolder; color: black;">
+            {{builder.description}} ({{builder.name}})
+          </span>
+          <span *ngIf="!builder.isComposite()" style="font-weight:lighter; color: #333333;">
+            {{builder.description}} ({{builder.name}})
+          </span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <br>
   </div>
 
@@ -18,8 +36,8 @@
     <div *ngFor="let property of subComponentProperties">
       <div *ngIf="property.type == 'String'">
         <mat-form-field appearance="outline">
-          <mat-label>{{property.value}}</mat-label>
-          <input [ngModel]="inputValue" (ngModelChange)="valueChange($event,property.value)" matInput
+          <mat-label>{{property.name}}</mat-label>
+          <input [ngModel]="inputValue" (ngModelChange)="valueChange($event, property)" matInput
             placeholder="Placeholder">
           &nbsp;
         </mat-form-field>
@@ -36,8 +54,8 @@
         </div>
       </div>
       <div *ngIf="property.type == 'Boolean'">
-        <mat-slide-toggle [ngModel]="inputValue" (ngModelChange)="valueChange($event,property.value)" matInput>
-          {{property.value}}</mat-slide-toggle>
+        <mat-slide-toggle [ngModel]="inputValue" (ngModelChange)="valueChange($event, property)" matInput>
+          {{property.name}}</mat-slide-toggle>
       </div>
     </div>
   </div>

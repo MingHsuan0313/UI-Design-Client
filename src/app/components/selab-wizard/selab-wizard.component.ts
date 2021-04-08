@@ -2,7 +2,6 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { PipelineCreateOperationAction, PipelineCreateTaskAction } from 'src/app/models/store/actions/pipelineTask.action';
 import { AppState } from 'src/app/models/store/app.state';
 import { ServiceComponentModel } from 'src/app/models/service-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
@@ -16,6 +15,7 @@ import { UIComponentFactory } from './uicomponent-factory';
 import GraphEditorService from 'src/app/services/externalRepresentation/graph-editor.service';
 import { ReturnDataMenuComponent } from './return-data-menu/return-data-menu.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
+import { UIComponentConfig } from './uicomponent-config';
 
 @Component({
   selector: 'selab-wizard',
@@ -30,6 +30,7 @@ export class SelabWizardComponent implements OnInit {
   type: string = ""; // form, dropdown...
   category: string = ""; // informative, input control...
   uiComponentBuilder: UIComponentBuilder;
+  wizardStorage: WizardStorage;
   lastTab: string;
 
   // it has return data if in pipeline mode
@@ -53,18 +54,19 @@ export class SelabWizardComponent implements OnInit {
   // receive data from dialog input
   initialization() {
     let pageId = this.graphEditorService.selectedPageId;
-    // console.log(JSON.stringify(SelabGlobalStorage.taskGraph));
     this.isPipeline = this.data.isPipeline;
     this.genere = this.data.genere;
     this.isComposite = this.data.isComposite;
     this.type = this.data.type;
     this.category = this.data.category;
-    let pageId = this.graphEditorService.selectedPageId;
+
+    this.wizardStorage = new WizardStorage();
     this.uiComponentBuilder = UIComponentFactory.create(this.type, pageId);
+    this.uiComponentBuilder.setDescription(this.uiComponentBuilder.selector);
+    this.wizardStorage.addUIComponentBuilder(this.uiComponentBuilder);
     if (this.isPipeline) {
       setTimeout(() => {
         let currentTask = SelabGlobalStorage.taskGraph.currentTask;
-        console.log(currentTask);
         this.uiComponentBuilder.setReturnData(currentTask.service.returnData.getReturnDatas()['datas']);
       }, 200);
     }
@@ -97,12 +99,7 @@ export class SelabWizardComponent implements OnInit {
     return true;
   }
 
-  checkUIComponent() {
-  }
-
   ngOnInit() {
-    console.log("initilize")
-    console.log(this.data);
     this.initialization();
     if (!this.checkWizardStatus())
       return;
@@ -123,5 +120,37 @@ export class SelabWizardComponent implements OnInit {
         this.composeTab.setReturn(this.data['service']);
       }
     }, 200)
+  }
+}
+
+export class WizardStorage {
+  uiComponentBuilderStorage: UIComponentBuilder[];
+  constructor() {
+    this.uiComponentBuilderStorage = [];
+  }
+
+  addUIComponentBuilder(uiComponentBuilder: UIComponentBuilder) {
+    this.uiComponentBuilderStorage.push(uiComponentBuilder);
+  }
+
+  isComposite(uiComponentBuilder: UIComponentBuilder) {
+    let compositeTypes = UIComponentConfig.getAllCompositeComponentTypes();
+
+    if(compositeTypes.includes(uiComponentBuilder.type)) 
+      return true;
+    else
+      return false;
+  }
+
+  getCompositeComponentBuilders() {
+    let builders = [];
+    for(let index = 0;index < this.uiComponentBuilderStorage.length; index++) {
+      let uiComponentBuilder = this.uiComponentBuilderStorage[index];
+      builders.push(uiComponentBuilder);
+      // if(this.isComposite(uiComponentBuilder)) {
+      //   builders.push(uiComponentBuilder);
+      // }
+    }
+    return builders;
   }
 }

@@ -40,7 +40,7 @@ export class StyleEditorComponent implements OnInit {
       this.selectedVertex = sender.selectionModel.cells[0];
       // console.log(this.selectedVertex);
       if (this.selectedVertex != undefined) {
-        let styleObj = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
+        let styleObj = StyleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
         // console.log(styleObj);
         this.syncEditorWithSelectedVertex(styleObj);
       }
@@ -48,69 +48,68 @@ export class StyleEditorComponent implements OnInit {
   }
 
   changeFontSize() {
-    let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
+    let oldStyle = StyleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
     oldStyle["fontSize"] = this.fontSize;
-    let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
+    let newStyleDescription = StyleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
     this.graphEditorService.getGraph().refresh();
   }
 
   changeFontColor() {
-    let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
+    let oldStyle = StyleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
     oldStyle["fontColor"] = this.fontColor;
-    let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
+    let newStyleDescription = StyleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
     this.graphEditorService.getGraph().refresh();
   }
 
   changeBorderColor() {
-    let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
+    let oldStyle = StyleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
     oldStyle["strokeColor"] = this.borderColor;
-    let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
+    let newStyleDescription = StyleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
     this.graphEditorService.getGraph().refresh();
   }
 
   changeFillColor() {
     console.log(this.fillColor)
-    let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
+    let oldStyle = StyleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
     oldStyle["fillColor"] = this.fillColor;
-    let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
+    let newStyleDescription = StyleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
     this.graphEditorService.getGraph().refresh();
   }
 
   toggleShadow() {
-    let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
+    let oldStyle = StyleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
     if (this.shadow) {
       oldStyle["shadow"] = "1";
     }
     else {
       oldStyle["shadow"] = "0";
     }
-    let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
+    let newStyleDescription = StyleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
     this.graphEditorService.getGraph().refresh();
   }
 
   changeOpacity(event) {
-    let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
+    let oldStyle = StyleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
     oldStyle["opacity"] = this.opacity;
-    let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
+    let newStyleDescription = StyleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
     this.graphEditorService.getGraph().refresh();
   }
 
   toggleRounded(event) {
-    let oldStyle = this.styleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
+    let oldStyle = StyleEditorService.convertStyleDescriptionToJsobObject(this.selectedVertex.style);
     if (this.rounded) {
       oldStyle["rounded"] = "1";
-
     }
     else {
       oldStyle["rounded"] = "0";
     }
-    let newStyleDescription = this.styleEditorService.convertJsonObjectToStyleDescription(oldStyle);
+    let newStyleDescription = StyleEditorService.convertJsonObjectToStyleDescription(oldStyle);
     this.selectedVertex.style = newStyleDescription;
     this.graphEditorService.getGraph().refresh();
   }

@@ -1,0 +1,48 @@
+<div class="container">
+  <h1 mat-dialog-title style="text-align: center; font-size: 24px;">Import Project</h1>
+  <mat-divider></mat-divider>
+  <br>
+
+  <div style="text-align: left;" mat-dialog-content>
+    &nbsp;&nbsp;
+    <mat-form-field>
+      <mat-label> Select Project </mat-label>
+      <mat-select disableRipple> 
+        <mat-option *ngFor="let project of projectOptions"
+          value="option"
+          (click)="chooseProject($event, project)"
+        >{{project.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-checkbox
+      (change)="setAll($event.checked)"
+    >
+      Select All Themes
+    </mat-checkbox>
+    <ul style="list-style-type: none; margin-top: 4px" *ngIf="selectedProject != 'undefined'">
+      <li *ngFor="let theme of selectedProject.themes">
+        <mat-checkbox
+          [(ngModel)]="theme.completed"
+          (click)="chooseTheme($event, theme)"
+          [color]="'primary'"
+        >
+          <span *ngIf="theme.used == true" style="color: #333333;">
+            {{theme.name}} (other developer is using)
+          </span>
+          <span *ngIf="theme.used == false">
+            {{theme.name}}
+          </span>
+        </mat-checkbox>
+      </li>
+    </ul>
+  </div>
+
+  <mat-divider></mat-divider>
+  <br>
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="importProject()"> Import </button>
+    <button mat-button [mat-dialog-close] (click)="cancel()"> Cancel </button>
+  </div>  
+</div>

@@ -7,34 +7,52 @@
     <mat-label>Service Candidates</mat-label>
     <mat-select disableRipple>
       <mat-option *ngFor="let option of serviceOptions" value="option" (click)="chooseService($event,option)">
-       <span style="color: #F2AA4CFF;">{{option.similarity.toFixed(3)}}</span> &nbsp;&nbsp; <span style="color: #101820FF;"> {{option.name}} </span>
+        <span style="color: #F2AA4CFF;">{{option.similarity.toFixed(3)}}</span> &nbsp;&nbsp; <span
+          style="color: #101820FF;"> {{option.name}} </span>
       </mat-option>
     </mat-select>
   </mat-form-field>
   &nbsp;&nbsp;
+
+  <mat-form-field appearance="outline">
+    <mat-label>Select Builder</mat-label>
+    <mat-select disableRipple>
+      <mat-option *ngFor="let builder of wizardStorage.getCompositeComponentBuilders()" value="option"
+        (click)="chooseBuilder($event, builder)">
+        <span *ngIf="builder.isComposite()" style="font-weight: bolder; color: black;">
+          {{builder.description}} ({{builder.name}})
+        </span>
+        <span *ngIf="!builder.isComposite()" style="font-weight:lighter; color: #333333;">
+          {{builder.description}} ({{builder.name}})
+        </span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;&nbsp;
+
   <button type="button" (click)="queryService()" mat-raised-button color="primary">Query Services</button>
   &nbsp;&nbsp;
   <mat-spinner [diameter]="30" style="display: inline; position: relative;" *ngIf="isQueryingService"></mat-spinner>
   <br>
 </div>
 
-<div>
-  <div *ngFor="let subComponent of uiComponentBuilder.componentList">
-    <div class="argument-block" *ngIf="subComponent.type === 'input'">
+<div *ngIf="selectedUIComponentBuilder != undefined">
+  <div *ngFor="let subComponentBuilder of selectedUIComponentBuilder.subComponentBuilders">
+    <div class="argument-block" *ngIf="subComponentBuilder.type === 'input'">
       <span>Input Text</span>
       <ul>
-        <li><span>Name: {{subComponent.name}}</span></li>
-        <li><span>Selector: {{subComponent.selector}}</span></li>
+        <li><span>Name: {{subComponentBuilder.name}}</span></li>
+        <li><span>Selector: {{subComponentBuilder.selector}}</span></li>
         <li>
-          <mat-checkbox [ngModel]="isArgument" (ngModelChange)="toggleIsArgument($event,subComponent)"></mat-checkbox>
+          <mat-checkbox [ngModel]="isArgument" (ngModelChange)="toggleIsArgument($event,subComponentBuilder)"></mat-checkbox>
           &nbsp;&nbsp;
           <span>Is Argument</span>
           &nbsp;&nbsp;
-          <mat-form-field *ngIf="subComponent.serviceComponent.bind === true" appearance="outline">
+          <mat-form-field *ngIf="subComponentBuilder.serviceComponent.bind === true" appearance="outline">
             <mat-label>Binding Argument</mat-label>
             <mat-select disableRipple>
               <mat-option *ngFor="let option of argumentOptions" value="{{option}}"
-                (click)="chooseArgument($event,option,subComponent)">
+                (click)="chooseArgument($event,option,subComponentBuilder)">
                 {{ option.name }}
               </mat-option>
             </mat-select>

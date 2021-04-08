@@ -13,8 +13,8 @@ export class InputTextComponent extends BasicComponent {
       super(uiComponentBuilder);
       let properties = uiComponentBuilder.getProperties();
       if (properties != undefined) {
-        this.typeInfo = properties["typeInfo"];
-        this.description = properties["name"];
+        // this.typeInfo = properties["typeInfo"].value;
+        this.description = properties["name"].value;
       }
     }
   }

@@ -12,9 +12,8 @@ export class CardComponent extends CompositeComponent {
       super(uiComponentBuilder);
       let properties = uiComponentBuilder.getProperties();
       if (properties != undefined) {
-        this.header = properties["header"];
+        this.header = properties["header"].value;
       }
-      this.componentList = uiComponentBuilder.componentList;
     }
   }
 

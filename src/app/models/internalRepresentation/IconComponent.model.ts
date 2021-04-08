@@ -10,7 +10,7 @@ export class IconComponent extends BasicComponent {
       super(uiComponentBuilder);
       let properties = uiComponentBuilder.getProperties();
       if (properties != undefined) {
-        this.text = properties["text"];
+        this.text = properties["text"].value;
       }
     }
   }

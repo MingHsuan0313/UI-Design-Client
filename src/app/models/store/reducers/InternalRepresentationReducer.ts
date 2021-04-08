@@ -46,8 +46,6 @@ class InternalRepresentationReducer {
         let pageName = store.pageUICDLs[action.pageId]['name'];
         let serviceName = action.serviceName;
         let returnObject = action.returnObject;
-        console.log(`pageName = ${pageName}\nserviceName = ${serviceName}`);
-        console.log(returnObject);
         store = {
             ...store,
             sumdl: {
@@ -140,9 +138,6 @@ class InternalRepresentationReducer {
     }
 
     findCell(graphModel: any[], componentId: string) {
-        console.log('find cell');
-        console.log(graphModel)
-        console.log(componentId)
         let cells = []
         for (let index = 0; index < graphModel.length; index++) {
             if (graphModel[index].componentID == componentId) {
@@ -184,8 +179,6 @@ class InternalRepresentationReducer {
             if (firstLevelCells.length > 0) {
                 // do data-binding hereee
                 for (let key in firstLevelCells) {
-                    console.log('first level');
-                    console.log(firstLevelCells);
                     let cell = firstLevelCells[key];
                     if (cell['dataBinding']['hasDataBinding']) {
                         store.pageUICDLs[action.id].body.componentList[index] = {
@@ -217,8 +210,6 @@ class InternalRepresentationReducer {
                     let secondLevelCells = this.findCell(graphModel, secondLevelComponentList[j].id);
                     if (secondLevelCells.length > 0) {
                         // do data-binding hereee
-                        console.log('second level');
-                        console.log(secondLevelCells);
                         for (let key in secondLevelCells) {
                             let cell = secondLevelCells[key];
                             if (cell['dataBinding']['hasDataBinding']) {
@@ -307,7 +298,6 @@ class InternalRepresentationReducer {
 
     @Action
     public insertUIComponent(store: InternalRepresentation, action: IRInsertUIComponentAction): InternalRepresentation {
-        console.log(action);
         store = { ...store };
         store.pageUICDLs = { ...store.pageUICDLs };
         let id = action.id;
@@ -363,11 +353,7 @@ class InternalRepresentationReducer {
     public addNDLPage(store: InternalRepresentation, action: IRInsertNDLPageAction): InternalRepresentation {
         store = { ...store }
         store.navigationDL = { ...store.navigationDL };
-        console.log(store.navigationDL)
         store.navigationDL["children"] = [...store.navigationDL["children"]];
-        console.log(typeof (store.navigationDL["children"]))
-
-        console.log(store.navigationDL["children"])
         store.navigationDL["children"].push({
             'selector': action.pageUICDL['id'],
             'component': action.pageUICDL['name'],
@@ -411,7 +397,6 @@ class InternalRepresentationReducer {
             "category": "Layout",
             "children": []
         }
-        console.log(store.navigationDL["children"])
         return store;
     }
 
@@ -438,7 +423,6 @@ class InternalRepresentationReducer {
                 for (let sourceComponentSelector in pageNDL["edges"]) {
                     if (this.isPageInTheme(store, action.themeIndex, pageNDL["edges"][sourceComponentSelector]["target"])) {
                         pageNDL["edges"][sourceComponentSelector] = { ...pageNDL["edges"][sourceComponentSelector] }
-                        console.log("debug 1")
                         delete pageNDL["edges"][sourceComponentSelector]
                     }
                 }

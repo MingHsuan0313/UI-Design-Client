@@ -4,12 +4,15 @@ import {RouterModule, Routes} from '@angular/router';
 import {DefaultLayoutComponent} from './containers';
 import { BPELDesignerComponent } from './containers/bpel-designer/bpel-designer.component';
 import {NavigationComponent} from 'src/app/models/navigation-dependency';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'index',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -19,9 +22,20 @@ export const routes: Routes = [
       {
         path: ':id',
         component: NavigationComponent
-
       }
     ]
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
+  {
+    path: 'home',
+    component: HomeComponent
   },
   {
     path: 'bpel',

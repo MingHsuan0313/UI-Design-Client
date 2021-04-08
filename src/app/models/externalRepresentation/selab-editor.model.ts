@@ -9,6 +9,7 @@ import { BreadcrumbStrategy, ButtonStrategy, CardStrategy, DropdownStrategy, For
 import { ICreateComponentStrategy } from "./createComponentStrategy/ICreateComponentStrategy";
 import { IRSetLayoutAction } from "../store/actions/internalRepresentation.action";
 import { MatDialog } from "@angular/material";
+import StyleEditorService from "src/app/services/externalRepresentation/style-editor.service";
 
 export class SelabEditor {
     editor: mxEditor;
@@ -83,7 +84,7 @@ export class SelabEditor {
         let id = selabVertex.getID();
         let value = selabVertex.getValue();
         let parent = this.getVertexByID(selabVertex.getParentID());
-        let styleDescription = this.convertJsonObjectToStyleDescription(style);
+        let styleDescription = StyleEditorService.convertJsonObjectToStyleDescription(style);
         try {
             this.getGraph().getModel().beginUpdate();
             vertex = this.getGraph()
@@ -163,20 +164,5 @@ export class SelabEditor {
             return cells[id];
         else
             return null;
-    }
-
-    convertJsonObjectToStyleDescription(styleObj: any): String {
-        let styleDescription = "";
-        let styleKeys = Object.keys(styleObj);
-        for (let index = 0; index < styleKeys.length; index++) {
-            let key = styleKeys[index];
-            if (styleObj[key] == undefined)
-                continue
-            if (index == styleKeys.length - 1)
-                styleDescription = styleDescription + `${key}=${styleObj[key]};`
-            else
-                styleDescription = styleDescription + `${key}=${styleObj[key]};`
-        }
-        return styleDescription;
     }
 }

@@ -158,7 +158,7 @@ export class NavEditorComponent implements OnInit {
             // set component(not layout) info to storage
             Storage.add(uiComponent);
           }
-          let childCellStyle = styleEditorService.convertStyleDescriptionToJsobObject(childCell.style);
+          let childCellStyle = StyleEditorService.convertStyleDescriptionToJsobObject(childCell.style);
           let vs: VertexStorage = new VertexStorage(childCell, new StyleStorage("", childCellStyle), uiComponent, dataBindingObject, isPrimary);
           let parentVertexStorage: VertexStorage = graphStorage.findVertexStorageByID(parentID);
           if (parentVertexStorage != null) {

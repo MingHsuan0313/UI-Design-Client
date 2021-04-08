@@ -7,14 +7,16 @@ import { IconComponent } from "../../models/internalRepresentation/IconComponent
 import { InputGroupComponent } from "../../models/internalRepresentation/InputGroupComponent.model";
 import { LayoutComponent } from "../../models/internalRepresentation/LayoutComponent.model";
 import { TableComponent } from "../../models/internalRepresentation/TableComponent.model";
-import { ArgumentModel, IServiceEntry, ReturnModel } from "../../models/service-component-dependency";
+import { ArgumentModel, IServiceEntry, ReturnModel, ServiceComponentModel } from "../../models/service-component-dependency";
 import { TextComponent, InputTextComponent, UIComponent } from "../../models/ui-component-dependency";
+import { UIComponentConfig } from "./uicomponent-config";
 
 export class UIComponentBuilder {
     public id: string;
     public name: string;
     public selector: string;
     public category: string;
+    public description: string;
     public type: string;
     public style: object;
     public pageId: string;
@@ -22,10 +24,10 @@ export class UIComponentBuilder {
     public serviceComponent: IServiceEntry;
     public argument: ArgumentModel;
     public properties: Object; // specific component properties: eg dropdown item, card header...
-    public componentList: UIComponent[];
+    public subComponentBuilders: UIComponentBuilder[];
     public serviceID: string;
     public returnData: ReturnModel;
-    public currentTaskStatus: {};
+    public currentTaskStatus: any[];
 
     constructor() {
         this.name = "";
@@ -36,13 +38,23 @@ export class UIComponentBuilder {
         this.type = "";
         this.geometry = {};
         this.style = {};
-        this.componentList = [];
+        this.subComponentBuilders = [];
         this.returnData = new ReturnModel({});
-        this.currentTaskStatus = {};
+        this.currentTaskStatus = [];
+        this.serviceComponent = new ServiceComponentModel();
     }
 
     getProperties(): Object {
         return this.properties;
+    }
+
+    isComposite(): boolean {
+        let compositeTypes = UIComponentConfig.getAllCompositeComponentTypes();
+        if(compositeTypes.includes(this.type)) {
+            return true;
+        }
+        else
+            return false;
     }
 
     setID(id: string) {
@@ -51,7 +63,7 @@ export class UIComponentBuilder {
     }
 
     setReturnData(datas: []) {
-        this.returnData.datas = datas;
+        this.returnData['datas'] = datas;
         return this;
     }
 
@@ -75,13 +87,18 @@ export class UIComponentBuilder {
         return this;
     }
 
-    addSubComponent(uiComponent: UIComponent) {
-        this.componentList.push(uiComponent);
+    addSubComponentBuilder(uiComponentBuilder: UIComponentBuilder) {
+        this.subComponentBuilders.push(uiComponentBuilder);
         return this;
     }
 
     setName(name: string) {
         this.name = name;
+        return this;
+    }
+
+    setDescription(description: string) {
+        this.description = description;    
         return this;
     }
 
@@ -167,11 +184,19 @@ export class UIComponentBuilder {
 
     buildFormComponent(): FormComponent {
         let formComponent: FormComponent = new FormComponent(this);
+        console.log(`build form Component ${formComponent.name}`)
+        console.log(formComponent)
+        for(let index = 0; index < this.subComponentBuilders.length; index++) {
+            formComponent.componentList.push(this.subComponentBuilders[index].build());
+        }
         return formComponent;
     }
 
     buildCardComponent(): CardComponent {
         let cardComponent: CardComponent = new CardComponent(this);
+        for(let index = 0; index < this.subComponentBuilders.length; index++) {
+            cardComponent.componentList.push(this.subComponentBuilders[index].build());
+        }
         return cardComponent;
     }
 
@@ -193,11 +218,6 @@ export class UIComponentBuilder {
     buildTableComponent(): TableComponent {
         let tableComponent: TableComponent = new TableComponent(this);
         return tableComponent;
-    }
-
-    addComponent(uiComponent: UIComponent): UIComponentBuilder {
-        this.componentList.push(uiComponent);
-        return this;
     }
 
     getServiceComponent() {

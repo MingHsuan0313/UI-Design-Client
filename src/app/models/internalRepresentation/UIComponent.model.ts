@@ -26,7 +26,6 @@ export class UIComponent {
     this.serviceComponent = uiComponentBuilder.serviceComponent;
     this.pageId = uiComponentBuilder.pageId;
     this.properties = uiComponentBuilder.properties;
-    // this.uiComponentBuilder = uiComponentBuilder;
   }
 
   public getName():  string{

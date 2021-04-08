@@ -9,7 +9,7 @@ import { UIComponent } from 'src/app/models/ui-component-dependency';
 import { UIComponentBuilder } from 'src/app/components/selab-wizard/UIComponentBuilder';
 import ServiceComponentService from 'src/app/services/serviceComponent/service-component.service';
 import { MatDialogRef } from '@angular/material';
-import { SelabWizardComponent } from '../selab-wizard.component';
+import { SelabWizardComponent, WizardStorage } from '../selab-wizard.component';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 
 @Component({
@@ -19,6 +19,9 @@ import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 })
 export class BindServiceTabComponent implements OnInit {
   @Input() uiComponentBuilder: UIComponentBuilder;
+  @Input() wizardStorage: WizardStorage;
+  selectedUIComponentBuilder: UIComponentBuilder;
+
   serviceOptions: any[];
   argumentOptions: any[];
   serviceComponentPool: Map<String, Boolean>; // check is serviceComponent has in pool
@@ -31,14 +34,19 @@ export class BindServiceTabComponent implements OnInit {
     private store: Store<AppState>,
     public wizard: MatDialogRef<SelabWizardComponent>,
     private serviceComponentService: ServiceComponentService) {
-    this.isQueryingService = false;
-    this.argumentOptions = [];
-    this.serviceComponentPool = new Map();
+      this.selectedUIComponentBuilder = this.uiComponentBuilder;
+      this.isQueryingService = false;
+      this.argumentOptions = [];
+      this.serviceComponentPool = new Map();
   }
 
   closeWizard() {
     let currentTask = SelabGlobalStorage.getTaskGraph().currentTask;
     this.wizard.close(currentTask);
+  }
+
+  chooseBuilder(event, builder) {
+    this.selectedUIComponentBuilder = builder;
   }
 
   async chooseService(event, option) {
@@ -56,11 +64,11 @@ export class BindServiceTabComponent implements OnInit {
       .subscribe((response) => {
         let returnModel = new ReturnModel(JSON.parse(response["body"]));
         serviceComponent.setReturn(returnModel);
-        this.uiComponentBuilder
+        this.selectedUIComponentBuilder
           .setServiceComponent(serviceComponent)
           .setServiceId(serviceComponent.getServiceID())
         if (option["name"] == "addDepartment" || option["name"] == "editDepartment") {
-            (this.uiComponentBuilder
+            (this.selectedUIComponentBuilder
               .getServiceComponent() as ServiceComponentModel)
               .setComplexTypeUrl(this.fakeData());
         }
@@ -68,10 +76,10 @@ export class BindServiceTabComponent implements OnInit {
       })
   }
 
-  chooseArgument(event, option, subComponent: UIComponent) {
+  chooseArgument(event, option, subComponentBuilder: UIComponentBuilder) {
     console.log("choose option");
     console.log(option);
-    (subComponent.serviceComponent as ArgumentModel)
+    (subComponentBuilder.serviceComponent as ArgumentModel)
       .setName(option["name"])
   }
 
@@ -108,12 +116,12 @@ export class BindServiceTabComponent implements OnInit {
         }
 
         let operation: ServiceComponentModel;
-        if ((this.uiComponentBuilder.getServiceComponent() as ServiceComponentModel).serviceID.toString().length > 0) {
-          operation = (this.uiComponentBuilder.getServiceComponent() as ServiceComponentModel);
+        if ((this.selectedUIComponentBuilder.getServiceComponent() as ServiceComponentModel).serviceID.toString().length > 0) {
+          operation = (this.selectedUIComponentBuilder.getServiceComponent() as ServiceComponentModel);
         }
         for (let index = 0; index < this.argumentOptions.length; index++)
           (operation as ServiceComponentModel).addArgument(this.argumentOptions[index]);
-        this.store.dispatch(new PipelineCreateOperationAction(this.uiComponentBuilder.getServiceComponent() as ServiceComponentModel));
+        this.store.dispatch(new PipelineCreateOperationAction(this.selectedUIComponentBuilder.getServiceComponent() as ServiceComponentModel));
       },
         (err) => {
           console.log(err);
@@ -123,7 +131,7 @@ export class BindServiceTabComponent implements OnInit {
   queryService() {
     this.isQueryingService = true;
     this.serviceComponentService
-      .queryMatchedServices(this.uiComponentBuilder)
+      .queryMatchedServices(this.selectedUIComponentBuilder)
       .subscribe(
         (response) => {
           console.log("queryService result")
@@ -141,11 +149,11 @@ export class BindServiceTabComponent implements OnInit {
       )
   }
 
-  toggleIsArgument(event, subComponent: UIComponent) {
+  toggleIsArgument(event, subComponentBuilder: UIComponentBuilder) {
     if (event)
-      subComponent.getServiceComponent().setBind(true);
+      subComponentBuilder.getServiceComponent().setBind(true);
     else
-      subComponent.getServiceComponent().setBind(false);
+      subComponentBuilder.getServiceComponent().setBind(false);
   }
 
   fakeData() {

@@ -305,7 +305,7 @@ export default class GraphEditorService {
         cell["geometry"]["y"] = model[key].geometry.y;
         cell["geometry"]["width"] = model[key].geometry.width;
         cell["geometry"]["height"] = model[key].geometry.height;
-        let styleObj = this.styleEditorService.convertStyleDescriptionToJsobObject(model[key].style);
+        let styleObj = StyleEditorService.convertStyleDescriptionToJsobObject(model[key].style);
         let styleConverter = new StyleConverter();
         styleObj = styleConverter.convertObject(styleObj);
         cell["style"] = styleObj;
