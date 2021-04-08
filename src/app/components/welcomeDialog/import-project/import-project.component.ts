@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-import-project',
@@ -13,7 +14,8 @@ export class ImportProjectComponent implements OnInit {
 
   constructor(
     public importProjectDialog: MatDialogRef<ImportProjectComponent>,
-    @Inject(MAT_DIALOG_DATA) public data
+    @Inject(MAT_DIALOG_DATA) public data,
+    private router: Router
   ) {
     this.selectedProject = new SelabProject();
     this.fakeData();
@@ -46,6 +48,10 @@ export class ImportProjectComponent implements OnInit {
         continue;
       this.selectedProject.themes[index]['completed'] = checked;
     }
+  }
+
+  cancel() {
+    this.router.navigate(['/login']);
   }
 
   fakeData() {

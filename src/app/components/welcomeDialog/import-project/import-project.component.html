@@ -18,7 +18,7 @@
     <mat-checkbox
       (change)="setAll($event.checked)"
     >
-      Select All
+      Select All Themes
     </mat-checkbox>
     <ul style="list-style-type: none; margin-top: 4px" *ngIf="selectedProject != 'undefined'">
       <li *ngFor="let theme of selectedProject.themes">
@@ -42,7 +42,7 @@
   <br>
 
   <div mat-dialog-actions>
-    <button mat-button (click)="importProject()"> OK </button>
-    <button mat-button [mat-dialog-close]> Cancel </button>
+    <button mat-button (click)="importProject()"> Import </button>
+    <button mat-button [mat-dialog-close] (click)="cancel()"> Cancel </button>
   </div>  
 </div>
