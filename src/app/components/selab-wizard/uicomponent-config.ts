@@ -45,6 +45,18 @@ export class UIComponentConfig {
                 }
             ]
         }
+        else if (type == "pagination") {
+            return [
+                {
+                    "type": "String",
+                    "name": "name"
+                },
+                {
+                    "type": "Number",
+                    "name": "pages"
+                }
+            ]
+        }
         else if (type == "tree") {
             return [
                 {

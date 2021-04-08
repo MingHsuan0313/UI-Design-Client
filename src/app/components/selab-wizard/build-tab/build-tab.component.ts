@@ -179,8 +179,8 @@ export class BuildTabComponent implements OnInit {
 
       }
 
-      else if (propertyType == "Integer") {
-
+      else if (propertyType == "Number") {
+        this.formData[propertyName].value = 0;
       }
       else if (this.buildFormProperties[index]["type"] == "Number") {
         this.formData[this.buildFormProperties[index]["value"]] = "";

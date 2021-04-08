@@ -1,3 +1,4 @@
+import { PaginationComponent } from "src/app/models/internalRepresentation/PaginationComponent.model";
 import { TreeComponent } from "src/app/models/internalRepresentation/TreeComponent.model";
 import { BreadcrumbComponent } from "../../models/internalRepresentation/BreadcrumbComponent.model";
 import { ButtonComponent } from "../../models/internalRepresentation/ButtonComponent.model";
@@ -158,6 +159,13 @@ export class UIComponentBuilder {
             return this.buildFormComponent();
         else if (this.type == "tree")
             return this.buildTreeComponent();
+        else if (this.type == "pagination")
+            return this.buildPaginationComponent();
+    }
+
+    buildPaginationComponent(): PaginationComponent {
+        let paginationComponent: PaginationComponent = new PaginationComponent(this);
+        return paginationComponent;
     }
 
     buildLayoutComponent(): LayoutComponent {

@@ -11,6 +11,8 @@ import { IRSetLayoutAction } from "../store/actions/internalRepresentation.actio
 import { MatDialog } from "@angular/material";
 import StyleEditorService from "src/app/services/externalRepresentation/style-editor.service";
 import { TreeStrategy } from "./createComponentStrategy/TreeStrategy";
+import { PaginationComponent } from "../internalRepresentation/PaginationComponent.model";
+import { PaginationStrategy } from "./createComponentStrategy/PagenationStrategy";
 
 export class SelabEditor {
     editor: mxEditor;
@@ -148,6 +150,9 @@ export class SelabEditor {
                 this.setStrategy(new CardStrategy(geometry, restoreMode));
             }  else if (uiComponent['type'] == 'form') {
                 this.setStrategy(new FormStrategy(geometry, restoreMode));
+            }
+            else if(uiComponent['type'] == 'pagination') {
+                this.setStrategy(new PaginationStrategy(geometry, restoreMode));
             }
             const compositeVertexStorage = this.createComponentStrategy.createComponent(this, uiComponent, parent);
             return compositeVertexStorage;

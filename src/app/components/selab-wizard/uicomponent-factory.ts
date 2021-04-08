@@ -110,6 +110,14 @@ export abstract class UIComponentFactory {
                 .setType("tree")
             this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
         }
+        else if (type == "pagination") {
+            uiComponentBuilder = new UIComponentBuilder()
+                .setCategory("container")
+                .setType("pagination")
+                .setID(`${this.nextID}`)
+                .setSelector(`${type}${this.nextID}`)
+            this.uiComponentBuilders.set(uiComponentBuilder.id, uiComponentBuilder);
+        }
         else if (type == "icon") {
             uiComponentBuilder = new UIComponentBuilder()
                 .setCategory("informative")
@@ -258,6 +266,15 @@ export abstract class UIComponentFactory {
                 [uiComponentBuilder.selector]: {
                     name: uiComponentBuilder.name,
                     label: uiComponentBuilder.properties["label"],
+                    service: info
+                }
+            }
+        }
+        else if (type == "pagination") {
+            return {
+                [uiComponentBuilder.selector]: {
+                    name: uiComponentBuilder.name,
+                    pages: uiComponentBuilder.properties["pages"],
                     service: info
                 }
             }
