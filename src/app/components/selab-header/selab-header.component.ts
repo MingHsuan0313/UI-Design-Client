@@ -277,4 +277,20 @@ export class SelabHeaderComponent implements OnInit {
       console.log(error);
     }
   }
+
+  logout() {
+    console.log("click logout");
+  }
+
+  inviteDeveloper() {
+    console.log("invite developer");
+  }
+
+  changeGroup() {
+    console.log("change group");
+  }
+
+  exportProject() {
+    console.log("export project");
+  }
 }
