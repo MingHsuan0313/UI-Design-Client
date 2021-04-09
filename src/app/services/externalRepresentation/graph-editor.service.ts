@@ -151,7 +151,7 @@ export default class GraphEditorService {
     this.selectedPageId = "navigation";
     if (this.inNavigation == flag)
       return;
-    if(this.inNavigation == "None"){
+    if (this.inNavigation == "None") {
       Configuration.configConnectionHadlerListener(this.getGraph(), this.dialog);
     }
     this.inNavigation = flag;
@@ -195,13 +195,13 @@ export default class GraphEditorService {
     let pagesIDInTheme = [];
     let pagesNameinTheme = []
     let pageUICDLs;
-    if(flag == "theme"){
+    if (flag == "theme") {
       subscribtion = this.store.select(themeSelector()).subscribe((themes) => {
         themes[this.selectedThemeIndex].pages.forEach(
           page => {
             pagesIDInTheme.push(page.id)
             pagesNameinTheme.push(page.name)
-        })
+          })
       })
       subscribtion.unsubscribe();
     }
@@ -213,32 +213,32 @@ export default class GraphEditorService {
         let xOffset = 0;
         let yOffset = 0;
         for (let index = 0; index < keys.length; index++) {
-            let key = keys[index];
-            let page = pages[key];
+          let key = keys[index];
+          let page = pages[key];
 
-            if(flag == "themes" || flag=="theme" && pagesIDInTheme.includes(key)){
-              if (page['layout'].length > 0) {
-                let layoutStrategy = new LayoutStrategy("graph-container", new mxGeometry(0, 0, 0, 0)).setOffset(xOffset, yOffset);
-                layoutStrategy.createLayoutComponent(this.editor, page, []);
-              }
-              let uiComponentList = this.IRTransformerService.transform(page, this.editor.getGraph());
-              uiComponentList.forEach(
-                uiComponent => {
-                  let copyComponent = {};
-                  copyComponent = JSON.parse(JSON.stringify(uiComponent));
-                  copyComponent["geometry"]["x"] = copyComponent["geometry"]["x"] + xOffset;
-                  this.bindComponent(copyComponent, copyComponent['geometry']);
-                }
-              )
-              let offset = document.getElementById('graph-container').offsetWidth;
-              xOffset = xOffset + offset;
+          if (flag == "themes" || flag == "theme" && pagesIDInTheme.includes(key)) {
+            if (page['layout'].length > 0) {
+              let layoutStrategy = new LayoutStrategy("graph-container", new mxGeometry(0, 0, 0, 0)).setOffset(xOffset, yOffset);
+              layoutStrategy.createLayoutComponent(this.editor, page, []);
             }
+            let uiComponentList = this.IRTransformerService.transform(page, this.editor.getGraph());
+            uiComponentList.forEach(
+              uiComponent => {
+                let copyComponent = {};
+                copyComponent = JSON.parse(JSON.stringify(uiComponent));
+                copyComponent["geometry"]["x"] = copyComponent["geometry"]["x"] + xOffset;
+                this.bindComponent(copyComponent, copyComponent['geometry']);
+              }
+            )
+            let offset = document.getElementById('graph-container').offsetWidth;
+            xOffset = xOffset + offset;
+          }
         }
-    })
+      })
     subscribtion.unsubscribe();
     return {
       "pages": pageUICDLs,
-      "pagesNameInTheme" : pagesNameinTheme
+      "pagesNameInTheme": pagesNameinTheme
     }
   }
 
@@ -251,28 +251,28 @@ export default class GraphEditorService {
     )
     subscribtion.unsubscribe();
     let cells = Object.values(this.getGraphModel().cells);
-    if (ndl && ndl["children"] != null) {
-      ndl["children"].forEach(
-        pageNdl => {
-          let pageName = pageNdl["component"]
-          if(flag == "themes" || flag=="theme" && pagesNameInTheme.includes(pageName)){
-            for(let componentSelector in pageNdl["edges"]){
-              let targetInfo = pageNdl["edges"][componentSelector]
-              let parameter = targetInfo["parameter"]       
-              let targetPageId = ((Object.values(pages)).find(page => page["name"] == targetInfo["target"]))["id"]
-              let sourceCell = cells.find(cell => cell["selector"] == componentSelector)
-              let targetCell = cells.find(cell =>
-                cell["pageId"] == targetPageId && cell["componentPart"] == "box" && cell["type"] == "layout"
-              )
-              this.renderEdge(sourceCell, targetCell, parameter)
-            }
+    if (ndl != null) {
+      let keys = Object.keys(ndl)
+      for (let key of keys) {
+        let pageNdl = ndl[key]
+        let pageName = pageNdl["component"]
+        if (flag == "themes" || flag == "theme" && pagesNameInTheme.includes(pageName)) {
+          for (let componentSelector in pageNdl["edges"]) {
+            let targetInfo = pageNdl["edges"][componentSelector]
+            let parameter = targetInfo["parameter"]
+            let targetPageId = ((Object.values(pages)).find(page => page["name"] == targetInfo["target"]))["id"]
+            let sourceCell = cells.find(cell => cell["selector"] == componentSelector)
+            let targetCell = cells.find(cell =>
+              cell["pageId"] == targetPageId && cell["componentPart"] == "box" && cell["type"] == "layout"
+            )
+            this.renderEdge(sourceCell, targetCell, parameter)
           }
         }
-      )
+      }
     }
   }
 
-  renderEdge(sourceCell, targetCell, parameter){
+  renderEdge(sourceCell, targetCell, parameter) {
     let size = 12 / this.getGraph().zoomFactor;
     let x = sourceCell['geometry'].width - size / 2;
     let y = sourceCell['geometry'].height / 2 - size / 2;
@@ -287,7 +287,7 @@ export default class GraphEditorService {
   generateGraphModel(model) {
     let cells = [];
     for (let key in model) {
-      if(model[key].componentID == undefined) {
+      if (model[key].componentID == undefined) {
         continue;
       }
 

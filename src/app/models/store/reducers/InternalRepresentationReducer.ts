@@ -1,7 +1,7 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInitialNDLAction, IRInsertNDLPageAction, IRClearNDLThemeEdgeAction, IRInsertSumdlServiceAction, IRInsertSumdlServiceReturnAction, IRDeleteAllDLsAndThemes, IROpenNDLFromDBAction, IROpenSUMDLFromDBAction  } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInsertNDLPageAction, IRClearNDLThemeEdgeAction, IRInsertSumdlServiceAction, IRInsertSumdlServiceReturnAction, IRDeleteAllDLsAndThemes, IROpenNDLFromDBAction, IROpenSUMDLFromDBAction  } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 import produce from 'immer';
 // import { enableMapSet } from 'immer';
@@ -11,13 +11,25 @@ import produce from 'immer';
 class InternalRepresentationReducer {
     @Action
     public insertTheme(store: InternalRepresentation, action: IRInsertThemeAction): InternalRepresentation {
-        return produce(store, draft => {
-            draft.themes.push({
-                name: action.name,
-                id: action.id,
-                pages: []
-            })
-        })
+        store = {
+            ...store,
+            themes: [
+                    ...store.themes,
+                    {
+                        name: action.name,
+                        id: action.id,
+                        pages: []
+                    }
+            ]
+        }
+        return store;
+        // return produce(store, draft => {
+        //     draft.themes.push({
+        //         name: action.name,
+        //         id: action.id,
+        //         pages: []
+        //     })
+        // })
     }
 
     @Action
@@ -311,21 +323,25 @@ class InternalRepresentationReducer {
     public AddNDLEdge(store: InternalRepresentation, action: IRAddNDLEdgeAction): InternalRepresentation {
         store = { ...store }
         store.navigationDL = { ...store.navigationDL };
-        store.navigationDL['children'] = [...store.navigationDL['children']]
 
         let source = action.edgeInfo["source"];
         let target = action.edgeInfo["target"];
         let parameter = action.edgeInfo["parameter"]
-        let sourceComponentSelector = source['componentSelector']
-        for (let index = 0; index < store.navigationDL['children'].length; index++) {
-            if (store.navigationDL['children'][index]['component'] == source['pageName']) {
-                store.navigationDL['children'][index] = { ...store.navigationDL['children'][index] }
-
-                let pageNDL = store.navigationDL['children'][index]
+        let sourceComponentSelector = source['componentSelector'];
+        let keys = Object.keys(store.navigationDL);
+        console.log(keys)
+        for (let key of keys) {
+            console.log(key)
+            console.log(store.navigationDL[key]['component'])
+            if (store.navigationDL[key]['component'] == source['pageName']) {
+                store.navigationDL[key] = { ...store.navigationDL[key] }
+                console.log("Hello")
+                console.log(key)
+                let pageNDL = store.navigationDL[key]
                 if (!pageNDL['destination'].includes(target['pageName'])) {
-                    store.navigationDL['children'][index]['destination'] = [...store.navigationDL['children'][index]['destination'], target['pageName']]
+                    store.navigationDL[key]['destination'] = [...store.navigationDL[key]['destination'], target['pageName']]
                 }
-                store.navigationDL['children'][index]["edges"] = { ...store.navigationDL['children'][index]["edges"] }
+                store.navigationDL[key]["edges"] = { ...store.navigationDL[key]["edges"] }
                 pageNDL['edges'][sourceComponentSelector] = { ...pageNDL['edges'][sourceComponentSelector] }
 
                 pageNDL['edges'][sourceComponentSelector] = {
@@ -337,13 +353,12 @@ class InternalRepresentationReducer {
                     pageNDL['edges'][sourceComponentSelector]['parameter'] = parameter;
                 }
             }
-
             if (parameter != undefined && parameter.length > 0
-                && store.navigationDL['children'][index]['component'] == target['pageName']
-                && !store.navigationDL['children'][index]["parameters"].includes(parameter)) {
-                store.navigationDL['children'][index] = { ...store.navigationDL['children'][index] }
-                store.navigationDL['children'][index]["parameters"] = [...store.navigationDL['children'][index]["parameters"]]
-                store.navigationDL['children'][index]["parameters"] = [...store.navigationDL['children'][index]["parameters"], parameter]
+                && store.navigationDL[key]['component'] == target['pageName']
+                && !store.navigationDL[key]["parameters"].includes(parameter)) {
+                    store.navigationDL[key] = { ...store.navigationDL[key] }
+                    store.navigationDL[key]["parameters"] = [...store.navigationDL[key]["parameters"]]
+                    store.navigationDL[key]["parameters"] = [...store.navigationDL[key]["parameters"], parameter]
             }
         }
         return store
@@ -353,8 +368,7 @@ class InternalRepresentationReducer {
     public addNDLPage(store: InternalRepresentation, action: IRInsertNDLPageAction): InternalRepresentation {
         store = { ...store }
         store.navigationDL = { ...store.navigationDL };
-        store.navigationDL["children"] = [...store.navigationDL["children"]];
-        store.navigationDL["children"].push({
+        store.navigationDL[action.pageUICDL.getId()] = {
             'selector': action.pageUICDL['id'],
             'component': action.pageUICDL['name'],
             'path': action.pageUICDL['name'],
@@ -364,7 +378,8 @@ class InternalRepresentationReducer {
             'parameters': [],
             'children': [],
             'edges': {}
-        })
+        }
+
         return store
     }
 
@@ -372,46 +387,41 @@ class InternalRepresentationReducer {
     public deleteNDLPage(store: InternalRepresentation, action: IRDeleteNDLPageAction): InternalRepresentation {
         store = { ...store }
         store.navigationDL = { ...store.navigationDL };
-        store.navigationDL["children"] = [...store.navigationDL["children"]];
-        let pages = store.navigationDL["children"];
-        let findIndex = -1
-        for (let index = 0; index < pages.length; index++) {
-            if (pages[index]["component"] == action.pageName) {
-                findIndex = index;
-            }
-        }
-        if (findIndex >= 0 && findIndex < pages.length) {
-            store.navigationDL["children"].splice(findIndex, 1)
-        }
+        console.log(action.page)
+        delete store.navigationDL[action.page];
         return store;
     }
 
-    @Action
-    public initialNDL(store: InternalRepresentation, action: IRInitialNDLAction): InternalRepresentation {
-        store = { ...store }
-        store.navigationDL = { ...store.navigationDL };
-        store.navigationDL = {
-            "selector": "DefaultLayout",
-            "component": "DefaultLayoutComponent",
-            "path": "",
-            "category": "Layout",
-            "children": []
-        }
-        return store;
-    }
+    // @Action
+    // public initialNDL(store: InternalRepresentation, action: IRInitialNDLAction): InternalRepresentation {
+    //     store = { ...store }
+    //     store.navigationDL = { ...store.navigationDL };
+    //     store.navigationDL = {
+    //         "selector": "DefaultLayout",
+    //         "component": "DefaultLayoutComponent",
+    //         "path": "",
+    //         "category": "Layout",
+    //         "children": []
+    //     }
+    //     return store;
+    // }
 
     @Action
     public clearEdgeByTheme(store: InternalRepresentation, action: IRClearNDLThemeEdgeAction): InternalRepresentation {
-        store = { ...store }
-        store.navigationDL = { ...store.navigationDL };
-        store.navigationDL['children'] = [...store.navigationDL['children']]
-        for (let index = 0; index < store.navigationDL['children'].length; index++) {
-            let pageName = store.navigationDL['children'][index]["component"]
+        store = { ...store, 
+                    navigationDL: {
+                        ...store.navigationDL
+                    }
+                }
+
+        let keys = Object.keys(store.navigationDL)
+        for (let key of keys) {
+            let pageName = store.navigationDL[key]["component"]
             if (this.isPageInTheme(store, action.themeIndex, pageName)) {
-                store.navigationDL['children'][index] = { ...store.navigationDL['children'][index] }
-                let pageNDL = store.navigationDL['children'][index]
+                store.navigationDL[key] = { ...store.navigationDL[key] }
+                let pageNDL = store.navigationDL[key]
                 // destination
-                for (let j = 0; index < pageNDL["destination"].length; index++) {
+                for (let j = 0; j < pageNDL["destination"].length; j++) {
                     pageNDL["destination"] = [...pageNDL["destination"]]
                     if (this.isPageInTheme(store, action.themeIndex, pageNDL["destination"][j])) {
                         pageNDL["destination"].splice(j, 1);
@@ -427,7 +437,6 @@ class InternalRepresentationReducer {
                     }
                 }
                 // parameters
-
             }
         }
         return store;
@@ -462,7 +471,7 @@ class InternalRepresentationReducer {
     public loadNDLFromDB(store: InternalRepresentation, action: IROpenNDLFromDBAction): InternalRepresentation{
         store = {...store}
         store.navigationDL = { ...store.navigationDL };
-        store.navigationDL = action.ndl;
+        store.navigationDL[action.pageID] = action.ndl;
         return store;
     }
 

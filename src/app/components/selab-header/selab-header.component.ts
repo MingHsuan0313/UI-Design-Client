@@ -6,7 +6,7 @@ import { LayoutComponent, TextComponent, UIComponent } from '../../models/ui-com
 import { PropertyGenerator } from '../../shared/property-generator';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { HttpClient } from '@angular/common/http';
-import ImportService from '../../services/internalRepresentation/import.service';
+import LoadService from '../../services/internalRepresentation/Load.service';
 import ExportService from '../../services/internalRepresentation/export.service';
 import IRTransformer from '../../services/internalRepresentation/IRTransformer.service'
 import {
@@ -62,7 +62,7 @@ export class SelabHeaderComponent implements OnInit {
 
   constructor(
     private graphEditorService: GraphEditorService,
-    private importService: ImportService,
+    private loadService: LoadService,
     private exportService: ExportService,
     private snackBar: MatSnackBar,
     public wizard: MatDialog,
@@ -189,8 +189,8 @@ export class SelabHeaderComponent implements OnInit {
     document.getElementById('navigationForm').style.display = 'block';
   }
 
-  import() {
-    this.importService.import();
+  loadProject() {
+    this.loadService.loadProject();
   }
 
   save() {
@@ -260,7 +260,7 @@ export class SelabHeaderComponent implements OnInit {
   }
 
   uploadFromDB(){
-    this.importService
+    this.loadService
   }
 
   uploadPageUICDL($event) {

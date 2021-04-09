@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import ImportService from '../../services/internalRepresentation/import.service';
+import LoadService from '../../services/internalRepresentation/Load.service';
 import ExportService from '../../services/internalRepresentation/export.service';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { Storage } from '../../shared/storage';
@@ -37,11 +37,11 @@ export class NavEditorComponent implements OnInit {
   private imageCount = 0;
   private imageObservable;
 
-  constructor(private importService: ImportService,
+  constructor(private loadService: LoadService,
     private exportService: ExportService,
     private graphEditorService: BpelDesignerEditorService,
     private styleEditorService: StyleEditorService) {
-    this.files = this.importService.pages;
+    this.files = this.loadService.pages;
     this.images = Storage.images;
   }
 

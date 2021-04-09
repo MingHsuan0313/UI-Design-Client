@@ -17,7 +17,7 @@ export enum IRActionTypes {
     RENAME_THEME = "[InternalRepresentation] Rename Theme",
     ADD_NDL_EDGE = "[InternalRepresentation] Add NDL Page Edge",
     CLEAR_NDL_EDGE = "[InternalRepresentation] Clear NDL Page Edge",
-    INITIAL_NDL = "[InternalRepresentation] Initial NDL",
+    //INITIAL_NDL = "[InternalRepresentation] Initial NDL",
     INSERT_NDL_PAGE = "[InternalRepresentation] Insert NDL Page",
     DELETE_NDL_PAGE = "[InternalRepresentation] Delete NDL Page",
     INSERT_SUMDL_SERVICE = "[InternalRepresentation] Insert SUMDL Service",
@@ -121,13 +121,13 @@ export class IRInsertNDLPageAction implements Action {
 
 export class IRDeleteNDLPageAction implements Action {
     public type = IRActionTypes["DELETE_NDL_PAGE"];
-    constructor(public pageName: string) {}
+    constructor(public page: string) {}
 }
 
-export class IRInitialNDLAction implements Action {
-    public type = IRActionTypes["INITIAL_NDL"];
-    constructor() {}
-}
+// export class IRInitialNDLAction implements Action {
+//     public type = IRActionTypes["INITIAL_NDL"];
+//     constructor() {}
+// }
 
 export class IRDeleteAllDLsAndThemes implements Action {
     public type = IRActionTypes["DELETE_ALL_DLs_THEMES"];
@@ -136,7 +136,7 @@ export class IRDeleteAllDLsAndThemes implements Action {
 
 export class IROpenNDLFromDBAction implements Action {
     public type = IRActionTypes["LOAD_NDL_FROM_DB"];
-    constructor(public ndl: {}) {}
+    constructor(public pageID: string, public ndl: {}) {}
 }
 
 export class IROpenSUMDLFromDBAction implements Action {

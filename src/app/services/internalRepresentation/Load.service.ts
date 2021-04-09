@@ -13,7 +13,7 @@ import { concatMap, map } from 'rxjs/operators';
   providedIn: "root"
 })
 
-export default class ImportService {
+export default class LoadService {
 
   baseUrl: string;
   files:any[];
@@ -26,13 +26,67 @@ export default class ImportService {
     this.baseUrl = "page";
   }
 
-  import() {
+  // import() {
+  //   let importProjectName;
+  //   let themes
+  //   this.store.select(projectNameSelector()).subscribe( projectName => importProjectName = projectName)
+  //   console.log(importProjectName)
+  //   this.store.dispatch(new IRDeleteAllDLsAndThemes());
+  //   this.store.dispatch(new IRInitialNDLAction());
+
+  //   this.getTheme(importProjectName).pipe(
+  //     concatMap((response)=> {
+  //       console.log(response)
+  //       themes = JSON.parse(response['body'])
+  //       themes.forEach(theme => {
+  //         this.store.dispatch(new IRInsertThemeAction(theme.id, theme.themeName));
+  //       })
+  //       this.store.dispatch(new IRDeleteThemeAction(0));
+  //       return this.getPageUICDL(importProjectName)
+  //     }),
+  //     concatMap((response)=> {
+  //       let pageUICDLs = JSON.parse(response['body'])
+  //       console.log(pageUICDLs)
+  //       let firstPageID;
+  //       pageUICDLs.forEach( (pageUICDL, index) => {
+  //         if(index==0){
+  //           firstPageID = pageUICDL.id;
+  //         }
+  //         themes.forEach( (theme, index) => {
+  //           if(theme.id == pageUICDL.themeTable.id){
+  //             let pageUICDLObject = JSON.parse(pageUICDL.pdl) as PageUICDL
+  //             let isMain = pageUICDLObject.isMain;
+  //             this.store.dispatch(new IRInsertPageUICDLAction(index, pageUICDLObject, isMain));
+  //           }
+  //         })
+  //       })
+  //       this.graphEditorService.changePage(firstPageID, firstPageID);
+  //       return this.getNDL(importProjectName)
+  //     }),
+  //     concatMap((response)=> {
+  //       let ndl = JSON.parse(JSON.parse(response['body']).ndl);
+  //       if(ndl){
+  //         this.store.dispatch(new IROpenNDLFromDBAction(ndl));
+  //       }
+  //       console.log(ndl)
+  //       return this.getSUMDL(importProjectName)
+  //     }),
+  //     map((response) => {
+  //       let sumdl = JSON.parse(JSON.parse(response['body']).sumdl);
+  //       if(sumdl){
+  //         this.store.dispatch(new IROpenSUMDLFromDBAction(sumdl));
+  //       }
+  //     })
+  //   ).subscribe(response=>console.log(response))
+  //   this.store.dispatch(new IRInsertThemeAction("temp","temp"))
+  // }
+
+  loadProject(){
     let importProjectName;
     let themes
     this.store.select(projectNameSelector()).subscribe( projectName => importProjectName = projectName)
     console.log(importProjectName)
     this.store.dispatch(new IRDeleteAllDLsAndThemes());
-    this.store.dispatch(new IRInitialNDLAction());
 
 
     this.getTheme(importProjectName).pipe(
@@ -79,7 +133,6 @@ export default class ImportService {
         }
       })
     ).subscribe(response=>console.log(response))
-
     this.store.dispatch(new IRInsertThemeAction("temp","temp"))
   }
 

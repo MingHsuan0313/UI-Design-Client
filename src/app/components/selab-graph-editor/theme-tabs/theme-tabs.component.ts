@@ -120,8 +120,8 @@ export class ThemeTabsComponent implements OnInit {
     // delete all pages under this specific theme first
     for (let index = 0; index < this.getSelectedTheme()['pages'].length; index++) {
       let page = this.getSelectedTheme()['pages'][index];
-      this.store.dispatch(new IRDeletePageUICDLAction(this.selectedThemeIndex.value, index, page['id']));
-      this.store.dispatch(new IRDeleteNDLPageAction(page["name"]))
+      this.store.dispatch(new IRDeleteNDLPageAction(page["id"]))
+      this.store.dispatch(new IRDeletePageUICDLAction(this.selectedThemeIndex.value, index, page["id"]));
     }
 
     // delete this specific theme
@@ -133,8 +133,9 @@ export class ThemeTabsComponent implements OnInit {
   closePage(index: number) {
     // delete page
     let page = this.getSelectedTheme()['pages'][index];
-    this.store.dispatch(new IRDeletePageUICDLAction(this.selectedThemeIndex.value, index, page['id']));
-    this.store.dispatch(new IRDeleteNDLPageAction(page["name"]))
+
+    this.store.dispatch(new IRDeleteNDLPageAction(page["id"]))
+    this.store.dispatch(new IRDeletePageUICDLAction(this.selectedThemeIndex.value, index, page["id"]));
 
     if (index == this.selectedPageIndex.value) {
       this.selectedPageIndex.setValue(0);
@@ -216,7 +217,7 @@ export class ThemeTabsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new IRInitialNDLAction());
+    //this.store.dispatch(new IRInitialNDLAction());
     this.addTheme(true);
     this.graphEditorService.setSelectedPageId(this.themes[0].pages[0].id);
     this.graphEditorService.setSelectedThemeIndex(0);
