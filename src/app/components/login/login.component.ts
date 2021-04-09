@@ -33,17 +33,11 @@ export class LoginComponent {
         this.loginFailed = true;
       }
       else {
-        let userID = JSON.parse(response['data'])["userId"];
-        let groupID = JSON.parse(response['data'])["groupId"];
+        let userID = response['data']["userId"];
+        let groupID = response['data']["groupId"];
         SelabGlobalStorage.startSession(this.username, userID, groupID);
         this.router.navigate(['index']);
       }
-      // if (status == 200)
-      // this.router.navigate(['./dashboard'], {
-      //   state: {
-      //     username: this.username
-      //   }
-      // });
     }, (error) => {
       this.loginFailed = true;
     })
