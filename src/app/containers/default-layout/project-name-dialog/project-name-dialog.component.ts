@@ -38,7 +38,9 @@ export class ProjectNameDialogComponent implements OnInit {
           alert(response["data"]);
         }
         else {
+          let projectId = response["data"];
           SelabGlobalStorage.sessionInformation["user"]["projectName"] = this.projectName;
+          SelabGlobalStorage.setProjectID(projectId);
           this.dialogRef.close(this.projectName);
         }
       })

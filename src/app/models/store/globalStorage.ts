@@ -26,6 +26,14 @@ export class SelabGlobalStorage {
         this.sessionInformation["openedThemeList"] = []
     }
 
+    static setProjectID(projectID: string) {
+        this.sessionInformation["user"]['projectID'] = projectID;
+    }
+
+    static getProjectID(projectID: string) {
+        return this.sessionInformation["user"]['projectID'];
+    }
+
     static getUserName() {
         return this.sessionInformation["user"]["username"];
     }

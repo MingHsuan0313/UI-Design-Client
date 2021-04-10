@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/models/store/app.state';
 import { IRSetProjectNameAction } from 'src/app/models/store/actions/internalRepresentation.action';
 import { WelcomeDialogComponent } from 'src/app/components/welcome-dialog/welcome-dialog.component';
-import { ImportProjectComponent } from 'src/app/components/welcomeDialog/import-project/import-project.component';
+import { ImportProjectComponent } from 'src/app/components/welcome-dialog/import-project/import-project.component';
 
 @Component({
   selector: 'app-dashboard',
