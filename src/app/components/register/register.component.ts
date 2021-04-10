@@ -30,15 +30,15 @@ export class RegisterComponent {
   }
 
   isRegisterValid() {
-    if(this.username.length < 3) {
+    if (this.username.length < 3) {
       alert('username length should be more than 8');
       return false;
     }
-    else if(this.password.length < 3) {
+    else if (this.password.length < 3) {
       alert('password length should be more than 8');
       return false;
     }
-    else if(this.email.length < 8 && this.email.includes('@')) {
+    else if (this.email.length < 8 && this.email.includes('@')) {
       alert('email not correctly');
       return false;
     }
@@ -47,19 +47,25 @@ export class RegisterComponent {
 
   async register() {
     console.log(`username: ${this.username}\npassword: ${this.password}\nemail: ${this.email}\nrepeated-password: ${this.repeatPassword}`);
-    if(!this.isRegisterValid())
+    if (!this.isRegisterValid())
       return;
     if (this.isPasswortRepeated()) {
-      await axios.post('http://localhost:8000/auth/register', {
+      await axios.post('http://localhost:8083/selab/auth/register', {
         username: this.username,
         password: this.password,
-        email: this.email
       }).then((response) => {
-        let status = response.status;
-        if (status === 201) {
-          console.log("register success navigate to login page")
+        console.log(response['data']);
+        if (response['data'] == 'Duplicate username') {
+          this.isRegisterError = true;
+          this.registerErrorLog = "username or email has been used";
+        }
+        else {
           this.router.navigate(['/login']);
         }
+        // let status = response.status;
+        // if (status === 201) {
+        //   console.log("register success navigate to login page")
+        // }
       }, (error) => {
         this.isRegisterError = true;
         this.registerErrorLog = "username or email has been used";

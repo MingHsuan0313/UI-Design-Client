@@ -23,7 +23,8 @@ export class HttpClientService {
 
   constructor(private httpClient: HttpClient) {
     this.jenkinsServerUrl = `http://localhost:8080/`
-    this.uiDesignServerUrl = `http://140.112.90.144:8081/selab/`;
+    //this.uiDesignServerUrl = `http://140.112.90.144:8081/selab/`;
+    this.uiDesignServerUrl = `http://localhost:8083/selab/`;
     // this.matchMakingServerUrl = `http://localhost:8082/`;
     this.matchMakingServerUrl = `http://140.112.90.144:8082/`;
     this.apiServerUrl = `http://140.112.90.144:7122/`;
@@ -73,6 +74,7 @@ export class HttpClientService {
       urlPrefix = this.uiDesignServerUrl;
     let uri = urlPrefix + endPointUrl;
     let header = new HttpHeaders().set("Content-Type", "application/json")
+    
     if(requestHeader){
       let requestHeaderKeys = Object.keys(requestHeader)
       for(let index=0; index<requestHeaderKeys.length; index++){
@@ -80,6 +82,7 @@ export class HttpClientService {
         header = header.set(requestHeaderKey, requestHeader[requestHeaderKey])
       }
     }
+    console.log(requestHeader)
     return this.httpClient.post(uri,
       requestBody,
       {

@@ -7,6 +7,7 @@ export class UIComponentConfig {
             "dropdown",
             "input",
             "form",
+            "tree"
         ]
     }
 
@@ -41,6 +42,30 @@ export class UIComponentConfig {
                 {
                     "type": "String",
                     "name": "href"
+                }
+            ]
+        }
+        else if (type == "pagination") {
+            return [
+                {
+                    "type": "String",
+                    "name": "name"
+                },
+                {
+                    "type": "Number",
+                    "name": "pages"
+                }
+            ]
+        }
+        else if (type == "tree") {
+            return [
+                {
+                    "type": "String",
+                    "name": "name"
+                },
+                {
+                    "type": "String",
+                    "name": "content"
                 }
             ]
         }

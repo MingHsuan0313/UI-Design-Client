@@ -14,22 +14,15 @@ class InternalRepresentationReducer {
         store = {
             ...store,
             themes: [
-                    ...store.themes,
-                    {
-                        name: action.name,
-                        id: action.id,
-                        pages: []
-                    }
+                ...store.themes,
+                {
+                    name: action.name,
+                    id: action.id,
+                    pages: []
+                }
             ]
         }
         return store;
-        // return produce(store, draft => {
-        //     draft.themes.push({
-        //         name: action.name,
-        //         id: action.id,
-        //         pages: []
-        //     })
-        // })
     }
 
     @Action

@@ -1,3 +1,5 @@
+import { PaginationComponent } from "src/app/models/internalRepresentation/PaginationComponent.model";
+import { TreeComponent } from "src/app/models/internalRepresentation/TreeComponent.model";
 import { BreadcrumbComponent } from "../../models/internalRepresentation/BreadcrumbComponent.model";
 import { ButtonComponent } from "../../models/internalRepresentation/ButtonComponent.model";
 import { CardComponent } from "../../models/internalRepresentation/CardComponent.model";
@@ -155,6 +157,15 @@ export class UIComponentBuilder {
             return this.buildLayoutComponent();
         else if (this.type == "form")
             return this.buildFormComponent();
+        else if (this.type == "tree")
+            return this.buildTreeComponent();
+        else if (this.type == "pagination")
+            return this.buildPaginationComponent();
+    }
+
+    buildPaginationComponent(): PaginationComponent {
+        let paginationComponent: PaginationComponent = new PaginationComponent(this);
+        return paginationComponent;
     }
 
     buildLayoutComponent(): LayoutComponent {
@@ -213,6 +224,11 @@ export class UIComponentBuilder {
     buildBreadcrumbComponent(): BreadcrumbComponent {
         let breadCrumbComponent: BreadcrumbComponent = new BreadcrumbComponent(this);
         return breadCrumbComponent;
+    }
+
+    buildTreeComponent(): TreeComponent {
+        let treeComponent: TreeComponent = new TreeComponent(this);
+        return treeComponent;
     }
 
     buildTableComponent(): TableComponent {

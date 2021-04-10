@@ -2,34 +2,44 @@
 <header style="position: fixed;">
   <div class="container-fluid">
     <div class="row">
-      <button style="padding-top:2px; font-size:large;" mat-button [matMenuTriggerFor]="fileMenu">File</button>
-      <button style="padding-top:2px; font-size:large;" mat-button [matMenuTriggerFor]="layoutMenu">Layout</button>
-      <button style=" padding-top:2px; font-size:large; width: 100%; inline-size: inherit;" mat-button [matMenuTriggerFor]="genereMenu"
-        matTooltip="Choose UI Component (launch wizard)">UI Component</button>
+      <div>
+        <button style="padding-top:2px; font-size:large;" mat-button [matMenuTriggerFor]="fileMenu">File</button>
+        <button style="padding-top:2px; font-size:large;" mat-button [matMenuTriggerFor]="layoutMenu">Layout</button>
+        <button style=" padding-top:2px; font-size:large; width: 100%; inline-size: inherit;" mat-button
+          [matMenuTriggerFor]="genereMenu" matTooltip="Choose UI Component (launch wizard)">UI Component</button>
+      </div>
+      <div>
+        <button class="float-right" mat-button [matMenuTriggerFor]="authMenu" style="padding-top: 2px; font-size:large" matTooltip="user">
+          <mat-icon style="margin-bottom:15px ;" svgIcon="auth"></mat-icon>
+        </button>
+      </div>
       <!-- <button style="width: 100%; inline-size: inherit;" mat-button>Launch Wizard</button> -->
     </div>
   </div>
 </header>
 <selab-header-navigation-form></selab-header-navigation-form>
 
+<mat-menu #authMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item (click)="logout()">Logout</button>
+  <button mat-menu-item matTooltip="invite other developer to this project" (click)="inviteDeveloper()">Invite</button>
+  <button mat-menu-item matTooltip="change group of this project" (click)="changeGroup()">Change Group</button>
+</mat-menu>
+
 <mat-menu #fileMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item (click)="save()">Save All</button>
-  <button mat-menu-item [matMenuTriggerFor]="importMenu">Import</button>
-  <button mat-menu-item [matMenuTriggerFor]="exportMenu">Export</button>
+  <!-- <button mat-menu-item (click)="save()">Save All</button> -->
+  <!-- <button mat-menu-item [matMenuTriggerFor]="importMenu">Import</button> -->
+  <!-- <button mat-menu-item [matMenuTriggerFor]="exportMenu">Export</button> -->
+  <button mat-menu-item (click)="exportProject()"> Export Project </button>
   <button mat-menu-item (click)="launchWebAppDashboard()">Generate WebApp</button>
 </mat-menu>
 
 <mat-menu #importMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item (click)="uploader.click()" matTooltip="Upload a page description language File">Upload File</button>
+  <button mat-menu-item (click)="uploader.click()" matTooltip="Upload a page description language File">Upload
+    File</button>
   <button mat-menu-item (click)="import()" matTooltip="Retrive data from database">Database</button>
 </mat-menu>
 
-<input 
-    hidden 
-    type="file" 
-    #uploader
-    (change)="uploadPageUICDL($event)"
-/>
+<input hidden type="file" #uploader (change)="uploadPageUICDL($event)" />
 
 <mat-menu #exportMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item (click)="storePDL()" matTooltip="Page Description Language">PDL</button>
@@ -60,6 +70,7 @@
   <button mat-menu-item (click)="launchWizard('Angular Material','informative','table')">table</button>
   <button mat-menu-item (click)="launchWizard('Angular Material','informative','card')"> card</button>
   <button mat-menu-item (click)="launchWizard('Angular Material','informative','icon')">icon</button>
+  <button mat-menu-item (click)="launchWizard('Angular Material','informative','tree')">tree</button>
 </mat-menu>
 
 <mat-menu #navigationMenu="matMenu" [overlapTrigger]="false">
@@ -77,4 +88,5 @@
 <mat-menu #containerMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item (click)="launchWizard('Angular Material','container','form')">form</button>
   <button mat-menu-item (click)="launchWizard('Angular Material','container','card')">card</button>
+  <button mat-menu-item (click)="launchWizard('Angular Material','container','pagination')">pagination</button>
 </mat-menu>

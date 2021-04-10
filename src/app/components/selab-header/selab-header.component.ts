@@ -69,6 +69,7 @@ export class SelabHeaderComponent implements OnInit {
     private IRTransformerService: IRTransformer,
     private store: Store<AppState>,
     public navigationService: NavigationService,
+    private router: Router,
     public webAppDashboard: MatDialog) {
   }
 
@@ -276,5 +277,23 @@ export class SelabHeaderComponent implements OnInit {
     fileReader.onerror = (error) => {
       console.log(error);
     }
+  }
+
+  logout() {
+    console.log("click logout");
+    SelabGlobalStorage.closeSession();
+    this.router.navigate(['/login'])
+  }
+
+  inviteDeveloper() {
+    console.log("invite developer");
+  }
+
+  changeGroup() {
+    console.log("change group");
+  }
+
+  exportProject() {
+    console.log("export project");
   }
 }

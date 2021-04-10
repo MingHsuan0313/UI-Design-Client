@@ -10,6 +10,9 @@ import { ICreateComponentStrategy } from "./createComponentStrategy/ICreateCompo
 import { IRSetLayoutAction } from "../store/actions/internalRepresentation.action";
 import { MatDialog } from "@angular/material";
 import StyleEditorService from "src/app/services/externalRepresentation/style-editor.service";
+import { TreeStrategy } from "./createComponentStrategy/TreeStrategy";
+import { PaginationComponent } from "../internalRepresentation/PaginationComponent.model";
+import { PaginationStrategy } from "./createComponentStrategy/PagenationStrategy";
 
 export class SelabEditor {
     editor: mxEditor;
@@ -135,6 +138,9 @@ export class SelabEditor {
             } else if (uiComponent['type'].startsWith('input')) {
                 this.setStrategy(new InputStrategy(geometry, restoreMode));
             }
+            else if (uiComponent['type'] == 'tree') {
+                this.setStrategy(new TreeStrategy(geometry, restoreMode));
+            }
             else if (uiComponent['type'] == 'breadcrumb') {
                 this.setStrategy(new BreadcrumbStrategy(geometry, restoreMode));
             }
@@ -144,6 +150,9 @@ export class SelabEditor {
                 this.setStrategy(new CardStrategy(geometry, restoreMode));
             }  else if (uiComponent['type'] == 'form') {
                 this.setStrategy(new FormStrategy(geometry, restoreMode));
+            }
+            else if(uiComponent['type'] == 'pagination') {
+                this.setStrategy(new PaginationStrategy(geometry, restoreMode));
             }
             const compositeVertexStorage = this.createComponentStrategy.createComponent(this, uiComponent, parent);
             return compositeVertexStorage;
