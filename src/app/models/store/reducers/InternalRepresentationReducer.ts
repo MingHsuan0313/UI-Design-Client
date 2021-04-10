@@ -1,7 +1,7 @@
 import { Action, createReducer } from "typed-reducer";
 import { PageUICDL } from "../../internalRepresentation/pageUICDL.model";
 import { UIComponent } from "../../internalRepresentation/UIComponent.model";
-import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInsertNDLPageAction, IRClearNDLThemeEdgeAction, IRInsertSumdlServiceAction, IRInsertSumdlServiceReturnAction, IRDeleteAllDLsAndThemes, IROpenNDLFromDBAction, IROpenSUMDLFromDBAction  } from "../actions/internalRepresentation.action";
+import { IRClearPageUICDLAction, IRDeletePageUICDLAction, IRDeleteThemeAction, IRInsertPageImageAction, IRInsertPageUICDLAction, IRInsertThemeAction, IRInsertUIComponentAction, IRRenamePageAction, IRRenameThemeAction, IRSetLayoutAction, IRSetProjectNameAction, IRSyncWithERAction, IRAddNDLEdgeAction, IRDeleteNDLPageAction, IRInsertNDLPageAction, IRClearNDLThemeEdgeAction, IRInsertSumdlServiceAction, IRInsertSumdlServiceReturnAction, IRDeleteAllDLsAndThemes, IROpenNDLFromDBAction, IROpenSUMDLFromDBAction } from "../actions/internalRepresentation.action";
 import { InternalRepresentation } from "../app.state";
 import produce from 'immer';
 // import { enableMapSet } from 'immer';
@@ -28,17 +28,36 @@ class InternalRepresentationReducer {
     @Action
     public insertSumdlService(store: InternalRepresentation, action: IRInsertSumdlServiceAction): InternalRepresentation {
         let pageName = store.pageUICDLs[action.pageId]['name'];
-        if(store.sumdl[pageName][action.serviceName] != undefined)
+        if (store.sumDL[action.pageId][pageName] == undefined) {
+            console.log('hello dhakjgregj')
+            store = {
+                ...store,
+                sumDL: {
+                    ...store.sumDL,
+                    [action.pageId]: {
+                        ...store.sumDL[action.pageId],
+                        [pageName]: {}
+                    }
+                }
+            }
+            console.log(store.sumDL);
+        }
+
+        if (store.sumDL[action.pageId][pageName][action.serviceName] != undefined)
             return store;
 
         store = {
             ...store,
-            sumdl: {
-                ...store.sumdl,
-                [pageName]: {
-                    ...store.sumdl[pageName],
-                    [action.serviceName]: {
-                        'return': []
+            sumDL: {
+                ...store.sumDL,
+                [action.pageId]: {
+                    ...store.sumDL[action.pageId],
+                    [pageName]: {
+                        ...store.sumDL[action.pageId][pageName],
+                        [action.serviceName]: {
+                            ...store.sumDL[action.pageId][pageName][action.serviceName],
+                            'return': []
+                        }
                     }
                 }
             }
@@ -51,18 +70,22 @@ class InternalRepresentationReducer {
         let pageName = store.pageUICDLs[action.pageId]['name'];
         let serviceName = action.serviceName;
         let returnObject = action.returnObject;
+
         store = {
             ...store,
-            sumdl: {
-                ...store.sumdl,
-                [pageName]: {
-                    ...store.sumdl[pageName],
-                    [serviceName]: {
-                        ...store.sumdl[pageName][serviceName],
-                        "return": [
-                            ...store.sumdl[pageName][serviceName]["return"],
-                            returnObject
-                        ]
+            sumDL: {
+                ...store.sumDL,
+                [action.pageId]: {
+                    ...store.sumDL[action.pageId],
+                    [pageName]: {
+                        ...store.sumDL[action.pageId][pageName],
+                        [serviceName]: {
+                            ...store.sumDL[action.pageId][pageName][serviceName],
+                            "return": [
+                                ...store.sumDL[action.pageId][pageName][serviceName]["return"],
+                                returnObject
+                            ]
+                        }
                     }
                 }
             }
@@ -104,9 +127,9 @@ class InternalRepresentationReducer {
                     isMain: action.isMain
                 }
             },
-            sumdl: {
-                ...store.sumdl,
-                [action.pageUICDL.name]: {
+            sumDL: {
+                ...store.sumDL,
+                [action.pageUICDL.id]: {
                 }
             }
         }
@@ -349,9 +372,9 @@ class InternalRepresentationReducer {
             if (parameter != undefined && parameter.length > 0
                 && store.navigationDL[key]['component'] == target['pageName']
                 && !store.navigationDL[key]["parameters"].includes(parameter)) {
-                    store.navigationDL[key] = { ...store.navigationDL[key] }
-                    store.navigationDL[key]["parameters"] = [...store.navigationDL[key]["parameters"]]
-                    store.navigationDL[key]["parameters"] = [...store.navigationDL[key]["parameters"], parameter]
+                store.navigationDL[key] = { ...store.navigationDL[key] }
+                store.navigationDL[key]["parameters"] = [...store.navigationDL[key]["parameters"]]
+                store.navigationDL[key]["parameters"] = [...store.navigationDL[key]["parameters"], parameter]
             }
         }
         return store
@@ -401,11 +424,12 @@ class InternalRepresentationReducer {
 
     @Action
     public clearEdgeByTheme(store: InternalRepresentation, action: IRClearNDLThemeEdgeAction): InternalRepresentation {
-        store = { ...store, 
-                    navigationDL: {
-                        ...store.navigationDL
-                    }
-                }
+        store = {
+            ...store,
+            navigationDL: {
+                ...store.navigationDL
+            }
+        }
 
         let keys = Object.keys(store.navigationDL)
         for (let key of keys) {
@@ -445,33 +469,33 @@ class InternalRepresentationReducer {
         return false;
     }
 
-    @Action 
-    public deleteAllPageUICDL(store: InternalRepresentation, action: IRDeleteAllDLsAndThemes): InternalRepresentation{
-        store = {...store}
+    @Action
+    public deleteAllPageUICDL(store: InternalRepresentation, action: IRDeleteAllDLsAndThemes): InternalRepresentation {
+        store = { ...store }
         store.pageUICDLs = { ...store.pageUICDLs };
         store.navigationDL = { ...store.navigationDL };
         store.themes = [...store.themes]
-        store.pageImages = {...store.pageImages}
+        store.pageImages = { ...store.pageImages }
 
-        store.pageUICDLs = new Map<string,PageUICDL>();
+        store.pageUICDLs = new Map<string, PageUICDL>();
         store.themes = []
-        store.pageImages = new Map<string,string>();
+        store.pageImages = new Map<string, string>();
         store.navigationDL = {}
         return store;
     }
 
-    @Action 
-    public loadNDLFromDB(store: InternalRepresentation, action: IROpenNDLFromDBAction): InternalRepresentation{
-        store = {...store}
+    @Action
+    public loadNDLFromDB(store: InternalRepresentation, action: IROpenNDLFromDBAction): InternalRepresentation {
+        store = { ...store }
         store.navigationDL = { ...store.navigationDL };
         store.navigationDL[action.pageID] = action.ndl;
         return store;
     }
 
 
-    @Action 
-    public loadSUMDLFromDB(store: InternalRepresentation, action: IROpenSUMDLFromDBAction): InternalRepresentation{
-        store = {...store}
+    @Action
+    public loadSUMDLFromDB(store: InternalRepresentation, action: IROpenSUMDLFromDBAction): InternalRepresentation {
+        store = { ...store }
         store.sumdl = { ...store.sumdl };
         store.sumdl = action.sumdl;
         return store;

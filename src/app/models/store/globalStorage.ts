@@ -2,7 +2,7 @@ import { TaskGraph, WizardTask } from "../wizardTask/TaskGraph.model";
 
 export class SelabGlobalStorage {
     static projectName: string;
-    static sumdl: {};
+    static sumDL: {};
     static usedNameTable: {}; // save all existing page and theme name, for duplicate name checking
     static taskGraph: TaskGraph;
     static sessionInformation: {}; // user info, project info
@@ -63,13 +63,13 @@ export class SelabGlobalStorage {
         if (projectName.length == 0)
             this.projectName = "SelabProject";
         this.projectName = projectName;
-        this.sumdl = {};
+        this.sumDL = {};
     }
 
     static getInfo() {
         return {
             "projectName": this.projectName,
-            "sumdl": this.sumdl,
+            "sumDL": this.sumDL,
             "wizardGraph": this.taskGraph
         }
     }

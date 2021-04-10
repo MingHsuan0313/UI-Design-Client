@@ -67,7 +67,8 @@ export class SelabWizardComponent implements OnInit {
     if (this.isPipeline) {
       setTimeout(() => {
         let currentTask = SelabGlobalStorage.taskGraph.currentTask;
-        this.uiComponentBuilder.setReturnData(currentTask.service.returnData.getReturnDatas()['datas']);
+        if(currentTask.service != undefined)
+          this.uiComponentBuilder.setReturnData(currentTask.service.returnData.getReturnDatas()['datas']);
       }, 200);
     }
   }
@@ -117,7 +118,9 @@ export class SelabWizardComponent implements OnInit {
       if (this.isPipeline) {
         this.returnDataMenu.render(this.data['service']);
         this.buildTab.setReturn(this.data['service']);
-        this.composeTab.setReturn(this.data['service']);
+        // basic component wizard
+        if(this.composeTab != undefined)
+          this.composeTab.setReturn(this.data['service']);
       }
     }, 200)
   }
