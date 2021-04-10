@@ -59,6 +59,7 @@ export class SelabHeaderComponent implements OnInit {
   private layoutPart: any;
   public userName = 'undefined';
   private images: any[] = [];
+  username: string = "";
 
   constructor(
     private graphEditorService: GraphEditorService,
@@ -75,6 +76,7 @@ export class SelabHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.genre = Storage.getGenre();
+    this.userName = SelabGlobalStorage.getUserName();
   }
 
   setLayout(selection: any) {

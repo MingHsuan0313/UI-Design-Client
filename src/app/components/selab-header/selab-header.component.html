@@ -20,6 +20,7 @@
 <selab-header-navigation-form></selab-header-navigation-form>
 
 <mat-menu #authMenu="matMenu" [overlapTrigger]="false">
+  <button style="font-size:large; color:cadetblue" mat-menu-item disabled>Hi! {{userName}}</button>
   <button mat-menu-item (click)="logout()">Logout</button>
   <button mat-menu-item matTooltip="invite other developer to this project" (click)="inviteDeveloper()">Invite</button>
   <button mat-menu-item matTooltip="change group of this project" (click)="changeGroup()">Change Group</button>
