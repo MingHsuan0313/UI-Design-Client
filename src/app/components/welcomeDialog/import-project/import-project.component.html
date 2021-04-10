@@ -23,13 +23,22 @@
     <ul style="list-style-type: none; margin-top: 4px" *ngIf="selectedProject != 'undefined'">
       <li *ngFor="let theme of selectedProject.themes">
         <mat-checkbox
+          *ngIf="theme.used == true"
           [(ngModel)]="theme.selected"
-          (click)="chooseTheme($event, theme)"
+          (change)="chooseTheme($eventchecked, theme)"
           [color]="'primary'"
+          disabled
         >
-          <span *ngIf="theme.used == true" style="color: #333333;">
+          <span>
             {{theme.name}} (other developer is using)
           </span>
+        </mat-checkbox>
+        <mat-checkbox
+          *ngIf="theme.used == false"
+          [(ngModel)]="theme.selected"
+          (change)="chooseTheme($eventchecked, theme)"
+          [color]="'primary'"
+        >
           <span *ngIf="theme.used == false">
             {{theme.name}}
           </span>

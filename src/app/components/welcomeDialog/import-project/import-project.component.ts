@@ -62,7 +62,7 @@ export class ImportProjectComponent implements OnInit {
      this.projectOptions = Object.values(projectOptionObject);
      console.log(this.projectOptions)
     })
-    //this.fakeData();
+    // this.fakeData();
   }
 
 
@@ -97,7 +97,7 @@ export class ImportProjectComponent implements OnInit {
     console.log(event);
     console.log(theme);
     if (theme.used)
-      theme.selected = true;
+      theme.selected = false;
   }
 
   setAll(checked) {
@@ -114,66 +114,66 @@ export class ImportProjectComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  //   fakeData() {
-  //     this.projectOptions = [
-  //       {
-  //         name: "Inventory System",
-  //         groudID: "group1"
-  //         themes: [
-  //           {
-  //             name:"Auth Controller",
-  //             used:false,
-  //             selected: false
-  //           },
-  //           {
-  //             name: "Department",
-  //             used: false,
-  //             selected: false
-  //           },
-  //           {
-  //             name: "Category",
-  //             used: true,
-  //             selected: false
-  //           },
-  //           {
-  //             name: "Item",
-  //             used: false,
-  //             selected: false
-  //           },
-  //           {
-  //             name: "Acquisition",
-  //             used: true,
-  //             selected: false
-  //           }
-  //         ],
-  //       },
-  //       {
-  //         name: "ChatBot",
-  //         groudID: "group2"
-  //         themes: [
-  //           {
-  //             name: "Authentication",
-  //             used: false,
-  //             selected: false
-  //           },
-  //           {
-  //             name: "Communication",
-  //             used: true,
-  //             selected: false
-  //           },
-  //           {
-  //             name: "Chat Room",
-  //             used: false,
-  //             selected: false
-  //           }
-  //         ],
-  //       },
-  //     ]
-  //   }
+    fakeData() {
+      this.projectOptions = [
+        {
+          projectName: "Inventory System",
+          groudID: "group1",
+          themes: [
+            {
+              name:"Auth Controller",
+              used:false,
+              selected: false
+            },
+            {
+              name: "Department",
+              used: false,
+              selected: false
+            },
+            {
+              name: "Category",
+              used: true,
+              selected: false
+            },
+            {
+              name: "Item",
+              used: false,
+              selected: false
+            },
+            {
+              name: "Acquisition",
+              used: true,
+              selected: false
+            }
+          ],
+        },
+        {
+          projectName: "ChatBot",
+          groudID: "group2",
+          themes: [
+            {
+              name: "Authentication",
+              used: false,
+              selected: false
+            },
+            {
+              name: "Communication",
+              used: true,
+              selected: false
+            },
+            {
+              name: "Chat Room",
+              used: false,
+              selected: false
+            }
+          ],
+        },
+      ]
+    }
 }
 
 export class SelabProject {
-  themes: [];
+  themes: any[];
   projectName: string;
 
   constructor() {
