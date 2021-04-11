@@ -72,9 +72,9 @@ export default class LoadService {
   //       return this.getSUMDL(importProjectName)
   //     }),
   //     map((response) => {
-  //       let sumdl = JSON.parse(JSON.parse(response['body']).sumdl);
-  //       if(sumdl){
-  //         this.store.dispatch(new IROpenSUMDLFromDBAction(sumdl));
+  //       let sumDL = JSON.parse(JSON.parse(response['body']).sumDL);
+  //       if(sumDL){
+  //         this.store.dispatch(new IROpenSUMDLFromDBAction(sumDL));
   //       }
   //     })
   //   ).subscribe(response=>console.log(response))
@@ -131,7 +131,7 @@ export default class LoadService {
   }
 
   getSUMDL(projectName: string){
-    let url = 'sumdl';
+    let url = 'sumDL';
     let params = new HttpParams();
     let header = { "projectName": projectName }
     return this.httpClientService.httpGet(url,params,"uiDesignServer", header);
