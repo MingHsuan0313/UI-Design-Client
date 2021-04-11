@@ -24,12 +24,14 @@ import { pageUICDLSelector, projectNameSelector, themeSelector } from "src/app/m
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
 import NavigationService from '../../services/navigation/navigation.service';
 import { forkJoin } from 'rxjs';
+import axios from 'axios';
 import { concatMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { WizardTask } from 'src/app/models/wizardTask/TaskGraph.model';
 import { UIComponentConfig } from '../selab-wizard/uicomponent-config';
 import { UIComponentFactory } from '../selab-wizard/uicomponent-factory';
 import { UIComponentBuilder } from '../selab-wizard/UIComponentBuilder';
+import { IRDeleteAllDLsAndThemes } from 'src/app/models/store/actions/internalRepresentation.action';
 
 @Component({
   selector: 'selab-header',
@@ -112,48 +114,48 @@ export class SelabHeaderComponent implements OnInit {
   }
 
   storePDL() {
-    let exportProjectName;
-    let exportThemeId;
-    let exportThemes;
-    let exportPageUICDLs;
-    this.openSnackBar("save PDL to database", "save");
-    let subscribtion = this.store.select(themeSelector()).subscribe(themes => {
-      exportThemeId = themes[this.graphEditorService.selectedThemeIndex].id
-    })
-    subscribtion = this.store.select(projectNameSelector()).subscribe(projectName => exportProjectName = projectName)
-    subscribtion = this.store.select(themeSelector()).subscribe(themes => exportThemes = themes)
-    subscribtion = this.store.select(pageUICDLSelector()).subscribe(pageUICDLs => exportPageUICDLs = pageUICDLs)
-    subscribtion.unsubscribe();
+    // let exportProjectName;
+    // let exportThemeId;
+    // let exportThemes;
+    // let exportPageUICDLs;
+    // this.openSnackBar("save PDL to database", "save");
+    // let subscribtion = this.store.select(themeSelector()).subscribe(themes => {
+    //   exportThemeId = themes[this.graphEditorService.selectedThemeIndex].id
+    // })
+    // subscribtion = this.store.select(projectNameSelector()).subscribe(projectName => exportProjectName = projectName)
+    // subscribtion = this.store.select(themeSelector()).subscribe(themes => exportThemes = themes)
+    // subscribtion = this.store.select(pageUICDLSelector()).subscribe(pageUICDLs => exportPageUICDLs = pageUICDLs)
+    // subscribtion.unsubscribe();
 
-    var responseObservable = this.exportService.deletePageUICDL(exportProjectName).pipe(
-      concatMap( () => {
-        return this.exportService.deleteTheme(exportProjectName)
-      }),
-      concatMap( () => {
-        let postTask = []
-        for(let index=0; index<exportThemes.length; index++){
-          let theme = {
-            "id": exportThemes[index].id,
-            "name": exportThemes[index].name
-          }
-          postTask.push(this.exportService.postTheme(exportProjectName, theme))
-          console.log(theme)
-        }
-        return forkJoin(postTask)
-      }),
-      concatMap(()=>{
-        console.log("post theme complete")
-        let postTask = []
-        let pageIds = Object.keys(exportPageUICDLs)
-        for(let index=0; index<pageIds.length; index++){
-          let themeId = exportPageUICDLs[pageIds[index]].themeId;
-          postTask.push(this.exportService.postPageUICDL(exportProjectName, themeId, exportPageUICDLs[pageIds[index]]))
-        }
-        return forkJoin(postTask)
-      }),
-    )
-    responseObservable.subscribe(response => console.log(response));
-    subscribtion.unsubscribe();
+    // var responseObservable = this.exportService.deletePageUICDL(exportProjectName).pipe(
+    //   concatMap( () => {
+    //     return this.exportService.deleteTheme(exportProjectName)
+    //   }),
+    //   concatMap( () => {
+    //     let postTask = []
+    //     for(let index=0; index<exportThemes.length; index++){
+    //       let theme = {
+    //         "id": exportThemes[index].id,
+    //         "name": exportThemes[index].name
+    //       }
+    //       postTask.push(this.exportService.postTheme(exportProjectName, theme))
+    //       console.log(theme)
+    //     }
+    //     return forkJoin(postTask)
+    //   }),
+    //   concatMap(()=>{
+    //     console.log("post theme complete")
+    //     let postTask = []
+    //     let pageIds = Object.keys(exportPageUICDLs)
+    //     for(let index=0; index<pageIds.length; index++){
+    //       let themeId = exportPageUICDLs[pageIds[index]].themeId;
+    //       postTask.push(this.exportService.postPageUICDL(exportProjectName, themeId, exportPageUICDLs[pageIds[index]]))
+    //     }
+    //     return forkJoin(postTask)
+    //   }),
+    // )
+    // responseObservable.subscribe(response => console.log(response));
+    // subscribtion.unsubscribe();
 
   }
 
@@ -193,7 +195,7 @@ export class SelabHeaderComponent implements OnInit {
   }
 
   loadProject() {
-    this.loadService.loadProject();
+    //this.loadService.loadProject();
   }
 
   save() {
@@ -281,10 +283,33 @@ export class SelabHeaderComponent implements OnInit {
     }
   }
 
-  logout() {
+  async logout() {
     console.log("click logout");
-    SelabGlobalStorage.closeSession();
-    this.router.navigate(['/login'])
+
+    let themeIDs = [];
+    this.store.select(themeSelector()).subscribe(
+      themes => {
+        themes.forEach(theme => themeIDs.push(theme.id));
+      }
+    )
+    console.log(themeIDs);
+
+    await axios.post('http://localhost:8083/selab/auth/logout', {
+      themeIDs: themeIDs,
+    }, {
+      headers: {
+        projectName: SelabGlobalStorage.getProjectName(),
+        userID: SelabGlobalStorage.getUserID()
+      }
+    }).then((response) => {
+        console.log("Logout success");
+        SelabGlobalStorage.closeSession();
+        this.store.dispatch(new IRDeleteAllDLsAndThemes());
+        this.router.navigate(['/login'])
+    }, (error) => {
+      console.log("logout fail")
+    })
+
   }
 
   inviteDeveloper() {
