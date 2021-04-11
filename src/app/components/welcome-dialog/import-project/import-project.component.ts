@@ -80,6 +80,7 @@ export class ImportProjectComponent implements OnInit {
     }
 
     this.loadService.loadProject(projectName, userID, themeIDs);
+    this.importProjectDialog.close("open project complete");
 
 
   }

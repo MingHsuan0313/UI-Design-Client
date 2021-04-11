@@ -476,11 +476,13 @@ class InternalRepresentationReducer {
         store.navigationDL = { ...store.navigationDL };
         store.themes = [...store.themes]
         store.pageImages = { ...store.pageImages }
+        store.sumDL = {...store.sumDL};
 
         store.pageUICDLs = new Map<string, PageUICDL>();
         store.themes = []
         store.pageImages = new Map<string, string>();
         store.navigationDL = {}
+        store.sumDL = {}
         return store;
     }
 
@@ -495,9 +497,19 @@ class InternalRepresentationReducer {
 
     @Action
     public loadSUMDLFromDB(store: InternalRepresentation, action: IROpenSUMDLFromDBAction): InternalRepresentation {
-        store = { ...store }
-        store.sumdl = { ...store.sumdl };
-        store.sumdl = action.sumdl;
+        console.log(action.pageID)
+        store = {
+            ...store,
+            sumDL: { 
+                ...store.sumDL,
+                [action.pageID]: action.sumdl
+            },
+
+        }
+        
+        // store = { ...store }
+        // store.sumDL = { ...store.sumDL };
+        // store.sumDL[action.pageID] = action.sumdl
         return store;
     }
 
