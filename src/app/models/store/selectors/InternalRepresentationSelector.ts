@@ -29,6 +29,10 @@ export const projectNameSelector = () => createSelector(internalRepresentation,(
     return internalRepresentation.projectName;
 })
 
+export const SUMDLSelector = () => createSelector(internalRepresentation,(internalRepresentation: InternalRepresentation) => {
+    return internalRepresentation.sumDL;
+})
+
 export const uiComponentSelector = (pageID: string,componentID: string) => createSelector(internalRepresentation,(internalRepresentation: InternalRepresentation) => {
     let componentList =internalRepresentation.pageUICDLs[pageID].body.componentList;
     for(let index = 0;index < componentList.length;index++) {

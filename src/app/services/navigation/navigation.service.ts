@@ -4,7 +4,7 @@ import { NDLSelector, pageUICDLSelector, projectNameSelector } from "src/app/mod
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/models/store/app.state';
-import ExportService from '../../services/internalRepresentation/export.service';
+import SaveServie from '../internalRepresentation/save.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +16,7 @@ export default class NavigationService {
   constructor
   (private graphEditorService: GraphEditorService,
    private store: Store<AppState>,
-   private exportService: ExportService){
+   private saveService: SaveServie){
 
   }
 
@@ -82,7 +82,7 @@ export default class NavigationService {
     this.store.select(projectNameSelector()).subscribe(
       projectName => exportProjectName = projectName
     )
-    this.exportService.postNDL(exportProjectName, exportNDL);
+    this.saveService.postNDL(exportProjectName, exportNDL);
   }
 
   storePartialNDL(){

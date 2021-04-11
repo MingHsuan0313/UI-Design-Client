@@ -7,7 +7,7 @@ import { PropertyGenerator } from '../../shared/property-generator';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { HttpClient } from '@angular/common/http';
 import LoadService from '../../services/internalRepresentation/Load.service';
-import ExportService from '../../services/internalRepresentation/export.service';
+import SaveServie from '../../services/internalRepresentation/save.service';
 import IRTransformer from '../../services/internalRepresentation/IRTransformer.service'
 import {
   MatDialog,
@@ -66,7 +66,7 @@ export class SelabHeaderComponent implements OnInit {
   constructor(
     private graphEditorService: GraphEditorService,
     private loadService: LoadService,
-    private exportService: ExportService,
+    private saveService: SaveServie,
     private snackBar: MatSnackBar,
     public wizard: MatDialog,
     private IRTransformerService: IRTransformer,
@@ -284,15 +284,12 @@ export class SelabHeaderComponent implements OnInit {
   }
 
   async logout() {
-    console.log("click logout");
-
     let themeIDs = [];
     this.store.select(themeSelector()).subscribe(
       themes => {
         themes.forEach(theme => themeIDs.push(theme.id));
       }
     )
-    console.log(themeIDs);
 
     await axios.post('http://localhost:8083/selab/auth/logout', {
       themeIDs: themeIDs,
@@ -320,7 +317,11 @@ export class SelabHeaderComponent implements OnInit {
     console.log("change group");
   }
 
-  exportProject() {
+  saveProject() {
+    
     console.log("export project");
+    console.log(SelabGlobalStorage.getProjectName())
+    this.storeNDL();
+    this.saveService.saveProject(SelabGlobalStorage.getProjectName(), SelabGlobalStorage.getUserID())
   }
 }
