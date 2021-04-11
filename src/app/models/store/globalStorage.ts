@@ -30,7 +30,7 @@ export class SelabGlobalStorage {
         this.sessionInformation["user"]['projectID'] = projectID;
     }
 
-    static getProjectID(projectID: string) {
+    static getProjectID() {
         return this.sessionInformation["user"]['projectID'];
     }
 

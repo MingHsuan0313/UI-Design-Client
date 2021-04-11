@@ -84,7 +84,31 @@ export default class LoadService {
   loadProject(projectName: string, userID: string, themeIDs: string[]){
     this.postProject(projectName, userID, themeIDs).subscribe(
       response => {
-        console.log(response)
+        let datas = JSON.parse(response["body"])
+        let index = 1;
+        console.log(datas)
+        this.store.dispatch(new IRDeleteAllDLsAndThemes());
+        this.store.dispatch(new IRInsertThemeAction("temp","temp"));
+        for(let data of datas){
+          let themeName = data["themeName"]
+          let themeID = data["themeID"]
+          this.store.dispatch(new IRInsertThemeAction(themeID, themeName));
+          let pageInfoArray = data["pages"]
+          for(let pageInfo of pageInfoArray){
+            let pageID = pageInfo["pageID"];
+            let pageName = pageInfo["pageName"];
+            let ndl = JSON.parse(pageInfo["DLs"]["ndl"]);
+            let pdl = JSON.parse(pageInfo["DLs"]["pdl"]);
+            let sumDL = JSON.parse(pageInfo["DLs"]["sumDL"]);
+            
+            this.store.dispatch(new IRInsertPageUICDLAction(index, pdl, pdl["isMain"]));
+            this.store.dispatch(new IROpenNDLFromDBAction(pageID, ndl));
+            this.store.dispatch(new IROpenSUMDLFromDBAction(pageID, sumDL));
+          } 
+          index = index + 1
+        }
+
+        this.store.dispatch(new IRDeleteThemeAction(0));
       }
     )
   }

@@ -141,5 +141,5 @@ export class IROpenNDLFromDBAction implements Action {
 
 export class IROpenSUMDLFromDBAction implements Action {
     public type = IRActionTypes["LOAD_SUMDL_FROM_DB"];
-    constructor(public sumDL: {}) {}
+    constructor(public pageID: string, public sumDL: {}) {}
 }
