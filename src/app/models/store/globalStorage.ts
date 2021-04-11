@@ -74,6 +74,10 @@ export class SelabGlobalStorage {
         this.sumDL = {};
     }
 
+    static getProjectName() {
+        return this.projectName;
+    }
+
     static getInfo() {
         return {
             "projectName": this.projectName,
