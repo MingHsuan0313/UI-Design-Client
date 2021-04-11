@@ -32,6 +32,7 @@ import { UIComponentConfig } from '../selab-wizard/uicomponent-config';
 import { UIComponentFactory } from '../selab-wizard/uicomponent-factory';
 import { UIComponentBuilder } from '../selab-wizard/UIComponentBuilder';
 import { IRDeleteAllDLsAndThemes } from 'src/app/models/store/actions/internalRepresentation.action';
+import { InviteGroupComponent } from '../login/invite-group/invite-group.component';
 
 @Component({
   selector: 'selab-header',
@@ -69,6 +70,7 @@ export class SelabHeaderComponent implements OnInit {
     private saveService: SaveServie,
     private snackBar: MatSnackBar,
     public wizard: MatDialog,
+    public inviteGroupDialog: MatDialog,
     private IRTransformerService: IRTransformer,
     private store: Store<AppState>,
     public navigationService: NavigationService,
@@ -310,6 +312,9 @@ export class SelabHeaderComponent implements OnInit {
   }
 
   inviteDeveloper() {
+    this.inviteGroupDialog.open(InviteGroupComponent, {
+      autoFocus: true,
+    });
     console.log("invite developer");
   }
 

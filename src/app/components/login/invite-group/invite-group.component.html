@@ -1,3 +1,16 @@
-<p>
-  invite-group works!
-</p>
+<h1 mat-dialog-title>Hi Welcome To UI-Design-Client</h1>
+<div mat-dialog-content>
+  <h3>Invite Person To Your Project</h3>
+  <br>
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput [(ngModel)]="username">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <!-- <button mat-button [mat-dialog-close]="projectName" cdkFocusInitial>Ok</button> -->
+  <button mat-raised-button style="color: white; background-color:#333333 ;" (click)="close()"
+    cdkFocusInitial>Ok</button>
+  &nbsp;&nbsp;
+  <span *ngIf="hasWarningMessage" style="color: red; margin-top:10px">{{warningMessage}}</span>
+</div>

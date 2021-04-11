@@ -99,7 +99,7 @@ export default class LoadService {
             let pageName = pageInfo["pageName"];
             let ndl = JSON.parse(pageInfo["DLs"]["ndl"]);
             let pdl = JSON.parse(pageInfo["DLs"]["pdl"]);
-            let sumDL = JSON.parse(pageInfo["DLs"]["sumDL"]);
+            let sumDL = JSON.parse(pageInfo["DLs"]["sumdl"]);
             
             this.store.dispatch(new IRInsertPageUICDLAction(index, pdl, pdl["isMain"]));
             this.store.dispatch(new IROpenNDLFromDBAction(pageID, ndl));

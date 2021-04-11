@@ -14,7 +14,7 @@ export class ProjectNameDialogComponent implements OnInit {
   isProjectNameEmpty: boolean;
 
   constructor(
-    public dialogRef: MatDialogRef<DefaultLayoutComponent>,
+    public dialogRef: MatDialogRef<ProjectNameDialogComponent>,
   ) {
     this.isProjectNameEmpty = false;
     this.projectName = "";
