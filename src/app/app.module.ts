@@ -65,6 +65,7 @@ import { HomeComponent } from './components/home/home.component';
 import { WelcomeDialogComponent } from './components/welcome-dialog/welcome-dialog.component';
 import { ImportProjectComponent } from './components/welcome-dialog/import-project/import-project.component';
 import { InviteGroupComponent } from './components/login/invite-group/invite-group.component';
+import { InviteGroupDialogComponent } from './components/invite-group-dialog/invite-group-dialog.component';
 enableMapSet();
 
 const appState = {
@@ -141,7 +142,8 @@ export function reducerFactory() {
     HomeComponent,
     WelcomeDialogComponent,
     ImportProjectComponent,
-    InviteGroupComponent
+    InviteGroupComponent,
+    InviteGroupDialogComponent
   ],
   imports: [
     AngularMaterialModule,
