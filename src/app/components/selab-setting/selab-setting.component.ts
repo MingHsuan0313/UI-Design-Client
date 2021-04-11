@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
-import ExportService from '../../services/internalRepresentation/export.service';
+import SaveServie from '../../services/internalRepresentation/save.service';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ComponentInfoComponent } from './component-info/component-info.component';
 import { UIComponent } from 'src/app/models/ui-component-dependency';
@@ -19,7 +19,7 @@ export class SelabSettingComponent implements OnInit {
   @ViewChild("settingInfo") componentInfo: ComponentInfoComponent;
   @ViewChild("settingStyle") styleSetting: StyleEditorComponent;
 
-  constructor(private graphEditorService: GraphEditorService, private exportService: ExportService) {
+  constructor(private graphEditorService: GraphEditorService, private saveService: SaveServie) {
   }
 
   ngOnInit() {

@@ -12,7 +12,7 @@ import { LayoutStrategy } from "src/app/models/externalRepresentation/component-
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage'
 import { Configuration } from "./util/configuration";
 import { IRInsertPageImageAction, IRInsertPageUICDLAction, IRSyncWithERAction, IRInsertNDLPageAction } from "src/app/models/store/actions/internalRepresentation.action";
-import ExportService from "../internalRepresentation/export.service";
+import SaveServie from "../internalRepresentation/save.service";
 
 @Injectable({
   providedIn: "root"
@@ -32,7 +32,7 @@ export default class GraphEditorService {
     private store: Store<AppState>,
     private IRTransformerService: IRTransformer,
     private dialog: MatDialog,
-    private exportService: ExportService
+    private saveService: SaveServie
   ) {
     this.inNavigation = "None";
     setTimeout(() => {
@@ -138,7 +138,7 @@ export default class GraphEditorService {
 
   savePageImg() {
     let changedPageId = this.selectedPageId;
-    this.exportService.getImageFromModel(this.editor.getGraphModel()).subscribe(
+    this.saveService.getImageFromModel(this.editor.getGraphModel()).subscribe(
       response => {
         let image = 'data:image/png;base64,' + response['body'];
         this.store.dispatch(new IRInsertPageImageAction(changedPageId, image))
@@ -215,7 +215,6 @@ export default class GraphEditorService {
         for (let index = 0; index < keys.length; index++) {
           let key = keys[index];
           let page = pages[key];
-
           if (flag == "themes" || flag == "theme" && pagesIDInTheme.includes(key)) {
             if (page['layout'].length > 0) {
               let layoutStrategy = new LayoutStrategy("graph-container", new mxGeometry(0, 0, 0, 0)).setOffset(xOffset, yOffset);

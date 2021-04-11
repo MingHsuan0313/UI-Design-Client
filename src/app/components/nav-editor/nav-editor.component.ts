@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import LoadService from '../../services/internalRepresentation/Load.service';
-import ExportService from '../../services/internalRepresentation/export.service';
+import SaveServie from '../../services/internalRepresentation/save.service';
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import { Storage } from '../../shared/storage';
 import { StyleStorage } from "../../models/graph-dependency";
@@ -38,7 +38,7 @@ export class NavEditorComponent implements OnInit {
   private imageObservable;
 
   constructor(private loadService: LoadService,
-    private exportService: ExportService,
+    private saveService: SaveServie,
     private graphEditorService: BpelDesignerEditorService,
     private styleEditorService: StyleEditorService) {
     this.files = this.loadService.pages;
@@ -54,7 +54,7 @@ export class NavEditorComponent implements OnInit {
     const pageUICDL = Storage.getPageUICDL();
     console.log(JSON.parse(JSON.stringify(pageUICDL)));
     pageUICDL["xml"] = xml;
-    this.exportService.postImage(xml).subscribe(
+    this.saveService.postImage(xml).subscribe(
       response => {
 
         let pageID = pageUICDL["selector"];

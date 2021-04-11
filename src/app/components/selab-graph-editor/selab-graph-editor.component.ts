@@ -3,8 +3,8 @@ import { AfterViewInit, Component, ElementRef, ViewChild, OnInit, Input } from '
 import GraphEditorService from '../../services/externalRepresentation/graph-editor.service';
 import * as html2canvas from 'html2canvas';
 
-import ImportService from '../../services/internalRepresentation/import.service';
-import ExportService from '../../services/internalRepresentation/export.service';
+import LoadService from '../../services/internalRepresentation/Load.service';
+import SaveServie from '../../services/internalRepresentation/save.service';
 import { StyleLibrary } from '../../shared/styleLibrary';
 import { AppState } from 'src/app/models/store/app.state';
 import { Store } from '@ngrx/store';
@@ -36,7 +36,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   verticalPosition: MatSnackBarVerticalPosition = "top";
   @Input() setting: SelabSettingComponent;
   constructor(private graphEditorService: GraphEditorService,
-    private exportService: ExportService,
+    private saveService: SaveServie,
     private store: Store<AppState>,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
@@ -217,7 +217,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   newProject() {
-    this.exportService.newProject().subscribe(
+    this.saveService.newProject().subscribe(
       response => console.log(response['body'])
     );
   }

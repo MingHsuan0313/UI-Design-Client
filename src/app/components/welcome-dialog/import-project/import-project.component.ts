@@ -80,9 +80,9 @@ export class ImportProjectComponent implements OnInit {
     }
 
     this.loadService.loadProject(projectName, userID, themeIDs);
+    SelabGlobalStorage.setProjectID(this.selectedProject.projectID);
+    SelabGlobalStorage.setProjectName(this.selectedProject.projectName);
     this.importProjectDialog.close("open project complete");
-
-
   }
 
   ngOnInit() {
@@ -176,6 +176,7 @@ export class ImportProjectComponent implements OnInit {
 export class SelabProject {
   themes: any[];
   projectName: string;
+  projectID: string;
 
   constructor() {
     this.projectName = "";
