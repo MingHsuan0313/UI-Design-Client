@@ -72,9 +72,9 @@ export default class LoadService {
   //       return this.getSUMDL(importProjectName)
   //     }),
   //     map((response) => {
-  //       let sumdl = JSON.parse(JSON.parse(response['body']).sumdl);
-  //       if(sumdl){
-  //         this.store.dispatch(new IROpenSUMDLFromDBAction(sumdl));
+  //       let sumDL = JSON.parse(JSON.parse(response['body']).sumDL);
+  //       if(sumDL){
+  //         this.store.dispatch(new IROpenSUMDLFromDBAction(sumDL));
   //       }
   //     })
   //   ).subscribe(response=>console.log(response))
@@ -99,11 +99,11 @@ export default class LoadService {
             let pageName = pageInfo["pageName"];
             let ndl = JSON.parse(pageInfo["DLs"]["ndl"]);
             let pdl = JSON.parse(pageInfo["DLs"]["pdl"]);
-            let sumdl = JSON.parse(pageInfo["DLs"]["sumdl"]);
+            let sumDL = JSON.parse(pageInfo["DLs"]["sumdl"]);
             
             this.store.dispatch(new IRInsertPageUICDLAction(index, pdl, pdl["isMain"]));
             this.store.dispatch(new IROpenNDLFromDBAction(pageID, ndl));
-            this.store.dispatch(new IROpenSUMDLFromDBAction(pageID, sumdl));
+            this.store.dispatch(new IROpenSUMDLFromDBAction(pageID, sumDL));
           } 
           index = index + 1
         }
@@ -155,7 +155,7 @@ export default class LoadService {
   }
 
   getSUMDL(projectName: string){
-    let url = 'sumdl';
+    let url = 'sumDL';
     let params = new HttpParams();
     let header = { "projectName": projectName }
     return this.httpClientService.httpGet(url,params,"uiDesignServer", header);

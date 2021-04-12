@@ -267,8 +267,8 @@ class InternalRepresentationReducer {
     public deletePageUICDL(store: InternalRepresentation, action: IRDeletePageUICDLAction): InternalRepresentation {
         store = { ...store };
         store.pageUICDLs = { ...store.pageUICDLs };
-        store.sumdl = { ...store.sumdl };
-        delete store.sumdl[store.pageUICDLs[action.id].name]
+        store.sumDL = { ...store.sumDL };
+        delete store.sumDL[store.pageUICDLs[action.id].name]
         delete store.pageUICDLs[action.id];
         store.themes = [...store.themes];
         store.themes[action.selectedThemeIndex] = { ...store.themes[action.selectedThemeIndex] };
@@ -290,9 +290,9 @@ class InternalRepresentationReducer {
                 }
             },
         }
-        store.sumdl = { ...store.sumdl };
-        store.sumdl[action.pageName] = store.sumdl[oldName];
-        delete store.sumdl[oldName];
+        store.sumDL = { ...store.sumDL };
+        store.sumDL[action.pageName] = store.sumDL[oldName];
+        delete store.sumDL[oldName];
 
         store.navigationDL = { ...store.navigationDL };
         store.navigationDL["children"] = [...store.navigationDL["children"]];
@@ -502,14 +502,10 @@ class InternalRepresentationReducer {
             ...store,
             sumDL: { 
                 ...store.sumDL,
-                [action.pageID]: action.sumdl
+                [action.pageID]: action.sumDL
             },
 
         }
-        
-        // store = { ...store }
-        // store.sumDL = { ...store.sumDL };
-        // store.sumDL[action.pageID] = action.sumdl
         return store;
     }
 
