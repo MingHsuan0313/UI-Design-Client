@@ -13,6 +13,8 @@ import { SelabGlobalStorage } from 'src/app/models/store/globalStorage'
 import { Configuration } from "./util/configuration";
 import { IRInsertPageImageAction, IRInsertPageUICDLAction, IRSyncWithERAction, IRInsertNDLPageAction } from "src/app/models/store/actions/internalRepresentation.action";
 import SaveServie from "../internalRepresentation/save.service";
+import NavigationService from "../navigation/navigation.service";
+
 
 @Injectable({
   providedIn: "root"
@@ -32,12 +34,16 @@ export default class GraphEditorService {
     private store: Store<AppState>,
     private IRTransformerService: IRTransformer,
     private dialog: MatDialog,
-    private saveService: SaveServie
+    private saveService: SaveServie,
   ) {
+
+  }
+
+  initialService(){
     this.inNavigation = "None";
     setTimeout(() => {
       let element = document.getElementById('graph-container');
-      this.editor = new SelabEditor(element, store, this, dialog);
+      this.editor = new SelabEditor(element, this.store, this, this.dialog);
     }, 100);
   }
 
