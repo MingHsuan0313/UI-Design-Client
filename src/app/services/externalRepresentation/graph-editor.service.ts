@@ -262,14 +262,20 @@ export default class GraphEditorService {
         let pageNdl = ndl[key]
         let pageName = pageNdl["component"]
         if (flag == "themes" || flag == "theme" && pagesNameInTheme.includes(pageName)) {
-          for (let componentSelector in pageNdl["edges"]) {
-            let targetInfo = pageNdl["edges"][componentSelector]
-            let parameter = targetInfo["parameter"]
-            let targetPageId = ((Object.values(pages)).find(page => page["name"] == targetInfo["target"]))["id"]
-            let sourceCell = cells.find(cell => cell["selector"] == componentSelector)
+          console.log(pageNdl["edges"])
+          for (let index in pageNdl["edges"]) {
+
+            let sourceSelector = pageNdl["edges"][index]['source']
+            let parameter = pageNdl["edges"][index]['passingParameter']
+            let targetPageName = pageNdl["edges"][index]['target']
+            let targetPageId = ((Object.values(pages)).find(page => page["name"] == targetPageName))["id"]
+            let sourceCell = cells.find(cell => cell["selector"] == sourceSelector)
             let targetCell = cells.find(cell =>
               cell["pageId"] == targetPageId && cell["componentPart"] == "box" && cell["type"] == "layout"
             )
+            console.log(sourceSelector)
+            console.log(sourceCell)
+            console.log(targetCell)
             this.renderEdge(sourceCell, targetCell, parameter)
           }
         }

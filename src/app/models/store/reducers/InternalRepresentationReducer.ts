@@ -339,7 +339,7 @@ class InternalRepresentationReducer {
     public AddNDLEdge(store: InternalRepresentation, action: IRAddNDLEdgeAction): InternalRepresentation {
         store = { ...store }
         store.navigationDL = { ...store.navigationDL };
-
+        console.log("Add NDL Edge reducer")
         let source = action.edgeInfo["source"];
         let target = action.edgeInfo["target"];
         let parameter = action.edgeInfo["parameter"]
@@ -357,17 +357,24 @@ class InternalRepresentationReducer {
                 if (!pageNDL['destination'].includes(target['pageName'])) {
                     store.navigationDL[key]['destination'] = [...store.navigationDL[key]['destination'], target['pageName']]
                 }
-                store.navigationDL[key]["edges"] = { ...store.navigationDL[key]["edges"] }
-                pageNDL['edges'][sourceComponentSelector] = { ...pageNDL['edges'][sourceComponentSelector] }
+                store.navigationDL[key]["edges"] = [
+                    ...store.navigationDL[key]["edges"], {
+                        source: sourceComponentSelector,
+                        target: target["pageName"],
+                        passingParameter:  (parameter!=undefined && parameter.length > 0) ? parameter : ""
+                    }
+                ]
 
-                pageNDL['edges'][sourceComponentSelector] = {
-                    "target": target["pageName"],
-                    "parameter": ""
-                }
-                if (parameter != undefined && parameter.length > 0) {
-                    pageNDL['edges'][sourceComponentSelector]['parameter'] = { ...pageNDL['edges'][sourceComponentSelector]['parameter'] }
-                    pageNDL['edges'][sourceComponentSelector]['parameter'] = parameter;
-                }
+                console.log(pageNDL['edges'])
+
+                // pageNDL['edges'] = {
+                //     "target": target["pageName"],
+                //     "parameter": ""
+                // }
+                // if (parameter != undefined && parameter.length > 0) {
+                //     pageNDL['edges'][sourceComponentSelector]['parameter'] = { ...pageNDL['edges'][sourceComponentSelector]['parameter'] }
+                //     pageNDL['edges'][sourceComponentSelector]['parameter'] = parameter;
+                // }
             }
             if (parameter != undefined && parameter.length > 0
                 && store.navigationDL[key]['component'] == target['pageName']
@@ -393,7 +400,7 @@ class InternalRepresentationReducer {
             'destination': [],
             'parameters': [],
             'children': [],
-            'edges': {}
+            'edges': []
         }
 
         return store
@@ -446,11 +453,11 @@ class InternalRepresentationReducer {
                 }
 
                 // edge
-                pageNDL["edges"] = { ...pageNDL["edges"] }
-                for (let sourceComponentSelector in pageNDL["edges"]) {
-                    if (this.isPageInTheme(store, action.themeIndex, pageNDL["edges"][sourceComponentSelector]["target"])) {
-                        pageNDL["edges"][sourceComponentSelector] = { ...pageNDL["edges"][sourceComponentSelector] }
-                        delete pageNDL["edges"][sourceComponentSelector]
+                pageNDL["edges"] = [ ...pageNDL["edges"]]
+                for (let index in pageNDL["edges"]) {
+                    if (this.isPageInTheme(store, action.themeIndex, pageNDL["edges"][index]["target"])) {
+                        pageNDL["edges"][index] = { ...pageNDL["edges"][index] }
+                        delete pageNDL["edges"][index]
                     }
                 }
                 // parameters
@@ -460,7 +467,6 @@ class InternalRepresentationReducer {
     }
 
     public isPageInTheme(store: InternalRepresentation, themeIndex: number, pageName: string) {
-
         for (let j = 0; j < store.themes[themeIndex].pages.length; j++) {
             if (store.themes[themeIndex].pages[j].name == pageName) {
                 return true;
