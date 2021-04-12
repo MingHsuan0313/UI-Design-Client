@@ -64,14 +64,13 @@ import { RegisterComponent } from "./components/register/register.component";
 import { WelcomeDialogComponent } from './components/welcome-dialog/welcome-dialog.component';
 import { ImportProjectComponent } from './components/welcome-dialog/import-project/import-project.component';
 import { InviteGroupComponent } from './components/login/invite-group/invite-group.component';
-import { InviteGroupDialogComponent } from './components/invite-group-dialog/invite-group-dialog.component';
+import { ProjectGroupSettingDialogComponent } from './components/project-group-setting-dialog/project-group-setting-dialog.component';
 enableMapSet();
 
 const appState = {
   pipelineStorage: new PipelineStorage(),
   internalRepresentation: new InternalRepresentation(),
   externalRepresentation: new ExternalRepresentation(),
-
   bpelRepresentation: new BPELRepresentation()
 }
 
@@ -141,7 +140,7 @@ export function reducerFactory() {
     WelcomeDialogComponent,
     ImportProjectComponent,
     InviteGroupComponent,
-    InviteGroupDialogComponent
+    ProjectGroupSettingDialogComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -173,7 +172,7 @@ export function reducerFactory() {
     QueryServiceWindowComponent,
     WelcomeDialogComponent,
     ImportProjectComponent,
-    InviteGroupComponent
+    ProjectGroupSettingDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

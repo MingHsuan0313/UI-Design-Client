@@ -26,14 +26,9 @@ export class LoginComponent {
   async login() {
     this.authService.login(this.username, this.password)
       .subscribe((response) => {
-        if (response['data'] == 'authentication failed') {
-          this.loginFailed = true;
-        }
-        else {
-          let userID = response['data']["userId"];
-          SelabGlobalStorage.startSession(this.username, userID, "");
-          this.router.navigate(['index']);
-        }
+        let userID = JSON.parse(response['body'])["userId"];
+        SelabGlobalStorage.startSession(this.username, userID, "");
+        this.router.navigate(['index']);
       }, (error) => {
         this.loginFailed = true;
       })

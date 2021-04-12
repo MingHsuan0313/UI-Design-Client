@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialogRef, MatTabChangeEvent } from '@angular/material';
 import { DefaultLayoutComponent } from '../default-layout.component';
 import axios from 'axios';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
@@ -34,7 +34,7 @@ export class ProjectNameDialogComponent implements OnInit {
           projectName: this.projectName
         }
       }).then((response) => {
-        if (response["data"] == 'project name has been used') {
+        if (response.status != 200) {
           alert(response["data"]);
         }
         else {

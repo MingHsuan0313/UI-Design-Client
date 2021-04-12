@@ -55,8 +55,7 @@ export class RegisterComponent {
       this.authService.register(this.username, this.password)
         .subscribe((response) => {
 
-        console.log(response['data']);
-        if (response['data'] == 'Duplicate username') {
+        if (response.status != 200) {
           this.isRegisterError = true;
           this.registerErrorLog = "username or email has been used";
         }
@@ -71,7 +70,6 @@ export class RegisterComponent {
     else {
       this.isRegisterError = true;
       this.registerErrorLog = "confirm password not the same as the password";
-      alert('repeat password not correct')
     }
   }
 

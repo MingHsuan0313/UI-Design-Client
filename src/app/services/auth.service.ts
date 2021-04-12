@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SelabGlobalStorage } from '../models/store/globalStorage';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +26,12 @@ export class AuthService {
         responseType: "text"
       }
     )
-}
+  }
 
-register(username: string, password: string) {
-  let uri = `${this.url}/register`;
+  register(username: string, password: string) {
+    let uri = `${this.url}/register`;
 
-  return this.httpClient.post(uri,
+    return this.httpClient.post(uri,
       {
         'username': username,
         'password': password
@@ -39,22 +40,65 @@ register(username: string, password: string) {
         observe: "response",
         responseType: "text"
       }
-  )
-}
+    )
+  }
 
-deRegister(username: string, password: string) {
+  logout(themeIDs: any[]) {
+    let uri = `${this.url}/logout`;
 
-}
+    return this.httpClient.post(uri,
+      {
+        'themeIDs': themeIDs
+      }, {
+      headers: {
+        projectName: SelabGlobalStorage.getProjectName(),
+        userID: SelabGlobalStorage.getUserID()
+      },
+      observe: "response",
+      responseType: "text"
+    })
+  }
 
-inviteToProjectGroup(projectId: string, username: string) {
+  deRegister(username: string, password: string) {
 
-}
+  }
 
-logout(userId: string, themeList: {}[]) {
+  createGroup(name: string, userId: string) {
+    let uri = `${this.url}/group`;
 
-}
+    return this.httpClient.post(uri, {
+      'name': name
+    }, {
+      headers: {
+        'userID': userId
+      },
+      observe: "response",
+      responseType: "text"
+    })
+  }
 
-createGroup(userId: string, groupName: string) {
+  inviteToProjectGroup(projectId: string, username: string) {
+    let uri = `${this.url}/group`;
 
-}
+    return this.httpClient.put(uri, {}, {
+      headers: {
+        projectID: projectId,
+        userName: username
+      },
+      observe: "response",
+      responseType: "text"
+    })
+  }
+
+  getGroupMembersByProjectId(projectId: string) {
+    let uri = `${this.url}/project/members`;
+
+    return this.httpClient.get(uri, {
+      headers: {
+        "projectId": projectId
+      },
+      observe: "response",
+      responseType: "text"
+    })
+  }
 }

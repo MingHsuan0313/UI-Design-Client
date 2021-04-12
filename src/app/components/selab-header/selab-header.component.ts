@@ -33,6 +33,8 @@ import { UIComponentFactory } from '../selab-wizard/uicomponent-factory';
 import { UIComponentBuilder } from '../selab-wizard/UIComponentBuilder';
 import { IRDeleteAllDLsAndThemes } from 'src/app/models/store/actions/internalRepresentation.action';
 import { InviteGroupComponent } from '../login/invite-group/invite-group.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { ProjectGroupSettingDialogComponent } from '../project-group-setting-dialog/project-group-setting-dialog.component';
 
 @Component({
   selector: 'selab-header',
@@ -71,10 +73,12 @@ export class SelabHeaderComponent implements OnInit {
     private snackBar: MatSnackBar,
     public wizard: MatDialog,
     public inviteGroupDialog: MatDialog,
+    public projectGroupSettingDialog: MatDialog,
     private IRTransformerService: IRTransformer,
     private store: Store<AppState>,
     public navigationService: NavigationService,
     private router: Router,
+    private authService: AuthService,
     public webAppDashboard: MatDialog) {
   }
 
@@ -207,13 +211,13 @@ export class SelabHeaderComponent implements OnInit {
 
   storeNDL() {
     this.openSnackBar("save NDL to database", "save");
-    if(this.graphEditorService.inNavigation=="theme"){
+    if (this.graphEditorService.inNavigation == "theme") {
       this.navigationService.storeNDL("theme");
     }
-    else if(this.graphEditorService.inNavigation=="themes"){
+    else if (this.graphEditorService.inNavigation == "themes") {
       this.navigationService.storeNDL("themes");
     }
-    
+
   }
 
   showImage() {
@@ -266,7 +270,7 @@ export class SelabHeaderComponent implements OnInit {
     })
   }
 
-  uploadFromDB(){
+  uploadFromDB() {
     this.loadService
   }
 
@@ -278,7 +282,7 @@ export class SelabHeaderComponent implements OnInit {
     fileReader.onload = () => {
       let pageUICDLObject = JSON.parse(fileReader.result as any);
       let pageUICDL = UIComponentFactory.createFromPageUICDLFromJSONObject(pageUICDLObject);
-     this.graphEditorService.uploadPageUICDL(pageUICDL);
+      this.graphEditorService.uploadPageUICDL(pageUICDL);
     }
     fileReader.onerror = (error) => {
       console.log(error);
@@ -293,37 +297,24 @@ export class SelabHeaderComponent implements OnInit {
       }
     )
 
-    await axios.post('http://localhost:8083/selab/auth/logout', {
-      themeIDs: themeIDs,
-    }, {
-      headers: {
-        projectName: SelabGlobalStorage.getProjectName(),
-        userID: SelabGlobalStorage.getUserID()
-      }
-    }).then((response) => {
+    this.authService.logout(themeIDs)
+      .subscribe((response) => {
         console.log("Logout success");
         SelabGlobalStorage.closeSession();
         this.store.dispatch(new IRDeleteAllDLsAndThemes());
         this.router.navigate(['/login'])
-    }, (error) => {
-      console.log("logout fail")
-    })
-
+      }, (error) => {
+        console.log("logout fail")
+      })
   }
 
-  inviteDeveloper() {
-    this.inviteGroupDialog.open(InviteGroupComponent, {
-      autoFocus: true,
+  projectGroupSetting() {
+    this.projectGroupSettingDialog.open(ProjectGroupSettingDialogComponent, {
+      autoFocus: true
     });
-    console.log("invite developer");
-  }
-
-  changeGroup() {
-    console.log("change group");
   }
 
   saveProject() {
-    
     console.log("export project");
     console.log(SelabGlobalStorage.getProjectName())
     this.storeNDL();

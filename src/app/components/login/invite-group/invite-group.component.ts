@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import axios from 'axios';
 import { SelabGlobalStorage } from 'src/app/models/store/globalStorage';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-invite-group',
@@ -14,6 +15,7 @@ export class InviteGroupComponent implements OnInit {
   warningMessage: string;
 
   constructor(
+    private authService: AuthService,
     private dialogRef: MatDialogRef<InviteGroupComponent>
   ) {
     this.hasWarningMessage = false;
@@ -25,12 +27,8 @@ export class InviteGroupComponent implements OnInit {
     if(this.username.length > 0) {
       let projectId = SelabGlobalStorage.getProjectID();
       let username = this.username;
-      await axios.put('http://localhost:8083/selab/auth/group',{},{
-        headers: {
-          projectID: projectId,
-          userName: username
-        }
-      }).then((response) => {
+      this.authService.inviteToProjectGroup(projectId, username)
+        .subscribe((response) => {
         if(response["data"] == "user is not found") {
           this.hasWarningMessage = true;
           this.warningMessage = `User: ${username} Isn't Existed`;
