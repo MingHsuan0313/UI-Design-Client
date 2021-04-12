@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
 import { AlertConfig } from 'ngx-bootstrap/alert';
+import { AuthService } from 'src/app/services/auth.service';
 import { getAlertConfig } from '../notifications/alerts.component';
 
 @Component({
@@ -19,7 +20,8 @@ export class RegisterComponent {
   isRegisterError: boolean;
   registerErrorLog: string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    private authService: AuthService) {
     this.username = "";
     this.password = "";
     this.email = "";
@@ -50,10 +52,9 @@ export class RegisterComponent {
     if (!this.isRegisterValid())
       return;
     if (this.isPasswortRepeated()) {
-      await axios.post('http://localhost:8083/selab/auth/register', {
-        username: this.username,
-        password: this.password,
-      }).then((response) => {
+      this.authService.register(this.username, this.password)
+        .subscribe((response) => {
+
         console.log(response['data']);
         if (response['data'] == 'Duplicate username') {
           this.isRegisterError = true;
@@ -62,10 +63,6 @@ export class RegisterComponent {
         else {
           this.router.navigate(['/login']);
         }
-        // let status = response.status;
-        // if (status === 201) {
-        //   console.log("register success navigate to login page")
-        // }
       }, (error) => {
         this.isRegisterError = true;
         this.registerErrorLog = "username or email has been used";

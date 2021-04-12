@@ -1,36 +1,60 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClientService } from './http-client.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+  private url: string;
   constructor(
-    httpClientService: HttpClientService
-  ) { }
+    private httpClient: HttpClient,
+  ) {
+    this.url = `http://${'localhost:8083'}/selab/auth`
+  }
 
   login(username: string, password: string) {
+    let uri = `${this.url}/login`;
 
-  }
+    return this.httpClient.post(uri,
+      {
+        'username': username,
+        'password': password
+      },
+      {
+        observe: "response",
+        responseType: "text"
+      }
+    )
+}
 
-  register(username: string, password: string) {
+register(username: string, password: string) {
+  let uri = `${this.url}/register`;
 
-  }
+  return this.httpClient.post(uri,
+      {
+        'username': username,
+        'password': password
+      },
+      {
+        observe: "response",
+        responseType: "text"
+      }
+  )
+}
 
-  deRegister(username: string, password: string) {
+deRegister(username: string, password: string) {
 
-  }
+}
 
-  inviteToProjectGroup (projectId: string, username: string) {
+inviteToProjectGroup(projectId: string, username: string) {
 
-  }
+}
 
-  logout(userId: string, themeList: {}[]) {
+logout(userId: string, themeList: {}[]) {
 
-  }
+}
 
-  createGroup(userId: string, groupName: string) {
+createGroup(userId: string, groupName: string) {
 
-  }
+}
 }
