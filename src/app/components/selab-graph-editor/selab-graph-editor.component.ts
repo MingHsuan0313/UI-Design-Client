@@ -51,6 +51,7 @@ export class SelabGraphEditorComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.graphEditorService.initialService();
   }
 
   showExternalRepresentation() {
@@ -228,5 +229,9 @@ export class SelabGraphEditorComponent implements AfterViewInit {
 
   decreaseFont() {
     StyleLibrary[0]['fontSize'] -= 10;
+  }
+
+  ngOnDestroy(){
+    console.log("graph editor component has been destoryed")
   }
 }
