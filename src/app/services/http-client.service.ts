@@ -60,6 +60,7 @@ export class HttpClientService {
       headers: header,
       observe: "response",
       responseType: "text",
+      withCredentials: true,
       params: params
     })
   }

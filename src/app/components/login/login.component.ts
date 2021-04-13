@@ -26,6 +26,7 @@ export class LoginComponent {
   async login() {
     this.authService.login(this.username, this.password)
       .subscribe((response) => {
+        console.log(response)
         let userID = JSON.parse(response['body'])["userId"];
         SelabGlobalStorage.startSession(this.username, userID, "");
         this.router.navigate(['index']);

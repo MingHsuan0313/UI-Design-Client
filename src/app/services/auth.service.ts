@@ -23,7 +23,8 @@ export class AuthService {
       },
       {
         observe: "response",
-        responseType: "text"
+        responseType: "text",
+        withCredentials: true
       }
     )
   }
@@ -38,7 +39,9 @@ export class AuthService {
       },
       {
         observe: "response",
-        responseType: "text"
+        responseType: "text",
+        withCredentials: true
+        
       }
     )
   }
