@@ -23,8 +23,8 @@ export class DefaultLayoutComponent implements OnInit {
   ) {
 
     const welcomeDialogRef = this.welcomeDialog.open(WelcomeDialogComponent, {
-      width: "25%",
-      height: "30%",
+      width: "40%",
+      height: "43%",
       autoFocus: true,
       disableClose: true
     })
